@@ -691,21 +691,6 @@ Andy holds a Master in Public Administration from Harvard Kennedy School and a B
     categories: ['strategy', 'technology'],
   },
   {
-    id: 15,
-    name: `Dara Schechter`,
-    photo: `/images/team/dara.webp`,
-    role: `Strategic Communications`,
-    location: `Montreal, Quebec, Canada`,
-    phone: `+1 732-887-4022`,
-    email: `dara@rawlinsic.com`,
-    linkedin: `https://www.linkedin.com/in/daraschechter/`,
-    background: `Dara has extensive experience in strategic communication and content development. Starting as a financial news-features journalist in New York City, Dara continued to hone her skills as a business correspondent in Paris. She then transitioned to public relations in the airline industry and subsequently headed global strategic communication for an enterprise business news and information service.  Most recently, Dara directed and developed global thought leadership content focused on sustainability and emerging technologies across transport and infrastructure sectors.`,
-    achievements: `Dara has established continued thought leadership dialogue toward generating new business opportunities and strengthening client relationships. She has successfully collaborated with industry experts to develop impactful messages and original narratives, fostering credibility, authority and trust.
-
-Dara applies systems thinking and clear cross-functional communication to position the organization for success in a dynamic and increasingly complex global business environment.`,
-    categories: ['communication-brand-design'],
-  },
-  {
     id: 25,
     name: `Jennifer (Jen) Pihl`,
     photo: `/images/team/jennifer.webp`,

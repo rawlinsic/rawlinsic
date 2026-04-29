@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 const RECIPIENTS = [
   "info@rawlinsic.com",
   "nicole@rawlinsic.com",
-  "dara@rawlinsic.com",
 ];
 
 /* In-memory rate limit (per-IP) for the API route. Persists across
