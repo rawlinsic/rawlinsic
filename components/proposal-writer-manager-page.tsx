@@ -315,10 +315,14 @@ export default function ProposalWriterManagerPage() {
             <h1 className="hero-title">
               Proposal <em>Writer/Manager</em>
             </h1>
-            <p className="hero-sub cs-hero-sub">
-              Full-Time &middot; Remote &middot; Location preferred either in US or
-              GCC markets (particularly UAE, Saudi Arabia and Qatar).
-            </p>
+            <div className="pwm-pills">
+              <span className="pwm-pill">Full-Time</span>
+              <span className="pwm-pill">Remote</span>
+              <span className="pwm-pill">
+                Location preferred either in US or GCC markets (particularly
+                UAE, Saudi Arabia and Qatar)
+              </span>
+            </div>
             <a
               href="#apply"
               className="auto-hero-btn"
@@ -778,6 +782,29 @@ export default function ProposalWriterManagerPage() {
         .pwm-form .form-recaptcha-notice,
         .pwm-form .form-recaptcha-notice a { color: #fff !important; }
 
+        /* Hero pills */
+        .pwm-pills {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          justify-content: center;
+          max-width: 880px;
+          margin: 8px auto 0;
+        }
+        .pwm-pill {
+          display: inline-flex;
+          align-items: center;
+          padding: 10px 22px;
+          border: 1px solid rgba(201, 168, 76, 0.55);
+          border-radius: 999px;
+          background: rgba(6, 12, 22, 0.4);
+          color: #fff;
+          font-size: 14px;
+          font-weight: 500;
+          letter-spacing: 0.3px;
+          line-height: 1.4;
+        }
+
         /* Centered, bigger submit button */
         .pwm-submit.form-submit {
           width: auto;
@@ -790,12 +817,14 @@ export default function ProposalWriterManagerPage() {
 
         @media (max-width: 768px) {
           .pwm-section { padding: 0 24px; }
-          .pwm-section .section-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+          .pwm-section .section-title { font-size: clamp(2.2rem, 7.5vw, 3rem); }
           .pwm-section ul { padding-left: 18px; }
+          .pwm-pill { font-size: 13px; padding: 9px 18px; }
           .pwm-submit.form-submit { min-width: 220px; padding: 16px 36px; font-size: 14px; }
         }
         @media (max-width: 480px) {
           .pwm-section { padding: 0 20px; }
+          .pwm-pill { font-size: 12px; padding: 8px 14px; }
           .pwm-submit.form-submit { width: 100%; min-width: 0; }
         }
       `}</style>

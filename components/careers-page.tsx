@@ -147,8 +147,18 @@ export default function CareersPage() {
               <p className="hero-sub cs-hero-sub" style={{ marginTop: "12px" }}>
                 Email us at <a href="mailto:jobs@rawlinsic.com" className="gold-text careers-email-link">jobs@rawlinsic.com</a>
               </p>
-              <p className="hero-label" style={{ marginTop: "48px", marginBottom: "16px" }}>
-                <span className="gold-text">Open Opportunities:</span>
+              <p
+                style={{
+                  marginTop: "48px",
+                  marginBottom: "16px",
+                  color: "#fff",
+                  fontSize: "20px",
+                  fontWeight: 700,
+                  letterSpacing: "normal",
+                  textTransform: "none",
+                }}
+              >
+                Open Opportunities:
               </p>
               <Link href="/careers/proposal-writer-manager" className="auto-hero-btn" style={{ opacity: 1, transform: "none", animation: "none", marginBottom: "72px" }}><span>Proposal Writer/Manager</span></Link>
             </div>

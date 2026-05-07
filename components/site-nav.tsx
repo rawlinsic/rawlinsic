@@ -241,7 +241,18 @@ export default function SiteNav({ ctaHref = "/contact" }: SiteNavProps) {
             </div>
           </div>
 
-          <a className="nav-item" href="/careers">Careers</a>
+          <div className="nav-item has-sub">
+            <span className="nav-item-label">
+              Careers
+              <svg className="nav-chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M1 1l3 3 3-3"/>
+              </svg>
+            </span>
+            <div className="nav-dropdown">
+              <a href="/careers">View All</a>
+              <a href="/careers/proposal-writer-manager">Proposal Writer/Manager</a>
+            </div>
+          </div>
         </div>
 
         <div className="nav-right">
