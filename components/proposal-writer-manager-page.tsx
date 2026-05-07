@@ -331,7 +331,7 @@ export default function ProposalWriterManagerPage() {
                 opacity: 1,
                 transform: "none",
                 animation: "none",
-                marginTop: 0,
+                marginTop: "24px",
                 marginBottom: "72px",
               }}
             >
