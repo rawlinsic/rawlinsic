@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 /* Recipients for careers / job application submissions. */
-const RECIPIENTS = ["jobs@rawlinsic.com"];
+const RECIPIENTS = ["jobs@rawlinsic.com", "nicole@rawlinsic.com"];
 
 /* In-memory rate limit (per-IP) for the API route. */
 const RATE_WINDOW_MS = 60 * 1000;
@@ -17,11 +17,8 @@ const ALLOWED_MIME = new Set([
   "application/pdf",
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "text/plain",
-  "application/rtf",
-  "text/rtf",
 ]);
-const ALLOWED_EXT = /\.(pdf|doc|docx|txt|rtf)$/i;
+const ALLOWED_EXT = /\.(pdf|doc|docx)$/i;
 
 function getClientIp(request: Request): string {
   const fwd = request.headers.get("x-forwarded-for");
@@ -91,6 +88,7 @@ export async function POST(request: Request) {
     const role = String(form.get("role") || "Proposal Writer/Manager").trim();
     const location = String(form.get("location") || "").trim();
     const message = String(form.get("message") || "").trim();
+    const consent = String(form.get("consent") || "").trim();
     const honeypot = String(form.get("company-website") || "").trim();
     const recaptchaToken = String(form.get("recaptchaToken") || "").trim() || undefined;
 
@@ -101,6 +99,13 @@ export async function POST(request: Request) {
     if (!name || !email) {
       return NextResponse.json(
         { error: "Name and email are required." },
+        { status: 400 }
+      );
+    }
+
+    if (consent !== "true") {
+      return NextResponse.json(
+        { error: "Please confirm consent to submit your application." },
         { status: 400 }
       );
     }
@@ -156,7 +161,7 @@ export async function POST(request: Request) {
       const typeOk = ALLOWED_MIME.has(f.type) || ALLOWED_EXT.test(f.name || "");
       if (!typeOk) {
         return NextResponse.json(
-          { error: `Unsupported file type for "${f.name}". Please upload PDF, DOC, DOCX, RTF, or TXT.` },
+          { error: `Unsupported file type for "${f.name}". Please upload PDF, DOC, or DOCX.` },
           { status: 400 }
         );
       }
@@ -194,7 +199,7 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Rawlins IC Careers <careers@rawlinsic.com>",
+        from: "Rawlins IC Website <contact@rawlinsic.com>",
         to: RECIPIENTS,
         subject: `New Application: ${escape(role)} — ${escape(name)}`,
         reply_to: email,
@@ -204,6 +209,7 @@ export async function POST(request: Request) {
           <p><strong>Name:</strong> ${escape(name)}</p>
           <p><strong>Email:</strong> ${escape(email)}</p>
           <p><strong>Location:</strong> ${location ? escape(location) : "Not provided"}</p>
+          <p><strong>Consent:</strong> Applicant consented to information storage &amp; review for recruitment purposes.</p>
           <hr />
           <p><strong>Why this role is a fit:</strong></p>
           <p>${message ? escape(message).replace(/\n/g, "<br />") : "<em>No note provided.</em>"}</p>
@@ -238,7 +244,7 @@ export async function GET() {
   return NextResponse.json({
     resendKeyPresent: Boolean(process.env.RESEND_API_KEY),
     recipientCount: RECIPIENTS.length,
-    fromAddress: "Rawlins IC Careers <careers@rawlinsic.com>",
+    fromAddress: "Rawlins IC Website <contact@rawlinsic.com>",
     maxFileBytes: MAX_FILE_BYTES,
     maxTotalBytes: MAX_TOTAL_BYTES,
   });

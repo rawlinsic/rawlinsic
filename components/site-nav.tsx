@@ -154,7 +154,16 @@ export default function SiteNav({ ctaHref = "/contact" }: SiteNavProps) {
             </div>
           </div>
 
-          <a href="/careers" onClick={close} className="mobile-menu-link" style={{ marginTop: 12 }}>Careers</a>
+          <div className="mobile-menu-group" style={{ marginTop: 12 }}>
+            <button className="mobile-menu-parent" onClick={() => toggleSub("careers")}>
+              Careers
+              <svg className={`mobile-menu-chevron${mobileSubOpen.has("careers") ? " open" : ""}`} width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1.5l5 5 5-5"/></svg>
+            </button>
+            <div className={`mobile-menu-sub${mobileSubOpen.has("careers") ? " open" : ""}`}>
+              <a href="/careers" onClick={close}>View All</a>
+              <a href="/careers/proposal-writer-manager" onClick={close}>Proposal Writer/Manager</a>
+            </div>
+          </div>
         </div>
 
         <Link href={ctaHref} onClick={close} className="mobile-menu-cta">Get In Touch</Link>

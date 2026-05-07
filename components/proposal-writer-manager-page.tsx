@@ -22,6 +22,9 @@ interface FormState {
   message: string;
 }
 
+const ACCEPT_DOC = ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+const ALLOWED_DOC_EXT = /\.(pdf|doc|docx)$/i;
+
 export default function ProposalWriterManagerPage() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
@@ -39,6 +42,7 @@ export default function ProposalWriterManagerPage() {
   });
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [coverFile, setCoverFile] = useState<File | null>(null);
+  const [consent, setConsent] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -166,6 +170,16 @@ export default function ProposalWriterManagerPage() {
       alert("Please attach your resume.");
       return;
     }
+    for (const f of [resumeFile, coverFile]) {
+      if (f && !ALLOWED_DOC_EXT.test(f.name)) {
+        alert(`"${f.name}" must be a PDF, DOC, or DOCX file.`);
+        return;
+      }
+    }
+    if (!consent) {
+      alert("Please confirm consent to submit your application.");
+      return;
+    }
     setSubmitting(true);
     try {
       let recaptchaToken: string | undefined;
@@ -194,6 +208,7 @@ export default function ProposalWriterManagerPage() {
       fd.append("location", formData.location);
       fd.append("message", formData.message);
       fd.append("role", "Proposal Writer/Manager");
+      fd.append("consent", consent ? "true" : "false");
       fd.append("company-website", honeypot);
       if (recaptchaToken) fd.append("recaptchaToken", recaptchaToken);
       fd.append("resume", resumeFile);
@@ -225,11 +240,13 @@ export default function ProposalWriterManagerPage() {
     setFormData({ name: "", email: "", location: "", message: "" });
     setResumeFile(null);
     setCoverFile(null);
+    setConsent(false);
   };
 
-  /* Style helpers — match the visual rhythm of other content pages */
+  /* Style helpers — match the visual rhythm of other content pages.
+     Padding switches to a smaller value at <=768px via the
+     `pwm-section` class (see <style jsx> below). */
   const sectionStyle: React.CSSProperties = {
-    padding: "0 48px",
     maxWidth: 1100,
     margin: "0 auto",
     position: "relative",
@@ -310,7 +327,7 @@ export default function ProposalWriterManagerPage() {
         </div>
 
         {/* ── About Rawlins Infra Consult ── */}
-        <section style={sectionStyle}>
+        <section className="pwm-section" style={sectionStyle}>
           <div style={sectionInner} className="reveal">
             <p className="section-label">
               <span className="gold-text">About</span>
@@ -335,7 +352,7 @@ export default function ProposalWriterManagerPage() {
         </div>
 
         {/* ── Role Description ── */}
-        <section style={sectionStyle}>
+        <section className="pwm-section" style={sectionStyle}>
           <div style={sectionInner} className="reveal">
             <p className="section-label">
               <span className="gold-text">The Role</span>
@@ -362,7 +379,7 @@ export default function ProposalWriterManagerPage() {
         </div>
 
         {/* ── Key Responsibilities ── */}
-        <section style={sectionStyle}>
+        <section className="pwm-section" style={sectionStyle}>
           <div style={sectionInner} className="reveal">
             <p className="section-label">
               <span className="gold-text">What You&rsquo;ll Do</span>
@@ -415,7 +432,7 @@ export default function ProposalWriterManagerPage() {
         </div>
 
         {/* ── Required Skills & Qualifications ── */}
-        <section style={sectionStyle}>
+        <section className="pwm-section" style={sectionStyle}>
           <div style={sectionInner} className="reveal">
             <p className="section-label">
               <span className="gold-text">Qualifications</span>
@@ -493,7 +510,7 @@ export default function ProposalWriterManagerPage() {
         </div>
 
         {/* ── How to Apply + Application Form ── */}
-        <section style={sectionStyle} id="apply">
+        <section className="pwm-section" style={sectionStyle} id="apply">
           <div style={sectionInner} className="reveal">
             <p className="section-label">
               <span className="gold-text">How to Apply</span>
@@ -592,12 +609,12 @@ export default function ProposalWriterManagerPage() {
                     id="resume"
                     name="resume"
                     type="file"
-                    accept=".pdf,.doc,.docx,.rtf,.txt,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    accept={ACCEPT_DOC}
                     onChange={(e) => setResumeFile(e.target.files?.[0] ?? null)}
                     required
                   />
                   <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, marginTop: 4 }}>
-                    PDF, DOC, DOCX, RTF, or TXT &middot; Max 2 MB
+                    PDF, DOC, or DOCX &middot; Max 2 MB
                   </span>
                 </div>
 
@@ -610,11 +627,11 @@ export default function ProposalWriterManagerPage() {
                     id="coverLetter"
                     name="coverLetter"
                     type="file"
-                    accept=".pdf,.doc,.docx,.rtf,.txt,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    accept={ACCEPT_DOC}
                     onChange={(e) => setCoverFile(e.target.files?.[0] ?? null)}
                   />
                   <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, marginTop: 4 }}>
-                    PDF, DOC, DOCX, RTF, or TXT &middot; Max 2 MB
+                    PDF, DOC, or DOCX &middot; Max 2 MB
                   </span>
                 </div>
 
@@ -632,6 +649,42 @@ export default function ProposalWriterManagerPage() {
                     rows={6}
                   />
                 </div>
+
+                <label
+                  className="form-consent-row"
+                  htmlFor="consent"
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 12,
+                    color: "rgba(255,255,255,0.78)",
+                    fontSize: 14,
+                    lineHeight: 1.6,
+                    cursor: "pointer",
+                  }}
+                >
+                  <input
+                    id="consent"
+                    name="consent"
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    required
+                    style={{
+                      marginTop: 4,
+                      width: 18,
+                      height: 18,
+                      accentColor: "#c9a84c",
+                      flexShrink: 0,
+                      cursor: "pointer",
+                    }}
+                  />
+                  <span>
+                    I consent to Rawlins Infra Consult storing and reviewing my
+                    submitted information for recruitment purposes.{" "}
+                    <span className="form-required">*</span>
+                  </span>
+                </label>
 
                 <button type="submit" className="form-submit" disabled={submitting}>
                   {submitting ? (
@@ -656,6 +709,26 @@ export default function ProposalWriterManagerPage() {
                   )}
                 </button>
 
+                <p
+                  style={{
+                    color: "rgba(255,255,255,0.6)",
+                    fontSize: 13,
+                    lineHeight: 1.7,
+                    marginTop: 4,
+                  }}
+                >
+                  By submitting this application, you agree that Rawlins Infra
+                  Consult may collect and review the information provided for
+                  hiring and recruitment purposes. See our{" "}
+                  <a
+                    href="/privacy-policy"
+                    style={{ color: "#c9a84c", textDecoration: "underline" }}
+                  >
+                    Privacy Policy
+                  </a>{" "}
+                  for details.
+                </p>
+
                 {RECAPTCHA_SITE_KEY && (
                   <p className="form-recaptcha-notice">
                     This site is protected by reCAPTCHA and the Google{" "}
@@ -677,10 +750,12 @@ export default function ProposalWriterManagerPage() {
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
-                <h3 className="form-success-title">Application Received</h3>
+                <h3 className="form-success-title">Thank you for your application</h3>
                 <p className="form-success-text">
-                  Thank you for your interest in joining Rawlins Infra Consult.
-                  Our team will review your application and be in touch.
+                  We&rsquo;ve received your materials and a member of our team
+                  will review them carefully. If your background aligns with
+                  this opportunity, we&rsquo;ll be in touch with next steps.
+                  We appreciate your interest in joining Rawlins Infra Consult.
                 </p>
                 <button className="form-success-reset" onClick={resetForm}>
                   Submit Another Application
@@ -694,19 +769,38 @@ export default function ProposalWriterManagerPage() {
           <div className="gold-line" />
         </div>
 
-        {/* ── Equal Opportunity ── */}
-        <section style={sectionStyle}>
+        {/* ── Equal Opportunity & Disclaimer ── */}
+        <section className="pwm-section" style={sectionStyle}>
           <div style={{ ...sectionInner, paddingBottom: 80 }} className="reveal">
             <p className="section-label">
               <span className="gold-text">Equal Opportunity</span>
             </p>
             <p style={{ ...bodyText, marginTop: 16 }}>
-              Rawlins Infra Consult is an equal-opportunity employer. We welcome
-              candidates from all backgrounds and life experiences.
+              Rawlins Infra Consult is an equal opportunity employer. We value
+              diversity and are committed to creating an inclusive environment
+              for all team members.
+            </p>
+            <p style={{ ...bodyText, marginTop: 20, color: "rgba(255,255,255,0.6)", fontSize: 14, fontStyle: "italic" }}>
+              Employment type, compensation structure, and final
+              responsibilities may vary based on candidate experience,
+              location, and business needs.
             </p>
           </div>
         </section>
       </div>
+
+      <style jsx global>{`
+        .pwm-section { padding: 0 48px; }
+        .pwm-section ul { padding-left: 22px; }
+        @media (max-width: 768px) {
+          .pwm-section { padding: 0 24px; }
+          .pwm-section .section-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+          .pwm-section ul { padding-left: 18px; }
+        }
+        @media (max-width: 480px) {
+          .pwm-section { padding: 0 20px; }
+        }
+      `}</style>
 
       <SiteFooter />
     </>
