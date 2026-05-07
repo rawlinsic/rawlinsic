@@ -318,10 +318,7 @@ export default function ProposalWriterManagerPage() {
             <div className="pwm-pills">
               <span className="pwm-pill">Full-Time</span>
               <span className="pwm-pill">Remote</span>
-              <span className="pwm-pill">
-                Location preferred either in US or GCC markets (particularly
-                UAE, Saudi Arabia and Qatar)
-              </span>
+              <span className="pwm-pill">US &amp; GCC preferred</span>
             </div>
             <a
               href="#apply"
