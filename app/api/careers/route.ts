@@ -100,9 +100,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true });
     }
 
-    if (!name || !email) {
+    if (!name || !email || !message) {
       return NextResponse.json(
-        { error: "Name and email are required." },
+        { error: "Name, email, and a short note about your fit are required." },
         { status: 400 }
       );
     }

@@ -616,7 +616,7 @@ export default function ProposalWriterManagerPage() {
 
                 <div className="form-group">
                   <label className="form-label" htmlFor="message">
-                    Why this role is a fit
+                    Why this role is a fit <span className="form-required">*</span>
                   </label>
                   <textarea
                     className="form-input form-textarea"
@@ -625,6 +625,7 @@ export default function ProposalWriterManagerPage() {
                     placeholder="Share a short note about why you're a fit for this role..."
                     value={formData.message}
                     onChange={handleChange}
+                    required
                     rows={6}
                   />
                 </div>
