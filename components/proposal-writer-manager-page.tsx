@@ -255,7 +255,7 @@ export default function ProposalWriterManagerPage() {
   const sectionInner: React.CSSProperties = { padding: "60px 0" };
   const bodyText: React.CSSProperties = {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 400,
     lineHeight: 1.85,
   };
@@ -263,7 +263,7 @@ export default function ProposalWriterManagerPage() {
     paddingLeft: 22,
     marginTop: 12,
     color: "#fff",
-    fontSize: 16,
+    fontSize: 17,
     lineHeight: 1.85,
     listStyle: "disc",
     listStylePosition: "outside",
@@ -330,7 +330,7 @@ export default function ProposalWriterManagerPage() {
                 opacity: 1,
                 transform: "none",
                 animation: "none",
-                marginTop: "32px",
+                marginTop: 0,
                 marginBottom: "72px",
               }}
             >
