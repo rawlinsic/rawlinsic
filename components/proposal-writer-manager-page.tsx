@@ -254,7 +254,7 @@ export default function ProposalWriterManagerPage() {
   };
   const sectionInner: React.CSSProperties = { padding: "60px 0" };
   const bodyText: React.CSSProperties = {
-    color: "rgba(255,255,255,0.78)",
+    color: "#fff",
     fontSize: 16,
     fontWeight: 400,
     lineHeight: 1.85,
@@ -262,12 +262,25 @@ export default function ProposalWriterManagerPage() {
   const ulStyle: React.CSSProperties = {
     paddingLeft: 22,
     marginTop: 12,
-    color: "rgba(255,255,255,0.78)",
+    color: "#fff",
     fontSize: 16,
     lineHeight: 1.85,
-    display: "flex",
-    flexDirection: "column",
-    gap: 10,
+    listStyle: "disc",
+    listStylePosition: "outside",
+    display: "block",
+  };
+  const liStyle: React.CSSProperties = {
+    marginBottom: 10,
+    color: "#fff",
+  };
+  const subHeadStyle: React.CSSProperties = {
+    fontSize: 30,
+    fontWeight: 600,
+    color: "#fff",
+    marginTop: 36,
+    marginBottom: 12,
+    fontFamily:
+      "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif",
   };
 
   return (
@@ -329,9 +342,6 @@ export default function ProposalWriterManagerPage() {
         {/* ── About Rawlins Infra Consult ── */}
         <section className="pwm-section" style={sectionStyle}>
           <div style={sectionInner} className="reveal">
-            <p className="section-label">
-              <span className="gold-text">About</span>
-            </p>
             <h2 className="section-title">
               About Rawlins <em>Infra Consult</em>
             </h2>
@@ -354,9 +364,6 @@ export default function ProposalWriterManagerPage() {
         {/* ── Role Description ── */}
         <section className="pwm-section" style={sectionStyle}>
           <div style={sectionInner} className="reveal">
-            <p className="section-label">
-              <span className="gold-text">The Role</span>
-            </p>
             <h2 className="section-title">
               Role <em>Description</em>
             </h2>
@@ -381,43 +388,40 @@ export default function ProposalWriterManagerPage() {
         {/* ── Key Responsibilities ── */}
         <section className="pwm-section" style={sectionStyle}>
           <div style={sectionInner} className="reveal">
-            <p className="section-label">
-              <span className="gold-text">What You&rsquo;ll Do</span>
-            </p>
             <h2 className="section-title">
               Key <em>Responsibilities</em>
             </h2>
-            <ul style={ulStyle}>
-              <li>
+            <ul style={{ ...ulStyle, marginTop: 20 }}>
+              <li style={liStyle}>
                 <strong style={{ color: "#fff" }}>Strategic Proposal Development:</strong>{" "}
                 Create compelling, persuasive proposal documents that clearly
                 articulate our value proposition and differentiate us from
                 competitors.
               </li>
-              <li>
+              <li style={liStyle}>
                 <strong style={{ color: "#fff" }}>Stakeholder Coordination:</strong>{" "}
                 Contact and coordinate with 5&ndash;10+ team members to gather
                 relevant information, resumes, and subject matter expertise for
                 proposal development.
               </li>
-              <li>
+              <li style={liStyle}>
                 <strong style={{ color: "#fff" }}>Quality Assurance:</strong>{" "}
                 Ensure all contributed content aligns with original resumes and
                 proposal requirements; obtain team confirmation and sign-off on
                 all materials.
               </li>
-              <li>
+              <li style={liStyle}>
                 <strong style={{ color: "#fff" }}>Documentation &amp; Consolidation:</strong>{" "}
                 Organize, condense, and synthesize multiple inputs into
                 cohesive, professional proposal documents.
               </li>
-              <li>
+              <li style={liStyle}>
                 <strong style={{ color: "#fff" }}>Cross-functional Collaboration:</strong>{" "}
                 Work closely with graphic design, marketing, and other
                 departments to integrate visuals, branding, and marketing
                 materials into proposals.
               </li>
-              <li>
+              <li style={liStyle}>
                 <strong style={{ color: "#fff" }}>Project Management:</strong>{" "}
                 Track proposal timelines, deadlines, and deliverables; manage
                 the &ldquo;wrangling&rdquo; of multiple contributors to keep
@@ -434,73 +438,46 @@ export default function ProposalWriterManagerPage() {
         {/* ── Required Skills & Qualifications ── */}
         <section className="pwm-section" style={sectionStyle}>
           <div style={sectionInner} className="reveal">
-            <p className="section-label">
-              <span className="gold-text">Qualifications</span>
-            </p>
             <h2 className="section-title">
               Required Skills &amp; <em>Qualifications</em>
             </h2>
-            <ul style={ulStyle}>
-              <li>
+            <ul style={{ ...ulStyle, marginTop: 20 }}>
+              <li style={liStyle}>
                 Exceptional writing and communication skills with the ability to
                 craft persuasive, clear narratives.
               </li>
-              <li>
+              <li style={liStyle}>
                 Strategic thinking and ability to understand client needs and
                 position our solutions effectively.
               </li>
-              <li>Strong project coordination and organizational abilities.</li>
-              <li>
+              <li style={liStyle}>Strong project coordination and organizational abilities.</li>
+              <li style={liStyle}>
                 Experience managing multiple stakeholders and cross-functional
                 teams.
               </li>
-              <li>
+              <li style={liStyle}>
                 Attention to detail and ability to maintain consistency across
                 complex documents.
               </li>
-              <li>
+              <li style={liStyle}>
                 Proficiency with proposal management tools and Microsoft Office
                 Suite.
               </li>
             </ul>
 
-            <h3
-              style={{
-                fontSize: 22,
-                fontWeight: 600,
-                color: "#fff",
-                marginTop: 36,
-                marginBottom: 8,
-                fontFamily:
-                  "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif",
-              }}
-            >
-              Preferred Qualifications
-            </h3>
+            <h3 style={subHeadStyle}>Preferred Qualifications</h3>
             <ul style={ulStyle}>
-              <li>
+              <li style={liStyle}>
                 Experience in business development, consulting, or government
                 contracting.
               </li>
-              <li>
+              <li style={liStyle}>
                 Familiarity with automation, integration, or technology services.
               </li>
-              <li>Experience with proposal graphics and design coordination.</li>
+              <li style={liStyle}>Experience with proposal graphics and design coordination.</li>
             </ul>
 
-            <h3
-              style={{
-                fontSize: 22,
-                fontWeight: 600,
-                color: "#fff",
-                marginTop: 36,
-                marginBottom: 8,
-                fontFamily:
-                  "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif",
-              }}
-            >
-              Salary
-            </h3>
+            <h3 style={subHeadStyle}>Salary</h3>
             <p style={bodyText}>Commensurate with experience and qualifications.</p>
           </div>
         </section>
@@ -509,12 +486,9 @@ export default function ProposalWriterManagerPage() {
           <div className="gold-line" />
         </div>
 
-        {/* ── How to Apply + Application Form ── */}
+        {/* ── Application Form ── */}
         <section className="pwm-section" style={sectionStyle} id="apply">
           <div style={sectionInner} className="reveal">
-            <p className="section-label">
-              <span className="gold-text">How to Apply</span>
-            </p>
             <h2 className="section-title">
               Apply for <em>this Role</em>
             </h2>
@@ -524,7 +498,7 @@ export default function ProposalWriterManagerPage() {
             </p>
           </div>
 
-          <div className="contact-form-wrap reveal rd2" style={{ marginBottom: 60 }}>
+          <div className="contact-form-wrap pwm-form reveal rd2" style={{ marginBottom: 60 }}>
             {!submitted ? (
               <form className="contact-form" onSubmit={handleSubmit} noValidate>
                 {/* Honeypot */}
@@ -613,14 +587,14 @@ export default function ProposalWriterManagerPage() {
                     onChange={(e) => setResumeFile(e.target.files?.[0] ?? null)}
                     required
                   />
-                  <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, marginTop: 4 }}>
+                  <span style={{ color: "#fff", fontSize: 12, marginTop: 4 }}>
                     PDF, DOC, or DOCX &middot; Max 2 MB
                   </span>
                 </div>
 
                 <div className="form-group">
                   <label className="form-label" htmlFor="coverLetter">
-                    Cover Letter <span style={{ color: "rgba(255,255,255,0.5)", fontWeight: 400 }}>(optional)</span>
+                    Cover Letter <span style={{ color: "#fff", fontWeight: 400 }}>(optional)</span>
                   </label>
                   <input
                     className="form-input"
@@ -630,7 +604,7 @@ export default function ProposalWriterManagerPage() {
                     accept={ACCEPT_DOC}
                     onChange={(e) => setCoverFile(e.target.files?.[0] ?? null)}
                   />
-                  <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, marginTop: 4 }}>
+                  <span style={{ color: "#fff", fontSize: 12, marginTop: 4 }}>
                     PDF, DOC, or DOCX &middot; Max 2 MB
                   </span>
                 </div>
@@ -657,7 +631,7 @@ export default function ProposalWriterManagerPage() {
                     display: "flex",
                     alignItems: "flex-start",
                     gap: 12,
-                    color: "rgba(255,255,255,0.78)",
+                    color: "#fff",
                     fontSize: 14,
                     lineHeight: 1.6,
                     cursor: "pointer",
@@ -686,32 +660,34 @@ export default function ProposalWriterManagerPage() {
                   </span>
                 </label>
 
-                <button type="submit" className="form-submit" disabled={submitting}>
-                  {submitting ? (
-                    <span className="form-submit-inner">
-                      <span className="form-spinner" />
-                      <span>Submitting&hellip;</span>
-                    </span>
-                  ) : (
-                    <span className="form-submit-inner">
-                      <span>Submit Application</span>
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    </span>
-                  )}
-                </button>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <button type="submit" className="form-submit pwm-submit" disabled={submitting}>
+                    {submitting ? (
+                      <span className="form-submit-inner">
+                        <span className="form-spinner" />
+                        <span>Submitting&hellip;</span>
+                      </span>
+                    ) : (
+                      <span className="form-submit-inner">
+                        <span>Submit Application</span>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    )}
+                  </button>
+                </div>
 
                 <p
                   style={{
-                    color: "rgba(255,255,255,0.6)",
+                    color: "#fff",
                     fontSize: 13,
                     lineHeight: 1.7,
                     marginTop: 4,
@@ -772,15 +748,12 @@ export default function ProposalWriterManagerPage() {
         {/* ── Equal Opportunity & Disclaimer ── */}
         <section className="pwm-section" style={sectionStyle}>
           <div style={{ ...sectionInner, paddingBottom: 80 }} className="reveal">
-            <p className="section-label">
-              <span className="gold-text">Equal Opportunity</span>
-            </p>
-            <p style={{ ...bodyText, marginTop: 16 }}>
+            <p style={{ ...bodyText }}>
               Rawlins Infra Consult is an equal opportunity employer. We value
               diversity and are committed to creating an inclusive environment
               for all team members.
             </p>
-            <p style={{ ...bodyText, marginTop: 20, color: "rgba(255,255,255,0.6)", fontSize: 14, fontStyle: "italic" }}>
+            <p style={{ ...bodyText, marginTop: 20, fontSize: 14, fontStyle: "italic" }}>
               Employment type, compensation structure, and final
               responsibilities may vary based on candidate experience,
               location, and business needs.
@@ -791,14 +764,39 @@ export default function ProposalWriterManagerPage() {
 
       <style jsx global>{`
         .pwm-section { padding: 0 48px; }
-        .pwm-section ul { padding-left: 22px; }
+        .pwm-section ul { padding-left: 22px; list-style: disc outside; }
+        .pwm-section li { color: #fff; }
+        .pwm-section p,
+        .pwm-section li,
+        .pwm-section h2,
+        .pwm-section h3 { color: #fff; }
+        .pwm-form .form-label,
+        .pwm-form .form-label * { color: #fff !important; }
+        .pwm-form .form-required { color: #c9a84c !important; }
+        .pwm-form .form-input { color: #fff; }
+        .pwm-form .form-input::placeholder { color: rgba(255,255,255,0.85); }
+        .pwm-form .form-recaptcha-notice,
+        .pwm-form .form-recaptcha-notice a { color: #fff !important; }
+
+        /* Centered, bigger submit button */
+        .pwm-submit.form-submit {
+          width: auto;
+          min-width: 280px;
+          padding: 18px 56px;
+          font-size: 16px;
+          letter-spacing: 2.5px;
+        }
+        .pwm-submit .form-submit-inner { gap: 14px; }
+
         @media (max-width: 768px) {
           .pwm-section { padding: 0 24px; }
           .pwm-section .section-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
           .pwm-section ul { padding-left: 18px; }
+          .pwm-submit.form-submit { min-width: 220px; padding: 16px 36px; font-size: 14px; }
         }
         @media (max-width: 480px) {
           .pwm-section { padding: 0 20px; }
+          .pwm-submit.form-submit { width: 100%; min-width: 0; }
         }
       `}</style>
 
