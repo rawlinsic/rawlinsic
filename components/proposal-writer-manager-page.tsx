@@ -738,9 +738,9 @@ export default function ProposalWriterManagerPage() {
                   this opportunity, we&rsquo;ll be in touch with next steps.
                   We appreciate your interest in joining Rawlins Infra Consult.
                 </p>
-                <button className="form-success-reset" onClick={resetForm}>
-                  Submit Another Application
-                </button>
+                <a href="/careers" className="form-success-reset">
+                  View All Opportunities
+                </a>
               </div>
             )}
           </div>
