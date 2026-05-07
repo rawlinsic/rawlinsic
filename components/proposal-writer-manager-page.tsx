@@ -228,7 +228,7 @@ export default function ProposalWriterManagerPage() {
       console.error("Application submission error:", err);
       const detail = err instanceof Error ? err.message : "Unknown error";
       alert(
-        `Something went wrong submitting your application.\n\n${detail}\n\nPlease try again, or email us directly at jobs@rawlinsic.com.`
+        `Something went wrong submitting your application.\n\n${detail}\n\nPlease try again, or email us directly at info@rawlinsic.com.`
       );
     } finally {
       setSubmitting(false);
