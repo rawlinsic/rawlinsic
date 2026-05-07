@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 
 /* Recipients for careers / job application submissions. */
-const RECIPIENTS = ["jobs@rawlinsic.com", "nicole@rawlinsic.com"];
+const RECIPIENTS = [
+  "jobs@rawlinsic.com",
+  "nicole@rawlinsic.com",
+  "andy@rawlinsic.com",
+];
 
 /* In-memory rate limit (per-IP) for the API route. */
 const RATE_WINDOW_MS = 60 * 1000;
