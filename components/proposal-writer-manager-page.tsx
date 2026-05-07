@@ -320,6 +320,10 @@ export default function ProposalWriterManagerPage() {
               <span className="pwm-pill">Remote</span>
               <span className="pwm-pill">US &amp; GCC preferred</span>
             </div>
+            <p className="pwm-hero-tagline">
+              Help Rawlins Infra Consult deliver impactful solutions through
+              strategic proposal development.
+            </p>
             <a
               href="#apply"
               className="auto-hero-btn"
@@ -779,6 +783,16 @@ export default function ProposalWriterManagerPage() {
         .pwm-form .form-recaptcha-notice,
         .pwm-form .form-recaptcha-notice a { color: #fff !important; }
 
+        /* Hero tagline */
+        .pwm-hero-tagline {
+          color: #fff;
+          font-size: 17px;
+          line-height: 1.7;
+          font-weight: 400;
+          max-width: 720px;
+          margin: 28px auto 32px;
+        }
+
         /* Hero pills */
         .pwm-pills {
           display: flex;
@@ -817,6 +831,7 @@ export default function ProposalWriterManagerPage() {
           .pwm-section .section-title { font-size: clamp(2.2rem, 7.5vw, 3rem); }
           .pwm-section ul { padding-left: 18px; }
           .pwm-pill { font-size: 13px; padding: 9px 18px; }
+          .pwm-hero-tagline { font-size: 15px; margin: 24px auto 28px; padding: 0 8px; }
           .pwm-submit.form-submit { min-width: 220px; padding: 16px 36px; font-size: 14px; }
         }
         @media (max-width: 480px) {
