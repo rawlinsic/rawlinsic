@@ -202,7 +202,7 @@ Ron brings enormous experience and ability with him in many facets of Right of W
     id: 10,
     name: `Ben Rawlins, P.E.`,
     photo: `/images/team/ben.webp`,
-    role: `Chief AI Strategy Officer`,
+    role: `Chief A&I Strategy Officer`,
     location: `Nevada`,
     phone: `+1 775-741-1382`,
     email: `ben@rawlinsic.com`,
@@ -484,7 +484,7 @@ Jeff holds an MBA and Master of Science in finance from Northeastern University 
     id: 39,
     name: `Nicole Arakorpi`,
     photo: `/images/team/nicole.webp`,
-    role: `Web & Graphic Designer`,
+    role: `Digital Strategy & Product`,
     location: `Nevada`,
     phone: `+1 775-881-8165`,
     email: `nicole@rawlinsic.com`,
@@ -495,7 +495,7 @@ Jeff holds an MBA and Master of Science in finance from Northeastern University 
 As a graphic designer, she excels in logo design, print materials, branding initiatives, and more. With a keen eye for typography, color theory, and layout design, Nicole is committed to creating designs that not only look great but also effectively communicate the essence of the brand.
 
 Nicole's journey into the world of design began after graduating with degrees in Marketing and Business Administration/Management from the University of Nevada, Reno. Although she initially pursued a career in Human Resources in 2013, Nicole realized her true passion lay in creativity and design. In 2017 Nicole got her BA in Graphic Design & Media Arts specializing in Web Design from Southern New Hampshire University. Since then, she has been dedicated to bringing clients' creative dreams to life.`,
-    categories: ['communication-brand-design'],
+    categories: ['communication-brand-design', 'technology'],
   },
   {
     id: 49,
