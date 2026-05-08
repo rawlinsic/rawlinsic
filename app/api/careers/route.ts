@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
 /* Recipients for careers / job application submissions. */
-/* TODO: re-add "jobs@rawlinsic.com" once the mailbox is provisioned. */
 const RECIPIENTS = [
+  "jobs@rawlinsic.com",
   "nicole@rawlinsic.com",
   "andy@rawlinsic.com",
 ];
