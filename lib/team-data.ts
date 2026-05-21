@@ -207,12 +207,8 @@ Ron brings enormous experience and ability with him in many facets of Right of W
     phone: `+1 775-741-1382`,
     email: `ben@rawlinsic.com`,
     linkedin: `https://www.linkedin.com/in/benjamin-rawlins-690867212/`,
-    background: `Ben has 3 years of experience as a roadway designer. His previous employer tasked him with designing, modifying, and facilitating the ROW plans for the I-15/Tropicana design build project in Las Vegas, Nevada.`,
-    achievements: `Ben was the brains behind the coordination between the design builder, NDOT, and the external property owners for this project. Ben also has 3 years of experience working with MicroStation and AutoCAD.
-
-Ben worked on multiple 3R projects while dabbling in all factions of the design process. He has experience in the sub-disciplines of utilities, ADA compliance, roadway striping, roadway geometry, traffic signals and signage, bridge design, materials, drainage structures, hydraulics, as well as curbs, gutters, and sidewalk design.
-
-Ben brings a fresh perspective to the Rawlins team and is ready and eager to give his new-generational insight to the field of infrastructure consulting.`,
+    background: `Ben Rawlins leads Rawlins Automation & Integration Division (RAID), helping organizations turn operational friction into practical AI, automation, integration, and software solutions. A licensed civil engineer by training, Ben has spent RIC's growth years building the systems, workflows, and technology backbone needed to scale a fast-growing consulting firm. His focus today is solutions architecture: listening to clients, identifying roadblocks across people, process, data, and systems, and designing right-sized solutions that can be built, adopted, and sustained. He works across AI strategy, low-code/no-code automation, dashboarding, integrations, and high-code AI/software pilots.`,
+    achievements: `Ben helped grow Rawlins Infra Consult from startup stage to where it is today and built RAID into a technology powerhouse with three service lanes: solutions architecture, low-code/no-code automation and integration, and high-code AI/software development. He has led internal automation systems that reduce administrative drag, improve visibility, and return time otherwise lost to manual data entry, invoicing, reporting, and fragmented handoffs. He also helps clients scale without immediately adding headcount by designing workflows that create "FTEs without needing to hire." Ben's leadership blends strategy and execution: he builds teams, frames problems clearly, connects business goals to technical delivery, and keeps adoption at the center so AI becomes useful.`,
     categories: ['technology'],
   },
   {
