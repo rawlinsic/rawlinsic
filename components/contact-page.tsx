@@ -358,7 +358,7 @@ export default function ContactPage() {
                     <div className="contact-detail-label">Location</div>
                     <address style={{ fontStyle: "normal" }}>
                       <a
-                        href="https://www.google.com/maps/search/?api=1&query=500+Damonte+Ranch+Parkway+%23980+Reno+NV+89521"
+                        href="https://maps.app.goo.gl/uArEsHPDmyhLG9rp7"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="contact-detail-value"
