@@ -356,13 +356,18 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div className="contact-detail-label">Location</div>
-                    <address
-                      className="contact-detail-value"
-                      style={{ fontStyle: "normal" }}
-                    >
-                      500 Damonte Ranch Parkway #980<br />
-                      Reno, NV 89521, USA<br />
-                      <span style={{ opacity: 0.75 }}>Serving Clients Worldwide</span>
+                    <address style={{ fontStyle: "normal" }}>
+                      <a
+                        href="https://www.google.com/maps/search/?api=1&query=500+Damonte+Ranch+Parkway+%23980+Reno+NV+89521"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="contact-detail-value"
+                        aria-label="Open Rawlins Infra Consult office location in Google Maps"
+                      >
+                        500 Damonte Ranch Parkway #980<br />
+                        Reno, NV 89521, USA
+                      </a>
+                      <div style={{ opacity: 0.75, marginTop: 4 }}>Serving Clients Worldwide</div>
                     </address>
                   </div>
                 </div>

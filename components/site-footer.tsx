@@ -55,8 +55,15 @@ export default function SiteFooter() {
             </li>
             <li>
               <address style={{ fontStyle: "normal", lineHeight: 1.5 }}>
-                500 Damonte Ranch Parkway #980<br />
-                Reno, NV 89521
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=500+Damonte+Ranch+Parkway+%23980+Reno+NV+89521"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open Rawlins Infra Consult office location in Google Maps"
+                >
+                  500 Damonte Ranch Parkway #980<br />
+                  Reno, NV 89521
+                </a>
               </address>
             </li>
           </ul>
