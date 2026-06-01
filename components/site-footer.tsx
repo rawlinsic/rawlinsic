@@ -53,6 +53,12 @@ export default function SiteFooter() {
             <li>
               <a href="tel:+17758433822">(775) 843-3822</a>
             </li>
+            <li>
+              <address style={{ fontStyle: "normal", lineHeight: 1.5 }}>
+                500 Damonte Ranch Parkway #980<br />
+                Reno, NV 89521
+              </address>
+            </li>
           </ul>
           <div className="footer-social">
             <a href="https://www.linkedin.com/company/107078508/admin/dashboard/" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="LinkedIn">

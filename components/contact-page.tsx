@@ -356,11 +356,14 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div className="contact-detail-label">Location</div>
-                    <span
+                    <address
                       className="contact-detail-value"
+                      style={{ fontStyle: "normal" }}
                     >
-                      Based in Reno, NV, USA &middot; Serving Clients Worldwide
-                    </span>
+                      500 Damonte Ranch Parkway #980<br />
+                      Reno, NV 89521, USA<br />
+                      <span style={{ opacity: 0.75 }}>Serving Clients Worldwide</span>
+                    </address>
                   </div>
                 </div>
               </div>
