@@ -576,25 +576,6 @@ In 2021, she left the private sector and began her career with the Texas Departm
     categories: ['operations'],
   },
   {
-    id: 37,
-    name: `Mark A. Johnson`,
-    photo: `/images/team/markj.webp`,
-    role: `Infrastructure Advisor`,
-    location: `Iowa`,
-    phone: `+1 515-509-4048`,
-    email: `markj@rawlinsic.com`,
-    linkedin: `https://www.linkedin.com/in/mark-a-johnson-691a541ab/`,
-    background: `Mark has over 31 years of transportation industry experience. Most recently, Mark was a Deputy Division Administrator with the Federal Highway Administration (FHWA) Iowa Division where he provided leadership support and strategic direction to the FHWA Iowa Division office with a collective federal-aid highway program of $750 million annually and approximately 21 employees. Mark collaborated with a wide variety of transportation stakeholders, including Iowa Department of Transportation (Iowa DOT), metropolitan planning organizations, tribal and local governments, non-profit organizations and others, to successfully implement numerous grant programs introduced in the Infrastructure Investment and Jobs Act.
-
-His distinguished career with FHWA has included assignments in Iowa, Nebraska, Colorado, West Virginia, and North Dakota. He worked for the Iowa Department of Transportation for three years and Federal Transit Administration for three years prior to joining FHWA.`,
-    achievements: `As the FHWA Iowa Deputy Division Administrator, Mark was responsible for 21 multi-disciplinary employees and providing executive stewardship and oversight of the annual $750 million federal-aid highway program, delivered in partnership with the Iowa Department of Transportation (Iowa DOT) and other federal, state, and local officials. Mark worked closely with Iowa DOT leaders on many successful projects. For example, he led efforts to restore essential traffic on the IA-WI Lansing Bridge Mississippi River Crossing between Iowa and Wisconsin, including the authorization of emergency relief funds after emergency closure of the bridge. He led staff in initiating immediate response to widespread flooding across the State of Iowa in March 2019. This event was the largest flooding event in three decades.
-
-As the FHWA West Virginia Deputy Division Administrator, Mark worked jointly with the West Virginia DOT to complete the Appalachian Development Highway System (ADHS), including Corridor H and King Coal Highway. As a member of the FHWA-West Virginia Leadership Team, he coordinated work activities in the performance plan, collected project performance measures, met weekly with the WVDOT leadership team to discuss project status and participated in on-site project reviews.
-
-Mark also completed several rotational and temporary assignments, including FHWA Deputy Division Administrator positions in Colorado and Nebraska. For nearly six months, Mark completed an assignment with the FHWA Office of Legislative Affairs and Policy Communications as a member of the FHWA “Briefings Team”. On multiple occasions, Mark served as a FHWA Leadership Development Academy Coach and volunteered to be one of 25 FHWA Corporate Mentors.`,
-    categories: ['operations'],
-  },
-  {
     id: 43,
     name: `Paul Wheeler`,
     photo: `/images/team/paulw.webp`,
@@ -702,25 +683,6 @@ Working across Federal and State DOT programs, Jen developed project prioritizat
 
 At the Federal level, Jen led national efforts in economic development and benefit-cost analysis at the FHWA Center for Innovation and Technology, supporting freight analysis, performance management, and traffic and modeling initiatives. She provided technical assistance and training to State DOTs and MPOs, supported performance-based planning and project prioritization, and served as a technical reviewer for federal discretionary grant programs. At the Federal Railroad Administration, she supported economic analysis and administration of major rail grant programs, developing guidance and templates now used nationally to support consistent evaluation and decision-making.`,
     categories: ['operations'],
-  },
-  {
-    id: 11,
-    name: `Bob Eatmon`,
-    photo: `/images/team/bob.webp`,
-    role: `Infrastructure Advisor`,
-    location: `Wyoming`,
-    phone: `+1 307-631-3695`,
-    email: `bob@rawlinsic.com`,
-    linkedin: `https://www.linkedin.com/in/bobeatmon/`,
-    background: `Bob Eatmon has over 24 years of service with the Federal Highway Administration, providing expert technical assistance and training in federal transportation grants, Federal-aid highway program funding, financial oversight, system assessments and programmatic/administrative requirements linkage. His career spans assignments in FHWA Division Offices in Wyoming and Nevada, a national technical assistance role in the FHWA Resource Center, and a senior acting leadership assignment at FHWA Headquarters. Across these roles, Bob built deep expertise in the Federal‑aid Highway Program and became a trusted advisor to FHWA staff and State DOTs across the country on how to translate federal requirements into workable, compliant delivery practices.
-
-After retiring from FHWA, Bob worked as a consultant providing technical assistance and customized training to State agencies, local governments, non-profits, and small businesses in his home State of Wyoming on grant management funding strategies, post-award grant administration, compliance integration, policy implementation, and performance improvement.`,
-    achievements: `- National Expert on Federal Highway Program Funding (HPF) and Grants Management: Served as a lead instructor for the National Highway Institute (NHI), training thousands of Federal, State, and local professionals in Grants Management, Developing Indirect Cost Allocation Proposals, and Financing Federal-aid Highways. Co-developed and updated course materials for IIJA/BIL implementation.
-- Policy Leadership at FHWA Headquarters: Led agencywide development of guidance on improper payments, internal controls, and enterprise risk management—tools that now inform system reviews and risk assessments at State DOTs.
-- Program Compliance Integration: Provided direct assistance to FHWA Division Offices and State DOTs in aligning 2 CFR 200 administrative rules with Title 23 program requirements for project funds management, consultant selection, safety programs, emergency relief, local programs, and discretionary grants.
-- Innovative Financial Oversight: Conducted financial system reviews in partnership with State DOTs (including AZ, CA, CO, FL, GA, IN, LA, MA, MT, NV, NY, WY), resulting in process improvements such as reducing project closeout timeframes by more than 50%.
-- Strategic Grant Support: Guided successful development and administration of programs such as Safe Routes to School, Transportation Alternatives, and Safe Streets and Roads for All (SS4A), bridging funding access with delivery readiness.`,
-    categories: ['strategy'],
   },
   {
     id: 30,
