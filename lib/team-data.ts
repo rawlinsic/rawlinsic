@@ -837,4 +837,17 @@ She continues to expand her expertise in AI and automation, consistently adoptin
     achievements: `Throughout his career, Ian spent several years as a franchise owner and operator, leading performance optimization, financial strategy, and team development across multiple locations. He transitioned into senior financial leadership, partnering closely with executive teams to streamline operations, improve profitability, and support expansion initiatives.`,
     categories: ['operations'],
   },
+  {
+    id: 55,
+    name: `Koussay Khelil`,
+    photo: `/images/team/koussay.webp`,
+    role: `Senior Front End Engineer`,
+    location: `Ontario, Canada`,
+    phone: `+1 613-601-4811`,
+    email: `koussay@rawlinsic.com`,
+    linkedin: `https://www.linkedin.com/in/koussay-khelil/`,
+    background: `Koussay Khelil is a Senior Front End Engineer with over 6 years of experience building scalable, high-performance web applications across enterprise and startup environments. He specializes in React, Next.js, TypeScript, and modern front-end architecture, with a strong focus on performance optimization, accessibility, and user experience.`,
+    achievements: `Koussay has led initiatives that improved application load times, enhanced real-time analytics dashboards, and streamlined component systems for global engineering teams. Currently at Cisco, he continues to drive innovation through scalable UI development and modern web technologies.`,
+    categories: ['technology'],
+  },
 ];

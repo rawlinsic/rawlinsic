@@ -4,7 +4,7 @@ import TeamPage from "@/components/team-page";
 export const metadata: Metadata = {
   title: "Our People",
   description:
-    "Meet the 50 accomplished professionals at Rawlins — a global management consulting firm at the intersection of strategy, operations, and technology.",
+    "Meet the 51 accomplished professionals at Rawlins — a global management consulting firm at the intersection of strategy, operations, and technology.",
   openGraph: {
     title: "Our People",
     description:
