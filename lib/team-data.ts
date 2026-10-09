@@ -858,4 +858,23 @@ At Rawlins Infra Consult, Jacob supports the firm's transportation and infrastru
 In addition to leading complex pursuit efforts, Jacob has built scalable proposal operations that improve organizational performance. He established governance frameworks, standardized templates, reusable content libraries, AI-enabled workflows, and proposal management processes that reduced proposal development effort by approximately 50 percent, improved consistency across more than 225 proposal submissions, and laid the foundation for a Proposal Center of Excellence focused on continuous improvement, knowledge management, and strategic business development support.`,
     categories: ['strategy', 'operations'],
   },
+  {
+    id: 59,
+    name: `Rex Vines, P.E.`,
+    photo: `/images/team/rex.webp`,
+    role: `Infrastructure Advisor`,
+    location: `Texas`,
+    phone: `(870) 208-5457`,
+    email: `rex@rawlinsic.com`,
+    linkedin: `https://www.linkedin.com/in/rex-vines-74b944384/`,
+    background: `Rex has more than 30 years of experience in transportation engineering, infrastructure delivery, and executive leadership, progressing from field-level construction engineering to Deputy Director and Chief Engineer of Operations for the Arkansas Department of Transportation (ARDOT). He is a transportation operations and performance-improvement leader who helps DOTs and infrastructure organizations enhance operational efficiency, organizational effectiveness, and program delivery.
+
+His expertise includes organizational restructuring, construction and maintenance operations, strategic planning, engineering policy, workforce optimization, program delivery, and stakeholder engagement. He has extensive experience working with transportation commissions, legislatures, FHWA, local governments, consultants, contractors, and industry organizations.`,
+    achievements: `As Deputy Director and Chief Engineer, Rex provided statewide leadership for engineering and operational functions and served as a principal advisor to the Director on policy, staffing, and project delivery. He led major organizational and operational initiatives, including restructuring ARDOT's Construction and Bridge Operations Divisions, implementing a statewide Maintenance Management System, and leading a comprehensive rewrite of engineering specifications.
+
+Throughout his career, Rex has driven organizational change focused on accountability, ownership, collaboration, and improved performance. His unique combination of field experience and executive leadership enables him to translate strategic objectives into practical solutions that improve transportation operations and infrastructure delivery.
+
+Rex holds a Bachelor of Science in Civil Engineering from Arkansas State University and is a licensed Professional Engineer in Arkansas and Texas. He has served in leadership roles with AASHTO and other transportation organizations, including Chairman of the AASHTO U.S. Route Numbering Committee.`,
+    categories: ['strategy', 'operations'],
+  },
 ];
