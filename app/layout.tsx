@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/pages/og-image.png",
+        url: "/images/pages/og-image-v2.png",
         width: 1200,
         height: 630,
         alt: "Rawlins",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: "Rawlins",
     description:
       "A global professional services firm that pairs consulting services with digital solutions to help organizations solve complex challenges at the intersection of strategy, operations, and technology.",
-    images: ["/images/pages/og-image.png"],
+    images: ["/images/pages/og-image-v2.png"],
   },
   robots: {
     index: true,
@@ -109,7 +109,7 @@ const LOCAL_BUSINESS_SCHEMA = {
   name: "Rawlins",
   legalName: "Rawlins Infra Consult, LLC",
   url: SITE_URL,
-  image: `${SITE_URL}/images/pages/og-image.png`,
+  image: `${SITE_URL}/images/pages/og-image-v2.png`,
   logo: `${SITE_URL}/images/pages/rawlinslogo-square.png`,
   description:
     "A global professional services firm that pairs consulting services with digital solutions to help organizations solve complex challenges at the intersection of strategy, operations, and technology.",
