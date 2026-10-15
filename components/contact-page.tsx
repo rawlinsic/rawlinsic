@@ -360,13 +360,13 @@ export default function ContactPage() {
                     <div className="contact-detail-label">Location</div>
                     <address style={{ fontStyle: "normal" }}>
                       <a
-                        href="https://maps.app.goo.gl/uArEsHPDmyhLG9rp7"
+                        href="https://www.google.com/maps/search/?api=1&query=10639+Professional+Cir%2C+Reno%2C+NV+89521"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="contact-detail-value"
                         aria-label="Open Rawlins Infra Consult office location in Google Maps"
                       >
-                        500 Damonte Ranch Parkway #980<br />
+                        10639 Professional Cir<br />
                         Reno, NV 89521, USA
                       </a>
                       <div style={{ opacity: 0.75, marginTop: 4 }}>Serving Clients Worldwide</div>

@@ -71,7 +71,7 @@ const ORGANIZATION_SCHEMA = {
   telephone: "+1-775-843-3822",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "500 Damonte Ranch Parkway #980",
+    streetAddress: "10639 Professional Cir",
     addressLocality: "Reno",
     addressRegion: "NV",
     postalCode: "89521",
@@ -118,7 +118,7 @@ const LOCAL_BUSINESS_SCHEMA = {
   priceRange: "$$$$",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "500 Damonte Ranch Parkway #980",
+    streetAddress: "10639 Professional Cir",
     addressLocality: "Reno",
     addressRegion: "NV",
     postalCode: "89521",
@@ -126,8 +126,8 @@ const LOCAL_BUSINESS_SCHEMA = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 39.4451,
-    longitude: -119.7517,
+    latitude: 39.4278,
+    longitude: -119.7534,
   },
   areaServed: {
     "@type": "Place",

@@ -181,7 +181,7 @@ const STATIC_ENTRIES: SearchEntry[] = [
     description:
       "Get in touch with the Rawlins team to start a conversation.",
     keywords:
-      "contact get in touch email phone address message form reach out conversation reno nv nevada 89521 damonte ranch parkway pkwy office location headquarters",
+      "contact get in touch email phone address message form reach out conversation reno nv nevada 89521 10639 professional circle cir office location headquarters",
   },
   {
     title: "Privacy Policy",
