@@ -24,15 +24,15 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rawlinsic.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Home | Rawlins",
+    default: "Rawlins | Strategy, Operations & Technology Consulting",
     template: "%s | Rawlins",
   },
   description:
-    "A global professional services firm that pairs consulting services with digital solutions to help organizations solve complex challenges at the intersection of strategy, operations, and technology.",
+    "Rawlins is a global consulting firm pairing strategy, operations, and technology expertise with digital solutions for transportation and infrastructure.",
   openGraph: {
-    title: "Rawlins",
+    title: "Rawlins | Strategy, Operations & Technology Consulting",
     description:
-      "A global professional services firm that pairs consulting services with digital solutions to help organizations solve complex challenges at the intersection of strategy, operations, and technology.",
+      "Rawlins is a global consulting firm pairing strategy, operations, and technology expertise with digital solutions for transportation and infrastructure.",
     url: SITE_URL,
     siteName: "Rawlins",
     type: "website",
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rawlins",
+    title: "Rawlins | Strategy, Operations & Technology Consulting",
     description:
-      "A global professional services firm that pairs consulting services with digital solutions to help organizations solve complex challenges at the intersection of strategy, operations, and technology.",
+      "Rawlins is a global consulting firm pairing strategy, operations, and technology expertise with digital solutions for transportation and infrastructure.",
     images: ["/images/pages/og-image-v2.png"],
   },
   robots: {
@@ -62,6 +62,7 @@ const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Rawlins",
+  alternateName: ["Rawlins Infra Consult", "Rawlins IC"],
   legalName: "Rawlins Infra Consult, LLC",
   url: SITE_URL,
   logo: `${SITE_URL}/images/pages/rawlinslogo-square.png`,
@@ -80,6 +81,7 @@ const ORGANIZATION_SCHEMA = {
   sameAs: [
     "https://www.linkedin.com/company/107078508/",
     "https://www.facebook.com/rawlinsic",
+    "https://maps.google.com/?cid=15053534270208893219",
   ],
   areaServed: {
     "@type": "Place",
@@ -107,6 +109,7 @@ const LOCAL_BUSINESS_SCHEMA = {
   "@type": "ProfessionalService",
   "@id": `${SITE_URL}#business`,
   name: "Rawlins",
+  alternateName: ["Rawlins Infra Consult", "Rawlins IC"],
   legalName: "Rawlins Infra Consult, LLC",
   url: SITE_URL,
   image: `${SITE_URL}/images/pages/og-image-v2.png`,
@@ -126,8 +129,8 @@ const LOCAL_BUSINESS_SCHEMA = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 39.4278,
-    longitude: -119.7534,
+    latitude: 39.4271,
+    longitude: -119.7535,
   },
   areaServed: {
     "@type": "Place",
@@ -136,6 +139,7 @@ const LOCAL_BUSINESS_SCHEMA = {
   sameAs: [
     "https://www.linkedin.com/company/107078508/",
     "https://www.facebook.com/rawlinsic",
+    "https://maps.google.com/?cid=15053534270208893219",
   ],
   knowsAbout: [
     "Strategy consulting",
