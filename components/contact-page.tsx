@@ -364,7 +364,7 @@ export default function ContactPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="contact-detail-value"
-                        aria-label="Open Rawlins Infra Consult office location in Google Maps"
+                        aria-label="Open Rawlins office location in Google Maps"
                       >
                         10639 Professional Cir<br />
                         Reno, NV 89521, USA

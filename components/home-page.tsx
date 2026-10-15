@@ -378,7 +378,7 @@ export default function HomePage() {
         <div className="hero-content">
           <Image
             src="/images/pages/rawlinslogo-white-wordmark.png"
-            alt="Rawlins Infra Consult"
+            alt="Rawlins"
             width={519}
             height={125}
             className="hero-logo-mark"

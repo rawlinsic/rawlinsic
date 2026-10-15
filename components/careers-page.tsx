@@ -134,7 +134,7 @@ export default function CareersPage() {
               <span className="hero-label">
                 <span className="gold-text">
                   <span className="hero-label-segment">Careers at</span>{" "}
-                  <span className="hero-label-segment">Rawlins Infra Consult</span>
+                  <span className="hero-label-segment">Rawlins</span>
                 </span>
               </span>
               <h1 className="hero-title">

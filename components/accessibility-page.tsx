@@ -60,7 +60,7 @@ export default function AccessibilityPage() {
 
           <div>
             <h2 style={h2Style}>Our Commitment</h2>
-            <p>Rawlins Infra Consult, LLC is committed to ensuring that our website is accessible to all users, including individuals with disabilities. We strive to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards, as recommended by the World Wide Web Consortium (W3C).</p>
+            <p>Rawlins is committed to ensuring that our website is accessible to all users, including individuals with disabilities. We strive to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards, as recommended by the World Wide Web Consortium (W3C).</p>
           </div>
 
           <div>
@@ -110,7 +110,7 @@ export default function AccessibilityPage() {
             <h2 style={h2Style}>Feedback and Contact</h2>
             <p>We welcome your feedback on the accessibility of our website. If you encounter any accessibility barriers or have suggestions for improvement, please contact us:</p>
             <p style={{ marginTop: 12 }}>
-              <strong style={{ color: "#fff" }}>Rawlins Infra Consult, LLC</strong><br />
+              <strong style={{ color: "#fff" }}>Rawlins</strong><br />
               Email: <a href="mailto:info@rawlinsic.com" style={{ color: "#fff" }}>info@rawlinsic.com</a><br />
               Phone: <a href="tel:+17758433822" style={{ color: "#fff" }}>(775) 843-3822</a><br />
               Website: <span style={{ color: "#fff" }}>rawlinsic.com</span>

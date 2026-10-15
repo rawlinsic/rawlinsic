@@ -24,30 +24,30 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rawlinsic.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Home | Rawlins Infra Consult",
-    template: "%s | Rawlins Infra Consult",
+    default: "Home | Rawlins",
+    template: "%s | Rawlins",
   },
   description:
     "A global professional services firm that pairs consulting services with digital solutions to help organizations solve complex challenges at the intersection of strategy, operations, and technology.",
   openGraph: {
-    title: "Rawlins Infra Consult",
+    title: "Rawlins",
     description:
       "A global professional services firm that pairs consulting services with digital solutions to help organizations solve complex challenges at the intersection of strategy, operations, and technology.",
     url: SITE_URL,
-    siteName: "Rawlins Infra Consult",
+    siteName: "Rawlins",
     type: "website",
     images: [
       {
         url: "/images/pages/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Rawlins Infra Consult",
+        alt: "Rawlins",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rawlins Infra Consult",
+    title: "Rawlins",
     description:
       "A global professional services firm that pairs consulting services with digital solutions to help organizations solve complex challenges at the intersection of strategy, operations, and technology.",
     images: ["/images/pages/og-image.png"],
@@ -61,8 +61,8 @@ export const metadata: Metadata = {
 const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Rawlins Infra Consult",
-  alternateName: "Rawlins IC",
+  name: "Rawlins",
+  legalName: "Rawlins Infra Consult, LLC",
   url: SITE_URL,
   logo: `${SITE_URL}/images/pages/rawlinslogo-square.png`,
   description:
@@ -90,7 +90,7 @@ const ORGANIZATION_SCHEMA = {
 const WEBSITE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Rawlins Infra Consult",
+  name: "Rawlins",
   url: SITE_URL,
   potentialAction: {
     "@type": "SearchAction",
@@ -106,8 +106,8 @@ const LOCAL_BUSINESS_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "@id": `${SITE_URL}#business`,
-  name: "Rawlins Infra Consult",
-  alternateName: "Rawlins IC",
+  name: "Rawlins",
+  legalName: "Rawlins Infra Consult, LLC",
   url: SITE_URL,
   image: `${SITE_URL}/images/pages/og-image.png`,
   logo: `${SITE_URL}/images/pages/rawlinslogo-square.png`,

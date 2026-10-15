@@ -43,7 +43,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       {
         title: "Technology Strategic Plan",
         description:
-          "Rawlins Infra Consult partnered with DelDOT to shape a comprehensive Technology Strategic Plan that provides a clear roadmap for future innovation and IT investment.",
+          "Rawlins partnered with DelDOT to shape a comprehensive Technology Strategic Plan that provides a clear roadmap for future innovation and IT investment.",
         bullets: [
           "Facilitated discovery through leadership interviews, stakeholder engagement, and SWOT analysis.",
           "Developed a strategic plan aligned with agency goals and operational priorities.",
@@ -61,7 +61,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/images/pages/louisiana.webp",
     heroImage: "/images/pages/cs-hero-9.webp",
     description:
-      "Rawlins Infra Consult is actively supporting the Louisiana Department of Transportation and Development (DOTD) through a comprehensive transformation initiative that aims to enhance organizational efficiency, program delivery, workforce development, and accountability.",
+      "Rawlins is actively supporting the Louisiana Department of Transportation and Development (DOTD) through a comprehensive transformation initiative that aims to enhance organizational efficiency, program delivery, workforce development, and accountability.",
     sectionHeading: "Key Projects & Initiatives",
     projects: [
       {
@@ -134,7 +134,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/images/pages/nv.webp",
     heroImage: "/images/pages/cs-hero-2.webp",
     description:
-      "Nevada\u2019s transportation network is vital for both economic development and community connectivity. Rawlins Infra Consult has played a significant role in modernizing infrastructure planning and maintenance across the state. Our work with the Nevada Department of Transportation (NDOT) has focused on strategic planning, asset management, and fleet optimization to ensure a more efficient, reliable, and cost-effective transportation system.",
+      "Nevada\u2019s transportation network is vital for both economic development and community connectivity. Rawlins has played a significant role in modernizing infrastructure planning and maintenance across the state. Our work with the Nevada Department of Transportation (NDOT) has focused on strategic planning, asset management, and fleet optimization to ensure a more efficient, reliable, and cost-effective transportation system.",
     sectionHeading: "Key Projects & Initiatives",
     projects: [
       {
@@ -284,7 +284,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/images/pages/majortrans.webp",
     heroImage: "/images/pages/cs-hero-8.webp",
     description:
-      "Rawlins Infra Consult has supported some of the largest and most complex transportation infrastructure projects in the United States, providing expert project management, risk mitigation, and multi-agency coordination.",
+      "Rawlins has supported some of the largest and most complex transportation infrastructure projects in the United States, providing expert project management, risk mitigation, and multi-agency coordination.",
     sectionHeading: "Key Projects",
     projects: [
       {
@@ -326,7 +326,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     image: "/images/pages/transportation.webp",
     heroImage: "/images/pages/cs-hero-7.webp",
     description:
-      "Rawlins Infra Consult has provided strategic consulting services across multiple states, delivering tailored solutions for transportation agencies with diverse operational needs.",
+      "Rawlins has provided strategic consulting services across multiple states, delivering tailored solutions for transportation agencies with diverse operational needs.",
     sectionHeading: "Key Projects & Initiatives",
     projects: [
       {

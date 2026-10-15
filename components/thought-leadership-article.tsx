@@ -258,13 +258,13 @@ export default function ThoughtLeadershipArticlePage({ article }: Props) {
       ...(article.authorLinkedIn ? { sameAs: [article.authorLinkedIn] } : {}),
       worksFor: {
         "@type": "Organization",
-        name: "Rawlins Infra Consult",
+        name: "Rawlins",
         url: siteUrl,
       },
     },
     publisher: {
       "@type": "Organization",
-      name: "Rawlins Infra Consult",
+      name: "Rawlins",
       url: siteUrl,
       logo: {
         "@type": "ImageObject",

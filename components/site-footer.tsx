@@ -60,7 +60,7 @@ export default function SiteFooter() {
                   href="https://www.google.com/maps/search/?api=1&query=10639+Professional+Cir%2C+Reno%2C+NV+89521"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Open Rawlins Infra Consult office location in Google Maps"
+                  aria-label="Open Rawlins office location in Google Maps"
                 >
                   10639 Professional Cir<br />
                   Reno, NV 89521

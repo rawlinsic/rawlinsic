@@ -61,7 +61,7 @@ export default function TermsOfServicePage() {
 
           <div>
             <h2 style={h2Style}>2. Description of Services</h2>
-            <p>Rawlins Infra Consult is a management consulting firm providing advisory services in strategy, operations, and technology for transportation agencies and enterprises. This Site provides general information about our firm, services, thought leadership, and career opportunities. The content on this Site is for informational purposes only and does not constitute professional advice, a solicitation, or an offer to provide services.</p>
+            <p>Rawlins is a management consulting firm providing advisory services in strategy, operations, and technology for transportation agencies and enterprises. This Site provides general information about our firm, services, thought leadership, and career opportunities. The content on this Site is for informational purposes only and does not constitute professional advice, a solicitation, or an offer to provide services.</p>
           </div>
 
           <div>
@@ -90,7 +90,7 @@ export default function TermsOfServicePage() {
 
           <div>
             <h2 style={h2Style}>6. No Professional Advice</h2>
-            <p>The information provided on this Site, including articles, case studies, thought leadership content, and other materials, is intended for general informational purposes only. It does not constitute professional, legal, financial, or technical advice and should not be relied upon as such. Any engagement for consulting services will be governed by a separate written agreement between you and Rawlins Infra Consult.</p>
+            <p>The information provided on this Site, including articles, case studies, thought leadership content, and other materials, is intended for general informational purposes only. It does not constitute professional, legal, financial, or technical advice and should not be relied upon as such. Any engagement for consulting services will be governed by a separate written agreement between you and Rawlins.</p>
           </div>
 
           <div>

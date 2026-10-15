@@ -27,7 +27,7 @@ const STATIC_ENTRIES: SearchEntry[] = [
     href: "/",
     category: "Main",
     description:
-      "Rawlins Infra Consult — trusted advisory at the intersection of strategy, operations, and technology.",
+      "Rawlins — trusted advisory at the intersection of strategy, operations, and technology.",
     keywords:
       "home rawlins consulting strategy operations technology advisory transportation infrastructure landing",
   },

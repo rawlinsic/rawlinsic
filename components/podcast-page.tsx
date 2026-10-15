@@ -243,16 +243,14 @@ export default function PodcastPage() {
               </button>
               <div className={`intro-expandable pod-about-expandable${aboutOpen ? " expanded" : ""}`}>
                 <p className="pod-about-text">
-                  The Rawlins Way podcast offers an inside look at how Rawlins Infra
-                  Consult delivers value-driven infrastructure consulting. Through
+                  The Rawlins Way podcast offers an inside look at how Rawlins delivers value-driven infrastructure consulting. Through
                   project deep dives, team insights, and industry discussions, discover
                   our unique approach to creating exceptional client outcomes while
                   fostering team success.
                 </p>
               </div>
               <p className="pod-about-text pod-about-text-desktop">
-                The Rawlins Way podcast offers an inside look at how Rawlins Infra
-                Consult delivers value-driven infrastructure consulting. Through
+                The Rawlins Way podcast offers an inside look at how Rawlins delivers value-driven infrastructure consulting. Through
                 project deep dives, team insights, and industry discussions, discover
                 our unique approach to creating exceptional client outcomes while
                 fostering team success.

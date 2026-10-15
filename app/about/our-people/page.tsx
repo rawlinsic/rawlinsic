@@ -51,7 +51,7 @@ function buildPersonSchemas() {
         url,
         worksFor: {
           "@type": "Organization",
-          name: "Rawlins Infra Consult",
+          name: "Rawlins",
           url: SITE_URL,
         },
       };

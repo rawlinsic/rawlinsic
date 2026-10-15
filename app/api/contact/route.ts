@@ -185,7 +185,7 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Rawlins IC Website <contact@rawlinsic.com>",
+        from: "Rawlins Website <contact@rawlinsic.com>",
         to: RECIPIENTS,
         subject: `New Contact Form: ${escape(name)}`,
         reply_to: email,
@@ -237,6 +237,6 @@ export async function GET() {
     resendKeyPresent: Boolean(process.env.RESEND_API_KEY),
     convexUrlPresent: Boolean(process.env.NEXT_PUBLIC_CONVEX_URL),
     recipientCount: RECIPIENTS.length,
-    fromAddress: "Rawlins IC Website <contact@rawlinsic.com>",
+    fromAddress: "Rawlins Website <contact@rawlinsic.com>",
   });
 }
