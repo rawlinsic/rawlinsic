@@ -454,12 +454,8 @@ Jeff holds an MBA and Master of Science in finance from Northeastern University 
     phone: `+1 775-881-8165`,
     email: `nicole@rawlinsic.com`,
     linkedin: `https://www.linkedin.com/in/nicolelawley/`,
-    background: `Nicole is a seasoned Web and Graphic Designer with over seven years of professional experience, specializing in creating visually compelling and user-friendly digital experiences. Her expertise spans across web design, graphic design, UI/UX design, and branding, ensuring each project is both aesthetically pleasing and functionally robust. Nicole brings a comprehensive skill-set to the table, allowing her to create impactful digital and visual solutions for clients across various industries. In both web and graphic design, Nicole approaches each project with creativity, innovation, and attention to detail. Her goal is to not only meet but exceed client expectations, delivering solutions that elevate their brand presence and drive tangible results.`,
-    achievements: `As a web designer, Nicole leverages her expertise to create responsive and user-friendly websites of all scopes. From sleek landing pages to intricate e-commerce platforms, she's had the pleasure of bringing countless digital visions to life. Nicole believes in continuous learning and staying updated with industry trends, ensuring her designs are always fresh, innovative, and aligned with best practices.
-
-As a graphic designer, she excels in logo design, print materials, branding initiatives, and more. With a keen eye for typography, color theory, and layout design, Nicole is committed to creating designs that not only look great but also effectively communicate the essence of the brand.
-
-Nicole's journey into the world of design began after graduating with degrees in Marketing and Business Administration/Management from the University of Nevada, Reno. Although she initially pursued a career in Human Resources in 2013, Nicole realized her true passion lay in creativity and design. In 2017 Nicole got her BA in Graphic Design & Media Arts specializing in Web Design from Southern New Hampshire University. Since then, she has been dedicated to bringing clients' creative dreams to life.`,
+    background: `Coming soon!`,
+    achievements: `Coming soon!`,
     categories: ['communication-brand-design', 'technology'],
   },
   {
