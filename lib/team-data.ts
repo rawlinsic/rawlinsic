@@ -873,4 +873,23 @@ Throughout his career, Rex has driven organizational change focused on accountab
 Rex holds a Bachelor of Science in Civil Engineering from Arkansas State University and is a licensed Professional Engineer in Arkansas and Texas. He has served in leadership roles with AASHTO and other transportation organizations, including Chairman of the AASHTO U.S. Route Numbering Committee.`,
     categories: ['strategy', 'operations'],
   },
+  {
+    id: 60,
+    name: `Jordan Stacy`,
+    photo: `/images/team/jordan.webp`,
+    role: `Infrastructure Advisor`,
+    location: `Utah`,
+    phone: `(801) 836-6566`,
+    email: `jordan@rawlinsic.com`,
+    linkedin: `https://www.linkedin.com/in/jordan-stacy0/`,
+    background: `Jordan Stacy brings a background in aviation, airport operations, and client engagement to the Rawlins team. He began his aviation career supporting commercial airline operations in passenger service and ground security before transitioning into airport operations.
+
+Jordan has experience at Part 139 airports in airfield operations and safety, regulatory compliance, and aircraft emergency response as a certified Aircraft Rescue & Fire Fighting (ARFF) responder. He later managed the day-to-day operations and noise mitigation program of an active general aviation airport while coordinating with pilots, tenants, and the surrounding community.
+
+His experience in both commercial and general aviation environments provides him with a practical understanding of airport operations and the needs of diverse stakeholders throughout the aviation ecosystem.`,
+    achievements: `Jordan earned a Bachelor of Science in Aviation Administration from Utah Valley University, graduating summa cum laude. He is also a Certified Member (C.M.) of the American Association of Airport Executives (AAAE), demonstrating comprehensive knowledge of airport management and operations.
+
+Jordan brings this operational perspective to Rawlins’ work in aviation and emerging technologies, connecting new concepts with the practical needs of state DOTs, aeronautics divisions, transportation agencies, operators, and other public-sector partners and stakeholders.`,
+    categories: ['strategy', 'operations'],
+  },
 ];
