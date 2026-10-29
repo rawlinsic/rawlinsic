@@ -143,9 +143,9 @@ const STATIC_ENTRIES: SearchEntry[] = [
     href: "/insights/thought-leadership",
     category: "Insights",
     description:
-      "Expert perspectives and practical insights from Rawlins advisors on complex challenges. Latest: Ron Crew on strengthening your team and April Blackburn on data governance.",
+      "Expert perspectives and practical insights from Rawlins advisors on complex challenges. Latest: April Blackburn on data governance.",
     keywords:
-      "thought leadership articles expert perspectives practical insights research advisors writing essays ron crew april blackburn strengthening your team data governance fatigue leadership team building high performance",
+      "thought leadership articles expert perspectives practical insights research advisors writing essays april blackburn data governance fatigue",
   },
   {
     title: "The Rawlins Way — Podcast",

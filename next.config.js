@@ -47,6 +47,8 @@ const nextConfig = {
       { source: "/the-skys-the-limit-with-alicia-mcconnell-pioneering-aerial-innovations", destination: "/insights/podcast", permanent: true },
       { source: "/critical-path-podcast-with-alicia-mcconnel-and-john-zuleger", destination: "/insights/podcast", permanent: true },
       { source: "/building-future-ready-teams-proficiency-focused-workforce-development", destination: "/insights/thought-leadership", permanent: true },
+      { source: "/insights/thought-leadership/strengthening-your-team", destination: "/insights/thought-leadership", permanent: true },
+      { source: "/thought-leadership-ron-crew-strengthening-your-team.pdf", destination: "/insights/thought-leadership", permanent: true },
       { source: "/index.php", destination: "/", permanent: true },
     ];
   },
