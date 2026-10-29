@@ -890,6 +890,6 @@ His experience in both commercial and general aviation environments provides him
     achievements: `Jordan earned a Bachelor of Science in Aviation Administration from Utah Valley University, graduating summa cum laude. He is also a Certified Member (C.M.) of the American Association of Airport Executives (AAAE), demonstrating comprehensive knowledge of airport management and operations.
 
 Jordan brings this operational perspective to Rawlins’ work in aviation and emerging technologies, connecting new concepts with the practical needs of state DOTs, aeronautics divisions, transportation agencies, operators, and other public-sector partners and stakeholders.`,
-    categories: ['strategy', 'operations'],
+    categories: ['technology'],
   },
 ];
