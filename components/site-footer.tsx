@@ -1,59 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
+import { LINES, CROSS, INDUSTRIES, lineHref, crossHref, industryHref } from "@/lib/redesign-data";
 
 const LOGO_URL =
   "/images/pages/rawlinslogo-white-wordmark.png";
 
+const SOCIAL_FONT = "var(--font-dm-sans), 'DM Sans', sans-serif";
+
 export default function SiteFooter() {
   return (
     <footer className="footer">
-      <div className="footer-grid">
+      <div className="footer-grid rd-footer-grid">
         <div>
           <Image src={LOGO_URL} alt="Rawlins" width={415} height={100} className="footer-logo-img" />
+          {/* Draft positioning, not approved (Ben and Scott). */}
           <p className="footer-brand-desc">
-            A global professional services firm that pairs consulting
-            services with digital solutions to help organizations solve
-            complex challenges at the intersection of strategy,
-            operations, and technology.
+            Former agency leaders helping the organizations that run public
+            infrastructure plan, deliver, and adopt better ways of working.
           </p>
-        </div>
-        <div>
-          <h3 className="footer-heading">Capabilities</h3>
-          <ul className="footer-links">
-            <li><Link href="/capabilities">View All</Link></li>
-            <li><Link href="/capabilities#strategy">Strategy</Link></li>
-            <li><Link href="/capabilities#operations">Operations</Link></li>
-            <li><Link href="/capabilities#technology">Technology</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="footer-heading">Company</h3>
-          <ul className="footer-links">
-            <li><Link href="/#story">About</Link></li>
-            <li><Link href="/about/our-people">Our People</Link></li>
-            <li><Link href="/about/areas-we-serve">Areas We Serve</Link></li>
-            <li><Link href="/careers">Careers</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="footer-heading">Insights</h3>
-          <ul className="footer-links">
-            <li><Link href="/insights">View All</Link></li>
-            <li><Link href="/insights/thought-leadership">Thought Leadership</Link></li>
-            <li><Link href="/insights/case-studies">Case Studies</Link></li>
-            <li><Link href="/insights/podcast">Podcast</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="footer-heading">Connect</h3>
-          <ul className="footer-links">
-            <li><Link href="/contact">Contact Us</Link></li>
-            <li>
-              <a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a>
-            </li>
-            <li>
-              <a href="tel:+17758433822">(775) 843-3822</a>
-            </li>
+          <ul className="footer-links" style={{ marginTop: 18 }}>
+            <li><a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a></li>
+            <li><a href="tel:+17758433822">(775) 843-3822</a></li>
             <li>
               <address style={{ fontStyle: "normal", lineHeight: 1.5 }}>
                 <a
@@ -70,12 +37,53 @@ export default function SiteFooter() {
           </ul>
           <div className="footer-social">
             <a href="https://www.linkedin.com/company/107078508/admin/dashboard/" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="LinkedIn">
-              <span style={{ fontFamily: "Arial, sans-serif", fontSize: "20px", fontWeight: 700, color: "#060c16", lineHeight: 1, letterSpacing: "-0.5px" }}>in</span>
+              <span style={{ fontFamily: SOCIAL_FONT, fontSize: "20px", fontWeight: 700, color: "#060c16", lineHeight: 1, letterSpacing: "-0.5px" }}>in</span>
             </a>
             <a href="https://g.page/r/CSNh-GWp5ejQEAI/review" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="Google">
-              <span style={{ fontFamily: "Arial, sans-serif", fontSize: "22px", fontWeight: 700, color: "#060c16", lineHeight: 1 }}>G</span>
+              <span style={{ fontFamily: SOCIAL_FONT, fontSize: "22px", fontWeight: 700, color: "#060c16", lineHeight: 1 }}>G</span>
             </a>
           </div>
+        </div>
+        <div>
+          <h3 className="footer-heading">Services</h3>
+          <ul className="footer-links">
+            {LINES.map((l) => (
+              <li key={l.id}><Link href={lineHref(l)}>{l.menuName}</Link></li>
+            ))}
+            {CROSS.map((c) => (
+              <li key={c.id}><Link href={crossHref(c)}>{c.name}</Link></li>
+            ))}
+            <li><Link href="/services">All Services</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h3 className="footer-heading">Industries</h3>
+          <ul className="footer-links">
+            {INDUSTRIES.map((i) => (
+              <li key={i.id}><Link href={industryHref(i)}>{i.short}</Link></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 className="footer-heading">Insights</h3>
+          <ul className="footer-links">
+            <li><Link href="/insights/case-studies">Case Studies</Link></li>
+            <li><Link href="/insights/thought-leadership">Thought Leadership</Link></li>
+            <li><Link href="/insights/podcast">Podcast</Link></li>
+            <li><Link href="/insights/news">News &amp; Events</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h3 className="footer-heading">Company</h3>
+          <ul className="footer-links">
+            <li><Link href="/about/who-we-are">Who We Are</Link></li>
+            <li><Link href="/about/how-we-work">How We Work</Link></li>
+            <li><Link href="/about/our-people">Our People</Link></li>
+            <li><Link href="/about/areas-we-serve">Areas We Serve</Link></li>
+            <li><Link href="/careers">Careers</Link></li>
+            <li><Link href="/contact">Contact</Link></li>
+            <li><Link href="/site-map">Site Map</Link></li>
+          </ul>
         </div>
       </div>
       <div className="footer-bottom">

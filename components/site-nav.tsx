@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import SiteSearch from "@/components/site-search";
+import { LINES, CROSS, INDUSTRIES, lineHref, crossHref, industryHref } from "@/lib/redesign-data";
 
 const LOGO_URL =
   "/images/pages/rawlinslogo-white-wordmark.png";
@@ -54,21 +55,25 @@ export default function SiteNav({ ctaHref = "/contact", homeMode = false }: Site
   const close = () => { setMobileMenuOpen(false); setMobileSubOpen(new Set()); };
   const toggleSub = (key: string) => setMobileSubOpen(prev => {
     const next = new Set(prev);
-    if (next.has(key)) {
-      next.delete(key);
-      // close nested subs when closing parent
-      if (key === "cap") next.delete("tech");
-    } else {
-      // close other top-level groups (but keep nested ones)
-      if (key !== "tech") {
-        next.clear();
-      }
-      next.add(key);
-      // keep parent open when opening nested
-      if (key === "tech") next.add("cap");
-    }
+    if (next.has(key)) next.delete(key); else { next.clear(); next.add(key); }
     return next;
   });
+
+  const chevron = (open: boolean) => (
+    <svg className={`mobile-menu-chevron${open ? " open" : ""}`} width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1.5l5 5 5-5"/></svg>
+  );
+  const navChevron = (
+    <svg className="nav-chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1l3 3 3-3"/></svg>
+  );
+  const mobileGroup = (key: string, label: string, body: ReactNode) => (
+    <div className="mobile-menu-group">
+      <button className="mobile-menu-parent" onClick={() => toggleSub(key)} aria-expanded={mobileSubOpen.has(key)}>
+        {label}
+        {chevron(mobileSubOpen.has(key))}
+      </button>
+      <div className={`mobile-menu-sub${mobileSubOpen.has(key) ? " open" : ""}`}>{body}</div>
+    </div>
+  );
 
   return (
     <>
@@ -93,72 +98,53 @@ export default function SiteNav({ ctaHref = "/contact", homeMode = false }: Site
           </button>
           <a href="/" onClick={close} className="mobile-menu-link">Home</a>
 
-          {/* Capabilities */}
-          <div className="mobile-menu-group">
-            <button className="mobile-menu-parent" onClick={() => toggleSub("cap")}>
-              Capabilities
-              <svg className={`mobile-menu-chevron${mobileSubOpen.has("cap") ? " open" : ""}`} width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1.5l5 5 5-5"/></svg>
-            </button>
-            <div className={`mobile-menu-sub${mobileSubOpen.has("cap") ? " open" : ""}`}>
-              <a href="/capabilities" onClick={close}>View All</a>
-              <a href="/capabilities#strategy" onClick={close}>Strategy</a>
-              <a href="/capabilities#operations" onClick={close}>Operations</a>
-              <div className="mobile-menu-group mobile-menu-group-nested">
-                <div className="mobile-menu-parent mobile-menu-parent-nested mobile-menu-split">
-                  <a
-                    href="/capabilities#technology"
-                    onClick={close}
-                    className="mobile-menu-split-link"
-                  >
-                    Technology
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => toggleSub("tech")}
-                    className="mobile-menu-split-toggle"
-                    aria-label={mobileSubOpen.has("tech") ? "Collapse Technology menu" : "Expand Technology menu"}
-                    aria-expanded={mobileSubOpen.has("tech")}
-                  >
-                    <svg className={`mobile-menu-chevron${mobileSubOpen.has("tech") ? " open" : ""}`} width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1.5l5 5 5-5"/></svg>
-                  </button>
+          {mobileGroup("services", "Services", (
+            <>
+              <a href="/services" onClick={close}>All Services</a>
+              {LINES.map((l) => (
+                <div key={l.id}>
+                  <a href={lineHref(l)} onClick={close} className="mm-line">{l.menuName}</a>
+                  {l.services.map((s) => (
+                    <a key={s.id} href={`/services/${l.slug}/${s.slug}`} onClick={close} className="mm-svc">{s.name}</a>
+                  ))}
                 </div>
-                <div className={`mobile-menu-sub mobile-menu-sub-nested${mobileSubOpen.has("tech") ? " open" : ""}`}>
-                  <a href="/capabilities/technology/advanced-air-mobility" onClick={close}>Advanced Air Mobility &amp; UAS</a>
-                  <a href="/capabilities/technology/automation-integration" onClick={close}>Data, Automation, &amp; AI</a>
-                </div>
-              </div>
-            </div>
-          </div>
+              ))}
+              <span className="mm-line" style={{ padding: "10px 0 0" }}>Across Every Line</span>
+              {CROSS.map((c) => (
+                <a key={c.id} href={crossHref(c)} onClick={close} className="mm-svc">{c.name}</a>
+              ))}
+            </>
+          ))}
 
-          {/* About */}
-          <div className="mobile-menu-group">
-            <button className="mobile-menu-parent" onClick={() => toggleSub("about")}>
-              About
-              <svg className={`mobile-menu-chevron${mobileSubOpen.has("about") ? " open" : ""}`} width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1.5l5 5 5-5"/></svg>
-            </button>
-            <div className={`mobile-menu-sub${mobileSubOpen.has("about") ? " open" : ""}`}>
-              <a href="/#story" onClick={close}>Who We Are</a>
+          {mobileGroup("industries", "Industries", (
+            <>
+              <a href="/industries" onClick={close}>All Industries</a>
+              {INDUSTRIES.map((i) => (
+                <a key={i.id} href={industryHref(i)} onClick={close}>{i.name}</a>
+              ))}
+            </>
+          ))}
+
+          {mobileGroup("insights", "Insights", (
+            <>
+              <a href="/insights" onClick={close}>View All</a>
+              <a href="/insights/case-studies" onClick={close}>Case Studies</a>
+              <a href="/insights/thought-leadership" onClick={close}>Thought Leadership</a>
+              <a href="/insights/podcast" onClick={close}>Podcast</a>
+              <a href="/insights/news" onClick={close}>News &amp; Events</a>
+            </>
+          ))}
+
+          {mobileGroup("about", "About", (
+            <>
+              <a href="/about" onClick={close}>About Rawlins</a>
+              <a href="/about/who-we-are" onClick={close}>Who We Are</a>
+              <a href="/about/how-we-work" onClick={close}>How We Work</a>
               <a href="/about/our-people" onClick={close}>Our People</a>
               <a href="/about/areas-we-serve" onClick={close}>Areas We Serve</a>
-            </div>
-          </div>
+            </>
+          ))}
 
-          {/* Insights */}
-          <div className="mobile-menu-group">
-            <button className="mobile-menu-parent" onClick={() => toggleSub("insights")}>
-              Insights
-              <svg className={`mobile-menu-chevron${mobileSubOpen.has("insights") ? " open" : ""}`} width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1.5l5 5 5-5"/></svg>
-            </button>
-            <div className={`mobile-menu-sub${mobileSubOpen.has("insights") ? " open" : ""}`}>
-              <a href="/insights" onClick={close}>View All</a>
-              <a href="/insights/thought-leadership" onClick={close}>Thought Leadership</a>
-              <a href="/insights/case-studies" onClick={close}>Case Studies</a>
-              <a href="/insights/podcast" onClick={close}>Podcast</a>
-            </div>
-          </div>
-
-          {/* Careers — plain link (no open postings, so no submenu).
-              The /careers page stays live. */}
           <a href="/careers" onClick={close} className="mobile-menu-link">Careers</a>
         </div>
 
@@ -167,10 +153,10 @@ export default function SiteNav({ ctaHref = "/contact", homeMode = false }: Site
         {/* Social icons — same as footer */}
         <div className="mobile-menu-social">
           <a href="https://www.linkedin.com/company/107078508/admin/dashboard/" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="LinkedIn">
-            <span style={{ fontFamily: "Arial, sans-serif", fontSize: "20px", fontWeight: 700, color: "#060c16", lineHeight: 1, letterSpacing: "-0.5px" }}>in</span>
+            <span style={{ fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontSize: "20px", fontWeight: 700, color: "#060c16", lineHeight: 1, letterSpacing: "-0.5px" }}>in</span>
           </a>
           <a href="https://g.page/r/CSNh-GWp5ejQEAI/review" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="Google">
-            <span style={{ fontFamily: "Arial, sans-serif", fontSize: "22px", fontWeight: 700, color: "#060c16", lineHeight: 1 }}>G</span>
+            <span style={{ fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontSize: "22px", fontWeight: 700, color: "#060c16", lineHeight: 1 }}>G</span>
           </a>
         </div>
       </div>
@@ -182,64 +168,77 @@ export default function SiteNav({ ctaHref = "/contact", homeMode = false }: Site
         </a>
 
         <div className="nav-center">
-          <div className="nav-item has-sub">
-            <span className="nav-item-label">
-              Capabilities
-              <svg className="nav-chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M1 1l3 3 3-3"/>
-              </svg>
-            </span>
-            <div className="nav-dropdown">
-              <a href="/capabilities">View All</a>
-              <a href="/capabilities#strategy">Strategy</a>
-              <a href="/capabilities#operations">Operations</a>
-              <div className="nav-dropdown-sub">
-                <span className="nav-dropdown-sub-label" style={{ cursor: "pointer" }} onClick={() => { window.location.href = "/capabilities#technology"; }}>
-                  Technology
-                  <svg className="nav-sub-chevron" width="6" height="8" viewBox="0 0 6 8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 1l4 3-4 3"/>
-                  </svg>
-                </span>
-                <div className="nav-sub-dropdown">
-                  <a href="/capabilities/technology/advanced-air-mobility">Advanced Air Mobility &amp; UAS</a>
-                  <a href="/capabilities/technology/automation-integration">Data, Automation, &amp; AI</a>
+          {/* Services: mega menu. Depth: Services > service line > service.
+              Activities live on the service page, not in the menu. */}
+          <div className="nav-item has-sub mega-item">
+            <a href="/services" className="nav-item-label">Services {navChevron}</a>
+            <div className="mega-panel">
+              <div className="mega-inner">
+                <div className="mega-cols">
+                  {LINES.map((l) => (
+                    <div className="mega-col" key={l.id}>
+                      <h4><a href={lineHref(l)}>{l.menuName}</a></h4>
+                      <ul>
+                        {l.services.map((s) => (
+                          <li key={s.id}><a href={`/services/${l.slug}/${s.slug}`}>{s.name}</a></li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <div className="mega-foot">
+                  <b>Across every line</b>
+                  {CROSS.map((c) => (
+                    <a key={c.id} href={crossHref(c)}>{c.name}</a>
+                  ))}
+                  <a href="/services" style={{ marginLeft: "auto" }}>View all services →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="nav-item has-sub mega-item">
+            <a href="/industries" className="nav-item-label">Industries {navChevron}</a>
+            <div className="mega-panel">
+              <div className="mega-inner">
+                <div className="mega-cols mega-cols-2">
+                  <div className="mega-col">
+                    <h4><a href="/industries">Industries</a></h4>
+                    <ul>
+                      {INDUSTRIES.map((i) => (
+                        <li key={i.id}><a href={industryHref(i)}>{i.name}</a></li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mega-col">
+                    <h4>Who we serve</h4>
+                    <p className="mega-desc">We built our practice inside state transportation agencies. The same work fits any organization that owns and runs public infrastructure.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="nav-item has-sub">
-            <span className="nav-item-label">
-              About
-              <svg className="nav-chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M1 1l3 3 3-3"/>
-              </svg>
-            </span>
+            <a href="/insights" className="nav-item-label">Insights {navChevron}</a>
             <div className="nav-dropdown">
-              <a href="/#story">Who We Are</a>
+              <a href="/insights/case-studies">Case Studies</a>
+              <a href="/insights/thought-leadership">Thought Leadership</a>
+              <a href="/insights/podcast">Podcast</a>
+              <a href="/insights/news">News &amp; Events</a>
+            </div>
+          </div>
+
+          <div className="nav-item has-sub">
+            <a href="/about" className="nav-item-label">About {navChevron}</a>
+            <div className="nav-dropdown">
+              <a href="/about/who-we-are">Who We Are</a>
+              <a href="/about/how-we-work">How We Work</a>
               <a href="/about/our-people">Our People</a>
               <a href="/about/areas-we-serve">Areas We Serve</a>
             </div>
           </div>
 
-          <div className="nav-item has-sub">
-            <span className="nav-item-label">
-              Insights
-              <svg className="nav-chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M1 1l3 3 3-3"/>
-              </svg>
-            </span>
-            <div className="nav-dropdown">
-              <a href="/insights">View All</a>
-              <a href="/insights/thought-leadership">Thought Leadership</a>
-              <a href="/insights/case-studies">Case Studies</a>
-              <a href="/insights/podcast">Podcast</a>
-            </div>
-          </div>
-
-          {/* Careers has no open postings right now, so it's a plain
-              link to /careers rather than a dropdown. The /careers page
-              itself stays live. */}
           <a href="/careers" className="nav-item nav-item-plain">Careers</a>
         </div>
 
