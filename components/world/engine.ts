@@ -206,7 +206,10 @@ export class World {
 
     const terr = buildTerrain(opts.mobile);
     this.scene.add(terr.mesh, terr.water);
-    const w = buildWorld(opts.mobile, Object.values(STATIONS).map((s2) => s2.pos));
+    /* keep trees out of every camera's line of sight */
+    const sight: THREE.Vector3[] = [];
+    for (const s2 of Object.values(STATIONS)) for (let k = 0; k <= 6; k++) sight.push(s2.pos.clone().lerp(s2.look, k / 8));
+    const w = buildWorld(opts.mobile, sight);
     this.scene.add(w.group);
     if (!opts.mobile) {
       terr.mesh.receiveShadow = true;

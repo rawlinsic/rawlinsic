@@ -190,7 +190,7 @@ html[data-world="menu"] .world-canvas { z-index: 1001; visibility: visible; }
 .jy-beats li {
   position: absolute; inset: 0;
   --d: max(var(--g, 0) - var(--i), var(--i) - var(--g, 0));
-  opacity: calc(1 - min(1, max(0, var(--d) - 0.18) * 2.4));
+  opacity: calc(1 - min(1, max(0, var(--d) - 0.2) * 3.4)); /* one beat at a time */
   transform: translateY(calc((var(--i) - var(--g, 0)) * 26px));
 }
 .jy-beat-k { margin: 0 0 4px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.8rem; color: var(--rw-blue-strong); }

@@ -415,7 +415,7 @@ export function buildWorld(mobile: boolean, avoid: THREE.Vector3[] = []) {
     if (inside(L.airport.x, L.airport.z, 220, 90)) continue;
     if (Math.abs(z - L.crossingZ) < 16) continue;
     if (Math.hypot(x - L.site.x, z - L.site.z) < 50 || inside(260, 530, 175, 60) || inside(920, 290, 140, 80)) continue;
-    let near = avoid.some((a) => Math.hypot(a.x - x, a.z - z) < 70);
+    let near = avoid.some((a) => Math.hypot(a.x - x, a.z - z) < 48);
     for (let i = 0; i < rural.length && !near; i += 3) if (Math.hypot(rural[i].x - x, rural[i].z - z) < 14) { near = true; break; }
     if (near) continue;
     const dens = 0.25 + sstep(-300, -600, x) * 0.7 + sstep(-500, -800, z) * 0.5;
