@@ -5,15 +5,16 @@ import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import PageScene from "@/components/site/page-scene";
 import { TEAM_MEMBERS } from "@/lib/team-data";
-import { AREAS, CASES, caseHref, caseWho, serviceById, serviceHref, type CaseIndex } from "@/lib/content/site";
+import { AREAS, CASES, caseHref, caseWho, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
+import { SCENE_PHOTO } from "@/lib/content/media";
 
 export const PROD = process.env.VERCEL_ENV === "production";
 
-export function Shell({ scene, highlight, children }: { scene?: string; highlight?: string[]; children: ReactNode }) {
+export function Shell({ scene, photo, highlight, children }: { scene?: string; photo?: string; highlight?: string[]; children: ReactNode }) {
   return (
     <>
       <SiteNav />
-      {scene && <PageScene scene={scene} highlight={highlight} />}
+      {scene && <PageScene scene={scene} photo={photo ?? SCENE_PHOTO[scene as SceneKey]} highlight={highlight} />}
       <main className={`pg${scene ? " pg-with-scene" : ""}`}>{children}</main>
       <SiteFooter />
     </>

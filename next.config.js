@@ -2,7 +2,7 @@
 const nextConfig = {
   /* Deployment kind baked into server and browser code at build time, so
      production builds never carry dev-only content. */
-  env: { RAWLINS_ENV: process.env.VERCEL_ENV || "development" },
+  env: { RAWLINS_ENV: process.env.VERCEL_ENV || "development", RAWLINS_SCENES: process.env.RAWLINS_SCENES || "photo" },
   experimental: {
     turbopackFileSystemCacheForDev: true,
     browserDebugInfoInTerminal: true,

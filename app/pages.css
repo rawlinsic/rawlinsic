@@ -16,7 +16,6 @@ body:has(.pg), body:has(.jy) { background: var(--rw-paper); color: var(--rw-ink)
   background: rgba(247, 249, 252, 0.86); box-shadow: var(--rw-shadow); border: 1px solid rgba(255, 255, 255, 0.8);
   -webkit-backdrop-filter: blur(14px) saturate(1.15); backdrop-filter: blur(14px) saturate(1.15);
 }
-html:not(.has-scene) .pg-hero-scene { background: linear-gradient(180deg, #9fc1ec 0%, #e6eef9 70%, var(--rw-paper) 100%); }
 .pg-hero-plain { padding: 120px clamp(16px, 5vw, 56px) 36px; background: var(--rw-paper); }
 .pg-hero-plain .pg-hero-in { max-width: 1180px; margin: 0 auto; }
 .pg-crumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 0; margin: 0 0 14px; padding: 0; font-size: 0.85rem; color: var(--rw-slate); }
@@ -269,3 +268,46 @@ html:not(.has-scene) .pg-hero-scene { background: linear-gradient(180deg, #9fc1e
 .aam-ring svg { width: 100%; height: auto; }
 .aam-eco-desc { margin: 16px 0 0; padding: 16px 18px; border-radius: 14px; background: #eef3fa; color: #22344d; line-height: 1.55; }
 @media (max-width: 860px) { .aam-land, .aam-eco { grid-template-columns: 1fr; } .aam-ring { max-width: 300px; } }
+
+/* ── Photo version backgrounds ── */
+.scene-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100lvh; z-index: 0; overflow: hidden; background: #dce6f2; pointer-events: none; }
+.scene-bg img { width: 100%; height: 100%; object-fit: cover; transform-origin: 60% 40%; animation: rw-drift 32s ease-in-out infinite alternate; }
+.scene-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 27, 46, 0.18), rgba(13, 27, 46, 0) 55%), linear-gradient(0deg, rgba(13, 27, 46, 0.12), rgba(13, 27, 46, 0) 40%); }
+@keyframes rw-drift { from { transform: scale(1.02) translate(0, 0); } to { transform: scale(1.1) translate(-1.5%, -1%); } }
+.scene-map { background: linear-gradient(180deg, #e9f1fb, #f7f9fc); display: grid; place-items: center end; padding: 90px 4vw 40px; }
+.scene-map::after { display: none; }
+.scene-map .usmap { width: min(62vw, 980px); height: auto; animation: none; }
+
+/* flat U.S. map */
+.usmap { display: block; width: 100%; height: auto; }
+.usmap-s { fill: #e3ebf6; stroke: #ffffff; stroke-width: 1; transition: fill 0.25s; }
+.usmap-s.is-lit { fill: #8fb5ec; cursor: pointer; }
+.usmap-s.is-lit:hover { fill: #5f95e6; }
+.usmap-s.is-active { fill: var(--rw-blue-strong); }
+.usmap-outline { fill: none; stroke: var(--rw-blue); stroke-width: 2; stroke-linejoin: round; }
+.usmap-loading { aspect-ratio: 975 / 610; }
+
+/* home journey, photo version */
+.jy-photos { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #dce6f2; }
+.jy-photo, .jy-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+img.jy-photo { animation: jy-fade 0.9s ease both, rw-drift 30s ease-in-out infinite alternate; transform-origin: 55% 45%; }
+.jy-photos::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(13, 27, 46, 0.22), rgba(13, 27, 46, 0) 60%); }
+.jy-photos.is-hero::after { background: linear-gradient(90deg, rgba(247, 249, 252, 0.88) 0%, rgba(247, 249, 252, 0.72) 38%, rgba(247, 249, 252, 0.15) 70%, rgba(247, 249, 252, 0) 85%); }
+@media (max-width: 760px) { .jy-photos.is-hero::after { background: linear-gradient(180deg, rgba(247, 249, 252, 0.55), rgba(247, 249, 252, 0.82) 30%, rgba(247, 249, 252, 0.82) 75%, rgba(247, 249, 252, 0.5)); } }
+@keyframes jy-fade { from { opacity: 0; } }
+.jy-map-layer { display: grid; place-items: center end; padding: 90px 4vw 40px; background: linear-gradient(180deg, #e9f1fb, #f7f9fc); animation: jy-fade 0.9s ease both; }
+.jy-map-layer .usmap { width: min(58vw, 980px); }
+.jy-photos:has(.jy-map-layer:last-child)::after { display: none; }
+.jy-proof .jy-panel { position: relative; }
+
+/* menu, photo version */
+.mn-photo { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.mn-photo img { width: 100%; height: 100%; object-fit: cover; animation: jy-fade 0.6s ease both; }
+
+@media (max-width: 760px) {
+  .scene-map, .jy-map-layer { place-items: start center; padding: 120px 12px 0; }
+  .scene-map .usmap, .jy-map-layer .usmap { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-bg img, img.jy-photo { animation: none; }
+}

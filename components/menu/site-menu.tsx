@@ -9,6 +9,9 @@ import {
   type MenuNode, type SearchHit,
 } from "@/lib/content/site";
 import { getPageScene, getWorld, hasJourney, setWorldLayer } from "@/components/world/host";
+import { want3D } from "@/components/site/scene-mode";
+import { SCENE_PHOTO } from "@/lib/content/media";
+import type { SceneKey } from "@/lib/content/site";
 
 type View = "browse" | "picker" | "search";
 
@@ -23,6 +26,8 @@ export default function SiteMenu({ open, onClose, prod }: { open: boolean; onClo
   const [wide, setWide] = useState(true);
   const [scene, setScene] = useState("capitol");
   const [worldOK, setWorldOK] = useState<boolean | null>(null);
+  const [three, setThree] = useState(false);
+  useEffect(() => { setThree(want3D()); }, []);
   const sceneTimer = useRef<number>(0);
 
   /* resolve the path into nodes */
@@ -42,6 +47,7 @@ export default function SiteMenu({ open, onClose, prod }: { open: boolean; onClo
   /* world: menu layer while open; the scene follows what you point at */
   useEffect(() => {
     if (!open) return;
+    if (!three) { setWorldOK(true); return; }
     let alive = true;
     setWorldLayer("menu");
     getWorld().then((w) => { if (!alive) return; setWorldOK(!!w); w?.focus(scene); });
@@ -56,14 +62,14 @@ export default function SiteMenu({ open, onClose, prod }: { open: boolean; onClo
       });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }, [open, three]);
   const point = useCallback((key: string) => {
     window.clearTimeout(sceneTimer.current);
     sceneTimer.current = window.setTimeout(() => {
       setScene(key);
-      getWorld().then((w) => w?.focus(key));
+      if (three) getWorld().then((w) => w?.focus(key));
     }, 120);
-  }, []);
+  }, [three]);
 
   /* open/close housekeeping: scroll lock, focus, Escape, focus trap */
   const opener = useRef<HTMLElement | null>(null);
@@ -139,6 +145,12 @@ export default function SiteMenu({ open, onClose, prod }: { open: boolean; onClo
   const crumb = depth === 2 ? l2?.label : depth === 1 ? l1.label : "";
   return (
     <div className="mn" role="dialog" aria-modal="true" aria-label="Site menu" id="site-menu" ref={panel} data-view={view} data-depth={depth} data-scene={scene} data-world-ok={worldOK === null ? undefined : String(worldOK)}>
+      {!three && (
+        <div className="mn-photo" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img key={scene} src={SCENE_PHOTO[scene as SceneKey] ?? SCENE_PHOTO.hero} alt="" decoding="async" />
+        </div>
+      )}
       <div className="mn-scrim" aria-hidden="true" />
       <div className="mn-top">
         <a href="/" className="mn-logo" aria-label="Rawlins home">

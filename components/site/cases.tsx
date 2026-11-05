@@ -1,6 +1,7 @@
 /* Case studies: index (filterable), detail pages, and the existing state
    pages (all their current content kept, results included). */
 import { CASE_STUDIES, type CaseStudy } from "@/components/case-studies-data";
+import { PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { AREAS, CASES, VISIBLE_INDUSTRIES, caseHref, caseWho, industryHref, serviceById, slugify, type CaseIndex } from "@/lib/content/site";
 import { CASES as CASE_DATA, SUBSECTORS } from "@/lib/content/catalog";
 import CaseFilter, { type CaseRow } from "@/components/site/case-filter";
@@ -23,7 +24,7 @@ export function CaseIndexPage() {
   }));
   const states = Array.from(new Set(CASES.filter((c) => !PROD || !c.needsSignoff).flatMap((c) => c.states))).sort();
   return (
-    <Shell scene="map">
+    <Shell scene="map" photo={PAGE_PHOTO.cases}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Case studies"]]} kicker="Our work" title="Case studies"
         lead={<p>Work from across the country, by service, industry, and state. Ongoing work is marked “In the works.”</p>}
         actions={<Btn href="/contact" primary>Get in touch</Btn>} />
@@ -58,7 +59,7 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
   const stateLinks = PROD && c.needsSignoff ? [] : c.states.map((s) => ({ label: s, href: `/insights/case-studies?state=${slugify(s)}` }));
   const related = CASES.filter((x) => x.id !== c.id && x.services.some((s) => c.services.includes(s))).slice(0, 3);
   return (
-    <Shell scene={sceneFor(c)}>
+    <Shell scene={sceneFor(c)} photo={SERVICE_PHOTO[c.services[0]] ?? PAGE_PHOTO.cases}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Case studies"], [caseHref(c), c.title]]}
         kicker={c.status === "Ongoing" ? "In the works" : "Case study"} title={c.title}
         lead={<p>{caseWho(c, PROD)} · {c.status}</p>} actions={<Btn href="/contact" primary>Talk to the team</Btn>}>
@@ -87,7 +88,7 @@ export function StateCasePage({ slug }: { slug: string }) {
   const names = STATE_NAME[slug] ?? [];
   const more = CASES.filter((c) => c.states.some((st) => names.includes(st)) && (!PROD || !c.needsSignoff));
   return (
-    <Shell scene={slug.includes("major") ? "crossing" : "map"}>
+    <Shell scene={slug.includes("major") ? "crossing" : "map"} photo={s.image || s.heroImage}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Case studies"], [`/insights/case-studies/${slug}`, s.title]]}
         kicker={s.subtitle ?? "Case study"} title={s.title} lead={<p>{s.description}</p>} actions={<Btn href="/contact" primary>Talk to the team</Btn>} />
       {s.clientInfo && (

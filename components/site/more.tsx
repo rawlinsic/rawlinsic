@@ -1,6 +1,7 @@
 /* About, Insights, Careers, Podcast, News & Recognition, Research,
    Thought Leadership (article kept word for word), Our People, site map. */
 import type { ReactNode } from "react";
+import { PAGE_PHOTO } from "@/lib/content/media";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { THOUGHT_LEADERSHIP, type ThoughtLeadershipArticle } from "@/components/thought-leadership-data";
 import { AREAS, CASES, LEADERS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseWho, industryHref, subsectorHref } from "@/lib/content/site";
@@ -19,7 +20,7 @@ const Cards = ({ items }: { items: { href: string; t: string; d: string }[] }) =
 /* ── About ── */
 export function AboutIndex() {
   return (
-    <Shell scene="hero">
+    <Shell scene="hero" photo={PAGE_PHOTO.about}>
       <Hero crumbs={[["/about", "About"]]} kicker="About Rawlins" title="People who have done the job"
         lead={<p>Former agency leaders and engineers, working alongside an in-house team that builds the tools.</p>} />
       <Sec>
@@ -38,7 +39,7 @@ export function AboutIndex() {
 
 export function WhoWeAre() {
   return (
-    <Shell scene="hero">
+    <Shell scene="hero" photo={PAGE_PHOTO.who}>
       <Hero crumbs={[["/about", "About"], ["/about/who-we-are", "Who we are"]]} kicker="Who we are" title="Former agency leaders, with a team that builds"
         lead={<p>Former agency leaders, working alongside an in-house automation and AI build team.</p>} statement="We find what's broken, fix it, and stay until it runs." />
       <Sec title="Our story">
@@ -59,7 +60,7 @@ export function WhoWeAre() {
 
 export function HowWeWork() {
   return (
-    <Shell scene="construction">
+    <Shell scene="construction" photo={PAGE_PHOTO.how}>
       <Hero crumbs={[["/about", "About"], ["/about/how-we-work", "How we work"]]} kicker="How we work" title="We find what's broken, fix it, and stay until it runs." />
       <Sec title="Four steps"><Steps steps={STEPS.map(([t, d]) => ({ t, d }))} /></Sec>
       <Sec title="Principles" tone="panel">
@@ -151,7 +152,7 @@ export type Position = { title: string; href: string; summary: string };
 export const OPEN_POSITIONS: Position[] = [];
 export function Careers() {
   return (
-    <Shell scene="rise">
+    <Shell scene="rise" photo={PAGE_PHOTO.careers}>
       <Hero crumbs={[["/careers", "Careers"]]} kicker="Careers at Rawlins" title="Work with us"
         lead={<>
           <p>We&rsquo;re always interested in connecting with thoughtful, driven professionals who are passionate about solving complex challenges and creating meaningful impact. If our approach aligns with your interests, we invite you to connect and discuss opportunities.</p>
@@ -175,7 +176,7 @@ export function Careers() {
 export function InsightsIndex() {
   const latest = NEWS.filter((n) => !n.placeholder || !PROD).slice(0, 3);
   return (
-    <Shell scene="network">
+    <Shell scene="network" photo={PAGE_PHOTO.insights}>
       <Hero crumbs={[["/insights", "Insights"]]} kicker="Insights" title="What we're learning, and what we've done"
         lead={<p>Case studies, news and recognition, thought leadership, research, and our podcast.</p>} />
       <Sec>
@@ -213,7 +214,7 @@ export function NewsPage() {
   const items = NEWS.filter((n) => !n.placeholder || !PROD);
   const events = EVENTS.filter((e) => !e.placeholder || !PROD);
   return (
-    <Shell scene="people">
+    <Shell scene="people" photo={PAGE_PHOTO.news}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/news", "News & Recognition"]]} kicker="Insights" title="News & Recognition"
         lead={<p>Wins, awards, publications, speaking, events, and new people on the team.</p>} />
       {events.length > 0 && (
@@ -241,7 +242,7 @@ export function ResearchPage() {
     { k: "Thought leadership", t: "Minimizing data governance fatigue to maximize value", d: <><a href="/insights/thought-leadership/minimizing-data-governance-fatigue">A Q&amp;A with April Blackburn</a>, former Florida DOT Chief Information Officer.</> },
   ];
   return (
-    <Shell scene="crossing">
+    <Shell scene="crossing" photo={PAGE_PHOTO.research}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/research", "Research & Publications"]]} kicker="Insights" title="Research & Publications"
         lead={<p>Guidance, standards, and research our team has written with the agencies and industries that use them.</p>} />
       <Sec>
@@ -255,7 +256,7 @@ export function ResearchPage() {
 
 export function ThoughtIndex() {
   return (
-    <Shell scene="network">
+    <Shell scene="network" photo={PAGE_PHOTO.thought}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/thought-leadership", "Thought Leadership"]]} kicker="Insights" title="Thought Leadership"
         lead={<p>Expert perspectives and practical insights from the Rawlins team.</p>} />
       <Sec>
@@ -301,7 +302,7 @@ export function ArticlePage({ a }: { a: ThoughtLeadershipArticle }) {
     i++;
   }
   return (
-    <Shell scene="network">
+    <Shell scene="network" photo={PAGE_PHOTO.thought}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/thought-leadership", "Thought Leadership"], [`/insights/thought-leadership/${a.slug}`, a.title]]}
         kicker={`${a.category} · ${a.dateLabel}`} title={a.title} lead={<p>{a.subtitle}</p>}
         actions={<Btn href={a.pdfUrl}>Download the PDF</Btn>} />
@@ -342,7 +343,7 @@ function Block({ b }: { b: ThoughtLeadershipArticle["content"][number] }) {
 /* ── Podcast (live content kept) ── */
 export function Podcast() {
   return (
-    <Shell scene="office">
+    <Shell scene="office" photo={PAGE_PHOTO.podcast}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/podcast", "Podcast"]]} kicker="Listen in · Learn more · Lead better" title="The Rawlins Way" />
       <Sec>
         <div className="pg-two">

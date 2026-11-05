@@ -1,8 +1,10 @@
 "use client";
-/* Home: the Rawlins story as one journey through a real-time 3D world.
-   Eight chapters; the camera flies as you scroll; the blue line draws
-   itself through every scene. All text is real HTML (readable, indexable,
-   works with no WebGL); the world sits behind it. */
+/* Home: the Rawlins story as a journey in eight chapters.
+   Photo version (default): the live site's hero video, then one photo per
+   scene, crossfading as you scroll, and a flat U.S. map for the proof.
+   3D version (?view=3d on preview deployments): one real-time world the
+   camera flies through, with the blue line drawing itself through every scene.
+   All text is real HTML (readable, indexable, works with no WebGL). */
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -10,6 +12,9 @@ import {
   areaHref, caseHref, caseWho, industryHref, serviceById, serviceHref, subsectorHref,
 } from "@/lib/content/site";
 import { getWorld, setJourneyOwner, setWorldLayer } from "@/components/world/host";
+import { want3D } from "@/components/site/scene-mode";
+import { HOME_VIDEO, STATION_PHOTO } from "@/lib/content/media";
+import USMap from "@/components/site/us-map";
 
 /* Chapter → stations (must match SEQ in components/world/engine.ts) */
 const CHAPTERS = [
@@ -23,6 +28,7 @@ const CHAPTERS = [
   { id: "get-in-touch", label: "Get in touch", stations: ["globe0", "globe1"], pinned: 170, tone: "calm" },
 ] as const;
 const SEQ_LEN = CHAPTERS.reduce((n, c) => n + c.stations.length, 0);
+const SEQ_LIST: string[] = CHAPTERS.flatMap((c) => [...c.stations]);
 const START: number[] = [];
 CHAPTERS.reduce((n, c, i) => { START[i] = n; return n + c.stations.length; }, 0);
 const TRANSITION = 0.2; // share of a chapter's scroll spent moving into the next one
@@ -45,6 +51,8 @@ export default function Journey({ prod }: { prod: boolean }) {
   const [state, setState] = useState<string | null>(null);
   const worldRef = useRef<Awaited<ReturnType<typeof getWorld>>>(null);
   const gRef = useRef(0);
+  const [three, setThree] = useState(false);
+  const [station, setStation] = useState("hero0");
 
   /* Cases visible here: production never shows uncleared names or places them on the map */
   const mapCases = useMemo(() => CASES.filter((c) => c.states.length && (!prod || !c.needsSignoff)), [prod]);
@@ -90,12 +98,16 @@ export default function Journey({ prod }: { prod: boolean }) {
     }
     setChapter((c) => (c === active ? c : active));
     setTone((t) => (t === CHAPTERS[active].tone ? t : CHAPTERS[active].tone));
+    const st = SEQ_LIST[Math.min(SEQ_LIST.length - 1, Math.round(g))];
+    setStation((x) => (x === st ? x : st));
     worldRef.current?.setJourney(g);
   }, []);
 
+  useEffect(() => { setThree(want3D()); }, []);
+
   useEffect(() => {
-    setJourneyOwner(true);
-    document.documentElement.dataset.world = "journey";
+    setJourneyOwner(three);
+    if (three) document.documentElement.dataset.world = "journey";
     let raf = 0;
     const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(measure); };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -104,7 +116,7 @@ export default function Journey({ prod }: { prod: boolean }) {
     /* load the 3D world after first paint, when the browser is idle */
     const idle = (cb: () => void) => ("requestIdleCallback" in window ? (window as any).requestIdleCallback(cb, { timeout: 1500 }) : setTimeout(cb, 600));
     let alive = true;
-    idle(() => {
+    if (three) idle(() => {
       getWorld().then((w) => {
         if (!alive || !w) return;
         worldRef.current = w;
@@ -127,9 +139,9 @@ export default function Journey({ prod }: { prod: boolean }) {
       window.removeEventListener("resize", onScroll);
       io.disconnect();
       setJourneyOwner(false);
-      setWorldLayer("off");
+      if (three) setWorldLayer("off");
     };
-  }, [measure]);
+  }, [measure, three]);
 
   /* proof: highlight states on the map */
   useEffect(() => {
@@ -151,6 +163,7 @@ export default function Journey({ prod }: { prod: boolean }) {
   return (
     <div className="jy" ref={root} data-tone={tone} data-chapter={chapter}>
       <div className="jy-backdrop" aria-hidden="true" />
+      {!three && <JourneyPhotos station={station} lit={states} active={state} onPick={(s) => setState(state === s ? null : s)} />}
 
       {/* Chapter rail + skip */}
       <nav className="jy-rail" aria-label="Chapters">
@@ -428,4 +441,34 @@ function Count({ to, suffix }: { to: number; suffix: string }) {
     return () => cancelAnimationFrame(raf);
   }, [to]);
   return <>{v}{suffix}</>;
+}
+
+/* Photo version backdrop: hero video, then one photo per scene with a
+   crossfade, and the flat map for "The proof". */
+function JourneyPhotos({ station, lit, active, onPick }: { station: string; lit: string[]; active: string | null; onPick: (s: string) => void }) {
+  const src = STATION_PHOTO[station] ?? STATION_PHOTO.hero0;
+  const [layers, setLayers] = useState<string[]>([src]);
+  const [still, setStill] = useState(false);
+  useEffect(() => { setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
+  useEffect(() => {
+    setLayers((l) => (l[l.length - 1] === src ? l : [...l.slice(-1), src]));
+  }, [src]);
+  const isHero = station === "hero0" || station === "hero1";
+  return (
+    <div className={`jy-photos${isHero ? " is-hero" : ""}`} aria-hidden={src === "map" ? undefined : true}>
+      {isHero && !still ? (
+        <video className="jy-video" autoPlay muted loop playsInline preload="auto" poster={HOME_VIDEO.poster}>
+          <source src={HOME_VIDEO.webm} type="video/webm" />
+          <source src={HOME_VIDEO.mp4} type="video/mp4" />
+        </video>
+      ) : (
+        layers.map((l, i) => l === "map" ? (
+          <div key={l + i} className="jy-photo jy-map-layer"><USMap lit={lit} active={active} onPick={onPick} label="Map of the states where we've done the work. Pick a state below to see the work behind it." /></div>
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img key={l + i} className="jy-photo" src={l} alt="" decoding="async" />
+        ))
+      )}
+    </div>
+  );
 }

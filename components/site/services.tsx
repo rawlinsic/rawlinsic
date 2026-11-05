@@ -1,6 +1,7 @@
 /* Services: overview, the five heading pages, and every service page.
    Content: lib/content/catalog.ts (v11 + v12). Structure: handoff v7 section 3. */
 import AutomationIntegrationInteractive from "@/components/automation-integration-interactive";
+import { AREA_PHOTO, PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import AutomationEcosystemBars from "@/components/automation-ecosystem-bars";
 import WhatWeDeliverPyramid from "@/components/what-we-deliver-pyramid";
 import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, subsectorHref, type Area } from "@/lib/content/site";
@@ -38,7 +39,7 @@ const DIGITAL_PROOF = [
 /* ── Overview ── */
 export function ServicesIndex() {
   return (
-    <Shell scene="grid">
+    <Shell scene="grid" photo={PAGE_PHOTO.services}>
       <Hero crumbs={[["/services", "Services"]]} kicker="What we do" title="Five areas. Most engagements draw on more than one."
         lead={<p>We help organizations plan, deliver, run, and modernize the infrastructure they own, and the organizations behind it.</p>}
         actions={<><Btn href="/contact" primary>Get in touch</Btn><Btn href="/insights/case-studies">See our work</Btn></>} />
@@ -57,7 +58,7 @@ export function ServicesIndex() {
 export function AreaPage({ area }: { area: Area }) {
   const L = AREA_DATA[area.id];
   return (
-    <Shell scene={area.scene}>
+    <Shell scene={area.scene} photo={AREA_PHOTO[area.id]}>
       <Hero crumbs={[["/services", "Services"], [areaHref(area), area.name]]} kicker={area.tag} title={area.name}
         lead={<p>{L.lead}</p>} actions={<><Btn href="/contact" primary>Get in touch</Btn><Btn href="#services">See the services</Btn></>} />
       <Sec title="What we hear"><ul className="pg-hear">{L.hear.map((h) => <li key={h}>{h}</li>)}</ul></Sec>
@@ -110,7 +111,7 @@ export function ServicePage({ id }: { id: string }) {
   const cases = CASES.filter((c) => c.services.includes(id));
   const subs = Object.values(SUBSECTORS).filter((x) => x.services.includes(id));
   return (
-    <Shell scene={hit.service.scene ?? area.scene}>
+    <Shell scene={hit.service.scene ?? area.scene} photo={SERVICE_PHOTO[id]}>
       <Hero crumbs={[["/services", "Services"], [areaHref(area), area.name], [`/services/${area.slug}/${hit.service.slug}`, s.name]]}
         kicker={area.name} title={s.name} lead={<p>{s.intro}</p>}
         actions={<><Btn href="/contact" primary>Talk to an expert</Btn>{cases.length > 0 && <Btn href="#work">See the work</Btn>}</>}>

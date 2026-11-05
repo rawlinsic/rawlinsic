@@ -1,13 +1,14 @@
 /* Who we work with: overview, industry pages, sub-sector pages, Private
    Sector (its own plain-language layout), and the hidden International page. */
 import { AREAS, CASES, VISIBLE_INDUSTRIES, industryHref, subsectorHref, type Industry, type Subsector } from "@/lib/content/site";
+import { INDUSTRY_PHOTO, PAGE_PHOTO } from "@/lib/content/media";
 import { APPLIED, CASES as CASE_DATA, INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AVIATION_TEAM } from "@/components/site/services";
 import { Btn, CaseCards, Dev, Hero, List, People, Sec, ServiceChips, Shell, Talk } from "@/components/site/ui";
 
 export function IndustriesIndex() {
   return (
-    <Shell scene="interchange">
+    <Shell scene="interchange" photo={PAGE_PHOTO.industries}>
       <Hero crumbs={[["/industries", "Who we work with"]]} kicker="Who we work with" title="Built inside public agencies. Useful anywhere."
         lead={<p>Most of our work is with organizations that own and run public infrastructure. The same methods work for any organization that needs to plan, deliver, and run better.</p>}
         actions={<Btn href="/contact" primary>Get in touch</Btn>} />
@@ -36,7 +37,7 @@ export function IndustryPage({ ind }: { ind: Industry }) {
   const svcIds = Object.values(SERVICES).filter((s) => s.industries.includes(ind.id)).map((s) => s.id);
   const cases = CASES.filter((c) => c.industry === ind.id || (ind.id === "contractors" && ["cs-major", "cs-partnering"].includes(c.id)));
   return (
-    <Shell scene={ind.scene}>
+    <Shell scene={ind.scene} photo={INDUSTRY_PHOTO[ind.id]}>
       <Hero crumbs={[["/industries", "Who we work with"], [industryHref(ind), ind.name]]} kicker={ind.who} title={ind.name}
         lead={<p>{ind.lead}</p>} actions={<><Btn href="/contact" primary>Get in touch</Btn><Btn href="#work">See the work</Btn></>} />
       {d.ch.length > 0 && <Sec title="Challenges we hear"><ul className="pg-hear">{d.ch.map((c) => <li key={c}>{c}</li>)}</ul></Sec>}
@@ -75,7 +76,7 @@ export function SubsectorPage({ ind, sub }: { ind: Industry; sub: Subsector }) {
   const list = CASES.filter((c) => CASE_DATA[c.id]?.subsectors.includes(sub.id));
   const aviation = sub.id === "sub-aviation";
   return (
-    <Shell scene={sub.scene}>
+    <Shell scene={sub.scene} photo={INDUSTRY_PHOTO[sub.id]}>
       <Hero crumbs={[["/industries", "Who we work with"], [industryHref(ind), ind.name], [subsectorHref(ind, sub), sub.name]]} kicker={ind.name} title={sub.name}
         lead={<p>{d?.intro || sub.line}</p>} actions={<Btn href="/contact" primary>Talk to an expert</Btn>}>
         {sub.thin && <Dev>Placeholder: only harbors work stands behind this page so far. Build it out.</Dev>}
@@ -93,7 +94,7 @@ export function SubsectorPage({ ind, sub }: { ind: Industry; sub: Subsector }) {
 
 function PrivateSector({ ind }: { ind: Industry }) {
   return (
-    <Shell scene="office">
+    <Shell scene="office" photo={INDUSTRY_PHOTO.private}>
       <Hero crumbs={[["/industries", "Who we work with"], [industryHref(ind), ind.name]]} kicker="Private sector" title="For growing firms"
         lead={<p>{ind.lead}</p>} actions={<Btn href="/contact" primary>Book a short call</Btn>} />
       <Sec title="Sound familiar?"><ul className="pg-hear">{PRIV.hear.map((h) => <li key={h}>{h}</li>)}</ul></Sec>
@@ -112,7 +113,7 @@ function PrivateSector({ ind }: { ind: Industry }) {
 /* Hidden until Scott and Andy approve: not linked anywhere, noindex. */
 export function International() {
   return (
-    <Shell scene="globe">
+    <Shell scene="globe" photo={INDUSTRY_PHOTO.intl}>
       <Hero crumbs={[["/industries", "Who we work with"], ["/industries/international", "International"]]} kicker="International" title="Transport agencies everywhere do the same job"
         lead={<p><b>Our work to date is in the United States.</b> A U.S. state department of transportation runs highways, bridges, aviation, and transit for millions of people. That&apos;s the same job a ministry of transport or a national roads authority does, and the lessons carry over.</p>}
         actions={<Btn href="/contact" primary>Get in touch</Btn>}>

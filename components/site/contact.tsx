@@ -1,11 +1,12 @@
 /* Get in touch: live contact details kept; form adds the service-area field. */
 import { AREAS } from "@/lib/content/site";
+import { PAGE_PHOTO } from "@/lib/content/media";
 import ContactForm from "@/components/site/contact-form";
 import { Hero, Shell } from "@/components/site/ui";
 
 export function ContactPageNew() {
   return (
-    <Shell scene="hero">
+    <Shell scene="hero" photo={PAGE_PHOTO.contact}>
       <Hero crumbs={[["/contact", "Contact"]]} kicker="Contact Rawlins" title="Ready to partner with purpose?"
         lead={<p>Whether you&rsquo;re ready to engage or simply exploring what&rsquo;s possible, we&rsquo;d love to hear from you.</p>} />
       <section className="pg-sec">

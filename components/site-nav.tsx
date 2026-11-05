@@ -5,6 +5,7 @@
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import SiteMenu from "@/components/menu/site-menu";
+import { want3D } from "@/components/site/scene-mode";
 
 interface SiteNavProps {
   /** href for the "Get in touch" button. Defaults to /contact */
@@ -19,10 +20,12 @@ export default function SiteNav({ ctaHref = "/contact" }: SiteNavProps) {
   const [solid, setSolid] = useState(!overScene);
   const [open, setOpen] = useState(false);
   const [prod, setProd] = useState(true);
+  const [three, setThree] = useState(false);
   const btn = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setProd(document.documentElement.dataset.env !== "dev");
+    setThree(want3D());
     if (!overScene) { setSolid(true); return; }
     const on = () => setSolid(window.scrollY > 40);
     on();
@@ -54,6 +57,12 @@ export default function SiteNav({ ctaHref = "/contact" }: SiteNavProps) {
         </div>
       </header>
       <SiteMenu open={open} onClose={close} prod={prod} />
+      {/* dev site only: switch between the photo version and the 3D version */}
+      {!prod && process.env.RAWLINS_SCENES !== "3d" && (
+        <a className="hd-view" href={three ? "?view=photo" : "?view=3d"}>
+          {three ? "Viewing the 3D version · switch to photos" : "Viewing the photo version · switch to 3D"}
+        </a>
+      )}
     </>
   );
 }
