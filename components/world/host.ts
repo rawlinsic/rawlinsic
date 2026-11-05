@@ -52,5 +52,10 @@ export function setWorldLayer(layer: "journey" | "menu" | "off") {
   });
 }
 
+/* Who owns the background when the menu closes: the home journey, a page's
+   own scene, or nobody. */
+let pageScene: string | null = null;
 export function setJourneyOwner(on: boolean) { journeyOwner = on; }
 export function hasJourney() { return journeyOwner; }
+export function setPageScene(key: string | null) { pageScene = key; }
+export function getPageScene() { return pageScene; }

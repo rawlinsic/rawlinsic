@@ -32,7 +32,7 @@ const Glyph = ({ g }: { g: React.ReactNode }) => (
 const LAYERS: Layer[] = [
   {
     n: "01", short: "Data governance",
-    line: <>We establish effective <Link href="/capabilities#data-governance" className="wwd-link">data governance</Link> practices.</>,
+    line: <>We establish effective <Link href="/services/digital-solutions/data-governance" className="wwd-link">data governance</Link> practices.</>,
     from: "#C4D8F2", to: "#ADC1DD", ink: "black",
     glyph: <><path d="M12 3l8 3v5c0 4.6-3.2 8.2-8 10-4.8-1.8-8-5.4-8-10V6z" /><path d="M9 12l2 2 4-4" /></>,
   },
@@ -56,7 +56,7 @@ const LAYERS: Layer[] = [
   },
   {
     n: "05", short: "Organizational change",
-    line: <>We guide <Link href="/capabilities#organizational-change-management" className="wwd-link">organizational change</Link> by cultivating the culture required for new ways of working.</>,
+    line: <>We guide <Link href="/services/strategy-organization/change-management" className="wwd-link">organizational change</Link> by cultivating the culture required for new ways of working.</>,
     from: "#294264", to: "#1D3759", ink: "white",
     glyph: <><circle cx="9" cy="8" r="3" /><circle cx="17" cy="9.5" r="2.2" /><path d="M4 19c0-2.8 2.2-5 5-5s5 2.2 5 5M15 14.5c2.3 0 4 1.8 4 4.5" /></>,
   },
@@ -121,8 +121,8 @@ const CSS = `
 .wwd-head{display:flex;align-items:center;gap:18px;padding:22px 28px 0}
 .wwd-ic{width:28px;height:28px;flex:0 0 auto;color:var(--w-fg);opacity:.8}
 .wwd-ic svg{width:100%;height:100%}
-.wwd-n{font-family:var(--font-cormorant),'Cormorant Garamond',Georgia,serif;font-size:28px;line-height:1;color:var(--w-soft)}
-.wwd-name{font-family:var(--font-cormorant),'Cormorant Garamond',Georgia,serif;font-size:31px;line-height:1.1;color:var(--w-fg)}
+.wwd-n{font-family:var(--font-serif);font-size:28px;line-height:1;color:var(--w-soft)}
+.wwd-name{font-family:var(--font-serif);font-size:31px;line-height:1.1;color:var(--w-fg)}
 .wwd-body{display:block;max-height:0;opacity:0;overflow:hidden;transition:max-height .45s,opacity .35s}
 .wwd-l.on .wwd-body{max-height:130px;opacity:1}
 .wwd-p{display:block;font-size:16px;line-height:1.65;color:var(--w-body);padding:12px 28px 22px;max-width:760px}

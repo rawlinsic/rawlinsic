@@ -147,7 +147,7 @@ const CSS = `
 .eco-body{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:space-between;gap:30px}
 
 .eco-head{display:flex;align-items:center;justify-content:space-between}
-.eco-num{font-family:var(--font-cormorant),'Cormorant Garamond',Georgia,serif;
+.eco-num{font-family:var(--font-serif);
   font-weight:600;font-size:46px;line-height:1;color:var(--eco-num);transition:color .4s}
 .eco-bar.active .eco-num{color:var(--eco-num-on)}
 
@@ -164,14 +164,14 @@ const CSS = `
 
 .eco-content{flex:1 1 auto;display:flex;flex-direction:column;max-width:430px;opacity:0;transition:opacity .4s .15s}
 .eco-bar.active .eco-content{opacity:1}
-.eco-h3{font-family:var(--font-cormorant),'Cormorant Garamond',Georgia,serif;
+.eco-h3{font-family:var(--font-serif);
   font-weight:600;font-size:32px;line-height:1.1;color:var(--eco-fg);margin-bottom:10px}
 .eco-p{font-size:16px;line-height:1.6;color:var(--eco-body)}
 .eco-accent{width:46px;height:2px;background:var(--eco-accent);margin-top:18px}
 
 .eco-vlabel{position:absolute;bottom:28px;left:0;right:0;margin:0 auto;height:320px;
   writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;
-  font-family:var(--font-cormorant),'Cormorant Garamond',Georgia,serif;
+  font-family:var(--font-serif);
   font-weight:600;font-size:30px;letter-spacing:.4px;color:var(--eco-fg);
   opacity:1;transition:opacity .3s}
 .eco-bar.active .eco-vlabel{opacity:0}

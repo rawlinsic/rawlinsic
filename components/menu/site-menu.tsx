@@ -8,7 +8,7 @@ import {
   CASES, MENU, PROBLEMS, SITE_INDEX, caseById, caseHref, caseWho, serviceById, serviceHref,
   type MenuNode, type SearchHit,
 } from "@/lib/content/site";
-import { getWorld, hasJourney, setWorldLayer } from "@/components/world/host";
+import { getPageScene, getWorld, hasJourney, setWorldLayer } from "@/components/world/host";
 
 type View = "browse" | "picker" | "search";
 
@@ -49,7 +49,10 @@ export default function SiteMenu({ open, onClose, prod }: { open: boolean; onClo
       alive = false;
       getWorld().then((w) => {
         if (!w) return;
-        if (hasJourney()) { setWorldLayer("journey"); w.release(); } else setWorldLayer("off");
+        const page = getPageScene();
+        if (hasJourney()) { setWorldLayer("journey"); w.release(); }
+        else if (page) { setWorldLayer("journey"); w.focus(page); }
+        else setWorldLayer("off");
       });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,8 +96,8 @@ export default function SiteMenu({ open, onClose, prod }: { open: boolean; onClo
   /* search: people load only when someone searches */
   useEffect(() => {
     if (view !== "search" || people.length) return;
-    import("@/lib/team-data").then((m) => {
-      setPeople(m.TEAM_MEMBERS.map((p) => ({ label: p.name, kind: p.title || p.role, href: "/about/our-people" })));
+    fetch("/people-index.json").then((r) => r.json()).then((list: SearchHit[]) => {
+      setPeople(list);
     }).catch(() => {});
   }, [view, people.length]);
   const results = useMemo(() => {

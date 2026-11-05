@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  /* Deployment kind baked into server and browser code at build time, so
+     production builds never carry dev-only content. */
+  env: { RAWLINS_ENV: process.env.VERCEL_ENV || "development" },
   experimental: {
     turbopackFileSystemCacheForDev: true,
     browserDebugInfoInTerminal: true,
@@ -34,9 +37,15 @@ const nextConfig = {
       { source: "/our-team", destination: "/about/our-people", permanent: true },
       { source: "/team", destination: "/about/our-people", permanent: true },
       { source: "/pxl-template/:slug*", destination: "/about/our-people", permanent: true },
-      { source: "/services", destination: "/capabilities", permanent: true },
-      { source: "/drones-advanced-air-mobility", destination: "/capabilities/technology/advanced-air-mobility", permanent: true },
-      { source: "/news", destination: "/insights", permanent: true },
+      // Redesign (handoff v7 section 7): old structure -> new, permanent
+      { source: "/capabilities", destination: "/services", permanent: true },
+      { source: "/capabilities/technology/advanced-air-mobility", destination: "/services/drones-advanced-air-mobility", permanent: true },
+      { source: "/capabilities/technology/automation-integration", destination: "/services/digital-solutions/integration-automation", permanent: true },
+      { source: "/capabilities/:path*", destination: "/services", permanent: true },
+      { source: "/automation-ai-examples", destination: "/services/digital-solutions/integration-automation", permanent: true },
+      { source: "/about/areas-we-serve", destination: "/about/where-we-work", permanent: true },
+      { source: "/drones-advanced-air-mobility", destination: "/services/drones-advanced-air-mobility", permanent: true },
+      { source: "/news", destination: "/insights/news", permanent: true },
       { source: "/projects-overview", destination: "/insights/case-studies", permanent: true },
       { source: "/projects/major-transportation-infrastructure-projects", destination: "/insights/case-studies/major-transportation-infrastructure", permanent: true },
       { source: "/projects/other-states-major-projects", destination: "/insights/case-studies/other-states-major-projects", permanent: true },

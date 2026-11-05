@@ -1,94 +1,70 @@
-import Image from "next/image";
-import Link from "next/link";
-import { LINES, CROSS, INDUSTRIES, lineHref, crossHref, industryHref } from "@/lib/redesign-data";
-
-const LOGO_URL =
-  "/images/pages/rawlinslogo-white-wordmark.png";
-
-const SOCIAL_FONT = "var(--font-dm-sans), 'DM Sans', sans-serif";
+/* Footer: the full site map, contact, and legal links. Brand name is just
+   "Rawlins"; the legal entity appears only on Terms and Privacy. */
+import { AREAS, VISIBLE_INDUSTRIES, areaHref, industryHref } from "@/lib/content/site";
 
 export default function SiteFooter() {
   return (
-    <footer className="footer">
-      <div className="footer-grid rd-footer-grid">
-        <div>
-          <Image src={LOGO_URL} alt="Rawlins" width={415} height={100} className="footer-logo-img" />
-          {/* Draft positioning, not approved (Ben and Scott). */}
-          <p className="footer-brand-desc">
-            Former agency leaders helping the organizations that run public
-            infrastructure plan, deliver, and adopt better ways of working.
+    <footer className="ft">
+      <div className="ft-in">
+        <div className="ft-brand">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/pages/rawlinslogo-blue-wordmark.png" alt="Rawlins" width={150} height={36} loading="lazy" />
+          <p>We find what&apos;s broken, fix it, and stay until it runs.</p>
+          <p className="ft-contact">
+            <a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a>
+            <a href="tel:+17758433822">(775) 843-3822</a>
+            <span>10639 Professional Cir, Reno, NV 89521</span>
           </p>
-          <ul className="footer-links" style={{ marginTop: 18 }}>
-            <li><a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a></li>
-            <li><a href="tel:+17758433822">(775) 843-3822</a></li>
-            <li>
-              <address style={{ fontStyle: "normal", lineHeight: 1.5 }}>
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=10639+Professional+Cir%2C+Reno%2C+NV+89521"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Open Rawlins office location in Google Maps"
-                >
-                  10639 Professional Cir<br />
-                  Reno, NV 89521
-                </a>
-              </address>
-            </li>
-          </ul>
-          <div className="footer-social">
-            <a href="https://www.linkedin.com/company/107078508/admin/dashboard/" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="LinkedIn">
-              <span style={{ fontFamily: SOCIAL_FONT, fontSize: "20px", fontWeight: 700, color: "#060c16", lineHeight: 1, letterSpacing: "-0.5px" }}>in</span>
-            </a>
-            <a href="https://g.page/r/CSNh-GWp5ejQEAI/review" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="Google">
-              <span style={{ fontFamily: SOCIAL_FONT, fontSize: "22px", fontWeight: 700, color: "#060c16", lineHeight: 1 }}>G</span>
-            </a>
+          <a href="/contact" className="ft-cta">Get in touch</a>
+        </div>
+        <nav className="ft-map" aria-label="Site map">
+          <div>
+            <h2>What we do</h2>
+            <ul>
+              {AREAS.map((a) => <li key={a.id}><a href={areaHref(a)}>{a.name}</a></li>)}
+              <li><a href="/services">All services</a></li>
+            </ul>
           </div>
-        </div>
-        <div>
-          <h3 className="footer-heading">Services</h3>
-          <ul className="footer-links">
-            {LINES.map((l) => (
-              <li key={l.id}><Link href={lineHref(l)}>{l.menuName}</Link></li>
-            ))}
-            {CROSS.map((c) => (
-              <li key={c.id}><Link href={crossHref(c)}>{c.name}</Link></li>
-            ))}
-            <li><Link href="/services">All Services</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="footer-heading">Industries</h3>
-          <ul className="footer-links">
-            {INDUSTRIES.map((i) => (
-              <li key={i.id}><Link href={industryHref(i)}>{i.short}</Link></li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3 className="footer-heading">Insights</h3>
-          <ul className="footer-links">
-            <li><Link href="/insights/case-studies">Case Studies</Link></li>
-            <li><Link href="/insights/thought-leadership">Thought Leadership</Link></li>
-            <li><Link href="/insights/podcast">Podcast</Link></li>
-            <li><Link href="/insights/news">News &amp; Events</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="footer-heading">Company</h3>
-          <ul className="footer-links">
-            <li><Link href="/about/who-we-are">Who We Are</Link></li>
-            <li><Link href="/about/how-we-work">How We Work</Link></li>
-            <li><Link href="/about/our-people">Our People</Link></li>
-            <li><Link href="/about/areas-we-serve">Areas We Serve</Link></li>
-            <li><Link href="/careers">Careers</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
-            <li><Link href="/site-map">Site Map</Link></li>
-          </ul>
-        </div>
+          <div>
+            <h2>Who we work with</h2>
+            <ul>
+              {VISIBLE_INDUSTRIES.map((i) => <li key={i.id}><a href={industryHref(i)}>{i.name}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <h2>Our work</h2>
+            <ul>
+              <li><a href="/insights/case-studies">Case studies</a></li>
+              <li><a href="/insights/case-studies?status=ongoing">In the works</a></li>
+              <li><a href="/about/where-we-work">Where we work</a></li>
+            </ul>
+            <h2>Insights</h2>
+            <ul>
+              <li><a href="/insights/news">News &amp; Recognition</a></li>
+              <li><a href="/insights/thought-leadership">Thought Leadership</a></li>
+              <li><a href="/insights/research">Research &amp; Publications</a></li>
+              <li><a href="/insights/podcast">Podcast</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>About</h2>
+            <ul>
+              <li><a href="/about/who-we-are">Who we are</a></li>
+              <li><a href="/about/how-we-work">How we work</a></li>
+              <li><a href="/about/our-people">Our people</a></li>
+              <li><a href="/careers">Careers</a></li>
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/site-map">Site map</a></li>
+            </ul>
+          </div>
+        </nav>
       </div>
-      <div className="footer-bottom">
-        <span>&copy; {new Date().getFullYear()} Rawlins. All rights reserved.</span>
-        <span><a href="/privacy-policy" style={{ color: "inherit", textDecoration: "none" }}>Privacy Policy</a> &middot; <a href="/terms-of-service" style={{ color: "inherit", textDecoration: "none" }}>Terms of Service</a> &middot; <a href="/accessibility" style={{ color: "inherit", textDecoration: "none" }}>Accessibility</a></span>
+      <div className="ft-base">
+        <span>© 2026 Rawlins</span>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/accessibility">Accessibility</a>
+        <a href="https://www.linkedin.com/company/107078508/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </footer>
   );

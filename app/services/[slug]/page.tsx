@@ -1,25 +1,20 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { LINES, CROSS } from "@/lib/redesign-data";
-import { LinePage, CrossPage } from "@/components/rd/pages";
+import { AREAS } from "@/lib/content/site";
+import { AREAS as AREA_DATA } from "@/lib/content/catalog";
+import { AreaPage } from "@/components/site/services";
 
-export function generateStaticParams() {
-  return [...LINES.map((l) => ({ slug: l.slug })), ...CROSS.map((c) => ({ slug: c.slug }))];
-}
 export const dynamicParams = false;
-
+export function generateStaticParams() { return AREAS.map((a) => ({ slug: a.slug })); }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const l = LINES.find((x) => x.slug === slug);
-  const c = CROSS.find((x) => x.slug === slug);
-  return { title: l?.name || c?.name || "Services", description: l?.lead || c?.desc };
+  const a = AREAS.find((x) => x.slug === slug);
+  if (!a) return {};
+  return { title: a.name, description: AREA_DATA[a.id].lead, alternates: { canonical: `/services/${a.slug}` } };
 }
-
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const l = LINES.find((x) => x.slug === slug);
-  if (l) return <LinePage line={l} />;
-  const c = CROSS.find((x) => x.slug === slug);
-  if (c) return <CrossPage c={c} />;
-  notFound();
+  const a = AREAS.find((x) => x.slug === slug);
+  if (!a) notFound();
+  return <AreaPage area={a} />;
 }

@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import CaseStudyDetail from "@/components/case-study-detail";
 import { CASE_STUDIES } from "@/components/case-studies-data";
+import { StateCasePage } from "@/components/site/cases";
 
 const study = CASE_STUDIES.find((s) => s.slug === "tennessee")!;
 
 export const metadata: Metadata = {
-  title: `${study.title} — Case Studies`,
+  title: `${study.title} · Case Studies`,
   description: study.description,
+  alternates: { canonical: "/insights/case-studies/tennessee" },
 };
 
 export default function Page() {
-  return <CaseStudyDetail study={study} />;
+  return <StateCasePage slug="tennessee" />;
 }

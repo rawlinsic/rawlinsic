@@ -1,29 +1,17 @@
 import "./globals.css";
-import "./redesign.css";
 import "./journey.css";
 import "./menu.css";
+import "./pages.css";
 
 import type { Metadata } from "next";
 import Script from "next/script";
-import { DM_Sans, Cormorant_Garamond, Source_Sans_3, Source_Serif_4 } from "next/font/google";
+import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
+import { AREAS, areaHref } from "@/lib/content/site";
 import AnalyticsWrapper from '@/components/analytics-wrapper';
 import CookieBanner from '@/components/cookie-banner';
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-});
-
 /* Redesign type: one token each (--font-sans, --font-serif in journey.css),
-   so the pair can change in one line. No Arial fallback metrics. */
+   so the pair can change in one line. No fallback metrics borrowed from other fonts. */
 const sourceSans = Source_Sans_3({
   variable: "--font-source-sans",
   subsets: ["latin"],
@@ -45,15 +33,15 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rawlinsic.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Rawlins | Strategy, Operations & Technology Consulting",
+    default: "Rawlins | Consulting for the organizations that build and run infrastructure",
     template: "%s | Rawlins",
   },
   description:
     "Rawlins is a global consulting firm pairing strategy, operations, and technology expertise with digital solutions for transportation and infrastructure.",
   openGraph: {
-    title: "Rawlins | Strategy, Operations & Technology Consulting",
+    title: "Rawlins | Consulting for the organizations that build and run infrastructure",
     description:
-      "Rawlins is a global consulting firm pairing strategy, operations, and technology expertise with digital solutions for transportation and infrastructure.",
+      "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. We find what's broken, fix it, and stay until it runs.",
     url: SITE_URL,
     siteName: "Rawlins",
     type: "website",
@@ -68,9 +56,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rawlins | Strategy, Operations & Technology Consulting",
+    title: "Rawlins | Consulting for the organizations that build and run infrastructure",
     description:
-      "Rawlins is a global consulting firm pairing strategy, operations, and technology expertise with digital solutions for transportation and infrastructure.",
+      "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. We find what's broken, fix it, and stay until it runs.",
     images: ["/images/pages/og-image-v2.png"],
   },
   robots: {
@@ -83,12 +71,11 @@ const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Rawlins",
-  alternateName: ["Rawlins Infra Consult", "Rawlins IC"],
   legalName: "Rawlins Infra Consult, LLC",
   url: SITE_URL,
   logo: `${SITE_URL}/images/pages/rawlinslogo-square.png`,
   description:
-    "A global professional services firm that pairs consulting services with digital solutions to help organizations solve complex challenges at the intersection of strategy, operations, and technology.",
+    "Rawlins helps organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. Former agency executives and engineers, working next to a team that builds the tools.",
   email: "info@rawlinsic.com",
   telephone: "+1-775-843-3822",
   address: {
@@ -130,13 +117,12 @@ const LOCAL_BUSINESS_SCHEMA = {
   "@type": "ProfessionalService",
   "@id": `${SITE_URL}#business`,
   name: "Rawlins",
-  alternateName: ["Rawlins Infra Consult", "Rawlins IC"],
   legalName: "Rawlins Infra Consult, LLC",
   url: SITE_URL,
   image: `${SITE_URL}/images/pages/og-image-v2.png`,
   logo: `${SITE_URL}/images/pages/rawlinslogo-square.png`,
   description:
-    "A global professional services firm that pairs consulting services with digital solutions to help organizations solve complex challenges at the intersection of strategy, operations, and technology.",
+    "Rawlins helps organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. Former agency executives and engineers, working next to a team that builds the tools.",
   email: "info@rawlinsic.com",
   telephone: "+1-775-843-3822",
   priceRange: "$$$$",
@@ -162,70 +148,20 @@ const LOCAL_BUSINESS_SCHEMA = {
     "https://www.facebook.com/rawlinsic",
     "https://maps.google.com/?cid=15053534270208893219",
   ],
-  knowsAbout: [
-    "Strategy consulting",
-    "Operations consulting",
-    "Technology strategy",
-    "Data governance",
-    "Automation and AI",
-    "Advanced Air Mobility",
-    "Uncrewed Aircraft Systems",
-    "Transportation infrastructure",
-    "Organizational change management",
-  ],
+  knowsAbout: AREAS.flatMap((a) => [a.name, ...a.services.map((s) => s.name)]),
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Consulting Services",
-    itemListElement: [
-      /* ── Strategy ── */
-      {
-        "@type": "OfferCatalog",
-        name: "Strategy",
-        url: `${SITE_URL}/capabilities#strategy`,
-        description:
-          "Decision systems, planning, and organizational design that turn priorities into measurable results.",
-        itemListElement: [
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Strategic Planning", description: "Translate leadership vision into measurable goals, developing roadmaps that balance short-term priorities with long-term organizational ambitions." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Organizational IT Strategy", description: "Define how technology investments, platforms, and capabilities will enable business goals, translating priorities into a pragmatic roadmap for modernization, security, and measurable outcomes." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Organizational Analysis", description: "Assess structures, processes, and culture to identify inefficiencies and surface opportunities for meaningful, data-informed improvement." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Organizational Change Management", description: "Guide organizations through transformation with frameworks that earn buy-in, reduce friction, and sustain momentum across every level." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Performance Management", description: "Establish clear goals, measures, and feedback loops that tie individual and team performance to strategic outcomes." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Program Effectiveness", description: "Evaluate whether programs are delivering intended outcomes, identify performance gaps, and optimize execution." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Asset Management", description: "Manage assets across their lifecycle to maximize value and performance while controlling cost and risk." } },
-        ],
-      },
-      /* ── Operations ── */
-      {
-        "@type": "OfferCatalog",
-        name: "Operations",
-        url: `${SITE_URL}/capabilities#operations`,
-        description:
-          "People, process, culture, and workforce programs that foster accountability and high performance.",
-        itemListElement: [
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Process & Procedure Improvements", description: "Analyze and streamline end-to-end processes and procedures to reduce waste and risk, improve consistency, and strengthen operational performance." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Program and Project Leadership", description: "Guide senior leaders in leading complex, multistakeholder programs and projects on schedule, within scope, and aligned with organizational goals." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Project Delivery", description: "Support project teams from kickoff to close-out to deliver on time and within budget, managing risk, coordinating stakeholders, and ensuring quality deliverables." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Maintenance & Operations Improvements", description: "Optimize day-to-day operations and maintenance to reduce downtime, improve service reliability, and increase work execution efficiency." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Program Quality Assurance", description: "Embed quality governance, reviews, and feedback loops to ensure program deliverables meet defined standards and stakeholder expectations." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Administration Program Services", description: "Streamline administrative functions by improving processes, controls, and reporting to increase efficiency, compliance, and operational performance." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Owner's Representative", description: "Serve as the owner's trusted on-site representative, protecting your interests, coordinating contractors, and ensuring scope, quality, schedule, and standards are met." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Finance, Budget & Procurement", description: "Provide finance, budgeting, and procurement management to help organizations allocate resources effectively, maintain fiscal responsibility, and ensure compliance." } },
-        ],
-      },
-      /* ── Technology ── */
-      {
-        "@type": "OfferCatalog",
-        name: "Technology",
-        url: `${SITE_URL}/capabilities#technology`,
-        description:
-          "Human-centric AI integration, data governance, analytics, and advanced air mobility.",
-        itemListElement: [
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Data Governance", description: "Develop and implement data governance policies, processes, and standards so data is accurate, secure, consistent, and used responsibly across the enterprise.", url: `${SITE_URL}/capabilities/technology/automation-integration` } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Automation & Integration", description: "Connect systems, automate workflows, and integrate AI so people can focus on high-value work and decisions rather than repetitive tasks.", url: `${SITE_URL}/capabilities/technology/automation-integration` } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Advanced Air Mobility & Uncrewed Aircraft Systems", description: "Planning, implementation, and integration of advanced air mobility and uncrewed aircraft systems within existing transportation networks.", url: `${SITE_URL}/capabilities/technology/advanced-air-mobility` } },
-        ],
-      },
-    ],
+    name: "Services",
+    itemListElement: AREAS.map((area) => ({
+      "@type": "OfferCatalog",
+      name: area.name,
+      url: `${SITE_URL}${areaHref(area)}`,
+      description: area.tag,
+      itemListElement: area.services.map((svc) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: svc.name, url: `${SITE_URL}/services/${area.slug}/${svc.slug}` },
+      })),
+    })),
   },
 };
 
@@ -237,7 +173,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-env={process.env.VERCEL_ENV === "production" ? "production" : "dev"}>
       <body
-        className={`${dmSans.variable} ${cormorant.variable} ${sourceSans.variable} ${sourceSerif.variable} antialiased`}
+        className={`${sourceSans.variable} ${sourceSerif.variable} antialiased`}
         suppressHydrationWarning={true}
       >
         <a href="#main-content" className="skip-to-content">Skip to main content</a>

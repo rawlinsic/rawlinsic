@@ -1,22 +1,21 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { NEW_CASE_STUDIES } from "@/lib/redesign-data";
-import { NewCasePage } from "@/components/rd/pages";
+import { CASES, caseWho } from "@/lib/content/site";
+import { CaseDetail } from "@/components/site/cases";
+import { CASES as CASE_DATA } from "@/lib/content/catalog";
 
-/* New case studies. The existing state pages (delaware, louisiana,
-   and the rest) are static folders beside this one and take priority. */
-export function generateStaticParams() { return NEW_CASE_STUDIES.map((c) => ({ slug: c.slug })); }
+const PROD = process.env.VERCEL_ENV === "production";
 export const dynamicParams = false;
-
+export function generateStaticParams() { return CASES.map((c) => ({ slug: c.slug })); }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const c = NEW_CASE_STUDIES.find((x) => x.slug === slug);
-  return { title: c?.title || "Case Study", description: c?.challenge };
+  const c = CASES.find((x) => x.slug === slug);
+  if (!c) return {};
+  return { title: c.title, description: `${caseWho(c, PROD)}. ${CASE_DATA[c.id]?.ch ?? ""}`.slice(0, 300), alternates: { canonical: `/insights/case-studies/${c.slug}` } };
 }
-
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const c = NEW_CASE_STUDIES.find((x) => x.slug === slug);
+  const c = CASES.find((x) => x.slug === slug);
   if (!c) notFound();
-  return <NewCasePage c={c} />;
+  return <CaseDetail c={c} />;
 }

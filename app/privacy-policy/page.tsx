@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import PrivacyPolicyPage from "@/components/privacy-policy-page";
+import { PrivacyPage } from "@/components/site/legal-privacy-policy";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <PrivacyPolicyPage />;
+  return <PrivacyPage />;
 }

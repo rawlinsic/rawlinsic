@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import ContactPage from "@/components/contact-page";
+import { ContactPageNew } from "@/components/site/contact";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with Rawlins — based at 10639 Professional Cir, Reno, NV 89521, and serving clients worldwide. Our team is here to listen, advise, and partner with you.",
+    "Get in touch with Rawlins, 10639 Professional Cir, Reno, NV 89521. Tell us what you're trying to fix, and we'll connect you with the person on our team who has done it.",
   openGraph: {
     title: "Contact | Rawlins",
     description:
-      "Reach Rawlins — 10639 Professional Cir, Reno, NV 89521. Global consultancy at the intersection of strategy, operations, and technology.",
+      "Reach Rawlins at 10639 Professional Cir, Reno, NV 89521.",
   },
 };
 
 export default function Page() {
-  return <ContactPage />;
+  return <ContactPageNew />;
 }

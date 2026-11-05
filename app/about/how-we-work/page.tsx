@@ -1,4 +1,4 @@
 import type { Metadata } from "next";
-import { HowWeWorkPage } from "@/components/rd/pages";
-export const metadata: Metadata = { title: "How We Work", description: "Start where the client is, bridge before building, and stay through execution." };
-export default function Page() { return <HowWeWorkPage />; }
+import { HowWeWork } from "@/components/site/more";
+export const metadata: Metadata = { title: "How We Work", description: "We find what's broken, fix it, and stay until it runs: assess, rebuild, train, hand off.", alternates: { canonical: "/about/how-we-work" } };
+export default function Page() { return <HowWeWork />; }

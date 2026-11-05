@@ -1,12 +1,4 @@
 import type { Metadata } from "next";
-import InsightsPage from "@/components/insights-page";
-
-export const metadata: Metadata = {
-  title: "Insights",
-  description:
-    "Ideas, experiences, and stories shaping better decisions from the Rawlins team.",
-};
-
-export default function InsightsRoute() {
-  return <InsightsPage />;
-}
+import { InsightsIndex } from "@/components/site/more";
+export const metadata: Metadata = { title: "Insights", description: "Case studies, news and recognition, thought leadership, research, and the Rawlins Way podcast.", alternates: { canonical: "/insights" } };
+export default function Page() { return <InsightsIndex />; }

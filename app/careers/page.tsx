@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
-import CareersPage from "@/components/careers-page";
-
+import { Careers } from "@/components/site/more";
 export const metadata: Metadata = {
   title: "Careers",
-  description:
-    "Join Rawlins. We are advisors, builders, and problem-solvers working at the intersection of strategy, operations, and technology.",
+  description: "Work with Rawlins. Email jobs@rawlinsic.com to connect about opportunities.",
+  alternates: { canonical: "/careers" },
 };
-
-export default function Page() {
-  return <CareersPage />;
-}
+export default function Page() { return <Careers />; }

@@ -8,6 +8,8 @@
    the production deployment. Read on the server (VERCEL_ENV) and passed
    down, so a missing public env var can never leak them to production. */
 export const isProductionEnv = () => process.env.VERCEL_ENV === "production";
+/* Set in next.config.js from VERCEL_ENV at build time; also inlined into browser code. */
+const PROD_BUILD = process.env.RAWLINS_ENV === "production";
 
 export const slugify = (s: string) =>
   s.toLowerCase().replace(/&/g, " ").replace(/['’]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -252,7 +254,10 @@ const cs = (
   id: string, slug: string, title: string, who: string, states: string[], status: "Ongoing" | "Completed",
   industry: string, services: string[], generic = "", needsSignoff = false,
 ): CaseIndex => ({
-  id, slug, title, who, states, status, industry, services, needsSignoff,
+  id, slug, title, status, industry, services, needsSignoff,
+  /* production builds never carry an uncleared client's name or state */
+  who: PROD_BUILD && needsSignoff ? (generic || who) : who,
+  states: PROD_BUILD && needsSignoff ? [] : states,
   generic: generic || who, visibility: needsSignoff ? "generic" : "public",
 });
 

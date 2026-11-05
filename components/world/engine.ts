@@ -270,9 +270,13 @@ export class World {
     if (this.mode === "journey") this.applyJourney();
   }
   /** Menu / pages: show a scene (SceneKey or station name). */
-  focus(key: string) {
+  focus(key: string, opts: { instant?: boolean } = {}) {
     const target = STATIONS[key] ? key : SCENE_STATION[key] || "hero1";
     if (this.mode === "menu" && target === this.menuTo) return;
+    if (opts.instant) {
+      this.mode = "menu"; this.menuFrom = target; this.menuTo = target; this.menuM = 1; this.first = true; this.dirty = true;
+      return;
+    }
     this.menuFrom = this.mode === "menu" ? (this.menuM > 0.5 ? this.menuTo : this.menuFrom) : SEQ[Math.round(this.journeyG)];
     this.menuTo = target;
     this.menuM = this.opts.reducedMotion ? 1 : 0;
@@ -629,7 +633,7 @@ export class World {
     (m.base.material as THREE.MeshBasicMaterial).opacity = f * sstep(0.3, 0.9, draw) * 0.95;
     const cents = (m as any).centroids || {};
     const pts: number[] = [];
-    for (const [name, mesh] of m.fills) {
+    m.fills.forEach((mesh, name) => {
       const on = this.highlighted.has(name);
       const mat = mesh.material as THREE.MeshBasicMaterial;
       const target = on ? (this.activeState === name ? 0.95 : 0.75) * sstep(0.75, 1, draw) * f : 0;
@@ -637,7 +641,7 @@ export class World {
       mat.color.set(this.activeState === name ? PAL.blue : PAL.panel2);
       mesh.visible = mat.opacity > 0.01;
       if (on && cents[name]) pts.push(...cents[name]);
-    }
+    });
     m.markers.geometry.setAttribute("position", new THREE.Float32BufferAttribute(pts, 3));
     (m.markers.material as THREE.PointsMaterial).opacity = f * sstep(0.8, 1, draw) * (0.75 + Math.sin(this.time * 2.4) * 0.25);
   }

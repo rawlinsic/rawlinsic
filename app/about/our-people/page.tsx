@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import TeamPage from "@/components/team-page";
+import { OurPeople } from "@/components/site/more";
 import { TEAM_MEMBERS } from "@/lib/team-data";
+import { cleanNames } from "@/lib/content/clean";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rawlinsic.com";
 
 export const metadata: Metadata = {
   title: "Our People",
-  description:
-    "Meet the 52 accomplished professionals at Rawlins — a global management consulting firm at the intersection of strategy, operations, and technology.",
+  description: `Meet the ${TEAM_MEMBERS.length} people at Rawlins: former agency executives and engineers, and the specialists who build the tools.`,
+  alternates: { canonical: "/about/our-people" },
   openGraph: {
     title: "Our People",
     description:
@@ -47,7 +48,7 @@ function buildPersonSchemas() {
         ...(m.location ? { address: { "@type": "PostalAddress", addressLocality: m.location } } : {}),
         ...(m.photo ? { image: `${SITE_URL}${m.photo}` } : {}),
         ...(m.linkedin ? { sameAs: [m.linkedin] } : {}),
-        ...(m.background ? { description: m.background } : {}),
+        ...(m.background ? { description: cleanNames(m.background) } : {}),
         url,
         worksFor: {
           "@type": "Organization",
@@ -69,7 +70,7 @@ export default function OurPeoplePage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <TeamPage />
+      <OurPeople />
     </>
   );
 }

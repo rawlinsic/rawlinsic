@@ -1322,7 +1322,7 @@ body:has(.rai-root) .footer a,body:has(.rai-root) .footer button{cursor:pointer}
 /* Tokens + font live on BOTH: the overlay is a sibling of .rai-root (see the
    stacking-context note in the JSX), so it can't inherit them from it. */
 .rai-root,.rai-overlay{--navy:#1e2d4d;--gold:#d99a2b;--ink:#3a4661;--muted:#7b869b;--line:#e6eaf1;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  font-family:var(--font-sans)}
 /* Flex column rather than position:fixed, so the hero and hub share the
    viewport and the footer has somewhere to go below. Padding clears the fixed
    nav (80px; 64px on smaller screens). */
@@ -1365,7 +1365,7 @@ body:has(.rai-root) .intro-expand-btn{cursor:pointer}
 .rai-label{position:absolute;pointer-events:none;width:max-content;max-width:216px;text-align:center;opacity:0;transition:opacity .3s}
 .rai-label.on{opacity:1}
 .rai-label .tab{display:block;background:none;border:0;box-shadow:none;padding:0;
-  font-family:var(--font-dm-sans),'DM Sans',sans-serif;
+  font-family:var(--font-sans);
   font-size:19px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff;line-height:1.15;
   text-shadow:0 2px 14px rgba(4,9,20,.98),0 0 34px rgba(4,9,20,.9),0 0 3px rgba(4,9,20,.9)}
 .rai-label .body{background:none;border:0;box-shadow:none;margin-top:9px;padding:0;text-align:center;
@@ -1392,12 +1392,12 @@ body:has(.rai-root) .intro-expand-btn{cursor:pointer}
 .rai-close:hover{background:#f1f4f9;transform:rotate(90deg)}
 .rai-modal-head{margin-bottom:22px;padding-right:40px}
 .rai-example{display:inline-block;background:#C4D8F2;color:#1D3759;font-size:12.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:7px 15px;border-radius:20px}
-.rai-modal-title{font-family:var(--font-dm-sans),'DM Sans',sans-serif;font-size:clamp(28px,4.6vw,42px);font-weight:800;color:var(--navy);margin:14px 0 5px;letter-spacing:-.3px}
+.rai-modal-title{font-family:var(--font-sans);font-size:clamp(28px,4.6vw,42px);font-weight:800;color:var(--navy);margin:14px 0 5px;letter-spacing:-.3px}
 .rai-modal-subtitle{font-size:17px;color:var(--muted);font-style:italic;margin:0}
 /* ---- story player ---- */
 .rai-story{display:grid;grid-template-columns:1.05fr 1fr;gap:26px;align-items:center;margin:26px 0 20px;min-height:250px}
 .rai-kicker{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:transparent}
-.rai-step-title{font-family:var(--font-dm-sans),'DM Sans',sans-serif;font-size:30px;font-weight:800;color:var(--navy);margin:8px 0 16px;letter-spacing:-.2px}
+.rai-step-title{font-family:var(--font-sans);font-size:30px;font-weight:800;color:var(--navy);margin:8px 0 16px;letter-spacing:-.2px}
 .rai-step-cap{font-size:17px;font-weight:700;color:var(--navy);margin:0 0 14px}
 .rai-step-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
 .rai-step-list li{display:flex;gap:11px;align-items:flex-start;font-size:16.5px;line-height:1.5;color:#46566f;animation:rai-li .45s ease backwards}
@@ -1461,7 +1461,7 @@ body:has(.rai-root) .intro-expand-btn{cursor:pointer}
   padding:13px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);
   background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.04));
   border-left:3px solid var(--acc)}
-.rai-mcard .t{font-family:var(--font-dm-sans),'DM Sans',sans-serif;
+.rai-mcard .t{font-family:var(--font-sans);
   font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#fff;line-height:1.2}
 .rai-mcard .d{font-size:12px;line-height:1.4;color:#b9c7de}
 
