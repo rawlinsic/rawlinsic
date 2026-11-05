@@ -714,23 +714,6 @@ Her work has been recognized with several prestigious honors, including the **Bi
     categories: ['technology'],
   },
   {
-    id: 14,
-    name: `Corey Biddle`,
-    photo: `/images/team/corey.webp`,
-    role: `Infrastructure Advisor`,
-    location: `Colorado`,
-    phone: `+1 984-500-6277`,
-    email: `corey@rawlinsic.com`,
-    linkedin: `https://www.linkedin.com/in/coreybiddle/`,
-    background: `Corey Biddle is a seasoned industry leader with over 20 years of transportation on industry experience. known for driving growth, strengthening contractor and owner relationships, and shaping delivery strategies across North America's alternative delivery market. With a career built on winning complex design build and collaborative delivery pursuits, Corey has established a reputation on for uniting teams and elevating client engagement.
-
-As a collaborative and people focused leader, Corey is known for fostering a “one team” culture that empowers staﬀ, strengthens morale, and enhances team performance. His leadership style blends strategic vision with practical execution, ensuring alignment between market leaders, technical experts, and executive stakeholders.`,
-    achievements: `Corey's expertise includes design build contract negotiation, commercial risk management, and guiding teams through the nuances of alternative delivery procurement. He is recognized for his ability to communicate with clarity, and champion ethical, transparent, and impactful decision making.
-
-Driven by a commitment to excellence and a passion for building strong partnerships, Corey continues to shape the future of alternative delivery across North America.`,
-    categories: ['strategy'],
-  },
-  {
     id: 23,
     name: `Jenn Breitner`,
     photo: `/images/team/jennb.webp`,
