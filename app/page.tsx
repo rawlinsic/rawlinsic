@@ -1,7 +1,18 @@
-import { HomePage } from "@/components/rd/pages";
+import SiteNav from "@/components/site-nav";
+import SiteFooter from "@/components/site-footer";
+import Journey from "@/components/home/journey";
 
-/* Redesign home. The previous home (components/home-page.tsx, video
-   hero) is unchanged and can be brought back or merged in. */
+/* Home: the Rawlins story as a journey through a 3D world (handoff v7, 6).
+   Dev-only blocks (placeholders, sign-off badges) never render in production. */
 export default function Page() {
-  return <HomePage />;
+  const prod = process.env.VERCEL_ENV === "production";
+  return (
+    <>
+      <SiteNav />
+      <main className="jy-main">
+        <Journey prod={prod} />
+      </main>
+      <SiteFooter />
+    </>
+  );
 }

@@ -1,0 +1,431 @@
+"use client";
+/* Home: the Rawlins story as one journey through a real-time 3D world.
+   Eight chapters; the camera flies as you scroll; the blue line draws
+   itself through every scene. All text is real HTML (readable, indexable,
+   works with no WebGL); the world sits behind it. */
+import Image from "next/image";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  AREAS, CASES, HOME, LEADERS, NUMBERS, PROBLEMS, STORY, VISIBLE_INDUSTRIES, WHY,
+  areaHref, caseHref, caseWho, industryHref, serviceById, serviceHref, subsectorHref,
+} from "@/lib/content/site";
+import { getWorld, setJourneyOwner, setWorldLayer } from "@/components/world/host";
+
+/* Chapter → stations (must match SEQ in components/world/engine.ts) */
+const CHAPTERS = [
+  { id: "who-we-are", label: "Who we are", stations: ["hero0", "hero1"], pinned: 230, tone: "dawn" },
+  { id: "our-people", label: "We've done the job", stations: ["people0", "people1"], pinned: 0, tone: "day" },
+  { id: "fix", label: "What are you trying to fix?", stations: ["grid0", "grid1"], pinned: 0, tone: "calm" },
+  { id: "what-we-do", label: "What we do", stations: ["capitol", "construction", "dusk", "network", "drone"], pinned: 5 * 78 + 70, tone: "day" },
+  { id: "who-we-work-with", label: "Who we work with", stations: ["rural", "crossing", "airport", "rail", "harbor", "street", "site", "office"], pinned: 8 * 62 + 70, tone: "day" },
+  { id: "proof", label: "The proof", stations: ["map0", "map1"], pinned: 0, tone: "high" },
+  { id: "headed", label: "Where we're headed", stations: ["rise0", "rise1", "rise2", "rise3"], pinned: 4 * 80 + 70, tone: "high" },
+  { id: "get-in-touch", label: "Get in touch", stations: ["globe0", "globe1"], pinned: 170, tone: "calm" },
+] as const;
+const SEQ_LEN = CHAPTERS.reduce((n, c) => n + c.stations.length, 0);
+const START: number[] = [];
+CHAPTERS.reduce((n, c, i) => { START[i] = n; return n + c.stations.length; }, 0);
+const TRANSITION = 0.2; // share of a chapter's scroll spent moving into the next one
+
+/* Who we work with: five Transportation sub-sectors, then the other industries */
+const transport = VISIBLE_INDUSTRIES.find((i) => i.id === "transport")!;
+const WHO_SCENES = [
+  ...transport.subsectors.map((s) => ({ key: s.id, kicker: "Transportation", name: s.name, line: s.line, who: transport.who, href: subsectorHref(transport, s), thin: s.thin })),
+  ...VISIBLE_INDUSTRIES.filter((i) => i.id !== "transport").map((i) => ({ key: i.id, kicker: "Industry", name: i.name, line: i.lead, who: i.who, href: industryHref(i), thin: false })),
+];
+
+const FEATURED = ["cs-transform", "cs-proficiency", "cs-strategic", "cs-major"];
+
+export default function Journey({ prod }: { prod: boolean }) {
+  const root = useRef<HTMLDivElement>(null);
+  const sections = useRef<(HTMLElement | null)[]>([]);
+  const [chapter, setChapter] = useState(0);
+  const [tone, setTone] = useState<string>("dawn");
+  const [problem, setProblem] = useState<number | null>(null);
+  const [state, setState] = useState<string | null>(null);
+  const worldRef = useRef<Awaited<ReturnType<typeof getWorld>>>(null);
+  const gRef = useRef(0);
+
+  /* Cases visible here: production never shows uncleared names or places them on the map */
+  const mapCases = useMemo(() => CASES.filter((c) => c.states.length && (!prod || !c.needsSignoff)), [prod]);
+  const states = useMemo(() => Array.from(new Set(mapCases.flatMap((c) => c.states))).sort(), [mapCases]);
+  /* home shows the six most recent; the full list lives on the case studies page */
+  const inTheWorks = useMemo(() => CASES.filter((c) => c.status === "Ongoing" && c.visibility !== "internal").slice(0, 6), []);
+
+  /* scroll → chapter progress → world position */
+  const measure = useCallback(() => {
+    const vh = window.innerHeight, y = window.scrollY;
+    const els = sections.current;
+    let g = 0, active = 0;
+    for (let i = 0; i < CHAPTERS.length; i++) {
+      const el = els[i];
+      if (!el) continue;
+      const top = el.offsetTop, h = el.offsetHeight;
+      const start = (k: number) => {
+        const e = els[k]!;
+        return k === 0 ? 0 : CHAPTERS[k].pinned ? e.offsetTop : e.offsetTop - vh * 0.5;
+      };
+      const s0 = start(i);
+      const next = els[i + 1];
+      const s1 = next ? start(i + 1) : top + h - vh;
+      const p = Math.max(0, Math.min(1, (y - s0) / Math.max(1, s1 - s0)));
+      if (y >= s0 || i === 0) {
+        active = i;
+        const n = CHAPTERS[i].stations.length, last = i === CHAPTERS.length - 1;
+        const inner = last ? 1 : 1 - TRANSITION;
+        g = p <= inner ? START[i] + (p / inner) * (n - 1) : START[i] + (n - 1) + (p - inner) / TRANSITION;
+      }
+      /* pinned chapters: local progress for their own animation */
+      if (CHAPTERS[i].pinned) {
+        const lp = Math.max(0, Math.min(1, (y - top) / Math.max(1, h - vh)));
+        el.style.setProperty("--p", lp.toFixed(4));
+      }
+    }
+    g = Math.max(0, Math.min(SEQ_LEN - 1, g));
+    gRef.current = g;
+    root.current?.style.setProperty("--g", g.toFixed(4));
+    for (let i = 0; i < CHAPTERS.length; i++) {
+      const el = els[i];
+      if (el && CHAPTERS[i].pinned) el.style.setProperty("--g", Math.max(-1, Math.min(CHAPTERS[i].stations.length, g - START[i])).toFixed(4));
+    }
+    setChapter((c) => (c === active ? c : active));
+    setTone((t) => (t === CHAPTERS[active].tone ? t : CHAPTERS[active].tone));
+    worldRef.current?.setJourney(g);
+  }, []);
+
+  useEffect(() => {
+    setJourneyOwner(true);
+    document.documentElement.dataset.world = "journey";
+    let raf = 0;
+    const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(measure); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    measure();
+    /* load the 3D world after first paint, when the browser is idle */
+    const idle = (cb: () => void) => ("requestIdleCallback" in window ? (window as any).requestIdleCallback(cb, { timeout: 1500 }) : setTimeout(cb, 600));
+    let alive = true;
+    idle(() => {
+      getWorld().then((w) => {
+        if (!alive || !w) return;
+        worldRef.current = w;
+        if (document.documentElement.dataset.world !== "menu") setWorldLayer("journey");
+        w.setJourney(gRef.current);
+        root.current?.classList.add("has-world");
+      });
+    });
+    /* stop rendering when the journey is off screen (footer) */
+    const io = new IntersectionObserver(([e]) => {
+      root.current?.classList.toggle("is-out", !e.isIntersecting);
+      const w = worldRef.current;
+      if (!w || document.documentElement.dataset.world === "menu") return;
+      if (e.isIntersecting) w.start(); else w.stop();
+    }, { rootMargin: "0px 0px -20% 0px" });
+    if (root.current) io.observe(root.current);
+    return () => {
+      alive = false;
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      io.disconnect();
+      setJourneyOwner(false);
+      setWorldLayer("off");
+    };
+  }, [measure]);
+
+  /* proof: highlight states on the map */
+  useEffect(() => {
+    worldRef.current?.highlightStates(states, state);
+  }, [states, state, chapter]);
+
+  const go = (i: number) => {
+    const el = sections.current[i];
+    if (!el) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: i === 0 ? 0 : el.offsetTop + 2, behavior: reduce ? "auto" : "smooth" });
+  };
+  const openMenu = () => window.dispatchEvent(new CustomEvent("rawlins:menu", { detail: { open: true } }));
+  const setSec = (i: number) => (el: HTMLElement | null) => { sections.current[i] = el; };
+
+  const sel = problem === null ? null : PROBLEMS[problem];
+  const stateCases = state ? mapCases.filter((c) => c.states.includes(state)) : [];
+
+  return (
+    <div className="jy" ref={root} data-tone={tone} data-chapter={chapter}>
+      <div className="jy-backdrop" aria-hidden="true" />
+
+      {/* Chapter rail + skip */}
+      <nav className="jy-rail" aria-label="Chapters">
+        <ol>
+          {CHAPTERS.map((c, i) => (
+            <li key={c.id}>
+              <button type="button" onClick={() => go(i)} aria-current={chapter === i ? "step" : undefined}>
+                <span className="jy-rail-dot" aria-hidden="true" />
+                <span className="jy-rail-label">{c.label}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <button type="button" className="jy-skip" onClick={openMenu}>Skip to menu</button>
+
+      {/* 1 · Who we are */}
+      <section ref={setSec(0)} id="who-we-are" className="jy-ch jy-pinned jy-hero" style={{ height: `${CHAPTERS[0].pinned}svh` }} aria-labelledby="jy-h1">
+        <div className="jy-sticky">
+          <div className="jy-hero-inner">
+            <p className="jy-eyebrow">{HOME.eyebrow}</p>
+            <h1 id="jy-h1" className="jy-h1">{HOME.headline}</h1>
+            <p className="jy-line">{HOME.line}</p>
+            <div className="jy-btns">
+              <a className="jy-btn jy-btn-primary" href="#fix" onClick={(e) => { e.preventDefault(); go(2); }}>What are you trying to fix?</a>
+              <a className="jy-btn" href="/contact">Get in touch</a>
+            </div>
+          </div>
+          <p className="jy-cue" aria-hidden="true"><span />Scroll</p>
+        </div>
+      </section>
+
+      {/* 2 · We've done the job */}
+      <section ref={setSec(1)} id="our-people" className="jy-ch jy-flow" aria-labelledby="jy-people">
+        <div className="jy-wrap">
+          <div className="jy-panel jy-intro">
+            <p className="jy-kicker"><span>02</span> Our people</p>
+            <h2 id="jy-people" className="jy-statement">We&apos;ve done the job.</h2>
+            <p className="jy-lead">{WHY[0][1]}</p>
+          </div>
+          <Numbers prod={prod} />
+          <div className="jy-drift" aria-label="Former roles on our team">
+            {[LEADERS.filter((_, i) => i % 2 === 0), LEADERS.filter((_, i) => i % 2 === 1)].map((row, r) => (
+              <div className={`jy-drift-row${r ? " jy-drift-rev" : ""}`} key={r}>
+                <ul>
+                  {[...row, ...row].map((p, i) => (
+                    <li key={`${p.name}-${i}`} className="jy-face" aria-hidden={i >= row.length ? true : undefined}>
+                      <Image src={`/images/team/${p.photo}.webp`} alt="" width={72} height={72} />
+                      <span><b>{p.name}</b><em>{p.role}</em></span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <a className="jy-more" href="/about/our-people">Meet our people</a>
+        </div>
+      </section>
+
+      {/* 3 · What are you trying to fix? + Why Rawlins */}
+      <section ref={setSec(2)} id="fix" className="jy-ch jy-flow" aria-labelledby="jy-fix">
+        <div className="jy-wrap">
+          <div className="jy-panel jy-picker">
+            <p className="jy-kicker"><span>03</span> Start with the problem</p>
+            <h2 id="jy-fix" className="jy-h2">What are you trying to fix?</h2>
+            <div className="jy-problems" role="group" aria-label="Pick the one that sounds most like you">
+              {PROBLEMS.map((p, i) => (
+                <button key={p.q} type="button" className="jy-problem" aria-pressed={problem === i} onClick={() => setProblem(problem === i ? null : i)}>
+                  {p.q}
+                </button>
+              ))}
+            </div>
+            <div className="jy-answer" aria-live="polite">
+              {sel ? (
+                <>
+                  <p className="jy-answer-q">Where to start:</p>
+                  <ul>
+                    {sel.services.map((id) => {
+                      const hit = serviceById(id);
+                      return hit ? (
+                        <li key={id}><a href={serviceHref(id)}><b>{hit.service.name}</b><span>{hit.area.name}</span></a></li>
+                      ) : null;
+                    })}
+                  </ul>
+                </>
+              ) : (
+                <p className="jy-answer-hint">Pick the one that sounds most like you. We&apos;ll show you where to start.</p>
+              )}
+            </div>
+          </div>
+          <div className="jy-panel jy-why">
+            <p className="jy-kicker">Why Rawlins</p>
+            <ol>
+              {WHY.map(([t, d], i) => (
+                <li key={t}><span className="jy-why-n">{String(i + 1).padStart(2, "0")}</span><h3>{t}</h3><p>{d}</p></li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      {/* 4 · What we do: five quick scenes */}
+      <section ref={setSec(3)} id="what-we-do" className="jy-ch jy-pinned jy-pass" style={{ height: `${CHAPTERS[3].pinned}svh` }} aria-labelledby="jy-what">
+        <div className="jy-sticky">
+          <div className="jy-pass-head">
+            <p className="jy-kicker"><span>04</span> What we do</p>
+            <h2 id="jy-what" className="jy-h2">Five ways we help.</h2>
+          </div>
+          <ol className="jy-track" style={{ ["--n" as string]: AREAS.length }}>
+            {AREAS.map((a, i) => (
+              <li key={a.id} className="jy-card" style={{ ["--i" as string]: i }}>
+                <p className="jy-card-n">{String(i + 1).padStart(2, "0")}</p>
+                <h3>{a.name}</h3>
+                <p className="jy-card-tag">{a.tag}</p>
+                <ul>{a.services.slice(0, 4).map((s) => <li key={s.id}>{s.name}</li>)}</ul>
+                <a href={areaHref(a)} className="jy-card-link">Explore {a.name}</a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* 5 · Who we work with */}
+      <section ref={setSec(4)} id="who-we-work-with" className="jy-ch jy-pinned jy-pass" style={{ height: `${CHAPTERS[4].pinned}svh` }} aria-labelledby="jy-who">
+        <div className="jy-sticky">
+          <div className="jy-pass-head">
+            <p className="jy-kicker"><span>05</span> Who we work with</p>
+            <h2 id="jy-who" className="jy-h2">Built inside public agencies. Useful anywhere.</h2>
+          </div>
+          <ol className="jy-track" style={{ ["--n" as string]: WHO_SCENES.length }}>
+            {WHO_SCENES.map((s, i) => (
+              <li key={s.key} className="jy-card" style={{ ["--i" as string]: i }}>
+                <p className="jy-card-n">{s.kicker}</p>
+                <h3>{s.name}</h3>
+                <p>{s.line}</p>
+                <p className="jy-card-who">{s.who}</p>
+                {s.thin && !prod && <span className="jy-dev">Placeholder: thin content, build out</span>}
+                <a href={s.href} className="jy-card-link">See {s.name}</a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* 6 · The proof */}
+      <section ref={setSec(5)} id="proof" className="jy-ch jy-flow jy-proof" aria-labelledby="jy-proof">
+        <div className="jy-wrap">
+          <div className="jy-proof-space" aria-hidden="true" />
+          <div className="jy-panel">
+            <p className="jy-kicker"><span>06</span> The proof</p>
+            <h2 id="jy-proof" className="jy-h2">Where we&apos;ve done the work.</h2>
+            <p className="jy-lead">Pick a state to see the work behind it.</p>
+            <div className="jy-states" role="group" aria-label="States with case studies">
+              {states.map((s) => {
+                const dev = !prod && mapCases.filter((c) => c.states.includes(s)).every((c) => c.needsSignoff);
+                return (
+                  <button key={s} type="button" aria-pressed={state === s} onClick={() => setState(state === s ? null : s)}>
+                    {s}{dev && <span className="jy-dev-dot" title="Needs sign-off" />}
+                  </button>
+                );
+              })}
+            </div>
+            <div aria-live="polite">
+              {state && (
+                <ul className="jy-cases">
+                  {stateCases.map((c) => (
+                    <li key={c.id}>
+                      <a href={caseHref(c)}>
+                        <b>{c.title}</b>
+                        <span>{caseWho(c, prod)} · {c.status}</span>
+                      </a>
+                      {c.needsSignoff && !prod && <span className="jy-dev">Needs sign-off</span>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          <div className="jy-panel">
+            <h3 className="jy-h3">Featured work</h3>
+            <ul className="jy-cases jy-cases-grid">
+              {FEATURED.map((id) => CASES.find((c) => c.id === id)!).map((c) => (
+                <li key={c.id}><a href={caseHref(c)}><b>{c.title}</b><span>{caseWho(c, prod)}</span></a></li>
+              ))}
+            </ul>
+          </div>
+          <div className="jy-panel">
+            <h3 className="jy-h3">In the works</h3>
+            <ul className="jy-works">
+              {inTheWorks.map((c) => (
+                <li key={c.id}>
+                  <b>{c.title}</b>
+                  <span>{caseWho(c, prod)}</span>
+                  {c.needsSignoff && !prod && <span className="jy-dev">Needs sign-off · shows as “{c.generic}” on launch</span>}
+                </li>
+              ))}
+            </ul>
+            <a className="jy-more" href="/insights/case-studies">All case studies</a>
+          </div>
+        </div>
+      </section>
+
+      {/* 7 · Where we're headed */}
+      <section ref={setSec(6)} id="headed" className="jy-ch jy-pinned jy-rise" style={{ height: `${CHAPTERS[6].pinned}svh` }} aria-labelledby="jy-headed">
+        <div className="jy-sticky">
+          <div className="jy-rise-inner">
+            <p className="jy-kicker"><span>07</span> How we&apos;ve grown</p>
+            <h2 id="jy-headed" className="jy-h2">Where we&apos;re headed.</h2>
+            <ol className="jy-beats">
+              {STORY.map(([k, t, d], i) => (
+                <li key={k} style={{ ["--i" as string]: i }}>
+                  <p className="jy-beat-k">{k}</p>
+                  <h3>{t}</h3>
+                  <p>{d}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      {/* 8 · Finale */}
+      <section ref={setSec(7)} id="get-in-touch" className="jy-ch jy-pinned jy-finale" style={{ height: `${CHAPTERS[7].pinned}svh` }} aria-labelledby="jy-end">
+        <div className="jy-sticky">
+          <div className="jy-finale-inner">
+            <p className="jy-kicker"><span>08</span> Get in touch</p>
+            <h2 id="jy-end" className="jy-statement">Tell us what you&apos;re trying to fix.</h2>
+            <p className="jy-lead">You&apos;ll talk with people who have done the job, and we&apos;ll tell you plainly where we can help.</p>
+            <div className="jy-btns">
+              <a className="jy-btn jy-btn-primary" href="/contact">Get in touch</a>
+              <button type="button" className="jy-btn" onClick={openMenu}>Explore the site</button>
+            </div>
+            {!prod && <p className="jy-dev jy-dev-block">Placeholder (dev only): News &amp; Recognition, latest 2 posts + next event, goes here before contact.</p>}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* Numbers count up once. Unverified numbers never reach production. */
+function Numbers({ prod }: { prod: boolean }) {
+  const ref = useRef<HTMLUListElement>(null);
+  const [run, setRun] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setRun(true); io.disconnect(); } }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <ul className="jy-numbers" ref={ref}>
+      {NUMBERS.filter((n) => n.verified || !prod).map((n) => (
+        <li key={n.label} className={n.verified ? "" : "is-dev"}>
+          <b>{n.count && run ? <Count to={n.count} suffix={n.suffix ?? ""} /> : n.value}</b>
+          <span>{n.label}</span>
+          {!n.verified && <em className="jy-dev">Placeholder until verified</em>}
+        </li>
+      ))}
+    </ul>
+  );
+}
+function Count({ to, suffix }: { to: number; suffix: string }) {
+  const [v, setV] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setV(to); return; }
+    let raf = 0; const t0 = performance.now();
+    const step = (t: number) => {
+      const k = Math.min(1, (t - t0) / 1300);
+      setV(Math.round(to * (1 - Math.pow(1 - k, 3))));
+      if (k < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [to]);
+  return <>{v}{suffix}</>;
+}

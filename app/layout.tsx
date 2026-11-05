@@ -1,9 +1,11 @@
 import "./globals.css";
 import "./redesign.css";
+import "./journey.css";
+import "./menu.css";
 
 import type { Metadata } from "next";
 import Script from "next/script";
-import { DM_Sans, Cormorant_Garamond } from "next/font/google";
+import { DM_Sans, Cormorant_Garamond, Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import AnalyticsWrapper from '@/components/analytics-wrapper';
 import CookieBanner from '@/components/cookie-banner';
 
@@ -18,6 +20,24 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
+});
+
+/* Redesign type: one token each (--font-sans, --font-serif in journey.css),
+   so the pair can change in one line. No Arial fallback metrics. */
+const sourceSans = Source_Sans_3({
+  variable: "--font-source-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  adjustFontFallback: false,
+  fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
+});
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  adjustFontFallback: false,
+  fallback: ["Georgia", "serif"],
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rawlinsic.com";
@@ -215,9 +235,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-env={process.env.VERCEL_ENV === "production" ? "production" : "dev"}>
       <body
-        className={`${dmSans.variable} ${cormorant.variable} antialiased`}
+        className={`${dmSans.variable} ${cormorant.variable} ${sourceSans.variable} ${sourceSerif.variable} antialiased`}
         suppressHydrationWarning={true}
       >
         <a href="#main-content" className="skip-to-content">Skip to main content</a>
