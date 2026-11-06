@@ -58,7 +58,7 @@ export const AREAS: Area[] = [
   },
   {
     id: "om", slug: "operations-maintenance", name: "Operations & Maintenance",
-    tag: "Keeping infrastructure safe, reliable, and affordable", scene: "dusk", featuredCase: "cs-mi-pbo",
+    tag: "Keeping what you own safe, working, and affordable", scene: "dusk", featuredCase: "cs-mi-pbo",
     services: [
       svc("asset-mgmt", "Asset Management", "crossing"),
       svc("operations", "Maintenance & Operations"),
@@ -118,15 +118,15 @@ const sub = (id: string, name: string, scene: SceneKey, line: string, thin = fal
 export const INDUSTRIES: Industry[] = [
   {
     id: "transport", slug: "transportation", name: "Transportation", scene: "interchange",
-    who: "Run by former DOT chief engineers, maintenance directors, and program leaders",
-    lead: "State DOTs are where most of our people built their careers. They've run districts, divisions, and whole departments, and they bring that experience to agencies working through the same problems now.",
+    who: "Led by former DOT chief engineers, maintenance directors, and program leaders",
+    lead: "State DOTs are where many of our people built their careers. They've run districts, divisions, and whole departments, and they bring that experience to agencies working through the same problems now.",
     featured: ["program-delivery", "row", "construction", "operations", "traffic", "asset-mgmt", "portals", "drone-programs"],
     featuredCase: "cs-major",
     subsectors: [
       sub("sub-highways", "Highways & Roads", "rural", "Most of our work is on highway systems: how they're planned, funded, delivered, maintained, and operated."),
       sub("sub-bridges", "Bridges & Structures", "crossing", "From billion-dollar river crossings to the inspections that keep bridges open."),
-      sub("sub-aviation", "Aviation & Airports", "airport", "Drones and advanced air mobility are moving faster than the rules and the org charts. We help aeronautics divisions and DOTs run drone programs that are safe, compliant, and useful across the agency, and plan for what's next."),
-      sub("sub-rail", "Rail & Transit", "rail", "Transit and rail agencies get the same delivery discipline and the same experienced people."),
+      sub("sub-aviation", "Aviation & Airports", "airport", "State aeronautics divisions, airports, and the drone and advanced air mobility programs growing around them. We help small aviation staffs run programs, plan for what's next, and compete for federal funding."),
+      sub("sub-rail", "Rail & Transit", "rail", "Our transit work so far is partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation."),
       /* v12: back under Transportation. Only harbors work so far (port security
          grant packages; drone and uncrewed-vessel technology evaluation). */
       sub("sub-ports", "Ports & Harbors", "harbor", "Harbors run on security, funding, and new technology. Our work here so far: port security grant packages, and evaluations of drone and uncrewed-vessel technology.", true),
@@ -155,7 +155,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     id: "private", slug: "private-sector", name: "Private Sector", scene: "office",
-    who: "An in-house team that builds, not just advises",
+    who: "An in-house team that builds the tools",
     lead: "Firms of about 50 to 500 people that have outgrown spreadsheets but don't have a build team. We connect the systems you already pay for and automate the work around them.",
     featured: ["automation", "ai", "dashboards", "data-governance", "portals"],
     subsectors: [],
@@ -232,7 +232,7 @@ export const LEADERS: { name: string; role: string; photo: string }[] = [
   { name: "April Blackburn, PMP", role: "Former Chief Information Officer, Chief Technology Officer, and Interim Assistant Secretary of Finance and Administration, Florida Department of Transportation", photo: "april" },
   { name: "Dara Wheeler", role: "Former Chief Data and AI Officer and Chief Innovation Officer, California Department of Transportation", photo: "darawheeler" },
   { name: "Mayela Sosa", role: "Former Division Administrator, Federal Highway Administration Indiana and Hawaii Divisions", photo: "mayela" },
-  { name: "Paul Steinman, P.E.", role: "Former Chief Operating Officer, Idaho Transportation Department", photo: "paulsteinman" },
+  { name: "Paul Steinman, P.E.", role: "Former Chief of Operations, Idaho Transportation Department", photo: "paulsteinman" },
   { name: "Rex Vines, P.E.", role: "Former Deputy Director and Chief Engineer of Operations, Arkansas Department of Transportation", photo: "rex" },
   { name: "Paul Schneider, P.E.", role: "Former member, Federal Highway Administration California Division executive leadership team", photo: "paulschneider" },
   { name: "Joey Paskey, P.E., PTOE", role: "Former Director of Public Works, City of Las Vegas", photo: "joey" },
@@ -276,16 +276,16 @@ export const CASES: CaseIndex[] = [
   cs("cs-workforce", "north-carolina-workforce-strategy", "Workforce strategy analysis", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["workforce", "org-design"]),
   cs("cs-nc-ipd", "north-carolina-integrated-program-delivery", "Integrated program delivery and asset management", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["program-delivery", "asset-mgmt", "grants"]),
   cs("cs-strategic", "nevada-six-year-strategic-plan", "Six-year strategic plan, action plans, and performance management", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["strategic-planning", "org-design", "dashboards"]),
-  cs("cs-nv-om", "nevada-operations-maintenance-review", "Operations and maintenance program review and fleet optimization", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt"]),
+  cs("cs-nv-om", "nevada-operations-maintenance-review", "Operations and maintenance program review", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt"]),
   cs("cs-aerodiv", "nevada-aeronautics-division-research", "Research on establishing a state aeronautics division and sustainable funding", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["research", "aero-division"]),
   cs("cs-de-tech", "delaware-technology-strategic-plan", "Technology strategic plan", "Delaware Department of Transportation", ["Delaware"], "Completed", "transport", ["tech-strategy", "strategic-planning"]),
   cs("cs-ut-am", "utah-asset-management-review", "Asset management program review", "Utah Department of Transportation", ["Utah"], "Completed", "transport", ["asset-mgmt"]),
   cs("cs-va-maint", "virginia-performance-based-maintenance-review", "Review of performance-based highway maintenance contracts", "Virginia Department of Transportation", ["Virginia"], "Completed", "transport", ["operations", "procurement"]),
-  cs("cs-maint-model", "six-state-maintenance-outsourcing-model", "Performance-based maintenance outsourcing model", "Departments of transportation in six states", [], "Completed", "transport", ["operations", "procurement"]),
-  cs("cs-pa-budget", "pennsylvania-maintenance-budgeting", "Maintenance budgeting", "Pennsylvania", ["Pennsylvania"], "Completed", "transport", ["procurement", "operations"]),
+  cs("cs-maint-model", "six-state-maintenance-outsourcing-model", "A flexible maintenance contracting model for DOTs", "AMOTIA (Association for the Management and Operations of Transportation Infrastructure Assets)", [], "Completed", "contractors", ["operations", "procurement"]),
+  cs("cs-pa-budget", "pennsylvania-maintenance-budgeting", "Maintenance budgeting", "Pennsylvania Department of Transportation", ["Pennsylvania"], "Completed", "transport", ["procurement", "operations"]),
   cs("cs-nyc-parks", "new-york-city-parks-asset-management", "Asset management for 29,000 acres of parkland", "New York City Parks and Recreation", ["New York"], "Completed", "gov", ["asset-mgmt"]),
   cs("cs-riverside", "riverside-county-fleet-and-facilities", "Facilities and fleet operations review", "Riverside County, California", ["California"], "Completed", "gov", ["operations", "asset-mgmt"]),
-  cs("cs-major", "major-river-crossings-and-transit", "Major river crossings and transit: coordination, risk, and partnering", "Iowa, Illinois, Missouri, and Minnesota", ["Iowa", "Illinois", "Missouri", "Minnesota"], "Completed", "transport", ["program-delivery", "owners-rep", "alt-delivery"]),
+  cs("cs-major", "major-river-crossings-and-transit", "Partnering on major river crossings and a light rail line", "Iowa, Illinois, Missouri, and Minnesota", ["Iowa", "Illinois", "Missouri", "Minnesota"], "Completed", "transport", ["program-delivery", "alt-delivery"]),
   cs("cs-partnering", "progressive-design-build-partnering", "Partnering facilitation for a progressive design-build bridge", "Illinois · contractor and state transportation department", ["Illinois"], "Ongoing", "transport", ["program-delivery", "procurement", "alt-delivery"], "A Midwest state DOT and its contractor", true),
   cs("cs-pooled", "multi-state-drone-standards", "Multi-state drone standards and specifications", "Pooled fund study led by Alaska", ["Alaska"], "Ongoing", "gov", ["research", "drone-programs"], "A multi-state pooled fund study", true),
   cs("cs-pdn", "louisiana-project-delivery-website", "A project delivery website, tools, and change system staff use every day", "Louisiana Department of Transportation and Development", ["Louisiana"], "Ongoing", "transport", ["portals", "automation", "training-video", "program-delivery"]),

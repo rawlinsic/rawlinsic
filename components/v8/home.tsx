@@ -44,70 +44,31 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <ul className="ways" aria-label="What we do: five areas">
-          {AREAS.map((a) => (
-            <li key={a.id} className="way" style={themeStyle(a.id)}>
-              <a href={areaHref(a)}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={AREA_PHOTO[a.id]} alt="" />
-                <span className="way-n" aria-hidden="true">{THEME[a.id].n}</span>
-                <span className="way-txt"><b>{a.name}</b><em>{a.tag}</em><span className="way-more">{a.services.length} services</span></span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* 2 · what we do, area by area */}
-      <section className="h-what" id="what" aria-labelledby="h-what">
-        <div className="v8-wrap h-what-head" data-reveal>
+        <div className="v8-wrap h-ways-head" id="what" data-reveal>
           <p className="v8-eyebrow">What we do</p>
-          <h2 id="h-what" className="v8-h2">Most of our work starts with how an organization is set up to deliver.</h2>
-          <p className="v8-lead">From there, we help deliver projects, keep what&apos;s built running, put digital tools to work, and launch drone and air mobility programs.</p>
+          <h2 className="h-ways-h">From how an organization is set up to how its work gets done.</h2>
+          <p className="v8-lead">We help organizations plan and organize, deliver projects, keep what&apos;s built running, put digital tools to work, and launch drone and air mobility programs.</p>
         </div>
-      </section>
-      <Scene steps={AREAS.length} per={115} className="xa" label="What we do, area by area">
-        <div className="xa-bg" aria-hidden="true" />
-        <ol className="xa-index">
-          {AREAS.map((a, k) => (
-            <li key={a.id} data-step={k}>
-              <button type="button" data-goto={k}><span className="xa-n">{THEME[a.id].n}</span><span className="xa-l">{a.name}</span><span className="xa-bar" aria-hidden="true"><i /></span></button>
-            </li>
-          ))}
-        </ol>
-        <div className="xa-panels">
-          {AREAS.map((a, k) => {
+        <ul className="ways" aria-label="What we do">
+          {AREAS.map((a) => {
             const d = AREA_DATA[a.id];
             return (
-              <article key={a.id} className="xa-panel glow dg-scrub" data-step={k} aria-labelledby={`xa-h-${a.id}`}>
-                <div className="xa-copy">
-                  <p className="xa-k"><span>{THEME[a.id].n}</span>{a.tag}</p>
-                  <h3 id={`xa-h-${a.id}`}><a href={areaHref(a)}>{a.name}</a></h3>
-                  <p className="xa-lead">{d.lead}</p>
-                  <ul className="xa-voices" aria-label="What we hear">{d.hear.slice(0, 2).map((h) => <li key={h}>{q(h)}</li>)}</ul>
-                  <a className="v8-btn v8-btn-glow" href={areaHref(a)}>Explore {a.name}</a>
-                </div>
-                <div className="xa-vis">
-                  <div className="xa-stack">
-                    <div className="xa-layer xa-photo">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={AREA_PHOTO[a.id]} alt="" loading="lazy" />
-                    </div>
-                    <div className="xa-layer xa-wire" aria-hidden="true" />
-                    <div className="xa-layer xa-front">
-                      <p className="xa-dg-title">{d.feature.title}</p>
-                      <Diagram kind={THEME[a.id].diagram} steps={d.feature.steps} />
-                    </div>
-                  </div>
-                  <ul className="xa-svcs" aria-label={`${a.name} services`}>
-                    {a.services.map((sv) => <li key={sv.id}><a href={`/services/${a.slug}/${sv.slug}`}>{sv.name}</a></li>)}
-                  </ul>
-                </div>
-              </article>
+              <li key={a.id} className="way" style={themeStyle(a.id)}>
+                <a href={areaHref(a)}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={AREA_PHOTO[a.id]} alt="" />
+                  <span className="way-txt">
+                    <b>{a.name}</b>
+                    <em>{a.tag}</em>
+                    <span className="way-q">{q(d.hear[0])}</span>
+                    <span className="way-more">Explore {a.name}</span>
+                  </span>
+                </a>
+              </li>
             );
           })}
-        </div>
-      </Scene>
+        </ul>
+      </section>
 
       {/* 3 · why us, with proof */}
       <section className="h-why" aria-labelledby="h-why">
@@ -162,7 +123,7 @@ export default function Home() {
       <section className="h-inds" aria-labelledby="h-inds">
         <div className="v8-wrap">
           <div className="h-row-head" data-reveal>
-            <div><p className="v8-eyebrow">Who we work with</p><h2 id="h-inds" className="v8-h2">Built inside public agencies. Useful anywhere.</h2></div>
+            <div><p className="v8-eyebrow">Who we work with</p><h2 id="h-inds" className="v8-h2">Built inside public agencies.</h2><p className="v8-lead">Our work so far is across the United States, and our team can do it anywhere.</p></div>
             <a className="v8-link" href="/industries">Everyone we work with</a>
           </div>
           <ul className="inds">

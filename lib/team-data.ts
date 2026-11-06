@@ -653,7 +653,7 @@ At the Federal level, Jen led national efforts in economic development and benef
     id: 30,
     name: `Ken M. McEntire, PE`,
     photo: `/images/team/kenm.webp`,
-    role: `Advisory Services – Highway Operations & Maintenance`,
+    role: `Advisory Services: Highway Operations & Maintenance`,
     location: `North Carolina`,
     phone: `+1 919-247-7707`,
     email: `kenm@rawlinsic.com`,

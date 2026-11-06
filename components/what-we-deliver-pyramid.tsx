@@ -8,8 +8,8 @@ import Link from "next/link";
    number/icon language as the Ecosystem bars, stepped over the middle of the ramp
    so black-on-light and white-on-dark both stay readable.
 
-   Copy is the approved "What we deliver" wording, verbatim, with the two internal
-   capability links preserved. */
+   Copy: content fixes v1 (Nov 5 2026), with the two internal capability links
+   preserved. */
 
 type Ink = "black" | "white";
 
@@ -32,31 +32,31 @@ const Glyph = ({ g }: { g: React.ReactNode }) => (
 const LAYERS: Layer[] = [
   {
     n: "01", short: "Data governance",
-    line: <>We establish effective <Link href="/services/digital-solutions/data-governance" className="wwd-link">data governance</Link> practices.</>,
+    line: <>We set up <Link href="/services/digital-solutions/data-governance" className="wwd-link">data governance</Link> people follow.</>,
     from: "#C4D8F2", to: "#ADC1DD", ink: "black",
     glyph: <><path d="M12 3l8 3v5c0 4.6-3.2 8.2-8 10-4.8-1.8-8-5.4-8-10V6z" /><path d="M9 12l2 2 4-4" /></>,
   },
   {
     n: "02", short: "Digital solutions",
-    line: "We design and implement digital solutions that help people work smarter and more creatively.",
+    line: "We build digital tools that take routine work off people's plates.",
     from: "#A6BBD6", to: "#8FA4C1", ink: "black",
     glyph: <><path d="M5 3v4M3 5h4M19 15v4M17 17h4" /><path d="M12 4l2.2 5.8L20 12l-5.8 2.2L12 20l-2.2-5.8L4 12l5.8-2.2z" /></>,
   },
   {
     n: "03", short: "Connected workflows",
-    line: "We streamline and connect workflows to reduce manual effort and improve efficiency.",
+    line: "We connect workflows so information is entered once and moves on its own.",
     from: "#4F6787", to: "#3E5778", ink: "white",
     glyph: <><circle cx="6" cy="6" r="2.5" /><circle cx="18" cy="6" r="2.5" /><circle cx="12" cy="18" r="2.5" /><path d="M8.5 6h7M17 8.2l-4 7.5M7 8.2l4 7.5" /></>,
   },
   {
     n: "04", short: "AI adoption",
-    line: "We develop high-value AI use cases and a roadmap for adoption and scaling.",
+    line: "We find the AI uses worth doing and plan how to adopt them.",
     from: "#3B5475", to: "#2C4667", ink: "white",
     glyph: <><rect x="8" y="8" width="8" height="8" rx="1.5" /><path d="M10 8V5M14 8V5M10 19v-3M14 19v-3M8 10H5M8 14H5M19 10h-3M19 14h-3" /></>,
   },
   {
     n: "05", short: "Organizational change",
-    line: <>We guide <Link href="/services/strategy-organization/change-management" className="wwd-link">organizational change</Link> by cultivating the culture required for new ways of working.</>,
+    line: <>We help people take up <Link href="/services/strategy-organization/change-management" className="wwd-link">the new way of working</Link>, with training and support.</>,
     from: "#294264", to: "#1D3759", ink: "white",
     glyph: <><circle cx="9" cy="8" r="3" /><circle cx="17" cy="9.5" r="2.2" /><path d="M4 19c0-2.8 2.2-5 5-5s5 2.2 5 5M15 14.5c2.3 0 4 1.8 4 4.5" /></>,
   },
@@ -69,7 +69,7 @@ export default function WhatWeDeliverPyramid() {
       <style>{CSS}</style>
       <div className="aam-container">
         <div className="aam-section-header reveal">
-          <p className="section-label"><span className="gold-text">Driving Transformation</span></p>
+          <p className="section-label"><span className="gold-text">From data to new ways of working</span></p>
           <h2 className="section-title">What we <em>deliver</em></h2>
         </div>
         <p className="wwd-hint">Hover or tap a panel to learn more</p>

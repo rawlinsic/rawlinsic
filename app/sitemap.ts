@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ({ url: `${SITE_URL}${path}`, lastModified: now, changeFrequency, priority });
   return [
     u("/", 1, "weekly"),
-    u("/services", 0.9), ...AREAS.map((a) => u(areaHref(a), 0.9)),
+    ...AREAS.map((a) => u(areaHref(a), 0.9)),
     ...AREAS.flatMap((a) => a.services.map((s) => u(`/services/${a.slug}/${s.slug}`, 0.8))),
     u("/industries", 0.9), ...VISIBLE_INDUSTRIES.map((i) => u(industryHref(i), 0.8)),
     ...VISIBLE_INDUSTRIES.flatMap((i) => i.subsectors.map((s) => u(subsectorHref(i, s), 0.7))),

@@ -55,9 +55,9 @@ export default function ServiceV8({ id }: { id: string }) {
         <div className="v8-wrap sv-hero-in">
           <div className="sv-hero-copy">
             <nav className="crumbs" aria-label="Breadcrumb">
-              <ol><li><a href="/services">What we do</a></li><li><a href={areaHref(area)}>{area.name}</a></li><li aria-current="page">{s.name}</li></ol>
+              <ol><li><a href="/#what">What we do</a></li><li><a href={areaHref(area)}>{area.name}</a></li><li aria-current="page">{s.name}</li></ol>
             </nav>
-            <p className="sv-area"><span>{T.n}</span>{area.name}</p>
+            <p className="sv-area"><a href={areaHref(area)}>{area.name}</a></p>
             <h1>{s.name}</h1>
             <p className="sv-intro">{s.intro}</p>
             <div className="v8-actions">
@@ -78,7 +78,7 @@ export default function ServiceV8({ id }: { id: string }) {
         <nav className="sv-sibs" aria-label={`${area.name} services`}>
           <ol className="v8-wrap">
             {area.services.map((x, k) => (
-              <li key={x.id}><a href={`/services/${area.slug}/${x.slug}`} aria-current={x.id === id ? "page" : undefined}><span>{T.n}.{k + 1}</span>{x.name}</a></li>
+              <li key={x.id}><a href={`/services/${area.slug}/${x.slug}`} aria-current={x.id === id ? "page" : undefined}>{x.name}</a></li>
             ))}
           </ol>
         </nav>
@@ -99,7 +99,6 @@ export default function ServiceV8({ id }: { id: string }) {
         <div className="v8-wrap sv-split dv-in">
           <div className="sv-split-h">
             <h2 className="v8-h2">What we deliver</h2>
-            <p className="dv-count"><b>{s.deliver.length}</b> parts of the work</p>
             <span className="dv-meter" aria-hidden="true"><i /></span>
           </div>
           <ol className="sv-deliver dv-list" style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>

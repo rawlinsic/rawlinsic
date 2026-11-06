@@ -44,7 +44,7 @@ export function WhoWeAre() {
         lead={<p>Former agency leaders, working alongside an in-house automation and AI build team.</p>} statement="We find what's broken, fix it, and stay until it runs." />
       <Sec title="Our story">
         <div className="pg-prose">
-          <p>Rawlins was founded in 2017 by Scott Rawlins, former Deputy Director and Chief Engineer of the Nevada Department of Transportation, to bring agency experience to agencies that needed it. It has grown from there.</p>
+          <p>Rawlins was founded in 2017 by Scott Rawlins, former Deputy Director and Chief Engineer of the Nevada Department of Transportation, to bring agency experience to agencies that needed it. A big part of our work is still advising agency leaders on how to deliver their programs. It has grown from there.</p>
           <Dev>Founding year and story: Scott to confirm.</Dev>
         </div>
       </Sec>
@@ -66,7 +66,7 @@ export function HowWeWork() {
       <Sec title="Principles" tone="panel">
         <ul className="pg-cards">
           {[
-            ["Start where the client is", "Most organizations already have a plan, a framework, or a manual. We put what exists to work before writing anything new."],
+            ["Start where the client is", "Many organizations already have a plan, a framework, or a manual. We put what exists to work before writing anything new."],
             ["Bridge before building", "We use the systems and licenses a client already owns, and build new only when nothing existing can do the job."],
             ["Straight answers on AI", "When a problem needs a rule, a process, or a decision instead of a model, we say so."],
             ["The client owns the result", "Every build comes with documentation and training. No lock-in."],
@@ -91,7 +91,7 @@ export function WhereWeWork() {
   return (
     <Shell scene="map" highlight={STATES}>
       <Hero crumbs={[["/about", "About"], ["/about/where-we-work", "Where we work"]]} kicker="Where we work" title="Across the United States"
-        lead={<p>The states where our work has taken us.</p>} actions={<Btn href="/insights/case-studies" primary>See the case studies</Btn>}>
+        lead={<p>The states where our work has taken us. Our work so far is across the United States, and our team can do it anywhere.</p>} actions={<Btn href="/insights/case-studies" primary>See the case studies</Btn>}>
         <Dev>International places on the current Areas page (Barbados, Dubai, Réunion, Saudi Arabia) are pursuits, not delivered work, so they are left off. Needs Nicole&apos;s decision.</Dev>
       </Hero>
       <Sec title="United States">
@@ -258,7 +258,7 @@ export function ThoughtIndex() {
   return (
     <Shell scene="network" photo={PAGE_PHOTO.thought}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/thought-leadership", "Thought Leadership"]]} kicker="Insights" title="Thought Leadership"
-        lead={<p>Expert perspectives and practical insights from the Rawlins team.</p>} />
+        lead={<p>Practical perspectives from our team on strategy, technology, data governance, and organizational change.</p>} />
       <Sec>
         <ul className="pg-cards">
           {THOUGHT_LEADERSHIP.map((a) => (
@@ -349,9 +349,9 @@ export function Podcast() {
         <div className="pg-two">
           <div>
             <p className="pg-kicker">About the podcast</p>
-            <h2 className="pg-h2">Providing value. Consulting with purpose.</h2>
+            <h2 className="pg-h2">Conversations with the people doing the work.</h2>
             <div className="pg-prose" style={{ marginTop: 14 }}>
-              <p>The Rawlins Way podcast offers an inside look at how Rawlins delivers value-driven infrastructure consulting. Through project deep dives, team insights, and industry discussions, discover our unique approach to creating exceptional client outcomes while fostering team success.</p>
+              <p>The Rawlins Way is our podcast: project deep dives, conversations with our team, and discussions of the issues agencies are working through.</p>
             </div>
           </div>
           <div>
@@ -360,7 +360,7 @@ export function Podcast() {
           </div>
         </div>
       </Sec>
-      <Talk title="Let's build something together" text="Join the conversation, share your story, and explore how the Rawlins team partners with agencies and enterprises to deliver lasting impact." />
+      <Talk title="Have a topic or a story to share?" text="Get in touch." />
     </Shell>
   );
 }
@@ -372,7 +372,7 @@ export function SiteMapPage() {
       <Hero scene={false} crumbs={[["/site-map", "Site map"]]} title="Site map" />
       <section className="pg-sec pg-body"><div className="pg-wrap pg-sitemap">
         <div>
-          <h2 className="pg-h3"><a href="/services">What we do</a></h2>
+          <h2 className="pg-h3"><a href="/#what">What we do</a></h2>
           <ul>{AREAS.map((a) => <li key={a.id}><a href={areaHref(a)}>{a.name}</a><ul>{a.services.map((s) => <li key={s.id}><a href={`/services/${a.slug}/${s.slug}`}>{s.name}</a></li>)}</ul></li>)}</ul>
         </div>
         <div>

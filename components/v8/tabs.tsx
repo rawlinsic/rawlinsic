@@ -21,7 +21,7 @@ export default function Tabs({ labels, label, children }: { labels: string[]; la
         {labels.map((l, k) => (
           <button key={l} ref={(b) => { btns.current[k] = b; }} type="button" role="tab" id={`${id}-t${k}`} aria-controls={`${id}-p${k}`}
             aria-selected={i === k} tabIndex={i === k ? 0 : -1} onClick={() => setI(k)}>
-            <span className="tb-n">{String(k + 1).padStart(2, "0")}</span>{l}
+            {l}
           </button>
         ))}
       </div>

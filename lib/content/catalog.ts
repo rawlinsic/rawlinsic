@@ -12,7 +12,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Strategic Planning & Performance Management",
   "area": "strategy",
   "st": "ok",
-  "intro": "Translate leadership vision into measurable goals, developing roadmaps that balance short-term priorities with long-term ambitions. Establish clear goals, measures and feedback loops that tie team performance to strategic outcomes.",
+  "intro": "We help leadership turn its direction into goals, measures, and yearly action plans, with dashboards that show whether the plan is working.",
   "hear": [
    "We have a strategic plan. We can't show it's working.” “We need a defensible way to decide what gets funded."
   ],
@@ -25,7 +25,7 @@ export const SERVICES: Record<string, SvcData> = {
    "Benchmarking and performance audits"
   ],
   "walk": [
-   "Performance measures, KPI inventories and dashboard approaches tied to the plan's goals, plus the leadership rhythm to review them",
+   "Performance measures, KPI inventories, and dashboard approaches tied to the plan's goals, plus the leadership rhythm to review them",
    "Prioritization frameworks, scoring criteria, screening tools, and a decision structure that holds up when someone asks why",
    "Action plan and monitoring frameworks that turn the plan into yearly work"
   ],
@@ -55,7 +55,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Organizational Design & Process Improvement",
   "area": "strategy",
   "st": "ok",
-  "intro": "Assess structures, processes, and culture to find what's slowing the organization down, then streamline the processes and procedures people use every day.",
+  "intro": "We look at structure, processes, and culture to find what's slowing the organization down, then fix the processes and procedures people use every day.",
   "hear": [
    "We're reorganizing, or standing up a new division.” “Our procedures live in people's heads, or in five versions of the same binder."
   ],
@@ -98,7 +98,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Change Management",
   "area": "strategy",
   "st": "ok",
-  "intro": "Guide organizations through change with frameworks that earn buy-in, reduce friction, and keep momentum at every level.",
+  "intro": "We help staff understand and adopt a change, whether it's a reorganization, a new system, or a new way of delivering work: a change plan, change champions, communication, and training.",
   "hear": [
    "A reorganization, a new system, or a new way of delivering work, and staff who have seen changes come and go before."
   ],
@@ -142,7 +142,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Workforce & Leadership Development",
   "area": "strategy",
   "st": "warn",
-  "intro": "Skills and proficiency programs that connect training, demonstrated skills, reviews and career progression, plus the HR structure behind them.",
+  "intro": "Skills and proficiency programs that connect training, demonstrated skills, reviews, and career progression, plus the HR structure behind them.",
   "hear": [
    "Our best people are retiring. Nobody's ready to step up."
   ],
@@ -152,14 +152,14 @@ export const SERVICES: Record<string, SvcData> = {
    "Leadership academies and manager workshops",
    "Career pathways and succession planning",
    "Knowledge transfer and retention strategy",
-   "HR advisory, process maps, classifications and salary surveys",
+   "HR advisory, process maps, classifications, and salary surveys",
    "Course and curriculum design, computer-based training"
   ],
   "walk": [
    "Proficiency programs and career paths",
    "Training curricula and train-the-trainer models",
    "Self-paced online courses",
-   "Job classifications, salary surveys and position descriptions"
+   "Job classifications, salary surveys, and position descriptions"
   ],
   "industries": [
    "transport",
@@ -172,8 +172,8 @@ export const SERVICES: Record<string, SvcData> = {
    "drone-programs"
   ],
   "xp": [
-   "We've run statewide training, quality management, and policy programs at Florida DOT",
-   "We've reworked maintenance training at Michigan DOT and served on a national training committee of state transportation officials",
+   "A former Florida DOT leader on our team ran its statewide training, quality management, and policy programs",
+   "A former Michigan DOT maintenance program coordinator on our team reworked its maintenance training and serves on AASHTO's training committee",
    "One of our trainers has led more than 8,000 classroom hours"
   ],
   "src": {
@@ -187,7 +187,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Executive Advisory",
   "area": "strategy",
   "st": "ok",
-  "intro": "Streamline administrative functions by improving processes, controls and reporting. Advisory, training design, facilitation and executive coaching for agency leadership and administrative functions.",
+  "intro": "We advise agency leaders on how to run and deliver their programs: big decisions, reorganizations, new programs, and key seats left open. We also help administrative functions work better, with clear processes, controls, and reporting.",
   "hear": [
    "Leadership is stretched, and the decisions in front of it are big: a reorganization, a new program, a key seat left open."
   ],
@@ -227,7 +227,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Program & Project Delivery",
   "area": "delivery",
   "st": "warn",
-  "intro": "Support project teams from kickoff to close-out to deliver on time and within budget, managing risk, coordinating stakeholders and ensuring quality. Serve as the owner's representative when the work is outsourced.",
+  "intro": "We support project teams from kickoff to closeout: managing risk, coordinating stakeholders, and checking quality to help projects finish on time and within budget. When the work is outsourced, we serve as the owner's representative.",
   "hear": [
    "Every manager runs projects their own way.” “We outsource the work. We need the contractor held to it."
   ],
@@ -255,7 +255,7 @@ export const SERVICES: Record<string, SvcData> = {
    "dashboards"
   ],
   "xp": [
-   "We've led major project teams at Florida DOT and the North Carolina Turnpike Authority, including alternative delivery programs",
+   "Members of our team led major projects at Florida DOT and the North Carolina Turnpike Authority, including design-build",
    "One of our project managers delivered a 13-mile, half-billion-dollar corridor in Las Vegas",
    "Our founder built Nevada DOT's matrix-based project management program"
   ],
@@ -270,7 +270,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Owner's Representation",
   "area": "delivery",
   "st": "warn",
-  "intro": "Serve as the owner's on-site representative: protect your interests, coordinate contractors, and make sure scope, quality, schedule, and standards are met.",
+  "intro": "We serve as the owner's on-site representative: protecting your interests, coordinating contractors, and checking that scope, quality, schedule, and standards are met.",
   "hear": [
    "We outsource the work. We need someone holding the contractor to it."
   ],
@@ -297,7 +297,7 @@ export const SERVICES: Record<string, SvcData> = {
    "operations"
   ],
   "xp": [
-   "We've coordinated risk and stakeholders on a $1.2 billion Mississippi River crossing and a $2 billion light rail line"
+   "We've facilitated partnering, with risk registers and issue resolution, on a $1.2 billion Mississippi River crossing and a $2 billion light rail line"
   ],
   "src": {
    "intro": "live",
@@ -341,7 +341,7 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "xp": [
    "Our founder led Nevada DOT's Pioneer Program for public-private partnerships, design-build, and construction manager/general contractor",
-   "Our team has delivered public-private partnerships, alternative delivery contracts, and a managed lanes program across three departments"
+   "A former executive at three state transportation departments on our team delivered public-private partnerships, alternative delivery contracts, and a managed lanes program"
   ],
   "src": {
    "intro": "Written from our records",
@@ -370,7 +370,7 @@ export const SERVICES: Record<string, SvcData> = {
    "Scope and solicitation development",
    "Proposal evaluation and source selection",
    "Cost and price analysis and negotiation",
-   "Contract administration, compliance and closeout"
+   "Contract administration, compliance, and closeout"
   ],
   "industries": [
    "transport",
@@ -383,7 +383,7 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "xp": [
    "One of our procurement specialists brings 35 years of government procurement in transportation and engineering services",
-   "We've led finance and administration at Florida DOT"
+   "Florida DOT's former Interim Assistant Secretary of Finance and Administration is on our team"
   ],
   "src": {
    "intro": "live",
@@ -469,7 +469,7 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "xp": [
    "Our team includes a former Arkansas DOT Chief Engineer of Operations who started as a field construction engineer",
-   "We led Michigan DOT's negotiations with industry that refined specifications, standard plans, and construction practices"
+   "A former Michigan DOT Engineer of Operations and Maintenance on our team chaired its negotiations with industry, which refined specifications, standard plans, and construction practices"
   ],
   "src": {
    "intro": "Based on Gulf South DOT Task 8 records; Southeastern DOT proficiency work orders; bios",
@@ -510,8 +510,8 @@ export const SERVICES: Record<string, SvcData> = {
    "row"
   ],
   "xp": [
-   "We've helped deliver California's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
-   "We've supported the leaders of 13 Federal Highway Administration division offices"
+   "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
+   "A former Federal Highway Administration executive on our team supported the leaders of 13 division offices"
   ],
   "src": {
    "intro": "Based on Gulf South DOT LPA manual work; bios",
@@ -524,7 +524,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Grants & Funding",
   "area": "delivery",
   "st": "ok",
-  "intro": "We help agencies find, win or issue the funding for programs they otherwise could not pursue, then turn the award into a working program.",
+  "intro": "We help agencies find, win, or issue the funding for programs they otherwise could not pursue, then turn the award into a working program.",
   "hear": [
    "There's grant money out there. Nobody has time to chase it."
   ],
@@ -536,7 +536,7 @@ export const SERVICES: Record<string, SvcData> = {
    "Turning awards into working programs"
   ],
   "walk": [
-   "A complete competitive application with task structure, budget and measurement plan",
+   "A complete competitive application with task structure, budget, and measurement plan",
    "Task structure and budget logic reusable for the next opportunity",
    "Or a published solicitation that attracts the right responses"
   ],
@@ -551,7 +551,7 @@ export const SERVICES: Record<string, SvcData> = {
    "procurement"
   ],
   "xp": [
-   "We've helped roll out new federal grant programs across 13 Federal Highway Administration division offices",
+   "A former Federal Highway Administration executive on our team helped 13 division offices roll out new federal grant programs",
    "Our proposal and grant team writes competitive federal applications"
   ],
   "src": {
@@ -565,15 +565,15 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Asset Management",
   "area": "om",
   "st": "ok",
-  "intro": "We help agencies align their expertise, digital tools and physical assets, so every decision drives measurable results. Manage assets across their lifecycle to maximize value and performance while controlling cost and risk.",
+  "intro": "We help organizations know what they own, what shape it's in, and where the next dollar does the most good. Then we set up the measures and governance that keep those decisions consistent.",
   "hear": [
-   "Rising material costs, changing technology, incomplete inventories and too little money for aging infrastructure. Many agencies make worst-first, reactive decisions in silos, which costs more over the life of the asset."
+   "Rising material costs, changing technology, incomplete inventories, and too little money for aging infrastructure. Many agencies make worst-first, reactive decisions in silos, which costs more over the life of the asset."
   ],
   "quote": true,
   "deliver": [
    "Asset data foundation and inventories",
    "Performance-based management and levels of service",
-   "Life cycle, risk and investment strategy",
+   "Life cycle, risk, and investment strategy",
    "Asset management governance and implementation",
    "Local-agency asset management workshops"
   ],
@@ -582,7 +582,7 @@ export const SERVICES: Record<string, SvcData> = {
    "Performance measures that support the organization's goals",
    "Life cycle and cost planning strategies",
    "Proficiency programs that develop staff",
-   "Frameworks that align asset data, performance management and governance"
+   "Frameworks that align asset data, performance management, and governance"
   ],
   "industries": [
    "transport",
@@ -595,9 +595,9 @@ export const SERVICES: Record<string, SvcData> = {
    "operations"
   ],
   "xp": [
-   "One of our advisors built a performance-based asset maintenance firm from two people to operations in 43 states",
+   "One of our advisors co-founded a performance-based asset maintenance firm that grew from two people to operations in 43 states",
    "Our founder led Nevada DOT's statewide asset management plan",
-   "We've done life cycle cost analysis for highway assets in the United States and Canada"
+   "One of our advisors has done life cycle cost analysis for highway assets on public and privately financed projects"
   ],
   "src": {
    "intro": "Janine Cooper, asset management answers",
@@ -610,7 +610,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Maintenance & Operations",
   "area": "om",
   "st": "warn",
-  "intro": "Optimize day-to-day operations and maintenance to reduce downtime, improve service reliability, and pay for results instead of hours.",
+  "intro": "We help maintenance and operations run the same way in every region: contracts that pay for results instead of hours, quality programs people trust, and fleets, facilities, and crews ready for winter and emergencies.",
   "hear": [
    "Our field crews do it differently in every region."
   ],
@@ -626,7 +626,7 @@ export const SERVICES: Record<string, SvcData> = {
   "walk": [
    "Performance-based contract specifications and deduction models",
    "Quality assurance programs",
-   "Field assessments, operating standards, checklists and crew training",
+   "Field assessments, operating standards, checklists, and crew training",
    "Tabletop exercises that test plans before an emergency does"
   ],
   "industries": [
@@ -639,9 +639,9 @@ export const SERVICES: Record<string, SvcData> = {
    "drone-emergency"
   ],
   "xp": [
-   "We've run Florida DOT's statewide maintenance program: 12,157 centerline miles and 7,152 bridges",
-   "We've led Michigan DOT's statewide maintenance operations alignment and a five-year statewide contract with the county road agencies",
-   "We've piloted performance-based maintenance in a Michigan DOT region",
+   "Florida DOT's former Director of Maintenance, who led its statewide program (12,157 centerline miles and 7,152 bridges), is on our team",
+   "A former Michigan DOT division administrator on our team led its statewide maintenance operations alignment and chaired the negotiations for a five-year statewide contract with the county road agencies",
+   /* hidden until Scott confirms (content fixes v1, 8.5): "We've piloted performance-based maintenance in a Michigan DOT region" */
    "Our founder led Nevada DOT's fleet optimization program for 2,700 pieces of equipment"
   ],
   "src": {
@@ -684,8 +684,8 @@ export const SERVICES: Record<string, SvcData> = {
    "dashboards"
   ],
   "xp": [
-   "We've managed Michigan DOT's safety programs, led its connected vehicle and operations plans, and run a region's intelligent transportation systems",
-   "We've championed Vision Zero as a city public works director"
+   "Former Michigan DOT leaders on our team ran its operations division, including traffic and safety, led its connected vehicle and operations plan, and ran a region's intelligent transportation systems",
+   "A former City of Las Vegas Director of Public Works on our team championed the city's Vision Zero initiative"
   ],
   "src": {
    "intro": "Based on Gulf South DOT Tasks 13 and 33; Southeastern DOT traffic design proficiency; bios",
@@ -759,7 +759,7 @@ export const SERVICES: Record<string, SvcData> = {
    "Prioritized opportunity list",
    "Working integration or automation",
    "Exception-handling rules",
-   "Documentation, training materials and owned artifacts"
+   "Documentation, training materials, and owned artifacts"
   ],
   "industries": [
    "transport",
@@ -785,7 +785,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Data Governance",
   "area": "tech",
   "st": "ok",
-  "intro": "Turn uncertain, fragmented or person-dependent data into governed information people can find, understand and use. Most organizations have already done governance on paper; the value is in putting it into practice.",
+  "intro": "We turn uncertain, scattered, or person-dependent data into governed information people can find, understand, and use. Many organizations have already written governance down. The value is in putting it into practice.",
   "hear": [
    "Nobody can tell me which number is the right one."
   ],
@@ -818,7 +818,7 @@ export const SERVICES: Record<string, SvcData> = {
    "ai"
   ],
   "xp": [
-   "We've led enterprise data governance at Florida DOT and Nevada DOT's strategic data plan"
+   "Florida DOT's former Chief Information Officer, who led its data governance, is on our team, and our founder led Nevada DOT's strategic data plan"
   ],
   "src": {
    "intro": "Data/AI catalog (internal)",
@@ -831,7 +831,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "AI",
   "area": "tech",
   "st": "ok",
-  "intro": "Select and implement AI where judgment is needed, trustworthy context exists, and the result can be governed and used. Part of what we bring is telling you when a problem doesn't need AI at all.",
+  "intro": "We put AI to work where judgment is needed, trustworthy information exists, and the result can be governed and used. We'll also tell you when a problem doesn't need AI at all.",
   "hear": [
    "Our staff already use AI, and we have no policy for it."
   ],
@@ -952,9 +952,9 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Technology & AI Strategy",
   "area": "tech",
   "st": "ok",
-  "intro": "The front door when there's a broad mandate, competing priorities, or not enough evidence to choose an implementation. These engagements are valuable only when they end in a decision.",
+  "intro": "Start here when there's a broad mandate, competing priorities, or not enough evidence to choose what to build. Every engagement ends in a decision.",
   "hear": [
-   "We bought the software, and nobody uses it.” Leadership wants AI, but useful cases, readiness, risk or ownership are unclear."
+   "We bought the software, and nobody uses it.” “Leadership wants AI, and no one is sure where it fits, whether we're ready, or who owns it."
   ],
   "quote": true,
   "deliver": [
@@ -968,7 +968,7 @@ export const SERVICES: Record<string, SvcData> = {
   "walk": [
    "Ranked use cases, prerequisites, guardrails, success measures, and go or no-go decisions",
    "A roadmap that assigns each initiative to the right work and sequence",
-   "Setup, training and change management so a new tool becomes how work gets done"
+   "Setup, training, and change management so a new tool becomes how work gets done"
   ],
   "industries": [
    "transport",
@@ -1032,9 +1032,9 @@ export const SERVICES: Record<string, SvcData> = {
    "workforce"
   ],
   "xp": [
-   "We've led drone programs since 2018, including a nationwide pilot network",
-   "We wrote first-of-their-kind guidance manuals on drones and advanced air mobility",
-   "We've done hundreds of complex and post-disaster bridge inspections with drones and rope access"
+   "One of our aviation leads has run drone programs since 2018, including a nationwide network of pilots",
+   "One of our advisors wrote first-of-their-kind guidance manuals on drones and advanced air mobility",
+   "One of our engineers has performed and managed hundreds of complex and post-disaster bridge inspections with drones and rope access"
   ],
   "src": {
    "intro": "aviation catalog (internal)",
@@ -1080,7 +1080,7 @@ export const SERVICES: Record<string, SvcData> = {
    "grants"
   ],
   "xp": [
-   "We wrote first-of-their-kind advanced air mobility guidance manuals and serve on national committees",
+   "One of our advisors wrote first-of-their-kind advanced air mobility guidance manuals and serves on national committees",
    "Our team includes the California Department of Transportation's former Chief of Aeronautics"
   ],
   "src": {
@@ -1122,7 +1122,7 @@ export const SERVICES: Record<string, SvcData> = {
    "operations"
   ],
   "xp": [
-   "Our aviation team has run disaster assessments and post-disaster bridge inspections"
+   "We've supported emergency drone response training and used drone data to check debris removal quantities, and one of our engineers has led post-disaster bridge inspections"
   ],
   "src": {
    "intro": "aviation catalog (internal)",
@@ -1135,7 +1135,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Research & Standards",
   "area": "aviation",
   "st": "ok",
-  "intro": "Facilitating agencies, manufacturers, researchers and regulators so the guidance agencies rely on is written with them, not around them.",
+  "intro": "We bring agencies, manufacturers, researchers, and regulators together so the guidance agencies rely on is written with them.",
   "hear": [
    "Agencies need guidance written with the people who will use it: states, manufacturers, researchers, and regulators."
   ],
@@ -1163,8 +1163,8 @@ export const SERVICES: Record<string, SvcData> = {
    "grants"
   ],
   "xp": [
-   "We serve on national drone and advanced air mobility committees",
-   "We've led research and innovation at the California Department of Transportation"
+   "Members of our team serve on national drone and advanced air mobility committees",
+   "Our team includes the California Department of Transportation's former Chief of Research, Innovation & System Information"
   ],
   "src": {
    "intro": "aviation catalog (internal)",
@@ -1246,9 +1246,9 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "xp": [
    "Members of our team led a smart cities and innovation practice across the Middle East and Africa",
-   "We've led mobility engagements and built a city data platform for a major automaker",
-   "Our team has worked on intelligent transportation systems for the U.S. Department of Transportation",
-   "We wrote connected vehicle and operations plans at Michigan DOT",
+   "A member of our team led mobility engagements and a city data platform at a major automaker",
+   "A member of our team contributed to the U.S. Department of Transportation's intelligent transportation systems program",
+   "A former Michigan DOT leader on our team led its connected vehicle and operations plan",
    "Our team includes a former innovation and rail leader at the California Department of Transportation"
   ],
   "src": {
@@ -1382,13 +1382,13 @@ export const AREAS: Record<string, AreaData> = {
  "om": {
   "id": "om",
   "name": "Operations & Maintenance",
-  "tag": "Keeping infrastructure safe, reliable, and affordable",
+  "tag": "Keeping what you own safe, working, and affordable",
   "services": [
    "asset-mgmt",
    "operations",
    "traffic"
   ],
-  "lead": "Most of an agency's money goes to keeping what it already owns safe and working. We help make every dollar of that count.",
+  "lead": "Keeping what you already own safe and working takes a big share of the budget. We help make every dollar of that count.",
   "hear": [
    "Worst-first, reactive decisions made in silos",
    "Field crews do it differently in every region",
@@ -1455,7 +1455,7 @@ export const AREAS: Record<string, AreaData> = {
    "tech-strategy",
    "smart-mobility"
   ],
-  "lead": "Most problems start the same way: systems that don't talk to each other, the same information keyed in three times, and data nobody trusts. We make the systems you already own work together, automate the busywork, and put AI to work where it helps.",
+  "lead": "Many problems start the same way: systems that don't talk to each other, the same information keyed in three times, and data nobody trusts. We make the systems you already own work together, automate the busywork, and put AI to work where it helps.",
   "hear": [
    "Our tools, manuals, and training are scattered across drives",
    "We key the same information into three systems",
@@ -1588,7 +1588,7 @@ export const INDUSTRIES: Record<string, IndustryData> = {
    ],
    [
     "Paul Steinman, P.E.",
-    "Former Chief Operating Officer, Idaho Transportation Department"
+    "Former Chief of Operations, Idaho Transportation Department"
    ],
    [
     "Rex Vines, P.E.",
@@ -1636,7 +1636,7 @@ export const INDUSTRIES: Record<string, IndustryData> = {
    ],
    [
     "David Rader",
-    "Built a performance-based asset maintenance firm to 43 states"
+    "Co-founded a performance-based asset maintenance firm that grew to 43 states"
    ]
   ]
  },
@@ -1731,7 +1731,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   "name": "Bridges & Structures",
   "st": "ok",
   "deliver": [
-   "Coordination, risk, and partnering on major crossings",
+   "Partnering on major crossings",
    "Progressive design-build partnering",
    "Drone and rope-access bridge inspection",
    "Multi-state standards for drone data on structures",
@@ -1770,7 +1770,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    "aero-division",
    "grants"
   ],
-  "intro": "Drones and advanced air mobility are moving faster than the rules and the org charts. We help aeronautics divisions and DOTs run drone programs that are safe, compliant, and useful across the agency, and plan for what's next.",
+  "intro": "State aeronautics divisions, airports, and the drone and advanced air mobility programs growing around them. We help small aviation staffs run programs, plan for what's next, and compete for federal funding.",
   "industry": "transport",
   "ch": [
    "Drone use spread before policy did",
@@ -1786,16 +1786,14 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   "name": "Rail & Transit",
   "st": "warn",
   "deliver": [
-   "Collaborative project management and risk on light rail",
-   "Transit performance improvement",
-   "Rail and transit program leadership"
+   "Partnering facilitation on a light rail line"
   ],
   "services": [
    "program-delivery",
    "owners-rep",
    "strategic-planning"
   ],
-  "intro": "Transit and rail agencies get the same delivery discipline and the same experienced people.",
+  "intro": "Our transit work so far is partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation.",
   "industry": "transport",
   "ch": [
    "Multi-agency coordination on a major transit build",
@@ -1811,7 +1809,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   "deliver": [
    "Self-assessments and steering committees",
    "Workshops on the state's competency framework",
-   "Short, mid and long-term action plans"
+   "Short, mid, and long-term action plans"
   ],
   "services": [
    "asset-mgmt",
@@ -1960,8 +1958,7 @@ export const CASES: Record<string, CaseData> = {
    "An appraisal tracker for the right of way appraiser program"
   ],
   "res": [
-   "Multiple career pathways, improved compensation structures, and increased accountability",
-   "A stronger team-based culture, with higher employee retention and efficiency",
+   "Goals: multiple career paths, pay set to industry benchmarks, and stronger checks and balances",
    "Utilization process complete and in use",
    "Transportation worker proficiency program handed to the statewide coordinator",
    "Appraiser classification, certification, and salary structure delivered",
@@ -1988,9 +1985,7 @@ export const CASES: Record<string, CaseData> = {
    "Reworked the project management life cycle from planning to maintenance",
    "Introduced risk management practices to control scope, schedule, and budget"
   ],
-  "res": [
-   "Increased on-time project completion and reduced budget variances"
-  ],
+  "res": [],
   "services": [
    "program-delivery"
   ],
@@ -2218,12 +2213,12 @@ export const CASES: Record<string, CaseData> = {
   "id": "cs-mi-pbo",
   "ch": "Michigan moved toward a maintenance model based on performance outcomes and needed the tools to run it.",
   "did": [
-   "Designed a statewide maintenance system based on performance outcomes",
-   "Developed benchmarking and cost modeling tools"
+   "Helped design and implement a performance-based program for statewide highway maintenance",
+   "Field measurement of current levels of service, and outcome-based performance measures",
+   "A cost model for maintenance activities",
+   "Requirements and procurement support for an enterprise asset management system"
   ],
-  "res": [
-   "Cost savings, improved accountability, and enhanced roadway performance"
-  ],
+  "res": [],
   "services": [
    "operations",
    "asset-mgmt"
@@ -2255,15 +2250,12 @@ export const CASES: Record<string, CaseData> = {
   "id": "cs-nc-ipd",
   "ch": "The department wanted to streamline how projects are delivered and funded, and to base maintenance funding on performance.",
   "did": [
-   "Statewide program reviews with improvements to procurement and contractor performance",
-   "Project execution and funding strategies, including federal grant applications",
-   "Performance-based budgeting for maintenance funding",
-   "Statewide asset tracking for infrastructure planning"
+   "Reviewed programs with staff and recommended improvements to how projects are delivered and funded",
+   "Supported BUILD and INFRA federal grant applications and the projects that were awarded",
+   "Reviewed asset management for highways, ports, airports, rail, transit, fleet, and ferries",
+   "Identified where maintenance funding could be allocated based on performance"
   ],
-  "res": [
-   "Increased access to federal infrastructure grants, leading to long-term funding stability",
-   "Reduced maintenance costs and extended roadway lifespans"
-  ],
+  "res": [],
   "services": [
    "program-delivery",
    "asset-mgmt",
@@ -2290,8 +2282,7 @@ export const CASES: Record<string, CaseData> = {
   "res": [
    "Strategic plan for 2024 to 2029 complete",
    "Year 1 action plan complete",
-   "Action plan tracking tool with progress dashboards in use",
-   "Improved project predictability and streamlined resource allocation"
+   "Action plan tracking tool with progress dashboards in use"
   ],
   "services": [
    "strategic-planning",
@@ -2310,14 +2301,9 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department wanted a statewide look at how its operations, maintenance, fleet, and facilities were managed.",
   "did": [
    "Statewide assessment of operations and maintenance programs",
-   "Performance-based asset management for fleet and facilities",
-   "Fleet optimization program for more than 2,700 vehicles",
-   "Predictive maintenance planning to reduce vehicle downtime and extend asset life"
+   "Reviewed asset management, performance management, fleet and facilities, district operations, organization, budgeting, and traffic operations"
   ],
-  "res": [
-   "Cost savings, improved service reliability, and extended asset lifespans",
-   "Improved budget efficiency and operational performance"
-  ],
+  "res": [],
   "services": [
    "operations",
    "asset-mgmt"
@@ -2360,8 +2346,7 @@ export const CASES: Record<string, CaseData> = {
    "A one-page visual summary for executive alignment"
   ],
   "res": [
-   "Technology strategic plan delivered",
-   "The technology division has the vision, structure, and tools to lead the agency forward"
+   "Technology strategic plan delivered"
   ],
   "services": [
    "tech-strategy",
@@ -2376,10 +2361,10 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department wanted its asset management programs to support long-term investment decisions.",
   "did": [
    "Reviewed the department's asset management programs",
-   "Implemented a strategy based on the ISO 55000 asset management standard"
+   "Developed an asset management strategy, vision, and implementation plan, using the ISO 55000 standard as the guide"
   ],
   "res": [
-   "Cost savings, improved lifecycle management, and better funding allocation"
+   "A plan of action for improving the department's asset management"
   ],
   "services": [
    "asset-mgmt"
@@ -2393,10 +2378,10 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department wanted to know how its statewide performance-based maintenance contracts were working and how to improve them.",
   "did": [
    "Statewide review of performance-based highway maintenance contracts",
-   "Improved procurement models and contractor accountability measures"
+   "An action plan, procurement recommendations, and performance measures and levels of service for interstate maintenance"
   ],
   "res": [
-   "Increased cost efficiency and improved service quality on interstate maintenance projects"
+   "Process improvements that increase contractor accountability and let VDOT spend less time monitoring contractors' work"
   ],
   "services": [
    "operations",
@@ -2410,9 +2395,10 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-maint-model": {
   "id": "cs-maint-model",
-  "ch": "Agencies outsourcing highway maintenance needed a model that pays for performance.",
+  "ch": "Maintenance contractors wanted a contracting model DOTs could tailor, from staff support to full performance-based programs.",
   "did": [
-   "Created a performance-based outsourcing model used by agencies in Florida, Texas, Georgia, South Carolina, Utah, and Arizona"
+   "Interviewed DOT leaders in Florida, Texas, Georgia, South Carolina, Utah, and Arizona about their maintenance needs",
+   "Recommended Flexible Asset Management Services: four contracting methods a DOT can combine"
   ],
   "res": [],
   "services": [
@@ -2422,14 +2408,14 @@ export const CASES: Record<string, CaseData> = {
   "subsectors": [
    "sub-highways"
   ],
-  "industry": "transport",
+  "industry": "contractors",
   "industry2": null
  },
  "cs-pa-budget": {
   "id": "cs-pa-budget",
   "ch": "Maintenance budgets needed to be easier to explain and tied to performance.",
   "did": [
-   "Developed a performance-based funding model for maintenance"
+   "Reviewed how maintenance budgets are allocated, compared them with leading practice, and delivered a white paper with near-, mid-, and long-term steps"
   ],
   "res": [],
   "services": [
@@ -2444,8 +2430,9 @@ export const CASES: Record<string, CaseData> = {
   "id": "cs-nyc-parks",
   "ch": "A city parks system needed a consistent way to track assets and plan capital projects.",
   "did": [
-   "Developed an investment strategy for 29,000 acres of parkland",
-   "Created a standard asset tracking and capital project planning framework"
+   "Helped set an asset investment strategy for 29,000 acres of parkland",
+   "A standard asset inspection protocol to inform capital planning, with a phased rollout",
+   "A framework and tool to prioritize capital needs across asset types"
   ],
   "res": [],
   "services": [
@@ -2474,16 +2461,16 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-major": {
   "id": "cs-major",
-  "ch": "Some of the largest projects in the country: a $1.2 billion Mississippi River crossing, a $275 million river bridge, and a $2 billion light rail line.",
+  "ch": "Three major projects: a $1.2 billion Mississippi River crossing, a $275 million river bridge, and a $2 billion light rail line.",
   "did": [
-   "I-74 Mississippi River Crossing, Iowa and Illinois ($1.2 billion): project coordination and risk management between state agencies and contractors",
-   "I-70 Rocheport River Bridge, Missouri ($275 million): partnering facilitation, risk mitigation, and stakeholder coordination",
-   "Southwest Light Rail Transit, Minnesota ($2.0 billion): collaborative project management, risk management, budget control, and multi-agency coordination"
+   "Partnering facilitation between the owner and contractor: project charter, risk register, issue resolution process, and team evaluations",
+   "I-74 Mississippi River Crossing, Iowa and Illinois ($1.2 billion)",
+   "I-70 Rocheport River Bridge, Missouri ($275 million)",
+   "Southwest Light Rail Transit, Minnesota ($2.0 billion)"
   ],
   "res": [],
   "services": [
    "program-delivery",
-   "owners-rep",
    "alt-delivery"
   ],
   "subsectors": [
@@ -2669,6 +2656,7 @@ export const PRIV: { hear: string[]; start: string[] } = {
 export const STATES: string[] = [
  "Alaska",
  "Arkansas",
+ "California",
  "Delaware",
  "Florida",
  "Georgia",
@@ -2680,6 +2668,7 @@ export const STATES: string[] = [
  "Louisiana",
  "Maryland",
  "Michigan",
+ "Minnesota",
  "Missouri",
  "Nevada",
  "New York",

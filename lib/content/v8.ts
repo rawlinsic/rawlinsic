@@ -1,6 +1,7 @@
-/* v8 design, brand palette (Nicole, Nov 5): blues, silver and greys, black,
-   with a glowing aqua accent. The five areas share one palette; each is told
-   apart by its own diagram and photography. Text colors pass WCAG AA. */
+/* v8 design. Colors: the 2025 Branding Guide palette (recorded in
+   Rawlins Branding/BRAND-SOURCE-BRIEF.md) plus a glowing blue accent
+   (Nicole, Nov 5). The five areas share one palette; each is told apart by
+   its own diagram and photography. Text colors pass WCAG AA. */
 import type { CSSProperties } from "react";
 import { PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import type { CaseIndex } from "@/lib/content/site";
@@ -9,10 +10,10 @@ export type DiagramKind = "loop" | "track" | "cycle" | "hub" | "ascent";
 export type AreaTheme = { n: string; color: string; ink: string; tint: string; soft: string; diagram: DiagramKind };
 
 export const BRAND = {
-  black: "#0a1220", deep: "#08111f", navy: "#1a3251", blue: "#1b5ccc", steel: "#4b6280",
-  silver: "#c9d2dd", silver2: "#e8edf3", paper: "#f5f7fa", aqua: "#22d3ee", aquaSoft: "#a5f3fc", aquaInk: "#0e7490",
+  navy: "#1D3759", logoNavy: "#203864", slate: "#4D688C", lightBlue: "#C4D8F2", paleBlue: "#DCE6F2", black: "#0D0D0D",
+  glow: "#22D3EE", glowSoft: "#A5F3FC", glowInk: "#0E7490", deep: "#0E1A2B",
 };
-const area = (n: string, diagram: DiagramKind): AreaTheme => ({ n, color: BRAND.blue, ink: BRAND.blue, tint: "#eef3fb", soft: "#cfdcf0", diagram });
+const area = (n: string, diagram: DiagramKind): AreaTheme => ({ n, color: BRAND.navy, ink: BRAND.navy, tint: BRAND.paleBlue, soft: BRAND.lightBlue, diagram });
 export const THEME: Record<string, AreaTheme> = {
   strategy: area("01", "loop"),
   delivery: area("02", "track"),

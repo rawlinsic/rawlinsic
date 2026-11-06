@@ -35,7 +35,7 @@ export const SCENE_PHOTO: Record<SceneKey, string> = {
 export const AREA_PHOTO: Record<string, string> = {
   strategy: P("strategy-bg.webp"),
   delivery: P("connectingdots.webp"),
-  om: P("majortrans.webp"),
+  om: P("aam-implementation-scaling.webp"), // U.S. bridge inspection crew (content fixes v1, section 7); was majortrans.webp
   tech: P("auto-team.webp"),
   aviation: P("skylimit.webp"),
 };

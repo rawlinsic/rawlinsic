@@ -9,8 +9,8 @@ import { Btn, CaseCards, Dev, Hero, List, People, Sec, ServiceChips, Shell, Talk
 export function IndustriesIndex() {
   return (
     <Shell scene="interchange" photo={PAGE_PHOTO.industries}>
-      <Hero crumbs={[["/industries", "Who we work with"]]} kicker="Who we work with" title="Built inside public agencies. Useful anywhere."
-        lead={<p>Most of our work is with organizations that own and run public infrastructure. The same methods work for any organization that needs to plan, deliver, and run better.</p>}
+      <Hero crumbs={[["/industries", "Who we work with"]]} kicker="Who we work with" title="Built inside public agencies."
+        lead={<p>Most of our work is with organizations that own and run public infrastructure. The same methods work for any organization that needs to plan, deliver, and run better. Our work so far is across the United States, and our team can do it anywhere.</p>}
         actions={<Btn href="/contact" primary>Get in touch</Btn>} />
       <Sec title="Industries">
         <ul className="pg-cards">

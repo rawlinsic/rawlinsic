@@ -41,21 +41,21 @@ const STAGES: Stage[] = [
   {
     num: "02",
     label: "Automation",
-    desc: "Automation transforms workflows using clean, structured data.",
+    desc: "Automation moves work along using clean, structured data.",
     from: "#A6BBD6", to: "#8FA4C1", ink: "black",
     icon: ic(<>{/* a loop that runs itself */}<path d="M21 12a9 9 0 0 0-9-9 9.7 9.7 0 0 0-6.7 2.7L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 9 9 9.7 9.7 0 0 0 6.7-2.7L21 16" /><path d="M21 21v-5h-5" /><path d="M12.9 8.3 9.8 12.9h2.3l-.7 2.9 3-4.4h-2.3z" /></>),
   },
   {
     num: "03",
     label: "AI",
-    desc: "AI recognizes patterns, makes predictions, evaluates alternatives, picks the best option, and updates its internal model, adapting outputs over time.",
+    desc: "AI finds patterns, makes predictions, and compares options, using the data and rules it's given.",
     from: "#4F6787", to: "#38506E", ink: "white",
     icon: ic(<><rect x="8" y="8" width="8" height="8" rx="1.5" /><path d="M10 8V5M14 8V5M10 19v-3M14 19v-3M8 10H5M8 14H5M19 10h-3M19 14h-3" /></>),
   },
   {
     num: "04",
     label: "Human Verification",
-    desc: "People validate AI results by applying context and judgment, then turn AI outputs into actionable insights.",
+    desc: "People check AI results with context and judgment, then decide what to do with them.",
     from: "#38506E", to: "#1D3759", ink: "white",
     icon: ic(<><circle cx="9.5" cy="7.5" r="3.2" /><path d="M3.5 19c0-3.3 2.7-6 6-6h.6" /><path d="M13.5 16.6l2.4 2.4 4.6-5" /></>),
   },
@@ -69,7 +69,7 @@ export default function AutomationEcosystemBars() {
       <style>{CSS}</style>
       <div className="aam-container">
         <div className="aam-section-header reveal">
-          <p className="section-label"><span className="gold-text">The Ecosystem</span></p>
+          <p className="section-label"><span className="gold-text">How the pieces fit</span></p>
           <h2 className="section-title">How data governance, automation, and <em>AI</em> work together</h2>
         </div>
 

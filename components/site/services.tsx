@@ -34,15 +34,15 @@ const DIGITAL_PROOF = [
   "A tracking dashboard for an advanced air mobility program",
   "Drone data validation that settled debris quantities when reports disagreed",
   "An accessibility (508) compliance add-in for Microsoft Word",
-  "An AI pilot starting with cash-flow modeling",
+  "A planned AI pilot for cash-flow modeling",
 ];
 
 /* ── Overview ── */
 export function ServicesIndex() {
   return (
     <Shell scene="grid" photo={PAGE_PHOTO.services}>
-      <Hero crumbs={[["/services", "Services"]]} kicker="What we do" title="Five areas. Most engagements draw on more than one."
-        lead={<p>We help organizations plan, deliver, run, and modernize the infrastructure they own, and the organizations behind it.</p>}
+      <Hero crumbs={[["/services", "Services"]]} kicker="What we do" title="Many engagements draw on more than one area."
+        lead={<p>We help organizations plan, deliver, run, and modernize the infrastructure they own, and strengthen the teams behind it.</p>}
         actions={<><Btn href="/contact" primary>Get in touch</Btn><Btn href="/insights/case-studies">See our work</Btn></>} />
       {AREAS.map((a, i) => (
         <Sec key={a.id} title={a.name} kicker={a.tag} tone={i % 2 ? "panel" : undefined}
@@ -75,7 +75,7 @@ export function AreaPage({ area }: { area: Area }) {
   );
 }
 
-function DigitalShowcase() {
+export function DigitalShowcase() {
   return (
     <>
       <Sec title="Making systems connect" kicker="What we build"
@@ -91,7 +91,7 @@ function DigitalShowcase() {
   );
 }
 
-function AviationShowcase() {
+export function AviationShowcase() {
   return (
     <>
       <Sec title="Where we lead" intro={<p>Our team helped shape early guidance on drones and advanced air mobility and continues to support its evolution, working directly with transportation agencies and airports to turn strategy into deployable programs.</p>}>

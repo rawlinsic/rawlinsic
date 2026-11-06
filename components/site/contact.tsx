@@ -7,15 +7,15 @@ import { Hero, Shell } from "@/components/site/ui";
 export function ContactPageNew() {
   return (
     <Shell scene="hero" photo={PAGE_PHOTO.contact}>
-      <Hero crumbs={[["/contact", "Contact"]]} kicker="Contact Rawlins" title="Ready to partner with purpose?"
-        lead={<p>Whether you&rsquo;re ready to engage or simply exploring what&rsquo;s possible, we&rsquo;d love to hear from you.</p>} />
+      <Hero crumbs={[["/contact", "Contact"]]} kicker="Contact Rawlins" title="Tell us what you're trying to fix."
+        lead={<p>Whether you have a project in mind or a question, we&rsquo;ll connect you with the person on our team who has done the work.</p>} />
       <section className="pg-sec">
         <div className="pg-wrap pg-two">
           <div>
             <p className="pg-kicker">Get in touch</p>
             <h2 className="pg-h2">Send us a message</h2>
             <div className="pg-prose" style={{ marginTop: 14 }}>
-              <p>Our team is here to listen, advise, and partner with you. Share a bit about your organization and what you&rsquo;re working through, and we&rsquo;ll take it from there.</p>
+              <p>Tell us about your organization and what you&rsquo;re working through.</p>
             </div>
             <dl className="pg-facts cf-facts">
               <div><dt>Email us</dt><dd><a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a></dd></div>

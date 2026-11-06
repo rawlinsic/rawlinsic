@@ -101,12 +101,11 @@ export default function HeaderClient({ data }: { data: NavData }) {
         <div className="mx-what">
           {data.areas.map((a) => (
             <section key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink, ["--a-tint" as string]: a.tint } as CSSProperties}>
-              <a className="mx-area" href={a.href}><span className="mx-n">{a.n}</span><b>{a.name}</b><em>{a.tag}</em></a>
+              <a className="mx-area" href={a.href}><b>{a.name}</b><em>{a.tag}</em></a>
               <ul>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
             </section>
           ))}
         </div>
-        <p className="mx-foot"><a href="/services">See all five areas and 29 services</a></p>
       </div>
       <div className="hx-panel" id="hx-m-who" hidden={open !== "who"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         <div className="mx-who">
@@ -173,7 +172,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
                 <summary>What we do</summary>
                 <ul className="hx-areas">{data.areas.map((a) => (
                   <li key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink } as CSSProperties}>
-                    <details><summary><span className="mx-n">{a.n}</span>{a.name}</summary>
+                    <details><summary>{a.name}</summary>
                       <ul><li><a href={a.href}>{a.name} overview</a></li>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
                     </details>
                   </li>
