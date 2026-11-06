@@ -692,15 +692,21 @@ html.lenis { scroll-behavior: auto !important; }
 
 /* panels: each section slides up over the one before it (components/v8/panels.tsx) */
 .pnl { position: relative; background: #0d0d0d; }
-.pnl > * { position: relative; }
+:where(.pnl > *) { position: relative; }
 .pnl[data-live] > * { position: sticky; top: var(--pt, 0px); transform-origin: 50% calc(100% - min(50%, 50vh)); }
-.pnl[data-live] > * + *:not(.h-start) { border-radius: clamp(20px, 2.6vw, 36px) clamp(20px, 2.6vw, 36px) 0 0; overflow: clip; box-shadow: 0 -20px 50px -14px rgba(3, 8, 16, 0.3); }
+.pnl[data-measure] > * { position: relative !important; top: auto !important; transform: none !important; }
+:where(.pnl[data-live] > :not(.pg-hero-scene, .sn)) { background-color: var(--paper, #fff); }
+.pnl[data-live] > .sn { top: 68px; z-index: 40; }
+.pnl[data-live] > * + *:not(.h-start):not(.sn) { border-radius: clamp(20px, 2.6vw, 36px) clamp(20px, 2.6vw, 36px) 0 0; overflow: clip; box-shadow: 0 -20px 50px -14px rgba(3, 8, 16, 0.3); }
 .pnl[data-live] > [data-cv] { transform: scale(calc(1 - var(--cv, 0) * 0.07)); opacity: calc(1 - var(--cv, 0) * 0.72); }
 .pnl[data-live] > [data-gone] { visibility: hidden; }
+/* older pages: the page's photo stays fixed behind the hero, so covered sections darken in place */
+.pnl.pnl-clear { background: transparent; }
+.pnl-clear[data-live] > [data-cv], .pnl-page[data-live] > [data-cv] { opacity: 1; filter: brightness(calc(1 - var(--cv, 0) * 0.55)); }
 .pnl .h-work, .pnl .h-new { background: #fff; }
 
 /* 1 · hero: the film opens out to full width as you scroll */
-.h-hero { padding: clamp(40px, 6vw, 88px) 0 0; background: #fff; }
+.h-hero { padding: clamp(40px, 6vw, 88px) 0 clamp(14px, 1.6vw, 22px); background: #fff; }
 .h-hero-top { align-items: end; }
 .h-line { font-size: clamp(1.15rem, 1.55vw, 1.45rem); font-weight: 500; line-height: 1.4; color: var(--ink-2); }
 .h-media { position: relative; margin-top: clamp(36px, 4.5vw, 64px); height: clamp(320px, 66vh, 780px); overflow: hidden; background: var(--deep); clip-path: inset(0 calc((1 - var(--sp, 0)) * clamp(12px, 6vw, 96px)) round calc((1 - var(--sp, 0)) * 28px)); }

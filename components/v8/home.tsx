@@ -1,13 +1,13 @@
 /* Home (v8). Moves like scale.com: smooth scrolling, and every section is a
    panel that slides up over the one before it. The story, in order:
-   1 who we are   2 what we do, area by area (held chapters)   3 why us (a
+   1 who we are, with the five areas as photo panels   2 what we do, area by area (held chapters)   3 why us (a
    card that lights up, then the proof)   4 who we work with (a ring of
    photos)   5 our work   6 how we've grown   7 what's new   8 start a
    conversation. Words come from the content layer. Dev-only marks never
    reach production. */
 import { AREAS, CASES, HOME, LEADERS, NUMBERS, PROBLEMS, STEPS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, caseWho, industryHref, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
-import { AREA_PHOTO, HOME_VIDEO, INDUSTRY_PHOTO, PAGE_PHOTO } from "@/lib/content/media";
+import { AREA_PHOTO, HOME_VIDEO, INDUSTRY_PHOTO } from "@/lib/content/media";
 import { NEWS, EVENTS } from "@/lib/content/news";
 import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
@@ -52,12 +52,22 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="h-media" data-scrub="page">
-          <video autoPlay muted loop playsInline poster={HOME_VIDEO.poster} aria-hidden="true">
-            <source src={HOME_VIDEO.webm} type="video/webm" />
-            <source src={HOME_VIDEO.mp4} type="video/mp4" />
-          </video>
-        </div>
+        <ul className="ways" aria-label="What we do">
+          {AREAS.map((a) => (
+            <li key={a.id} className="way" style={themeStyle(a.id)}>
+              <a href={areaHref(a)}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={AREA_PHOTO[a.id]} alt="" />
+                <span className="way-txt">
+                  <b>{a.name}</b>
+                  <em>{a.tag}</em>
+                  <span className="way-q">{q(AREA_DATA[a.id].hear[0])}</span>
+                  <span className="way-more">Explore {a.name}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* 2 · what we do, area by area */}
@@ -224,8 +234,10 @@ export default function Home() {
 
       {/* 8 · start a conversation */}
       <section className="h-start" aria-labelledby="h-start">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="h-start-video" src={PAGE_PHOTO.about} alt="" loading="lazy" />
+        <video className="h-start-video" autoPlay muted loop playsInline poster={HOME_VIDEO.poster} aria-hidden="true">
+          <source src={HOME_VIDEO.webm} type="video/webm" />
+          <source src={HOME_VIDEO.mp4} type="video/mp4" />
+        </video>
         <div className="v8-wrap h-start-in" data-reveal>
           <h2 id="h-start" className="v8-h2">Tell us what you&apos;re trying to fix.</h2>
           <p className="v8-lead">Start with the one that sounds most like you, or write your own.</p>

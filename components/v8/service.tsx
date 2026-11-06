@@ -13,6 +13,7 @@ import { THEME, themeStyle, casePhoto, type DiagramKind } from "@/lib/content/v8
 import { Diagram } from "@/components/v8/diagram";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
+import Panels from "@/components/v8/panels";
 import { ServiceFeature } from "@/components/site/services";
 
 const PROD = process.env.VERCEL_ENV === "production";
@@ -51,6 +52,7 @@ export default function ServiceV8({ id }: { id: string }) {
 
   return (
     <div className="sv" style={themeStyle(area.id)}>
+      <Panels className="pnl-page">
       <section className="sv-hero">
         <div className="v8-wrap sv-hero-in">
           <div className="sv-hero-copy">
@@ -195,6 +197,7 @@ export default function ServiceV8({ id }: { id: string }) {
         <img src={next.photo} alt="" loading="lazy" />
         <span className="v8-wrap sv-next-in"><em>{next.k}</em><b>{next.name}</b><span>{next.text}</span><i aria-hidden="true">→</i></span>
       </a>
+      </Panels>
     </div>
   );
 }

@@ -11,6 +11,7 @@
    motion get a plain, stacked layout with everything shown. */
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { glideTo } from "@/components/v8/smooth";
+import { docTop } from "@/components/v8/panels";
 
 export default function Scene({ steps, per = 100, id, className, label, children }: { steps: number; per?: number; id?: string; className?: string; label?: string; children: ReactNode }) {
   const ref = useRef<HTMLElement>(null);
@@ -60,7 +61,7 @@ export default function Scene({ steps, per = 100, id, className, label, children
       const k = Number(b.dataset.goto);
       if (!live) { const t = Array.from(el.querySelectorAll<HTMLElement>(`[data-step="${k}"]`)).pop(); t?.scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth", block: "start" }); return; }
       const total = el.offsetHeight - window.innerHeight;
-      glideTo(el.getBoundingClientRect().top + window.scrollY + total * ((k + 0.25) / steps));
+      glideTo(docTop(el) + total * ((k + 0.25) / steps));
     };
     mode();
     window.addEventListener("scroll", on, { passive: true });

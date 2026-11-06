@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import Header from "@/components/v8/header";
 import Footer from "@/components/v8/footer";
 import PageScene from "@/components/site/page-scene";
+import Panels from "@/components/v8/panels";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { AREAS, CASES, caseHref, caseWho, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
 import { SCENE_PHOTO } from "@/lib/content/media";
@@ -15,7 +16,7 @@ export function Shell({ scene, photo, highlight, children }: { scene?: string; p
     <>
       <Header />
       {scene && <PageScene scene={scene} photo={photo ?? SCENE_PHOTO[scene as SceneKey]} highlight={highlight} />}
-      <main className={`pg${scene ? " pg-with-scene" : ""}`}>{children}</main>
+      <main className={`pg${scene ? " pg-with-scene" : ""}`}><Panels className="pnl-clear">{children}</Panels></main>
       <Footer />
     </>
   );

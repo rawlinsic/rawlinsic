@@ -12,6 +12,7 @@ import { THEME, themeStyle, casePhoto } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
+import Panels from "@/components/v8/panels";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
@@ -32,6 +33,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
 
   return (
     <div className="sv ar" style={themeStyle(area.id)}>
+      <Panels className="pnl-page">
       <section className="sv-hero">
         <div className="v8-wrap sv-hero-in">
           <div className="sv-hero-copy">
@@ -139,6 +141,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
         <img src={AREA_PHOTO[next.id]} alt="" loading="lazy" />
         <span className="v8-wrap sv-next-in"><em>Next area</em><b>{next.name}</b><span>{next.tag}</span><i aria-hidden="true">→</i></span>
       </a>
+      </Panels>
     </div>
   );
 }

@@ -7,6 +7,7 @@
    Phones and reduced motion get the same content as stacked cards. */
 import { useEffect, useRef } from "react";
 import { glideTo } from "@/components/v8/smooth";
+import { docTop } from "@/components/v8/panels";
 
 export type Chapter = { id: string; name: string; tag: string; lead: string; quote: string; href: string; photo: string; services: { name: string; href: string }[] };
 
@@ -62,7 +63,7 @@ export default function Chapters({ intro, items }: { intro: { k: string; h: stri
       const k = Number(b.dataset.goto);
       if (!live) { el.querySelector<HTMLElement>(`[data-frame="${k}"]`)?.scrollIntoView({ block: "start" }); return; }
       const total = el.offsetHeight - window.innerHeight;
-      glideTo(el.getBoundingClientRect().top + window.scrollY + total * ((k + 0.05) / (n + 0.5)));
+      glideTo(docTop(el) + total * ((k + 0.05) / (n + 0.5)));
     };
     mode();
     window.addEventListener("scroll", on, { passive: true });
