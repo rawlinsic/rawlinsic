@@ -206,9 +206,9 @@ export const SYSTEM_PAIRS: { label: string; fg: keyof Theme; bg: keyof Theme }[]
 
 /* Guide sections, in order (ready = built in this draft) */
 export const BRAND_SECTIONS = [
-  { name: "Overview", ready: false }, { name: "Color", ready: true }, { name: "Logo", ready: true },
-  { name: "Typography", ready: false }, { name: "Graphic language", ready: false }, { name: "Photography", ready: false },
-  { name: "Voice and tone", ready: false }, { name: "Templates", ready: false },
+  { num: "00", name: "Overview", ready: true }, { num: "01", name: "Color", ready: true }, { num: "02", name: "Logo", ready: true },
+  { num: "03", name: "Typography", ready: true }, { num: "04", name: "Graphic language", ready: true }, { num: "05", name: "Photography", ready: true },
+  { num: "06", name: "Voice and tone", ready: true }, { num: "07", name: "Templates", ready: true },
 ];
 
 /* Recommended pick (shown on the decision slide; Nicole decides) */

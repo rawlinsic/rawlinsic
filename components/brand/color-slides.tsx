@@ -53,11 +53,11 @@ export function Cover(p: SlideProps) {
       <div className="cv-copy">
         <p className="bs-k">Brand guide · Draft</p>
         <h1>The Rawlins<br />brand guide</h1>
-        <p className="cv-sub">Starts with color. Fonts and colors here become the kit for the website, slides, one-pagers and everything else.</p>
+        <p className="cv-sub">The website's colors and fonts, made into the kit for slides, one-pagers, proposals and everything else.</p>
       </div>
       <ol className="cv-toc">
-        {BRAND_SECTIONS.map((s, k) => (
-          <li key={s.name} className={s.ready ? "is-ready" : ""}><b>{pad(k + 1)}</b>{s.name}<em>{s.ready ? "In this draft" : "Next"}</em></li>
+        {BRAND_SECTIONS.map((s) => (
+          <li key={s.name} className={s.ready ? "is-ready" : ""}><b>{s.num}</b>{s.name}<em>{s.ready ? "Draft" : "Next"}</em></li>
         ))}
       </ol>
       <p className="cv-date">November 5, 2026 · Options for review. Nicole decides; nothing here is final.</p>

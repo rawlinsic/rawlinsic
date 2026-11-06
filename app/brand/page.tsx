@@ -11,6 +11,10 @@ import {
 import {
   ConceptSlide, LogoDecide, LogoDirections, LogoOpener, LogoSmall, LogoToday, LogoType, LogoYours,
 } from "@/components/brand/logo-slides";
+import {
+  GLFrames, GLGrid, GLLines, LogoDonts, LogoSpace, LogoVersions, Opener, OverviewGlance, OverviewUse, PhotoTreat, PhotoWhat,
+  TplOnePager, TplSlides, TypeApps, TypePair, TypeScale, VoiceClaims, VoiceTone, VoiceTraits, VoiceWords,
+} from "@/components/brand/guide-slides";
 import { CONCEPTS } from "@/components/brand/logos";
 import { ACCENTS, PICK, SYSTEMS, accentById, mockVars, systemById } from "@/lib/content/brand-guide";
 import { BRAND_FONT_VARS } from "./fonts";
@@ -27,6 +31,8 @@ export const metadata: Metadata = {
 type Def = SlideMeta & { C: (p: SlideProps) => ReactNode };
 const SLIDES: Def[] = [
   { id: "cover", title: "Cover", section: "Start", C: Cover },
+  { id: "overview", title: "One kit for everything", section: "Overview", C: OverviewUse },
+  { id: "overview-glance", title: "The brand at a glance", section: "Overview", C: OverviewGlance },
   { id: "color", title: "Color", section: "Color", C: ColorOpener },
   { id: "color-today", title: "Today's palette", section: "Color", C: Today },
   { id: "color-systems", title: "Four blue systems", section: "Color", C: Systems },
@@ -45,6 +51,28 @@ const SLIDES: Def[] = [
   { id: "logo-type", title: "Wordmark typefaces", section: "Logo", C: LogoType },
   { id: "logo-small", title: "The 16-pixel test", section: "Logo", C: LogoSmall },
   { id: "logo-decide", title: "Pick a direction", section: "Logo", C: LogoDecide },
+  { id: "logo-versions", title: "Logo versions", section: "Logo", C: LogoVersions },
+  { id: "logo-space", title: "Clear space and size", section: "Logo", C: LogoSpace },
+  { id: "logo-donts", title: "Logo don'ts", section: "Logo", C: LogoDonts },
+  { id: "type", title: "Typography", section: "Typography", C: (p: SlideProps) => <Opener {...p} num="03" name="Typography" line="Two free families. The same everywhere." steps={[["The pair", "Source Sans 3 and Source Serif 4"], ["Sizes", "For slides, web and print"], ["Where it works", "Office, Canva, Adobe, print"]]} /> },
+  { id: "type-pair", title: "The type pair", section: "Typography", C: TypePair },
+  { id: "type-scale", title: "Hierarchy and sizes", section: "Typography", C: TypeScale },
+  { id: "type-apps", title: "Fonts by app", section: "Typography", C: TypeApps },
+  { id: "graphics", title: "Graphic language", section: "Graphic language", C: (p: SlideProps) => <Opener {...p} num="04" name="Graphic language" line="Lines, nodes, frames and a quiet grid." steps={[["Lines and nodes", "One line, real steps"], ["Photo frames", "Layers, not boxes"], ["Blueprint grid", "Behind, never on top"]]} /> },
+  { id: "graphics-lines", title: "Lines and nodes", section: "Graphic language", C: GLLines },
+  { id: "graphics-frames", title: "Layered photo frames", section: "Graphic language", C: GLFrames },
+  { id: "graphics-grid", title: "Blueprint grid", section: "Graphic language", C: GLGrid },
+  { id: "photo", title: "Photography", section: "Photography", C: (p: SlideProps) => <Opener {...p} num="05" name="Photography" line="Real work, real infrastructure, real places." steps={[["What we show", "People, scale, places"], ["Treatment", "One photo, four uses"], ["Avoid", "Staged, sci-fi, uncleared"]]} /> },
+  { id: "photo-what", title: "What we show", section: "Photography", C: PhotoWhat },
+  { id: "photo-treat", title: "Photo treatment", section: "Photography", C: PhotoTreat },
+  { id: "voice", title: "Voice and tone", section: "Voice and tone", C: (p: SlideProps) => <Opener {...p} num="06" name="Voice and tone" line="From Jacob Michaels' Brand Voice and Tone Kit, v1.1." steps={[["Four qualities", "How we sound"], ["Tone settings", "How it shifts"], ["Words and claims", "What we say, and prove"]]} /> },
+  { id: "voice-traits", title: "Four qualities", section: "Voice and tone", C: VoiceTraits },
+  { id: "voice-tone", title: "Tone settings", section: "Voice and tone", C: VoiceTone },
+  { id: "voice-words", title: "Words and mechanics", section: "Voice and tone", C: VoiceWords },
+  { id: "voice-claims", title: "Claims", section: "Voice and tone", C: VoiceClaims },
+  { id: "templates", title: "Templates", section: "Templates", C: (p: SlideProps) => <Opener {...p} num="07" name="Templates" line="Start from these, not from a blank page." steps={[["One-pager", "The solution brief"], ["Slides", "Four layouts"]]} /> },
+  { id: "templates-one", title: "One-pager", section: "Templates", C: TplOnePager },
+  { id: "templates-slides", title: "Slide layouts", section: "Templates", C: TplSlides },
 ];
 
 export default function BrandGuidePage() {

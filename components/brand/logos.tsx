@@ -20,6 +20,8 @@ export const CONCEPTS: Concept[] = [
   { id: "noder", n: 6, name: "Node R", from: "new", says: "A bold R with a glowing node in its bowl. Still a clean R at 16 px.", watch: "The node drops out under 32 px; at that size it is simply an R.", word: "Rawlins", font: "Figtree SemiBold", fontVar: "var(--f-figtree)" },
 ];
 export const conceptById = (id: ConceptId) => CONCEPTS.find((c) => c.id === id)!;
+/* logo usage slides use this direction until Nicole picks one */
+export const LOGO_STANDIN: ConceptId = "framed";
 
 const ink = { stroke: "var(--lk)", fill: "none" } as const;
 const acc = { stroke: "var(--la)", fill: "none" } as const;
