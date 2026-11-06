@@ -2,7 +2,7 @@
    Speaking, Event, New team member. Each post can link to its LinkedIn post.
    `placeholder` items show on preview deployments only, never in production. */
 export type NewsItem = { tag: "Win" | "Award" | "Publication" | "Speaking" | "Event" | "New team member"; date?: string; title: string; text?: string; href?: string; linkedin?: string; placeholder?: string };
-export type EventItem = { when: string; title: string; where?: string; placeholder?: string };
+export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string };
 
 export const NEWS: NewsItem[] = [
   {
@@ -16,6 +16,8 @@ export const NEWS: NewsItem[] = [
   { tag: "Speaking", title: "A recent talk or panel", placeholder: "event, topic, and who spoke" },
 ];
 
+/* AASHTO Annual Meeting (handoff v8, 4.1). Safe line only: ten of our people
+   are going. Exhibiting or speaking is unverified, so it isn't claimed. */
 export const EVENTS: EventItem[] = [
-  { when: "Upcoming", title: "Next event", placeholder: "event name, dates, location, and whether we're exhibiting or speaking (confirm before launch)" },
+  { when: "Nov 15–18, 2026", title: "AASHTO Annual Meeting", where: "Louisville, Kentucky", note: "Ten of our people will be there." },
 ];

@@ -34,11 +34,12 @@ export const AREAS: Area[] = [
     id: "strategy", slug: "strategy-organization", name: "Strategy & Organization",
     tag: "Direction, structure, and people", scene: "capitol", featuredCase: "cs-strategic",
     services: [
+      /* v8: renamed and listed first (handoff v8, section 6, default) */
+      svc("exec-advisory", "Executive Advisory"),
       svc("strategic-planning", "Strategic Planning & Performance Management", "grid"),
       svc("org-design", "Organizational Design & Process Improvement"),
       svc("change-mgmt", "Change Management", "people"),
       svc("workforce", "Workforce & Leadership Development", "site"),
-      svc("exec-advisory", "Executive & Administrative Advisory"),
     ],
   },
   {
@@ -205,7 +206,7 @@ export const WHY: [string, string][] = [
   ["We've done the job", "Our people ran the programs our clients run: chief engineers, maintenance directors, chief information officers, right of way managers, and federal program executives. We know the work from the inside, so we skip the learning curve."],
   ["Small enough to move fast", "Senior people do the work, with no layers between you and them. Decisions happen in days, not quarters."],
   ["Strategy and build under one roof", "The team that writes the plan works next to an in-house team that builds the tools: integrations, automation, dashboards, and AI. Nothing stalls waiting on another vendor."],
-  ["We stay until it works", "We start with what you already have, and we stay through training and rollout. You own everything we build."],
+  ["We stay until it runs", "We start with what you already have, and we stay through training and rollout. You own everything we build."],
   /* v12 fifth point; "making systems connect" thread */
   ["We make the systems you already own work together", "We connect the platforms, data, and tools you already pay for, and build small custom apps where an off-the-shelf integration doesn't fit."],
 ];

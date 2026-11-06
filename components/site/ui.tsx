@@ -1,8 +1,8 @@
 /* Building blocks for every redesigned page (server components).
    Styles: app/pages.css (pg- prefix). Dev-only marks never render in production. */
 import type { ReactNode } from "react";
-import SiteNav from "@/components/site-nav";
-import SiteFooter from "@/components/site-footer";
+import Header from "@/components/v8/header";
+import Footer from "@/components/v8/footer";
 import PageScene from "@/components/site/page-scene";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { AREAS, CASES, caseHref, caseWho, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
@@ -13,10 +13,10 @@ export const PROD = process.env.VERCEL_ENV === "production";
 export function Shell({ scene, photo, highlight, children }: { scene?: string; photo?: string; highlight?: string[]; children: ReactNode }) {
   return (
     <>
-      <SiteNav />
+      <Header />
       {scene && <PageScene scene={scene} photo={photo ?? SCENE_PHOTO[scene as SceneKey]} highlight={highlight} />}
       <main className={`pg${scene ? " pg-with-scene" : ""}`}>{children}</main>
-      <SiteFooter />
+      <Footer />
     </>
   );
 }

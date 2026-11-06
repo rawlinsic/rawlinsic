@@ -184,7 +184,7 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "exec-advisory": {
   "id": "exec-advisory",
-  "name": "Executive & Administrative Advisory",
+  "name": "Executive Advisory",
   "area": "strategy",
   "st": "ok",
   "intro": "Streamline administrative functions by improving processes, controls and reporting. Advisory, training design, facilitation and executive coaching for agency leadership and administrative functions.",

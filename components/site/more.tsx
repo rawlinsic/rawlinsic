@@ -220,7 +220,7 @@ export function NewsPage() {
       {events.length > 0 && (
         <Sec title="Where we'll be">
           <ul className="pg-news">{events.map((e) => (
-            <li key={e.title} className={e.placeholder ? "is-dev" : ""}><span className="pg-case-k">{e.when}</span><b>{e.title}</b>{e.where && <p>{e.where}</p>}{e.placeholder && <Dev>Placeholder: {e.placeholder}</Dev>}</li>
+            <li key={e.title} className={e.placeholder ? "is-dev" : ""}><span className="pg-case-k">{e.when}</span><b>{e.title}</b>{e.where && <p>{e.where}</p>}{e.note && <p>{e.note}</p>}{e.placeholder && <Dev>Placeholder: {e.placeholder}</Dev>}</li>
           ))}</ul>
         </Sec>
       )}

@@ -33,10 +33,10 @@ export const SCENE_PHOTO: Record<SceneKey, string> = {
 
 /* Heading pages */
 export const AREA_PHOTO: Record<string, string> = {
-  strategy: P("utah.webp"),
+  strategy: P("strategy-bg.webp"),
   delivery: P("connectingdots.webp"),
-  om: P("journey-evolution.webp"),
-  tech: P("home-team-bg.webp"),
+  om: P("majortrans.webp"),
+  tech: P("auto-team.webp"),
   aviation: P("skylimit.webp"),
 };
 

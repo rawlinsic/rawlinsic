@@ -1,18 +1,18 @@
-import SiteNav from "@/components/site-nav";
-import SiteFooter from "@/components/site-footer";
-import Journey from "@/components/home/journey";
+import Header from "@/components/v8/header";
+import Footer from "@/components/v8/footer";
+import Home from "@/components/v8/home";
+import Reveal from "@/components/v8/reveal";
 
-/* Home: the Rawlins story as a journey through a 3D world (handoff v7, 6).
-   Dev-only blocks (placeholders, sign-off badges) never render in production. */
+/* Home (v8 design on the handoff v8 structure). Dev-only marks never render in production. */
 export default function Page() {
-  const prod = process.env.VERCEL_ENV === "production";
   return (
     <>
-      <SiteNav />
-      <main className="jy-main">
-        <Journey prod={prod} />
+      <Header />
+      <main id="main-content" className="v8 v8-home">
+        <Home />
       </main>
-      <SiteFooter />
+      <Footer />
+      <Reveal />
     </>
   );
 }

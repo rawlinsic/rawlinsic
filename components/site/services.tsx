@@ -8,6 +8,7 @@ import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseH
 import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AamEcosystem, AamLandscape } from "@/components/site/aam";
 import { AAM_SERVICES, DRONE_SERVICES, LIFECYCLE, WHERE_WE_LEAD } from "@/components/site/aam-data";
+import { SERVICE_STEPS } from "@/lib/content/features";
 import { Btn, CaseCards, Chips, Dev, Hero, List, People, PROD, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk } from "@/components/site/ui";
 
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
@@ -147,7 +148,7 @@ export function ServicePage({ id }: { id: string }) {
 }
 
 /* One page-specific feature per service (wireframe FEAT + KEEP) */
-function ServiceFeature({ id }: { id: string }) {
+export function ServiceFeature({ id }: { id: string }) {
   switch (id) {
     case "automation":
       return (
@@ -168,17 +169,11 @@ function ServiceFeature({ id }: { id: string }) {
         </>
       );
     case "workforce":
-      return <Sec title="What a proficiency path looks like" kicker="From our work"><Steps steps={[
-        { t: "Core proficiencies", d: "What every person in the role must show" }, { t: "Electives", d: "Specialties that fit the work unit" },
-        { t: "Demonstration", d: "Task sheets scored by a trained reviewer" }, { t: "Review", d: "Supervisor and peer sign-off" }, { t: "Advance", d: "A clear step to the next level" }]} /></Sec>;
     case "asset-mgmt":
-      return <Sec title="The asset life cycle"><Steps steps={[
-        { t: "Inventory", d: "Know what you own and where" }, { t: "Condition", d: "Know what shape it's in" }, { t: "Strategy", d: "Life cycle, risk, and investment decisions" },
-        { t: "Delivery", d: "Maintain and replace on plan" }, { t: "Performance", d: "Measure the result and adjust" }]} /></Sec>;
-    case "strategic-planning":
-      return <Sec title="How a strategic plan comes together" kicker="From our work"><Steps steps={[
-        { t: "Engage", d: "Leadership, staff, and partners shape it" }, { t: "Set direction", d: "Vision, goals, and measures" },
-        { t: "Act", d: "Yearly action plans by division" }, { t: "Track", d: "Progress dashboards leadership reviews" }]} /></Sec>;
+    case "strategic-planning": {
+      const f = SERVICE_STEPS[id];
+      return <Sec title={f.title} kicker={f.kicker}><Steps steps={f.steps} /></Sec>;
+    }
     case "row":
       return <Sec title="The depth behind it"><List cols items={["Acquisition and relocation", "Property management and excess land", "Appraisal and appraiser certification", "Outdoor advertising and junkyard control", "Eminent domain litigation support and mediation", "Local agency right of way projects"]} /></Sec>;
     case "program-delivery":
@@ -205,10 +200,10 @@ function ServiceFeature({ id }: { id: string }) {
     }
     case "portals":
       return <Sec title="Inside a delivery website" kicker="From our work"><List items={["A landing page with the program's tools, resource library, manuals, and training one click away", "Links to the systems staff already use: scheduling, status reporting, and dashboards", "A change request form tied to a tracker, with automatic routing to reviewers and decision makers", "Email at each step, from submission through quality check and close-out", "How-to videos and online courses published next to the tools they teach"]} /></Sec>;
-    case "training-video":
-      return <Sec title="How a training video comes together" kicker="From our work"><Steps steps={[
-        { t: "Storyboard", d: "Who it's for and the one task it teaches" }, { t: "Script", d: "Written with the experts who do the work" }, { t: "Build", d: "Screens, narration, and examples" },
-        { t: "Review", d: "Experts and leadership sign off" }, { t: "Publish", d: "On the program's site, next to the tool" }]} /></Sec>;
+    case "training-video": {
+      const f = SERVICE_STEPS[id];
+      return <Sec title={f.title} kicker={f.kicker}><Steps steps={f.steps} /></Sec>;
+    }
     case "drone-aam":
       return (
         <>

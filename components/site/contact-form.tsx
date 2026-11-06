@@ -19,8 +19,12 @@ export default function ContactForm({ topics }: { topics: string[] }) {
   const done = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const t = new URLSearchParams(window.location.search).get("topic");
+    const sp = new URLSearchParams(window.location.search);
+    const t = sp.get("topic");
     if (t && topics.includes(t)) setF((x) => ({ ...x, interest: t }));
+    /* home "Tell us what you're trying to fix": the problem the visitor picked */
+    const m = sp.get("msg");
+    if (m && m.length < 200) setF((x) => (x.message ? x : { ...x, message: m }));
   }, [topics]);
   useEffect(() => {
     if (!RECAPTCHA_SITE_KEY || document.querySelector("script[data-recaptcha]")) return;

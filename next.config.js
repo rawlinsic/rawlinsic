@@ -39,6 +39,7 @@ const nextConfig = {
       { source: "/pxl-template/:slug*", destination: "/about/our-people", permanent: true },
       // Redesign (handoff v7 section 7): old structure -> new, permanent
       { source: "/capabilities", destination: "/services", permanent: true },
+      { source: "/services/strategy-organization/executive-administrative-advisory", destination: "/services/strategy-organization/executive-advisory", permanent: true },
       { source: "/capabilities/technology/advanced-air-mobility", destination: "/services/drones-advanced-air-mobility", permanent: true },
       { source: "/capabilities/technology/automation-integration", destination: "/services/digital-solutions/integration-automation", permanent: true },
       { source: "/capabilities/:path*", destination: "/services", permanent: true },

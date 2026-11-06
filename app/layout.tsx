@@ -2,6 +2,7 @@ import "./globals.css";
 import "./journey.css";
 import "./menu.css";
 import "./pages.css";
+import "./v8.css";
 
 import type { Metadata } from "next";
 import Script from "next/script";
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
     template: "%s | Rawlins",
   },
   description:
-    "Rawlins is a global consulting firm pairing strategy, operations, and technology expertise with digital solutions for transportation and infrastructure.",
+    "Rawlins is a consulting firm pairing strategy, operations, and technology expertise with digital solutions for the organizations that build and run infrastructure.",
   openGraph: {
     title: "Rawlins | Consulting for the organizations that build and run infrastructure",
     description:
