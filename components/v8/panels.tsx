@@ -4,6 +4,11 @@
    meets the bottom of the screen, then holds while the next panel slides up
    over it as a rounded card. The panel being covered sinks back: it shrinks
    a little and dims. A fully covered panel is hidden.
+   So nothing is covered while it is still being read: a panel shorter than
+   the screen is grown to fill it (its content centered, like a slide), and
+   every panel holds still for a short beat (DWELL) before the next one
+   starts to come over it. Panels that hold on their own (scroll scenes)
+   are left as they are.
      --pt  on each panel: where it holds (its sticky top)
      --cv  on each covered panel: how far the next one has covered it, 0 to 1
      --sp  on [data-scrub="page"] elements: page scroll in screen heights, 0 to 1
@@ -14,6 +19,8 @@
 import { useEffect, useRef, type ReactNode } from "react";
 
 const NAV = 68;
+const DWELL = 0.2; // screen heights the page holds still on a panel before the next one comes over it
+const HELD = ".scn, .wwd, .h-orbit, [data-nofill]"; // panels with their own hold
 const NATURAL = new WeakMap<HTMLElement, number>(); // panel -> its top in the page when not held
 
 /* Where an element sits in the page (for jump links), even inside a held panel. */
@@ -45,24 +52,42 @@ export default function Panels({ children, className }: { children: ReactNode; c
       vh = window.innerHeight;
       // panels after the "On this page" bar hold just under it
       tops = kids.map((el) => (sn && sn.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING ? NAV + sn.offsetHeight : NAV));
+      wrap.style.setProperty("--snh", `${sn ? sn.offsetHeight : 0}px`); // held scenes after the bar hold under it
+      // fill the screen and hold a beat, so nothing is covered before it is read
+      unfill();
+      kids.forEach((el, i) => {
+        if (i === 0 || i === kids.length - 1 || el.matches(HELD)) return;
+        const room = vh - tops[i], h = el.offsetHeight;
+        if (h < room - 1) {
+          el.style.paddingTop = `${parseFloat(getComputedStyle(el).paddingTop) + (room - h) / 2}px`;
+          el.style.minHeight = `${room}px`;
+        }
+        el.style.marginBottom = `${Math.round(vh * DWELL)}px`;
+      });
       // measure where each panel sits when it is not held
       wrap.dataset.measure = "";
       kids.forEach((el) => NATURAL.set(el, el.getBoundingClientRect().top + window.scrollY));
       delete wrap.dataset.measure;
-      kids.forEach((el, i) => el.style.setProperty("--pt", `${Math.min(tops[i], vh - el.offsetHeight)}px`));
+      // (the first panel never holds lower than where it starts, or it would be pushed down under the next one)
+      kids.forEach((el, i) => el.style.setProperty("--pt", `${Math.min(tops[i], vh - el.offsetHeight, i ? Infinity : NATURAL.get(el)!)}px`));
     };
+    const unfill = () => kids.forEach((el) => { el.style.paddingTop = ""; el.style.minHeight = ""; el.style.marginBottom = ""; });
     const tick = () => {
       raf = 0;
       if (!live) return;
       const rs = kids.map((k) => k.getBoundingClientRect());
       for (let i = 0; i < kids.length - 1; i++) {
-        const cur = rs[i], nx = rs[i + 1];
-        const cv = Math.max(0, Math.min(1, (vh - nx.top) / (vh - tops[i + 1])));
-        const el = kids[i];
+        const cur = rs[i], nx = rs[i + 1], el = kids[i];
+        // how much of this panel's on-screen part the next panel covers. Panels sit
+        // end to end, so this stays 0 until the next one really slides over it:
+        // nothing dims while it is still being read.
+        const top = Math.max(cur.top, tops[i + 1]), bot = Math.min(cur.bottom, vh);
+        const cover = bot - top > 1 ? Math.max(0, Math.min(1, (bot - nx.top) / (bot - top))) : nx.top <= top + 1 ? 1 : 0;
+        const cv = cover * cover; // eased: the part still showing stays readable until it is nearly covered
         if (cv > 0.001) { el.style.setProperty("--cv", cv.toFixed(4)); el.dataset.cv = ""; }
         else if ("cv" in el.dataset) { el.style.removeProperty("--cv"); delete el.dataset.cv; }
         // hidden only once the panel in front covers everything of it that is on screen
-        const gone = cv > 0.5 && nx.top <= Math.max(cur.top, tops[i]) + 1 && nx.bottom >= Math.min(cur.bottom, vh) - 1;
+        const gone = cover > 0.999 && nx.bottom >= bot - 1;
         if (gone !== ("gone" in el.dataset)) { if (gone) el.dataset.gone = ""; else delete el.dataset.gone; }
       }
       const sp = Math.max(0, Math.min(1, window.scrollY / (vh * 0.75)));
@@ -74,6 +99,7 @@ export default function Panels({ children, className }: { children: ReactNode; c
       if (live) { wrap.dataset.live = ""; place(); tick(); }
       else {
         delete wrap.dataset.live;
+        unfill();
         kids.forEach((el) => { NATURAL.delete(el); el.style.removeProperty("--cv"); delete el.dataset.cv; delete el.dataset.gone; });
         scrubs.forEach((s) => s.style.setProperty("--sp", "1"));
       }

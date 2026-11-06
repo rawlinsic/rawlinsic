@@ -1,9 +1,14 @@
 /* Service page (v8). Carries everything handoff v8 section 3 lists: what it
    is, what we hear, what we deliver, what you walk away with, the experience
    behind it, where we've done it, often paired with, industries, and a way to
-   talk to someone. Each page takes its area's color world; the step feature
-   (where a service has one) is drawn in that area's diagram style; the page
-   ends by moving you on to the next service. */
+   talk to someone. How it moves:
+     hero         lit by the service's own photo, with its area's line drawing
+                  (each area's services get their own look)
+     we hear      held while the client's words light up
+     we deliver   held while the deliverables are dealt in as cards
+     how          the area's diagram drawing itself (where a service has steps)
+     walk away    with the experience behind it alongside
+   and the page ends by moving you on to the next service. */
 import type { CSSProperties } from "react";
 import { AREAS, CASES, INDUSTRIES, areaHref, caseHref, caseWho, industryHref, serviceById, serviceHref, subsectorHref } from "@/lib/content/site";
 import { SERVICES, SUBSECTORS } from "@/lib/content/catalog";
@@ -11,6 +16,8 @@ import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { SERVICE_STEPS } from "@/lib/content/features";
 import { THEME, themeStyle, casePhoto, type DiagramKind } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
+import AreaMark from "@/components/v8/area-mark";
+import LitText from "@/components/v8/lit-text";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
@@ -39,10 +46,11 @@ export default function ServiceV8({ id }: { id: string }) {
     return ind && sub ? { label: sub.name, href: subsectorHref(ind, sub) } : null;
   }).filter(Boolean) as { label: string; href: string }[];
   const steps = SERVICE_STEPS[id];
+  const photo = SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id];
   const sections: [string, string][] = [
     ["hear", "What we hear"], ["deliver", "What we deliver"],
     ...(steps ? [["how", steps.title] as [string, string]] : HAS_FEATURE.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
-    ["walk", "What you walk away with"], ["experience", "The experience behind it"],
+    ["walk", "What you walk away with"],
     ...(cases.length ? [["work", "Where we've done it"] as [string, string]] : []),
     ["talk", "Talk to us"],
   ];
@@ -51,9 +59,14 @@ export default function ServiceV8({ id }: { id: string }) {
     : { k: "Next area", name: nextArea.name, text: nextArea.tag, href: areaHref(nextArea), photo: AREA_PHOTO[nextArea.id], style: themeStyle(nextArea.id) };
 
   return (
-    <div className="sv" style={themeStyle(area.id)}>
+    <div className="sv svc" style={themeStyle(area.id)}>
       <Panels className="pnl-page">
-      <section className="sv-hero">
+      <section className="sv-hero svh" data-scrub="page">
+        <div className="svh-bg" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={photo} alt="" />
+        </div>
+        <AreaMark kind={T.diagram} />
         <div className="v8-wrap sv-hero-in">
           <div className="sv-hero-copy">
             <nav className="crumbs" aria-label="Breadcrumb">
@@ -73,7 +86,7 @@ export default function ServiceV8({ id }: { id: string }) {
             <span className="lf-mid" aria-hidden="true"><i /><i /><i /><i /></span>
             <span className="lf-front">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id]} alt="" />
+              <img src={photo} alt="" />
             </span>
           </figure>
         </div>
@@ -88,24 +101,22 @@ export default function ServiceV8({ id }: { id: string }) {
 
       <SectionNav items={sections} />
 
-      <section id="hear" className="sv-sec sv-hear">
-        <div className="v8-wrap">
+      <Scene steps={1} per={s.hear.length > 1 ? 95 : 75} id="hear" className="svq" label="What we hear">
+        <div className="v8-wrap svq-in">
           <h2 className="v8-eyebrow">What we hear</h2>
-          {s.quote || s.hear.length === 1
-            ? <blockquote className={`sv-pull${s.hear[0].length > 120 ? " is-long" : ""}`} data-reveal>{quote(s.hear[0])}</blockquote>
-            : <ul className="sv-quotes">{s.hear.map((h, k) => <li key={h} data-reveal style={{ ["--d" as string]: `${k * 90}ms` } as CSSProperties}>{quote(h)}</li>)}</ul>}
+          <LitText lines={s.hear.map(quote)} className={s.hear.length > 1 ? "is-many" : s.hear[0].length > 120 ? "is-long" : undefined} />
         </div>
-      </section>
+      </Scene>
 
-      <Scene steps={1} per={Math.max(80, s.deliver.length * 20)} id="deliver" className="dv" label="What we deliver">
-        <div className="v8-wrap sv-split dv-in">
-          <div className="sv-split-h">
+      <Scene steps={1} per={Math.max(70, s.deliver.length * 17)} id="deliver" className="svd" label="What we deliver">
+        <div className="v8-wrap svd-in">
+          <AreaMark kind={T.diagram} />
+          <div className="svd-head">
             <h2 className="v8-h2">What we deliver</h2>
-            <span className="dv-meter" aria-hidden="true"><i /></span>
           </div>
-          <ol className="sv-deliver dv-list" style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
-            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span>{d}</li>)}
-          </ol>
+          <ul className={`svd-cards${s.deliver.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
+            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}>{d}</li>)}
+          </ul>
         </div>
       </Scene>
 
@@ -125,17 +136,18 @@ export default function ServiceV8({ id }: { id: string }) {
         <section id="feature" className="sv-legacy"><ServiceFeature id={id} /></section>
       )}
 
-      <section id="walk" className="sv-sec sv-walk">
-        <div className="v8-wrap sv-split">
-          <div className="sv-split-h"><h2 className="v8-h2">What you walk away with</h2></div>
-          <ul className="sv-checks">{s.walk.map((w, k) => <li key={w} data-reveal style={{ ["--d" as string]: `${k * 70}ms` } as CSSProperties}>{w}</li>)}</ul>
-        </div>
-      </section>
-
-      <section id="experience" className="sv-sec sv-xp">
-        <div className="v8-wrap">
-          <h2 className="v8-eyebrow">The experience behind it</h2>
-          <ul>{s.xp.map((x, k) => <li key={x} data-reveal style={{ ["--d" as string]: `${k * 90}ms` } as CSSProperties}>{x}</li>)}</ul>
+      <section id="walk" className="sv-sec svw">
+        <div className={`v8-wrap svw-in${s.xp.length ? "" : " is-solo"}`}>
+          <div>
+            <h2 className="v8-h2">What you walk away with</h2>
+            <ul className="sv-checks">{s.walk.map((w, k) => <li key={w} data-reveal style={{ ["--d" as string]: `${k * 70}ms` } as CSSProperties}>{w}</li>)}</ul>
+          </div>
+          {s.xp.length > 0 && (
+            <aside id="experience" className="svw-xp" aria-labelledby="svw-xp-h" data-reveal>
+              <h2 id="svw-xp-h" className="v8-eyebrow">The experience behind it</h2>
+              <ul>{s.xp.map((x) => <li key={x}>{x}</li>)}</ul>
+            </aside>
+          )}
         </div>
       </section>
 
@@ -161,33 +173,34 @@ export default function ServiceV8({ id }: { id: string }) {
         </section>
       )}
 
-      <section className="sv-sec sv-links">
-        <div className="v8-wrap sv-links-in">
-          <div>
-            <h2 className="v8-eyebrow">Often paired with</h2>
-            <ul className="sv-chips">
-              {s.related.map((r) => { const h = serviceById(r); return h ? <li key={r}><a href={serviceHref(r)} style={themeStyle(h.area.id)}><i aria-hidden="true" />{h.service.name}</a></li> : null; })}
-            </ul>
-          </div>
-          <div>
-            <h2 className="v8-eyebrow">Where we do this</h2>
-            <ul className="sv-chips">
-              {inds.map((x) => <li key={x!.id}><a href={industryHref(x!)}>{x!.name}</a></li>)}
-              {subs.map((x) => <li key={x.href}><a href={x.href} className="is-sub">{x.label}</a></li>)}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section id="talk" className="sv-talk">
-        <div className="v8-wrap sv-talk-in">
-          <div>
+      <section id="talk" className="svt">
+        <div className="v8-wrap svt-in">
+          <div className="svt-talk">
             <h2 className="v8-h2">Talk to the people who do this work</h2>
             <p className="v8-lead">Tell us what you&apos;re working on. We&apos;ll connect you with the person on our team who has done it.</p>
+            <div className="v8-actions">
+              <a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a>
+              <a className="v8-btn v8-btn-ghost" href={areaHref(area)}>All of {area.name}</a>
+            </div>
           </div>
-          <div className="v8-actions">
-            <a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a>
-            <a className="v8-btn v8-btn-ghost" href={areaHref(area)}>All of {area.name}</a>
+          <div className="svt-links">
+            {s.related.length > 0 && (
+              <div>
+                <h3 className="v8-eyebrow">Often paired with</h3>
+                <ul className="sv-chips">
+                  {s.related.map((r) => { const h = serviceById(r); return h ? <li key={r}><a href={serviceHref(r)} style={themeStyle(h.area.id)}><i aria-hidden="true" />{h.service.name}</a></li> : null; })}
+                </ul>
+              </div>
+            )}
+            {inds.length + subs.length > 0 && (
+              <div>
+                <h3 className="v8-eyebrow">Where we do this</h3>
+                <ul className="sv-chips">
+                  {inds.map((x) => <li key={x!.id}><a href={industryHref(x!)}>{x!.name}</a></li>)}
+                  {subs.map((x) => <li key={x.href}><a href={x.href} className="is-sub">{x.label}</a></li>)}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </section>

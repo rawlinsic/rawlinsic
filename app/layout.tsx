@@ -6,28 +6,21 @@ import "./v8.css";
 
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
+import { Source_Sans_3 } from "next/font/google";
 import { AREAS, areaHref } from "@/lib/content/site";
 import AnalyticsWrapper from '@/components/analytics-wrapper';
 import CookieBanner from '@/components/cookie-banner';
 import Smooth from "@/components/v8/smooth";
 
-/* Redesign type: one token each (--font-sans, --font-serif in journey.css),
-   so the pair can change in one line. No fallback metrics borrowed from other fonts. */
+/* Redesign type: one typeface, Source Sans 3, on every page (--font-sans in
+   journey.css; the old --font-serif token points at it too). No fallback
+   metrics borrowed from other fonts. */
 const sourceSans = Source_Sans_3({
   variable: "--font-source-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
   adjustFontFallback: false,
   fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
-});
-const sourceSerif = Source_Serif_4({
-  variable: "--font-source-serif",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  adjustFontFallback: false,
-  fallback: ["Georgia", "serif"],
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rawlinsic.com";
@@ -175,7 +168,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-env={process.env.VERCEL_ENV === "production" ? "production" : "dev"}>
       <body
-        className={`${sourceSans.variable} ${sourceSerif.variable} antialiased`}
+        className={`${sourceSans.variable} antialiased`}
         suppressHydrationWarning={true}
       >
         <a href="#main-content" className="skip-to-content">Skip to main content</a>

@@ -51,9 +51,16 @@ export default function Scene({ steps, per = 100, id, className, label, children
       }
     };
     const on = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    const stage = el.querySelector<HTMLElement>(".scn-stage")!;
     const mode = () => {
       live = window.innerWidth >= 960 && !reduce.matches;
-      if (live) { delete el.dataset.static; tick(); } else setStatic();
+      if (live) {
+        delete el.dataset.static;
+        // if what's inside is taller than the screen it can't be held without cutting it off: show it plainly
+        const inner = stage.firstElementChild as HTMLElement | null;
+        if (inner && inner.offsetHeight > stage.clientHeight + 2) { live = false; setStatic(); return; }
+        tick();
+      } else setStatic();
     };
     const go = (e: Event) => {
       const b = (e.target as HTMLElement).closest<HTMLElement>("[data-goto]");

@@ -3,7 +3,8 @@
 /* next/font sets --font-source-* on <body>, so the font tokens live there */
 body {
   --font-sans: var(--font-source-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-serif: var(--font-source-serif), Georgia, serif;
+  /* one typeface on every page: the old serif token now points at the sans */
+  --font-serif: var(--font-sans);
 }
 :root {
   --rw-paper: #f7f9fc;
