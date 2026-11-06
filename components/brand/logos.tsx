@@ -17,7 +17,7 @@ export const CONCEPTS: Concept[] = [
   { id: "nodeword", n: 3, name: "Node wordmark", from: "yours", says: "Our own lettering. The a and the dot of the i are glowing nodes.", watch: "Lowercase reads modern; check that Scott is fine moving off a capital R.", word: "", font: "Custom lettering", fontVar: "" },
   { id: "route", n: 4, name: "Route wordmark", from: "new", says: "Today's underline becomes a route that rises to a node.", watch: "Wide shape; the icon carries it at small sizes.", word: "", font: "Custom lettering", fontVar: "" },
   { id: "framed", n: 5, name: "Framed", from: "new", says: "Today's box and underline in clean type, with one lit corner.", watch: "Safest with Scott's rectangle; least new.", word: "Rawlins", font: "Source Sans 3 Bold", fontVar: "var(--font-sans)" },
-  { id: "noder", n: 6, name: "Node R", from: "new", says: "A bold R with a glowing node in its bowl. Built for 16 px.", watch: "Simple on purpose; the wordmark and color do the rest.", word: "Rawlins", font: "Figtree SemiBold", fontVar: "var(--f-figtree)" },
+  { id: "noder", n: 6, name: "Node R", from: "new", says: "A bold R with a glowing node in its bowl. Still a clean R at 16 px.", watch: "The node drops out under 32 px; at that size it is simply an R.", word: "Rawlins", font: "Figtree SemiBold", fontVar: "var(--f-figtree)" },
 ];
 export const conceptById = (id: ConceptId) => CONCEPTS.find((c) => c.id === id)!;
 
