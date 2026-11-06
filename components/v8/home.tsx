@@ -18,6 +18,7 @@ import Rail from "@/components/v8/rail";
 import Panels from "@/components/v8/panels";
 import Chapters from "@/components/v8/chapters";
 import Orbit, { type Tile } from "@/components/v8/orbit";
+import { stripPeople } from "@/components/site/more";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const q = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
@@ -30,6 +31,7 @@ export default function Home() {
   const ev = EVENTS.filter((e) => !e.placeholder || !PROD)[0];
   const pdn = CASES.find((c) => c.id === "cs-pdn")!;
   const why = [0, 1, 2, 4, 3].map((i) => WHY[i]);
+  const people = stripPeople();
   // the ring: each industry, then its specialties, dealt round so they spread out
   const groups: Tile[][] = VISIBLE_INDUSTRIES.map((i) => [
     { src: INDUSTRY_PHOTO[i.id], label: i.name, href: industryHref(i) },
@@ -83,14 +85,26 @@ export default function Home() {
       <Scene steps={1} per={90} className="wc" label="Why Rawlins">
         <div className="wc-in">
           <div className="wc-card">
-            <div className="wc-faces" aria-hidden="true">
-              {LEADERS.slice(0, 3).map((p) => (
-                <figure key={p.name}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={`/images/team/${p.photo}.webp`} alt="" loading="lazy" />
-                  <figcaption><b>{p.name}</b>{p.role}</figcaption>
-                </figure>
-              ))}
+            <div className="wc-people" role="region" aria-label="Some of our people. Hover to pause; select a person to open their profile.">
+              {[0, 1].map((col) => {
+                const list = people.filter((_, i) => i % 2 === col);
+                return (
+                  <ul key={col} className={`wc-col${col ? " wc-col-down" : ""}`}>
+                    {[...list, ...list].map((p, i) => {
+                      const copy = i >= list.length;
+                      return (
+                        <li key={`${p.slug}-${i}`} className="wc-p" aria-hidden={copy || undefined}>
+                          <a href={`/about/our-people#${p.slug}`} tabIndex={copy ? -1 : undefined}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={p.photo} alt="" loading="lazy" />
+                            <span><b>{p.name}</b><em>{p.line}</em></span>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                );
+              })}
             </div>
             <div className="wc-copy">
               <p className="v8-eyebrow">Why Rawlins</p>

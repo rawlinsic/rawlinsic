@@ -131,6 +131,17 @@ function personFromRoster(m: (typeof TEAM_MEMBERS)[number]): Person {
     formerly: FORMERLY[bare(m.name)], email: m.email, phone: m.phone, linkedin: m.linkedin, background: cleanNames(m.background), achievements: cleanNames(m.achievements),
   };
 }
+/* People for the moving strip on home: the advisors and specialists from Our
+   people, founder first, then the people who ran agency programs. Each links
+   to their profile (Our people opens it from the #slug). */
+export function stripPeople() {
+  const rank = (p: Person) => (/Founder/.test(p.role) ? 0 : p.formerly ? 1 : p.group === "Advisors" ? 2 : 3);
+  return TEAM_MEMBERS.map(personFromRoster)
+    .map((p, i) => ({ p, i }))
+    .filter(({ p }) => p.group !== "Business Operations")
+    .sort((a, b) => rank(a.p) - rank(b.p) || a.i - b.i)
+    .map(({ p }) => ({ slug: p.slug, name: p.name, photo: p.photo, line: p.formerly ?? p.role }));
+}
 export function OurPeople() {
   const people = TEAM_MEMBERS.map(personFromRoster);
   const founder = people.findIndex((p) => /Founder/.test(p.role));

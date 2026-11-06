@@ -777,15 +777,25 @@ html.lenis { scroll-behavior: auto !important; }
 .wc { background: #0a1220; }
 .wc .scn-stage { display: grid; align-items: center; padding: clamp(24px, 4vw, 48px) var(--side); }
 .wc[data-static] .scn-stage { padding: 72px 18px; }
-.wc-card { display: grid; grid-template-columns: minmax(170px, 24%) minmax(0, 1fr); gap: clamp(12px, 1.6vw, 22px); width: 100%; max-width: 1320px; margin: 0 auto; }
-.wc-faces { position: relative; aspect-ratio: 3 / 4; align-self: start; overflow: hidden; border-radius: 18px; background: #dce6f2; }
-.wc-faces figure { position: absolute; inset: 0; margin: 0; transition: opacity 0.5s; }
-.wc-faces figure:nth-child(1) { opacity: clamp(0, (0.36 - var(--p, 1)) * 30, 1); }
-.wc-faces figure:nth-child(2) { opacity: calc(clamp(0, (var(--p, 1) - 0.33) * 30, 1) * clamp(0, (0.69 - var(--p, 1)) * 30, 1)); }
-.wc-faces figure:nth-child(3) { opacity: clamp(0, (var(--p, 1) - 0.66) * 30, 1); }
-.wc-faces img { width: 100%; height: 100%; object-fit: cover; }
-.wc-faces figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 44px 14px 12px; background: linear-gradient(transparent, rgba(5, 10, 20, 0.86)); color: #c3cfdd; font-size: 0.82rem; line-height: 1.3; }
-.wc-faces figcaption b { display: block; color: #fff; font-size: 0.95rem; font-weight: 600; }
+.wc-card { display: grid; grid-template-columns: clamp(270px, 27%, 360px) minmax(0, 1fr); gap: clamp(12px, 1.6vw, 22px); width: 100%; max-width: 1320px; margin: 0 auto; }
+/* the moving strip of people: two columns drifting opposite ways; hover or focus pauses it */
+.wc-people { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; height: clamp(360px, 60vh, 600px); overflow: hidden; -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
+.wc-col { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; animation: wc-up 120s linear infinite; will-change: transform; }
+.wc-col-down { animation-name: wc-down; animation-duration: 135s; }
+.wc-people:hover .wc-col, .wc-people:focus-within .wc-col { animation-play-state: paused; }
+@keyframes wc-up { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 5px)); } }
+@keyframes wc-down { from { transform: translateY(calc(-50% - 5px)); } to { transform: translateY(0); } }
+.wc-p a { display: block; overflow: hidden; border-radius: 14px; background: #13233a; border: 1px solid rgba(165, 243, 252, 0.14); color: #fff !important; text-decoration: none; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+.wc-p img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; object-position: center top; background: #dce6f2; }
+.wc-p span { display: block; padding: 8px 10px 10px; }
+.wc-p b { display: block; font-size: 0.86rem; font-weight: 600; line-height: 1.2; }
+.wc-p em { display: -webkit-box; margin-top: 3px; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-style: normal; font-size: 0.74rem; line-height: 1.3; color: #a9b8cb; }
+.wc-p a:hover, .wc-p a:focus-visible { border-color: var(--aqua); box-shadow: 0 0 18px rgba(34, 211, 238, 0.35); transform: scale(1.03); }
+.wc-p a:focus-visible { outline: 2px solid var(--aqua); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .wc-col { animation: none; }
+  .wc-people { overflow-y: auto; -webkit-mask-image: none; mask-image: none; }
+}
 .wc-copy { display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: clamp(320px, 54vh, 580px); padding: clamp(24px, 3.2vw, 48px); border-radius: 18px; background: radial-gradient(70% 90% at 92% 0%, rgba(34, 211, 238, 0.18), transparent 60%), var(--navy); }
 .wc-copy .v8-eyebrow { color: var(--aqua); }
 .wc-lit { font-size: clamp(1.8rem, 3.4vw, 3.3rem); font-weight: 500; line-height: 1.12; letter-spacing: -0.025em; max-width: 24ch; }
@@ -825,5 +835,8 @@ html.lenis { scroll-behavior: auto !important; }
 @media (max-width: 700px) {
   .h-media { height: 56vh; }
   .wc-card { grid-template-columns: 1fr; }
-  .wc-faces { aspect-ratio: 4 / 3; }
+  .wc-people { order: 2; height: 340px; }
 }
+
+/* Our people: the profile window opens centered */
+.pp-dialog { margin: auto; }
