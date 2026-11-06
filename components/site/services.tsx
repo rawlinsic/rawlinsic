@@ -2,6 +2,7 @@
    Content: lib/content/catalog.ts (v11 + v12). Structure: handoff v7 section 3. */
 import AutomationIntegrationInteractive from "@/components/automation-integration-interactive";
 import { AREA_PHOTO, PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
+import { LineStrip, NextStation } from "@/components/route/line-strip";
 import AutomationEcosystemBars from "@/components/automation-ecosystem-bars";
 import WhatWeDeliverPyramid from "@/components/what-we-deliver-pyramid";
 import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, subsectorHref, type Area } from "@/lib/content/site";
@@ -61,6 +62,7 @@ export function AreaPage({ area }: { area: Area }) {
     <Shell scene={area.scene} photo={AREA_PHOTO[area.id]}>
       <Hero crumbs={[["/services", "Services"], [areaHref(area), area.name]]} kicker={area.tag} title={area.name}
         lead={<p>{L.lead}</p>} actions={<><Btn href="/contact" primary>Get in touch</Btn><Btn href="#services">See the services</Btn></>} />
+      <LineStrip areaId={area.id} />
       <Sec title="What we hear"><ul className="pg-hear">{L.hear.map((h) => <li key={h}>{h}</li>)}</ul></Sec>
       <Sec title={L.feature.title} tone="panel"><Steps steps={L.feature.steps} /></Sec>
       {area.id === "tech" && <DigitalShowcase />}
@@ -117,6 +119,7 @@ export function ServicePage({ id }: { id: string }) {
         actions={<><Btn href="/contact" primary>Talk to an expert</Btn>{cases.length > 0 && <Btn href="#work">See the work</Btn>}</>}>
         {s.st !== "ok" && <Dev>Content status: {STATUS[s.st]}</Dev>}
       </Hero>
+      <LineStrip areaId={area.id} current={id} />
       <Sec title="What we hear">
         {s.quote ? <blockquote className="pg-quote">{s.hear[0]}</blockquote> : <ul className="pg-hear">{s.hear.map((h) => <li key={h}>{h}</li>)}</ul>}
       </Sec>
@@ -141,6 +144,7 @@ export function ServicePage({ id }: { id: string }) {
       )}
       <Sec title="Related services"><ServiceChips ids={s.related} /></Sec>
       {AVIATION_PAGES.includes(id) && <Sec title="Your aviation team" tone="panel"><People people={AVIATION_TEAM} /></Sec>}
+      <NextStation areaId={area.id} current={id} />
       <Talk />
     </Shell>
   );

@@ -2,6 +2,7 @@ import "./globals.css";
 import "./journey.css";
 import "./menu.css";
 import "./pages.css";
+import "./route.css";
 
 import type { Metadata } from "next";
 import Script from "next/script";
