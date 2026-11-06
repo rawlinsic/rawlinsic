@@ -8,6 +8,7 @@
 import { useEffect, useRef } from "react";
 import { glideTo } from "@/components/v8/smooth";
 import { docTop } from "@/components/v8/panels";
+import SkipNext from "@/components/v8/skip-next";
 
 export type Chapter = { id: string; name: string; tag: string; lead: string; quote: string; href: string; photo: string; services: { name: string; href: string }[] };
 
@@ -115,6 +116,7 @@ export default function Chapters({ intro, items }: { intro: { k: string; h: stri
           </article>
         ))}
 
+        <SkipNext className="skip-wwd" />
         <nav className="wwd-rail" aria-label="Jump to an area">
           <ol>
             {items.map((c, k) => (

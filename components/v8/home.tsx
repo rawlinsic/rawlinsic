@@ -20,6 +20,7 @@ import Chapters from "@/components/v8/chapters";
 import Orbit, { type Tile } from "@/components/v8/orbit";
 import { stripPeople, veteranPeople } from "@/components/site/more";
 import PeopleStrip from "@/components/v8/people-strip";
+import SkipNext from "@/components/v8/skip-next";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const q = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
@@ -96,10 +97,12 @@ export default function Home() {
         </div>
       </Scene>
 
-      <section className="h-why" aria-labelledby="h-why">
+      {/* the proof: holds while scrolling steps through each reason */}
+      <Scene steps={5} per={60} className="h-why hw" label="What sets us apart">
         <div className="v8-wrap">
-          <div className="h-why-head" data-reveal>
+          <div className="h-why-head h-row-head" data-reveal>
             <h2 id="h-why" className="v8-h2">What sets us apart</h2>
+            <SkipNext />
           </div>
           <div data-reveal>
             <Tabs label="What sets us apart" labels={why.map((w) => w[0])}>
@@ -132,7 +135,7 @@ export default function Home() {
             </Tabs>
           </div>
         </div>
-      </section>
+      </Scene>
 
       {/* 4 · who we work with: a ring of photos around the headline */}
       <Orbit tiles={tiles}>

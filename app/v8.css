@@ -875,3 +875,27 @@ html.lenis { scroll-behavior: auto !important; }
   .ps-row { animation: none; }
   .ps-across { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
 }
+
+/* skip past a held section */
+.skip { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(29, 55, 89, 0.28); background: rgba(255, 255, 255, 0.6); color: var(--navy); font: 600 0.9rem/1 var(--font-sans); cursor: pointer; transition: background 0.2s, border-color 0.2s, box-shadow 0.2s; }
+.skip:hover { background: #fff; border-color: var(--aqua); box-shadow: 0 0 16px rgba(34, 211, 238, 0.3); }
+.skip-wwd { position: absolute; z-index: 5; top: clamp(16px, 3vh, 28px); right: var(--side); color: #e6edf5; background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.28); }
+.skip-wwd:hover { background: rgba(34, 211, 238, 0.12); }
+.skip { display: none; }
+@media (min-width: 960px) and (prefers-reduced-motion: no-preference) {
+  .scn:not([data-static]) .skip, .wwd:not([data-static]) .skip { display: inline-flex; }
+  /* What sets us apart: holds while scrolling steps through each reason */
+  .hw:not([data-static]) { padding: 0; }
+  .hw:not([data-static]) > .scn-stage { display: flex; flex-direction: column; justify-content: center; }
+  .hw:not([data-static]) .h-why-head { margin-bottom: 20px; }
+}
+
+/* the dark sections, lighter: brand navy with a soft glow, no grid */
+.wwd { background: #1d3759; }
+.wwd-stage { background: radial-gradient(60% 70% at 72% 40%, rgba(34, 211, 238, 0.13), transparent 65%), radial-gradient(45% 55% at 12% 90%, rgba(165, 243, 252, 0.07), transparent 70%), linear-gradient(165deg, #25446f 0%, #1d3759 45%, #15294a 100%); }
+.wwd-rail button { color: #a9b8cb; }
+.wc { background: radial-gradient(55% 70% at 85% 20%, rgba(34, 211, 238, 0.12), transparent 65%), linear-gradient(165deg, #15294a 0%, #1d3759 55%, #25446f 100%); }
+.wc-copy { background: radial-gradient(70% 90% at 92% 0%, rgba(34, 211, 238, 0.16), transparent 60%), linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)); border: 1px solid rgba(165, 243, 252, 0.2); }
+.wc-p a { background: rgba(255, 255, 255, 0.07); }
+.wc-p em { color: #c3cfdd; }
+.wc-loc { color: #a9b8cb; }
