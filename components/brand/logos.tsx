@@ -181,7 +181,8 @@ export function Stage({ tone, glow, className = "", children, style }: { tone: "
    with the new directions. "clean" keeps it as is; "lit" opens the ring at
    the top right with one glowing node. */
 export function RIcon({ size, variant }: { size: number; variant: "clean" | "lit" }) {
-  const R = "M38 70V27H55A11.5 11.5 0 0 1 55 50H38M50 50L63 70";
+  /* a solid slanted R with an open counter, like today's icon */
+  const R = "M30 24H56C68 24 74 31 74 39C74 47 69 52 61 54L71 72H58L49 55H43V72H30ZM43 34V46H55C59 46 61 43.5 61 40C61 36.5 59 34 55 34Z";
   return (
     <svg className="lg-mark" viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
       {variant === "clean" ? (
@@ -192,8 +193,8 @@ export function RIcon({ size, variant }: { size: number; variant: "clean" | "lit
           <path className="lg-acc" d="M57.6 6.7A44 44 0 0 1 89.9 31.4" fill="none" stroke="var(--la)" strokeWidth={size < 40 ? 9 : 7} strokeLinecap="round" />
         </>
       )}
-      <g transform="translate(10.6 0) skewX(-12)">
-        <path d={R} fill="none" stroke="var(--lk)" strokeWidth={size < 40 ? 14 : 12} strokeLinecap="square" strokeLinejoin="miter" />
+      <g transform="translate(8.6 0) skewX(-12)">
+        <path d={R} fill="var(--lk)" fillRule="evenodd" />
       </g>
       <path d="M31 81H69" stroke={variant === "lit" ? "var(--la)" : "var(--lk)"} className={variant === "lit" ? "lg-acc" : ""} strokeWidth={size < 40 ? 7 : 5} strokeLinecap="round" />
     </svg>

@@ -76,7 +76,7 @@ export function WhoPeople(p: SlideProps) {
 
 /* ── how we've grown ──────────────────────────────────────────── */
 export function WhoGrown(p: SlideProps) {
-  const pts: [number, number][] = [[240, 900], [710, 800], [1180, 700], [1650, 600]];
+  const pts: [number, number][] = [[240, 930], [710, 830], [1180, 730], [1650, 630]];
   const d = pts.reduce((acc, [x, y], k) => (k ? `${acc} C ${pts[k - 1][0] + 220} ${pts[k - 1][1]} ${x - 220} ${y} ${x} ${y}` : `M0 960 Q 120 930 ${x} ${y}`), "") + " Q 1780 560 1920 520";
   return (
     <Frame {...p} dark section="Who we are" className="wg">
@@ -87,7 +87,7 @@ export function WhoGrown(p: SlideProps) {
         {pts.map(([x, y], k) => <g key={k} className="mk-node" transform={`translate(${x} ${y})`}><circle className="mk-halo" r="26" /><circle className="mk-ring" r="12" /><circle className="mk-dot" r="5" /></g>)}
       </svg>
       {STORY.map(([stage, title, body], k) => (
-        <article key={stage} className="wg-stage" style={{ left: pts[k][0] - 170, top: pts[k][1] - 345 }}>
+        <article key={stage} className="wg-stage" style={{ left: pts[k][0] - 170, top: pts[k][1] - 420 }}>
           <img src={STORY_PHOTO[k]} alt="" />
           <p className="wg-k">{pad(k + 1)} · {stage}</p>
           <h3>{title}</h3>
