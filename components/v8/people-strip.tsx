@@ -1,13 +1,15 @@
 "use client";
-/* The moving strip of our people beside the Why Rawlins card. Two columns
-   drift opposite ways; hover or keyboard focus pauses them. Selecting a
+/* A moving strip of our people. Two lanes drift opposite ways: up and down
+   beside the Why Rawlins card, or sideways (across) in "We've done the job".
+   Hover or keyboard focus pauses them. Cards show the Rawlins title and
+   location. Selecting a
    person opens their profile in a pop-up right here (the same window as
    Our people). Each card is still a real link to Our people, so a new-tab
    click or no JavaScript goes there instead. */
 import { useEffect, useRef, useState, type MouseEvent } from "react";
-import { ProfileBody, holdPage, type Person } from "@/components/site/people";
+import { Pin, ProfileBody, holdPage, type Person } from "@/components/site/people";
 
-export default function PeopleStrip({ people }: { people: Person[] }) {
+export default function PeopleStrip({ people, across = false }: { people: Person[]; across?: boolean }) {
   const [open, setOpen] = useState<Person | null>(null);
   const dlg = useRef<HTMLDialogElement>(null);
   const byPointer = useRef(false); // closed with the mouse: let the strip move again
@@ -33,11 +35,12 @@ export default function PeopleStrip({ people }: { people: Person[] }) {
 
   return (
     <>
-      <div className="wc-people" role="region" aria-label="Some of our people. Hover to pause; select a person to read their bio." data-paused={open ? "" : undefined}>
+      <div className={`wc-people${across ? " ps-across" : ""}`} role="region" aria-label="Some of our people. Hover to pause; select a person to read their bio." data-paused={open ? "" : undefined}>
         {[0, 1].map((col) => {
           const list = people.filter((_, i) => i % 2 === col);
+          const lane = across ? `ps-row${col ? " ps-row-rev" : ""}` : `wc-col${col ? " wc-col-down" : ""}`;
           return (
-            <ul key={col} className={`wc-col${col ? " wc-col-down" : ""}`}>
+            <ul key={col} className={lane}>
               {[...list, ...list].map((p, i) => {
                 const copy = i >= list.length;
                 return (
@@ -45,7 +48,7 @@ export default function PeopleStrip({ people }: { people: Person[] }) {
                     <a href={`/about/our-people#${p.slug}`} tabIndex={copy ? -1 : undefined} onClick={(e) => pick(e, p)} aria-haspopup="dialog">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={p.photo} alt="" loading="lazy" />
-                      <span><b>{p.name}</b><em>{p.formerly ?? p.role}</em></span>
+                      <span><b>{p.name}</b><em>{p.role}</em>{p.location && <small className="wc-loc"><Pin />{p.location}</small>}</span>
                     </a>
                   </li>
                 );

@@ -128,7 +128,7 @@ function personFromRoster(m: (typeof TEAM_MEMBERS)[number]): Person {
   if (/Aerial|Jordan Stacy|John Zuleger/.test(`${m.role} ${m.name}`)) { areas.add("drones-advanced-air-mobility"); if (!/Infrastructure Technologies|Jordan/.test(`${m.role} ${m.name}`)) areas.delete("digital-solutions"); }
   return {
     slug: memberSlug(m.name), name: m.name, photo: m.photo, role, group, areas: Array.from(areas),
-    formerly: FORMERLY[bare(m.name)], email: m.email, phone: m.phone, linkedin: m.linkedin, background: cleanNames(m.background), achievements: cleanNames(m.achievements),
+    formerly: FORMERLY[bare(m.name)], location: m.location, email: m.email, phone: m.phone, linkedin: m.linkedin, background: cleanNames(m.background), achievements: cleanNames(m.achievements),
   };
 }
 /* People for the moving strip on home: the advisors and specialists from Our
@@ -141,6 +141,10 @@ export function stripPeople(): Person[] {
     .filter(({ p }) => p.group !== "Business Operations")
     .sort((a, b) => rank(a.p) - rank(b.p) || a.i - b.i)
     .map(({ p }) => p);
+}
+/* The people who ran agency programs (they have a former agency role), founder first. */
+export function veteranPeople(): Person[] {
+  return stripPeople().filter((p) => p.formerly);
 }
 export function OurPeople() {
   const people = TEAM_MEMBERS.map(personFromRoster);

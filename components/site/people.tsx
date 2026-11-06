@@ -1,12 +1,13 @@
 "use client";
 /* Our People: flat, remote firm. Grouped by kind of work, filters by service
-   area, search, and a profile with the person's bio. No locations, no tiers.
+   area, search, and a profile with the person's bio. Cards show the Rawlins
+   title and location; a former agency role is in the profile. No tiers.
    Source: lib/team-data.ts (the live roster). */
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export type Person = {
   slug: string; name: string; photo: string; role: string; group: "Advisors" | "Specialists" | "Business Operations";
-  areas: string[]; formerly?: string; email?: string; phone?: string; linkedin?: string; background: string; achievements: string;
+  areas: string[]; formerly?: string; location?: string; email?: string; phone?: string; linkedin?: string; background: string; achievements: string;
 };
 type Opt = { value: string; label: string };
 
@@ -35,6 +36,11 @@ function Bio({ text }: { text: string }) {
   );
 }
 
+/* A small map pin, as on the live site's profiles. */
+export function Pin() {
+  return <svg className="pp-pin" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>;
+}
+
 /* A person's profile (photo, titles, contact, bio). Used in the Our people
    window and in the pop-up on the home page. */
 export function ProfileBody({ p }: { p: Person }) {
@@ -47,6 +53,7 @@ export function ProfileBody({ p }: { p: Person }) {
           <h2 id="pp-name" className="pg-h2">{p.name}</h2>
           <p className="pp-role">{p.role}</p>
           {p.formerly && <p className="pp-formerly">{p.formerly}</p>}
+          {p.location && <p className="pp-loc"><Pin />Located in {p.location}</p>}
           <p className="pp-contact">
             {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
             {p.phone && <a href={`tel:${p.phone.replace(/[^\d+]/g, "")}`}>{p.phone}</a>}
@@ -120,7 +127,7 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
                     <img src={p.photo} alt="" width={120} height={120} loading="lazy" />
                     <b>{p.name}</b>
                     <span className="pp-role">{p.role}</span>
-                    {p.formerly && <span className="pp-formerly">{p.formerly}</span>}
+                    {p.location && <span className="pp-loc"><Pin />{p.location}</span>}
                     {p.areas.length > 0 && <span className="pp-tags">{p.areas.slice(0, 3).map((a) => <i key={a}>{areas.find((x) => x.value === a)?.label}</i>)}</span>}
                   </button>
                 </li>

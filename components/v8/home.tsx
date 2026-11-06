@@ -5,7 +5,7 @@
    photos)   5 our work   6 how we've grown   7 what's new   8 start a
    conversation. Words come from the content layer. Dev-only marks never
    reach production. */
-import { AREAS, CASES, HOME, LEADERS, NUMBERS, PROBLEMS, STEPS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, caseWho, industryHref, serviceById, subsectorHref } from "@/lib/content/site";
+import { AREAS, CASES, HOME, NUMBERS, PROBLEMS, STEPS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, caseWho, industryHref, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, HOME_VIDEO, INDUSTRY_PHOTO } from "@/lib/content/media";
 import { NEWS, EVENTS } from "@/lib/content/news";
@@ -18,7 +18,7 @@ import Rail from "@/components/v8/rail";
 import Panels from "@/components/v8/panels";
 import Chapters from "@/components/v8/chapters";
 import Orbit, { type Tile } from "@/components/v8/orbit";
-import { stripPeople } from "@/components/site/more";
+import { stripPeople, veteranPeople } from "@/components/site/more";
 import PeopleStrip from "@/components/v8/people-strip";
 
 const PROD = process.env.VERCEL_ENV === "production";
@@ -33,6 +33,7 @@ export default function Home() {
   const pdn = CASES.find((c) => c.id === "cs-pdn")!;
   const why = [0, 1, 2, 4, 3].map((i) => WHY[i]);
   const people = stripPeople();
+  const veterans = veteranPeople();
   // the ring: each industry, then its specialties, dealt round so they spread out
   const groups: Tile[][] = VISIBLE_INDUSTRIES.map((i) => [
     { src: INDUSTRY_PHOTO[i.id], label: i.name, href: industryHref(i) },
@@ -104,13 +105,7 @@ export default function Home() {
             <Tabs label="What sets us apart" labels={why.map((w) => w[0])}>
               <div className="why-p">
                 <p className="why-text">{why[0][1]}</p>
-                <ul className="faces">{LEADERS.slice(0, 6).map((p) => (
-                  <li key={p.name}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`/images/team/${p.photo}.webp`} alt="" loading="lazy" width={72} height={72} />
-                    <b>{p.name}</b><span>{p.role}</span>
-                  </li>
-                ))}</ul>
+                <PeopleStrip people={veterans} across />
                 <a className="v8-link" href="/about/our-people">Meet our people</a>
               </div>
               <div className="why-p">

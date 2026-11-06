@@ -143,24 +143,42 @@ export function Steps({ steps, compact }: { steps: readonly { t: string; d: stri
 }
 
 /* People: headshots come from the live roster (lib/team-data.ts) */
-const bare = (n: string) => n.split(",")[0].trim().toLowerCase();
+/* Match a name to the roster: first and last name, ignoring credentials,
+   middle initials, and nicknames in parentheses ("Jennifer (Jen) Pihl"). */
+const nameKeys = (n: string) => {
+  const base = n.split(",")[0];
+  const nick = Array.from(base.matchAll(/\((.*?)\)/g)).map((m) => m[1].toLowerCase());
+  const t = base.replace(/\(.*?\)/g, " ").toLowerCase().replace(/[^a-z\s'-]/g, " ").split(/\s+/).filter((w) => w.length > 1);
+  if (!t.length) return [];
+  return [`${t[0]} ${t[t.length - 1]}`, ...nick.map((k) => `${k} ${t[t.length - 1]}`)];
+};
+const ROSTER = new Map<string, (typeof TEAM_MEMBERS)[number]>();
+TEAM_MEMBERS.forEach((m) => nameKeys(m.name).forEach((k) => ROSTER.set(k, m)));
+export function rosterFor(name: string) {
+  for (const k of nameKeys(name)) { const m = ROSTER.get(k); if (m) return m; }
+  return undefined;
+}
 export function photoFor(name: string) {
-  const m = TEAM_MEMBERS.find((p) => bare(p.name) === bare(name));
-  return m?.photo;
+  return rosterFor(name)?.photo;
+}
+/* The title a person holds at Rawlins (front-facing titles are never a former role). */
+export function rawlinsTitle(m: (typeof TEAM_MEMBERS)[number]) {
+  return m.title && m.title !== m.role ? `${m.title}, ${m.role}` : m.role;
 }
 export function People({ people }: { people: readonly (readonly string[])[] }) {
   if (!people.length) return null;
   return (
     <ul className="pg-people">
       {people.map(([name, line]) => {
-        const photo = photoFor(name);
+        const m = rosterFor(name);
+        const photo = m?.photo;
         return (
           <li key={name} className="pg-person">
             {photo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={photo} alt="" width={72} height={72} loading="lazy" />
             ) : <span className="pg-person-ph" aria-hidden="true">{name.slice(0, 1)}</span>}
-            <span><b>{name}</b><em>{line}</em></span>
+            <span><b>{name}</b><em>{m ? rawlinsTitle(m) : line}</em>{m?.location && <small className="pg-person-loc">{m.location}</small>}</span>
           </li>
         );
       })}

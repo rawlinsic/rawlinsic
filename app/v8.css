@@ -849,3 +849,29 @@ html.lenis { scroll-behavior: auto !important; }
 .pp-more { margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line, #c4d8f2); }
 .pp-more a { font-weight: 600; color: var(--navy, #1d3759); }
 .pp-more a::after { content: " →"; }
+
+/* people cards: location line (Rawlins title above it) */
+.wc-loc, .pp-loc, .pg-person-loc { display: flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 0.74rem; font-style: normal; line-height: 1.2; color: #8fa3bb; }
+.pp-pin { flex: none; }
+.pp-card .pp-loc { font-size: 0.85rem; color: var(--rw-slate, #4d688c); }
+.pp-dialog .pp-loc { font-size: 0.92rem; color: var(--steel, #4d688c); }
+.pg-person-loc { display: block; color: var(--rw-slate, #4d688c); font-size: 0.82rem; }
+.wc-p em { -webkit-line-clamp: 2; }
+/* "We've done the job": the same strip, moving sideways */
+.ps-across { grid-template-columns: minmax(0, 1fr); gap: 10px; height: auto; margin: 22px 0 20px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.ps-row { list-style: none; margin: 0; padding: 0; display: flex; gap: 10px; width: max-content; animation: ps-left 95s linear infinite; will-change: transform; }
+.ps-row-rev { animation-name: ps-right; animation-duration: 105s; }
+.wc-people:hover .ps-row, .wc-people:has(:focus-visible) .ps-row, .wc-people[data-paused] .ps-row { animation-play-state: paused; }
+@keyframes ps-left { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 5px)); } }
+@keyframes ps-right { from { transform: translateX(calc(-50% - 5px)); } to { transform: translateX(0); } }
+.ps-across .wc-p a { display: flex; align-items: center; gap: 12px; width: 290px; height: 100%; padding: 10px 14px 10px 10px; border-radius: 14px; background: #fff; border: 1px solid var(--line); color: var(--ink) !important; }
+.ps-across .wc-p img { flex: none; width: 64px; height: 64px; border-radius: 50%; background: #e9eff8; }
+.ps-across .wc-p span { min-width: 0; padding: 0; }
+.ps-across .wc-p b { color: var(--head); font-size: 0.95rem; }
+.ps-across .wc-p em { color: var(--steel); font-size: 0.84rem; }
+.ps-across .wc-loc { color: var(--muted); }
+.ps-across .wc-p a:hover, .ps-across .wc-p a:focus-visible { border-color: var(--aqua); box-shadow: 0 8px 22px -10px rgba(34, 211, 238, 0.7); transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) {
+  .ps-row { animation: none; }
+  .ps-across { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+}
