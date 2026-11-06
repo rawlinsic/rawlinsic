@@ -19,6 +19,7 @@ import Panels from "@/components/v8/panels";
 import Chapters from "@/components/v8/chapters";
 import Orbit, { type Tile } from "@/components/v8/orbit";
 import { stripPeople } from "@/components/site/more";
+import PeopleStrip from "@/components/v8/people-strip";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const q = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
@@ -85,27 +86,7 @@ export default function Home() {
       <Scene steps={1} per={90} className="wc" label="Why Rawlins">
         <div className="wc-in">
           <div className="wc-card">
-            <div className="wc-people" role="region" aria-label="Some of our people. Hover to pause; select a person to open their profile.">
-              {[0, 1].map((col) => {
-                const list = people.filter((_, i) => i % 2 === col);
-                return (
-                  <ul key={col} className={`wc-col${col ? " wc-col-down" : ""}`}>
-                    {[...list, ...list].map((p, i) => {
-                      const copy = i >= list.length;
-                      return (
-                        <li key={`${p.slug}-${i}`} className="wc-p" aria-hidden={copy || undefined}>
-                          <a href={`/about/our-people#${p.slug}`} tabIndex={copy ? -1 : undefined}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={p.photo} alt="" loading="lazy" />
-                            <span><b>{p.name}</b><em>{p.line}</em></span>
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                );
-              })}
-            </div>
+            <PeopleStrip people={people} />
             <div className="wc-copy">
               <p className="v8-eyebrow">Why Rawlins</p>
               <LitText className="wc-lit" text="30+ former agency executives and engineers. Our people ran the programs our clients run, so we skip the learning curve." />

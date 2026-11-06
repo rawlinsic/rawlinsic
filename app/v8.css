@@ -782,7 +782,7 @@ html.lenis { scroll-behavior: auto !important; }
 .wc-people { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; height: clamp(360px, 60vh, 600px); overflow: hidden; -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
 .wc-col { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; animation: wc-up 120s linear infinite; will-change: transform; }
 .wc-col-down { animation-name: wc-down; animation-duration: 135s; }
-.wc-people:hover .wc-col, .wc-people:focus-within .wc-col { animation-play-state: paused; }
+.wc-people:hover .wc-col, .wc-people:has(:focus-visible) .wc-col { animation-play-state: paused; }
 @keyframes wc-up { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 5px)); } }
 @keyframes wc-down { from { transform: translateY(calc(-50% - 5px)); } to { transform: translateY(0); } }
 .wc-p a { display: block; overflow: hidden; border-radius: 14px; background: #13233a; border: 1px solid rgba(165, 243, 252, 0.14); color: #fff !important; text-decoration: none; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
@@ -840,3 +840,12 @@ html.lenis { scroll-behavior: auto !important; }
 
 /* Our people: the profile window opens centered */
 .pp-dialog { margin: auto; }
+/* the people strip holds still while a profile is open; the pop-up's own styles on home */
+.wc-people[data-paused] .wc-col { animation-play-state: paused; }
+.pp-dialog { color: #22344d; }
+.pp-dialog .pg-h2 { margin: 0; color: var(--head, #0a1220); font-size: clamp(1.6rem, 2.6vw, 2.1rem); line-height: 1.1; }
+.pp-dialog .pg-h3 { margin: 18px 0 8px; color: var(--head, #0a1220); font-size: 1.15rem; font-weight: 600; }
+.pp-dialog .pp-role { color: var(--steel, #4d688c); font-weight: 600; }
+.pp-more { margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line, #c4d8f2); }
+.pp-more a { font-weight: 600; color: var(--navy, #1d3759); }
+.pp-more a::after { content: " →"; }

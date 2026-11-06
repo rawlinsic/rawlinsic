@@ -35,6 +35,39 @@ function Bio({ text }: { text: string }) {
   );
 }
 
+/* A person's profile (photo, titles, contact, bio). Used in the Our people
+   window and in the pop-up on the home page. */
+export function ProfileBody({ p }: { p: Person }) {
+  return (
+    <>
+      <div className="pp-head">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={p.photo} alt={p.name} width={140} height={140} />
+        <div>
+          <h2 id="pp-name" className="pg-h2">{p.name}</h2>
+          <p className="pp-role">{p.role}</p>
+          {p.formerly && <p className="pp-formerly">{p.formerly}</p>}
+          <p className="pp-contact">
+            {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
+            {p.phone && <a href={`tel:${p.phone.replace(/[^\d+]/g, "")}`}>{p.phone}</a>}
+            {p.linkedin && <a href={p.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
+          </p>
+        </div>
+      </div>
+      <div className="pp-bio">
+        {p.background.trim() === "Coming soon!" ? <p>Bio coming soon.</p> : <><h3 className="pg-h3">Background</h3><Bio text={p.background} /></>}
+        {p.achievements && p.achievements.trim() !== "Coming soon!" && <><h3 className="pg-h3">Achievements</h3><Bio text={p.achievements} /></>}
+      </div>
+    </>
+  );
+}
+
+/* While a profile window is open, the page behind it holds still. */
+export function holdPage(on: boolean) {
+  const l = (window as unknown as { __lenis?: { stop(): void; start(): void } }).__lenis;
+  if (on) l?.stop(); else l?.start();
+}
+
 export default function PeopleDirectory({ people, areas, showDev }: { people: Person[]; areas: Opt[]; showDev: boolean }) {
   const [area, setArea] = useState("");
   const [q, setQ] = useState("");
@@ -50,6 +83,7 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
     if (!d) return;
     if (open && !d.open) d.showModal();
     if (!open && d.open) d.close();
+    holdPage(!!open);
   }, [open]);
 
   const list = useMemo(() => {
@@ -95,28 +129,11 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
           </section>
         );
       })}
-      <dialog ref={dlg} className="pp-dialog" onClose={() => { setOpen(null); window.history.replaceState(null, "", window.location.pathname); }} aria-labelledby="pp-name">
+      <dialog ref={dlg} className="pp-dialog" data-lenis-prevent onClose={() => { setOpen(null); window.history.replaceState(null, "", window.location.pathname); }} aria-labelledby="pp-name">
         {open && (
           <div className="pp-dialog-in">
             <button type="button" className="pp-close" onClick={() => setOpen(null)} aria-label="Close profile">×</button>
-            <div className="pp-head">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={open.photo} alt={open.name} width={140} height={140} />
-              <div>
-                <h2 id="pp-name" className="pg-h2">{open.name}</h2>
-                <p className="pp-role">{open.role}</p>
-                {open.formerly && <p className="pp-formerly">{open.formerly}</p>}
-                <p className="pp-contact">
-                  {open.email && <a href={`mailto:${open.email}`}>{open.email}</a>}
-                  {open.phone && <a href={`tel:${open.phone.replace(/[^\d+]/g, "")}`}>{open.phone}</a>}
-                  {open.linkedin && <a href={open.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
-                </p>
-              </div>
-            </div>
-            <div className="pp-bio">
-              {open.background.trim() === "Coming soon!" ? <p>Bio coming soon.</p> : <><h3 className="pg-h3">Background</h3><Bio text={open.background} /></>}
-              {open.achievements && open.achievements.trim() !== "Coming soon!" && <><h3 className="pg-h3">Achievements</h3><Bio text={open.achievements} /></>}
-            </div>
+            <ProfileBody p={open} />
           </div>
         )}
       </dialog>
