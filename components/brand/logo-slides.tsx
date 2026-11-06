@@ -235,7 +235,7 @@ export function LogoDecide(p: SlideProps) {
           <p className="dc-h">Our take</p>
           <ul>
             <li><b>If the rectangle is a must:</b> 5 Framed. Same box and underline, modern type, one lit corner.</li>
-            <li><b>If Scott is open:</b> 6 Node R for the icon with a clean wordmark. Strongest at 16 px.</li>
+            <li><b>If Scott is open:</b> 6 Node R for the icon with a clean wordmark. The simplest, clearest R at 16 px.</li>
             <li><b>Most like your concepts:</b> 2 Circuit R, using its simple version under 32 px.</li>
           </ul>
         </div>
