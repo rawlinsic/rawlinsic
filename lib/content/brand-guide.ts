@@ -206,10 +206,29 @@ export const SYSTEM_PAIRS: { label: string; fg: keyof Theme; bg: keyof Theme }[]
 
 /* Guide sections, in order (ready = built in this draft) */
 export const BRAND_SECTIONS = [
-  { name: "Overview", ready: false }, { name: "Color", ready: true }, { name: "Logo", ready: false },
+  { name: "Overview", ready: false }, { name: "Color", ready: true }, { name: "Logo", ready: true },
   { name: "Typography", ready: false }, { name: "Graphic language", ready: false }, { name: "Photography", ready: false },
   { name: "Voice and tone", ready: false }, { name: "Templates", ready: false },
 ];
 
 /* Recommended pick (shown on the decision slide; Nicole decides) */
 export const PICK = { system: "A", accent: "aqua" } as const;
+
+/* Wordmark typeface options and where each works. Checked live on Nov 5,
+   2026 (sources in Rawlins Branding/brand-guide-2026-11-05/font-availability
+   check): Microsoft's cloud-fonts list, fonts.adobe.com, Google Fonts' OFL
+   metadata. Canva's built-in library is only visible signed in to the
+   editor, so it is not checked yet. Custom upload: Canva Pro/Teams. */
+export type Avail = { ok: "yes" | "no" | "part"; label: string };
+export type WordmarkFont = { name: string; cssVar: string; note?: string; office: Avail; canva: Avail; adobe: Avail };
+const install: Avail = { ok: "part", label: "Install + embed" };
+const canvaTbd: Avail = { ok: "part", label: "Not checked yet" };
+const adobeYes: Avail = { ok: "yes", label: "Yes (Adobe Fonts)" };
+export const WORDMARK_FONTS: WordmarkFont[] = [
+  { name: "Source Sans 3", cssVar: "var(--font-sans)", note: "the site's font", office: { ok: "yes", label: "Yes, as Source Sans Pro" }, canva: canvaTbd, adobe: adobeYes },
+  { name: "Montserrat", cssVar: "var(--f-montserrat)", office: install, canva: canvaTbd, adobe: adobeYes },
+  { name: "Outfit", cssVar: "var(--f-outfit)", office: install, canva: canvaTbd, adobe: adobeYes },
+  { name: "Figtree", cssVar: "var(--f-figtree)", office: install, canva: canvaTbd, adobe: adobeYes },
+  { name: "Inter", cssVar: "var(--f-inter)", office: install, canva: canvaTbd, adobe: adobeYes },
+  { name: "IBM Plex Sans", cssVar: "var(--f-plex)", office: install, canva: canvaTbd, adobe: adobeYes },
+];

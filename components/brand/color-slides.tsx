@@ -21,7 +21,7 @@ export function Frame({ n, total, dark, section, className = "", style, children
   );
 }
 
-function Head({ k, t, sub }: { k: string; t: ReactNode; sub?: ReactNode }) {
+export function Head({ k, t, sub }: { k: string; t: ReactNode; sub?: ReactNode }) {
   return (
     <header className="bs-head">
       <p className="bs-k">{k}</p>
