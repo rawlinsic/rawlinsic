@@ -66,6 +66,17 @@ export const AREAS: Area[] = [
     ],
   },
   {
+    id: "aviation", slug: "drones-advanced-air-mobility", name: "Drones & Advanced Air Mobility",
+    tag: "Programs, planning, response, and standards", scene: "drone", featuredCase: "cs-aero",
+    services: [
+      svc("drone-programs", "Drone Program Development & Sustainment"),
+      svc("drone-aam", "Advanced Air Mobility Strategy & Readiness", "sky"),
+      svc("drone-emergency", "Emergency Response with Drones"),
+      svc("research", "Research & Standards", "crossing"),
+      svc("aero-division", "Aeronautics Division & Program Setup", "airport"),
+    ],
+  },
+  {
     id: "tech", slug: "digital-solutions", name: "Digital Solutions",
     tag: "Websites, tools, workflows, data, AI, and training", scene: "network", featuredCase: "cs-pdn",
     services: [
@@ -77,17 +88,6 @@ export const AREAS: Area[] = [
       svc("training-video", "Digital Training & Video", "site"),
       svc("tech-strategy", "Technology & AI Strategy", "grid"),
       svc("smart-mobility", "Smart Mobility & Connected Systems", "dusk"), // v12 new
-    ],
-  },
-  {
-    id: "aviation", slug: "drones-advanced-air-mobility", name: "Drones & Advanced Air Mobility",
-    tag: "Programs, planning, response, and standards", scene: "drone", featuredCase: "cs-aero",
-    services: [
-      svc("drone-programs", "Drone Program Development & Sustainment"),
-      svc("drone-aam", "Advanced Air Mobility Strategy & Readiness", "sky"),
-      svc("drone-emergency", "Emergency Response with Drones"),
-      svc("research", "Research & Standards", "crossing"),
-      svc("aero-division", "Aeronautics Division & Program Setup", "airport"),
     ],
   },
 ];

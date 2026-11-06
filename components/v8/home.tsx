@@ -1,19 +1,23 @@
-/* Home (v8). The story, in order:
-   1 who we are, with five ways in   2 what we do, area by area (the page
-   takes each area's color)   3 why us, shown with proof   4 who we work with
-   5 our work   6 how we've grown   7 what's new   8 start a conversation.
-   Words come from the content layer. Dev-only marks never reach production. */
-import type { CSSProperties } from "react";
+/* Home (v8). Moves like scale.com: smooth scrolling, and every section is a
+   panel that slides up over the one before it. The story, in order:
+   1 who we are   2 what we do, area by area (held chapters)   3 why us (a
+   card that lights up, then the proof)   4 who we work with (a ring of
+   photos)   5 our work   6 how we've grown   7 what's new   8 start a
+   conversation. Words come from the content layer. Dev-only marks never
+   reach production. */
 import { AREAS, CASES, HOME, LEADERS, NUMBERS, PROBLEMS, STEPS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, caseWho, industryHref, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
-import { AREA_PHOTO, HOME_VIDEO, INDUSTRY_PHOTO } from "@/lib/content/media";
+import { AREA_PHOTO, HOME_VIDEO, INDUSTRY_PHOTO, PAGE_PHOTO } from "@/lib/content/media";
 import { NEWS, EVENTS } from "@/lib/content/news";
-import { THEME, themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
+import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
 import Scene from "@/components/v8/scene";
 import LitText from "@/components/v8/lit-text";
 import Tabs from "@/components/v8/tabs";
 import Rail from "@/components/v8/rail";
+import Panels from "@/components/v8/panels";
+import Chapters from "@/components/v8/chapters";
+import Orbit, { type Tile } from "@/components/v8/orbit";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const q = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
@@ -26,16 +30,20 @@ export default function Home() {
   const ev = EVENTS.filter((e) => !e.placeholder || !PROD)[0];
   const pdn = CASES.find((c) => c.id === "cs-pdn")!;
   const why = [0, 1, 2, 4, 3].map((i) => WHY[i]);
+  // the ring: each industry, then its specialties, dealt round so they spread out
+  const groups: Tile[][] = VISIBLE_INDUSTRIES.map((i) => [
+    { src: INDUSTRY_PHOTO[i.id], label: i.name, href: industryHref(i) },
+    ...i.subsectors.filter((sb) => INDUSTRY_PHOTO[sb.id]).map((sb) => ({ src: INDUSTRY_PHOTO[sb.id], label: sb.name, href: subsectorHref(i, sb) })),
+  ]);
+  const tiles: Tile[] = [];
+  for (let r = 0; tiles.length < groups.flat().length; r++) groups.forEach((g) => { if (g[r]) tiles.push(g[r]); });
 
   return (
-    <>
-      {/* 1 · who we are, and five ways in */}
+    <Panels>
+      {/* 1 · who we are */}
       <section className="h-hero" aria-labelledby="h-title">
         <div className="v8-wrap h-hero-top">
-          <div>
-            <p className="v8-eyebrow" data-reveal>{HOME.eyebrow}</p>
-            <h1 id="h-title" className="h-title" data-reveal>{HOME.headline}</h1>
-          </div>
+          <h1 id="h-title" className="h-title" data-reveal>{HOME.headline}</h1>
           <div className="h-side" data-reveal>
             <p className="h-line">{HOME.line}</p>
             <div className="v8-actions">
@@ -44,41 +52,48 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="v8-wrap h-ways-head" id="what" data-reveal>
-          <p className="v8-eyebrow">What we do</p>
-          <h2 className="h-ways-h">From how an organization is set up to how its work gets done.</h2>
-          <p className="v8-lead">We help organizations plan and organize, deliver projects, keep what&apos;s built running, put digital tools to work, and launch drone and air mobility programs.</p>
+        <div className="h-media" data-scrub="page">
+          <video autoPlay muted loop playsInline poster={HOME_VIDEO.poster} aria-hidden="true">
+            <source src={HOME_VIDEO.webm} type="video/webm" />
+            <source src={HOME_VIDEO.mp4} type="video/mp4" />
+          </video>
         </div>
-        <ul className="ways" aria-label="What we do">
-          {AREAS.map((a) => {
-            const d = AREA_DATA[a.id];
-            return (
-              <li key={a.id} className="way" style={themeStyle(a.id)}>
-                <a href={areaHref(a)}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={AREA_PHOTO[a.id]} alt="" />
-                  <span className="way-txt">
-                    <b>{a.name}</b>
-                    <em>{a.tag}</em>
-                    <span className="way-q">{q(d.hear[0])}</span>
-                    <span className="way-more">Explore {a.name}</span>
-                  </span>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
       </section>
 
-      {/* 3 · why us, with proof */}
+      {/* 2 · what we do, area by area */}
+      <Chapters
+        intro={{ k: "What we do", h: "Most of our work starts with how an organization is set up to deliver.", lead: "From there, we help deliver projects, keep what's built running, launch drone and air mobility programs, and put digital tools to work." }}
+        items={AREAS.map((a) => ({
+          id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id].lead, quote: q(AREA_DATA[a.id].hear[0]), href: areaHref(a), photo: AREA_PHOTO[a.id],
+          services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
+        }))}
+      />
+
+      {/* 3 · why us: the card holds while the sentence lights up */}
+      <Scene steps={1} per={90} className="wc" label="Why Rawlins">
+        <div className="wc-in">
+          <div className="wc-card">
+            <div className="wc-faces" aria-hidden="true">
+              {LEADERS.slice(0, 3).map((p) => (
+                <figure key={p.name}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={`/images/team/${p.photo}.webp`} alt="" loading="lazy" />
+                  <figcaption><b>{p.name}</b>{p.role}</figcaption>
+                </figure>
+              ))}
+            </div>
+            <div className="wc-copy">
+              <p className="v8-eyebrow">Why Rawlins</p>
+              <LitText className="wc-lit" text="30+ former agency executives and engineers. Our people ran the programs our clients run, so we skip the learning curve." />
+            </div>
+          </div>
+        </div>
+      </Scene>
+
       <section className="h-why" aria-labelledby="h-why">
         <div className="v8-wrap">
           <div className="h-why-head" data-reveal>
-            <p className="v8-eyebrow">Why Rawlins</p>
             <h2 id="h-why" className="v8-h2">What sets us apart</h2>
-          </div>
-          <div className="why-lit" data-reveal>
-            <LitText text="30+ former agency executives and engineers. Our people ran the programs our clients run, so we skip the learning curve." />
           </div>
           <div data-reveal>
             <Tabs label="What sets us apart" labels={why.map((w) => w[0])}>
@@ -119,29 +134,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4 · who we work with */}
-      <section className="h-inds" aria-labelledby="h-inds">
-        <div className="v8-wrap">
-          <div className="h-row-head" data-reveal>
-            <div><p className="v8-eyebrow">Who we work with</p><h2 id="h-inds" className="v8-h2">Built inside public agencies.</h2><p className="v8-lead">Our work so far is across the United States, and our team can do it anywhere.</p></div>
-            <a className="v8-link" href="/industries">Everyone we work with</a>
-          </div>
-          <ul className="inds">
-            {VISIBLE_INDUSTRIES.map((ind, k) => (
-              <li key={ind.id} className={`ind ind-${k}`} data-reveal style={{ ["--d" as string]: `${k * 80}ms` } as CSSProperties}>
-                <a className="ind-main" href={industryHref(ind)}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={INDUSTRY_PHOTO[ind.id]} alt="" loading="lazy" />
-                  <span className="ind-txt"><b>{ind.name}</b><span>{ind.who}</span></span>
-                </a>
-                {ind.subsectors.length > 0 && (
-                  <ul className="ind-subs" aria-label={`${ind.name} specialties`}>{ind.subsectors.map((s) => <li key={s.id}><a href={subsectorHref(ind, s)}>{s.name}</a></li>)}</ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {/* 4 · who we work with: a ring of photos around the headline */}
+      <Orbit tiles={tiles}>
+        <p className="v8-eyebrow">Who we work with</p>
+        <h2 id="orb-h" className="orb-h">Built inside <span>public agencies.</span></h2>
+        <p className="v8-lead">Our work so far is across the United States, and our team can do it anywhere.</p>
+        <ul className="orb-chips">{VISIBLE_INDUSTRIES.map((i) => <li key={i.id}><a href={industryHref(i)}>{i.name}</a></li>)}</ul>
+        <a className="v8-link" href="/industries">Everyone we work with</a>
+      </Orbit>
 
       {/* 5 · our work */}
       <section className="h-work" aria-labelledby="h-work">
@@ -183,7 +183,7 @@ export default function Home() {
               <li key={k} className="hg-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={STORY_PHOTO[i]} alt="" loading="lazy" />
-                <div><span className="grown-k">{String(i + 1).padStart(2, "0")} · {k}</span><b>{h}</b><p>{p}</p></div>
+                <div><span className="grown-k">{k}</span><b>{h}</b><p>{p}</p></div>
               </li>
             ))}
             <li className="hg-card hg-next"><span className="grown-k">What&apos;s next</span><b>Where are you headed?</b><a className="v8-btn v8-btn-glow" href="/contact">Tell us what you&apos;re trying to fix</a></li>
@@ -224,10 +224,8 @@ export default function Home() {
 
       {/* 8 · start a conversation */}
       <section className="h-start" aria-labelledby="h-start">
-        <video className="h-start-video" autoPlay muted loop playsInline poster={HOME_VIDEO.poster} aria-hidden="true">
-          <source src={HOME_VIDEO.webm} type="video/webm" />
-          <source src={HOME_VIDEO.mp4} type="video/mp4" />
-        </video>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="h-start-video" src={PAGE_PHOTO.about} alt="" loading="lazy" />
         <div className="v8-wrap h-start-in" data-reveal>
           <h2 id="h-start" className="v8-h2">Tell us what you&apos;re trying to fix.</h2>
           <p className="v8-lead">Start with the one that sounds most like you, or write your own.</p>
@@ -241,6 +239,6 @@ export default function Home() {
           <p className="h-start-direct"><a href="/contact">Write your own</a><a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a><a href="tel:+17758433822">(775) 843-3822</a></p>
         </div>
       </section>
-    </>
+    </Panels>
   );
 }

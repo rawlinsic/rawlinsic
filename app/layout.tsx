@@ -10,6 +10,7 @@ import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import { AREAS, areaHref } from "@/lib/content/site";
 import AnalyticsWrapper from '@/components/analytics-wrapper';
 import CookieBanner from '@/components/cookie-banner';
+import Smooth from "@/components/v8/smooth";
 
 /* Redesign type: one token each (--font-sans, --font-serif in journey.css),
    so the pair can change in one line. No fallback metrics borrowed from other fonts. */
@@ -225,6 +226,7 @@ export default function RootLayout({
           }
         `}</Script>
         <CookieBanner />
+        <Smooth />
       </body>
     </html>
   );
