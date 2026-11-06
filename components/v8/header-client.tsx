@@ -36,6 +36,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
   const [q, setQ] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const timer = useRef<number | undefined>(undefined);
+  const openedAt = useRef(0);
   const bar = useRef<HTMLDivElement>(null);
   const hits = useSearch(data.search, q);
 
@@ -57,7 +58,10 @@ export default function HeaderClient({ data }: { data: NavData }) {
     if (lock) requestAnimationFrame(() => document.querySelector<HTMLInputElement>(".hx-find input, .hx-sheet input")?.focus());
   }, [sheet, find]);
 
-  const hoverOpen = (m: Menu) => { window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setOpen(m), 90); };
+  const show = (m: Menu) => { if (m !== open) openedAt.current = Date.now(); setOpen(m); };
+  const hoverOpen = (m: Menu) => { window.clearTimeout(timer.current); timer.current = window.setTimeout(() => show(m), 90); };
+  /* a click right after hover-open keeps the menu open (it used to close it) */
+  const toggle = (m: Menu) => { window.clearTimeout(timer.current); if (open === m && Date.now() - openedAt.current > 500) setOpen(null); else show(m); };
   const hoverClose = () => { window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setOpen(null), 160); };
 
   const results = (
@@ -80,7 +84,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
             {MENUS.map(([m, label]) => (
               <li key={m}>
                 <button type="button" id={`hx-b-${m}`} aria-expanded={open === m} aria-controls={`hx-m-${m}`}
-                  onMouseEnter={() => hoverOpen(m)} onClick={() => setOpen(open === m ? null : m)}>{label}</button>
+                  onMouseEnter={() => hoverOpen(m)} onClick={() => toggle(m)}>{label}</button>
               </li>
             ))}
           </ul>
@@ -102,7 +106,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
             </section>
           ))}
         </div>
-        <p className="mx-foot"><a href="/services">Everything we do, on one page</a></p>
+        <p className="mx-foot"><a href="/services">See all five areas and 29 services</a></p>
       </div>
       <div className="hx-panel" id="hx-m-who" hidden={open !== "who"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         <div className="mx-who">

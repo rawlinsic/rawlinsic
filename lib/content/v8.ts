@@ -1,6 +1,6 @@
-/* v8 design: each area has its own color world and its own diagram, drawn
-   from that area's "how the pieces fit" content. Text colors (ink) pass
-   WCAG AA on white and on the area tint. No gold anywhere (Scott). */
+/* v8 design, brand palette (Nicole, Nov 5): blues, silver and greys, black,
+   with a glowing aqua accent. The five areas share one palette; each is told
+   apart by its own diagram and photography. Text colors pass WCAG AA. */
 import type { CSSProperties } from "react";
 import { PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import type { CaseIndex } from "@/lib/content/site";
@@ -8,12 +8,17 @@ import type { CaseIndex } from "@/lib/content/site";
 export type DiagramKind = "loop" | "track" | "cycle" | "hub" | "ascent";
 export type AreaTheme = { n: string; color: string; ink: string; tint: string; soft: string; diagram: DiagramKind };
 
+export const BRAND = {
+  black: "#0a1220", deep: "#08111f", navy: "#1a3251", blue: "#1b5ccc", steel: "#4b6280",
+  silver: "#c9d2dd", silver2: "#e8edf3", paper: "#f5f7fa", aqua: "#22d3ee", aquaSoft: "#a5f3fc", aquaInk: "#0e7490",
+};
+const area = (n: string, diagram: DiagramKind): AreaTheme => ({ n, color: BRAND.blue, ink: BRAND.blue, tint: "#eef3fb", soft: "#cfdcf0", diagram });
 export const THEME: Record<string, AreaTheme> = {
-  strategy: { n: "01", color: "#5b54e8", ink: "#4338ca", tint: "#f2f1ff", soft: "#dddafe", diagram: "loop" },
-  delivery: { n: "02", color: "#f26a2a", ink: "#c2410c", tint: "#fff4ed", soft: "#ffd8c2", diagram: "track" },
-  om: { n: "03", color: "#18a06c", ink: "#0f7a52", tint: "#edf8f2", soft: "#c8eedb", diagram: "cycle" },
-  tech: { n: "04", color: "#0ea5c6", ink: "#0e7490", tint: "#eaf8fb", soft: "#c3ebf4", diagram: "hub" },
-  aviation: { n: "05", color: "#d63fa0", ink: "#a21c78", tint: "#fdf1f8", soft: "#f6cde6", diagram: "ascent" },
+  strategy: area("01", "loop"),
+  delivery: area("02", "track"),
+  om: area("03", "cycle"),
+  tech: area("04", "hub"),
+  aviation: area("05", "ascent"),
 };
 
 export const themeStyle = (areaId: string): CSSProperties => {

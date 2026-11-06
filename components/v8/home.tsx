@@ -10,7 +10,8 @@ import { AREA_PHOTO, HOME_VIDEO, INDUSTRY_PHOTO } from "@/lib/content/media";
 import { NEWS, EVENTS } from "@/lib/content/news";
 import { THEME, themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
-import Explorer from "@/components/v8/explorer";
+import Scene from "@/components/v8/scene";
+import LitText from "@/components/v8/lit-text";
 import Tabs from "@/components/v8/tabs";
 import Rail from "@/components/v8/rail";
 
@@ -64,30 +65,49 @@ export default function Home() {
           <h2 id="h-what" className="v8-h2">Most of our work starts with how an organization is set up to deliver.</h2>
           <p className="v8-lead">From there, we help deliver projects, keep what&apos;s built running, put digital tools to work, and launch drone and air mobility programs.</p>
         </div>
-        <Explorer items={AREAS.map((a) => ({ name: a.name, n: THEME[a.id].n, tint: THEME[a.id].tint, color: THEME[a.id].color }))}>
-          {AREAS.map((a, i) => {
+      </section>
+      <Scene steps={AREAS.length} per={115} className="xa" label="What we do, area by area">
+        <div className="xa-bg" aria-hidden="true" />
+        <ol className="xa-index">
+          {AREAS.map((a, k) => (
+            <li key={a.id} data-step={k}>
+              <button type="button" data-goto={k}><span className="xa-n">{THEME[a.id].n}</span><span className="xa-l">{a.name}</span><span className="xa-bar" aria-hidden="true"><i /></span></button>
+            </li>
+          ))}
+        </ol>
+        <div className="xa-panels">
+          {AREAS.map((a, k) => {
             const d = AREA_DATA[a.id];
             return (
-              <article key={a.id} className="ex-panel" data-i={i} data-reveal style={themeStyle(a.id)} aria-labelledby={`ex-h-${a.id}`}>
-                <div className="ex-copy">
-                  <p className="ex-k"><span>{THEME[a.id].n}</span>{a.tag}</p>
-                  <h3 id={`ex-h-${a.id}`}><a href={areaHref(a)}>{a.name}</a></h3>
-                  <p className="ex-lead">{d.lead}</p>
-                  <ul className="v8-voices" aria-label="What we hear">{d.hear.slice(0, 2).map((h) => <li key={h}>{q(h)}</li>)}</ul>
-                  <a className="v8-btn v8-btn-area" href={areaHref(a)}>Explore {a.name}</a>
+              <article key={a.id} className="xa-panel glow dg-scrub" data-step={k} aria-labelledby={`xa-h-${a.id}`}>
+                <div className="xa-copy">
+                  <p className="xa-k"><span>{THEME[a.id].n}</span>{a.tag}</p>
+                  <h3 id={`xa-h-${a.id}`}><a href={areaHref(a)}>{a.name}</a></h3>
+                  <p className="xa-lead">{d.lead}</p>
+                  <ul className="xa-voices" aria-label="What we hear">{d.hear.slice(0, 2).map((h) => <li key={h}>{q(h)}</li>)}</ul>
+                  <a className="v8-btn v8-btn-glow" href={areaHref(a)}>Explore {a.name}</a>
                 </div>
-                <div className="ex-visual">
-                  <p className="ex-dg-title">{d.feature.title}</p>
-                  <Diagram kind={THEME[a.id].diagram} steps={d.feature.steps} />
-                  <ul className="ex-svcs" aria-label={`${a.name} services`}>
-                    {a.services.map((s) => <li key={s.id}><a href={`/services/${a.slug}/${s.slug}`}>{s.name}</a></li>)}
+                <div className="xa-vis">
+                  <div className="xa-stack">
+                    <div className="xa-layer xa-photo">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={AREA_PHOTO[a.id]} alt="" loading="lazy" />
+                    </div>
+                    <div className="xa-layer xa-wire" aria-hidden="true" />
+                    <div className="xa-layer xa-front">
+                      <p className="xa-dg-title">{d.feature.title}</p>
+                      <Diagram kind={THEME[a.id].diagram} steps={d.feature.steps} />
+                    </div>
+                  </div>
+                  <ul className="xa-svcs" aria-label={`${a.name} services`}>
+                    {a.services.map((sv) => <li key={sv.id}><a href={`/services/${a.slug}/${sv.slug}`}>{sv.name}</a></li>)}
                   </ul>
                 </div>
               </article>
             );
           })}
-        </Explorer>
-      </section>
+        </div>
+      </Scene>
 
       {/* 3 · why us, with proof */}
       <section className="h-why" aria-labelledby="h-why">
@@ -95,6 +115,9 @@ export default function Home() {
           <div className="h-why-head" data-reveal>
             <p className="v8-eyebrow">Why Rawlins</p>
             <h2 id="h-why" className="v8-h2">What sets us apart</h2>
+          </div>
+          <div className="why-lit" data-reveal>
+            <LitText text="30+ former agency executives and engineers. Our people ran the programs our clients run, so we skip the learning curve." />
           </div>
           <div data-reveal>
             <Tabs label="What sets us apart" labels={why.map((w) => w[0])}>
@@ -186,21 +209,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6 · how we've grown */}
-      <section className="h-grown" aria-labelledby="h-grown">
-        <div className="v8-wrap">
-          <div className="h-row-head" data-reveal><div><p className="v8-eyebrow">How we&apos;ve grown</p><h2 id="h-grown" className="v8-h2">Started in 2017 by a former Nevada DOT chief engineer</h2></div><a className="v8-link" href="/about/who-we-are">Who we are</a></div>
-          <ol className="grown" data-reveal>
+      {/* 6 · how we've grown: slides sideways as you scroll */}
+      <Scene steps={1} per={160} className="hg" label="How we've grown">
+        <div className="v8-wrap h-row-head hg-head">
+          <div><p className="v8-eyebrow">How we&apos;ve grown</p><h2 className="v8-h2">Started in 2017 by a former Nevada DOT chief engineer</h2></div>
+          <a className="v8-link" href="/about/who-we-are">Who we are</a>
+        </div>
+        <div className="hg-line" aria-hidden="true"><i /></div>
+        <div className="hg-view">
+          <ol className="hg-track" data-hscroll>
             {STORY.map(([k, h, p], i) => (
-              <li key={k} style={{ ["--i" as string]: i } as CSSProperties}>
+              <li key={k} className="hg-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={STORY_PHOTO[i]} alt="" loading="lazy" />
-                <span className="grown-k">{k}</span><b>{h}</b><p>{p}</p>
+                <div><span className="grown-k">{String(i + 1).padStart(2, "0")} · {k}</span><b>{h}</b><p>{p}</p></div>
               </li>
             ))}
+            <li className="hg-card hg-next"><span className="grown-k">What&apos;s next</span><b>Where are you headed?</b><a className="v8-btn v8-btn-glow" href="/contact">Tell us what you&apos;re trying to fix</a></li>
           </ol>
         </div>
-      </section>
+      </Scene>
 
       {/* 7 · what's new */}
       <section className="h-new" aria-labelledby="h-new">

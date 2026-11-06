@@ -12,6 +12,7 @@ import { SERVICE_STEPS } from "@/lib/content/features";
 import { THEME, themeStyle, casePhoto, type DiagramKind } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
 import SectionNav from "@/components/v8/section-nav";
+import Scene from "@/components/v8/scene";
 import { ServiceFeature } from "@/components/site/services";
 
 const PROD = process.env.VERCEL_ENV === "production";
@@ -65,9 +66,13 @@ export default function ServiceV8({ id }: { id: string }) {
             </div>
             {!PROD && s.st !== "ok" && <em className="v8-dev">Content status (preview only): {STATUS[s.st]}</em>}
           </div>
-          <figure className="sv-photo">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id]} alt="" />
+          <figure className="sv-photo lf">
+            <span className="lf-back" aria-hidden="true" />
+            <span className="lf-mid" aria-hidden="true"><i /><i /><i /><i /></span>
+            <span className="lf-front">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id]} alt="" />
+            </span>
           </figure>
         </div>
         <nav className="sv-sibs" aria-label={`${area.name} services`}>
@@ -90,23 +95,30 @@ export default function ServiceV8({ id }: { id: string }) {
         </div>
       </section>
 
-      <section id="deliver" className="sv-sec">
-        <div className="v8-wrap sv-split">
-          <div className="sv-split-h"><h2 className="v8-h2">What we deliver</h2></div>
-          <ol className="sv-deliver">
-            {s.deliver.map((d, k) => <li key={d} data-reveal style={{ ["--d" as string]: `${k * 70}ms` } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span>{d}</li>)}
+      <Scene steps={1} per={Math.max(80, s.deliver.length * 20)} id="deliver" className="dv" label="What we deliver">
+        <div className="v8-wrap sv-split dv-in">
+          <div className="sv-split-h">
+            <h2 className="v8-h2">What we deliver</h2>
+            <p className="dv-count"><b>{s.deliver.length}</b> parts of the work</p>
+            <span className="dv-meter" aria-hidden="true"><i /></span>
+          </div>
+          <ol className="sv-deliver dv-list" style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
+            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span>{d}</li>)}
           </ol>
         </div>
-      </section>
+      </Scene>
 
       {steps && (
-        <section id="how" className="sv-sec sv-how">
-          <div className="v8-wrap">
-            {steps.kicker && <p className="v8-eyebrow">{steps.kicker}</p>}
-            <h2 className="v8-h2">{steps.title}</h2>
-            <div data-reveal><Diagram kind={STEP_KIND[id] ?? T.diagram} steps={steps.steps} detail /></div>
+        <Scene steps={1} per={120} id="how" className="sv-scene" label={steps.title}>
+          <div className="v8-wrap sv-scene-in glow dg-scrub" data-step={0}>
+            <div className="sv-scene-copy">
+              {steps.kicker && <p className="v8-eyebrow">{steps.kicker}</p>}
+              <h2 className="v8-h2">{steps.title}</h2>
+              <span className="sv-scene-meter" aria-hidden="true"><i /></span>
+            </div>
+            <Diagram kind={STEP_KIND[id] ?? T.diagram} steps={steps.steps} detail />
           </div>
-        </section>
+        </Scene>
       )}
       {!steps && HAS_FEATURE.includes(id) && (
         <section id="feature" className="sv-legacy"><ServiceFeature id={id} /></section>
