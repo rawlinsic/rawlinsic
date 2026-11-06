@@ -714,20 +714,6 @@ Her work has been recognized with several prestigious honors, including the **Bi
     categories: ['technology'],
   },
   {
-    id: 23,
-    name: `Jenn Breitner`,
-    photo: `/images/team/jennb.webp`,
-    role: `Administrative Assistant`,
-    location: `Michigan`,
-    phone: `+1 231-383-3559`,
-    email: `jennb@rawlinsic.com`,
-    background: `Jenn has 20 years of office experience and a background in client services and administration, including managerial and financial accounting. Throughout her career, she has developed extensive skills in clerical operations, financial data entry, and account reconciliation. Her background in client relations allows her to communicate effectively, analyze requests, and provide exceptional service with precision.`,
-    achievements: `She has a proven track record of analyzing financial and inventory data. Jenn is currently pursuing a degree in Business and Accounting at Baker College. She is on an accelerated track towards her bachelor's degree and plans to pursue an MBA shortly thereafter.
-
-Jenn has two boys in the United States Army and one grandson, who are her pride and joy. She spends her free time traveling to see them and adventuring to new places. In her spare time, she enjoys searching for beach glass along the shores of Lake Michigan, hiking, and camping with family.`,
-    categories: ['administration'],
-  },
-  {
     id: 32,
     name: `Kobus Pieters`,
     photo: `/images/team/kobus.webp`,
@@ -778,23 +764,6 @@ Prior to her public sector leadership, Joey served as a consultant providing tec
     linkedin: `https://www.linkedin.com/in/koussay-khelil/`,
     background: `Koussay Khelil is a Senior Front End Engineer with over 6 years of experience building scalable, high-performance web applications across enterprise and startup environments. He specializes in React, Next.js, TypeScript, and modern front-end architecture, with a strong focus on performance optimization, accessibility, and user experience.`,
     achievements: `Koussay has led initiatives that improved application load times, enhanced real-time analytics dashboards, and streamlined component systems for global engineering teams. Currently at Cisco, he continues to drive innovation through scalable UI development and modern web technologies.`,
-    categories: ['technology'],
-  },
-  {
-    id: 56,
-    name: `Satheesh Vivekanandan`,
-    photo: `/images/team/satheesh.webp`,
-    role: `AI Solutions Architect`,
-    location: `Dubai, United Arab Emirates`,
-    phone: `+971 52 698 3930`,
-    email: `satheesh@rawlinsic.com`,
-    linkedin: `https://www.linkedin.com/in/satheesh-vivekanandan/`,
-    background: `Satheesh Vivekanandan is a Solutions Architect with over 11 years of experience helping organizations design, implement, and scale technology solutions that improve operational efficiency and business performance. His expertise spans artificial intelligence, Data, Analytics, business process automation, enterprise integrations, cloud technologies, and digital transformation initiatives.
-
-Throughout his career, Satheesh has worked with clients across government, banking, healthcare, and enterprise sectors, leading discovery workshops, solution design, stakeholder engagement, and implementation planning for complex technology programs. He specializes in bridging the gap between business objectives and technical execution, ensuring solutions are practical, scalable, and aligned with organizational goals.
-
-At Rawlins, Satheesh focuses on identifying opportunities to streamline operations, automate manual processes, and transform business requirements into build-ready solutions that deliver measurable results. His passion lies in leveraging emerging technologies and automation to solve real-world business challenges while creating sustainable long-term value for clients and internal teams.`,
-    achievements: ``,
     categories: ['technology'],
   },
   {

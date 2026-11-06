@@ -48,7 +48,7 @@ export default function SiteSearch({ open, onClose }: Props) {
   /* Single navigation path used by both Enter and click, so the two
      behave identically (per the "Enter select" hint in the footer).
      Subtlety: results that link to a team-member popup use hash deep
-     links (e.g. /about/our-people#satheesh-vivekanandan) that the
+     links (e.g. /about/our-people#jordan-stacy) that the
      team page opens via a `hashchange` listener. Next.js router.push
      for a same-path hash change doesn't reliably fire `hashchange`,
      so for that case we set window.location.hash directly. For
