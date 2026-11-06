@@ -33,6 +33,7 @@ const Proposed = () => <span className="pp">Proposed</span>;
 /* ── overview ─────────────────────────────────────────────────── */
 const SECTION_LINES: Record<string, [string, string]> = {
   Overview: ["overview", "How to use it, the brand at a glance"],
+  "Who we are": ["who", "The people, how we've grown, how we work together"],
   Color: ["color", "Four blue systems, five accents"],
   Logo: ["logo", "Six directions and how to use the logo"],
   Typography: ["type", "Source Sans 3 and Source Serif 4"],

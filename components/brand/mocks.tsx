@@ -14,13 +14,14 @@ const PHOTO = {
   social: "/images/pages/aam-highway-aerial.webp",
 };
 
-/* draw at iw×ih, show at width w */
+/* draw at iw×ih, show at width w. zoom (not transform) so the layout
+   size matches what is shown; print then never sees the full-size box. */
 export function Fit({ w, iw, ih, children, label }: { w: number; iw: number; ih: number; children: ReactNode; label?: string }) {
   const s = w / iw;
   return (
     <figure className="fit" style={{ width: w }}>
       <div className="fit-box" style={{ width: w, height: Math.round(ih * s) }}>
-        <div className="fit-in" style={{ width: iw, height: ih, transform: `scale(${s})` }}>{children}</div>
+        <div className="fit-in" style={{ width: iw, height: ih, zoom: s }}>{children}</div>
       </div>
       {label && <figcaption>{label}</figcaption>}
     </figure>

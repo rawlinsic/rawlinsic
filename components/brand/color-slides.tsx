@@ -71,7 +71,7 @@ export function ColorOpener(p: SlideProps) {
     <Frame {...p} dark section="Color" className="op">
       <div className="mk-grid" />
       <Route w={1920} h={1080} nodes={4} className="op-route" />
-      <p className="op-n">01</p>
+      <p className="op-n">02</p>
       <h2 className="op-t">Color</h2>
       <p className="op-line">Stay in the blues. Make them work harder.</p>
       <ol className="op-steps">

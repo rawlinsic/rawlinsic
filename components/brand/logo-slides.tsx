@@ -4,7 +4,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Frame, Head, type SlideProps } from "@/components/brand/color-slides";
 import { Fit, Route } from "@/components/brand/mocks";
-import { Boxed, CONCEPTS, Lockup, Mark, Stage, type Concept, type ConceptId } from "@/components/brand/logos";
+import { Boxed, CONCEPTS, FramedLogo, Lettering, Lockup, Mark, RIcon, Stage, type Concept, type ConceptId } from "@/components/brand/logos";
 import { WORDMARK_FONTS } from "@/lib/content/brand-guide";
 
 const CUR = "/images/brand/current";
@@ -16,7 +16,7 @@ export function LogoOpener(p: SlideProps) {
     <Frame {...p} dark section="Logo" className="op">
       <div className="mk-grid" />
       <Route w={1920} h={1080} nodes={4} className="op-route" />
-      <p className="op-n">02</p>
+      <p className="op-n">03</p>
       <h2 className="op-t">Logo</h2>
       <p className="op-line">Exploration only. Nicole decides.</p>
       <ol className="op-steps">
@@ -237,6 +237,7 @@ export function LogoDecide(p: SlideProps) {
             <li><b>If the rectangle is a must:</b> 5 Framed. Same box and underline, modern type, one lit corner.</li>
             <li><b>If Scott is open:</b> 6 Node R for the icon with a clean wordmark. The simplest, clearest R at 16 px.</li>
             <li><b>Most like your concepts:</b> 2 Circuit R, using its simple version under 32 px.</li>
+            <li><b>Love today's R icon?</b> Keep it, redrawn (A or B), next to 5 Framed.</li>
           </ul>
         </div>
         <div className="dc-flow">
@@ -248,6 +249,61 @@ export function LogoDecide(p: SlideProps) {
             <li><b>4</b>Embroidery test<span>New .dst from the flat one-color version</span></li>
           </ol>
         </div>
+      </div>
+    </Frame>
+  );
+}
+
+/* ── today's R icon with the new directions ───────────────────── */
+export function LogoRToday(p: SlideProps) {
+  const pairs: [string, ReactNode][] = [
+    ["With 5 Framed", <FramedLogo key="f" h={64} />],
+    ["With 3 Node wordmark", <Lettering key="n" h={58} variant="node" />],
+    ["With 4 Route wordmark", <Lettering key="r" h={66} variant="route" />],
+    ["With plain Source Sans", <span key="s" className="lr-word">Rawlins</span>],
+  ];
+  return (
+    <Frame {...p} section="Logo" className="lr">
+      <Head k="Logo · Your R icon" t="Today's R icon, next to the new directions" sub="The ring and the underline already speak the new language: a frame and a line." />
+      <div className="lr-row">
+        <div className="lr-hero"><img src={`${CUR}/r-icon-black.svg`} alt="Today's R icon" /><p><b>Today</b>Ring, slanted R, underline. A gradient fill in the color files.</p></div>
+        <div className="lr-grid">
+          {pairs.map(([t, art]) => (
+            <figure key={t}>
+              <Stage tone="light" className="lr-pair"><img src={`${CUR}/r-icon-black.svg`} alt="" style={{ height: 76 }} />{art}</Stage>
+              <figcaption>{t}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+      <div className="lr-notes">
+        <p className="lr-ok"><b>Works:</b> a round badge next to a rectangular logo; it keeps a link to the logo people know.</p>
+        <p className="lr-no"><b>Watch:</b> the script R doesn't match clean type, the gradient doesn't print flat, and small, a circled R reads like the ® registered mark.</p>
+      </div>
+    </Frame>
+  );
+}
+
+/* ── the R icon, redrawn ──────────────────────────────────────── */
+export function LogoRRefresh(p: SlideProps) {
+  const vs: ["clean" | "lit", string, string][] = [
+    ["clean", "A · Redrawn", "Same ring, slanted R and underline, drawn flat and even."],
+    ["lit", "B · Redrawn and lit", "The ring opens at the top right in the accent; the underline glows."],
+  ];
+  return (
+    <Frame {...p} section="Logo" className="lrr">
+      <Head k="Logo · Your R icon" t="Keep it, redrawn" sub="Two ways to keep today's R icon and make it work at every size. Pairs best with 5 Framed." />
+      <div className="lrr-grid">
+        {vs.map(([v, t, d]) => (
+          <section key={v}>
+            <div className="lrr-big">
+              <Stage tone="light" className="lrr-st"><RIcon size={190} variant={v} /></Stage>
+              <Stage tone="dark" glow className="lrr-st"><RIcon size={190} variant={v} /></Stage>
+            </div>
+            <p className="lrr-t">{t}</p><p className="lrr-d">{d}</p>
+            <Stage tone="light" className="lrr-sizes">{[64, 32, 16].map((s) => <span key={s}><RIcon size={s} variant={v} /><i>{s}</i></span>)}<span className="lrr-lock"><RIcon size={64} variant={v} /><FramedLogo h={60} /></span></Stage>
+          </section>
+        ))}
       </div>
     </Frame>
   );

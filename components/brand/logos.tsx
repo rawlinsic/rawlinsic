@@ -176,3 +176,26 @@ export const stage = (tone: "light" | "dark" | "mono-light" | "mono-dark"): CSSP
 export function Stage({ tone, glow, className = "", children, style }: { tone: "light" | "dark" | "mono-light" | "mono-dark"; glow?: boolean; className?: string; children: ReactNode; style?: CSSProperties }) {
   return <div className={`lg-stage lg-${tone}${glow ? " lg-glow" : ""} ${className}`} style={{ ...stage(tone), ...style }}>{children}</div>;
 }
+
+/* Today's R icon (ring, slanted R, underline), redrawn flat so it can live
+   with the new directions. "clean" keeps it as is; "lit" opens the ring at
+   the top right with one glowing node. */
+export function RIcon({ size, variant }: { size: number; variant: "clean" | "lit" }) {
+  const R = "M38 70V27H55A11.5 11.5 0 0 1 55 50H38M50 50L63 70";
+  return (
+    <svg className="lg-mark" viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
+      {variant === "clean" ? (
+        <circle cx="50" cy="50" r="44" fill="none" stroke="var(--lk)" strokeWidth={size < 40 ? 9 : 7} />
+      ) : (
+        <>
+          <path d="M89.9 31.4A44 44 0 1 1 57.6 6.7" fill="none" stroke="var(--lk)" strokeWidth={size < 40 ? 9 : 7} strokeLinecap="round" />
+          <path className="lg-acc" d="M57.6 6.7A44 44 0 0 1 89.9 31.4" fill="none" stroke="var(--la)" strokeWidth={size < 40 ? 9 : 7} strokeLinecap="round" />
+        </>
+      )}
+      <g transform="translate(10.6 0) skewX(-12)">
+        <path d={R} fill="none" stroke="var(--lk)" strokeWidth={size < 40 ? 14 : 12} strokeLinecap="square" strokeLinejoin="miter" />
+      </g>
+      <path d="M31 81H69" stroke={variant === "lit" ? "var(--la)" : "var(--lk)"} className={variant === "lit" ? "lg-acc" : ""} strokeWidth={size < 40 ? 7 : 5} strokeLinecap="round" />
+    </svg>
+  );
+}
