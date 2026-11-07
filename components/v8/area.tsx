@@ -1,15 +1,23 @@
 /* Area page (v8). Carries what handoff v8 section 3 lists: what the area
-   covers (lead), what we hear, how the pieces fit (its diagram, drawn on a
-   dark stage as you scroll), its services, its projects, the industries it
-   serves, a way to talk to someone, and the next area. The Digital and
-   Drones areas keep their carried-over features (applied solutions, the
-   AAM landscape and partners). */
+   covers (lead), its services, what we hear, how the pieces fit (its
+   diagram, drawn on a navy stage as you scroll), its projects, the
+   industries it serves, a way to talk to someone, and the next area.
+   How it looks:
+     hero        lit by the area's photo, with the area's line drawing; the
+                 area's services sit right in it as photo panels that open
+                 on hover (the home page's area panels, one level down)
+     we hear     held while the clients' words light up
+     pieces fit  the area's diagram drawing itself
+   The Digital and Drones areas keep their carried-over features (applied
+   solutions, the AAM landscape and partners). */
 import type { ReactNode } from "react";
 import { AREAS, CASES, INDUSTRIES, areaHref, caseHref, caseWho, industryHref, type Area } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { THEME, themeStyle, casePhoto } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
+import AreaMark from "@/components/v8/area-mark";
+import LitText from "@/components/v8/lit-text";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
@@ -26,47 +34,66 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
   const cases = L.cases.map((id) => CASES.find((c) => c.id === id)).filter((c) => c && (!PROD || !c.needsSignoff)) as typeof CASES;
   const indIds = Array.from(new Set(area.services.flatMap((s) => SERVICES[s.id]?.industries ?? [])));
   const inds = indIds.map((id) => INDUSTRIES.find((i) => i.id === id)).filter((i) => i && !i.hidden);
+  const many = area.services.length >= 5;
   const sections: [string, string][] = [
-    ["hear", "What we hear"], ["fit", L.feature.title], ...(extra ? [["more", "From our work"] as [string, string]] : []),
-    ["services", "Services"], ...(cases.length ? [["work", "Our work"] as [string, string]] : []), ["talk", "Talk to us"],
+    ["services", "Services"], ["hear", "What we hear"], ["fit", L.feature.title], ...(extra ? [["more", "From our work"] as [string, string]] : []),
+    ...(cases.length ? [["work", "Our work"] as [string, string]] : []), ["talk", "Talk to us"],
   ];
 
   return (
     <div className="sv ar" style={themeStyle(area.id)}>
       <Panels className="pnl-page">
-      <section className="sv-hero">
-        <div className="v8-wrap sv-hero-in">
-          <div className="sv-hero-copy">
+      <section className="sv-hero svh arh" data-scrub="page">
+        <div className="svh-bg" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={AREA_PHOTO[area.id]} alt="" />
+        </div>
+        <AreaMark kind={T.diagram} />
+        <div className="v8-wrap arh-top">
+          <div>
             <nav className="crumbs" aria-label="Breadcrumb">
               <ol><li><a href="/">Home</a></li><li><a href="/#what">What we do</a></li><li aria-current="page">{area.name}</li></ol>
             </nav>
             <p className="sv-area">{area.tag}</p>
             <h1>{area.name}</h1>
+          </div>
+          <div className="arh-side">
             <p className="sv-intro">{L.lead}</p>
             <div className="v8-actions">
               <a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a>
-              <a className="v8-btn v8-btn-ghost" href="#services">See the services</a>
+              {cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See our work</a>}
             </div>
           </div>
-          <figure className="sv-photo lf">
-            <span className="lf-back" aria-hidden="true" />
-            <span className="lf-mid" aria-hidden="true"><i /><i /><i /><i /></span>
-            <span className="lf-front">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={AREA_PHOTO[area.id]} alt="" />
-            </span>
-          </figure>
+        </div>
+        <div id="services" className="v8-wrap arh-svcs">
+          <h2 className="sr-only">{area.name} services</h2>
+          <ul className={`ways ways-svc${many ? " is-many" : ""}`}>
+            {area.services.map((s) => (
+              <li key={s.id} className="way">
+                <a href={`/services/${area.slug}/${s.slug}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={SERVICE_PHOTO[s.id] ?? AREA_PHOTO[area.id]} alt="" loading="lazy" />
+                  {many && <span className="way-v" aria-hidden="true">{s.name}</span>}
+                  <span className="way-txt">
+                    <b>{s.name}</b>
+                    <span className="way-q">{firstSentence(SERVICES[s.id]?.intro ?? "")}</span>
+                    <span className="way-more">Explore</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
       <SectionNav items={sections} />
 
-      <section id="hear" className="sv-sec sv-hear">
-        <div className="v8-wrap">
+      <Scene steps={1} per={95} id="hear" className="svq" label="What we hear">
+        <div className="v8-wrap svq-in">
           <h2 className="v8-eyebrow">What we hear</h2>
-          <ul className="sv-quotes">{L.hear.map((h) => <li key={h} data-reveal>{quote(h)}</li>)}</ul>
+          <LitText lines={L.hear.map(quote)} className="is-many" />
         </div>
-      </section>
+      </Scene>
 
       <Scene steps={1} per={120} id="fit" className="sv-scene" label={L.feature.title}>
         <div className="v8-wrap sv-scene-in glow dg-scrub" data-step={0}>
@@ -79,27 +106,12 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
         </div>
       </Scene>
 
-      {extra && <section id="more" className="sv-legacy">{extra}</section>}
-
-      <section id="services" className="sv-sec">
-        <div className="v8-wrap">
-          <h2 className="v8-h2">Services</h2>
-          <ul className="ar-svcs">
-            {area.services.map((s) => (
-              <li key={s.id} data-reveal>
-                <a href={`/services/${area.slug}/${s.slug}`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={SERVICE_PHOTO[s.id] ?? AREA_PHOTO[area.id]} alt="" loading="lazy" />
-                  <span><b>{s.name}</b><em>{firstSentence(SERVICES[s.id]?.intro ?? "")}</em></span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {/* the carried-over features: each of their sections is its own panel */}
+      {extra && <span id="more" className="ar-anchor" data-nopanel aria-hidden="true" />}
+      {extra}
 
       {cases.length > 0 && (
-        <section id="work" className="sv-sec sv-hear">
+        <section id="work" className="sv-sec ar-work">
           <div className="v8-wrap">
             <div className="h-row-head"><h2 className="v8-h2">Our work</h2><a className="v8-link" href={`/insights/case-studies?area=${area.slug}`}>All {area.name} projects</a></div>
             <ul className="sv-cases">
@@ -119,20 +131,25 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
         </section>
       )}
 
-      <section className="sv-sec sv-links">
-        <div className="v8-wrap">
-          <h2 className="v8-eyebrow">Who we do this for</h2>
-          <ul className="sv-chips">{inds.map((x) => <li key={x!.id}><a href={industryHref(x!)}>{x!.name}</a></li>)}</ul>
-        </div>
-      </section>
-
-      <section id="talk" className="sv-talk">
-        <div className="v8-wrap sv-talk-in">
-          <div>
+      <section id="talk" className="svt">
+        <div className="v8-wrap svt-in">
+          <div className="svt-talk">
             <h2 className="v8-h2">Talk to the people who do this work</h2>
             <p className="v8-lead">Tell us what you&apos;re working on. We&apos;ll connect you with the person on our team who has done it.</p>
+            <div className="v8-actions"><a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a></div>
           </div>
-          <div className="v8-actions"><a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a></div>
+          <div className="svt-links">
+            <div>
+              <h3 className="v8-eyebrow">{area.name} services</h3>
+              <ul className="sv-chips">{area.services.map((s) => <li key={s.id}><a href={`/services/${area.slug}/${s.slug}`}><i aria-hidden="true" />{s.name}</a></li>)}</ul>
+            </div>
+            {inds.length > 0 && (
+              <div>
+                <h3 className="v8-eyebrow">Who we do this for</h3>
+                <ul className="sv-chips">{inds.map((x) => <li key={x!.id}><a href={industryHref(x!)}>{x!.name}</a></li>)}</ul>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 

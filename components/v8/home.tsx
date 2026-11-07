@@ -186,7 +186,7 @@ export default function Home() {
               <li key={k} className="hg-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={STORY_PHOTO[i]} alt="" loading="lazy" />
-                <div><span className="grown-k">{k}</span><b>{h}</b><p>{p}</p></div>
+                <div><span className="grown-k">{String(i + 1).padStart(2, "0")} · {k}</span><b>{h}</b><p>{p}</p></div>
               </li>
             ))}
             <li className="hg-card hg-next"><span className="grown-k">What&apos;s next</span><b>Where are you headed?</b><a className="v8-btn v8-btn-glow" href="/contact">Tell us what you&apos;re trying to fix</a></li>

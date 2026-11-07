@@ -5,7 +5,7 @@
      hero         lit by the service's own photo, with its area's line drawing
                   (each area's services get their own look)
      we hear      held while the client's words light up
-     we deliver   held while the deliverables are dealt in as cards
+     we deliver   held while the deliverables are dealt in as numbered cards
      how          the area's diagram drawing itself (where a service has steps)
      walk away    with the experience behind it alongside
    and the page ends by moving you on to the next service. */
@@ -115,7 +115,7 @@ export default function ServiceV8({ id }: { id: string }) {
             <h2 className="v8-h2">What we deliver</h2>
           </div>
           <ul className={`svd-cards${s.deliver.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
-            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}>{d}</li>)}
+            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span>{d}</li>)}
           </ul>
         </div>
       </Scene>

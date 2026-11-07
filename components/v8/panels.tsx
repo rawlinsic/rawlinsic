@@ -8,7 +8,8 @@
    the screen is grown to fill it (its content centered, like a slide), and
    every panel holds still for a short beat (DWELL) before the next one
    starts to come over it. Panels that hold on their own (scroll scenes)
-   are left as they are.
+   are left as they are, and the first panel (the hero) scrolls away
+   normally.
      --pt  on each panel: where it holds (its sticky top)
      --cv  on each covered panel: how far the next one has covered it, 0 to 1
      --sp  on [data-scrub="page"] elements: page scroll in screen heights, 0 to 1
@@ -68,8 +69,9 @@ export default function Panels({ children, className }: { children: ReactNode; c
       wrap.dataset.measure = "";
       kids.forEach((el) => NATURAL.set(el, el.getBoundingClientRect().top + window.scrollY));
       delete wrap.dataset.measure;
-      // (the first panel never holds lower than where it starts, or it would be pushed down under the next one)
-      kids.forEach((el, i) => el.style.setProperty("--pt", `${Math.min(tops[i], vh - el.offsetHeight, i ? Infinity : NATURAL.get(el)!)}px`));
+      // the first panel (the hero) doesn't hold: it scrolls away normally, so what sits at
+      // its bottom (photo panels, buttons) is never covered the moment you start scrolling
+      kids.forEach((el, i) => el.style.setProperty("--pt", `${i ? Math.min(tops[i], vh - el.offsetHeight) : -el.offsetHeight}px`));
     };
     const unfill = () => kids.forEach((el) => { el.style.paddingTop = ""; el.style.minHeight = ""; el.style.marginBottom = ""; });
     const tick = () => {
