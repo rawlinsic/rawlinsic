@@ -13,6 +13,7 @@ import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
 import Scene from "@/components/v8/scene";
+import Grown from "@/components/v8/grown";
 import LitText from "@/components/v8/lit-text";
 import Tabs from "@/components/v8/tabs";
 import Rail from "@/components/v8/rail";
@@ -41,8 +42,8 @@ export default function Home() {
   const veterans = veteranPeople();
   // the ring: each industry, then its specialties, dealt round so they spread out
   const groups: Tile[][] = VISIBLE_INDUSTRIES.map((i) => [
-    { src: INDUSTRY_PHOTO[i.id], label: i.name, href: industryHref(i) },
-    ...i.subsectors.filter((sb) => INDUSTRY_PHOTO[sb.id] && !OFF_RING.includes(sb.id)).map((sb) => ({ src: INDUSTRY_PHOTO[sb.id], label: sb.name, href: subsectorHref(i, sb) })),
+    { src: INDUSTRY_PHOTO[i.id], label: i.name, href: industryHref(i), sub: i.who },
+    ...i.subsectors.filter((sb) => INDUSTRY_PHOTO[sb.id] && !OFF_RING.includes(sb.id)).map((sb) => ({ src: INDUSTRY_PHOTO[sb.id], label: sb.name, href: subsectorHref(i, sb), sub: i.name })),
   ]);
   const tiles: Tile[] = [];
   for (let r = 0; tiles.length < groups.flat().length; r++) groups.forEach((g) => { if (g[r]) tiles.push(g[r]); });
@@ -146,8 +147,6 @@ export default function Home() {
         <p className="v8-eyebrow">Who we work with</p>
         <h2 id="orb-h" className="orb-h">Public agencies and private firms, <span>wherever the work is.</span></h2>
         <p className="v8-lead">More than 30 transportation agencies so far, plus local governments, a multi-state research program, contractors, and engineering firms. Our work so far is across the United States, and our team can do it anywhere.</p>
-        <ul className="orb-chips">{VISIBLE_INDUSTRIES.map((i) => <li key={i.id}><a href={industryHref(i)}>{i.name}</a></li>)}</ul>
-        <a className="v8-link" href="/industries">Everyone we work with</a>
       </Orbit>
 
       {/* 5 · our work */}
@@ -177,33 +176,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6 · how we've grown: slides sideways as you scroll */}
-      <Scene steps={1} per={160} className="hg" label="How we've grown">
-        <div className="v8-wrap h-row-head hg-head">
-          <div><p className="v8-eyebrow">How we&apos;ve grown</p><h2 className="v8-h2">Started in 2017 by a former Nevada DOT chief engineer</h2></div>
-          <a className="v8-link" href="/about/who-we-are">Who we are</a>
-        </div>
-        <div className="hg-line" aria-hidden="true"><i /></div>
-        <div className="hg-view">
-          {/* a sideways route: each stop lights as the line reaches it while the cards slide */}
-          <ol className="hg-track hg-route" data-hscroll style={{ ["--n" as string]: STORY.length } as CSSProperties}>
-            {STORY.map(([k, h, p], i) => (
-              <li key={k} className="hg-item" style={{ ["--i" as string]: i } as CSSProperties}>
-                <span className="hg-node" aria-hidden="true"><b>{String(i + 1).padStart(2, "0")}</b></span>
-                <div className="hg-card">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={STORY_PHOTO[i]} alt="" loading="lazy" />
-                  <div><span className="grown-k">{String(i + 1).padStart(2, "0")} · {k}</span><b>{h}</b><p>{p}</p></div>
-                </div>
-              </li>
-            ))}
-            <li className="hg-item is-next" style={{ ["--i" as string]: STORY.length } as CSSProperties}>
-              <span className="hg-node" aria-hidden="true"><b>→</b></span>
-              <div className="hg-card hg-next"><span className="grown-k">What&apos;s next</span><b>Where are you headed?</b><a className="v8-btn v8-btn-glow" href="/contact">Tell us what you&apos;re trying to fix</a></div>
-            </li>
-          </ol>
-        </div>
-      </Scene>
+      {/* 6 · how we've grown: slides sideways as you scroll (shared with Who we are) */}
+      <Grown eyebrow="How we've grown" title="Started in 2017 by a former Nevada DOT chief engineer" link={{ href: "/about/who-we-are", label: "Who we are" }} />
 
       {/* 7 · what's new */}
       <section className="h-new" aria-labelledby="h-new">

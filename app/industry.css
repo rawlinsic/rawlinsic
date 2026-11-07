@@ -1,0 +1,130 @@
+/* ════════════════════════════════════════════════════════════════════
+   Industry pages (components/v8/industry.tsx): Transportation, Government &
+   Public Works, Contractors & Engineering Firms, their specialty pages, and
+   Private Sector. They use the area pages' pieces from app/v8.css (.svh,
+   .arh, .ways-svc, .svq, .sv-cases/.pc, .svt, .sv-next) and the portrait
+   cards (.av-team). Only what those don't cover lives here, under .ipg.
+   One typeface, headings 600 in #0a1220; navy, blues, silver-greys and the
+   aqua glow; dark sections on --navy-grad.
+   ════════════════════════════════════════════════════════════════════ */
+.ipg { --a: #1d3759; --a-ink: #1d3759; --a-tint: #dce6f2; --a-soft: #c4d8f2; }
+.ipg .sv-sec { scroll-margin-top: 120px; }
+
+/* ── hero ─────────────────────────────────────────────────────────── */
+/* specialties as photo panels: an open panel shows the specialty's whole line */
+.ipg .ipg-ways:not(:hover):not(:focus-within) .way:first-child .way-q,
+.ipg .ipg-ways .way:hover .way-q,
+.ipg .ipg-ways .way:focus-within .way-q { max-height: 9em; }
+.ipg .ipg-ways .way-q { max-width: 46ch; }
+.ipg .ipg-ways .pg-dev { justify-self: start; }
+/* pages without panels: the photo in its layered frame, the copy beside it */
+.ipg .ipg-hero.is-frame .sv-hero-in { padding-top: clamp(20px, 2.6vw, 36px); }
+.ipg .ipg-hero.is-frame .sv-photo { aspect-ratio: 5 / 4.4; }
+.ipg .ipg-hero.is-frame h1 { max-width: 16ch; }
+.ipg .ipg-hero .sv-area a { color: inherit; }
+.ipg .ipg-hero .sv-sibs a { font-size: 0.98rem; }
+
+/* ── a list as a route, its heading held on the left ───────────────── */
+.ipg-route { background: radial-gradient(40% 50% at 100% 8%, rgba(34, 211, 238, 0.14), transparent 70%), linear-gradient(180deg, #f4f8fc, #e6eef8); }
+.ipg-route.is-white { background: radial-gradient(40% 50% at 100% 8%, rgba(34, 211, 238, 0.1), transparent 70%), #fff; }
+.ipg-split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+.ipg-split-h { position: sticky; top: calc(68px + var(--snh, 0px) + 32px); }
+.ipg-split-h .v8-h2 { max-width: 14ch; }
+
+/* ── How we help: one card per service area ────────────────────────── */
+.ipg-help { background: radial-gradient(45% 55% at 100% 0%, rgba(34, 211, 238, 0.1), transparent 70%), #eef3f9; }
+.ipg-help-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 32px; margin-bottom: clamp(24px, 3vw, 40px); }
+.ipg-help-head .v8-h2 { margin: 0; }
+.ipg-key { display: inline-flex; align-items: center; gap: 12px; margin: 0; padding: 9px 16px; border-radius: 999px; background: #fff; border: 1px solid #c4d8f2; color: #0a1220; font-size: 1.02rem; font-weight: 600; }
+.ipg-key i { flex: none; width: 10px; height: 10px; border-radius: 50%; background: #22d3ee; box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2), 0 0 10px rgba(34, 211, 238, 0.85); }
+/* each area is a wide card: its name on navy at the left, its services in two columns */
+.ipg-areas { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(14px, 1.6vw, 20px); }
+.ipg-area { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); overflow: hidden; border-radius: 22px; background: #fff; border: 1px solid #d6e3f2; box-shadow: 0 22px 50px -32px rgba(13, 27, 46, 0.45); }
+.ipg-area-h { position: relative; display: flex; flex-direction: column; justify-content: center; padding: 24px 28px; background: var(--navy-grad); color: #fff; }
+.ipg-area-h::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 3px; background: var(--aqua); box-shadow: 0 0 14px 2px rgba(34, 211, 238, 0.6); }
+.ipg-area-h h3 { margin: 0 0 6px; font-size: clamp(1.3rem, 1.6vw, 1.55rem); font-weight: 600; line-height: 1.18; letter-spacing: -0.012em; }
+.ipg-area-h h3 a { color: #fff !important; text-decoration: none; }
+.ipg-area-h h3 a::after { content: " →"; color: var(--aqua); }
+.ipg-area-h h3 a:hover { text-decoration: underline; text-decoration-color: var(--aqua); text-underline-offset: 4px; }
+.ipg-area-h p { margin: 0; color: #cfdbea; font-size: 1.02rem; line-height: 1.4; }
+.ipg-area-list { list-style: none; margin: 0; padding: 10px 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; align-content: center; }
+.ipg-area-list li { border-top: 1px solid #e3ebf5; }
+.ipg-area-list li:nth-child(-n + 2) { border-top: 0; }
+.ipg-area-list a { height: 100%; display: flex; align-items: center; gap: 14px; padding: 13px 12px; border-radius: 12px; color: #0a1220 !important; font-size: 1.06rem; font-weight: 500; line-height: 1.3; text-decoration: none; transition: background 0.2s; }
+.ipg-area-list a::before { content: ""; flex: none; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #b9cde4; box-sizing: border-box; }
+.ipg-area-list a::after { content: "→"; margin-left: auto; padding-left: 8px; color: #4d688c; transition: transform 0.2s, color 0.2s; }
+.ipg-area-list a:hover { background: #eef3f9; }
+.ipg-area-list a:hover::after { color: #0e7490; transform: translateX(3px); }
+.ipg-area-list .is-top a { font-weight: 600; }
+.ipg-area-list .is-top a::before { border: 0; background: #22d3ee; box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2), 0 0 10px rgba(34, 211, 238, 0.85); }
+
+/* ── portrait cards (.av-team) ─────────────────────────────────────── */
+/* the wrapper is the panel, so it carries the navy (the space the panels add stays navy) */
+.ipg-team { background: var(--navy-grad); scroll-margin-top: 120px; }
+.ipg-team .av-team { background: none; }
+.ipg .ipg-team .av-team-list { grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr)); }
+.ipg .ipg-team.is-few .av-team > .v8-wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: center; }
+.ipg .ipg-team.is-few .av-head { flex-direction: column; align-items: flex-start; justify-content: flex-start; margin: 0; }
+.ipg .ipg-team.is-few .v8-h2 { max-width: 12ch; }
+.ipg .ipg-team.is-few .av-team-list { max-width: calc(var(--cols) * 250px); }
+.ipg .ipg-team .av-team-list b { font-size: clamp(1.2rem, 1.4vw, 1.32rem); }
+.ipg .ipg-team .av-team-role { font-size: 1.04rem; }
+
+/* ── projects ──────────────────────────────────────────────────────── */
+.ipg-work { background: #fff; }
+.ipg-work.is-pale { background: radial-gradient(45% 55% at 0% 100%, rgba(34, 211, 238, 0.08), transparent 70%), #eef3f9; }
+.ipg .ipg-work .pc b { color: #0a1220; font-size: 1.2rem; font-weight: 600; line-height: 1.25; }
+.ipg .ipg-work .pc-who { color: #4d688c; font-size: 1rem; line-height: 1.4; }
+.ipg .ipg-work .pc a { box-shadow: 0 18px 44px -26px rgba(13, 27, 46, 0.45); border: 1px solid #e3ebf5; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
+.ipg .ipg-work .pc a:hover { border-color: var(--aqua); box-shadow: 0 22px 50px -26px rgba(13, 27, 46, 0.5), 0 0 0 1px rgba(34, 211, 238, 0.4); }
+
+/* ── services as linked cards ─────────────────────────────────────── */
+.ipg-svcs-sec { background: #fff; }
+.ipg-svcs-sec.is-pale { background: radial-gradient(45% 55% at 100% 0%, rgba(34, 211, 238, 0.1), transparent 70%), #eef3f9; }
+.ipg-svcs-sec .v8-h2 { margin-bottom: clamp(22px, 3vw, 36px); }
+.ipg-svc-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 22px); }
+.ipg-svc-cards.is-2, .ipg-svc-cards.is-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ipg-svc-cards.is-1 { grid-template-columns: minmax(0, 640px); }
+.ipg-svc-cards a { position: relative; height: 100%; display: flex; flex-direction: column; gap: 8px; padding: 26px 26px 24px; border-radius: 22px; background: #f5f9fd; border: 1px solid #c4d8f2; color: #0a1220 !important; text-decoration: none; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, background 0.25s; }
+.ipg-svcs-sec.is-pale .ipg-svc-cards a { background: #fff; border-color: #d6e3f2; }
+.ipg-svc-cards a::before { content: ""; width: 42px; height: 3px; margin-bottom: 8px; border-radius: 3px; background: var(--aqua); box-shadow: 0 0 10px var(--aqua); }
+.ipg-svc-cards a:hover { transform: translateY(-3px); background: #fff; border-color: var(--aqua); box-shadow: 0 18px 44px -24px rgba(13, 27, 46, 0.4), 0 0 0 1px rgba(34, 211, 238, 0.4); }
+.ipg-svc-area { color: #0e7490; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.ipg-svc-cards b { font-size: clamp(1.25rem, 1.6vw, 1.45rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+.ipg-svc-q { color: #2e3c50; font-size: 1.04rem; line-height: 1.5; }
+.ipg-svc-cards i { margin-top: auto; padding-top: 6px; color: #1d3759; font-style: normal; font-size: 1.3rem; transition: transform 0.2s, color 0.2s; }
+.ipg-svc-cards a:hover i { color: #0e7490; transform: translateX(5px); }
+
+/* ── closing band: chip links say where you are ────────────────────── */
+.ipg .ipg-chips a { font-size: 1rem; color: #0a1220 !important; }
+.ipg .ipg-chips a[aria-current="page"] { background: #1d3759; border-color: #1d3759; color: #fff !important; }
+.ipg .ipg-chips a[aria-current="page"] i { background: var(--aqua); box-shadow: 0 0 8px var(--aqua); }
+
+/* ── tablet and phone ─────────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .ipg-area { grid-template-columns: 1fr; }
+  .ipg-area-h::after { top: auto; left: 0; width: auto; height: 3px; }
+  .ipg-svc-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ipg .ipg-team:not(.is-few) .av-team-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ipg .ipg-team.is-few .av-team > .v8-wrap { grid-template-columns: 1fr; gap: 26px; }
+  .ipg .ipg-team.is-few .av-head { flex-direction: row; flex-wrap: wrap; align-items: end; justify-content: space-between; }
+  .ipg .ipg-team.is-few .v8-h2 { max-width: none; }
+  .ipg-split { grid-template-columns: 1fr; gap: 22px; }
+  .ipg-split-h { position: static; }
+  .ipg-split-h .v8-h2 { max-width: none; }
+}
+@media (max-width: 760px) {
+  .ipg .ipg-ways .way-q { opacity: 1 !important; max-height: 10em !important; }
+  .ipg .ipg-hero.is-frame .sv-photo { aspect-ratio: 4 / 3; margin-right: 22px; }
+  .ipg-area-list { grid-template-columns: 1fr; padding: 6px 12px 10px; }
+  .ipg-area-list li:nth-child(2) { border-top: 1px solid #e3ebf5; }
+  .ipg-area-h { padding: 20px 22px; }
+  .ipg-svc-cards, .ipg-svc-cards.is-2, .ipg-svc-cards.is-4 { grid-template-columns: 1fr; }
+  .ipg-help-head { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 640px) {
+  .ipg .ipg-team:not(.is-few) .av-team-list, .ipg .ipg-team.is-few .av-team-list { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ipg-area-list a, .ipg-svc-cards a, .ipg-svc-cards i { transition: none; }
+}

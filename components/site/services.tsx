@@ -3,7 +3,7 @@
 import AutomationIntegrationInteractive from "@/components/automation-integration-interactive";
 import { AREA_PHOTO, PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import AutomationEcosystemBars from "@/components/automation-ecosystem-bars";
-import WhatWeDeliverPyramid from "@/components/what-we-deliver-pyramid";
+import DeliverStack from "@/components/v8/deliver-stack";
 import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, subsectorHref, type Area } from "@/lib/content/site";
 import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AAM_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
@@ -11,6 +11,7 @@ import { SERVICE_STEPS } from "@/lib/content/features";
 import { Btn, CaseCards, Chips, Dev, Hero, List, People, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor } from "@/components/site/ui";
 import { AviationTeam, BridgingSilos, NextLayer, type TeamCard } from "@/components/site/aviation";
 import { WhereWeLead } from "@/components/site/where-we-lead";
+import { casePhoto } from "@/lib/content/v8";
 import RouteList from "@/components/v8/route-list";
 
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
@@ -89,7 +90,7 @@ export function DigitalShowcase() {
         <AutomationIntegrationInteractive embedded eyebrow="Applied solutions" title="Examples from our team's work" intro="Click an example to step through how it was built. The first is Rawlins work for a state DOT. The others are from our automation team's work before Rawlins." />
       </section>
       <section className="pg-sec pg-sec-navy pg-legacy"><AutomationEcosystemBars /></section>
-      <section className="pg-sec pg-sec-navy pg-legacy"><WhatWeDeliverPyramid /></section>
+      <DeliverStack />
     </>
   );
 }
@@ -197,7 +198,7 @@ export function ServiceFeature({ id }: { id: string }) {
             {parts.map(([t, d, ids]) => (
               <li key={t} className="pg-card">
                 <b>{t}</b><span>{d}</span>
-                <Chips items={ids.map((i) => caseById(i)).filter(Boolean).map((c) => ({ label: c!.title, href: caseHref(c!) }))} />
+                <ul className="pj-mini">{ids.map((i) => caseById(i)).filter(Boolean).map((c) => <li key={c!.id}><a href={caseHref(c!)}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src={casePhoto(c!)} alt="" loading="lazy" /><span>{c!.title}</span></a></li>)}</ul>
               </li>
             ))}
           </ul>

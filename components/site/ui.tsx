@@ -9,6 +9,7 @@ import Panels from "@/components/v8/panels";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { AREAS, CASES, caseHref, caseTag, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
 import { SCENE_PHOTO } from "@/lib/content/media";
+import { casePhoto } from "@/lib/content/v8";
 
 export const PROD = process.env.VERCEL_ENV === "production";
 
@@ -116,7 +117,9 @@ export function CaseCards({ ids, cases, limit }: { ids?: readonly string[]; case
     <ul className="pg-cases">
       {list.map((c) => (
         <li key={c.id}>
-          <a href={caseHref(c)} className="pg-case">
+          <a href={caseHref(c)} className="pg-case has-photo">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={casePhoto(c)} alt="" loading="lazy" />
             <span className="pg-case-k">{caseTag(c, "Case study")}</span>
             <b>{c.title}</b>
             <span>{c.who}</span>

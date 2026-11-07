@@ -9,6 +9,8 @@ import { INDUSTRIES as IND_DATA, STATES, STATES_ACTIVE, STATES_SERVED, STEPS } f
 import { AVIATION_TEAM } from "@/components/site/services";
 import PeopleDirectory, { type Person } from "@/components/site/people";
 import PodcastPlayer from "@/components/site/podcast-player";
+import Grown from "@/components/v8/grown";
+import TeamWall, { type WallPerson } from "@/components/v8/team-wall";
 import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { cleanNames } from "@/lib/content/clean";
 import { Btn, CaseCards, Dev, Hero, List, People, PROD, Sec, Shell, Steps, Talk } from "@/components/site/ui";
@@ -48,11 +50,11 @@ export function WhoWeAre() {
           <p>Advising agency leaders on how to deliver their programs is still a big part of what we do. Since 2017 we&apos;ve added drone and advanced air mobility work, an in-house team that builds integrations, automation, dashboards, and AI, and clients beyond transportation agencies, including contractors, engineering firms, and private companies. Our people work across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>
         </div>
       </Sec>
-      <Sec title="How we've grown" tone="panel"><Steps steps={STORY.map(([k, t, d]) => ({ t: `${k}: ${t}`, d }))} /></Sec>
+      <Grown eyebrow="Since 2017" title="How we've grown" />
       <Sec title="Why Rawlins">
         <ol className="pg-cards">{WHY.map(([t, d], i) => <li key={t}><div className="pg-card"><span className="pg-case-k">{String(i + 1).padStart(2, "0")}</span><b>{t}</b><span>{d}</span></div></li>)}</ol>
       </Sec>
-      <Sec title="Who's behind it" tone="panel"><People people={LEADERS.map((l) => [l.name, l.role])} /><p style={{ marginTop: 18 }}><a href="/about/our-people">Meet everyone</a></p></Sec>
+      <TeamWall people={wallPeople()} spot={veteranPeople().map(wall)} />
       <Talk />
     </Shell>
   );
@@ -155,6 +157,14 @@ export function stripPeople(): Person[] {
 /* The people who ran agency programs (they have a former agency role), founder first. */
 export function veteranPeople(): Person[] {
   return stripPeople().filter((p) => p.formerly);
+}
+/* Meet the team (Who we are): everyone, founder first, for the wall of faces */
+const wall = (p: Person): WallPerson => ({ slug: p.slug, name: p.name, photo: p.photo, role: p.role, formerly: p.formerly });
+function wallPeople(): WallPerson[] {
+  const people = TEAM_MEMBERS.map(personFromRoster);
+  const founder = people.findIndex((p) => /Founder/.test(p.role));
+  if (founder > 0) people.unshift(people.splice(founder, 1)[0]);
+  return people.map(wall);
 }
 export function OurPeople() {
   const people = TEAM_MEMBERS.map(personFromRoster);

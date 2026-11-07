@@ -8,7 +8,7 @@ type Link = { label: string; href: string; note?: string };
 type Hit = { label: string; kind: string; href: string };
 export type NavData = {
   areas: { id: string; n: string; name: string; tag: string; href: string; color: string; ink: string; tint: string; photo: string; services: { name: string; href: string }[] }[];
-  industries: { name: string; href: string; who: string; photo: string; subs: { name: string; href: string }[]; projects: { title: string; href: string; before?: boolean }[] }[];
+  industries: { name: string; href: string; who: string; photo: string; subs: { name: string; href: string }[]; projects: { title: string; href: string; photo?: string; before?: boolean }[] }[];
   work: Link[]; featured: { title: string; who: string; href: string; photo: string };
   insights: Link[]; about: Link[]; search: Hit[];
 };
@@ -121,7 +121,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
             </>}
             {data.industries[ind].projects.length > 0 && <>
               <p className="mx-k">Featured projects</p>
-              <ul>{data.industries[ind].projects.map((p) => <li key={p.href}><a href={p.href}>{p.title}{p.before && <small className="mx-tag">Before Rawlins</small>}</a></li>)}</ul>
+              <ul className="mx-projs">{data.industries[ind].projects.map((p) => <li key={p.href}><a className="mx-proj" href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{p.photo && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}{p.before && <small className="mx-tag">Before Rawlins</small>}</span></a></li>)}</ul>
             </>}
             <a className="mx-more" href="/industries">Everyone we work with</a>
           </div>
@@ -186,7 +186,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
                 <li key={x.href}>
                   <a href={x.href}>{x.name}</a>
                   {x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}
-                  {x.projects.length > 0 && <><p className="mx-k">Featured projects</p><ul>{x.projects.map((p) => <li key={p.href}><a href={p.href}>{p.title}{p.before && <small className="mx-tag">Before Rawlins</small>}</a></li>)}</ul></>}
+                  {x.projects.length > 0 && <><p className="mx-k">Featured projects</p><ul className="mx-projs">{x.projects.map((p) => <li key={p.href}><a className="mx-proj" href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{p.photo && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}{p.before && <small className="mx-tag">Before Rawlins</small>}</span></a></li>)}</ul></>}
                 </li>
               ))}</ul></details>
               <details><summary>Our work</summary><ul>{data.work.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>

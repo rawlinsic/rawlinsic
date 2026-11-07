@@ -15,7 +15,7 @@ export default function Header() {
     industries: VISIBLE_INDUSTRIES.map((i) => ({
       name: i.name, href: industryHref(i), who: i.who, photo: INDUSTRY_PHOTO[i.id],
       subs: i.subsectors.map((s) => ({ name: s.name, href: subsectorHref(i, s) })),
-      projects: i.projects.map((id) => caseById(id)).filter(Boolean).map((c) => ({ title: c!.title, href: caseHref(c!), before: !isOurs(c!) })),
+      projects: i.projects.map((id) => caseById(id)).filter(Boolean).map((c) => ({ title: c!.title, href: caseHref(c!), photo: casePhoto(c!), before: !isOurs(c!) })),
     })),
     work: [
       { label: "All projects", href: "/insights/case-studies", note: "Every project, by area, industry, and state" },

@@ -45,6 +45,12 @@ const CASE_PHOTO: Record<string, string> = {
   "cs-ia-partnering": P("aam-planning.webp"),
   "cs-workforce": P("auto-human.webp"),
   "cs-maint-model": P("transportation-aerial.webp"), // multi-state; its service photo (Nashville) would show the wrong place
+  // private-sector projects: office and data photos with no place in them, one each so the cards differ
+  "cs-pv-pmo": P("auto-capability.webp"),
+  "cs-pv-reporting": P("auto-data.webp"),
+  "cs-pv-service": P("auto-collab.webp"),
+  "cs-pv-field": P("auto-workflow.webp"),
+  "cs-pv-capacity": P("auto-dashboard.webp"),
 };
 const STATE_PHOTO: Record<string, string> = {
   Tennessee: P("tnbig.webp"), Louisiana: P("louisiana.webp"), Nevada: P("nv.webp"), Michigan: P("michigan.webp"),

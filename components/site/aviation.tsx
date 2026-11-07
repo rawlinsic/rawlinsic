@@ -123,12 +123,12 @@ export function BridgingSilos() {
 
 /* ── Your aviation team ── */
 export type TeamCard = { name: string; title: string; photo?: string; location?: string; href: string };
-export function AviationTeam({ people }: { people: TeamCard[] }) {
+export function AviationTeam({ people, title = "Your aviation team" }: { people: TeamCard[]; title?: string }) {
   return (
     <section className="av av-team">
       <div className="v8-wrap">
         <div className="av-head av-head-row">
-          <h2 className="v8-h2">Your aviation team</h2>
+          <h2 className="v8-h2">{title}</h2>
           <a className="v8-link" href="/about/our-people">Everyone on our team</a>
         </div>
         <ul className="av-team-list">

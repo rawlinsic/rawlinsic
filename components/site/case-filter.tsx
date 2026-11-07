@@ -4,7 +4,7 @@
    ?status=ongoing ?status=before-rawlins ?service=). */
 import { useEffect, useMemo, useState } from "react";
 
-export type CaseRow = { id: string; href: string; title: string; who: string; status: string; tag: string; areas: string[]; services: string[]; industries: string[]; states: string[] };
+export type CaseRow = { id: string; href: string; photo: string; title: string; who: string; status: string; tag: string; areas: string[]; services: string[]; industries: string[]; states: string[] };
 type Opt = { value: string; label: string };
 
 export default function CaseFilter({ rows, areas, industries, states, services }: { rows: CaseRow[]; areas: Opt[]; industries: Opt[]; states: Opt[]; services: Opt[] }) {
@@ -48,7 +48,9 @@ export default function CaseFilter({ rows, areas, industries, states, services }
       <ul className="pg-cases">
         {list.map((c) => (
           <li key={c.id}>
-            <a href={c.href} className="pg-case">
+            <a href={c.href} className="pg-case has-photo">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={c.photo} alt="" loading="lazy" />
               <span className="pg-case-k">{c.tag}</span>
               <b>{c.title}</b>
               <span>{c.who}</span>
