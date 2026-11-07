@@ -9,7 +9,8 @@ import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content
 import { AAM_SERVICES, DRONE_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
 import { SERVICE_STEPS } from "@/lib/content/features";
 import { Btn, CaseCards, Chips, Dev, Hero, List, People, PROD, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor } from "@/components/site/ui";
-import { AviationTeam, BridgingSilos, NextLayer, WhereWeLead, type TeamCard } from "@/components/site/aviation";
+import { AviationTeam, BridgingSilos, NextLayer, type TeamCard } from "@/components/site/aviation";
+import { WhereWeLead } from "@/components/site/where-we-lead";
 
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const STATUS: Record<string, string> = { ok: "Content ready", warn: "Proven, copy needed", gap: "Needs expert content" };

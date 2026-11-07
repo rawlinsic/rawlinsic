@@ -1,7 +1,7 @@
 "use client";
 /* The Drones & Advanced Air Mobility page's own sections (v9), carried over
    from the current site and rebuilt so they read at a glance:
-     Where we lead       the seven numbered areas as an editorial list beside a photo
+     (Where we lead lives in where-we-lead.tsx)
      The next layer      the region map on navy: glowing routes, big labels; pick a
                          place on the map and its routes light up and fly
      Bridging silos      the eight partner groups in two rows, all of them
@@ -9,31 +9,6 @@
      Your aviation team  portrait cards that open each person's bio
    Content is the current site's, unchanged in substance. */
 import { useState, type CSSProperties } from "react";
-import { WHERE_WE_LEAD } from "@/components/site/aam-data";
-
-/* ── Where we lead ── */
-export function WhereWeLead({ photo }: { photo: string }) {
-  return (
-    <section className="av av-lead">
-      <div className="v8-wrap av-lead-in">
-        <div className="av-lead-copy">
-          <h2 className="v8-h2">Where we lead</h2>
-          <p className="v8-lead">Our team helped shape early guidance on drones and advanced air mobility and continues to support its evolution, working directly with transportation agencies and airports to turn strategy into deployable programs.</p>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="av-lead-photo" src={photo} alt="" loading="lazy" />
-        </div>
-        <ol className="av-lead-list">
-          {WHERE_WE_LEAD.map((w, i) => (
-            <li key={w.n} data-reveal style={{ ["--d" as string]: `${i * 60}ms` } as CSSProperties}>
-              <span className="av-lead-n" aria-hidden="true">{w.n}</span>
-              <div><h3>{w.t}</h3><p>{w.d}</p></div>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-}
 
 /* ── Integrate the next layer of your transportation system ── */
 const NODES = [
