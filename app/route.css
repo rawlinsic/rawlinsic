@@ -26,9 +26,28 @@
 .rt-txt { padding: 10px 22px 14px; border-radius: 18px; opacity: 0.45; transform: translateX(10px); transition: opacity 0.5s, transform 0.5s, background 0.4s, box-shadow 0.4s; }
 .rt-stop[data-on] .rt-txt { opacity: 1; transform: none; background: rgba(255, 255, 255, 0.78); box-shadow: 0 14px 34px -22px rgba(16, 32, 56, 0.45), 0 0 0 1px rgba(34, 211, 238, 0.28); }
 .rt-txt h3 { margin: 0 0 6px; color: #0a1220; font-size: clamp(1.2rem, 1.5vw, 1.4rem); font-weight: 600; line-height: 1.2; }
-.rt-txt p { margin: 0; color: #2e3c50; font-size: 1.06rem; line-height: 1.5; }
+.rt-txt .rt-d { margin: 0; color: #2e3c50; font-size: 1.06rem; line-height: 1.5; }
+.rt-txt .rt-tag { margin: 0 0 4px; color: var(--aqua-ink, #0e7490); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.rt-txt .pg-list { margin: 10px 0 0; }
+.rt-txt .pg-chips { margin-top: 10px; }
 
-@media (max-width: 1080px) { .rt-side { position: static; } }
+/* check-mark stops (lists of outcomes): the words are the whole stop */
+.rt-list.is-check .rt-node { color: #4d688c; }
+.rt-list.is-check .rt-stop[data-on] .rt-node { color: #a5f3fc; }
+.rt-list.is-check .rt-stop { padding: 10px 0 12px; }
+.rt-list.is-check .rt-txt { padding: 10px 20px; }
+.rt-list.is-check .rt-txt .rt-d { color: #0a1220; font-size: clamp(1.06rem, 1.25vw, 1.2rem); font-weight: 500; line-height: 1.4; }
+
+/* next to a section heading: the heading stays put on the left, the route runs down the right */
+.pg-wrap:has(> .rt-list) { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+.pg-wrap:has(> .rt-list) > .pg-sec-head { position: sticky; top: calc(68px + var(--snh, 0px) + 32px); margin-bottom: 0; }
+.pg-wrap:has(> .rt-list) > .pg-sec-head .pg-h2 { max-width: 16ch; }
+
+@media (max-width: 1080px) {
+  .rt-side { position: static; }
+  .pg-wrap:has(> .rt-list) { grid-template-columns: 1fr; }
+  .pg-wrap:has(> .rt-list) > .pg-sec-head { position: static; margin-bottom: 24px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .rt-light { display: none; }
   .rt-node, .rt-txt { transition: none; }

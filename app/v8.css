@@ -1307,3 +1307,25 @@ html.lenis { scroll-behavior: auto !important; }
   .av-map-stage { aspect-ratio: 1 / 0.9; }
   .av-place span { white-space: normal; max-width: 88px; text-align: center; line-height: 1.15; }
 }
+
+/* v9 · sideways route: home How we've grown (components/v8/home.tsx). Each card carries
+   its stop; the line between stops fills with the section's progress (--p). */
+.hg-line { display: none; }
+.hg-route { align-items: stretch; }
+.hg-item { position: relative; flex: 0 0 min(440px, 60vw); display: flex; flex-direction: column; padding-top: 70px; --on: clamp(0, calc((var(--p, 0) * var(--n) - var(--i) + 0.02) * 30), 1); }
+.hg-item > .hg-card { flex: 1 1 auto; }
+.hg-item:not(.is-next)::before, .hg-item:not(.is-next)::after { content: ""; position: absolute; left: 25px; top: 23px; width: calc(100% + 18px); height: 3px; border-radius: 3px; }
+.hg-item:not(.is-next)::before { background: repeating-linear-gradient(90deg, rgba(29, 55, 89, 0.24) 0 6px, transparent 6px 12px); }
+.hg-item:not(.is-next)::after { background: linear-gradient(90deg, #0e7490, #22d3ee); box-shadow: 0 0 12px rgba(34, 211, 238, 0.8); transform-origin: left; transform: scaleX(clamp(0, calc(var(--p, 0) * var(--n) - var(--i)), 1)); }
+.hg-node { position: absolute; z-index: 1; left: 0; top: 0; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: color-mix(in srgb, #10233f calc(var(--on) * 100%), #fff); border: 2px solid color-mix(in srgb, #22d3ee calc(var(--on) * 100%), #b9cde4); box-shadow: 0 0 0 calc(var(--on) * 5px) rgba(34, 211, 238, 0.18), 0 0 calc(var(--on) * 22px) rgba(34, 211, 238, 0.55); }
+.hg-node b { color: color-mix(in srgb, #a5f3fc calc(var(--on) * 100%), #4d688c); font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.hg-item.is-next .hg-node::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid #22d3ee; opacity: var(--on); animation: hg-ping 2.2s ease-out infinite; }
+@media (max-width: 959px), (prefers-reduced-motion: reduce) {
+  .hg-item { flex: none; padding: 0 0 0 66px; }
+  .hg-item:not(.is-next)::before, .hg-item:not(.is-next)::after { left: 23px; top: 48px; width: 3px; height: calc(100% - 30px); transform: none; }
+  .hg-item:not(.is-next)::before { background: repeating-linear-gradient(180deg, rgba(29, 55, 89, 0.24) 0 6px, transparent 6px 12px); }
+  .hg-item:not(.is-next)::after { background: linear-gradient(180deg, #0e7490, #22d3ee); }
+}
+
+@keyframes hg-ping { from { opacity: 0.9; transform: scale(1); } to { opacity: 0; transform: scale(1.9); } }
+@media (prefers-reduced-motion: reduce) { .hg-item.is-next .hg-node::after { animation: none; } }

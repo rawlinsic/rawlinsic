@@ -21,6 +21,7 @@ import LitText from "@/components/v8/lit-text";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
+import RouteList from "@/components/v8/route-list";
 import { ServiceFeature } from "@/components/site/services";
 import { TALK } from "@/components/site/ui";
 
@@ -134,7 +135,7 @@ export default function ServiceV8({ id }: { id: string }) {
         <div className={`v8-wrap svw-in${s.xp.length ? "" : " is-solo"}`}>
           <div>
             <h2 className="v8-h2">What you walk away with</h2>
-            <ul className="sv-checks">{s.walk.map((w, k) => <li key={w} data-reveal style={{ ["--d" as string]: `${k * 70}ms` } as CSSProperties}>{w}</li>)}</ul>
+            <RouteList check ordered={false} stops={s.walk.map((w) => ({ d: w }))} />
           </div>
           {s.xp.length > 0 && (
             <aside id="experience" className="svw-xp" aria-labelledby="svw-xp-h" data-reveal>

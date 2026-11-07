@@ -11,6 +11,7 @@ import { SERVICE_STEPS } from "@/lib/content/features";
 import { Btn, CaseCards, Chips, Dev, Hero, List, People, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor } from "@/components/site/ui";
 import { AviationTeam, BridgingSilos, NextLayer, type TeamCard } from "@/components/site/aviation";
 import { WhereWeLead } from "@/components/site/where-we-lead";
+import RouteList from "@/components/v8/route-list";
 
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const STATUS: Record<string, string> = { ok: "Content ready", warn: "Proven, copy needed", gap: "Needs expert content" };
@@ -219,7 +220,7 @@ export function ServiceFeature({ id }: { id: string }) {
     case "drone-programs":
       return (
         <Sec title="Program lifecycle">
-          <ol className="pg-cards">{LIFECYCLE.map((l, i) => <li key={l.t}><div className="pg-card"><span className="pg-case-k">{String(i + 1).padStart(2, "0")} · {l.tag}</span><b>{l.t}</b><List items={l.items} /></div></li>)}</ol>
+          <RouteList stops={LIFECYCLE.map((l) => ({ tag: l.tag, t: l.t, extra: <List items={l.items} /> }))} />
         </Sec>
       );
     default:

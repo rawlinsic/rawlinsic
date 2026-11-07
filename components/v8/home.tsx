@@ -5,6 +5,7 @@
    photos)   5 our work   6 how we've grown   7 what's new   8 start a
    conversation. Words come from the content layer. Dev-only marks never
    reach production. */
+import type { CSSProperties } from "react";
 import { AREAS, CASES, HOME, NUMBERS, PROBLEMS, STEPS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/media";
@@ -184,15 +185,22 @@ export default function Home() {
         </div>
         <div className="hg-line" aria-hidden="true"><i /></div>
         <div className="hg-view">
-          <ol className="hg-track" data-hscroll>
+          {/* a sideways route: each stop lights as the line reaches it while the cards slide */}
+          <ol className="hg-track hg-route" data-hscroll style={{ ["--n" as string]: STORY.length } as CSSProperties}>
             {STORY.map(([k, h, p], i) => (
-              <li key={k} className="hg-card">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={STORY_PHOTO[i]} alt="" loading="lazy" />
-                <div><span className="grown-k">{String(i + 1).padStart(2, "0")} · {k}</span><b>{h}</b><p>{p}</p></div>
+              <li key={k} className="hg-item" style={{ ["--i" as string]: i } as CSSProperties}>
+                <span className="hg-node" aria-hidden="true"><b>{String(i + 1).padStart(2, "0")}</b></span>
+                <div className="hg-card">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={STORY_PHOTO[i]} alt="" loading="lazy" />
+                  <div><span className="grown-k">{String(i + 1).padStart(2, "0")} · {k}</span><b>{h}</b><p>{p}</p></div>
+                </div>
               </li>
             ))}
-            <li className="hg-card hg-next"><span className="grown-k">What&apos;s next</span><b>Where are you headed?</b><a className="v8-btn v8-btn-glow" href="/contact">Tell us what you&apos;re trying to fix</a></li>
+            <li className="hg-item is-next" style={{ ["--i" as string]: STORY.length } as CSSProperties}>
+              <span className="hg-node" aria-hidden="true"><b>→</b></span>
+              <div className="hg-card hg-next"><span className="grown-k">What&apos;s next</span><b>Where are you headed?</b><a className="v8-btn v8-btn-glow" href="/contact">Tell us what you&apos;re trying to fix</a></div>
+            </li>
           </ol>
         </div>
       </Scene>

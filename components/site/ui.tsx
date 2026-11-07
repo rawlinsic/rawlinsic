@@ -1,6 +1,7 @@
 /* Building blocks for every redesigned page (server components).
    Styles: app/pages.css (pg- prefix). Dev-only marks never render in production. */
 import type { ReactNode } from "react";
+import RouteList from "@/components/v8/route-list";
 import Header from "@/components/v8/header";
 import Footer from "@/components/v8/footer";
 import PageScene from "@/components/site/page-scene";
@@ -127,6 +128,8 @@ export function CaseCards({ ids, cases, limit }: { ids?: readonly string[]; case
 }
 
 export function Steps({ steps, compact }: { steps: readonly { t: string; d: string; services?: readonly string[] }[]; compact?: boolean }) {
+  // full step lists run as a route you scroll down; compact ones (case figures) stay a strip
+  if (!compact) return <RouteList stops={steps.map((s) => ({ t: s.t, d: s.d, extra: s.services && s.services.length > 0 ? <ServiceChips ids={s.services} /> : undefined }))} />;
   return (
     <ol className={`pg-steps${compact ? " pg-steps-compact" : ""}`} style={{ ["--n" as string]: steps.length }}>
       {steps.map((s, i) => (
