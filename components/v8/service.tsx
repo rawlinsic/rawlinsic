@@ -10,25 +10,28 @@
      walk away    with the experience behind it alongside
    and the page ends by moving you on to the next service. */
 import type { CSSProperties } from "react";
-import { AREAS, CASES, INDUSTRIES, areaHref, caseHref, caseWho, industryHref, serviceById, serviceHref, subsectorHref } from "@/lib/content/site";
-import { SERVICES, SUBSECTORS } from "@/lib/content/catalog";
+import { AREAS, CASES, areaHref, caseHref, caseWho, serviceById, serviceHref } from "@/lib/content/site";
+import { SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { SERVICE_STEPS } from "@/lib/content/features";
 import { THEME, themeStyle, casePhoto, type DiagramKind } from "@/lib/content/v8";
-import { Diagram } from "@/components/v8/diagram";
+import Fit from "@/components/v8/fit";
 import AreaMark from "@/components/v8/area-mark";
 import LitText from "@/components/v8/lit-text";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
 import { ServiceFeature } from "@/components/site/services";
+import { TALK } from "@/components/site/ui";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const STATUS: Record<string, string> = { warn: "Proven, copy needed", gap: "Needs expert content" };
 const STEP_KIND: Record<string, DiagramKind> = { "asset-mgmt": "cycle", "strategic-planning": "loop", workforce: "track", "training-video": "track" };
 const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "program-delivery", "operations", "portals", "drone-aam", "drone-programs"];
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
-const quote = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
+const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
+/* one card per quote: some entries hold two quotes in one string ("…” “…") */
+const quotes = (hear: string[]) => hear.flatMap((h) => h.split(/["”]\s*["“]/)).map((h) => bare(h.replace(/^["“]/, "")));
 
 export default function ServiceV8({ id }: { id: string }) {
   const hit = serviceById(id)!;
@@ -39,13 +42,8 @@ export default function ServiceV8({ id }: { id: string }) {
   const nextSvc = area.services[i + 1];
   const nextArea = AREAS[(AREAS.findIndex((a) => a.id === area.id) + 1) % AREAS.length];
   const cases = CASES.filter((c) => c.services.includes(id));
-  const inds = s.industries.map((x) => INDUSTRIES.find((y) => y.id === x)).filter((x) => x && !x.hidden);
-  const subs = Object.values(SUBSECTORS).filter((x) => x.services.includes(id)).map((x) => {
-    const ind = INDUSTRIES.find((y) => y.id === x.industry);
-    const sub = ind?.subsectors.find((y) => y.id === x.id);
-    return ind && sub ? { label: sub.name, href: subsectorHref(ind, sub) } : null;
-  }).filter(Boolean) as { label: string; href: string }[];
   const steps = SERVICE_STEPS[id];
+  const hear = quotes(s.hear);
   const photo = SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id];
   const sections: [string, string][] = [
     ["hear", "What we hear"], ["deliver", "What we deliver"],
@@ -101,12 +99,12 @@ export default function ServiceV8({ id }: { id: string }) {
 
       <SectionNav items={sections} />
 
-      <Scene steps={1} per={s.hear.length > 1 ? 95 : 75} id="hear" className="svq" label="What we hear">
+      <section id="hear" className="svq">
         <div className="v8-wrap svq-in">
-          <h2 className="v8-eyebrow">What we hear</h2>
-          <LitText lines={s.hear.map(quote)} className={s.hear.length > 1 ? "is-many" : s.hear[0].length > 120 ? "is-long" : undefined} />
+          <h2 className="v8-h2">What we hear</h2>
+          <LitText lines={hear} className={`svq-q is-${Math.min(hear.length, 4)}${hear.length === 1 && hear[0].length > 120 ? " is-long" : ""}`} />
         </div>
-      </Scene>
+      </section>
 
       <Scene steps={1} per={Math.max(70, s.deliver.length * 17)} id="deliver" className="svd" label="What we deliver">
         <div className="v8-wrap svd-in">
@@ -121,14 +119,9 @@ export default function ServiceV8({ id }: { id: string }) {
       </Scene>
 
       {steps && (
-        <Scene steps={1} per={120} id="how" className="sv-scene" label={steps.title}>
-          <div className="v8-wrap sv-scene-in glow dg-scrub" data-step={0}>
-            <div className="sv-scene-copy">
-              {steps.kicker && <p className="v8-eyebrow">{steps.kicker}</p>}
-              <h2 className="v8-h2">{steps.title}</h2>
-              <span className="sv-scene-meter" aria-hidden="true"><i /></span>
-            </div>
-            <Diagram kind={STEP_KIND[id] ?? T.diagram} steps={steps.steps} detail />
+        <Scene steps={1} per={100} id="how" className="sv-scene fit-scene" label={steps.title}>
+          <div className="v8-wrap fit-in">
+            <Fit kind={STEP_KIND[id] ?? T.diagram} eyebrow={steps.kicker} title={steps.title} steps={steps.steps} />
           </div>
         </Scene>
       )}
@@ -176,32 +169,23 @@ export default function ServiceV8({ id }: { id: string }) {
       <section id="talk" className="svt">
         <div className="v8-wrap svt-in">
           <div className="svt-talk">
-            <h2 className="v8-h2">Talk to the people who do this work</h2>
-            <p className="v8-lead">Tell us what you&apos;re working on. We&apos;ll connect you with the person on our team who has done it.</p>
+            <h2 className="v8-h2">{TALK.title}</h2>
+            <p className="v8-lead">{TALK.text}</p>
             <div className="v8-actions">
               <a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a>
               <a className="v8-btn v8-btn-ghost" href={areaHref(area)}>All of {area.name}</a>
             </div>
           </div>
-          <div className="svt-links">
-            {s.related.length > 0 && (
+          {s.related.length > 0 && (
+            <div className="svt-links">
               <div>
                 <h3 className="v8-eyebrow">Often paired with</h3>
                 <ul className="sv-chips">
                   {s.related.map((r) => { const h = serviceById(r); return h ? <li key={r}><a href={serviceHref(r)} style={themeStyle(h.area.id)}><i aria-hidden="true" />{h.service.name}</a></li> : null; })}
                 </ul>
               </div>
-            )}
-            {inds.length + subs.length > 0 && (
-              <div>
-                <h3 className="v8-eyebrow">Where we do this</h3>
-                <ul className="sv-chips">
-                  {inds.map((x) => <li key={x!.id}><a href={industryHref(x!)}>{x!.name}</a></li>)}
-                  {subs.map((x) => <li key={x.href}><a href={x.href} className="is-sub">{x.label}</a></li>)}
-                </ul>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 

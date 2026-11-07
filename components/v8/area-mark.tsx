@@ -2,7 +2,7 @@
    families of service pages each have their own look. Glowing aqua lines,
    drawn in on load and moving slowly. Pure decoration (hidden from screen
    readers); reduced motion shows it still.
-     loop    Strategy & Organization: plan to practice, round again
+     loop    Strategy & Organization: many priorities brought into one direction
      track   Project Delivery: the project life cycle, milestone to milestone
      cycle   Operations & Maintenance: the asset life cycle
      hub     Digital Solutions: tools built around the systems you own
@@ -17,13 +17,19 @@ const ring = (cx: number, cy: number, r: number, n: number, from = 0) =>
 
 function Art({ kind }: { kind: DiagramKind }) {
   if (kind === "loop") {
+    // many priorities brought into one direction
+    const ys = [80, 190, 300, 410, 520];
+    const into = (y: number) => `M 20 ${y} C 300 ${y} 330 300 520 300`;
     return (
       <>
-        <g className="svm-spin">
-          {[-18, 42, 102].map((r) => <ellipse key={r} className="svm-draw" cx="420" cy="300" rx="320" ry="118" transform={`rotate(${r} 420 300)`} />)}
-        </g>
-        {ring(420, 300, 118, 3, 30).map(([x, y], i) => <circle key={i} className="svm-node" cx={x} cy={y} r="7" style={{ animationDelay: `${i * 0.6}s` }} />)}
-        <circle className="svm-core" cx="420" cy="300" r="34" />
+        {ys.map((y) => <path key={y} className={`svm-draw${y === 300 ? "" : " svm-faint"}`} d={into(y)} />)}
+        <path className="svm-draw" d="M 520 300 H 790" />
+        {ys.map((y, i) => <circle key={`n${y}`} className="svm-node svm-faint" cx="20" cy={y} r="6" style={{ animationDelay: `${i * 0.4}s` }} />)}
+        <circle className="svm-node" cx="520" cy="300" r="9" />
+        <circle className="svm-ping" cx="790" cy="300" r="10" />
+        <circle className="svm-fly" r="7">
+          <animateMotion dur="7s" repeatCount="indefinite" path={`${into(80)} H 790`} calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines="0.45 0 0.35 1" />
+        </circle>
       </>
     );
   }

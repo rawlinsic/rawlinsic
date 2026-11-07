@@ -6,6 +6,7 @@
    while the section stands still. Screen readers get the plain text;
    reduced motion shows it fully lit. */
 import { useEffect, useRef, type RefObject } from "react";
+import { docTop } from "@/components/v8/panels";
 
 const words = (s: string, from: number) => s.split(" ").map((w, i) => <span key={from + i} className="lit-w">{w} </span>);
 
@@ -26,8 +27,10 @@ export default function LitText({ text, lines, as: Tag = "p", className }: { tex
         const sr = scn.getBoundingClientRect();
         p = Math.max(0, Math.min(1, (-sr.top / Math.max(1, scn.offsetHeight - vh)) * 1.25 + 0.06));
       } else {
-        const r = el.getBoundingClientRect();
-        p = Math.max(0, Math.min(1, (vh * 0.86 - r.top) / (vh * 0.5)));
+        // where it sits in the page, not on screen: a section that holds in place
+        // still finishes lighting as you keep scrolling
+        const top = docTop(el) - window.scrollY;
+        p = Math.max(0, Math.min(1, (vh * 0.98 - top) / (vh * 0.4)));
       }
       const n = Math.round(p * ws.length);
       ws.forEach((w, i) => w.classList.toggle("is-lit", i < n));

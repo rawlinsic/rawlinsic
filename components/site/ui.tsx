@@ -186,7 +186,9 @@ export function People({ people }: { people: readonly (readonly string[])[] }) {
   );
 }
 
-export function Talk({ title = "Talk to the people who do this work", text = "Tell us what you're working on. We'll connect you with the person on our team who has done it." }: { title?: string; text?: string }) {
+/* The closing ask on every page. The line under it is the current site's own. */
+export const TALK = { title: "Tell us what you’re working on", text: "Whether you’re ready to engage or simply exploring what’s possible, we’d love to hear from you." };
+export function Talk({ title = TALK.title, text = TALK.text }: { title?: string; text?: string }) {
   return (
     <section className="pg-talk">
       <div className="pg-wrap pg-talk-in">

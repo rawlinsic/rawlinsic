@@ -6,10 +6,10 @@ import AutomationEcosystemBars from "@/components/automation-ecosystem-bars";
 import WhatWeDeliverPyramid from "@/components/what-we-deliver-pyramid";
 import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, subsectorHref, type Area } from "@/lib/content/site";
 import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
-import { AamEcosystem, AamLandscape } from "@/components/site/aam";
-import { AAM_SERVICES, DRONE_SERVICES, LIFECYCLE, WHERE_WE_LEAD } from "@/components/site/aam-data";
+import { AAM_SERVICES, DRONE_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
 import { SERVICE_STEPS } from "@/lib/content/features";
-import { Btn, CaseCards, Chips, Dev, Hero, List, People, PROD, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk } from "@/components/site/ui";
+import { Btn, CaseCards, Chips, Dev, Hero, List, People, PROD, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor } from "@/components/site/ui";
+import { AviationTeam, BridgingSilos, NextLayer, WhereWeLead, type TeamCard } from "@/components/site/aviation";
 
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const STATUS: Record<string, string> = { ok: "Content ready", warn: "Proven, copy needed", gap: "Needs expert content" };
@@ -92,14 +92,17 @@ export function DigitalShowcase() {
 }
 
 export function AviationShowcase() {
+  const slug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  const team: TeamCard[] = AVIATION_TEAM.map(([name, line]) => {
+    const m = rosterFor(name);
+    return { name, title: m ? rawlinsTitle(m) : line, photo: m?.photo, location: m?.location, href: `/about/our-people#${slug(m?.name ?? name)}` };
+  });
   return (
     <>
-      <Sec title="Where we lead" intro={<p>Our team helped shape early guidance on drones and advanced air mobility and continues to support its evolution, working directly with transportation agencies and airports to turn strategy into deployable programs.</p>}>
-        <ol className="pg-cards">{WHERE_WE_LEAD.map((w) => <li key={w.n}><div className="pg-card"><span className="pg-case-k">{w.n}</span><b>{w.t}</b><span>{w.d}</span></div></li>)}</ol>
-      </Sec>
-      <Sec title="Integrate the next layer of your transportation system" tone="panel"><AamLandscape /></Sec>
-      <Sec title="Bridging silos" intro={<p>Advanced air mobility touches every part of the aviation and transportation world. We help agencies work with all of it.</p>}><AamEcosystem /></Sec>
-      <Sec title="Your aviation team" tone="panel"><People people={AVIATION_TEAM} /></Sec>
+      <WhereWeLead photo={SERVICE_PHOTO["drone-programs"]} />
+      <NextLayer />
+      <BridgingSilos />
+      <AviationTeam people={team} />
     </>
   );
 }
@@ -207,7 +210,7 @@ export function ServiceFeature({ id }: { id: string }) {
     case "drone-aam":
       return (
         <>
-          <Sec title="Integrate the next layer of your transportation system"><AamLandscape /></Sec>
+          <NextLayer />
           <Sec title="Advanced air mobility services" tone="panel"><List items={AAM_SERVICES} cols /></Sec>
         </>
       );

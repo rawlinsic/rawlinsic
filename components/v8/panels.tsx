@@ -12,6 +12,9 @@
    normally.
      --pt  on each panel: where it holds (its sticky top)
      --cv  on each covered panel: how far the next one has covered it, 0 to 1
+     --rad on each panel: 1 while it slides in as a rounded card, easing to 0
+           (square corners) as it reaches its place, so no corners show
+           under the header or the "On this page" bar
      --sp  on [data-scrub="page"] elements: page scroll in screen heights, 0 to 1
    A page's "On this page" bar (.sn) stays pinned on top and panels hold
    just under it. Because held panels are no longer where the page layout
@@ -48,6 +51,7 @@ export default function Panels({ children, className }: { children: ReactNode; c
     const scrubs = Array.from(wrap.querySelectorAll<HTMLElement>('[data-scrub="page"]'));
     const sn = wrap.querySelector<HTMLElement>(":scope > .sn");
     let raf = 0, live = false, vh = window.innerHeight, tops: number[] = [];
+    const rads: string[] = [];
 
     const place = () => {
       vh = window.innerHeight;
@@ -78,6 +82,10 @@ export default function Panels({ children, className }: { children: ReactNode; c
       raf = 0;
       if (!live) return;
       const rs = kids.map((k) => k.getBoundingClientRect());
+      for (let i = 1; i < kids.length; i++) {
+        const rad = Math.max(0, Math.min(1, (rs[i].top - tops[i]) / (vh * 0.3))).toFixed(3);
+        if (rad !== rads[i]) { rads[i] = rad; kids[i].style.setProperty("--rad", rad); }
+      }
       for (let i = 0; i < kids.length - 1; i++) {
         const cur = rs[i], nx = rs[i + 1], el = kids[i];
         // how much of this panel's on-screen part the next panel covers. Panels sit

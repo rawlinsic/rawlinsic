@@ -6,25 +6,28 @@
      hero        lit by the area's photo, with the area's line drawing; the
                  area's services sit right in it as photo panels that open
                  on hover (the home page's area panels, one level down)
-     we hear     held while the clients' words light up
-     pieces fit  the area's diagram drawing itself
+     we hear     the clients' words side by side, lighting up as they come in
+     pieces fit  the steps as big cards joined by a line that draws itself
    The Digital and Drones areas keep their carried-over features (applied
    solutions, the AAM landscape and partners). */
 import type { ReactNode } from "react";
-import { AREAS, CASES, INDUSTRIES, areaHref, caseHref, caseWho, industryHref, type Area } from "@/lib/content/site";
+import { AREAS, CASES, areaHref, caseHref, caseWho, type Area } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { THEME, themeStyle, casePhoto } from "@/lib/content/v8";
-import { Diagram } from "@/components/v8/diagram";
+import Fit from "@/components/v8/fit";
 import AreaMark from "@/components/v8/area-mark";
 import LitText from "@/components/v8/lit-text";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
+import { TALK } from "@/components/site/ui";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
-const quote = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
+const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
+/* one card per quote: some entries hold two quotes in one string ("…” “…") */
+const quotes = (hear: string[]) => hear.flatMap((h) => h.split(/["”]\s*["“]/)).map((h) => bare(h.replace(/^["“]/, "")));
 
 export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode }) {
   const L = AREA_DATA[area.id];
@@ -32,8 +35,6 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
   const k = AREAS.findIndex((a) => a.id === area.id);
   const next = AREAS[(k + 1) % AREAS.length];
   const cases = L.cases.map((id) => CASES.find((c) => c.id === id)).filter((c) => c && (!PROD || !c.needsSignoff)) as typeof CASES;
-  const indIds = Array.from(new Set(area.services.flatMap((s) => SERVICES[s.id]?.industries ?? [])));
-  const inds = indIds.map((id) => INDUSTRIES.find((i) => i.id === id)).filter((i) => i && !i.hidden);
   const many = area.services.length >= 5;
   const sections: [string, string][] = [
     ["services", "Services"], ["hear", "What we hear"], ["fit", L.feature.title], ...(extra ? [["more", "From our work"] as [string, string]] : []),
@@ -66,7 +67,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
           </div>
         </div>
         <div id="services" className="v8-wrap arh-svcs">
-          <h2 className="sr-only">{area.name} services</h2>
+          <h2 className="arh-svcs-h">Our services <span>{area.services.length}</span></h2>
           <ul className={`ways ways-svc${many ? " is-many" : ""}`}>
             {area.services.map((s) => (
               <li key={s.id} className="way">
@@ -88,21 +89,16 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
 
       <SectionNav items={sections} />
 
-      <Scene steps={1} per={95} id="hear" className="svq" label="What we hear">
+      <section id="hear" className="svq">
         <div className="v8-wrap svq-in">
-          <h2 className="v8-eyebrow">What we hear</h2>
-          <LitText lines={L.hear.map(quote)} className="is-many" />
+          <h2 className="v8-h2">What we hear</h2>
+          <LitText lines={quotes(L.hear)} className={`svq-q is-${Math.min(quotes(L.hear).length, 4)}`} />
         </div>
-      </Scene>
+      </section>
 
-      <Scene steps={1} per={120} id="fit" className="sv-scene" label={L.feature.title}>
-        <div className="v8-wrap sv-scene-in glow dg-scrub" data-step={0}>
-          <div className="sv-scene-copy">
-            <p className="v8-eyebrow">How the pieces fit</p>
-            <h2 className="v8-h2">{L.feature.title}</h2>
-            <span className="sv-scene-meter" aria-hidden="true"><i /></span>
-          </div>
-          <Diagram kind={T.diagram} steps={L.feature.steps} detail />
+      <Scene steps={1} per={100} id="fit" className="sv-scene fit-scene" label={L.feature.title}>
+        <div className="v8-wrap fit-in">
+          <Fit kind={T.diagram} eyebrow="How the pieces fit" title={L.feature.title} steps={L.feature.steps} />
         </div>
       </Scene>
 
@@ -134,8 +130,8 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
       <section id="talk" className="svt">
         <div className="v8-wrap svt-in">
           <div className="svt-talk">
-            <h2 className="v8-h2">Talk to the people who do this work</h2>
-            <p className="v8-lead">Tell us what you&apos;re working on. We&apos;ll connect you with the person on our team who has done it.</p>
+            <h2 className="v8-h2">{TALK.title}</h2>
+            <p className="v8-lead">{TALK.text}</p>
             <div className="v8-actions"><a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a></div>
           </div>
           <div className="svt-links">
@@ -143,12 +139,6 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
               <h3 className="v8-eyebrow">{area.name} services</h3>
               <ul className="sv-chips">{area.services.map((s) => <li key={s.id}><a href={`/services/${area.slug}/${s.slug}`}><i aria-hidden="true" />{s.name}</a></li>)}</ul>
             </div>
-            {inds.length > 0 && (
-              <div>
-                <h3 className="v8-eyebrow">Who we do this for</h3>
-                <ul className="sv-chips">{inds.map((x) => <li key={x!.id}><a href={industryHref(x!)}>{x!.name}</a></li>)}</ul>
-              </div>
-            )}
           </div>
         </div>
       </section>
