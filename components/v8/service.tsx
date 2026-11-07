@@ -8,7 +8,9 @@
      we deliver   held while the deliverables are dealt in as numbered cards
      how          the area's diagram drawing itself (where a service has steps)
      walk away    with the experience behind it alongside
-   and the page ends by moving you on to the next service. */
+   and the page ends by moving you on to the next service. The five drone
+   service pages also show Our aviation team: the six roles, then the people
+   (full site pass, Parts 2 and 4). */
 import type { CSSProperties } from "react";
 import { AREAS, CASES, areaHref, caseHref, caseTag, isOurs, serviceById, serviceHref } from "@/lib/content/site";
 import { SERVICES } from "@/lib/content/catalog";
@@ -22,7 +24,9 @@ import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
 import RouteList from "@/components/v8/route-list";
-import { ServiceFeature } from "@/components/site/services";
+import { AVIATION_PAGES, ServiceFeature, aviationCards } from "@/components/site/services";
+import { AviationTeam } from "@/components/site/aviation";
+import { AVIATION_ROLES } from "@/lib/content/people";
 import { TALK } from "@/components/site/ui";
 
 const PROD = process.env.VERCEL_ENV === "production";
@@ -47,11 +51,13 @@ export default function ServiceV8({ id }: { id: string }) {
   const steps = SERVICE_STEPS[id];
   const hear = quotes(s.hear);
   const photo = SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id];
+  const aviation = AVIATION_PAGES.includes(id);
   const sections: [string, string][] = [
     ["hear", "What we hear"], ["deliver", "What we deliver"],
     ...(steps ? [["how", steps.title] as [string, string]] : HAS_FEATURE.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
     ["walk", "What you walk away with"],
     ...(cases.length ? [["work", "Where we've done it"] as [string, string]] : []),
+    ...(aviation ? [["aviation", "Our aviation team"] as [string, string]] : []),
     ["talk", "Talk to us"],
   ];
   const next = nextSvc
@@ -166,6 +172,8 @@ export default function ServiceV8({ id }: { id: string }) {
           </div>
         </section>
       )}
+
+      {aviation && <div id="aviation" className="sv-avteam"><AviationTeam roles={AVIATION_ROLES} people={aviationCards()} /></div>}
 
       <section id="talk" className="svt">
         <div className="v8-wrap svt-in">

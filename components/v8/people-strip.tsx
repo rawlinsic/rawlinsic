@@ -9,7 +9,7 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { Pin, ProfileBody, holdPage, type Person } from "@/components/site/people";
 
-export default function PeopleStrip({ people, across = false }: { people: Person[]; across?: boolean }) {
+export default function PeopleStrip({ people, across = false, showDev = false }: { people: Person[]; across?: boolean; showDev?: boolean }) {
   const [open, setOpen] = useState<Person | null>(null);
   const dlg = useRef<HTMLDialogElement>(null);
   const byPointer = useRef(false); // closed with the mouse: let the strip move again
@@ -61,7 +61,7 @@ export default function PeopleStrip({ people, across = false }: { people: Person
         {open && (
           <div className="pp-dialog-in">
             <button type="button" className="pp-close" onClick={(e) => shut(e.detail > 0)} aria-label="Close profile">×</button>
-            <ProfileBody p={open} />
+            <ProfileBody p={open} showDev={showDev} />
             <p className="pp-more"><a href="/about/our-people">Meet everyone on our team</a></p>
           </div>
         )}

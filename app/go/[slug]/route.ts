@@ -19,8 +19,9 @@ import { NextResponse, type NextRequest } from "next/server";
  * use /go/... instead.
  */
 const DESTINATIONS: Record<string, string> = {
-  examples: "/automation-ai-examples",
-  automation: "/capabilities/technology/automation-integration",
+  /* straight to the redesigned page, so the scan keeps its tracking tags in one step (service pages scrub, 6.1) */
+  examples: "/services/digital-solutions/integration-automation",
+  automation: "/services/digital-solutions/integration-automation",
 };
 
 /** Where a scan lands when the slug isn't in the map above. */

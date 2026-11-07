@@ -9,7 +9,8 @@ import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content
 import { AAM_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
 import { SERVICE_STEPS } from "@/lib/content/features";
 import { Btn, CaseCards, Chips, Dev, Hero, List, People, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor } from "@/components/site/ui";
-import { AviationTeam, BridgingSilos, NextLayer, type TeamCard } from "@/components/site/aviation";
+import { AviationRoles, AviationTeam, BridgingSilos, NextLayer, type TeamCard } from "@/components/site/aviation";
+import { AVIATION_ROLES, AVIATION_TEAM, formerlyFor } from "@/lib/content/people";
 import { WhereWeLead } from "@/components/site/where-we-lead";
 import { casePhoto } from "@/lib/content/v8";
 import RouteList from "@/components/v8/route-list";
@@ -17,26 +18,26 @@ import RouteList from "@/components/v8/route-list";
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const STATUS: Record<string, string> = { ok: "Content ready", warn: "Proven, copy needed", gap: "Needs expert content" };
 
-/* Aviation team (bios on Our People) */
-export const AVIATION_TEAM: string[][] = [
-  ["Alicia McConnell, P.E.", "Has led drone programs since 2018, including a nationwide pilot network"],
-  ["Paul Wheeler", "Wrote first-of-their-kind guidance manuals on drones and advanced air mobility"],
-  ["Aaron Organ", "Airport operations and pilot training; built aviation curricula"],
-  ["Jordan Stacy", "Commercial airport operations and aircraft rescue and firefighting"],
-  ["John Zuleger, P.E.", "Drone and rope-access bridge inspection"],
-];
-const AVIATION_PAGES = ["drone-programs", "drone-aam", "drone-emergency", "research", "aero-division"];
+/* Our aviation team, by name and by role: lib/content/people.ts */
+export { AVIATION_ROLES, AVIATION_TEAM };
+export const AVIATION_PAGES = ["drone-programs", "drone-aam", "drone-emergency", "research", "aero-division"];
+/* the aviation team as portrait cards: Rawlins title and location from the roster, plus a former role */
+const personSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+export const aviationCards = (): TeamCard[] => AVIATION_TEAM.map(([name]) => {
+  const m = rosterFor(name);
+  return { name, title: m ? rawlinsTitle(m) : "", formerly: formerlyFor(name), photo: m?.photo, location: m?.location, href: `/about/our-people#${personSlug(m?.name ?? name)}` };
+});
 
 /* Broad digital proof (handoff 4.12); invoicing example not cleared, left out */
 const DIGITAL_PROOF = [
-  /* examples 06 and 07 are off the site until confirmed (content updates v4, 6.5), so no count and no sales handoff here */
-  "Applied solutions for agencies and growing firms, from consultant contracting at a state DOT to field reporting",
+  /* examples 06 and 07 are off the site until confirmed (content updates v4, 6.5); four of the five are from before Rawlins (scrub 3.1) */
+  "Five examples of connected workflows: consultant contracting at a state DOT, and four from our automation team's work before Rawlins",
   "A statewide project delivery website, change request system, consultant contracting workflow, estimating tools, and training videos",
   "Repeated project fields filled in once from trusted agency data, and paper forms turned into web apps",
   "A website and wiki migration with every item reviewed: keep, update, combine, move, or retire",
   "Website modernization, procedures, and Power BI dashboards for a state DOT",
   "A tracking dashboard for an advanced air mobility program",
-  "Drone data validation that settled debris quantities when reports disagreed",
+  "Drone data that checked debris removal quantities, and proved correct when reports disagreed",
   "An accessibility (508) compliance add-in for Microsoft Word",
   "A planned AI pilot for cash-flow modeling",
 ];
@@ -96,17 +97,13 @@ export function DigitalShowcase() {
 }
 
 export function AviationShowcase() {
-  const slug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-  const team: TeamCard[] = AVIATION_TEAM.map(([name, line]) => {
-    const m = rosterFor(name);
-    return { name, title: m ? rawlinsTitle(m) : line, photo: m?.photo, location: m?.location, href: `/about/our-people#${slug(m?.name ?? name)}` };
-  });
   return (
     <>
       <WhereWeLead photo={SERVICE_PHOTO["drone-programs"]} />
       <NextLayer />
       <BridgingSilos />
-      <AviationTeam people={team} />
+      {/* roles first, then the people (full site pass, Parts 2 and 4) */}
+      <AviationTeam roles={AVIATION_ROLES} people={aviationCards()} />
     </>
   );
 }
@@ -148,7 +145,7 @@ export function ServicePage({ id }: { id: string }) {
         </Sec>
       )}
       <Sec title="Related services"><ServiceChips ids={s.related} /></Sec>
-      {AVIATION_PAGES.includes(id) && <Sec title="Your aviation team" tone="panel"><People people={AVIATION_TEAM} /></Sec>}
+      {AVIATION_PAGES.includes(id) && <Sec title="Our aviation team" tone="panel"><AviationRoles roles={AVIATION_ROLES} /><People people={AVIATION_TEAM} /></Sec>}
       <Talk />
     </Shell>
   );

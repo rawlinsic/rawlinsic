@@ -10,7 +10,7 @@ export function WhereWeLead({ photo }: { photo: string }) {
       <div className="v8-wrap av-lead-in">
         <div className="av-lead-copy rt-side">
           <h2 className="v8-h2">Where we lead</h2>
-          <p className="v8-lead">Our team helped shape early guidance on drones and advanced air mobility and continues to support its evolution, working directly with transportation agencies and airports to turn strategy into deployable programs.</p>
+          <p className="v8-lead">Members of our team wrote some of the first guidance on drones and advanced air mobility, and they still help shape it on national committees and through a multi-state research program. We work directly with transportation agencies to turn that guidance into programs they can run.</p>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="av-lead-photo" src={photo} alt="" loading="lazy" />
         </div>

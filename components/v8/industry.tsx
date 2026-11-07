@@ -6,7 +6,7 @@
      we hear       the clients' words side by side as quote cards
      how we help   one card per service area, its services as a plain list of
                    links, the ones we use most here marked
-     people        portrait cards that open each bio
+     people        portrait cards that open each bio ("Experience on our team")
      projects      photo cards
    then the closing band and the next page. Content comes from lib/content,
    unchanged. Which projects show (and in what order) is decided by the
@@ -28,7 +28,8 @@ import SectionNav from "@/components/v8/section-nav";
 import LitText from "@/components/v8/lit-text";
 import RouteList from "@/components/v8/route-list";
 import { AviationTeam, type TeamCard } from "@/components/site/aviation";
-import { AVIATION_TEAM } from "@/components/site/services";
+import { aviationCards } from "@/components/site/services";
+import { AVIATION_ROLES, formerlyFor } from "@/lib/content/people";
 import { Dev, TALK, rawlinsTitle, rosterFor } from "@/components/site/ui";
 import "@/app/industry.css";
 
@@ -41,12 +42,20 @@ const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks
 const quotes = (hear: readonly string[]) => hear.flatMap((h) => h.split(/["”]\s*["“]/)).map((h) => bare(h.replace(/^["“]/, "")));
 /* the anchor each person has on Our People */
 const personSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-/* portrait cards from [name, line] pairs: the Rawlins title from the roster when we have it */
+/* portrait cards from [name, line] pairs: the Rawlins title and location from
+   the roster, plus a former agency role when there is one; the line passed in
+   isn't shown (full site pass, Part 4, 4) */
 const team = (people: readonly (readonly string[])[]): TeamCard[] =>
-  people.map(([name, line]) => {
+  people.map(([name]) => {
     const m = rosterFor(name);
-    return { name, title: m ? rawlinsTitle(m) : line, photo: m?.photo, location: m?.location, href: `/about/our-people#${personSlug(m?.name ?? name)}` };
+    return { name, title: m ? rawlinsTitle(m) : "", formerly: formerlyFor(name), photo: m?.photo, location: m?.location, href: `/about/our-people#${personSlug(m?.name ?? name)}` };
   });
+/* preview-only notes on the thin specialty pages, true for each page (full site pass, Part 4, 1) */
+const THIN_NOTE: Record<string, string> = {
+  "sub-ports": "Content status: only the harbors work stands behind this page so far.",
+  "g-capital": "Content status: no Rawlins project yet; the page leads with experience on our team.",
+  "g-mpo": "Content status: no Rawlins project yet; the page leads with experience on our team.",
+};
 const nextIndustry = (id: string) => VISIBLE_INDUSTRIES[(VISIBLE_INDUSTRIES.findIndex((i) => i.id === id) + 1) % VISIBLE_INDUSTRIES.length];
 
 /* ── shared pieces ─────────────────────────────────────────────── */
@@ -55,7 +64,7 @@ function Page({ sections, hero, children }: { sections: Nav[]; hero: ReactNode; 
   return (
     <>
       <Header />
-      <main className="v8">
+      <main id="main-content" className="v8">
         <div className="sv ipg">
           <Panels className="pnl-page">
             {hero}
@@ -200,12 +209,12 @@ function Route({ id, title, note, children, className }: { id: string; title: st
 }
 
 /* Portrait cards. Few people: the heading sits beside them. */
-function Team({ id, title, people }: { id: string; title?: string; people: TeamCard[] }) {
+function Team({ id, title, people, roles }: { id: string; title?: string; people: TeamCard[]; roles?: readonly (readonly [string, string])[] }) {
   const n = people.length;
   const cols = n <= 3 ? n : n === 5 ? 5 : 4;
   return (
-    <div id={id} className={`ipg-team${n <= 3 ? " is-few" : ""}`} style={{ ["--cols" as string]: cols } as CSSProperties}>
-      <AviationTeam people={people} title={title} />
+    <div id={id} className={`ipg-team${n <= 3 && !roles ? " is-few" : ""}`} style={{ ["--cols" as string]: cols } as CSSProperties}>
+      <AviationTeam people={people} title={title} roles={roles} />
     </div>
   );
 }
@@ -358,14 +367,14 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
     ...(subs.length ? [["specialties", "Specialties"] as Nav] : []),
     ...(d.ch.length ? [["hear", "Challenges we hear"] as Nav] : []),
     ["help", "How we help"],
-    ...(people.length ? [["people", "Who you'll work with"] as Nav] : []),
+    ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ...(work.length ? [["work", "Featured projects"] as Nav] : []),
     ["talk", "Talk to us"],
   ];
   const hero = subs.length ? (
     <PanelHero photo={INDUSTRY_PHOTO[ind.id]} crumbs={crumbs} tag="Who we work with" title={ind.name} lead={ind.lead} actions={actions}
       label={ind.id === "transport" ? "Transportation specialties" : "Specialties"}
-      subs={subs.map((s) => ({ id: s.id, name: s.name, line: s.line, href: subsectorHref(ind, s), photo: INDUSTRY_PHOTO[s.id] ?? INDUSTRY_PHOTO[ind.id], note: s.thin ? <Dev>Placeholder: thin content</Dev> : undefined }))} />
+      subs={subs.map((s) => ({ id: s.id, name: s.name, line: s.line, href: subsectorHref(ind, s), photo: INDUSTRY_PHOTO[s.id] ?? INDUSTRY_PHOTO[ind.id], note: s.thin ? <Dev>{THIN_NOTE[s.id] ?? "Placeholder: thin content"}</Dev> : undefined }))} />
   ) : (
     <FrameHero photo={INDUSTRY_PHOTO[ind.id]} crumbs={crumbs} tag="Who we work with" title={ind.name} lead={ind.lead} actions={actions}
       sibs={industryLinks(ind.id)} sibsLabel="Who we work with" />
@@ -374,7 +383,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
     <Page sections={sections} hero={hero}>
       {d.ch.length > 0 && <Hear title="Challenges we hear" items={d.ch} />}
       <Help ind={ind} />
-      {people.length > 0 && <Team id="people" title="Who you'll work with" people={people} />}
+      {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       {work.length > 0 && <Work title="Featured projects" cases={work} all={{ href: `/insights/case-studies?industry=${ind.slug}`, label: `All ${ind.name} projects` }} />}
       <Talk {...(subs.length
         ? { linksTitle: ind.id === "transport" ? "Transportation specialties" : "Specialties", links: subs.map((s) => ({ id: s.id, name: s.name, href: subsectorHref(ind, s) })) }
@@ -388,7 +397,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
 export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector; cases: CaseIndex[] }) {
   const d = SUBSECTORS[sub.id];
   const aviation = sub.id === "sub-aviation";
-  const avTeam = aviation ? team(AVIATION_TEAM) : [];
+  const avTeam = aviation ? aviationCards() : [];
   const people = team(d?.people ?? []);
   const deliver = d?.deliver ?? [];
   const services = d?.services ?? [];
@@ -398,8 +407,8 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
   const sections: Nav[] = [
     ...(d?.ch?.length ? [["hear", "What we hear"] as Nav] : []),
     ...(deliver.length ? [["deliver", "What we deliver"] as Nav] : []),
-    ...(avTeam.length ? [["aviation", "Your aviation team"] as Nav] : []),
-    ...(people.length ? [["people", "Who you'll work with"] as Nav] : []),
+    ...(avTeam.length ? [["aviation", "Our aviation team"] as Nav] : []),
+    ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ...(services.length ? [["services", "Services behind this"] as Nav] : []),
     ...(cases.length ? [["work", "Where we've done this"] as Nav] : []),
     ["talk", "Talk to us"],
@@ -410,15 +419,15 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
       crumbs={[["/industries", "Who we work with"], [industryHref(ind), ind.name], [subsectorHref(ind, sub), sub.name]]}
       tag={<a href={industryHref(ind)}>{ind.name}</a>} title={sub.name} lead={d?.intro || sub.line}
       actions={<><a className="v8-btn v8-btn-area" href="/contact">Talk to an expert</a>{cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See the work</a>}</>}
-      note={sub.thin ? <Dev>Placeholder: only harbors work stands behind this page so far. Build it out.</Dev> : undefined}
+      note={sub.thin ? <Dev>{THIN_NOTE[sub.id] ?? "Content status: thin content"}</Dev> : undefined}
       sibs={sibs} sibsLabel={`${ind.name} specialties`} />
   );
   return (
     <Page sections={sections} hero={hero}>
       {d?.ch?.length ? <Hear title="What we hear" items={d.ch} /> : null}
       {deliver.length > 0 && <Route id="deliver" title="What we deliver"><RouteList check ordered={false} stops={deliver.map((x) => ({ d: x }))} /></Route>}
-      {avTeam.length > 0 && <Team id="aviation" people={avTeam} />}
-      {people.length > 0 && <Team id="people" title="Who you'll work with" people={people} />}
+      {avTeam.length > 0 && <Team id="aviation" people={avTeam} roles={AVIATION_ROLES} />}
+      {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       <ServiceCards id="services" title="Services behind this" ids={services} />
       {cases.length > 0 && <Work title="Where we've done this" cases={cases} tone="pale" />}
       <Talk linksTitle={ind.id === "transport" ? "Transportation specialties" : "Specialties"} links={sibs} />
@@ -438,7 +447,7 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
     ...(cases.length ? [["work", "Featured projects"] as Nav] : []),
     ["start", "Ways to start"],
     ["services", "Services"],
-    ...(people.length ? [["people", "Who you'll work with"] as Nav] : []),
+    ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ["talk", "Talk to us"],
   ];
   const hero = (
@@ -455,7 +464,7 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
         <RouteList stops={PRIV.start.map((s) => ({ t: s }))} />
       </Route>
       <ServiceCards id="services" title="Services" ids={services} tone="pale" />
-      {people.length > 0 && <Team id="people" title="Who you'll work with" people={people} />}
+      {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       <Talk title="Tell us where your workflows drag" text="A short call is enough to see whether we can help, and what a small first project would look like."
         linksTitle="Who we work with" links={industryLinks(ind.id)} />
       <Next k="Next industry" name={next.name} text={next.who} href={industryHref(next)} photo={INDUSTRY_PHOTO[next.id]} />

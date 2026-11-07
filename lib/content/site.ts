@@ -129,8 +129,8 @@ export const INDUSTRIES: Industry[] = [
       sub("sub-aviation", "Aviation & Airports", "airport", "State aeronautics divisions, airports, and the drone and advanced air mobility programs growing around them. We help small aviation staffs run programs, plan for what's next, and compete for federal funding."),
       sub("sub-rail", "Rail & Transit", "rail", "Our transit work so far is partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation."),
       /* v12: back under Transportation. Only harbors work so far (port security
-         grant packages; drone and uncrewed-vessel technology evaluation). */
-      sub("sub-ports", "Ports & Harbors", "harbor", "Harbors run on security, funding, and new technology. Our work here so far: port security grant packages, and evaluations of drone and uncrewed-vessel technology.", true),
+         grant applications; one drone and uncrewed-vessel technology evaluation). */
+      sub("sub-ports", "Ports & Harbors", "harbor", "Harbors run on security, funding, and new technology. Our work here so far: port security grant applications, and an evaluation of drone and uncrewed-vessel technology.", true),
     ],
   },
   {
@@ -142,9 +142,9 @@ export const INDUSTRIES: Industry[] = [
     projects: ["cs-local-am", "cs-pooled"],
     subsectors: [
       sub("g-asset", "Asset Management for Local Agencies", "street", "Local agencies can use asset management to plan their programs, but each one starts from a different place. We meet them there."),
-      sub("g-capital", "Capital Project Delivery & Permitting", "construction", "Cities carry big capital programs and land development permitting with small staffs. Faster delivery comes from clear roles, standard procedures, and a roadmap staff can follow.", true),
-      sub("g-mpo", "Regional & Metropolitan Planning Support", "grid", "Regional planning organizations answer to federal performance and certification rules with lean staffs. We help them plan, program, and report with confidence.", true),
-      sub("g-federal", "Federal & Multi-State Programs", "crossing", "Some problems are bigger than one state. We facilitate a multi-state research program writing drone standards that agencies can adopt into their own specifications."),
+      sub("g-capital", "Capital Project Delivery & Permitting", "construction", "Cities carry big capital programs and land development permitting with small staffs. Clear roles, standard procedures, and a roadmap staff can follow keep projects and permits moving. Our team includes a former Director of Public Works for the City of Las Vegas.", true),
+      sub("g-mpo", "Regional & Metropolitan Planning Support", "grid", "Metropolitan planning organizations answer to federal performance and certification rules with lean staffs. Our team includes former Federal Highway Administration executives who worked with them, including all eighteen in California.", true),
+      sub("g-federal", "Federal & Multi-State Programs", "crossing", "Some problems are bigger than one state. We facilitate a multi-state research program building a shared drone data standard and recommended practices agencies can adopt."),
     ],
   },
   {
@@ -185,7 +185,7 @@ export const PROBLEMS: { q: string; services: string[] }[] = [
   { q: "Our systems don't talk to each other", services: ["automation", "portals"] },
   { q: "We want to use AI responsibly", services: ["ai", "tech-strategy"] },
   { q: "We want a drone program, or to plan for advanced air mobility", services: ["drone-programs", "drone-aam"] },
-  { q: "There's funding out there and no one to chase it", services: ["grants"] },
+  { q: "There's grant money out there. Nobody has time to chase it", services: ["grants"] },
   /* so contractors and private firms see themselves (content updates v4, 7.8) */
   { q: "We're starting our first design-build project with a public owner", services: ["alt-delivery", "owners-rep"] },
   { q: "We've outgrown our spreadsheets", services: ["automation", "dashboards"] },
@@ -211,18 +211,19 @@ export const NUMBERS: { value: string; count?: number; suffix?: string; label: s
   { value: "[N]+", label: "Years of combined experience", verified: false },
 ];
 
+/* Why Rawlins (full site pass, Part 5, 1.3): five reasons, in display order.
+   Home shows them as tabs, each with its own proof; Who we are numbers them. */
 export const WHY: [string, string][] = [
-  ["We've done the job", "Our people ran the programs our clients run: chief engineers, operations and maintenance leaders, technology and data chiefs, a right of way manager, a city public works director, and federal highway executives. We know the work from the inside, so we skip the learning curve."],
-  ["Small enough to move fast", "Senior people do the work, with no layers between you and them, so questions get answered and decisions get made fast."],
-  ["Strategy and build under one roof", "The team that writes the plan works next to an in-house team that builds the tools: integrations, automation, dashboards, and AI. No handoff to another vendor."],
-  ["We stay until it runs", "We start with what you already have, and we stay through training and rollout. You own everything we build."],
-  /* v12 fifth point; "making systems connect" thread */
-  ["We make the systems you already own work together", "We connect the platforms, data, and tools you already pay for, and build small custom apps where an off-the-shelf integration doesn't fit."],
+  ["We've done the job", "Our people ran the programs our clients run: chief engineers, operations and maintenance leaders, technology and data chiefs, a right of way manager, a city public works director, and federal highway executives. They know how budgets, decisions, and projects move inside an agency, so what we recommend fits how your agency works."],
+  ["Senior people do the work", "The senior people you meet are the people who do the work. Several clients treat our team as part of their own staff, and have kept working with us for years."],
+  ["Strategy and build under one roof", "Former agency leaders work alongside our in-house automation and AI team, so the plan and the tools it calls for come from one firm: websites, workflows, dashboards, and training."],
+  ["We build on what you already own", "We use the systems and licenses you already own, connect them, and build new only when nothing you have can do the job. Every build is documented and handed over, so you own the result."],
+  ["We stay until it runs", "Recommendations are where we start. We write the manuals and procedures, build the tools, train your people, and stay until your team runs it on its own."],
 ];
 
 /* How we've grown (content updates v4, 7.6). Also shows on Who we are. */
 export const STORY: [string, string, string][] = [
-  ["Where we started", "Agency experience", "Our founder spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer. More than 25 of our people built their careers inside public agencies too."],
+  ["Where we started", "Agency experience", "Our founder spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and started Rawlins in 2017 to bring that experience to other agencies."],
   ["Advisory", "Strategy, delivery, and people", "We help organizations set direction, deliver their programs, and develop their people. Several clients have kept working with us for years."],
   ["Drones", "Drones and advanced air mobility", "We help agencies run drone programs, write shared drone standards, and plan for advanced air mobility."],
   ["Digital", "Data, automation, and AI", "Our in-house team connects the systems clients already own, automates the busywork, and puts AI to work where it helps."],
@@ -281,7 +282,7 @@ export const CASES: CaseIndex[] = [
   cs("cs-drt", "statewide-drone-response-team", "Statewide drone response team and drone program governance", STATE_DOT, [], "Ongoing", "transport", ["drone-programs", "drone-emergency"]),
   cs("cs-local-am", "michigan-local-asset-management", "Asset management workshops and action plans for local agencies", "State of Michigan, Michigan Infrastructure Office", ["Michigan"], "Completed", "gov", ["asset-mgmt", "workforce"]),
   cs("cs-mi-pbo", "michigan-performance-based-maintenance-operations", "Performance-based maintenance and operations", "Michigan Department of Transportation · Our team's work before Rawlins, completed 2014", ["Michigan"], "Before Rawlins", "transport", ["operations", "asset-mgmt"]),
-  cs("cs-workforce", "north-carolina-workforce-strategy", "Workforce strategy analysis", STATE_DOT, [], "Completed", "transport", ["workforce", "org-design"]),
+  cs("cs-workforce", "workforce-strategy-analysis", "Workforce strategy analysis", STATE_DOT, [], "Completed", "transport", ["workforce", "org-design"]),
   cs("cs-nc-ipd", "north-carolina-integrated-program-delivery", "Integrated program delivery", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["program-delivery", "grants", "operations", "alt-delivery"]),
   cs("cs-nc-am", "north-carolina-asset-management-review", "Asset management review across modes", `North Carolina Department of Transportation${FOUNDER}`, ["North Carolina"], "Before Rawlins", "transport", ["asset-mgmt", "operations", "procurement"]),
   cs("cs-strategic", "nevada-six-year-strategic-plan", "Six-year strategic plan, action plans, and performance management", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["strategic-planning", "org-design", "dashboards"]),

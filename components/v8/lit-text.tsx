@@ -4,13 +4,14 @@
    (lines); with lines, the words light across all of them in order. Inside
    a held scroll scene it follows the scene instead, so the words light
    while the section stands still. Screen readers get the plain text;
-   reduced motion shows it fully lit. */
+   reduced motion shows it fully lit. With notes, each quote card carries a
+   short line under it (the area pages' "What we bring"); notes don't light. */
 import { useEffect, useRef, type RefObject } from "react";
 import { docTop } from "@/components/v8/panels";
 
 const words = (s: string, from: number) => s.split(" ").map((w, i) => <span key={from + i} className="lit-w">{w} </span>);
 
-export default function LitText({ text, lines, as: Tag = "p", className }: { text?: string; lines?: string[]; as?: "p" | "h2" | "div"; className?: string }) {
+export default function LitText({ text, lines, notes, noteLabel, as: Tag = "p", className }: { text?: string; lines?: string[]; notes?: (string | undefined)[]; noteLabel?: string; as?: "p" | "h2" | "div"; className?: string }) {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -48,12 +49,15 @@ export default function LitText({ text, lines, as: Tag = "p", className }: { tex
         {lines.map((l, k) => {
           const from = at;
           at += l.split(" ").length;
-          return (
-            <blockquote key={k} className="lit-line">
-              <span className="sr-only">{l}</span>
-              <span aria-hidden="true">{words(l, from)}</span>
-            </blockquote>
+          const quote = <><span className="sr-only">{l}</span><span aria-hidden="true">{words(l, from)}</span></>;
+          const note = notes?.[k];
+          if (note) return (
+            <div key={k} className="lit-line has-note">
+              <blockquote className="lit-q">{quote}</blockquote>
+              <p className="lit-note">{noteLabel && <span>{noteLabel}</span>}{note}</p>
+            </div>
           );
+          return <blockquote key={k} className="lit-line">{quote}</blockquote>;
         })}
       </div>
     );

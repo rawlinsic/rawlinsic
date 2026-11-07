@@ -4,9 +4,10 @@ import type { ReactNode } from "react";
 import { PAGE_PHOTO } from "@/lib/content/media";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { THOUGHT_LEADERSHIP, type ThoughtLeadershipArticle } from "@/components/thought-leadership-data";
-import { AREAS, CASES, LEADERS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, industryHref, subsectorHref } from "@/lib/content/site";
-import { INDUSTRIES as IND_DATA, STATES, STATES_ACTIVE, STATES_SERVED, STEPS } from "@/lib/content/catalog";
-import { AVIATION_TEAM } from "@/components/site/services";
+import { AREAS, CASES, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, industryHref, subsectorHref } from "@/lib/content/site";
+import { STATES, STATES_ACTIVE, STATES_SERVED, STEPS } from "@/lib/content/catalog";
+import { FORMERLY, bareName as bare } from "@/lib/content/people";
+import { RESEARCH } from "@/lib/content/research";
 import PeopleDirectory, { type Person } from "@/components/site/people";
 import PodcastPlayer from "@/components/site/podcast-player";
 import Grown from "@/components/v8/grown";
@@ -15,8 +16,17 @@ import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { cleanNames } from "@/lib/content/clean";
 import { Btn, CaseCards, Dev, Hero, List, People, PROD, Sec, Shell, Steps, Talk } from "@/components/site/ui";
 
-const Cards = ({ items }: { items: { href: string; t: string; d: string }[] }) => (
-  <ul className="pg-cards">{items.map((x) => <li key={x.href}><a href={x.href} className="pg-card pg-card-link"><b>{x.t}</b><span>{x.d}</span></a></li>)}</ul>
+/* photo: the page's own hero photo, on top of the card (Insights, full site pass Part 2, 3.1) */
+const Cards = ({ items }: { items: { href: string; t: string; d: string; photo?: string }[] }) => (
+  <ul className="pg-cards">{items.map((x) => (
+    <li key={x.href}>
+      <a href={x.href} className={`pg-card pg-card-link${x.photo ? " pg-photo-card" : ""}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {x.photo && <img src={x.photo} alt="" loading="lazy" />}
+        <b>{x.t}</b><span>{x.d}</span>
+      </a>
+    </li>
+  ))}</ul>
 );
 
 /* ── About ── */
@@ -24,7 +34,7 @@ export function AboutIndex() {
   return (
     <Shell scene="hero" photo={PAGE_PHOTO.about}>
       <Hero crumbs={[["/about", "About"]]} kicker="About Rawlins" title="People who've done the job, and a team that builds the tools."
-        lead={<p>Founded in 2017 by a former Nevada DOT chief engineer. Today more than 25 of our people come from public agencies, and they work next to an in-house team that builds integrations, automation, dashboards, and AI.</p>} />
+        lead={<p>Founded in 2017 by a former Nevada DOT chief engineer. Today more than 25 of our people come from public agencies, and they work alongside an in-house digital team that builds websites, workflows, dashboards, training, and AI tools.</p>} />
       <Sec>
         <Cards items={[
           { href: "/about/who-we-are", t: "Who we are", d: "Our story, how we've grown, and the people behind it." },
@@ -43,11 +53,11 @@ export function WhoWeAre() {
   return (
     <Shell scene="hero" photo={PAGE_PHOTO.who}>
       <Hero crumbs={[["/about", "About"], ["/about/who-we-are", "Who we are"]]} kicker="Who we are" title="Founded on agency experience"
-        lead={<p>Rawlins was founded in 2017 by Scott Rawlins, former Deputy Director and Chief Engineer of the Nevada Department of Transportation. Today former agency leaders work next to an in-house team that builds the tools.</p>} />
+        lead={<p>Rawlins was founded in 2017 by Scott Rawlins, former Deputy Director and Chief Engineer of the Nevada Department of Transportation. Today former agency leaders work alongside an in-house digital team that builds the tools.</p>} />
       <Sec title="Our story">
         <div className="pg-prose">
-          <p>Scott Rawlins started Rawlins in 2017 to bring agency experience to the agencies that needed it. He spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and then led an infrastructure asset management practice at a global consulting firm. Some of the projects on this site come from that earlier work, or from our team&apos;s work before they joined us. Those are marked Before Rawlins.</p>
-          <p>Advising agency leaders on how to deliver their programs is still a big part of what we do. Since 2017 we&apos;ve added drone and advanced air mobility work, an in-house team that builds integrations, automation, dashboards, and AI, and clients beyond transportation agencies, including contractors, engineering firms, and private companies. Our people work across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>
+          <p>Scott Rawlins spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and then led an infrastructure asset management practice at a global consulting firm. He started Rawlins in 2017 to bring agency experience to the agencies that needed it. Some of the projects on this site come from that earlier work, or from our team&apos;s work before they joined us. Those are marked Before Rawlins.</p>
+          <p>Advising agency leaders on how to deliver their programs is still a big part of what we do. Since 2017 we&apos;ve added drone and advanced air mobility work, an in-house team that builds integrations, automation, dashboards, and AI, and clients beyond transportation agencies, including local governments, contractors, and engineering firms. Our people work across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>
         </div>
       </Sec>
       <Grown eyebrow="Since 2017" title="How we've grown" />
@@ -72,7 +82,7 @@ export function HowWeWork() {
             ["Start where the client is", "Most organizations already have a plan, a framework, or a manual. We put what exists to work before writing anything new."],
             ["Bridge before building", "We use the systems and licenses a client already owns, and build new only when nothing existing can do the job."],
             ["Straight answers on AI", "When a problem needs a rule, a process, or a decision instead of a model, we say so."],
-            ["The client owns the result", "Every build comes with documentation and training. No lock-in."],
+            ["The client owns the result", "Every build comes with documentation and training, and you own it."],
             ["We stay through execution", "Recommendations are where we start. We help put them into practice."],
           ].map(([t, d]) => <li key={t}><div className="pg-card"><b>{t}</b><span>{d}</span></div></li>)}
         </ul>
@@ -101,7 +111,7 @@ export function WhereWeWork() {
   return (
     <Shell scene="map" highlight={STATES} strong={STATES_ACTIVE}>
       <Hero crumbs={[["/about", "About"], ["/about/where-we-work", "Where we work"]]} kicker="Where we work" title="Across the United States"
-        lead={<p>The states where our work has taken us. Our work so far is across the United States, and our team can do it anywhere. Members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>} actions={<Btn href="/insights/case-studies" primary>See our projects</Btn>}>
+        lead={<p>The states where our work has taken us. Our work so far has been in the United States, and our team can work anywhere. Members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>} actions={<Btn href="/insights/case-studies" primary>See our projects</Btn>}>
         <ul className="pg-map-legend" aria-label="Map key">
           <li><i className="is-active" aria-hidden="true" />Active</li>
           <li><i aria-hidden="true" />Areas we&apos;ve served</li>
@@ -116,18 +126,7 @@ export function WhereWeWork() {
 
 /* ── Our People ── */
 const memberSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-const bare = (n: string) => n.split(",")[0].replace(/\s*\(.*?\)\s*/g, " ").trim().toLowerCase();
-const FORMERLY: Record<string, string> = (() => {
-  const out: Record<string, string> = {};
-  const add = (name: string, line: string) => {
-    const l = line.replace(/^Founder\.\s*/, "");
-    if (/^Former/.test(l) && !out[bare(name)]) out[bare(name)] = l;
-  };
-  LEADERS.forEach((l) => add(l.name, l.role));
-  Object.values(IND_DATA).forEach((i) => i.people.forEach(([n, l]) => add(n, l)));
-  AVIATION_TEAM.forEach(([n, l]) => add(n, l));
-  return out;
-})();
+/* former agency roles: lib/content/people.ts (the same list the people cards use) */
 const BUSINESS = /Accounting|Administrative Assistant|Professional Services|VP of Finance|Chief Culture|Administration & Contract/;
 const SPECIALIST = /Specialist|Designer|Engineer\b|Architect|Tester|Digital Strategy|Chief AI Strategy/;
 function personFromRoster(m: (typeof TEAM_MEMBERS)[number]): Person {
@@ -204,7 +203,10 @@ export function Careers() {
         {OPEN_POSITIONS.length ? (
           <ul className="pg-cards">{OPEN_POSITIONS.map((p) => <li key={p.href}><a href={p.href} className="pg-card pg-card-link"><b>{p.title}</b><span>{p.summary}</span></a></li>)}</ul>
         ) : (
-          <div className="pg-prose"><p>No open positions right now. Send us a note and your résumé anyway, and we&rsquo;ll keep you in mind.</p></div>
+          <div className="pg-prose">
+            <p>Send us a note and your résumé at <a href="mailto:jobs@rawlinsic.com">jobs@rawlinsic.com</a>, and we&rsquo;ll be in touch when there&rsquo;s a fit.</p>
+            <Dev>Placeholder: no open positions posted.</Dev>
+          </div>
         )}
       </Sec>
       <Sec title="What it's like here" tone="panel">
@@ -223,11 +225,11 @@ export function InsightsIndex() {
         lead={<p>Projects, news and recognition, thought leadership, research, and our podcast.</p>} />
       <Sec>
         <Cards items={[
-          { href: "/insights/case-studies", t: "Projects", d: "Our work, by service, industry, and state." },
-          { href: "/insights/news", t: "News & Recognition", d: "Wins, awards, publications, speaking, events, and new team members." },
-          { href: "/insights/thought-leadership", t: "Thought Leadership", d: "Practical perspectives from our team." },
-          { href: "/insights/research", t: "Research & Publications", d: "Guidance manuals, standards, and research." },
-          { href: "/insights/podcast", t: "Podcast", d: "The Rawlins Way: conversations with the people doing the work." },
+          { href: "/insights/case-studies", t: "Projects", d: "Our work, by service, industry, and state.", photo: PAGE_PHOTO.cases },
+          { href: "/insights/news", t: "News & Recognition", d: "Events, publications, and news from our team.", photo: PAGE_PHOTO.news },
+          { href: "/insights/thought-leadership", t: "Thought Leadership", d: "Practical perspectives from our team.", photo: PAGE_PHOTO.thought },
+          { href: "/insights/research", t: "Research & Publications", d: "Guidance manuals, standards, and research.", photo: PAGE_PHOTO.research },
+          { href: "/insights/podcast", t: "Podcast", d: "The Rawlins Way: conversations with the people doing the work.", photo: PAGE_PHOTO.podcast },
         ]} />
       </Sec>
       {latest.length > 0 && <Sec title="Latest" tone="panel"><NewsList items={latest} /></Sec>}
@@ -242,7 +244,7 @@ function NewsList({ items }: { items: typeof NEWS }) {
       {items.map((n) => (
         <li key={n.title} className={n.placeholder ? "is-dev" : ""}>
           <span className="pg-case-k">{n.tag}{n.date ? ` · ${n.date}` : ""}</span>
-          <b>{n.href ? <a href={n.href}>{n.title}</a> : n.title}</b>
+          <b>{n.href ? <a href={n.href} {...(/^http/.test(n.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{n.title}</a> : n.title}</b>
           {n.text && <p>{n.text}</p>}
           {n.linkedin && <a href={n.linkedin} target="_blank" rel="noopener noreferrer">See the post on LinkedIn</a>}
           {n.placeholder && <Dev>Placeholder: {n.placeholder}</Dev>}
@@ -258,7 +260,7 @@ export function NewsPage() {
   return (
     <Shell scene="people" photo={PAGE_PHOTO.news}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/news", "News & Recognition"]]} kicker="Insights" title="News & Recognition"
-        lead={<p>Wins, awards, publications, speaking, events, and new people on the team.</p>} />
+        lead={<p>Events, publications, and news from our team.</p>} />
       {events.length > 0 && (
         <Sec title="Where we'll be">
           <ul className="pg-news">{events.map((e) => (
@@ -273,16 +275,8 @@ export function NewsPage() {
 }
 
 export function ResearchPage() {
-  const pooled = caseById("cs-pooled")!;
-  const aero = caseById("cs-aero")!;
-  const division = caseById("cs-aerodiv")!;
-  const items: { k: string; t: string; d: ReactNode }[] = [
-    { k: "Guidance", t: "Guidance manuals on drones and advanced air mobility", d: <>First-of-their-kind guidance manuals written by Paul Wheeler, an aerial innovation advisor on our team.</> },
-    { k: "Standards", t: "Multi-state drone standards and specifications", d: <><a href={caseHref(pooled)}>{pooled.who}</a>: consensus standards states can write into their own specifications.</> },
-    { k: "Research", t: "Establishing a state aeronautics division", d: <><a href={caseHref(division)}>{division.who}</a>: a national scan, stakeholder interviews, and funding options.</> },
-    { k: "Symposium", t: "A statewide drone and advanced air mobility symposium", d: <><a href={caseHref(aero)}>{aero.who}</a>: we planned and ran it.</> },
-    { k: "Thought leadership", t: "Minimizing data governance fatigue to maximize value", d: <><a href="/insights/thought-leadership/minimizing-data-governance-fatigue">A Q&amp;A with April Blackburn</a>, former Florida DOT Chief Information Officer.</> },
-  ];
+  /* the list lives in lib/content/research.ts (the Insights menu reads it too) */
+  const items: { k: string; t: string; d: ReactNode }[] = RESEARCH.map((r) => ({ k: r.k, t: r.t, d: <>{r.link && <a href={r.link.href}>{r.link.label}</a>}{r.text}</> }));
   return (
     <Shell scene="crossing" photo={PAGE_PHOTO.research}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/research", "Research & Publications"]]} kicker="Insights" title="Research & Publications"

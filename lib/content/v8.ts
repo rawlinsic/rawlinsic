@@ -59,7 +59,8 @@ const STATE_PHOTO: Record<string, string> = {
 export const casePhoto = (c: CaseIndex) => CASE_PHOTO[c.id] ?? STATE_PHOTO[c.states[0]] ?? SERVICE_PHOTO[c.services[0]] ?? PAGE_PHOTO.cases;
 
 /* How we've grown: live-site photos matched to each stage (first: Reno, where Rawlins started) */
-export const STORY_PHOTO = [P("cs-hero-2.webp"), P("auto-human.webp"), P("aam-helicopter.webp"), P("auto-data.webp")];
+/* 03: Aaron Organ, from our team, speaking at a 2026 symposium; 04: people working together at their computers */
+export const STORY_PHOTO = [P("cs-hero-2.webp"), P("auto-human.webp"), P("aam-reg-navigation.webp"), P("auto-collab.webp")];
 
 /* Home: Featured projects, Rawlins work only (no Before Rawlins cases) */
 export const FEATURED_CASES = ["cs-transform", "cs-pdn", "cs-proficiency", "cs-strategic", "cs-pbmc", "cs-local-am", "cs-major", "cs-aero", "cs-nc-ipd", "cs-ia-partnering"];

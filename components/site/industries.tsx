@@ -13,7 +13,7 @@ export function IndustriesIndex() {
   return (
     <Shell scene="interchange" photo={PAGE_PHOTO.industries}>
       <Hero crumbs={[["/industries", "Who we work with"]]} kicker="Who we work with" title="Public agencies and private firms, wherever the work is."
-        lead={<p>Most of our work is with organizations that own and run public infrastructure: more than 30 transportation agencies so far, plus local governments and a multi-state research program. We also work with contractors and engineering firms on public projects, and with private firms on their systems and workflows. Our work so far is across the United States, and our team can do it anywhere.</p>}
+        lead={<p>Most of our work is with organizations that own and run public infrastructure: more than 30 transportation agencies, plus local governments and a multi-state research program. We also work with contractors and engineering firms on public projects, and help private firms with their systems and workflows. Our work so far has been in the United States, and our team can work anywhere.</p>}
         actions={<Btn href="/contact" primary>Get in touch</Btn>} />
       <Sec title="Industries">
         <ul className="pg-cards">

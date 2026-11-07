@@ -30,34 +30,36 @@ const ic = (d: React.ReactNode) => (
   </svg>
 );
 
+/* Jacob's four steps, word for word, in the order the pieces depend on
+   (Partner Field Guide; service pages scrub, 3.1). A client can start at any step. */
 const STAGES: Stage[] = [
   {
     num: "01",
-    label: "Data Governance",
-    desc: "People bring trust to data through data governance.",
+    label: "Data governance",
+    desc: "Know what you have, who owns it, and whether to trust it.",
     from: "#C4D8F2", to: "#ADC1DD", ink: "black",
     icon: ic(<><path d="M12 3l8 3v5c0 4.6-3.2 8.2-8 10-4.8-1.8-8-5.4-8-10V6z" /><path d="M9 12l2 2 4-4" /></>),
   },
   {
     num: "02",
-    label: "Automation",
-    desc: "Automation moves work along using clean, structured data.",
+    label: "Policies and procedures",
+    desc: "Write down how the work, the data, and the tools will be used.",
     from: "#A6BBD6", to: "#8FA4C1", ink: "black",
-    icon: ic(<>{/* a loop that runs itself */}<path d="M21 12a9 9 0 0 0-9-9 9.7 9.7 0 0 0-6.7 2.7L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 9 9 9.7 9.7 0 0 0 6.7-2.7L21 16" /><path d="M21 21v-5h-5" /><path d="M12.9 8.3 9.8 12.9h2.3l-.7 2.9 3-4.4h-2.3z" /></>),
+    icon: ic(<>{/* a written procedure */}<path d="M7 3h7l4 4v14H7z" /><path d="M14 3v4h4" /><path d="M10 11h5M10 14h5M10 17h3" /></>),
   },
   {
     num: "03",
-    label: "AI",
-    desc: "AI finds patterns, makes predictions, and compares options, using the data and rules it's given.",
+    label: "AI enablement and automation",
+    desc: "Remove the busywork. Add AI where judgment is needed.",
     from: "#4F6787", to: "#38506E", ink: "white",
     icon: ic(<><rect x="8" y="8" width="8" height="8" rx="1.5" /><path d="M10 8V5M14 8V5M10 19v-3M14 19v-3M8 10H5M8 14H5M19 10h-3M19 14h-3" /></>),
   },
   {
     num: "04",
-    label: "Human Verification",
-    desc: "People check AI results with context and judgment, then decide what to do with them.",
+    label: "Integration",
+    desc: "Connect the systems so information moves on its own.",
     from: "#38506E", to: "#1D3759", ink: "white",
-    icon: ic(<><circle cx="9.5" cy="7.5" r="3.2" /><path d="M3.5 19c0-3.3 2.7-6 6-6h.6" /><path d="M13.5 16.6l2.4 2.4 4.6-5" /></>),
+    icon: ic(<>{/* systems joined up */}<rect x="3" y="4" width="7" height="6" rx="1.2" /><rect x="14" y="14" width="7" height="6" rx="1.2" /><path d="M10 7h4a3 3 0 0 1 3 3v4" /><path d="M14 17h-4a3 3 0 0 1-3-3v-4" /></>),
   },
 ];
 
@@ -70,7 +72,8 @@ export default function AutomationEcosystemBars() {
       <div className="aam-container">
         <div className="aam-section-header reveal">
           <p className="section-label"><span className="gold-text">How the pieces fit</span></p>
-          <h2 className="section-title">How data governance, automation, and <em>AI</em> work together</h2>
+          <h2 className="section-title">How the data, automation, and <em>AI</em> pieces build on each other</h2>
+          <p className="eco-sub">A client can start at any step. This is the order the pieces depend on.</p>
         </div>
 
         <p className="eco-hint">Hover or tap a panel to learn more</p>
@@ -90,8 +93,7 @@ export default function AutomationEcosystemBars() {
               <span className="eco-inner">
                 <span className="eco-head">
                   <span className="eco-num">{s.num}</span>
-                  {/* where this stage sits in the chain — the section's whole point
-                      is that the four run in sequence */}
+                  {/* where this step sits in the order the pieces depend on */}
                   <span className="eco-rail" aria-hidden="true">
                     {STAGES.map((r, j) => (
                       <span key={r.num} className={`eco-pip${j === i ? " on" : ""}${j < i ? " past" : ""}`} />
@@ -120,6 +122,7 @@ export default function AutomationEcosystemBars() {
 }
 
 const CSS = `
+.eco-sub{margin:14px 0 0;max-width:58ch;font-size:1.08rem;line-height:1.55;color:#dce6f2}
 .eco-hint{margin-top:8px;text-align:left;font-size:13px;letter-spacing:.6px;text-transform:uppercase;font-weight:600;color:#fff}
 
 .eco-bars{display:flex;gap:12px;height:400px;margin-top:34px}
@@ -169,10 +172,11 @@ const CSS = `
 .eco-p{font-size:16px;line-height:1.6;color:var(--eco-body)}
 .eco-accent{width:46px;height:2px;background:var(--eco-accent);margin-top:18px}
 
-.eco-vlabel{position:absolute;bottom:28px;left:0;right:0;margin:0 auto;height:320px;
-  writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;
+/* longer step names wrap onto a second line instead of running into the number */
+.eco-vlabel{position:absolute;bottom:28px;left:0;right:0;margin:0 auto;height:270px;
+  writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;text-wrap:balance;
   font-family:var(--font-serif);
-  font-weight:600;font-size:30px;letter-spacing:.4px;color:var(--eco-fg);
+  font-weight:600;font-size:26px;line-height:1.15;letter-spacing:.4px;color:var(--eco-fg);
   opacity:1;transition:opacity .3s}
 .eco-bar.active .eco-vlabel{opacity:0}
 

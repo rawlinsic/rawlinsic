@@ -172,7 +172,8 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <a href="#main-content" className="skip-to-content">Skip to main content</a>
-        <div id="main-content">
+        {/* each page's <main> carries id="main-content", once per page */}
+        <div>
         {children}
         </div>
         {/* JSON-LD is metadata, not JavaScript, so use plain script tags.

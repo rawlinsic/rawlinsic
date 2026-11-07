@@ -16,7 +16,7 @@ const sceneFor = (c: CaseIndex) => {
 
 export function CaseIndexPage() {
   const rows: CaseRow[] = CASES.map((c) => ({
-    id: c.id, href: caseHref(c), photo: casePhoto(c), title: c.title, who: c.who, status: c.status, tag: caseTag(c, "Case study"),
+    id: c.id, href: caseHref(c), photo: casePhoto(c), title: c.title, who: c.who, status: c.status, tag: caseTag(c),
     areas: Array.from(new Set(c.services.map(areaOfService).filter(Boolean) as string[])).map((id) => AREAS.find((a) => a.id === id)!.slug),
     services: c.services.map((id) => serviceById(id)?.service.slug).filter(Boolean) as string[],
     industries: [c.industry, CASE_DATA[c.id]?.industry2].filter(Boolean).map((id) => VISIBLE_INDUSTRIES.find((i) => i.id === id)?.slug).filter(Boolean) as string[],
@@ -57,7 +57,7 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
   return (
     <Shell scene={sceneFor(c)} photo={casePhoto(c)}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Projects"], [caseHref(c), c.title]]}
-        kicker={caseTag(c, "Case study")} title={c.title}
+        kicker={caseTag(c)} title={c.title}
         lead={<p>{lead}</p>} actions={<Btn href="/contact" primary>Talk to the team</Btn>} />
       <Sec title="The challenge"><div className="pg-prose"><p>{d?.ch}</p></div></Sec>
       <Sec title="What we did" tone="panel">

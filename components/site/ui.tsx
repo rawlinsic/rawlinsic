@@ -10,6 +10,7 @@ import { TEAM_MEMBERS } from "@/lib/team-data";
 import { AREAS, CASES, caseHref, caseTag, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
 import { SCENE_PHOTO } from "@/lib/content/media";
 import { casePhoto } from "@/lib/content/v8";
+import { formerlyFor } from "@/lib/content/people";
 
 export const PROD = process.env.VERCEL_ENV === "production";
 
@@ -18,7 +19,7 @@ export function Shell({ scene, photo, highlight, strong, children }: { scene?: s
     <>
       <Header />
       {scene && <PageScene scene={scene} photo={photo ?? SCENE_PHOTO[scene as SceneKey]} highlight={highlight} strong={strong} />}
-      <main className={`pg${scene ? " pg-with-scene" : ""}`}><Panels className="pnl-clear">{children}</Panels></main>
+      <main id="main-content" className={`pg${scene ? " pg-with-scene" : ""}`}><Panels className="pnl-clear">{children}</Panels></main>
       <Footer />
     </>
   );
@@ -120,7 +121,7 @@ export function CaseCards({ ids, cases, limit }: { ids?: readonly string[]; case
           <a href={caseHref(c)} className="pg-case has-photo">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={casePhoto(c)} alt="" loading="lazy" />
-            <span className="pg-case-k">{caseTag(c, "Case study")}</span>
+            <span className="pg-case-k">{caseTag(c)}</span>
             <b>{c.title}</b>
             <span>{c.who}</span>
           </a>
@@ -170,20 +171,24 @@ export function photoFor(name: string) {
 export function rawlinsTitle(m: (typeof TEAM_MEMBERS)[number]) {
   return m.title && m.title !== m.role ? `${m.title}, ${m.role}` : m.role;
 }
+/* People cards: the Rawlins title and location from the roster, plus the
+   person's former agency role when they have one (the list Our people uses).
+   The line passed in with each name isn't shown (full site pass, Part 4, 4). */
 export function People({ people }: { people: readonly (readonly string[])[] }) {
   if (!people.length) return null;
   return (
     <ul className="pg-people">
-      {people.map(([name, line]) => {
+      {people.map(([name]) => {
         const m = rosterFor(name);
         const photo = m?.photo;
+        const former = formerlyFor(name);
         return (
           <li key={name} className="pg-person">
             {photo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={photo} alt="" width={72} height={72} loading="lazy" />
             ) : <span className="pg-person-ph" aria-hidden="true">{name.slice(0, 1)}</span>}
-            <span><b>{name}</b><em>{m ? rawlinsTitle(m) : line}</em>{m?.location && <small className="pg-person-loc">{m.location}</small>}</span>
+            <span><b>{name}</b>{m && <em>{rawlinsTitle(m)}</em>}{former && <small className="pg-person-former">{former}</small>}{m?.location && <small className="pg-person-loc">{m.location}</small>}</span>
           </li>
         );
       })}
@@ -191,8 +196,8 @@ export function People({ people }: { people: readonly (readonly string[])[] }) {
   );
 }
 
-/* The closing ask on every page. The line under it is the current site's own. */
-export const TALK = { title: "Tell us what you’re working on", text: "Whether you’re ready to engage or simply exploring what’s possible, we’d love to hear from you." };
+/* The closing ask on every page (line: full site pass, Part 2, 0.3). */
+export const TALK = { title: "Tell us what you’re working on", text: "We’ll tell you plainly where we can help, and connect you with the person on our team who has done it." };
 export function Talk({ title = TALK.title, text = TALK.text }: { title?: string; text?: string }) {
   return (
     <section className="pg-talk">

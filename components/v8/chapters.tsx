@@ -2,15 +2,16 @@
 /* What we do, as chapters (scale.com's hero move). The section holds still
    while you scroll. One layered glass visual stays on screen: it opens up
    for the intro, then holds beside each area's words and glides to the other
-   side for the next area, swapping to that area's photo on the way. Words
-   come and go per chapter. The rail at the bottom jumps to any area.
-   Phones and reduced motion get the same content as stacked cards. */
+   side for the next area, swapping to that area's featured project photo on
+   the way. Words come and go per chapter: what clients say, paired with what
+   we bring (full site pass, Part 5, 1.2). The rail at the bottom jumps to any
+   area. Phones and reduced motion get the same content as stacked cards. */
 import { useEffect, useRef } from "react";
 import { glideTo } from "@/components/v8/smooth";
 import { docTop } from "@/components/v8/panels";
 import SkipNext from "@/components/v8/skip-next";
 
-export type Chapter = { id: string; name: string; tag: string; lead: string; quote: string; href: string; photo: string; services: { name: string; href: string }[] };
+export type Chapter = { id: string; name: string; tag: string; lead: string; pairs: { q: string; b: string }[]; href: string; photo: string; project?: { title: string; href: string }; services: { name: string; href: string }[] };
 
 const PER = 0.9; // screen heights of scrolling per chapter
 const ease = (t: number) => t * t * (3 - 2 * t);
@@ -108,10 +109,18 @@ export default function Chapters({ intro, items }: { intro: { k: string; h: stri
             <p className="wwd-k">{c.tag}</p>
             <h3 id={`wwd-${c.id}`}><a href={c.href}>{c.name}</a></h3>
             <p className="wwd-lead">{c.lead}</p>
-            <blockquote className="wwd-q">{c.quote}</blockquote>
+            <ul className="wwd-pairs" aria-label="What we hear, and what we bring">
+              {c.pairs.map((p) => (
+                <li key={p.q}>
+                  <blockquote className="wwd-q">{p.q}</blockquote>
+                  {p.b && <p className="wwd-bring"><span>What we bring</span>{p.b}</p>}
+                </li>
+              ))}
+            </ul>
             <ul className="wwd-svcs" aria-label={`${c.name} services`}>
               {c.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}
             </ul>
+            {c.project && <p className="wwd-proj"><a href={c.project.href}>From our work: {c.project.title}</a></p>}
             <a className="v8-btn v8-btn-glow" href={c.href}>Explore {c.name}</a>
           </article>
         ))}

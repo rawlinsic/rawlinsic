@@ -42,8 +42,10 @@ export function Pin() {
 }
 
 /* A person's profile (photo, titles, contact, bio). Used in the Our people
-   window and in the pop-up on the home page. */
-export function ProfileBody({ p }: { p: Person }) {
+   window and in the pop-up on the home page. With no bio yet ("Coming soon!"),
+   there's no background section; previews say a bio is needed (full site
+   pass, Part 4, 1). */
+export function ProfileBody({ p, showDev = false }: { p: Person; showDev?: boolean }) {
   return (
     <>
       <div className="pp-head">
@@ -62,7 +64,9 @@ export function ProfileBody({ p }: { p: Person }) {
         </div>
       </div>
       <div className="pp-bio">
-        {p.background.trim() === "Coming soon!" ? <p>Bio coming soon.</p> : <><h3 className="pg-h3">Background</h3><Bio text={p.background} /></>}
+        {p.background.trim() === "Coming soon!"
+          ? (showDev ? <p className="pg-dev pg-dev-block">Placeholder: bio needed</p> : null)
+          : <><h3 className="pg-h3">Background</h3><Bio text={p.background} /></>}
         {p.achievements && p.achievements.trim() !== "Coming soon!" && <><h3 className="pg-h3">Achievements</h3><Bio text={p.achievements} /></>}
       </div>
     </>
@@ -140,7 +144,7 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
         {open && (
           <div className="pp-dialog-in">
             <button type="button" className="pp-close" onClick={() => setOpen(null)} aria-label="Close profile">×</button>
-            <ProfileBody p={open} />
+            <ProfileBody p={open} showDev={showDev} />
           </div>
         )}
       </dialog>

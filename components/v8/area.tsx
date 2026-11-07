@@ -92,7 +92,8 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
       <section id="hear" className="svq">
         <div className="v8-wrap svq-in">
           <h2 className="v8-h2">What we hear</h2>
-          <LitText lines={quotes(L.hear)} className={`svq-q is-${Math.min(quotes(L.hear).length, 4)}`} />
+          {/* each quote with Jacob's "What we bring" line under it (full site pass, Part 5, 2) */}
+          <LitText lines={quotes(L.hear)} notes={L.bring} noteLabel="What we bring" className={`svq-q is-${Math.min(quotes(L.hear).length, 4)}${L.bring?.length ? " has-notes" : ""}`} />
         </div>
       </section>
 

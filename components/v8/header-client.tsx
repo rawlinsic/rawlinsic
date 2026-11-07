@@ -1,16 +1,22 @@
 "use client";
 /* Header: logo, five menus, search, Get in touch. Desktop menus open on
    hover or click (Escape closes). Phones get a full-screen menu with
-   search at the top. Every area carries its own color. */
+   search at the top. Every area carries its own color. The menus show real
+   content with pictures that mean something: area photos, projects, the
+   latest items, and our people (full site pass, Part 1, 1; Part 4, 3). */
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 
 type Link = { label: string; href: string; note?: string };
 type Hit = { label: string; kind: string; href: string };
+type Card = { title: string; who: string; href: string; photo: string; status: string; live: boolean };
+type Line = { k?: string; t: string };
 export type NavData = {
-  areas: { id: string; n: string; name: string; tag: string; href: string; color: string; ink: string; tint: string; photo: string; services: { name: string; href: string }[] }[];
-  industries: { name: string; href: string; who: string; photo: string; subs: { name: string; href: string }[]; projects: { title: string; href: string; photo?: string; before?: boolean }[] }[];
-  work: Link[]; featured: { title: string; who: string; href: string; photo: string };
-  insights: Link[]; about: Link[]; search: Hit[];
+  areas: { id: string; n: string; name: string; tag: string; href: string; color: string; ink: string; tint: string; photo: string; services: { name: string; href: string }[]; projects: string }[];
+  industries: { name: string; href: string; who: string; subs: { name: string; href: string }[]; challenges: string[]; feature?: Card; projects: { title: string; href: string }[]; all: { label: string; href: string } }[];
+  intl?: { name: string; href: string; note: string };
+  work: Link[]; inWorks: Card[];
+  insights: (Link & { photo: string; line?: Line; next?: Line & { ends?: string } })[];
+  about: Link[]; faces: { name: string; photo: string }[]; facesLine: string; search: Hit[];
 };
 type Menu = "what" | "who" | "work" | "insights" | "about" | null;
 const MENUS: [Exclude<Menu, null>, string][] = [["what", "What we do"], ["who", "Who we work with"], ["work", "Our work"], ["insights", "Insights"], ["about", "About"]];
@@ -28,6 +34,19 @@ function useSearch(data: NavData["search"], q: string) {
   }, [q, data, people]);
 }
 
+/* A project as a photo card: photo, status, title, client line */
+function ProjectCard({ c }: { c: Card }) {
+  return (
+    <a className="mx-card" href={c.href}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={c.photo} alt="" loading="lazy" />
+      <span className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</span>
+      <b>{c.title}</b>
+      <span>{c.who}</span>
+    </a>
+  );
+}
+
 export default function HeaderClient({ data }: { data: NavData }) {
   const [open, setOpen] = useState<Menu>(null);
   const [ind, setInd] = useState(0);
@@ -39,6 +58,15 @@ export default function HeaderClient({ data }: { data: NavData }) {
   const openedAt = useRef(0);
   const bar = useRef<HTMLDivElement>(null);
   const hits = useSearch(data.search, q);
+  /* News & recognition: "Next: <event>" until the day after it ends (Pacific), then the newest post */
+  const [today, setToday] = useState<number | null>(null);
+  useEffect(() => { setToday(Date.now()); }, []);
+  const upcoming = (ends?: string) => {
+    if (!ends || today === null) return true;
+    const [y, m, d] = ends.split("-").map(Number);
+    return today < Date.UTC(y, m - 1, d + 1, 8);
+  };
+  const lineOf = (l: NavData["insights"][number]) => (l.next && upcoming(l.next.ends) ? l.next : l.line);
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8);
@@ -101,11 +129,15 @@ export default function HeaderClient({ data }: { data: NavData }) {
         <div className="mx-what">
           {data.areas.map((a) => (
             <section key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink, ["--a-tint" as string]: a.tint } as CSSProperties}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="mx-area-ph" src={a.photo} alt="" loading="lazy" />
               <a className="mx-area" href={a.href}><b>{a.name}</b><em>{a.tag}</em></a>
               <ul>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
+              <a className="mx-go" href={a.projects}>Projects in this area</a>
             </section>
           ))}
         </div>
+        <p className="mx-foot"><a href="/contact">Not sure where yours fits? Tell us what you&apos;re trying to fix</a></p>
       </div>
       <div className="hx-panel" id="hx-m-who" hidden={open !== "who"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         <div className="mx-who">
@@ -113,36 +145,69 @@ export default function HeaderClient({ data }: { data: NavData }) {
             {data.industries.map((x, i) => (
               <li key={x.href}><a href={x.href} onMouseEnter={() => setInd(i)} onFocus={() => setInd(i)} aria-current={ind === i ? "true" : undefined}><b>{x.name}</b><span>{x.who}</span></a></li>
             ))}
+            {data.intl && <li className="mx-intl"><a href={data.intl.href}><b>{data.intl.name}</b></a><em className="v8-dev">{data.intl.note}</em></li>}
           </ul>
           <div className="mx-subs">
-            {data.industries[ind].subs.length > 0 && <>
+            {data.industries[ind].subs.length > 0 ? <>
               <p className="mx-k">Specialties</p>
               <ul>{data.industries[ind].subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
+            </> : data.industries[ind].challenges.length > 0 && <>
+              <p className="mx-k">Challenges we hear</p>
+              <ul className="mx-hear">{data.industries[ind].challenges.map((c) => <li key={c}>{c}</li>)}</ul>
             </>}
-            {data.industries[ind].projects.length > 0 && <>
-              <p className="mx-k">Featured projects</p>
-              <ul className="mx-projs">{data.industries[ind].projects.map((p) => <li key={p.href}><a className="mx-proj" href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{p.photo && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}{p.before && <small className="mx-tag">Before Rawlins</small>}</span></a></li>)}</ul>
-            </>}
-            <a className="mx-more" href="/industries">Everyone we work with</a>
           </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="mx-photo" src={data.industries[ind].photo} alt="" />
+          <div className="mx-feat">
+            {data.industries[ind].feature && <ProjectCard c={data.industries[ind].feature!} />}
+            {data.industries[ind].projects.length > 0 && (
+              <ul className="mx-plinks">{data.industries[ind].projects.map((p) => <li key={p.href}><a href={p.href}>{p.title}</a></li>)}</ul>
+            )}
+            <a className="mx-go" href={data.industries[ind].all.href}>{data.industries[ind].all.label}</a>
+          </div>
         </div>
+        <p className="mx-foot"><a href="/industries">Everyone we work with</a></p>
       </div>
       <div className="hx-panel" id="hx-m-work" hidden={open !== "work"} onMouseEnter={() => window.clearTimeout(timer.current)}>
-        <div className="mx-list">
-          <ul>{data.work.map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul>
-          <a className="mx-card" href={data.featured.href}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={data.featured.photo} alt="" /><span className="mx-k">Featured project</span><b>{data.featured.title}</b><span>{data.featured.who}</span>
-          </a>
+        <div className="mx-list mx-work">
+          <div>
+            <ul>{data.work.map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul>
+            <p className="mx-k mx-k-gap">Browse by area</p>
+            <ul className="mx-chips">{data.areas.map((a) => <li key={a.id}><a href={a.projects} style={{ ["--a" as string]: a.color } as CSSProperties}><i aria-hidden="true" />{a.name}</a></li>)}</ul>
+          </div>
+          <div>
+            <p className="mx-k">In the works</p>
+            <ul className="mx-live">{data.inWorks.map((c) => (
+              <li key={c.href}><a className="mx-proj" href={c.href}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={c.photo} alt="" loading="lazy" />
+                <span><b>{c.title}</b><span>{c.who}</span><small className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</small></span>
+              </a></li>
+            ))}</ul>
+            <a className="mx-go" href="/insights/case-studies?status=ongoing">All projects in the works</a>
+          </div>
         </div>
       </div>
       <div className="hx-panel" id="hx-m-insights" hidden={open !== "insights"} onMouseEnter={() => window.clearTimeout(timer.current)}>
-        <div className="mx-list"><ul className="mx-2">{data.insights.map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul></div>
+        <ul className="mx-ins">{data.insights.map((l) => {
+          const line = lineOf(l);
+          return (
+            <li key={l.href}><a href={l.href}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={l.photo} alt="" loading="lazy" />
+              <b>{l.label}</b>
+              {line && <span>{line.k && <em>{line.k}</em>}{line.t}</span>}
+            </a></li>
+          );
+        })}</ul>
       </div>
       <div className="hx-panel" id="hx-m-about" hidden={open !== "about"} onMouseEnter={() => window.clearTimeout(timer.current)}>
-        <div className="mx-list"><ul className="mx-2">{data.about.map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul></div>
+        <div className="mx-list mx-about">
+          <ul>{data.about.map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul>
+          <div className="mx-faces">
+            <ul>{data.faces.map((f) => <li key={f.photo}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src={f.photo} alt={f.name} width={56} height={56} loading="lazy" /></li>)}</ul>
+            <p>{data.facesLine}</p>
+            <a className="mx-go" href="/about/our-people">Meet our people</a>
+          </div>
+        </div>
       </div>
 
       {/* search */}
@@ -177,20 +242,23 @@ export default function HeaderClient({ data }: { data: NavData }) {
                 <ul className="hx-areas">{data.areas.map((a) => (
                   <li key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink } as CSSProperties}>
                     <details><summary>{a.name}</summary>
-                      <ul><li><a href={a.href}>{a.name} overview</a></li>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
+                      <ul><li><a href={a.href}>{a.name} overview</a></li>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}<li><a href={a.projects}>Projects in this area</a></li></ul>
                     </details>
                   </li>
                 ))}</ul>
               </details>
-              <details><summary>Who we work with</summary><ul>{data.industries.map((x) => (
-                <li key={x.href}>
-                  <a href={x.href}>{x.name}</a>
-                  {x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}
-                  {x.projects.length > 0 && <><p className="mx-k">Featured projects</p><ul className="mx-projs">{x.projects.map((p) => <li key={p.href}><a className="mx-proj" href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{p.photo && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}{p.before && <small className="mx-tag">Before Rawlins</small>}</span></a></li>)}</ul></>}
-                </li>
-              ))}</ul></details>
+              <details><summary>Who we work with</summary><ul>{data.industries.map((x) => {
+                const projects = [...(x.feature ? [{ title: x.feature.title, href: x.feature.href, photo: x.feature.photo }] : []), ...x.projects];
+                return (
+                  <li key={x.href}>
+                    <a href={x.href}>{x.name}</a>
+                    {x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}
+                    {projects.length > 0 && <><p className="mx-k">Featured projects</p><ul className="mx-projs">{projects.map((p) => <li key={p.href}><a className={"photo" in p ? "mx-proj" : undefined} href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{"photo" in p && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}</span></a></li>)}</ul></>}
+                  </li>
+                );
+              })}{data.intl && <li><a href={data.intl.href}>{data.intl.name}</a><em className="v8-dev">{data.intl.note}</em></li>}</ul></details>
               <details><summary>Our work</summary><ul>{data.work.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>
-              <details><summary>Insights</summary><ul>{data.insights.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>
+              <details><summary>Insights</summary><ul>{data.insights.map((l) => <li key={l.href}><a className="hx-noted" href={l.href}>{l.label}<span>{l.note}</span></a></li>)}</ul></details>
               <details><summary>About</summary><ul>{data.about.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>
             </div>
           )}

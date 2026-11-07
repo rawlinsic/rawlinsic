@@ -27,15 +27,18 @@ const REDIRECTS: Record<string, string> = {
   podcast: "/insights/podcast",
   case: "/insights/case-studies",
   "case-studies": "/insights/case-studies",
-  capabilities: "/capabilities",
-  services: "/capabilities",
-  strategy: "/capabilities#strategy",
-  operations: "/capabilities#operations",
-  technology: "/capabilities#technology",
-  aam: "/capabilities/technology/advanced-air-mobility",
-  uas: "/capabilities/technology/advanced-air-mobility",
-  automation: "/capabilities/technology/automation-integration",
-  ai: "/capabilities/technology/automation-integration",
+  /* straight to the redesigned pages, so a scan lands in one step (service pages scrub, 6.1).
+     The old Operations section covered what is now Project Delivery and Operations &
+     Maintenance; it goes to Operations & Maintenance by name. */
+  capabilities: "/services",
+  services: "/services",
+  strategy: "/services/strategy-organization",
+  operations: "/services/operations-maintenance",
+  technology: "/services/digital-solutions",
+  aam: "/services/drones-advanced-air-mobility",
+  uas: "/services/drones-advanced-air-mobility",
+  automation: "/services/digital-solutions/integration-automation",
+  ai: "/services/digital-solutions/integration-automation",
 };
 
 const FALLBACK = "/";

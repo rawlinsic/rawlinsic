@@ -4,9 +4,11 @@
    card that lights up, then the proof)   4 who we work with (a ring of
    photos)   5 our work   6 how we've grown   7 what's new   8 start a
    conversation. Words come from the content layer. Dev-only marks never
-   reach production. */
+   reach production. Full site pass Part 5: the hero panels are the doors (no
+   quotes); What we do pairs what clients say with what we bring, beside each
+   area's featured project; Why Rawlins keeps its card and five tabs. */
 import type { CSSProperties } from "react";
-import { AREAS, CASES, HOME, NUMBERS, PROBLEMS, STEPS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
+import { AREAS, CASES, HOME, NUMBERS, PROBLEMS, STEPS, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/media";
 import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
@@ -27,23 +29,27 @@ import SkipNext from "@/components/v8/skip-next";
 const PROD = process.env.VERCEL_ENV === "production";
 const q = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
 const areaOf = (serviceId: string) => serviceById(serviceId)?.area;
-/* off the photo ring: no Rawlins work there yet (g-capital, g-mpo), and no U.S. light rail photo yet (sub-rail) */
-const OFF_RING = ["g-capital", "g-mpo", "sub-rail"];
+/* off the photo ring in production: no Rawlins work there yet (g-capital, g-mpo), and placeholder
+   photos (sub-rail; sub-ports, Philadelphia from the Ben Franklin Bridge). Previews show them,
+   labeled (full site pass, Part 1, 2.4 and Part 4, 1). */
+const OFF_RING: Record<string, string> = { "g-capital": "No project yet", "g-mpo": "No project yet", "sub-rail": "Placeholder photo", "sub-ports": "Placeholder photo" };
 
 export default function Home() {
   /* Featured projects: Rawlins work only (no Before Rawlins cases) */
   const cases = FEATURED_CASES.map((id) => CASES.find((c) => c.id === id)!).filter((c) => c && isOurs(c));
-  const numbers = NUMBERS.filter((n) => n.verified);
+  /* previews also show the unverified number, marked (Part 4, 1) */
+  const numbers = NUMBERS.filter((n) => n.verified || !PROD);
   const news = NEWS.filter((n) => !n.placeholder || !PROD).slice(0, 3);
   const ev = EVENTS.filter((e) => (!e.placeholder || !PROD) && isUpcoming(e))[0];
   const pdn = CASES.find((c) => c.id === "cs-pdn")!;
-  const why = [0, 1, 2, 4, 3].map((i) => WHY[i]);
+  /* the five reasons in display order; each tab keeps its own proof (Part 5, 1.3) */
+  const why = WHY;
   const people = stripPeople();
   const veterans = veteranPeople();
   // the ring: each industry, then its specialties, dealt round so they spread out
   const groups: Tile[][] = VISIBLE_INDUSTRIES.map((i) => [
     { src: INDUSTRY_PHOTO[i.id], label: i.name, href: industryHref(i), sub: i.who },
-    ...i.subsectors.filter((sb) => INDUSTRY_PHOTO[sb.id] && !OFF_RING.includes(sb.id)).map((sb) => ({ src: INDUSTRY_PHOTO[sb.id], label: sb.name, href: subsectorHref(i, sb), sub: i.name })),
+    ...i.subsectors.filter((sb) => INDUSTRY_PHOTO[sb.id] && (!PROD || !OFF_RING[sb.id])).map((sb) => ({ src: INDUSTRY_PHOTO[sb.id], label: sb.name, href: subsectorHref(i, sb), sub: i.name, note: OFF_RING[sb.id] })),
   ]);
   const tiles: Tile[] = [];
   for (let r = 0; tiles.length < groups.flat().length; r++) groups.forEach((g) => { if (g[r]) tiles.push(g[r]); });
@@ -60,6 +66,7 @@ export default function Home() {
               <a className="v8-btn" href="/contact">Get in touch</a>
               <a className="v8-btn v8-btn-ghost" href="#what">See what we do</a>
             </div>
+            {ev?.line && <p className="h-event"><a href="/contact">{ev.line} <b>Plan to meet us</b></a></p>}
           </div>
         </div>
         <ul className="ways" aria-label="What we do">
@@ -71,7 +78,6 @@ export default function Home() {
                 <span className="way-txt">
                   <b>{a.name}</b>
                   <em>{a.tag}</em>
-                  <span className="way-q">{q(AREA_DATA[a.id].hear[0])}</span>
                   <span className="way-more">Explore {a.name}</span>
                 </span>
               </a>
@@ -82,21 +88,30 @@ export default function Home() {
 
       {/* 2 · what we do, area by area */}
       <Chapters
-        intro={{ k: "What we do", h: "From the plan to the tools people use every day.", lead: "Most of our work starts with how an organization is set up to deliver. Then we help deliver projects, keep what's built running, build drone programs, and put digital tools to work." }}
-        items={AREAS.map((a) => ({
-          id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id].lead, quote: q(AREA_DATA[a.id].hear[0]), href: areaHref(a), photo: AREA_PHOTO[a.id],
-          services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
-        }))}
+        intro={{ k: "What we do", h: "What we hear, and what we bring.", lead: "Technology pays off only when the organization under it is ready: a plan people measure, a structure that can carry new work, procedures people follow, and data they trust. That is our work, and you can start with any part of it." }}
+        items={AREAS.map((a) => {
+          const L = AREA_DATA[a.id];
+          const fc = a.featuredCase ? caseById(a.featuredCase) : undefined;
+          return {
+            id: a.id, name: a.name, tag: a.tag, lead: L.lead, href: areaHref(a),
+            /* the first two "What we hear / What we bring" pairs (Part 5, 2) */
+            pairs: L.hear.slice(0, 2).map((h, k) => ({ q: q(h), b: L.bring?.[k] ?? "" })),
+            /* the area's featured project, not the area photo the hero already shows */
+            photo: fc ? casePhoto(fc) : AREA_PHOTO[a.id],
+            project: fc ? { title: fc.title, href: caseHref(fc) } : undefined,
+            services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
+          };
+        })}
       />
 
       {/* 3 · why us: the card holds while the sentence lights up */}
       <Scene steps={1} per={90} className="wc" label="Why Rawlins">
         <div className="wc-in">
           <div className="wc-card">
-            <PeopleStrip people={people} />
+            <PeopleStrip people={people} showDev={!PROD} />
             <div className="wc-copy">
               <p className="v8-eyebrow">Why Rawlins</p>
-              <LitText className="wc-lit" text="More than 25 of our people built their careers inside public agencies. They've sat where our clients sit." />
+              <LitText className="wc-lit" text="Our people have run the programs you run. They do the work themselves, with an in-house team that builds the tools." />
             </div>
           </div>
         </div>
@@ -113,12 +128,12 @@ export default function Home() {
             <Tabs label="What sets us apart" labels={why.map((w) => w[0])}>
               <div className="why-p">
                 <p className="why-text">{why[0][1]}</p>
-                <PeopleStrip people={veterans} across />
+                <PeopleStrip people={veterans} across showDev={!PROD} />
                 <a className="v8-link" href="/about/our-people">Meet our people</a>
               </div>
               <div className="why-p">
                 <p className="why-text">{why[1][1]}</p>
-                <dl className="nums">{numbers.map((n) => <div key={n.label}><dt>{n.label}</dt><dd>{n.value}</dd></div>)}</dl>
+                <dl className="nums">{numbers.map((n) => <div key={n.label}>{!n.verified && <em className="v8-dev">Placeholder: number not verified yet.</em>}<dt>{n.label}</dt><dd>{n.value}</dd></div>)}</dl>
               </div>
               <div className="why-p">
                 <p className="why-text">{why[2][1]}</p>
@@ -146,7 +161,7 @@ export default function Home() {
       <Orbit tiles={tiles}>
         <p className="v8-eyebrow">Who we work with</p>
         <h2 id="orb-h" className="orb-h">Public agencies and private firms, <span>wherever the work is.</span></h2>
-        <p className="v8-lead">More than 30 transportation agencies so far, plus local governments, a multi-state research program, contractors, and engineering firms. Our work so far is across the United States, and our team can do it anywhere.</p>
+        <p className="v8-lead">More than 30 transportation agencies, plus local governments, a multi-state research program, contractors, and engineering firms. Our work so far has been in the United States, and our team can work anywhere.</p>
       </Orbit>
 
       {/* 5 · our work */}
@@ -177,7 +192,7 @@ export default function Home() {
       </section>
 
       {/* 6 · how we've grown: slides sideways as you scroll (shared with Who we are) */}
-      <Grown eyebrow="How we've grown" title="Started in 2017 by a former Nevada DOT chief engineer" link={{ href: "/about/who-we-are", label: "Who we are" }} />
+      <Grown eyebrow="Our story" title="From our story to yours." link={{ href: "/about/who-we-are", label: "Who we are" }} />
 
       {/* 7 · what's new */}
       <section className="h-new" aria-labelledby="h-new">
@@ -196,7 +211,7 @@ export default function Home() {
             {news.map((n) => (
               <article key={n.title} className={`nw${n.placeholder ? " is-dev" : ""}`} data-reveal>
                 <span className="nw-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span>
-                <b>{n.href ? <a href={n.href}>{n.title}</a> : n.title}</b>
+                <b>{n.href ? <a href={n.href} {...(/^http/.test(n.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{n.title}</a> : n.title}</b>
                 {n.text && <p>{n.text}</p>}
                 {n.placeholder && !PROD && <em className="v8-dev">Placeholder (preview only): {n.placeholder}</em>}
               </article>
