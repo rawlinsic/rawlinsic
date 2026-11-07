@@ -4,8 +4,7 @@ export const LIFECYCLE = [
   { t: "Enable the system", tag: "Policy and program support", items: ["Policy development", "Program framework", "Stakeholder engagement", "Infrastructure planning", "Regulatory compliance"] },
   { t: "Deliver operations", tag: "Operations and scale", items: ["Operational deployment", "Safety and compliance monitoring", "Performance optimization", "Continuous improvement"] },
 ];
-export const AAM_SERVICES = ["Feasibility studies", "Vertiport planning", "Air traffic management", "Policy framework development", "Community outreach", "Pilot program design", "Economic impact analysis", "Safety case development", "Multimodal integration", "Regulatory compliance"];
-export const DRONE_SERVICES = ["Operational design domain development", "Drone delivery corridor planning", "Data governance frameworks", "Beyond-visual-line-of-sight operations support", "Safety management systems", "Ground transportation integration", "Workforce training programs", "Airspace deconfliction", "Environmental impact assessments", "Procurement support"];
+export const AAM_SERVICES = ["Feasibility studies", "Vertiport planning", "Policy framework development", "Community outreach", "Economic impact analysis", "Regulatory compliance"];
 export const WHERE_WE_LEAD = [
   { n: "01", t: "Policy and system planning", d: "Develop policy, system plans, and standardized guidance for local implementation." },
   { n: "02", t: "Regulatory navigation", d: "Provide regulatory understanding for compliance and guide regulatory coordination." },

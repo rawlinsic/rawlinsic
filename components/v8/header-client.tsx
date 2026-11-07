@@ -8,7 +8,7 @@ type Link = { label: string; href: string; note?: string };
 type Hit = { label: string; kind: string; href: string };
 export type NavData = {
   areas: { id: string; n: string; name: string; tag: string; href: string; color: string; ink: string; tint: string; photo: string; services: { name: string; href: string }[] }[];
-  industries: { name: string; href: string; who: string; photo: string; subs: { name: string; href: string }[] }[];
+  industries: { name: string; href: string; who: string; photo: string; subs: { name: string; href: string }[]; projects: { title: string; href: string; before?: boolean }[] }[];
   work: Link[]; featured: { title: string; who: string; href: string; photo: string };
   insights: Link[]; about: Link[]; search: Hit[];
 };
@@ -115,10 +115,14 @@ export default function HeaderClient({ data }: { data: NavData }) {
             ))}
           </ul>
           <div className="mx-subs">
-            <p className="mx-k">{data.industries[ind].subs.length ? "Specialties" : "Who you'll work with"}</p>
-            {data.industries[ind].subs.length
-              ? <ul>{data.industries[ind].subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
-              : <p className="mx-who-line">{data.industries[ind].who}</p>}
+            {data.industries[ind].subs.length > 0 && <>
+              <p className="mx-k">Specialties</p>
+              <ul>{data.industries[ind].subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
+            </>}
+            {data.industries[ind].projects.length > 0 && <>
+              <p className="mx-k">Featured projects</p>
+              <ul>{data.industries[ind].projects.map((p) => <li key={p.href}><a href={p.href}>{p.title}{p.before && <small className="mx-tag">Before Rawlins</small>}</a></li>)}</ul>
+            </>}
             <a className="mx-more" href="/industries">Everyone we work with</a>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -178,7 +182,13 @@ export default function HeaderClient({ data }: { data: NavData }) {
                   </li>
                 ))}</ul>
               </details>
-              <details><summary>Who we work with</summary><ul>{data.industries.map((x) => <li key={x.href}><a href={x.href}>{x.name}</a>{x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}</li>)}</ul></details>
+              <details><summary>Who we work with</summary><ul>{data.industries.map((x) => (
+                <li key={x.href}>
+                  <a href={x.href}>{x.name}</a>
+                  {x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}
+                  {x.projects.length > 0 && <><p className="mx-k">Featured projects</p><ul>{x.projects.map((p) => <li key={p.href}><a href={p.href}>{p.title}{p.before && <small className="mx-tag">Before Rawlins</small>}</a></li>)}</ul></>}
+                </li>
+              ))}</ul></details>
               <details><summary>Our work</summary><ul>{data.work.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>
               <details><summary>Insights</summary><ul>{data.insights.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>
               <details><summary>About</summary><ul>{data.about.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>

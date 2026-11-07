@@ -19,9 +19,11 @@ type Node = {
   icon: "chart" | "gauge" | "db" | "flow" | "pin" | "handoff" | "chevrons"; ang: number;
   example: string; popupTitle: string; popupSubtitle: string;
   before: string; after: string;
-  problem: string[]; built: string[]; result: string[]; stack: string[]; quote: string;
+  problem: string[]; built: string[]; result: string[]; stack: string[];
 };
 
+/* Five examples, spaced evenly round the hub (examples 06 and 07 are off the
+   site until it's confirmed who did them; content updates v4, 6.5). */
 const NODES: Node[] = [
   { id: "process-rebuild", title: "Process Rebuild", desc: "One connected workflow, end to end.", descLines: ["One connected workflow,", "end to end."], labDy: 34, accent: "#7a68cf", icon: "chevrons", ang: 0,
     example: "Example 01", popupTitle: "Rebuilding an Agency Process End to End", popupSubtitle: "Consultant contracting at a state DOT",
@@ -29,56 +31,35 @@ const NODES: Node[] = [
     problem: ["Consultant contracting ran across eight steps and four divisions: procurement, legal, engineering, and accounting", "Handoffs between steps relied on email, spreadsheets, and scanned paper", "The same information was re-entered at every stage, from entity agreement through closeout", "Status lived in calendar reminders, verbal follow-ups, and a manual log"],
     built: ["Mapped the process in working sessions with the staff who perform each step, not those who oversee it", "Rebuilt the first six steps as one connected workflow in Monday.com, with one intake form as the only place work enters", "A Make.com integration layer builds documents from the record, files them to storage, and sends notices: nothing crosses a boundary by hand", "Data governance decided before the build: the record keeps the consensus outcome, never an individual evaluator's score"],
     result: ["More than twenty agency staff across three divisions completed a full working walkthrough", "One working session per step, staffed with the people who perform it rather than with managers", "Chosen for maintainability: agency staff can be trained to run it with no prior knowledge of the system"],
-    stack: ["Monday.com", "Make.com"],
-    quote: "The platform choice is driven by maintainability, so someone at the agency with no prior knowledge of the system can be trained to run it. We expect the work to outlast our engagement." },
-  { id: "reporting", title: "Reporting", desc: "One view of the business, without rebuilding reports.", descLines: ["One view of the business,", "without rebuilding reports."], labDy: -34, accent: "#3a83d6", icon: "chart", ang: 206,
+    stack: ["Monday.com", "Make.com"] },
+  { id: "reporting", title: "Reporting", desc: "One view of the business, without rebuilding reports.", descLines: ["One view of the business,", "without rebuilding reports."], labDy: -34, accent: "#3a83d6", icon: "chart", ang: 144,
     example: "Example 02", popupTitle: "Project Accounting & Reporting", popupSubtitle: "Project-based technical services firm",
     before: "Data everywhere, no operating picture", after: "One view, drill-down on demand",
     problem: ["Project, accounting, CRM, time & reporting data lived in separate systems", "Teams manually pushed data into spreadsheets to get usable views", "Leaders needed both high-level and department-level visibility", "Field staff had no easy mobile access to site maps, photos & docs"],
     built: ["Migrated core data from Zoho into Monday.com", "Connected platforms with Make.com so data moved reliably", "Built dashboards that drill from high-level to project detail", "Shipped a mobile micro-app for project files from the field"],
     result: ["Leaders got a clean operating view without rebuilding reports", "Project teams reached records and files from the field", "Reliable data flow cut manual handling and lifted confidence"],
-    stack: ["Monday.com", "Make.com", "QuickBooks", "QuickBooks Time", "Looker Studio", "Google Drive"],
-    quote: "We already had the information. It was just spread across too many places. Once the systems were connected, we could finally see the project picture without rebuilding it every time." },
-  { id: "capacity", title: "Capacity", desc: "See capacity before it becomes a bottleneck.", descLines: ["See capacity before it", "becomes a bottleneck."], labDy: -34, accent: "#e0a63c", icon: "gauge", ang: 154,
+    stack: ["Monday.com", "Make.com", "QuickBooks", "QuickBooks Time", "Looker Studio", "Google Drive"] },
+  { id: "capacity", title: "Capacity", desc: "See capacity before it becomes a bottleneck.", descLines: ["See capacity before it", "becomes a bottleneck."], labDy: -34, accent: "#e0a63c", icon: "gauge", ang: 72,
     example: "Example 05", popupTitle: "Capacity Planning", popupSubtitle: "Field services / drilling organization",
     before: "Capacity run on guesswork", after: "Capacity you can actually see",
     problem: ["Capacity depended on scattered updates and local knowledge", "No view of equipment location, booking length, or downtime", "People & equipment constraints managed inconsistently", "Service windows, PTO for machines, were invisible in the plan"],
     built: ["Built one capacity system in Monday.com + Make.com", "Templatized it to manage people and equipment together", "Tracked locations, booking windows, utilization & downtime", "Made unavailable equipment visible before it caused conflicts"],
     result: ["See capacity before bottlenecks become emergencies", "Know what's booked, available, or out of service", "Specialized assets scheduled right alongside people"],
-    stack: ["Monday.com", "Make.com"],
-    quote: "We stopped relying on scattered updates to understand capacity. We could finally see what was available, what was booked, and where the constraint was coming from." },
-  { id: "single-source", title: "Single Source", desc: "One source of truth across your team.", descLines: ["One source of truth", "across your team."], accent: "#33b07a", icon: "db", ang: 103,
-    example: "Example 06", popupTitle: "Single Source of Truth", popupSubtitle: "100+ employee manufacturing firm",
-    before: "Workshops siloed, data unused", after: "One system, full-company view",
-    problem: ["Manufacturing spread across workshops with poor office↔floor comms", "No reliable way to record time against a specific item built", "Data sat unused: no dashboards on production, staffing, or capacity", "Heavy manual entry to match materials, time, and cost"],
-    built: ["Rebuilt everything around a core Monday.com board structure", "One source of truth with per-workshop permission levels", "Formulas + Make.com auto-calculate cost, materials, hours & assignment", "Added Tracket time tracking and DocuSign work orders inside Monday.com"],
-    result: ["Estimated time, actual time, team, cost & price all in one place", "Leaders track workshop speed, profitability, staffing & capacity", "Quotes and invoices automated; jobs assigned by capacity, not phone calls"],
-    stack: ["Monday.com", "Make.com", "Tracket", "DocuSign"],
-    quote: "We went from several software tools to one easy-to-use source of truth: full visibility over what's happening across the entire company." },
-  { id: "sales-project", title: "Sales → Project", desc: "From closed deal to billing-ready in days.", descLines: ["From closed deal to", "billing-ready in days."], labDy: 34, accent: "#8FB9E8", icon: "flow", ang: 51,
-    example: "Example 07", popupTitle: "Business Development → Project Handover", popupSubtitle: "130-person professional services firm",
-    before: "Closed-won ran on memory", after: "Billing-ready in days, not weeks",
-    problem: ["Handoff from Business Development to delivery & finance ran on email and memory", "Scope, fee, billing terms & owner moved late or incomplete", "Finance and PMs chased Business Development for info that should be settled at close", "Project setup dragged on for one to two weeks"],
-    built: ["Locked the few fields required before an opportunity can close-won", "Required scope, fee, terms, owner & kickoff date in Salesforce", "Automation pushes the project record into Monday.com at close", "Notified finance & delivery instantly with a standardized kickoff checklist"],
-    result: ["Setup went from 1–2 weeks of back-and-forth to billing-ready in days", "Finance stopped chasing Business Development for basic setup information", "PMs walked into kickoffs with everything they needed"],
-    stack: ["Salesforce", "Monday.com", "Make.com", "QuickBooks", "SharePoint", "Teams"],
-    quote: "Project setup went from one to two weeks of back-and-forth to billing-ready in a few business days. Finance stopped chasing Business Development, and PMs walked into kickoffs with what they needed." },
-  { id: "field-reporting", title: "Field Reporting", desc: "Field records filed where the office can find them.", descLines: ["Field records filed where", "the office can find them."], labDy: 34, accent: "#e07a3c", icon: "pin", ang: 309,
+    stack: ["Monday.com", "Make.com"] },
+  { id: "field-reporting", title: "Field Reporting", desc: "Field records filed where the office can find them.", descLines: ["Field records filed where", "the office can find them."], labDy: 34, accent: "#e07a3c", icon: "pin", ang: 288,
     example: "Example 04", popupTitle: "Field Reporting", popupSubtitle: "Field-service / project delivery firm",
     before: "Records that vanished after the visit", after: "Captured on site, filed automatically",
     problem: ["Site-visit info existed but wasn't structured for later use", "Attachments and field details were hard to retrieve afterward", "Office staff had to chase individuals to see what happened"],
     built: ["Added form links directly into Google Calendar events", "Monday.com forms create board items the moment field staff submit", "Attachments auto-file into the right Google Drive structure", "Connected field capture back into the project record"],
     result: ["Field information became easy to find, reuse, and report on", "Attachments landed in the right place automatically", "The office gained clean visibility into every site visit"],
-    stack: ["Monday.com", "Make.com", "Google Calendar", "Google Drive"],
-    quote: "Our team was already capturing the information. The value came from making sure it landed somewhere useful without another person having to chase it down." },
-  { id: "service-handoff", title: "Service Handoff", desc: "Project history follows the work to the service team.", descLines: ["Project history follows", "the work to the service team."], accent: "#2ab0ab", icon: "handoff", ang: 257,
+    stack: ["Monday.com", "Make.com", "Google Calendar", "Google Drive"] },
+  { id: "service-handoff", title: "Service Handoff", desc: "Project history follows the work to the service team.", descLines: ["Project history follows", "the work to the service team."], accent: "#2ab0ab", icon: "handoff", ang: 216,
     example: "Example 03", popupTitle: "Project → Service Handoff", popupSubtitle: "Install & service / maintenance firm",
     before: "Service teams starting from zero", after: "History follows the work",
     problem: ["Completed projects moved to service, but the handoff was siloed", "Service teams had limited insight into what install had done", "Staff often started from scratch to understand project history", "PMs had no time to walk service through each project"],
     built: ["Moved the workflow into Monday.com + Google Suite", "Tracked every client visit against the project history", "Google Calendar sync & on-site forms captured what was done", "Filed attachments and records into a supporting Drive structure"],
     result: ["Service teams stopped starting from zero", "Project knowledge followed the work, not one PM's memory", "Delivery → service handoff became cleaner and faster"],
-    stack: ["Monday.com", "Make.com", "Google Suite", "Google Calendar"],
-    quote: "The biggest change was that our service team stopped starting from zero. They could see the history, understand the work, and get to the issue faster." },
+    stack: ["Monday.com", "Make.com", "Google Suite", "Google Calendar"] },
 ];
 
 function toolDot(name: string): string {
@@ -868,10 +849,10 @@ export default function AutomationIntegrationInteractive({ embedded = false, eye
          corner at icon-top height where nothing exists, so the fit reserved a
          band of empty air above the hub. The platform is wide but low; only the
          icon's middle is tall.
-         Sampled across a 60deg sweep as well: with seven nodes the hub repeats
-         every ~51deg, so that covers every angle you can drag it to. Fitting only the rest pose
+         Sampled across an 80deg sweep as well: with five nodes the hub repeats
+         every 72deg, so that covers every angle you can drag it to. Fitting only the rest pose
          let nodes swing outside the frame and clip once you started rotating. */
-      for (let s = 0; s < 6; s++) {
+      for (let s = 0; s < 9; s++) {
         const th = (s * 10 * Math.PI) / 180, sx = Math.sin(a + th) * R, sz = Math.cos(a + th) * R;
         for (let c = 0; c < 4; c++) fitPts.push(new THREE.Vector3(sx + (c & 1 ? 0.78 : -0.78), 0.3, sz + (c & 2 ? 0.78 : -0.78)));
         fitPts.push(new THREE.Vector3(sx, 1.75, sz));
@@ -1174,7 +1155,6 @@ export default function AutomationIntegrationInteractive({ embedded = false, eye
 
               {step === STEPS.length - 1 && (
                 <div className="rai-final">
-                  <blockquote className="rai-quote">{active.quote}</blockquote>
                   <div className="rai-stack">
                     <div className="rai-stack-head"><span className="rai-stack-line" />The Stack We Connect<span className="rai-stack-line" /></div>
                     <div className="rai-stack-items">{active.stack.map((tool) => (<span className="rai-chip" key={tool}><span className="rai-chip-dot" style={{ background: toolDot(tool) }} />{tool}</span>))}</div>

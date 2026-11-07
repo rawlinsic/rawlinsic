@@ -8,7 +8,7 @@ import { getWorld, setPageScene, setWorldLayer } from "@/components/world/host";
 import { want3D } from "@/components/site/scene-mode";
 import USMap from "@/components/site/us-map";
 
-export default function PageScene({ scene, photo, highlight }: { scene: string; photo?: string; highlight?: string[] }) {
+export default function PageScene({ scene, photo, highlight, strong }: { scene: string; photo?: string; highlight?: string[]; strong?: string[] }) {
   const [three, setThree] = useState(false);
   useEffect(() => { setThree(want3D()); }, []);
 
@@ -43,7 +43,7 @@ export default function PageScene({ scene, photo, highlight }: { scene: string; 
   }, [three, scene, highlight]);
 
   if (highlight?.length && !three) {
-    return <div className="scene-bg scene-map" aria-hidden="true"><USMap lit={highlight} label="" /></div>;
+    return <div className="scene-bg scene-map" aria-hidden="true"><USMap lit={highlight} strong={strong} label="" /></div>;
   }
   return photo ? (
     <div className="scene-bg" aria-hidden="true">

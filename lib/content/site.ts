@@ -4,12 +4,10 @@
    Source notes stay in comments, never on the page. */
 
 /* ── Environment ─────────────────────────────────────────────── */
-/* Dev-only blocks (Placeholder, Needs sign-off) render everywhere except
-   the production deployment. Read on the server (VERCEL_ENV) and passed
-   down, so a missing public env var can never leak them to production. */
+/* Dev-only blocks (Placeholder notes) render everywhere except the
+   production deployment. Read on the server (VERCEL_ENV) and passed down, so
+   a missing public env var can never leak them to production. */
 export const isProductionEnv = () => process.env.VERCEL_ENV === "production";
-/* Set in next.config.js from VERCEL_ENV at build time; also inlined into browser code. */
-const PROD_BUILD = process.env.RAWLINS_ENV === "production";
 
 export const slugify = (s: string) =>
   s.toLowerCase().replace(/&/g, " ").replace(/['’]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -58,7 +56,7 @@ export const AREAS: Area[] = [
   },
   {
     id: "om", slug: "operations-maintenance", name: "Operations & Maintenance",
-    tag: "Keeping what you own safe, working, and affordable", scene: "dusk", featuredCase: "cs-mi-pbo",
+    tag: "Keeping what you own safe, working, and affordable", scene: "dusk", featuredCase: "cs-pbmc",
     services: [
       svc("asset-mgmt", "Asset Management", "crossing"),
       svc("operations", "Maintenance & Operations"),
@@ -107,9 +105,11 @@ export const serviceHref = (id: string) => {
 
 /* ── Industries ──────────────────────────────────────────────── */
 export type Subsector = { id: string; slug: string; name: string; line: string; scene: SceneKey; thin?: boolean };
+/* who: one plain line about who the industry covers (menu, overview cards).
+   projects: its Featured projects, in order (the Who we work with menu). */
 export type Industry = {
   id: string; slug: string; name: string; who: string; lead: string; scene: SceneKey;
-  subsectors: Subsector[]; featured: string[]; featuredCase?: string; hidden?: boolean;
+  subsectors: Subsector[]; featured: string[]; featuredCase?: string; hidden?: boolean; projects: string[];
 };
 
 const sub = (id: string, name: string, scene: SceneKey, line: string, thin = false): Subsector =>
@@ -118,13 +118,14 @@ const sub = (id: string, name: string, scene: SceneKey, line: string, thin = fal
 export const INDUSTRIES: Industry[] = [
   {
     id: "transport", slug: "transportation", name: "Transportation", scene: "interchange",
-    who: "Led by former DOT chief engineers, maintenance directors, and program leaders",
-    lead: "State DOTs are where many of our people built their careers. They've run districts, divisions, and whole departments, and they bring that experience to agencies working through the same problems now.",
+    who: "State DOTs, aeronautics divisions, harbors, and transit",
+    lead: "Most of our work is with state departments of transportation: more than 30 transportation agencies so far. We work across highways, bridges, aviation, harbors, and transit, from how a department is organized to how its projects get delivered and its roads get maintained.",
     featured: ["program-delivery", "row", "construction", "operations", "traffic", "asset-mgmt", "portals", "drone-programs"],
     featuredCase: "cs-major",
+    projects: ["cs-transform", "cs-proficiency", "cs-aero"],
     subsectors: [
       sub("sub-highways", "Highways & Roads", "rural", "Most of our work is on highway systems: how they're planned, funded, delivered, maintained, and operated."),
-      sub("sub-bridges", "Bridges & Structures", "crossing", "From billion-dollar river crossings to the inspections that keep bridges open."),
+      sub("sub-bridges", "Bridges & Structures", "crossing", "From partnering on billion-dollar river crossings to bridge inspector proficiency programs and drone inspection standards."),
       sub("sub-aviation", "Aviation & Airports", "airport", "State aeronautics divisions, airports, and the drone and advanced air mobility programs growing around them. We help small aviation staffs run programs, plan for what's next, and compete for federal funding."),
       sub("sub-rail", "Rail & Transit", "rail", "Our transit work so far is partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation."),
       /* v12: back under Transportation. Only harbors work so far (port security
@@ -134,36 +135,39 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     id: "gov", slug: "government-public-works", name: "Government & Public Works", scene: "street",
-    who: "Former city public works and federal program leaders",
-    lead: "Cities, counties, regional planning organizations, and federal programs that own and run public infrastructure with lean staffs.",
+    who: "Local agencies and multi-state programs",
+    lead: "Local governments and federal and multi-state programs that own and run public infrastructure, often with lean staffs. Our work here includes asset management with local agencies and drone standards for a multi-state research program.",
     featured: ["asset-mgmt", "program-delivery", "lpa", "grants", "portals", "strategic-planning"],
-    featuredCase: "cs-nyc-parks",
+    featuredCase: "cs-local-am",
+    projects: ["cs-local-am", "cs-pooled"],
     subsectors: [
       sub("g-asset", "Asset Management for Local Agencies", "street", "Local agencies can use asset management to plan their programs, but each one starts from a different place. We meet them there."),
       sub("g-capital", "Capital Project Delivery & Permitting", "construction", "Cities carry big capital programs and land development permitting with small staffs. Faster delivery comes from clear roles, standard procedures, and a roadmap staff can follow.", true),
       sub("g-mpo", "Regional & Metropolitan Planning Support", "grid", "Regional planning organizations answer to federal performance and certification rules with lean staffs. We help them plan, program, and report with confidence.", true),
-      sub("g-federal", "Federal & Multi-State Programs", "crossing", "Some problems are bigger than one state. We facilitate the multi-state research and standards that agencies end up writing into their own specifications."),
+      sub("g-federal", "Federal & Multi-State Programs", "crossing", "Some problems are bigger than one state. We facilitate a multi-state research program writing drone standards that agencies can adopt into their own specifications."),
     ],
   },
   {
     id: "contractors", slug: "contractors-engineering-firms", name: "Contractors & Engineering Firms", scene: "site",
-    who: "People who've sat on the owner's side of the table",
-    lead: "Contractors and engineering firms working with public owners. We help both sides of the table work together, and help firms run their own operations better.",
+    who: "Partnering, contracting models, and teaming on public work",
+    lead: "Contractors and engineering firms working with public owners. We help both sides of the table work together, through partnering on major projects and contracting models that work for owners and industry. Engineering firms also bring us onto their teams for state DOT work: program delivery, organization and workforce, technology, aviation, and drone programs.",
     featured: ["alt-delivery", "owners-rep", "automation", "training-video"],
     featuredCase: "cs-major",
+    projects: ["cs-major", "cs-db-partnering", "cs-ia-partnering", "cs-maint-model"],
     subsectors: [],
   },
   {
     id: "private", slug: "private-sector", name: "Private Sector", scene: "office",
-    who: "An in-house team that builds the tools",
-    lead: "Firms of about 50 to 500 people that have outgrown spreadsheets but don't have a build team. We connect the systems you already pay for and automate the work around them.",
+    who: "Growing firms that have outgrown their spreadsheets",
+    lead: "Firms that have outgrown spreadsheets but don't have a build team. We connect the systems you already pay for and automate the work around them.",
     featured: ["automation", "ai", "dashboards", "data-governance", "portals"],
+    projects: ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service"],
     subsectors: [],
   },
   /* Built but hidden and noindex until Scott and Andy approve. Never linked. */
   {
     id: "intl", slug: "international", name: "International", scene: "globe", hidden: true,
-    who: "", lead: "Our work to date is in the United States.", featured: [], subsectors: [],
+    who: "", lead: "Our work to date is in the United States.", featured: [], subsectors: [], projects: [],
   },
 ];
 
@@ -180,8 +184,11 @@ export const PROBLEMS: { q: string; services: string[] }[] = [
   { q: "Maintenance costs keep climbing", services: ["operations", "asset-mgmt"] },
   { q: "Our systems don't talk to each other", services: ["automation", "portals"] },
   { q: "We want to use AI responsibly", services: ["ai", "tech-strategy"] },
-  { q: "We want a drone program, or to plan for air taxis", services: ["drone-programs", "drone-aam"] },
+  { q: "We want a drone program, or to plan for advanced air mobility", services: ["drone-programs", "drone-aam"] },
   { q: "There's funding out there and no one to chase it", services: ["grants"] },
+  /* so contractors and private firms see themselves (content updates v4, 7.8) */
+  { q: "We're starting our first design-build project with a public owner", services: ["alt-delivery", "owners-rep"] },
+  { q: "We've outgrown our spreadsheets", services: ["automation", "dashboards"] },
 ];
 
 /* ── Home copy ───────────────────────────────────────────────── */
@@ -196,27 +203,29 @@ export const HOME = {
    leave the tile out rather than show an unverified number. */
 export const NUMBERS: { value: string; count?: number; suffix?: string; label: string; verified: boolean }[] = [
   { value: "2017", label: "Established", verified: true },
-  { value: "30+", count: 30, suffix: "+", label: "Former agency executives and engineers", verified: true },
-  { value: "[N]", label: "States where we've worked", verified: false },
+  /* 27 verified (content updates v4, section 5) */
+  { value: "25+", count: 25, suffix: "+", label: "People on our team who came from public agencies", verified: true },
+  /* "[N] States where we've worked" left out: the map shows the states (2.4) */
+  /* 31 verified: 19 agencies directly or through a prime, plus 12 through the drone standards pooled fund */
   { value: "30+", count: 30, suffix: "+", label: "Transportation agencies served", verified: true },
   { value: "[N]+", label: "Years of combined experience", verified: false },
 ];
 
 export const WHY: [string, string][] = [
-  ["We've done the job", "Our people ran the programs our clients run: chief engineers, maintenance directors, chief information officers, right of way managers, and federal program executives. We know the work from the inside, so we skip the learning curve."],
-  ["Small enough to move fast", "Senior people do the work, with no layers between you and them. Decisions happen in days, not quarters."],
-  ["Strategy and build under one roof", "The team that writes the plan works next to an in-house team that builds the tools: integrations, automation, dashboards, and AI. Nothing stalls waiting on another vendor."],
+  ["We've done the job", "Our people ran the programs our clients run: chief engineers, operations and maintenance leaders, technology and data chiefs, a right of way manager, a city public works director, and federal highway executives. We know the work from the inside, so we skip the learning curve."],
+  ["Small enough to move fast", "Senior people do the work, with no layers between you and them, so questions get answered and decisions get made fast."],
+  ["Strategy and build under one roof", "The team that writes the plan works next to an in-house team that builds the tools: integrations, automation, dashboards, and AI. No handoff to another vendor."],
   ["We stay until it runs", "We start with what you already have, and we stay through training and rollout. You own everything we build."],
   /* v12 fifth point; "making systems connect" thread */
   ["We make the systems you already own work together", "We connect the platforms, data, and tools you already pay for, and build small custom apps where an off-the-shelf integration doesn't fit."],
 ];
 
-/* How we've grown (current site's Evolving Impact, kept) */
+/* How we've grown (content updates v4, 7.6). Also shows on Who we are. */
 export const STORY: [string, string, string][] = [
-  ["Foundation", "Deep transportation agency experience", "Our people built their careers inside public agencies. We know how projects, programs, budgets, and decisions actually work there."],
-  ["Evolution", "Advisory for any organization", "We help organizations modernize processes, develop their people, and adopt new technology, and we keep long-term relationships with our clients."],
-  ["Innovation", "Drones and advanced air mobility", "We plan, implement, and integrate drones and advanced air mobility into existing transportation networks."],
-  ["Frontier", "Data, automation, and AI", "We help organizations govern their data, automate the busywork, and use AI, so people can focus on the work that needs them."],
+  ["Where we started", "Agency experience", "Our founder spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer. More than 25 of our people built their careers inside public agencies too."],
+  ["Advisory", "Strategy, delivery, and people", "We help organizations set direction, deliver their programs, and develop their people. Several clients have kept working with us for years."],
+  ["Drones", "Drones and advanced air mobility", "We help agencies run drone programs, write shared drone standards, and plan for advanced air mobility."],
+  ["Digital", "Data, automation, and AI", "Our in-house team connects the systems clients already own, automates the busywork, and puts AI to work where it helps."],
 ];
 
 export const STEPS: [string, string][] = [
@@ -232,71 +241,82 @@ export const LEADERS: { name: string; role: string; photo: string }[] = [
   { name: "April Blackburn, PMP", role: "Former Chief Information Officer, Chief Technology Officer, and Interim Assistant Secretary of Finance and Administration, Florida Department of Transportation", photo: "april" },
   { name: "Dara Wheeler", role: "Former Chief Data and AI Officer and Chief Innovation Officer, California Department of Transportation", photo: "darawheeler" },
   { name: "Mayela Sosa", role: "Former Division Administrator, Federal Highway Administration Indiana and Hawaii Divisions", photo: "mayela" },
-  { name: "Paul Steinman, P.E.", role: "Former Chief of Operations, Idaho Transportation Department", photo: "paulsteinman" },
+  { name: "Paul Steinman, P.E.", role: "Former Chief Operating Officer, Idaho Transportation Department, and District Secretary, Florida DOT", photo: "paulsteinman" },
   { name: "Rex Vines, P.E.", role: "Former Deputy Director and Chief Engineer of Operations, Arkansas Department of Transportation", photo: "rex" },
   { name: "Paul Schneider, P.E.", role: "Former member, Federal Highway Administration California Division executive leadership team", photo: "paulschneider" },
   { name: "Joey Paskey, P.E., PTOE", role: "Former Director of Public Works, City of Las Vegas", photo: "joey" },
   { name: "Lance Grace", role: "Former Director, Office of Maintenance, Florida Department of Transportation", photo: "lance" },
-  { name: "Mark Geib, P.E.", role: "Former operations division administrator, Michigan Department of Transportation", photo: "mark" },
+  { name: "Mark Geib, P.E.", role: "Former Transportation Systems Management and Operations Division Administrator, Michigan Department of Transportation", photo: "mark" },
   { name: "Ben Rawlins, P.E.", role: "Chief AI Strategy Officer. Leads the automation and AI team", photo: "ben" },
 ];
 
 /* ── Case studies (index data for the map, menu and "In the works") ──
-   needsSignoff: newly named clients (TX, AR, FL, IL, Alaska-led pooled fund,
-   HI, TN technology). In production they show only the generic descriptor
-   and are never placed on the map. visibility: public | generic | internal. */
+   Unnamed clients (content updates v4, section 1): the client line is "A state
+   DOT" (or as listed), with no state tags, and the case shows everywhere like
+   any other. "Before Rawlins": our founder's work, or our team's work before
+   they joined; tagged, never featured on home or as an area's featured case. */
+export type CaseStatus = "Ongoing" | "Completed" | "Before Rawlins";
 export type CaseIndex = {
-  id: string; slug: string; title: string; who: string; generic: string;
-  states: string[]; status: "Ongoing" | "Completed"; industry: string; services: string[];
-  needsSignoff?: boolean; visibility: "public" | "generic" | "internal";
+  id: string; slug: string; title: string; who: string;
+  states: string[]; status: CaseStatus; industry: string; services: string[];
 };
 
 const cs = (
-  id: string, slug: string, title: string, who: string, states: string[], status: "Ongoing" | "Completed",
-  industry: string, services: string[], generic = "", needsSignoff = false,
-): CaseIndex => ({
-  id, slug, title, status, industry, services, needsSignoff,
-  /* production builds never carry an uncleared client's name or state */
-  who: PROD_BUILD && needsSignoff ? (generic || who) : who,
-  states: PROD_BUILD && needsSignoff ? [] : states,
-  generic: generic || who, visibility: needsSignoff ? "generic" : "public",
-});
+  id: string, slug: string, title: string, who: string, states: string[], status: CaseStatus,
+  industry: string, services: string[],
+): CaseIndex => ({ id, slug, title, who, states, status, industry, services });
+
+const STATE_DOT = "A state DOT";
+const FOUNDER = " · Our founder's work before Rawlins";
+const TEAM = " · Our team's work before Rawlins";
 
 export const CASES: CaseIndex[] = [
   cs("cs-proficiency", "tennessee-career-paths-and-proficiency", "Career paths and proficiency programs across a department", "Tennessee Department of Transportation", ["Tennessee"], "Ongoing", "transport", ["workforce", "org-design", "change-mgmt"]),
   cs("cs-tn-ipd", "tennessee-integrated-program-delivery", "Integrated program delivery", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["program-delivery"]),
   cs("cs-pbmc", "tennessee-performance-based-maintenance-contracts", "Launching performance-based maintenance contracts on an interstate network", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["operations", "procurement"]),
   cs("cs-aero", "tennessee-aviation-program", "Statewide aviation program support: drones, advanced air mobility, and federal funding", "Tennessee Department of Transportation, Aeronautics Division", ["Tennessee"], "Ongoing", "transport", ["drone-programs", "grants", "research", "drone-aam"]),
-  cs("cs-transform", "louisiana-statewide-transformation", "Statewide transformation: project delivery, prioritization, and organization", "Louisiana Department of Transportation and Development", ["Louisiana"], "Ongoing", "transport", ["program-delivery", "org-design", "change-mgmt", "strategic-planning", "automation", "data-governance"]),
-  cs("cs-pmdiv", "standing-up-a-project-delivery-division", "Standing up a project delivery division", "Arkansas Department of Transportation", ["Arkansas"], "Ongoing", "transport", ["org-design", "change-mgmt", "workforce", "program-delivery"], "A Mid-South state DOT", true),
-  cs("cs-txmaint", "performance-based-maintenance-and-rating-program", "Performance-based maintenance contracts and a maintenance rating program", "Texas Department of Transportation", ["Texas"], "Completed", "transport", ["operations", "procurement", "asset-mgmt"], "A Gulf South state DOT", true),
-  cs("cs-drt", "statewide-drone-response-team", "Statewide drone response team and drone program governance", "Florida Department of Transportation", ["Florida"], "Ongoing", "transport", ["drone-programs", "drone-emergency"], "A Southeast state DOT", true),
+  cs("cs-transform", "statewide-project-delivery-and-organization", "Statewide project delivery, prioritization, and organization", STATE_DOT, [], "Ongoing", "transport", ["program-delivery", "org-design", "change-mgmt", "strategic-planning", "automation", "data-governance"]),
+  cs("cs-pmdiv", "standing-up-a-project-delivery-division", "Standing up a project delivery division", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "workforce", "program-delivery"]),
+  cs("cs-txmaint", "performance-based-maintenance-and-rating-program", "Performance-based maintenance contracts and a maintenance rating program", STATE_DOT, [], "Completed", "transport", ["operations", "procurement", "asset-mgmt"]),
+  cs("cs-drt", "statewide-drone-response-team", "Statewide drone response team and drone program governance", STATE_DOT, [], "Ongoing", "transport", ["drone-programs", "drone-emergency"]),
   cs("cs-local-am", "michigan-local-asset-management", "Asset management workshops and action plans for local agencies", "State of Michigan, Michigan Infrastructure Office", ["Michigan"], "Completed", "gov", ["asset-mgmt", "workforce"]),
-  cs("cs-mi-pbo", "michigan-performance-based-maintenance-operations", "Performance-based maintenance and operations", "Michigan Department of Transportation", ["Michigan"], "Completed", "transport", ["operations", "asset-mgmt"]),
-  cs("cs-workforce", "north-carolina-workforce-strategy", "Workforce strategy analysis", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["workforce", "org-design"]),
-  cs("cs-nc-ipd", "north-carolina-integrated-program-delivery", "Integrated program delivery and asset management", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["program-delivery", "asset-mgmt", "grants"]),
+  cs("cs-mi-pbo", "michigan-performance-based-maintenance-operations", "Performance-based maintenance and operations", "Michigan Department of Transportation · Our team's work before Rawlins, completed 2014", ["Michigan"], "Before Rawlins", "transport", ["operations", "asset-mgmt"]),
+  cs("cs-workforce", "north-carolina-workforce-strategy", "Workforce strategy analysis", STATE_DOT, [], "Completed", "transport", ["workforce", "org-design"]),
+  cs("cs-nc-ipd", "north-carolina-integrated-program-delivery", "Integrated program delivery", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["program-delivery", "grants", "operations", "alt-delivery"]),
+  cs("cs-nc-am", "north-carolina-asset-management-review", "Asset management review across modes", `North Carolina Department of Transportation${FOUNDER}`, ["North Carolina"], "Before Rawlins", "transport", ["asset-mgmt", "operations", "procurement"]),
   cs("cs-strategic", "nevada-six-year-strategic-plan", "Six-year strategic plan, action plans, and performance management", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["strategic-planning", "org-design", "dashboards"]),
   cs("cs-nv-om", "nevada-operations-maintenance-review", "Operations and maintenance program review", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt"]),
   cs("cs-aerodiv", "nevada-aeronautics-division-research", "Research on establishing a state aeronautics division and sustainable funding", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["research", "aero-division"]),
   cs("cs-de-tech", "delaware-technology-strategic-plan", "Technology strategic plan", "Delaware Department of Transportation", ["Delaware"], "Completed", "transport", ["tech-strategy", "strategic-planning"]),
-  cs("cs-ut-am", "utah-asset-management-review", "Asset management program review", "Utah Department of Transportation", ["Utah"], "Completed", "transport", ["asset-mgmt"]),
-  cs("cs-va-maint", "virginia-performance-based-maintenance-review", "Review of performance-based highway maintenance contracts", "Virginia Department of Transportation", ["Virginia"], "Completed", "transport", ["operations", "procurement"]),
+  cs("cs-ut-am", "utah-asset-management-review", "Asset management program review", `Utah Department of Transportation${FOUNDER}`, ["Utah"], "Before Rawlins", "transport", ["asset-mgmt"]),
+  cs("cs-va-maint", "virginia-performance-based-maintenance-review", "Review of performance-based highway maintenance contracts", `Virginia Department of Transportation${FOUNDER}`, ["Virginia"], "Before Rawlins", "transport", ["operations", "procurement"]),
   cs("cs-maint-model", "six-state-maintenance-outsourcing-model", "A flexible maintenance contracting model for DOTs", "AMOTIA (Association for the Management and Operations of Transportation Infrastructure Assets)", [], "Completed", "contractors", ["operations", "procurement"]),
-  cs("cs-pa-budget", "pennsylvania-maintenance-budgeting", "Maintenance budgeting", "Pennsylvania Department of Transportation", ["Pennsylvania"], "Completed", "transport", ["procurement", "operations"]),
-  cs("cs-nyc-parks", "new-york-city-parks-asset-management", "Asset management for 29,000 acres of parkland", "New York City Parks and Recreation", ["New York"], "Completed", "gov", ["asset-mgmt"]),
-  cs("cs-riverside", "riverside-county-fleet-and-facilities", "Facilities and fleet operations review", "Riverside County, California", ["California"], "Completed", "gov", ["operations", "asset-mgmt"]),
+  cs("cs-pa-budget", "pennsylvania-maintenance-budgeting", "Maintenance budgeting", `Pennsylvania Department of Transportation${FOUNDER}`, ["Pennsylvania"], "Before Rawlins", "transport", ["procurement", "operations"]),
+  cs("cs-nyc-parks", "new-york-city-parks-asset-management", "Asset management for 29,000 acres of parkland", `New York City Parks and Recreation${FOUNDER}`, ["New York"], "Before Rawlins", "gov", ["asset-mgmt"]),
+  /* no state tag: California isn't on the map */
+  cs("cs-riverside", "riverside-county-fleet-and-facilities", "Facilities and fleet operations review", `Riverside County, California${FOUNDER}`, [], "Before Rawlins", "gov", ["operations", "asset-mgmt"]),
   cs("cs-major", "major-river-crossings-and-transit", "Partnering on major river crossings and a light rail line", "Iowa, Illinois, Missouri, and Minnesota", ["Iowa", "Illinois", "Missouri", "Minnesota"], "Completed", "transport", ["program-delivery", "alt-delivery"]),
-  cs("cs-partnering", "progressive-design-build-partnering", "Partnering facilitation for a progressive design-build bridge", "Illinois · contractor and state transportation department", ["Illinois"], "Ongoing", "transport", ["program-delivery", "procurement", "alt-delivery"], "A Midwest state DOT and its contractor", true),
-  cs("cs-pooled", "multi-state-drone-standards", "Multi-state drone standards and specifications", "Pooled fund study led by Alaska", ["Alaska"], "Ongoing", "gov", ["research", "drone-programs"], "A multi-state pooled fund study", true),
-  cs("cs-pdn", "louisiana-project-delivery-website", "A project delivery website, tools, and change system staff use every day", "Louisiana Department of Transportation and Development", ["Louisiana"], "Ongoing", "transport", ["portals", "automation", "training-video", "program-delivery"]),
-  cs("cs-tn-tech", "technology-modernization-and-ai-governance", "Technology modernization and AI governance", "Tennessee Department of Transportation", ["Tennessee"], "Ongoing", "transport", ["tech-strategy", "data-governance", "ai"], "A Southeast state DOT", true),
-  cs("cs-hi", "construction-standards-and-statewide-support", "Construction standards, program knowledge, and statewide support", "Hawaii Department of Transportation", ["Hawaii"], "Ongoing", "transport", ["construction", "portals", "program-delivery", "training-video", "drone-programs"], "A Pacific state DOT", true),
+  cs("cs-partnering", "progressive-design-build-partnering", "Partnering facilitation for a progressive design-build bridge", "A state DOT and its contractor", [], "Ongoing", "transport", ["program-delivery", "procurement", "alt-delivery"]),
+  cs("cs-ia-partnering", "statewide-partnering-between-a-dot-and-its-construction-industry", "Statewide partnering between a DOT and its construction industry", "A state DOT and its construction industry", [], "Completed", "transport", ["alt-delivery", "construction", "program-delivery"]),
+  cs("cs-db-partnering", "partnering-through-construction-on-design-build-bridges-and-interstates", "Partnering through construction on design-build bridges and interstates", "State DOTs and their contractors", [], "Completed", "contractors", ["alt-delivery", "program-delivery", "construction"]),
+  cs("cs-pooled", "multi-state-drone-standards", "Multi-state drone standards and specifications", "A multi-state pooled fund study", [], "Ongoing", "gov", ["research", "drone-programs"]),
+  cs("cs-pdn", "project-delivery-website-and-change-system", "A project delivery website, tools, and change system staff use every day", STATE_DOT, [], "Ongoing", "transport", ["portals", "automation", "training-video", "program-delivery"]),
+  cs("cs-tn-tech", "technology-modernization-and-ai-governance", "Technology modernization and AI governance", STATE_DOT, [], "Ongoing", "transport", ["tech-strategy", "data-governance", "ai"]),
+  cs("cs-hi", "construction-standards-and-statewide-support", "Construction standards, program knowledge, and statewide support", STATE_DOT, [], "Ongoing", "transport", ["construction", "portals", "program-delivery", "training-video", "drone-programs"]),
+  /* Private sector: our own project, then our automation team's work before Rawlins */
+  cs("cs-pv-pmo", "project-management-system-for-an-engineering-firm", "A project management system for an engineering firm", "An engineering firm", [], "Ongoing", "private", ["automation", "dashboards", "data-governance"]),
+  cs("cs-pv-reporting", "project-accounting-and-reporting-in-one-view", "Project accounting and reporting in one view", `A project-based technical services firm${TEAM}`, [], "Before Rawlins", "private", ["automation", "dashboards", "data-governance"]),
+  cs("cs-pv-service", "project-history-that-follows-the-work-to-the-service-team", "Project history that follows the work to the service team", `An install, service, and maintenance firm${TEAM}`, [], "Before Rawlins", "private", ["automation"]),
+  cs("cs-pv-field", "field-reports-the-office-can-find", "Field reports the office can find", `A field service and project delivery firm${TEAM}`, [], "Before Rawlins", "private", ["automation"]),
+  cs("cs-pv-capacity", "capacity-planning-for-people-and-equipment", "Capacity planning for people and equipment", `A field services and drilling company${TEAM}`, [], "Before Rawlins", "private", ["automation", "dashboards"]),
 ];
 
 export const caseHref = (c: CaseIndex) => `/insights/case-studies/${c.slug}`;
 export const caseById = (id: string) => CASES.find((c) => c.id === id);
-/* What a visitor sees as the client line (production hides uncleared names). */
-export const caseWho = (c: CaseIndex, prod: boolean) => (prod && c.needsSignoff ? c.generic : c.who);
+/* Rawlins' own work (not "Before Rawlins") */
+export const isOurs = (c: CaseIndex) => c.status !== "Before Rawlins";
+/* The tag a case card shows */
+export const caseTag = (c: CaseIndex, done = "Completed") => (c.status === "Ongoing" ? "In the works" : c.status === "Before Rawlins" ? "Before Rawlins" : done);
 
 /* ── Menu tree (stacked, nested) ─────────────────────────────── */
 export type MenuNode = {
@@ -326,7 +346,7 @@ export const MENU: MenuNode[] = [
         id: i.id, label: i.name, href: industryHref(i), scene: i.scene, note: i.who,
         feature: i.featuredCase
           ? { kind: "case" as const, id: i.featuredCase }
-          : { kind: "link" as const, title: "Applied solutions", text: "Seven examples of connected systems and automated workflows we've built for growing firms.", href: serviceHref("automation"), cta: "See the examples" },
+          : { kind: "link" as const, title: "Applied solutions", text: "Featured projects for growing firms.", href: serviceHref("automation"), cta: "See the examples" },
         groups: [
           ...(i.subsectors.length ? [{ title: "Sub-sectors", items: i.subsectors.map((s) => leaf(s.id, s.name, subsectorHref(i, s), s.scene, s.thin)) }] : []),
           { title: "Featured services", items: i.featured.map((id) => {
@@ -343,11 +363,11 @@ export const MENU: MenuNode[] = [
     groups: [{
       items: [
         {
-          id: "cases", label: "Case studies", href: "/insights/case-studies", scene: "map",
+          id: "cases", label: "Projects", href: "/insights/case-studies", scene: "map",
           groups: [
             { title: "By service area", items: AREAS.map((a) => leaf(`cs-a-${a.id}`, a.name, `/insights/case-studies?area=${a.slug}`, a.scene)) },
             { title: "By industry", items: VISIBLE_INDUSTRIES.map((i) => leaf(`cs-i-${i.id}`, i.name, `/insights/case-studies?industry=${i.slug}`, i.scene)) },
-            { title: "By state", items: Array.from(new Set(CASES.filter((c) => !c.needsSignoff).flatMap((c) => c.states))).sort().map((s) => leaf(`cs-s-${slugify(s)}`, s, `/insights/case-studies?state=${slugify(s)}`, "map")) },
+            { title: "By state", items: Array.from(new Set(CASES.flatMap((c) => c.states))).sort().map((s) => leaf(`cs-s-${slugify(s)}`, s, `/insights/case-studies?state=${slugify(s)}`, "map")) },
           ],
         },
         leaf("in-the-works", "In the works", "/insights/case-studies?status=ongoing", "construction"),
@@ -369,7 +389,7 @@ export const MENU: MenuNode[] = [
   },
   {
     id: "about", label: "About", href: "/about", scene: "hero",
-    feature: { kind: "link", title: "Our people", text: "More than 30 former agency executives and engineers, working next to the team that builds the tools.", href: "/about/our-people", cta: "Meet the team" },
+    feature: { kind: "link", title: "Our people", text: "More than 25 people from public agencies, working next to the team that builds the tools.", href: "/about/our-people", cta: "Meet the team" },
     groups: [{
       items: [
         leaf("who-we-are", "Who we are", "/about/who-we-are", "hero"),

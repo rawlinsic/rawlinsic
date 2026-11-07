@@ -5,10 +5,10 @@
    photos)   5 our work   6 how we've grown   7 what's new   8 start a
    conversation. Words come from the content layer. Dev-only marks never
    reach production. */
-import { AREAS, CASES, HOME, NUMBERS, PROBLEMS, STEPS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, caseWho, industryHref, serviceById, subsectorHref } from "@/lib/content/site";
+import { AREAS, CASES, HOME, NUMBERS, PROBLEMS, STEPS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
-import { AREA_PHOTO, HOME_VIDEO, INDUSTRY_PHOTO } from "@/lib/content/media";
-import { NEWS, EVENTS } from "@/lib/content/news";
+import { AREA_PHOTO, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/media";
+import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
 import Scene from "@/components/v8/scene";
@@ -25,12 +25,15 @@ import SkipNext from "@/components/v8/skip-next";
 const PROD = process.env.VERCEL_ENV === "production";
 const q = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
 const areaOf = (serviceId: string) => serviceById(serviceId)?.area;
+/* off the photo ring: no Rawlins work there yet (g-capital, g-mpo), and no U.S. light rail photo yet (sub-rail) */
+const OFF_RING = ["g-capital", "g-mpo", "sub-rail"];
 
 export default function Home() {
-  const cases = FEATURED_CASES.map((id) => CASES.find((c) => c.id === id)!).filter((c) => c && (!PROD || !c.needsSignoff));
+  /* Featured projects: Rawlins work only (no Before Rawlins cases) */
+  const cases = FEATURED_CASES.map((id) => CASES.find((c) => c.id === id)!).filter((c) => c && isOurs(c));
   const numbers = NUMBERS.filter((n) => n.verified);
   const news = NEWS.filter((n) => !n.placeholder || !PROD).slice(0, 3);
-  const ev = EVENTS.filter((e) => !e.placeholder || !PROD)[0];
+  const ev = EVENTS.filter((e) => (!e.placeholder || !PROD) && isUpcoming(e))[0];
   const pdn = CASES.find((c) => c.id === "cs-pdn")!;
   const why = [0, 1, 2, 4, 3].map((i) => WHY[i]);
   const people = stripPeople();
@@ -38,7 +41,7 @@ export default function Home() {
   // the ring: each industry, then its specialties, dealt round so they spread out
   const groups: Tile[][] = VISIBLE_INDUSTRIES.map((i) => [
     { src: INDUSTRY_PHOTO[i.id], label: i.name, href: industryHref(i) },
-    ...i.subsectors.filter((sb) => INDUSTRY_PHOTO[sb.id]).map((sb) => ({ src: INDUSTRY_PHOTO[sb.id], label: sb.name, href: subsectorHref(i, sb) })),
+    ...i.subsectors.filter((sb) => INDUSTRY_PHOTO[sb.id] && !OFF_RING.includes(sb.id)).map((sb) => ({ src: INDUSTRY_PHOTO[sb.id], label: sb.name, href: subsectorHref(i, sb) })),
   ]);
   const tiles: Tile[] = [];
   for (let r = 0; tiles.length < groups.flat().length; r++) groups.forEach((g) => { if (g[r]) tiles.push(g[r]); });
@@ -77,7 +80,7 @@ export default function Home() {
 
       {/* 2 · what we do, area by area */}
       <Chapters
-        intro={{ k: "What we do", h: "Most of our work starts with how an organization is set up to deliver.", lead: "From there, we help deliver projects, keep what's built running, launch drone and air mobility programs, and put digital tools to work." }}
+        intro={{ k: "What we do", h: "From the plan to the tools people use every day.", lead: "Most of our work starts with how an organization is set up to deliver. Then we help deliver projects, keep what's built running, build drone programs, and put digital tools to work." }}
         items={AREAS.map((a) => ({
           id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id].lead, quote: q(AREA_DATA[a.id].hear[0]), href: areaHref(a), photo: AREA_PHOTO[a.id],
           services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
@@ -91,7 +94,7 @@ export default function Home() {
             <PeopleStrip people={people} />
             <div className="wc-copy">
               <p className="v8-eyebrow">Why Rawlins</p>
-              <LitText className="wc-lit" text="30+ former agency executives and engineers. Our people ran the programs our clients run, so we skip the learning curve." />
+              <LitText className="wc-lit" text="More than 25 of our people built their careers inside public agencies. They've sat where our clients sit." />
             </div>
           </div>
         </div>
@@ -120,7 +123,7 @@ export default function Home() {
                 <a className="proof" href={caseHref(pdn)}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={casePhoto(pdn)} alt="" loading="lazy" />
-                  <span><em>From our work</em><b>{pdn.title}</b><span>{caseWho(pdn, PROD)}</span></span>
+                  <span><em>From our work</em><b>{pdn.title}</b><span>{pdn.who}</span></span>
                 </a>
               </div>
               <div className="why-p" style={themeStyle("tech")}>
@@ -140,8 +143,8 @@ export default function Home() {
       {/* 4 · who we work with: a ring of photos around the headline */}
       <Orbit tiles={tiles}>
         <p className="v8-eyebrow">Who we work with</p>
-        <h2 id="orb-h" className="orb-h">Built inside <span>public agencies.</span></h2>
-        <p className="v8-lead">Our work so far is across the United States, and our team can do it anywhere.</p>
+        <h2 id="orb-h" className="orb-h">Public agencies and private firms, <span>wherever the work is.</span></h2>
+        <p className="v8-lead">More than 30 transportation agencies so far, plus local governments, a multi-state research program, contractors, and engineering firms. Our work so far is across the United States, and our team can do it anywhere.</p>
         <ul className="orb-chips">{VISIBLE_INDUSTRIES.map((i) => <li key={i.id}><a href={industryHref(i)}>{i.name}</a></li>)}</ul>
         <a className="v8-link" href="/industries">Everyone we work with</a>
       </Orbit>
@@ -150,8 +153,8 @@ export default function Home() {
       <section className="h-work" aria-labelledby="h-work">
         <div className="v8-wrap">
           <div className="h-row-head" data-reveal>
-            <div><p className="v8-eyebrow">Our work</p><h2 id="h-work" className="v8-h2">Projects, finished and in the works</h2></div>
-            <a className="v8-link" href="/insights/case-studies">All 28 projects</a>
+            <div><p className="v8-eyebrow">Our work</p><h2 id="h-work" className="v8-h2">Featured projects</h2></div>
+            <a className="v8-link" href="/insights/case-studies">All projects</a>
           </div>
           <Rail label="Projects">
             {cases.map((c) => {
@@ -161,9 +164,9 @@ export default function Home() {
                   <a href={caseHref(c)}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={casePhoto(c)} alt="" loading="lazy" />
-                    <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{c.status === "Ongoing" ? "In the works" : "Completed"}</span>
+                    <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{caseTag(c)}</span>
                     <b>{c.title}</b>
-                    <span className="pc-who">{caseWho(c, PROD)}</span>
+                    <span className="pc-who">{c.who}</span>
                     <span className="pc-areas">{areas.map((id) => <i key={id} style={themeStyle(id)}>{AREAS.find((a) => a.id === id)!.name}</i>)}</span>
                   </a>
                 </li>
@@ -227,10 +230,9 @@ export default function Home() {
 
       {/* 8 · start a conversation */}
       <section className="h-start" aria-labelledby="h-start">
-        <video className="h-start-video" autoPlay muted loop playsInline poster={HOME_VIDEO.poster} aria-hidden="true">
-          <source src={HOME_VIDEO.webm} type="video/webm" />
-          <source src={HOME_VIDEO.mp4} type="video/mp4" />
-        </video>
+        {/* a still photo for now (Detroit at night); a licensed U.S. clip can replace it later */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="h-start-video" src={HOME_CLOSING_PHOTO} alt="" loading="lazy" aria-hidden="true" />
         <div className="v8-wrap h-start-in" data-reveal>
           <h2 id="h-start" className="v8-h2">Tell us what you&apos;re trying to fix.</h2>
           <p className="v8-lead">Start with the one that sounds most like you, or write your own.</p>

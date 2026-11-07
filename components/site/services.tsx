@@ -6,9 +6,9 @@ import AutomationEcosystemBars from "@/components/automation-ecosystem-bars";
 import WhatWeDeliverPyramid from "@/components/what-we-deliver-pyramid";
 import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, subsectorHref, type Area } from "@/lib/content/site";
 import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
-import { AAM_SERVICES, DRONE_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
+import { AAM_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
 import { SERVICE_STEPS } from "@/lib/content/features";
-import { Btn, CaseCards, Chips, Dev, Hero, List, People, PROD, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor } from "@/components/site/ui";
+import { Btn, CaseCards, Chips, Dev, Hero, List, People, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor } from "@/components/site/ui";
 import { AviationTeam, BridgingSilos, NextLayer, type TeamCard } from "@/components/site/aviation";
 import { WhereWeLead } from "@/components/site/where-we-lead";
 
@@ -27,7 +27,8 @@ const AVIATION_PAGES = ["drone-programs", "drone-aam", "drone-emergency", "resea
 
 /* Broad digital proof (handoff 4.12); invoicing example not cleared, left out */
 const DIGITAL_PROOF = [
-  "Seven applied solutions for agencies and growing firms, from consultant contracting at a state DOT to field reporting and sales-to-project handoffs",
+  /* examples 06 and 07 are off the site until confirmed (content updates v4, 6.5), so no count and no sales handoff here */
+  "Applied solutions for agencies and growing firms, from consultant contracting at a state DOT to field reporting",
   "A statewide project delivery website, change request system, consultant contracting workflow, estimating tools, and training videos",
   "Repeated project fields filled in once from trusted agency data, and paper forms turned into web apps",
   "A website and wiki migration with every item reviewed: keep, update, combine, move, or retire",
@@ -70,7 +71,7 @@ export function AreaPage({ area }: { area: Area }) {
       <Sec title="Services" id="services">
         <ServiceCards ids={L.services} blurb={(id) => firstSentence(SERVICES[id]?.intro ?? "")} />
       </Sec>
-      <Sec title="Featured work" tone="panel"><CaseCards ids={L.cases} /></Sec>
+      <Sec title="Featured projects" tone="panel"><CaseCards ids={L.cases} /></Sec>
       <Talk />
     </Shell>
   );
@@ -84,7 +85,7 @@ export function DigitalShowcase() {
         <List items={DIGITAL_PROOF} cols />
       </Sec>
       <section className="pg-sec pg-sec-navy pg-legacy">
-        <AutomationIntegrationInteractive embedded eyebrow="Applied solutions" title="Seven examples from our work" intro="Click an example to step through how it was built." />
+        <AutomationIntegrationInteractive embedded eyebrow="Applied solutions" title="Examples from our team's work" intro="Click an example to step through how it was built. The first is Rawlins work for a state DOT. The others are from our automation team's work before Rawlins." />
       </section>
       <section className="pg-sec pg-sec-navy pg-legacy"><AutomationEcosystemBars /></section>
       <section className="pg-sec pg-sec-navy pg-legacy"><WhatWeDeliverPyramid /></section>
@@ -141,7 +142,7 @@ export function ServicePage({ id }: { id: string }) {
       {cases.length > 0 && (
         <Sec title="Where we've done this" tone="panel" id="work">
           <CaseCards cases={cases} limit={4} />
-          {cases.length > 4 && <p style={{ marginTop: 16 }}><a href={`/insights/case-studies?service=${hit.service.slug}`}>See all {cases.length} case studies</a></p>}
+          {cases.length > 4 && <p style={{ marginTop: 16 }}><a href={`/insights/case-studies?service=${hit.service.slug}`}>See all {cases.length} projects</a></p>}
         </Sec>
       )}
       <Sec title="Related services"><ServiceChips ids={s.related} /></Sec>
@@ -158,7 +159,7 @@ export function ServiceFeature({ id }: { id: string }) {
       return (
         <>
           <section className="pg-sec pg-sec-navy pg-legacy">
-            <AutomationIntegrationInteractive embedded eyebrow="Applied solutions" title="From our work" intro="Seven examples, including how we rebuilt consultant contracting at a state DOT, step by step." />
+            <AutomationIntegrationInteractive embedded eyebrow="Applied solutions" title="From our team's work" intro="Five examples, including how we rebuilt consultant contracting at a state DOT, step by step. The first is Rawlins work. The others are from our automation team's work before Rawlins." />
           </section>
           <Sec title="Applied solutions" intro={<p>Where these came from:</p>}><List items={APPLIED.map((a) => `${a[0]}: ${a[1]}`)} cols /></Sec>
         </>
@@ -184,9 +185,9 @@ export function ServiceFeature({ id }: { id: string }) {
       return <Sec title="Inside a project delivery network" kicker="From our work"><List items={["Tools, templates, and workflows for every phase", "Project management plans and commitment tracking", "Risk registers and risk training", "Online courses and a delivery website staff actually use"]} /></Sec>;
     case "operations": {
       const parts: [string, string, string[]][] = [
-        ["Performance-based maintenance", "Contracts that pay for results: specifications, deduction models, and administration", ["cs-txmaint", "cs-pbmc", "cs-va-maint", "cs-maint-model"]],
+        ["Performance-based maintenance", "Contracts that pay for results: specifications, deduction models, and administration", ["cs-txmaint", "cs-pbmc", "cs-maint-model"]],
         ["Quality assurance and ratings", "Handbooks and rating programs decisions can rely on", ["cs-transform", "cs-txmaint"]],
-        ["Fleet and facilities", "The right equipment, in the right shape, at the right cost", ["cs-nv-om", "cs-riverside"]],
+        ["Fleet and facilities", "The right equipment, in the right shape, at the right cost", ["cs-nv-om"]],
         ["Winter operations and emergency readiness", "Plans tested before they're needed, including drone response teams", ["cs-txmaint", "cs-drt"]],
       ];
       return (
@@ -195,7 +196,7 @@ export function ServiceFeature({ id }: { id: string }) {
             {parts.map(([t, d, ids]) => (
               <li key={t} className="pg-card">
                 <b>{t}</b><span>{d}</span>
-                <Chips items={ids.map((i) => caseById(i)).filter((c) => c && (!PROD || !c.needsSignoff)).map((c) => ({ label: c!.title, href: caseHref(c!) }))} />
+                <Chips items={ids.map((i) => caseById(i)).filter(Boolean).map((c) => ({ label: c!.title, href: caseHref(c!) }))} />
               </li>
             ))}
           </ul>
@@ -217,12 +218,9 @@ export function ServiceFeature({ id }: { id: string }) {
       );
     case "drone-programs":
       return (
-        <>
-          <Sec title="Program lifecycle">
-            <ol className="pg-cards">{LIFECYCLE.map((l, i) => <li key={l.t}><div className="pg-card"><span className="pg-case-k">{String(i + 1).padStart(2, "0")} · {l.tag}</span><b>{l.t}</b><List items={l.items} /></div></li>)}</ol>
-          </Sec>
-          <Sec title="Drone services" tone="panel"><List items={DRONE_SERVICES} cols /></Sec>
-        </>
+        <Sec title="Program lifecycle">
+          <ol className="pg-cards">{LIFECYCLE.map((l, i) => <li key={l.t}><div className="pg-card"><span className="pg-case-k">{String(i + 1).padStart(2, "0")} · {l.tag}</span><b>{l.t}</b><List items={l.items} /></div></li>)}</ol>
+        </Sec>
       );
     default:
       return null;

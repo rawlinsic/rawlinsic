@@ -60,6 +60,17 @@ const nextConfig = {
       { source: "/insights/thought-leadership/strengthening-your-team", destination: "/insights/thought-leadership", permanent: true },
       { source: "/thought-leadership-ron-crew-strengthening-your-team.pdf", destination: "/insights/thought-leadership", permanent: true },
       { source: "/index.php", destination: "/", permanent: true },
+      // Old state pages from the current site (content updates v4, 3.6): permanent
+      { source: "/insights/case-studies/delaware", destination: "/insights/case-studies/delaware-technology-strategic-plan", permanent: true },
+      { source: "/insights/case-studies/louisiana", destination: "/insights/case-studies", permanent: true },
+      { source: "/insights/case-studies/michigan", destination: "/insights/case-studies/michigan-performance-based-maintenance-operations", permanent: true },
+      { source: "/insights/case-studies/nevada", destination: "/insights/case-studies/nevada-six-year-strategic-plan", permanent: true },
+      { source: "/insights/case-studies/north-carolina", destination: "/insights/case-studies/north-carolina-integrated-program-delivery", permanent: true },
+      { source: "/insights/case-studies/tennessee", destination: "/insights/case-studies?state=tennessee", permanent: true },
+      { source: "/insights/case-studies/utah", destination: "/insights/case-studies/utah-asset-management-review", permanent: true },
+      { source: "/insights/case-studies/virginia", destination: "/insights/case-studies/virginia-performance-based-maintenance-review", permanent: true },
+      { source: "/insights/case-studies/major-transportation-infrastructure", destination: "/insights/case-studies/major-river-crossings-and-transit", permanent: true },
+      { source: "/insights/case-studies/other-states-major-projects", destination: "/insights/case-studies", permanent: true },
     ];
   },
   async headers() {

@@ -1,16 +1,16 @@
 /* Who we work with: overview, industry pages, sub-sector pages, Private
    Sector (its own plain-language layout), and the hidden International page. */
-import { AREAS, CASES, VISIBLE_INDUSTRIES, industryHref, subsectorHref, type Industry, type Subsector } from "@/lib/content/site";
+import { AREAS, CASES, VISIBLE_INDUSTRIES, caseById, industryHref, isOurs, subsectorHref, type CaseIndex, type Industry, type Subsector } from "@/lib/content/site";
 import { INDUSTRY_PHOTO, PAGE_PHOTO } from "@/lib/content/media";
-import { APPLIED, CASES as CASE_DATA, INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
+import { CASES as CASE_DATA, INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AVIATION_TEAM } from "@/components/site/services";
 import { Btn, CaseCards, Dev, Hero, List, People, Sec, ServiceChips, Shell, Talk } from "@/components/site/ui";
 
 export function IndustriesIndex() {
   return (
     <Shell scene="interchange" photo={PAGE_PHOTO.industries}>
-      <Hero crumbs={[["/industries", "Who we work with"]]} kicker="Who we work with" title="Built inside public agencies."
-        lead={<p>Most of our work is with organizations that own and run public infrastructure. The same methods work for any organization that needs to plan, deliver, and run better. Our work so far is across the United States, and our team can do it anywhere.</p>}
+      <Hero crumbs={[["/industries", "Who we work with"]]} kicker="Who we work with" title="Public agencies and private firms, wherever the work is."
+        lead={<p>Most of our work is with organizations that own and run public infrastructure: more than 30 transportation agencies so far, plus local governments and a multi-state research program. We also work with contractors and engineering firms on public projects, and with private firms on their systems and workflows. Our work so far is across the United States, and our team can do it anywhere.</p>}
         actions={<Btn href="/contact" primary>Get in touch</Btn>} />
       <Sec title="Industries">
         <ul className="pg-cards">
@@ -35,10 +35,16 @@ export function IndustryPage({ ind }: { ind: Industry }) {
   if (ind.id === "intl") return <International />;
   const d = IND_DATA[ind.id];
   const svcIds = Object.values(SERVICES).filter((s) => s.industries.includes(ind.id)).map((s) => s.id);
-  const cases = CASES.filter((c) => c.industry === ind.id || (ind.id === "contractors" && ["cs-major", "cs-partnering"].includes(c.id)));
+  /* Featured projects: Rawlins work only (no Before Rawlins cases). Contractors &
+     Engineering Firms shows its own list, in this order (an engineering firm is
+     the client on cs-pv-pmo). */
+  const cases = (ind.id === "contractors"
+    ? CONTRACTOR_CASES.map((id) => caseById(id)).filter(Boolean) as CaseIndex[]
+    : [...ind.projects.map((id) => caseById(id)).filter(Boolean) as CaseIndex[], ...CASES.filter((c) => c.industry === ind.id && !ind.projects.includes(c.id))]
+  ).filter(isOurs);
   return (
     <Shell scene={ind.scene} photo={INDUSTRY_PHOTO[ind.id]}>
-      <Hero crumbs={[["/industries", "Who we work with"], [industryHref(ind), ind.name]]} kicker={ind.who} title={ind.name}
+      <Hero crumbs={[["/industries", "Who we work with"], [industryHref(ind), ind.name]]} kicker="Who we work with" title={ind.name}
         lead={<p>{ind.lead}</p>} actions={<><Btn href="/contact" primary>Get in touch</Btn><Btn href="#work">See the work</Btn></>} />
       {d.ch.length > 0 && <Sec title="Challenges we hear"><ul className="pg-hear">{d.ch.map((c) => <li key={c}>{c}</li>)}</ul></Sec>}
       {ind.subsectors.length > 0 && (
@@ -65,11 +71,15 @@ export function IndustryPage({ ind }: { ind: Industry }) {
         </div>
       </Sec>
       {d.people.length > 0 && <Sec title="Who you'll work with" tone="panel"><People people={d.people} /></Sec>}
-      {cases.length > 0 && <Sec title="Case studies" id="work"><CaseCards cases={cases} limit={6} /><p style={{ marginTop: 16 }}><a href={`/insights/case-studies?industry=${ind.slug}`}>All {ind.name} case studies</a></p></Sec>}
+      {cases.length > 0 && <Sec title="Featured projects" id="work"><CaseCards cases={cases} limit={6} /><p style={{ marginTop: 16 }}><a href={`/insights/case-studies?industry=${ind.slug}`}>All {ind.name} projects</a></p></Sec>}
       <Talk />
     </Shell>
   );
 }
+
+const CONTRACTOR_CASES = ["cs-major", "cs-db-partnering", "cs-ia-partnering", "cs-partnering", "cs-maint-model", "cs-pv-pmo"];
+/* Private Sector: our own project first, then our automation team's work before Rawlins (tagged) */
+const PRIVATE_CASES = ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service", "cs-pv-field"];
 
 export function SubsectorPage({ ind, sub }: { ind: Industry; sub: Subsector }) {
   const d = SUBSECTORS[sub.id];
@@ -98,7 +108,7 @@ function PrivateSector({ ind }: { ind: Industry }) {
       <Hero crumbs={[["/industries", "Who we work with"], [industryHref(ind), ind.name]]} kicker="Private sector" title="For growing firms"
         lead={<p>{ind.lead}</p>} actions={<Btn href="/contact" primary>Book a short call</Btn>} />
       <Sec title="Sound familiar?"><ul className="pg-hear">{PRIV.hear.map((h) => <li key={h}>{h}</li>)}</ul></Sec>
-      <Sec title="What we've built for firms like yours" tone="panel"><List items={APPLIED.slice(1).map((a) => `${a[0]}: ${a[1]}`)} cols /></Sec>
+      <Sec title="Featured projects" tone="panel" id="work"><CaseCards ids={PRIVATE_CASES} /></Sec>
       <Sec title="Ways to start">
         <ol className="pg-cards">{PRIV.start.map((s, i) => <li key={s}><div className="pg-card"><span className="pg-case-k">{String(i + 1).padStart(2, "0")}</span><b>{s}</b></div></li>)}</ol>
         <Dev block>Ways to start: confirm wording with Ben. Hours and pricing stay internal.</Dev>

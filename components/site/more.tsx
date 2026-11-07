@@ -4,12 +4,12 @@ import type { ReactNode } from "react";
 import { PAGE_PHOTO } from "@/lib/content/media";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { THOUGHT_LEADERSHIP, type ThoughtLeadershipArticle } from "@/components/thought-leadership-data";
-import { AREAS, CASES, LEADERS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseWho, industryHref, subsectorHref } from "@/lib/content/site";
-import { INDUSTRIES as IND_DATA, STATES, STEPS } from "@/lib/content/catalog";
+import { AREAS, CASES, LEADERS, STORY, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, industryHref, subsectorHref } from "@/lib/content/site";
+import { INDUSTRIES as IND_DATA, STATES, STATES_ACTIVE, STATES_SERVED, STEPS } from "@/lib/content/catalog";
 import { AVIATION_TEAM } from "@/components/site/services";
 import PeopleDirectory, { type Person } from "@/components/site/people";
 import PodcastPlayer from "@/components/site/podcast-player";
-import { NEWS, EVENTS } from "@/lib/content/news";
+import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { cleanNames } from "@/lib/content/clean";
 import { Btn, CaseCards, Dev, Hero, List, People, PROD, Sec, Shell, Steps, Talk } from "@/components/site/ui";
 
@@ -21,8 +21,8 @@ const Cards = ({ items }: { items: { href: string; t: string; d: string }[] }) =
 export function AboutIndex() {
   return (
     <Shell scene="hero" photo={PAGE_PHOTO.about}>
-      <Hero crumbs={[["/about", "About"]]} kicker="About Rawlins" title="People who have done the job"
-        lead={<p>Former agency leaders and engineers, working alongside an in-house team that builds the tools.</p>} />
+      <Hero crumbs={[["/about", "About"]]} kicker="About Rawlins" title="People who've done the job, and a team that builds the tools."
+        lead={<p>Founded in 2017 by a former Nevada DOT chief engineer. Today more than 25 of our people come from public agencies, and they work next to an in-house team that builds integrations, automation, dashboards, and AI.</p>} />
       <Sec>
         <Cards items={[
           { href: "/about/who-we-are", t: "Who we are", d: "Our story, how we've grown, and the people behind it." },
@@ -40,12 +40,12 @@ export function AboutIndex() {
 export function WhoWeAre() {
   return (
     <Shell scene="hero" photo={PAGE_PHOTO.who}>
-      <Hero crumbs={[["/about", "About"], ["/about/who-we-are", "Who we are"]]} kicker="Who we are" title="Former agency leaders, with a team that builds"
-        lead={<p>Former agency leaders, working alongside an in-house automation and AI build team.</p>} statement="We find what's broken, fix it, and stay until it runs." />
+      <Hero crumbs={[["/about", "About"], ["/about/who-we-are", "Who we are"]]} kicker="Who we are" title="Founded on agency experience"
+        lead={<p>Rawlins was founded in 2017 by Scott Rawlins, former Deputy Director and Chief Engineer of the Nevada Department of Transportation. Today former agency leaders work next to an in-house team that builds the tools.</p>} />
       <Sec title="Our story">
         <div className="pg-prose">
-          <p>Rawlins was founded in 2017 by Scott Rawlins, former Deputy Director and Chief Engineer of the Nevada Department of Transportation, to bring agency experience to agencies that needed it. A big part of our work is still advising agency leaders on how to deliver their programs. It has grown from there.</p>
-          <Dev>Founding year and story: Scott to confirm.</Dev>
+          <p>Scott Rawlins started Rawlins in 2017 to bring agency experience to the agencies that needed it. He spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and then led an infrastructure asset management practice at a global consulting firm. Some of the projects on this site come from that earlier work, or from our team&apos;s work before they joined us. Those are marked Before Rawlins.</p>
+          <p>Advising agency leaders on how to deliver their programs is still a big part of what we do. Since 2017 we&apos;ve added drone and advanced air mobility work, an in-house team that builds integrations, automation, dashboards, and AI, and clients beyond transportation agencies, including contractors, engineering firms, and private companies. Our people work across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>
         </div>
       </Sec>
       <Sec title="How we've grown" tone="panel"><Steps steps={STORY.map(([k, t, d]) => ({ t: `${k}: ${t}`, d }))} /></Sec>
@@ -61,12 +61,13 @@ export function WhoWeAre() {
 export function HowWeWork() {
   return (
     <Shell scene="construction" photo={PAGE_PHOTO.how}>
-      <Hero crumbs={[["/about", "About"], ["/about/how-we-work", "How we work"]]} kicker="How we work" title="We find what's broken, fix it, and stay until it runs." />
+      <Hero crumbs={[["/about", "About"], ["/about/how-we-work", "How we work"]]} kicker="How we work" title="Start with what exists. Stay until it runs."
+        lead={<p>Four steps, worked out with the people who do the work.</p>} />
       <Sec title="Four steps"><Steps steps={STEPS.map(([t, d]) => ({ t, d }))} /></Sec>
       <Sec title="Principles" tone="panel">
         <ul className="pg-cards">
           {[
-            ["Start where the client is", "Many organizations already have a plan, a framework, or a manual. We put what exists to work before writing anything new."],
+            ["Start where the client is", "Most organizations already have a plan, a framework, or a manual. We put what exists to work before writing anything new."],
             ["Bridge before building", "We use the systems and licenses a client already owns, and build new only when nothing existing can do the job."],
             ["Straight answers on AI", "When a problem needs a rule, a process, or a decision instead of a model, we say so."],
             ["The client owns the result", "Every build comes with documentation and training. No lock-in."],
@@ -74,10 +75,10 @@ export function HowWeWork() {
           ].map(([t, d]) => <li key={t}><div className="pg-card"><b>{t}</b><span>{d}</span></div></li>)}
         </ul>
       </Sec>
-      <Sec title="How an engagement usually runs">
+      <Sec title="How a project usually runs">
         <List items={[
-          "Start with what exists: the agency's plans, manuals, data, and systems",
-          "Work with the agency's own experts, through core teams, working groups, and workshops",
+          "Start with what exists: your plans, manuals, data, and systems",
+          "Work with your own experts, in working groups and workshops",
           "Build the tools people will use: manuals, templates, training, dashboards, and working apps",
           "Stay through rollout: training, onboarding, and support while staff learn the new way",
         ]} />
@@ -88,15 +89,24 @@ export function HowWeWork() {
 }
 
 export function WhereWeWork() {
+  /* a state links to its projects only when a project carries its tag (unnamed-client work has no state tag) */
+  const tagged = new Set(CASES.flatMap((c) => c.states));
+  const chips = (list: string[]) => (
+    <ul className="pg-chips">{[...list].sort().map((s) => <li key={s}>{tagged.has(s)
+      ? <a href={`/insights/case-studies?state=${s.toLowerCase().replace(/\s+/g, "-")}`}>{s}</a>
+      : <span className="pg-chip">{s}</span>}</li>)}</ul>
+  );
   return (
-    <Shell scene="map" highlight={STATES}>
+    <Shell scene="map" highlight={STATES} strong={STATES_ACTIVE}>
       <Hero crumbs={[["/about", "About"], ["/about/where-we-work", "Where we work"]]} kicker="Where we work" title="Across the United States"
-        lead={<p>The states where our work has taken us. Our work so far is across the United States, and our team can do it anywhere.</p>} actions={<Btn href="/insights/case-studies" primary>See the case studies</Btn>}>
-        <Dev>International places on the current Areas page (Barbados, Dubai, Réunion, Saudi Arabia) are pursuits, not delivered work, so they are left off. Needs Nicole&apos;s decision.</Dev>
+        lead={<p>The states where our work has taken us. Our work so far is across the United States, and our team can do it anywhere. Members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>} actions={<Btn href="/insights/case-studies" primary>See our projects</Btn>}>
+        <ul className="pg-map-legend" aria-label="Map key">
+          <li><i className="is-active" aria-hidden="true" />Active</li>
+          <li><i aria-hidden="true" />Areas we&apos;ve served</li>
+        </ul>
       </Hero>
-      <Sec title="United States">
-        <ul className="pg-chips">{STATES.map((s) => <li key={s}><a href={`/insights/case-studies?state=${s.toLowerCase().replace(/\s+/g, "-")}`}>{s}</a></li>)}</ul>
-      </Sec>
+      <Sec title="Active">{chips(STATES_ACTIVE)}</Sec>
+      <Sec title="Areas we've served" tone="panel">{chips(STATES_SERVED)}</Sec>
       <Talk />
     </Shell>
   );
@@ -152,8 +162,8 @@ export function OurPeople() {
   if (founder > 0) people.unshift(people.splice(founder, 1)[0]);
   return (
     <Shell>
-      <Hero scene={false} crumbs={[["/about", "About"], ["/about/our-people", "Our people"]]} kicker="Our people" title="People who have done the job"
-        lead={<p>More than 30 former agency executives and engineers, working next to the team that builds the tools. We&apos;re a flat, remote firm: you work with the people who do the work.</p>} />
+      <Hero scene={false} crumbs={[["/about", "About"], ["/about/our-people", "Our people"]]} kicker="Our people" title="The people behind the work"
+        lead={<p>More than 25 of our people came from public agencies. They work next to the specialists who build the tools, and you work directly with the people doing the work.</p>} />
       <section className="pg-sec pg-body"><div className="pg-wrap">
         <PeopleDirectory people={people} showDev={!PROD} areas={AREAS.map((a) => ({ value: a.slug, label: a.name }))} />
       </div></section>
@@ -164,24 +174,31 @@ export function OurPeople() {
 
 /* ── Careers (live content kept) ── */
 export type Position = { title: string; href: string; summary: string };
+/* What it's like here (for people who might join us, not the client-facing WHY points) */
+const CAREERS_WHY: [string, string][] = [
+  ["Learn from people who've done the job", "More than 25 of our people came from public agencies. You'll work next to people who ran the programs."],
+  ["Strategy and build, side by side", "Advisors and our in-house build team work on the same projects."],
+  ["Work from where you are", "Our people work across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates."],
+  ["Senior people, real work", "Senior people do the work, so you work with them directly."],
+];
 export const OPEN_POSITIONS: Position[] = [];
 export function Careers() {
   return (
     <Shell scene="rise" photo={PAGE_PHOTO.careers}>
       <Hero crumbs={[["/careers", "Careers"]]} kicker="Careers at Rawlins" title="Work with us"
         lead={<>
-          <p>We&rsquo;re always interested in connecting with thoughtful, driven professionals who are passionate about solving complex challenges and creating meaningful impact. If our approach aligns with your interests, we invite you to connect and discuss opportunities.</p>
+          <p>We hire people who&rsquo;ve done the work inside public agencies, and people who build the tools that make the work easier. If that sounds like you, we&rsquo;d like to hear from you.</p>
           <p>Email us at <a href="mailto:jobs@rawlinsic.com">jobs@rawlinsic.com</a></p>
         </>} actions={<Btn href="mailto:jobs@rawlinsic.com" primary>Email jobs@rawlinsic.com</Btn>} />
       <Sec title="Open positions">
         {OPEN_POSITIONS.length ? (
           <ul className="pg-cards">{OPEN_POSITIONS.map((p) => <li key={p.href}><a href={p.href} className="pg-card pg-card-link"><b>{p.title}</b><span>{p.summary}</span></a></li>)}</ul>
         ) : (
-          <div className="pg-prose"><p>We don&rsquo;t have any open positions at the moment, but we&rsquo;re always glad to connect with talented people. Reach out at the email above and we&rsquo;ll keep you in mind for future opportunities.</p></div>
+          <div className="pg-prose"><p>No open positions right now. Send us a note and your résumé anyway, and we&rsquo;ll keep you in mind.</p></div>
         )}
       </Sec>
       <Sec title="What it's like here" tone="panel">
-        <ol className="pg-cards">{WHY.slice(0, 4).map(([t, d]) => <li key={t}><div className="pg-card"><b>{t}</b><span>{d}</span></div></li>)}</ol>
+        <ol className="pg-cards">{CAREERS_WHY.map(([t, d]) => <li key={t}><div className="pg-card"><b>{t}</b><span>{d}</span></div></li>)}</ol>
       </Sec>
     </Shell>
   );
@@ -192,15 +209,15 @@ export function InsightsIndex() {
   const latest = NEWS.filter((n) => !n.placeholder || !PROD).slice(0, 3);
   return (
     <Shell scene="network" photo={PAGE_PHOTO.insights}>
-      <Hero crumbs={[["/insights", "Insights"]]} kicker="Insights" title="What we're learning, and what we've done"
-        lead={<p>Case studies, news and recognition, thought leadership, research, and our podcast.</p>} />
+      <Hero crumbs={[["/insights", "Insights"]]} kicker="Insights" title="What we've done, and what we're learning"
+        lead={<p>Projects, news and recognition, thought leadership, research, and our podcast.</p>} />
       <Sec>
         <Cards items={[
-          { href: "/insights/case-studies", t: "Case studies", d: "Our work, by service, industry, and state." },
+          { href: "/insights/case-studies", t: "Projects", d: "Our work, by service, industry, and state." },
           { href: "/insights/news", t: "News & Recognition", d: "Wins, awards, publications, speaking, events, and new team members." },
           { href: "/insights/thought-leadership", t: "Thought Leadership", d: "Practical perspectives from our team." },
           { href: "/insights/research", t: "Research & Publications", d: "Guidance manuals, standards, and research." },
-          { href: "/insights/podcast", t: "Podcast", d: "The Rawlins Way." },
+          { href: "/insights/podcast", t: "Podcast", d: "The Rawlins Way: conversations with the people doing the work." },
         ]} />
       </Sec>
       {latest.length > 0 && <Sec title="Latest" tone="panel"><NewsList items={latest} /></Sec>}
@@ -227,7 +244,7 @@ function NewsList({ items }: { items: typeof NEWS }) {
 
 export function NewsPage() {
   const items = NEWS.filter((n) => !n.placeholder || !PROD);
-  const events = EVENTS.filter((e) => !e.placeholder || !PROD);
+  const events = EVENTS.filter((e) => (!e.placeholder || !PROD) && isUpcoming(e));
   return (
     <Shell scene="people" photo={PAGE_PHOTO.news}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/news", "News & Recognition"]]} kicker="Insights" title="News & Recognition"
@@ -250,10 +267,10 @@ export function ResearchPage() {
   const aero = caseById("cs-aero")!;
   const division = caseById("cs-aerodiv")!;
   const items: { k: string; t: string; d: ReactNode }[] = [
-    { k: "Guidance", t: "National guidance manuals on drones and advanced air mobility", d: <>First-of-their-kind guidance manuals written by Paul Wheeler, an aerial innovation advisor on our team.</> },
-    { k: "Standards", t: "Multi-state drone standards and specifications", d: <><a href={caseHref(pooled)}>{caseWho(pooled, PROD)}</a>: consensus standards states can write into their own specifications.</> },
-    { k: "Research", t: "Establishing a state aeronautics division", d: <><a href={caseHref(division)}>{caseWho(division, PROD)}</a>: a national scan, stakeholder interviews, and funding options.</> },
-    { k: "Symposia", t: "Aviation symposia and peer exchanges", d: <><a href={caseHref(aero)}>{caseWho(aero, PROD)}</a>: convening states, industry, and researchers.</> },
+    { k: "Guidance", t: "Guidance manuals on drones and advanced air mobility", d: <>First-of-their-kind guidance manuals written by Paul Wheeler, an aerial innovation advisor on our team.</> },
+    { k: "Standards", t: "Multi-state drone standards and specifications", d: <><a href={caseHref(pooled)}>{pooled.who}</a>: consensus standards states can write into their own specifications.</> },
+    { k: "Research", t: "Establishing a state aeronautics division", d: <><a href={caseHref(division)}>{division.who}</a>: a national scan, stakeholder interviews, and funding options.</> },
+    { k: "Symposium", t: "A statewide drone and advanced air mobility symposium", d: <><a href={caseHref(aero)}>{aero.who}</a>: we planned and ran it.</> },
     { k: "Thought leadership", t: "Minimizing data governance fatigue to maximize value", d: <><a href="/insights/thought-leadership/minimizing-data-governance-fatigue">A Q&amp;A with April Blackburn</a>, former Florida DOT Chief Information Officer.</> },
   ];
   return (
@@ -408,7 +425,7 @@ export function SiteMapPage() {
           </ul>
         </div>
         <div>
-          <h2 className="pg-h3"><a href="/insights/case-studies">Case studies</a></h2>
+          <h2 className="pg-h3"><a href="/insights/case-studies">Projects</a></h2>
           <ul>{CASES.map((c) => <li key={c.id}><a href={caseHref(c)}>{c.title}</a></li>)}</ul>
         </div>
       </div></section>

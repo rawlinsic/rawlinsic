@@ -6,16 +6,16 @@ import Footer from "@/components/v8/footer";
 import PageScene from "@/components/site/page-scene";
 import Panels from "@/components/v8/panels";
 import { TEAM_MEMBERS } from "@/lib/team-data";
-import { AREAS, CASES, caseHref, caseWho, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
+import { AREAS, CASES, caseHref, caseTag, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
 import { SCENE_PHOTO } from "@/lib/content/media";
 
 export const PROD = process.env.VERCEL_ENV === "production";
 
-export function Shell({ scene, photo, highlight, children }: { scene?: string; photo?: string; highlight?: string[]; children: ReactNode }) {
+export function Shell({ scene, photo, highlight, strong, children }: { scene?: string; photo?: string; highlight?: string[]; strong?: string[]; children: ReactNode }) {
   return (
     <>
       <Header />
-      {scene && <PageScene scene={scene} photo={photo ?? SCENE_PHOTO[scene as SceneKey]} highlight={highlight} />}
+      {scene && <PageScene scene={scene} photo={photo ?? SCENE_PHOTO[scene as SceneKey]} highlight={highlight} strong={strong} />}
       <main className={`pg${scene ? " pg-with-scene" : ""}`}><Panels className="pnl-clear">{children}</Panels></main>
       <Footer />
     </>
@@ -116,10 +116,9 @@ export function CaseCards({ ids, cases, limit }: { ids?: readonly string[]; case
       {list.map((c) => (
         <li key={c.id}>
           <a href={caseHref(c)} className="pg-case">
-            <span className="pg-case-k">{c.status === "Ongoing" ? "In the works" : "Case study"}</span>
+            <span className="pg-case-k">{caseTag(c, "Case study")}</span>
             <b>{c.title}</b>
-            <span>{caseWho(c, PROD)}</span>
-            {c.needsSignoff && !PROD && <em className="pg-dev">Needs sign-off · shows as “{c.generic}” on launch</em>}
+            <span>{c.who}</span>
           </a>
         </li>
       ))}
@@ -198,7 +197,7 @@ export function Talk({ title = TALK.title, text = TALK.text }: { title?: string;
         </div>
         <div className="pg-btns">
           <Btn href="/contact" primary>Get in touch</Btn>
-          <Btn href="/insights/case-studies">See case studies</Btn>
+          <Btn href="/insights/case-studies">See our projects</Btn>
         </div>
       </div>
     </section>

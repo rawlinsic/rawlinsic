@@ -12,20 +12,21 @@ import { useState, type CSSProperties } from "react";
 
 /* ── Integrate the next layer of your transportation system ── */
 const NODES = [
-  { id: "urban-air-taxi", label: "Air Taxi", x: 175, y: 140, desc: "Electric vertical takeoff and landing (eVTOL) aircraft providing on-demand urban and regional passenger transport." },
+  { id: "urban-air-taxi", label: "Passenger aircraft", x: 175, y: 140, desc: "Electric vertical takeoff and landing (eVTOL) aircraft providing on-demand urban and regional passenger transport." },
   { id: "package-delivery", label: "Package Delivery", x: 193, y: 420, desc: "Automated drone logistics for last-mile and middle-mile package delivery across urban and suburban areas." },
   { id: "residential", label: "Residential Areas", x: 492, y: 160, desc: "Suburban and residential communities served by drone delivery, air taxi connections, and emergency response drones." },
   { id: "medical", label: "Medical Supplies", x: 488, y: 370, desc: "Time-critical medical supply delivery including lab samples, medications, vaccines, and emergency equipment." },
   { id: "rural", label: "Rural & Agriculture", x: 805, y: 150, desc: "Agricultural monitoring, crop spraying, rural delivery services, and environmental data collection for remote areas." },
   { id: "city-center", label: "City Center", x: 760, y: 400, desc: "Dense urban cores integrating vertiport networks, drone corridors, and multimodal transit connections." },
 ];
-type Kind = "air" | "delivery" | "medical";
+/* two route kinds: people and cargo (package and medical deliveries are one kind) */
+type Kind = "air" | "delivery";
 const PATHS: [string, string, Kind][] = [
   ["urban-air-taxi", "residential", "air"], ["urban-air-taxi", "rural", "air"], ["residential", "rural", "air"], ["residential", "city-center", "air"], ["urban-air-taxi", "city-center", "air"],
   ["package-delivery", "residential", "delivery"], ["package-delivery", "medical", "delivery"], ["package-delivery", "city-center", "delivery"], ["package-delivery", "rural", "delivery"],
-  ["medical", "residential", "medical"], ["medical", "city-center", "medical"], ["medical", "rural", "medical"],
+  ["medical", "residential", "delivery"], ["medical", "city-center", "delivery"], ["medical", "rural", "delivery"],
 ];
-const ROUTE: Record<Kind, string> = { air: "Air taxi routes", delivery: "Package delivery routes", medical: "Medical supply routes" };
+const ROUTE: Record<Kind, string> = { air: "People movement", delivery: "Cargo movement" };
 const at = (id: string) => NODES.find((n) => n.id === id)!;
 const arc = (a: string, b: string, i: number) => {
   const p = at(a), q = at(b);
@@ -80,14 +81,15 @@ export function NextLayer() {
 
 /* ── Bridging silos ── */
 const ECO = [
-  { label: "Aviation authorities", short: "FAA · ICAO · NASAO", desc: "Interpreting U.S. federal and international aviation regulatory bodies shaping airspace policy and certification standards." },
-  { label: "Government agencies", short: "State DOTs · Security · Emergency", desc: "Aligning state, federal, and international transportation agencies, security forces, and emergency management services." },
-  { label: "Standards organizations", short: "ACRA · AASHTO · NCHRP", desc: "Developing industry standards for technical requirements, performance benchmarks, and implementation frameworks." },
-  { label: "Academic institutions", short: "Research · Universities · Labs", desc: "Steering research centers and universities advancing advanced air mobility technology, safety analysis, and workforce development." },
-  { label: "Air navigation providers", short: "Drone traffic · Air traffic management", desc: "Integrating drone traffic management operators and air traffic management providers to enable safe airspace." },
-  { label: "Operators and services", short: "Drone operations · Delivery · Providers", desc: "Informing commercial drone operators, delivery service providers, and aerial operations companies on industry best practices." },
-  { label: "Industry", short: "Manufacturers · Technology · Integrators", desc: "Guiding aircraft manufacturers, technology providers, and systems integrators building the vehicles for tomorrow's airspace." },
-  { label: "Cities and planning organizations", short: "Municipal · Planning · Transit", desc: "Integrating advanced air mobility across rural and urban communities." },
+  { label: "Aviation authorities", short: "FAA · ICAO · NASAO", desc: "Federal rules and guidance we track for agency programs, with international standards where they apply." },
+  { label: "Government agencies", short: "State DOTs · Federal agencies · Emergency management", desc: "State and federal transportation agencies and emergency management offices." },
+  /* ACRP: Airport Cooperative Research Program ("ACRA" was a typo carried over from the live site) */
+  { label: "Standards organizations", short: "ACRP · AASHTO · NCHRP", desc: "Standards and research bodies whose guidance agencies adopt. Members of our team serve on national committees." },
+  { label: "Academic institutions", short: "Research · Universities · Labs", desc: "Universities and research centers working on air mobility safety, technology, and workforce." },
+  { label: "Air navigation providers", short: "Drone traffic · Air traffic management", desc: "Drone traffic management and air traffic management providers whose systems shape what agencies can do." },
+  { label: "Operators and services", short: "Drone operations · Delivery · Providers", desc: "Commercial drone operators and delivery providers." },
+  { label: "Industry", short: "Manufacturers · Technology · Integrators", desc: "Aircraft manufacturers, technology providers, and systems integrators." },
+  { label: "Cities and planning organizations", short: "Municipal · Planning · Transit", desc: "Local governments and planning organizations preparing for air mobility." },
 ];
 
 export function BridgingSilos() {

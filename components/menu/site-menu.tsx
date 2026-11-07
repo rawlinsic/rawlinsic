@@ -5,7 +5,7 @@
    Phone: the same levels as a drill-down with a back arrow. */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  CASES, MENU, PROBLEMS, SITE_INDEX, caseById, caseHref, caseWho, serviceById, serviceHref,
+  CASES, MENU, PROBLEMS, SITE_INDEX, caseById, caseHref, serviceById, serviceHref,
   type MenuNode, type SearchHit,
 } from "@/lib/content/site";
 import { getPageScene, getWorld, hasJourney, setWorldLayer } from "@/components/world/host";
@@ -109,7 +109,7 @@ export default function SiteMenu({ open, onClose, prod }: { open: boolean; onClo
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (q.length < 2) return [];
-    const caseHits: SearchHit[] = CASES.map((c) => ({ label: c.title, kind: `Case study · ${caseWho(c, prod)}`, href: caseHref(c) }));
+    const caseHits: SearchHit[] = CASES.map((c) => ({ label: c.title, kind: `Project · ${c.who}`, href: caseHref(c) }));
     return [...SITE_INDEX, ...caseHits, ...people].filter((h) => h.label.toLowerCase().includes(q) || h.kind.toLowerCase().includes(q)).slice(0, 14);
   }, [query, people, prod]);
 
@@ -281,12 +281,12 @@ function Feature({ node, prod, onPicker }: { node: MenuNode; prod: boolean; onPi
   }
   if (f.kind === "case") {
     const c = caseById(f.id);
-    if (!c || (prod && c.needsSignoff)) return null;
+    if (!c) return null;
     return (
       <a className="mn-card" href={caseHref(c)}>
         <p className="mn-card-k">Case study · {c.status}</p>
         <h3>{c.title}</h3>
-        <p>{caseWho(c, prod)}</p>
+        <p>{c.who}</p>
         <span className="mn-card-cta">Read the case study</span>
       </a>
     );

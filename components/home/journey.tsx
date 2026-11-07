@@ -9,11 +9,11 @@ import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   AREAS, CASES, HOME, LEADERS, NUMBERS, PROBLEMS, STORY, VISIBLE_INDUSTRIES, WHY,
-  areaHref, caseHref, caseWho, industryHref, serviceById, serviceHref, subsectorHref,
+  areaHref, caseHref, industryHref, serviceById, serviceHref, subsectorHref,
 } from "@/lib/content/site";
 import { getWorld, setJourneyOwner, setWorldLayer } from "@/components/world/host";
 import { want3D } from "@/components/site/scene-mode";
-import { HOME_VIDEO, STATION_PHOTO } from "@/lib/content/media";
+import { STATION_PHOTO } from "@/lib/content/media";
 import USMap from "@/components/site/us-map";
 
 /* Chapter → stations (must match SEQ in components/world/engine.ts) */
@@ -54,11 +54,11 @@ export default function Journey({ prod }: { prod: boolean }) {
   const [three, setThree] = useState(false);
   const [station, setStation] = useState("hero0");
 
-  /* Cases visible here: production never shows uncleared names or places them on the map */
-  const mapCases = useMemo(() => CASES.filter((c) => c.states.length && (!prod || !c.needsSignoff)), [prod]);
+  /* Cases with a state go on the map (unnamed clients have no state) */
+  const mapCases = useMemo(() => CASES.filter((c) => c.states.length), []);
   const states = useMemo(() => Array.from(new Set(mapCases.flatMap((c) => c.states))).sort(), [mapCases]);
   /* home shows the six most recent; the full list lives on the case studies page */
-  const inTheWorks = useMemo(() => CASES.filter((c) => c.status === "Ongoing" && c.visibility !== "internal").slice(0, 6), []);
+  const inTheWorks = useMemo(() => CASES.filter((c) => c.status === "Ongoing").slice(0, 6), []);
 
   /* scroll → chapter progress → world position */
   const measure = useCallback(() => {
@@ -317,14 +317,9 @@ export default function Journey({ prod }: { prod: boolean }) {
             <h2 id="jy-proof" className="jy-h2">Where we&apos;ve done the work.</h2>
             <p className="jy-lead">Pick a state to see the work behind it.</p>
             <div className="jy-states" role="group" aria-label="States with case studies">
-              {states.map((s) => {
-                const dev = !prod && mapCases.filter((c) => c.states.includes(s)).every((c) => c.needsSignoff);
-                return (
-                  <button key={s} type="button" aria-pressed={state === s} onClick={() => setState(state === s ? null : s)}>
-                    {s}{dev && <span className="jy-dev-dot" title="Needs sign-off" />}
-                  </button>
-                );
-              })}
+              {states.map((s) => (
+                <button key={s} type="button" aria-pressed={state === s} onClick={() => setState(state === s ? null : s)}>{s}</button>
+              ))}
             </div>
             <div aria-live="polite">
               {state && (
@@ -333,9 +328,8 @@ export default function Journey({ prod }: { prod: boolean }) {
                     <li key={c.id}>
                       <a href={caseHref(c)}>
                         <b>{c.title}</b>
-                        <span>{caseWho(c, prod)} · {c.status}</span>
+                        <span>{c.who} · {c.status}</span>
                       </a>
-                      {c.needsSignoff && !prod && <span className="jy-dev">Needs sign-off</span>}
                     </li>
                   ))}
                 </ul>
@@ -346,7 +340,7 @@ export default function Journey({ prod }: { prod: boolean }) {
             <h3 className="jy-h3">Featured work</h3>
             <ul className="jy-cases jy-cases-grid">
               {FEATURED.map((id) => CASES.find((c) => c.id === id)!).map((c) => (
-                <li key={c.id}><a href={caseHref(c)}><b>{c.title}</b><span>{caseWho(c, prod)}</span></a></li>
+                <li key={c.id}><a href={caseHref(c)}><b>{c.title}</b><span>{c.who}</span></a></li>
               ))}
             </ul>
           </div>
@@ -356,8 +350,7 @@ export default function Journey({ prod }: { prod: boolean }) {
               {inTheWorks.map((c) => (
                 <li key={c.id}>
                   <b>{c.title}</b>
-                  <span>{caseWho(c, prod)}</span>
-                  {c.needsSignoff && !prod && <span className="jy-dev">Needs sign-off · shows as “{c.generic}” on launch</span>}
+                  <span>{c.who}</span>
                 </li>
               ))}
             </ul>
@@ -443,32 +436,23 @@ function Count({ to, suffix }: { to: number; suffix: string }) {
   return <>{v}{suffix}</>;
 }
 
-/* Photo version backdrop: hero video, then one photo per scene with a
-   crossfade, and the flat map for "The proof". */
+/* Photo version backdrop: one photo per scene with a crossfade (the old hero
+   video is no longer used), and the flat map for "The proof". */
 function JourneyPhotos({ station, lit, active, onPick }: { station: string; lit: string[]; active: string | null; onPick: (s: string) => void }) {
   const src = STATION_PHOTO[station] ?? STATION_PHOTO.hero0;
   const [layers, setLayers] = useState<string[]>([src]);
-  const [still, setStill] = useState(false);
-  useEffect(() => { setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
   useEffect(() => {
     setLayers((l) => (l[l.length - 1] === src ? l : [...l.slice(-1), src]));
   }, [src]);
   const isHero = station === "hero0" || station === "hero1";
   return (
     <div className={`jy-photos${isHero ? " is-hero" : ""}`} aria-hidden={src === "map" ? undefined : true}>
-      {isHero && !still ? (
-        <video className="jy-video" autoPlay muted loop playsInline preload="auto" poster={HOME_VIDEO.poster}>
-          <source src={HOME_VIDEO.webm} type="video/webm" />
-          <source src={HOME_VIDEO.mp4} type="video/mp4" />
-        </video>
+      {layers.map((l, i) => l === "map" ? (
+        <div key={l + i} className="jy-photo jy-map-layer"><USMap lit={lit} active={active} onPick={onPick} label="Map of the states where we've done the work. Pick a state below to see the work behind it." /></div>
       ) : (
-        layers.map((l, i) => l === "map" ? (
-          <div key={l + i} className="jy-photo jy-map-layer"><USMap lit={lit} active={active} onPick={onPick} label="Map of the states where we've done the work. Pick a state below to see the work behind it." /></div>
-        ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img key={l + i} className="jy-photo" src={l} alt="" decoding="async" />
-        ))
-      )}
+        // eslint-disable-next-line @next/next/no-img-element
+        <img key={l + i} className="jy-photo" src={l} alt="" decoding="async" />
+      ))}
     </div>
   );
 }

@@ -10,7 +10,7 @@
      walk away    with the experience behind it alongside
    and the page ends by moving you on to the next service. */
 import type { CSSProperties } from "react";
-import { AREAS, CASES, areaHref, caseHref, caseWho, serviceById, serviceHref } from "@/lib/content/site";
+import { AREAS, CASES, areaHref, caseHref, caseTag, isOurs, serviceById, serviceHref } from "@/lib/content/site";
 import { SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { SERVICE_STEPS } from "@/lib/content/features";
@@ -41,7 +41,8 @@ export default function ServiceV8({ id }: { id: string }) {
   const i = area.services.findIndex((x) => x.id === id);
   const nextSvc = area.services[i + 1];
   const nextArea = AREAS[(AREAS.findIndex((a) => a.id === area.id) + 1) % AREAS.length];
-  const cases = CASES.filter((c) => c.services.includes(id));
+  /* our own work first; earlier work (tagged Before Rawlins) after it */
+  const cases = CASES.filter((c) => c.services.includes(id)).sort((a, b) => Number(!isOurs(a)) - Number(!isOurs(b)));
   const steps = SERVICE_STEPS[id];
   const hear = quotes(s.hear);
   const photo = SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id];
@@ -154,10 +155,9 @@ export default function ServiceV8({ id }: { id: string }) {
                   <a href={caseHref(c)}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={casePhoto(c)} alt="" loading="lazy" />
-                    <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{c.status === "Ongoing" ? "In the works" : "Completed"}</span>
+                    <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{caseTag(c)}</span>
                     <b>{c.title}</b>
-                    <span className="pc-who">{caseWho(c, PROD)}</span>
-                    {!PROD && c.needsSignoff && <em className="v8-dev">Needs sign-off · shows as “{c.generic}” on launch</em>}
+                    <span className="pc-who">{c.who}</span>
                   </a>
                 </li>
               ))}

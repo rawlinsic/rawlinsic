@@ -2,7 +2,8 @@
    Speaking, Event, New team member. Each post can link to its LinkedIn post.
    `placeholder` items show on preview deployments only, never in production. */
 export type NewsItem = { tag: "Win" | "Award" | "Publication" | "Speaking" | "Event" | "New team member"; date?: string; title: string; text?: string; href?: string; linkedin?: string; placeholder?: string };
-export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string };
+/* ends: the event's last day (YYYY-MM-DD). It drops off the site the next day. */
+export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string };
 
 export const NEWS: NewsItem[] = [
   {
@@ -19,5 +20,15 @@ export const NEWS: NewsItem[] = [
 /* AASHTO Annual Meeting (handoff v8, 4.1). Safe line only: ten of our people
    are going. Exhibiting or speaking is unverified, so it isn't claimed. */
 export const EVENTS: EventItem[] = [
-  { when: "Nov 15–18, 2026", title: "AASHTO Annual Meeting", where: "Louisville, Kentucky", note: "Ten of our people will be there." },
+  { when: "Nov 15–18, 2026", title: "AASHTO Annual Meeting", where: "Louisville, Kentucky", note: "Ten of our people will be there.", ends: "2026-11-18" },
 ];
+
+/* An event shows until the end of its last day, Pacific time (our office is in
+   Reno). Pages that list events revalidate hourly, so a past event drops off
+   on its own without a new deploy. */
+export const isUpcoming = (e: EventItem, now: Date = new Date()) => {
+  if (!e.ends) return true;
+  const [y, m, d] = e.ends.split("-").map(Number);
+  const nextDayPacific = Date.UTC(y, m - 1, d + 1, 8); // midnight PST (UTC-8) the day after
+  return now.getTime() < nextDayPacific;
+};

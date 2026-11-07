@@ -11,7 +11,7 @@
    The Digital and Drones areas keep their carried-over features (applied
    solutions, the AAM landscape and partners). */
 import type { ReactNode } from "react";
-import { AREAS, CASES, areaHref, caseHref, caseWho, type Area } from "@/lib/content/site";
+import { AREAS, CASES, areaHref, caseHref, isOurs, type Area } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { THEME, themeStyle, casePhoto } from "@/lib/content/v8";
@@ -23,7 +23,6 @@ import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
 import { TALK } from "@/components/site/ui";
 
-const PROD = process.env.VERCEL_ENV === "production";
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
 /* one card per quote: some entries hold two quotes in one string ("…” “…") */
@@ -34,11 +33,12 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
   const T = THEME[area.id];
   const k = AREAS.findIndex((a) => a.id === area.id);
   const next = AREAS[(k + 1) % AREAS.length];
-  const cases = L.cases.map((id) => CASES.find((c) => c.id === id)).filter((c) => c && (!PROD || !c.needsSignoff)) as typeof CASES;
+  /* Featured projects: Rawlins work only (no Before Rawlins cases) */
+  const cases = L.cases.map((id) => CASES.find((c) => c.id === id)).filter((c) => c && isOurs(c)) as typeof CASES;
   const many = area.services.length >= 5;
   const sections: [string, string][] = [
     ["services", "Services"], ["hear", "What we hear"], ["fit", L.feature.title], ...(extra ? [["more", "From our work"] as [string, string]] : []),
-    ...(cases.length ? [["work", "Our work"] as [string, string]] : []), ["talk", "Talk to us"],
+    ...(cases.length ? [["work", "Featured projects"] as [string, string]] : []), ["talk", "Talk to us"],
   ];
 
   return (
@@ -109,7 +109,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
       {cases.length > 0 && (
         <section id="work" className="sv-sec ar-work">
           <div className="v8-wrap">
-            <div className="h-row-head"><h2 className="v8-h2">Our work</h2><a className="v8-link" href={`/insights/case-studies?area=${area.slug}`}>All {area.name} projects</a></div>
+            <div className="h-row-head"><h2 className="v8-h2">Featured projects</h2><a className="v8-link" href={`/insights/case-studies?area=${area.slug}`}>All {area.name} projects</a></div>
             <ul className="sv-cases">
               {cases.map((c) => (
                 <li key={c.id} data-reveal className="pc">
@@ -118,7 +118,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
                     <img src={casePhoto(c)} alt="" loading="lazy" />
                     <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{c.status === "Ongoing" ? "In the works" : "Completed"}</span>
                     <b>{c.title}</b>
-                    <span className="pc-who">{caseWho(c, PROD)}</span>
+                    <span className="pc-who">{c.who}</span>
                   </a>
                 </li>
               ))}

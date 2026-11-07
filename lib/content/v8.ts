@@ -27,19 +27,24 @@ export const themeStyle = (areaId: string): CSSProperties => {
   return { ["--a" as string]: t.color, ["--a-ink" as string]: t.ink, ["--a-tint" as string]: t.tint, ["--a-soft" as string]: t.soft };
 };
 
-/* A photo for each project card: a few chosen, then the state, then the first service */
+/* A photo for each project card: a few chosen, then the state, then the first
+   service. Photo rules (content updates v4, 9.1): U.S. places or no
+   recognizable place; a case never shows a different city or state than the
+   work; unnamed-client cases never show a state. */
 const P = (f: string) => `/images/pages/${f}`;
 const CASE_PHOTO: Record<string, string> = {
   "cs-pdn": P("auto-workflow.webp"),
   "cs-aero": P("engineersoperatingdrones.webp"),
-  "cs-major": P("cs-hero-8.webp"),
-  "cs-pbmc": P("majortrans.webp"),
-  "cs-nyc-parks": P("cs-hero-9.webp"),
+  "cs-major": P("aam-team-meeting.webp"), // partnering; no U.S. river bridge photo in the library yet
+  "cs-pbmc": P("transportation-aerial.webp"),
+  "cs-nyc-parks": P("auto-optimize.webp"),
   "cs-proficiency": P("tnbig.webp"),
-  "cs-transform": P("louisiana.webp"),
-  "cs-txmaint": P("aam-highway-aerial.webp"),
-  "cs-mi-pbo": P("transportation.webp"),
-  "cs-riverside": P("cs-hero-3.webp"),
+  "cs-transform": P("auto-human.webp"),
+  "cs-txmaint": P("auto-optimize.webp"),
+  "cs-riverside": P("strategy-bg.webp"),
+  "cs-ia-partnering": P("aam-planning.webp"),
+  "cs-workforce": P("auto-human.webp"),
+  "cs-maint-model": P("transportation-aerial.webp"), // multi-state; its service photo (Nashville) would show the wrong place
 };
 const STATE_PHOTO: Record<string, string> = {
   Tennessee: P("tnbig.webp"), Louisiana: P("louisiana.webp"), Nevada: P("nv.webp"), Michigan: P("michigan.webp"),
@@ -47,8 +52,8 @@ const STATE_PHOTO: Record<string, string> = {
 };
 export const casePhoto = (c: CaseIndex) => CASE_PHOTO[c.id] ?? STATE_PHOTO[c.states[0]] ?? SERVICE_PHOTO[c.services[0]] ?? PAGE_PHOTO.cases;
 
-/* How we've grown: live-site photos matched to each stage */
-export const STORY_PHOTO = [P("journey-foundation.webp"), P("auto-human.webp"), P("aam-helicopter.webp"), P("auto-data.webp")];
+/* How we've grown: live-site photos matched to each stage (first: Reno, where Rawlins started) */
+export const STORY_PHOTO = [P("cs-hero-2.webp"), P("auto-human.webp"), P("aam-helicopter.webp"), P("auto-data.webp")];
 
-/* Home: projects to feature (production drops any that still need sign-off) */
-export const FEATURED_CASES = ["cs-transform", "cs-pdn", "cs-proficiency", "cs-strategic", "cs-pbmc", "cs-local-am", "cs-major", "cs-aero", "cs-nyc-parks", "cs-ut-am"];
+/* Home: Featured projects, Rawlins work only (no Before Rawlins cases) */
+export const FEATURED_CASES = ["cs-transform", "cs-pdn", "cs-proficiency", "cs-strategic", "cs-pbmc", "cs-local-am", "cs-major", "cs-aero", "cs-nc-ipd", "cs-ia-partnering"];

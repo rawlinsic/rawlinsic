@@ -283,7 +283,15 @@ body:has(.pg), body:has(.jy) { background: var(--rw-paper); color: var(--rw-ink)
 .usmap-s { fill: #e3ebf6; stroke: #ffffff; stroke-width: 1; transition: fill 0.25s; }
 .usmap-s.is-lit { fill: #8fb5ec; cursor: pointer; }
 .usmap-s.is-lit:hover { fill: #5f95e6; }
+.usmap-s.is-lit.is-strong { fill: var(--rw-blue); }
 .usmap-s.is-active { fill: var(--rw-blue-strong); }
+/* Where we work: the map key (two shades: active, areas we've served) */
+.pg-map-legend { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 22px; }
+.pg-map-legend li { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; color: var(--rw-navy); }
+.pg-map-legend i { width: 18px; height: 18px; border-radius: 5px; background: #8fb5ec; flex: none; }
+.pg-map-legend i.is-active { background: var(--rw-blue); }
+/* a state chip with no tagged project (plain, not a link) */
+.pg-chips .pg-chip { display: inline-flex; align-items: center; min-height: 38px; padding: 0 14px; border-radius: 999px; background: #fff; border: 1.5px solid #cfdbec; color: var(--rw-navy); font-weight: 600; font-size: 0.93rem; }
 .usmap-outline { fill: none; stroke: var(--rw-blue); stroke-width: 2; stroke-linejoin: round; }
 .usmap-loading { aspect-ratio: 975 / 610; }
 
@@ -311,3 +319,8 @@ img.jy-photo { animation: jy-fade 0.9s ease both, rw-drift 30s ease-in-out infin
 @media (prefers-reduced-motion: reduce) {
   .scene-bg img, img.jy-photo { animation: none; }
 }
+
+/* phone menu: the Featured projects label under each industry (Who we work with) */
+.hx-acc li > .mx-k { margin: 8px 0 0 14px; }
+/* Who we work with menu: the tag on earlier work in an industry's Featured projects */
+.mx-tag { display: block; margin-top: 2px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }

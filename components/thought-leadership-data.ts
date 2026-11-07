@@ -81,7 +81,7 @@ export const THOUGHT_LEADERSHIP: ThoughtLeadershipArticle[] = [
     image: "/images/tl-april-blackburn-banner.webp",
     imageWidth: 1600,
     imageHeight: 652,
-    heroImage: "/images/pages/tl-hero.webp",
+    heroImage: "/images/pages/home-tl-bg.webp", // not rendered; same photo the article page shows (tl-hero is blocked, content updates v4, 9.2)
     authorImage: "/images/team/april.webp",
     pdfUrl: "/thought-leadership-april-blackburn-data-governance.pdf",
     format: "qa",

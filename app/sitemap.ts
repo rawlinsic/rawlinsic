@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { CASE_STUDIES } from "@/components/case-studies-data";
 import { THOUGHT_LEADERSHIP } from "@/components/thought-leadership-data";
 import { AREAS, CASES, VISIBLE_INDUSTRIES, areaHref, caseHref, industryHref, subsectorHref } from "@/lib/content/site";
 
@@ -20,7 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     u("/insights", 0.8, "weekly"), u("/insights/case-studies", 0.8), u("/insights/news", 0.7, "weekly"),
     u("/insights/thought-leadership", 0.7, "weekly"), u("/insights/research", 0.6), u("/insights/podcast", 0.6, "weekly"),
     ...CASES.map((c) => u(caseHref(c), 0.7)),
-    ...CASE_STUDIES.map((cs) => u(`/insights/case-studies/${cs.slug}`, 0.7)),
     ...THOUGHT_LEADERSHIP.map((a) => ({ url: `${SITE_URL}/insights/thought-leadership/${a.slug}`, lastModified: new Date(a.date || now), changeFrequency: "monthly" as const, priority: 0.7 })),
     u("/about", 0.7), u("/about/who-we-are", 0.7), u("/about/how-we-work", 0.6), u("/about/our-people", 0.8), u("/about/where-we-work", 0.6),
     u("/careers", 0.6), u("/contact", 0.6, "yearly"), u("/site-map", 0.3, "yearly"),

@@ -1,0 +1,36 @@
+/* A list as a route you scroll down (components/site/where-we-lead.tsx).
+   Idea from livepeer.org/foundation, in Rawlins colors: the heading and photo
+   stay put; an aqua line fills down through the numbered stops with a light
+   at its front; each stop lights and pings as the line reaches it. */
+.av-lead.rt { background: radial-gradient(40% 50% at 100% 8%, rgba(34, 211, 238, 0.16), transparent 70%), radial-gradient(45% 55% at 0% 100%, rgba(29, 55, 89, 0.08), transparent 70%), linear-gradient(180deg, #f4f8fc, #e6eef8); }
+.rt .av-lead-in { align-items: start; }
+.rt-side { position: sticky; top: calc(68px + var(--snh, 0px) + 32px); }
+.rt .av-lead-photo { aspect-ratio: 16 / 10; }
+
+.rt-list { position: relative; }
+.rt-list ol { list-style: none; margin: 0; padding: 0; }
+.rt-rail { position: absolute; left: 24px; top: var(--rt-top, 24px); height: var(--rt-len, 0px); width: 3px; margin-left: -1.5px; border-radius: 3px; background: repeating-linear-gradient(to bottom, rgba(29, 55, 89, 0.24) 0 6px, transparent 6px 12px); }
+.rt-fill { position: absolute; left: 0; top: 0; width: 100%; height: var(--rt-fill, 0px); border-radius: 3px; background: linear-gradient(to bottom, #0e7490, #22d3ee); box-shadow: 0 0 12px rgba(34, 211, 238, 0.8); }
+.rt-light { position: absolute; left: 50%; top: var(--rt-fill, 0px); width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.35), 0 0 18px 4px #22d3ee; transition: opacity 0.3s; }
+.rt-list[data-done] .rt-light { opacity: 0; }
+
+.rt-stop { position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 20px; padding: 16px 0 22px; }
+.rt-node { position: relative; z-index: 1; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 2px solid #b9cde4; transition: border-color 0.4s, background 0.4s, box-shadow 0.4s; }
+.rt-node b { color: #4d688c; font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; transition: color 0.4s; }
+.rt-node::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid #22d3ee; opacity: 0; }
+.rt-stop[data-on] .rt-node { background: #10233f; border-color: #22d3ee; box-shadow: 0 0 0 5px rgba(34, 211, 238, 0.18), 0 0 22px rgba(34, 211, 238, 0.55); }
+.rt-stop[data-on] .rt-node b { color: #a5f3fc; }
+.rt-stop[data-on] .rt-node::after { animation: rt-ping 1.1s ease-out 1; }
+@keyframes rt-ping { from { opacity: 0.9; transform: scale(1); } to { opacity: 0; transform: scale(1.9); } }
+
+.rt-txt { padding: 10px 22px 14px; border-radius: 18px; opacity: 0.45; transform: translateX(10px); transition: opacity 0.5s, transform 0.5s, background 0.4s, box-shadow 0.4s; }
+.rt-stop[data-on] .rt-txt { opacity: 1; transform: none; background: rgba(255, 255, 255, 0.78); box-shadow: 0 14px 34px -22px rgba(16, 32, 56, 0.45), 0 0 0 1px rgba(34, 211, 238, 0.28); }
+.rt-txt h3 { margin: 0 0 6px; color: #0a1220; font-size: clamp(1.2rem, 1.5vw, 1.4rem); font-weight: 600; line-height: 1.2; }
+.rt-txt p { margin: 0; color: #2e3c50; font-size: 1.06rem; line-height: 1.5; }
+
+@media (max-width: 1080px) { .rt-side { position: static; } }
+@media (prefers-reduced-motion: reduce) {
+  .rt-light { display: none; }
+  .rt-node, .rt-txt { transition: none; }
+  .rt-stop[data-on] .rt-node::after { animation: none; }
+}
