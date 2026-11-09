@@ -11,6 +11,7 @@ import { AREAS, areaHref } from "@/lib/content/site";
 import AnalyticsWrapper from '@/components/analytics-wrapper';
 import CookieBanner from '@/components/cookie-banner';
 import Smooth from "@/components/v8/smooth";
+import PreviewEdit from "@/components/v8/preview-edit";
 
 /* Redesign type: one typeface, Source Sans 3, on every page (--font-sans in
    journey.css; the old --font-serif token points at it too). No fallback
@@ -220,6 +221,8 @@ export default function RootLayout({
           }
         `}</Script>
         <CookieBanner />
+        {/* preview builds only: click-and-type text editor (never on the live site) */}
+        {process.env.VERCEL_ENV === "preview" && <PreviewEdit />}
         <Smooth />
       </body>
     </html>
