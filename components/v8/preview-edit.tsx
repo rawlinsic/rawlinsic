@@ -7,7 +7,8 @@
    exact piece of text that changed and the words around it, so the right spot
    is found even when a sentence has a link in it or a wording repeats. Anything it
    can't place goes on EDITS-PENDING.md in the repo for Claude Code. */
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import PreviewComments, { askName } from "@/components/v8/preview-comments";
 
 type Change = { old: string; next: string; nodeOld?: string; nodeNew?: string; context?: string[] };
 type Snap = { full: string; nodes: string[]; context: string[] };
@@ -45,6 +46,14 @@ const diff = (snap: Snap, now: string): Change => {
 
 export default function PreviewEdit() {
   const [on, setOn] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [listOpen, setListOpen] = useState(false);
+  const [count, setCount] = useState(0);
+  const onCount = useCallback((n: number) => setCount(n), []);
+  // clean view: hide every review mark (tools, pins, placeholder notes) to see the site as it will look
+  const [cleanView, setCleanView] = useState(false);
+  useEffect(() => { try { setCleanView(localStorage.getItem("pe-clean") === "1"); } catch {} }, []);
+  useEffect(() => { document.documentElement.classList.toggle("pe-clean", cleanView); try { localStorage.setItem("pe-clean", cleanView ? "1" : "0"); } catch {} }, [cleanView]);
   const [changes, setChanges] = useState<Change[]>([]);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
@@ -89,14 +98,7 @@ export default function PreviewEdit() {
   const stop = () => { if (changes.length && !confirm("Leave edit mode and drop your unsaved changes?")) return; window.location.reload(); };
 
   const save = async () => {
-    // a name (not a password) so each change shows who made it; asked once, remembered here
-    let name = "";
-    try { name = localStorage.getItem("pe-name") || ""; } catch {}
-    if (!name) {
-      name = (prompt("Your name (it goes on your changes so we know who made them)") || "").trim();
-      if (!name) return;
-      try { localStorage.setItem("pe-name", name); } catch {}
-    }
+    const name = askName(); if (!name) return;
     setBusy(true); setMsg("Saving…");
     try {
       const r = await fetch("/api/preview-edit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ page: location.pathname, name, changes }) });
@@ -108,18 +110,33 @@ export default function PreviewEdit() {
     finally { setBusy(false); }
   };
 
+  if (cleanView) return <button type="button" className="pe-show" onClick={() => setCleanView(false)} title="Show the review tools">Review tools</button>;
+
   return (
-    <div className="pe-bar" role="region" aria-label="Edit text (preview only)">
-      {!on ? (
-        <button type="button" className="pe-btn" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter or click away to finish one."); }}>Edit text</button>
-      ) : (
-        <>
-          <span className="pe-n">{changes.length} change{changes.length === 1 ? "" : "s"}</span>
-          <button type="button" className="pe-btn pe-save" disabled={!changes.length || busy} onClick={save}>Save</button>
-          <button type="button" className="pe-btn pe-ghost" onClick={stop}>Done</button>
-        </>
-      )}
-      {msg && <p className="pe-msg" aria-live="polite">{msg}</p>}
-    </div>
+    <>
+      <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={listOpen} onCount={onCount} hidden={cleanView} />
+      <div className="pe-bar" role="region" aria-label="Review tools (preview only)">
+        {on ? (
+          <>
+            <span className="pe-n">{changes.length} change{changes.length === 1 ? "" : "s"}</span>
+            <button type="button" className="pe-btn pe-save" disabled={!changes.length || busy} onClick={save}>Save</button>
+            <button type="button" className="pe-btn pe-ghost" onClick={stop}>Done</button>
+          </>
+        ) : adding ? (
+          <>
+            <span className="pe-n">Click the spot you want to comment on</span>
+            <button type="button" className="pe-btn pe-ghost" onClick={() => setAdding(false)}>Cancel</button>
+          </>
+        ) : (
+          <>
+            <button type="button" className="pe-btn" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter or click away to finish one."); }}>Edit text</button>
+            <button type="button" className="pe-btn" onClick={() => { setAdding(true); setMsg(""); }}>Comment</button>
+            <button type="button" className={`pe-btn pe-ghost${listOpen ? " is-on" : ""}`} onClick={() => setListOpen((v) => !v)}>Comments ({count})</button>
+            <button type="button" className="pe-btn pe-ghost" onClick={() => { setCleanView(true); setListOpen(false); }} title="Hide the tools, comment pins, and placeholder notes">Clean view</button>
+          </>
+        )}
+        {msg && <p className="pe-msg" aria-live="polite">{msg}</p>}
+      </div>
+    </>
   );
 }
