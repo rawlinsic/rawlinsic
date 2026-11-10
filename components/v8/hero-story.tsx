@@ -15,10 +15,11 @@
       shows the items' titles lighting up one by one (no video). A
       one-message side can put a picture in the frame too (How we work: the
       five service areas as still tiles);
-   4. like scale.com: the frame drifts up and fades while a glass block with
-      the team statement rises from the bottom (its words light up, the first
-      ones in electric blue) and the scrolling team strip rises on its left.
-      The navy stays.
+   4. like scale.com: the frame drifts up and fades while a white box with the
+      team statement comes up from the bottom at scroll speed, runs off the
+      bottom of the screen, and keeps going up as the page moves on; its words
+      light up (the first ones in blue) and the scrolling team strip travels
+      on its left. The navy stays.
    Phones and reduced motion get the same pieces stacked: the hero, each side
    with its items and pictures, then the team block. The video is paused off
    screen, in a hidden tab, while a picture covers it, and for reduced motion;
@@ -82,6 +83,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
     const texts = Array.from(el.querySelectorAll<HTMLElement>(".hs-step"));
     const why = el.querySelector<HTMLElement>(".hs-why")!;
     const pause = el.querySelector<HTMLElement>(".hs-pause");
+    const nextEl = el.querySelector<HTMLElement>(".hs-next");
     const pansBox = el.querySelector<HTMLElement>(".hs-pans");
     const lit = Array.from(why.querySelectorAll<HTMLElement>(".lit-w"));
     const items = texts.map((t) => Array.from(t.querySelectorAll<HTMLElement>(".hs-item:not(.hs-intro)")));
@@ -136,6 +138,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
       el.style.setProperty("--zoom", c01(s).toFixed(3)); // navy comes up around the frame
       const h = 1 - c01(s / 0.22);
       heroEl.style.opacity = h.toFixed(3); heroEl.style.visibility = h < 0.01 ? "hidden" : "visible";
+      if (nextEl) nextEl.style.visibility = s > 0.25 ? "hidden" : "visible"; // gone once faded, so it never blocks a click
       let cover = 0;
       texts.forEach((t, i) => {
         const a = s - starts[i], many = items[i].length > 0;
@@ -192,11 +195,13 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
       const hide = cover > 0.99 || media < 0.01;
       if (hide !== covered.current) { covered.current = hide; kick.current(); }
       if (pause) { const po = media * (1 - cover); pause.style.opacity = po.toFixed(3); pause.style.visibility = po < 0.01 ? "hidden" : "visible"; } // goes with the video
-      const wu = s - sEnd;
-      why.style.setProperty("--wr", ease(c01(wu / 0.8)).toFixed(3)); // the block
-      why.style.setProperty("--wl", ease(c01((wu - 0.12) / 0.8)).toFixed(3)); // the team strip, a beat behind
-      why.toggleAttribute("data-on", wu > 0.5);
-      const nl = Math.round(c01((wu - 0.35) / 0.7) * lit.length); // the block's words light up as it settles
+      // like scale.com: the white box comes up from the bottom at scroll speed, runs off the bottom of
+      // the screen, and keeps going up as the page moves on (the team strip travels beside it)
+      const wu = s - sEnd, perBeat = total / beats;
+      why.style.setProperty("--wy", `${(stage.clientHeight - wu * perBeat).toFixed(1)}px`);
+      why.style.setProperty("--wh", `${Math.round(stage.clientHeight + (beats - sEnd + 0.2) * perBeat)}px`);
+      why.toggleAttribute("data-on", wu > 0.25);
+      const nl = Math.round(c01((wu - 0.15) / 0.6) * lit.length); // its words light up as it rises
       lit.forEach((w, i) => w.classList.toggle("is-lit", i < nl));
     };
     const on = () => { if (!raf) raf = requestAnimationFrame(tick); };
@@ -205,7 +210,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
       if (live) { delete el.dataset.static; layout(); tick(); }
       else {
         el.dataset.static = "";
-        [vis, heroEl, why, ...texts, ...items.flat(), ...pans.flat(), ...intros, ...eyebrows, ...solo, ...teasers, ...tickRows, ...(pause ? [pause] : [])].forEach((n) => { if (n) n.style.cssText = ""; });
+        [vis, heroEl, why, ...(nextEl ? [nextEl] : []), ...texts, ...items.flat(), ...pans.flat(), ...intros, ...eyebrows, ...solo, ...teasers, ...tickRows, ...(pause ? [pause] : [])].forEach((n) => { if (n) n.style.cssText = ""; });
         glows.flat().forEach((x) => x.classList.add("is-lit"));
         lit.forEach((w) => w.classList.add("is-lit"));
         if (covered.current) { covered.current = false; kick.current(); }
@@ -244,23 +249,25 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
               <div className="hs-plane hs-media">
                 <video ref={vid} src={video.src} poster={video.poster} muted loop playsInline preload="auto" aria-hidden="true" />
                 <i className="hs-shade" aria-hidden="true" />
-                {steps.some((st) => st.items?.length || st.visual) && (
-                  <div className="hs-pans">
-                    {steps.map((st, i) => st.items?.length
-                      ? [
-                          st.intro ? (
-                            <div key={`${i}-intro`} className="hs-pan hs-tease" data-step={i} data-j="intro" aria-hidden="true">
-                              <div className="hs-pan-in"><ol>{st.items.map((it, j) => <li key={j}><span>{two(j + 1)}</span>{it.h}</li>)}</ol></div>
-                            </div>
-                          ) : null,
-                          ...st.items.map((it, j) => <div key={`${i}-${j}`} className="hs-pan" data-step={i} data-j={j}><div className="hs-pan-in">{it.visual}</div></div>),
-                        ]
-                      : st.visual ? <div key={`${i}-solo`} className="hs-pan" data-step={i} data-j="-1"><div className="hs-pan-in">{st.visual}</div></div> : null)}
-                  </div>
-                )}
               </div>
               <div className="hs-plane hs-glass" aria-hidden="true" />
             </div>
+            {/* the frame's pictures sit on their own layer, tilted like the frame: inside the 3D layers,
+                browsers missed clicks on parts of them */}
+            {steps.some((st) => st.items?.length || st.visual) && (
+              <div className="hs-pans">
+                {steps.map((st, i) => st.items?.length
+                  ? [
+                      st.intro ? (
+                        <div key={`${i}-intro`} className="hs-pan hs-tease" data-step={i} data-j="intro" aria-hidden="true">
+                          <div className="hs-pan-in"><ol>{st.items.map((it, j) => <li key={j}><span>{two(j + 1)}</span>{it.h}</li>)}</ol></div>
+                        </div>
+                      ) : null,
+                      ...st.items.map((it, j) => <div key={`${i}-${j}`} className="hs-pan" data-step={i} data-j={j}><div className="hs-pan-in">{it.visual}</div></div>),
+                    ]
+                  : st.visual ? <div key={`${i}-solo`} className="hs-pan" data-step={i} data-j="-1"><div className="hs-pan-in">{st.visual}</div></div> : null)}
+              </div>
+            )}
           </div>
           <div className="hs-hero">{hero}</div>
           <button type="button" className="fh-pause hs-pause" onClick={toggle} aria-label={paused ? "Play background video" : "Pause background video"}>
@@ -287,7 +294,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
                 <div key={j} className="hs-item">
                   <h3>{it.h}</h3>
                   <p>{it.p}</p>
-                  {it.link && <a className="hs-link" href={it.link.href}>{it.link.label} <span aria-hidden="true">→</span></a>}
+                  {it.link && <a className="v8-btn v8-btn-light hs-btn" href={it.link.href}>{it.link.label}</a>}
                   {(it.phoneVisual ?? it.visual) && <div className="hs-item-vis is-on">{it.phoneVisual ?? it.visual}</div>}
                 </div>
               ))}

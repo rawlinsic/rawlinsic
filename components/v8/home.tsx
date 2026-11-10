@@ -104,10 +104,17 @@ export default function Home() {
             intro: { h: "What sets us apart" },
             items: why.map(([h, p], i) => ({
               h, p,
-              link: i === 0 ? { label: "Meet our people", href: "/about/our-people" } : i === 4 ? { label: "How we work", href: "/about/how-we-work" } : undefined,
+              link: [
+                { label: "Meet our people", href: "/about/our-people" },
+                { label: "Who we are", href: "/about/who-we-are" },
+                { label: "See the project", href: caseHref(pdn) },
+                { label: "See Digital Solutions", href: areaHref(AREAS.find((a) => a.id === "tech")!) },
+                { label: "How we work", href: "/about/how-we-work" },
+              ][i],
               visual: [
                 <PeopleStrip key="team" people={veterans} lanes={4} showDev={!PROD} />,
-                <dl key="nums" className="nums">{numbers.map((n) => <div key={n.label}>{!n.verified && <em className="v8-dev">Placeholder: number not verified yet.</em>}<dt>{n.label}</dt><dd>{n.value}</dd></div>)}</dl>,
+                /* verified numbers only here; the unverified one stays out of the frame */
+                <dl key="nums" className="nums">{NUMBERS.filter((n) => n.verified).map((n) => <div key={n.label}><dt>{n.label}</dt><dd>{n.value}</dd></div>)}</dl>,
                 <a key="proof" className="hs-proof" href={caseHref(pdn)}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={casePhoto(pdn)} alt="" loading="lazy" />

@@ -1976,3 +1976,43 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .hs-tease li span { min-width: 2.2em; color: rgba(34, 211, 238, 0.35); font-size: 1rem; font-weight: 700; letter-spacing: 0.1em; transition: color 0.4s, text-shadow 0.4s; }
 .hs-tease li.is-lit { color: #fff; transform: none; text-shadow: 0 0 22px rgba(34, 211, 238, 0.35); }
 .hs-tease li.is-lit span { color: var(--aqua); text-shadow: 0 0 12px rgba(34, 211, 238, 0.8); }
+
+/* the TV's back planes never catch clicks (they were blocking some team cards) */
+.hs-wire, .hs-dots { pointer-events: none; }
+.hs-item .hs-btn { margin-top: 24px; }
+
+/* reasons 2, 4, 5: the TV screen goes dark with glowing type, like the intro */
+.hs-pan:has(.nums), .hs-pan:has(.dg) { background: radial-gradient(75% 70% at 50% 45%, rgba(34, 211, 238, 0.14), transparent 70%), linear-gradient(165deg, #0b1830, #10233f 60%, #15294a); }
+.hs-pan .nums { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+.hs-pan .nums div { gap: 10px; padding: 6px 26px; border-top: 0; border-left: 1px solid rgba(165, 243, 252, 0.28); }
+.hs-pan .nums div:first-child { padding-left: 6px; border-left: 0; }
+.hs-pan .nums dd { color: #fff; font-size: 4.6rem; text-shadow: 0 0 22px rgba(34, 211, 238, 0.6), 0 0 50px rgba(34, 211, 238, 0.25); }
+.hs-pan .nums dt { color: #cfdbea; font-size: 1.05rem; line-height: 1.4; }
+.hs-pan .dg-spoke, .hs-pan .dg-ring { stroke: var(--aqua) !important; }
+.hs-pan .dg-art { filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.85)); }
+.hs-pan .dg-center { background: radial-gradient(circle at 50% 35%, #25446f, #0b1830 75%); color: #fff; box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.75), 0 0 34px rgba(34, 211, 238, 0.5), inset 0 0 26px rgba(34, 211, 238, 0.25); }
+.hs-pan :is(.dg-hub) .dg-steps li { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(165, 243, 252, 0.45); box-shadow: 0 0 18px rgba(34, 211, 238, 0.18); }
+.hs-pan .dg-steps b { color: #fff; }
+.hs-pan .dg-num { color: var(--aqua); }
+.hs-pan .dg-d { color: #b9c6d6; }
+.hs-pan .dg-track .dg-steps::before { background: rgba(165, 243, 252, 0.2); }
+.hs-pan .dg-track .dg-steps::after { background: var(--aqua); box-shadow: 0 0 12px var(--aqua); }
+.hs-pan .dg-track .dg-steps li::before { background: #0b1830; border-color: var(--aqua); box-shadow: 0 0 12px rgba(34, 211, 238, 0.7); }
+
+/* the team block, like scale.com's box: white, comes up from the bottom at scroll speed, runs off the
+   bottom of the screen, and keeps going up; the team strip travels beside it */
+.hs:not([data-static]) .hs-why { align-items: start; padding-top: 0; padding-bottom: 0; }
+.hs:not([data-static]) .hs-why .wc-card { align-items: start; }
+.hs:not([data-static]) .hs-why-right { transform: translate3d(0, var(--wy, 120vh), 0); }
+.hs:not([data-static]) .hs-why-left { transform: translate3d(0, calc(var(--wy, 120vh) + 48px), 0); }
+.hs:not([data-static]) .hs-why .wc-copy { min-height: var(--wh, 180vh); border-radius: 24px 24px 0 0; }
+.hs-why .wc-copy { justify-content: flex-start; padding: clamp(36px, 4.6vw, 76px); background: #fff; border: 0; box-shadow: 0 -24px 60px -34px rgba(0, 0, 0, 0.5); }
+.hs-why .wc-lit { color: #0a1220; max-width: 22ch; }
+.hs-why .wc-lit .lit-w { color: #c9d5e3; text-shadow: none; }
+.hs-why .wc-lit .lit-w.is-lit { color: #0a1220; }
+.hs-why .wc-lit .lit-w.is-lit:nth-child(-n + 6) { color: #0891b2; }
+.hs-navy, .hs-shade { pointer-events: none; }
+/* the frame's pictures: their own layer over the frame, tilted the same way, so every card takes clicks */
+.hs-pans { border-radius: var(--rad, 18px); overflow: hidden; transform: rotateY(calc(var(--x, 0) * var(--open, 0) * -18deg)) rotateX(calc(var(--open, 0) * 6deg)); pointer-events: none; }
+.hs-pan { pointer-events: auto; }
+.hs-pan :is(.dg-hub) .dg-steps li { background: linear-gradient(180deg, #17325a, #0f2340); }
