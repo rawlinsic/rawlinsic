@@ -9,7 +9,7 @@
    neighbors and section heading) picks the one that sits next to the same
    words in the code. */
 
-export type Change = { old: string; next: string; nodeOld?: string; nodeNew?: string; context?: string[] };
+export type Change = { old: string; next: string; nodeOld?: string; nodeNew?: string; context?: string[]; breaks?: string };
 export type Hit = { path: string; index: number; match: string };
 
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

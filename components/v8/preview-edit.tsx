@@ -10,13 +10,22 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import PreviewComments, { askName } from "@/components/v8/preview-comments";
 
-type Change = { old: string; next: string; nodeOld?: string; nodeNew?: string; context?: string[] };
+type Change = { old: string; next: string; nodeOld?: string; nodeNew?: string; context?: string[]; breaks?: string };
 type Snap = { full: string; nodes: string[]; context: string[] };
 const LEAF = "h1,h2,h3,h4,h5,p,li,blockquote,dt,dd,figcaption,b,strong,em,small,span,a,button,label,td,th";
 const clean = (s: string) => s.replace(/\s+/g, " ").trim();
 /* the words as written (textContent), not as styled: labels shown in capitals
    are written normally in the code */
-const textOf = (el: Element) => el.textContent || "";
+const textOf = (el: Node): string => {
+  // like textContent, but a line break typed with Enter (or pasted) counts as a new line
+  let out = "";
+  el.childNodes.forEach((n) => {
+    if (n.nodeType === 3) out += n.nodeValue || "";
+    else if (n.nodeName === "BR") out += "\n";
+    else { if (/^(DIV|P)$/.test(n.nodeName) && out && !out.endsWith("\n")) out += "\n"; out += textOf(n); }
+  });
+  return out;
+};
 const textNodes = (el: Element) => { const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); const out: string[] = []; while (w.nextNode()) out.push(w.currentNode.nodeValue || ""); return out; };
 /* words near the element on the page: its neighbors and its section heading,
    used to pick the right spot when the same wording is in several places */
@@ -34,7 +43,7 @@ const diff = (snap: Snap, now: string): Change => {
   const a = snap.full, b = now;
   let p = 0; while (p < a.length && p < b.length && a[p] === b[p]) p++;
   let s = 0; while (s < a.length - p && s < b.length - p && a[a.length - 1 - s] === b[b.length - 1 - s]) s++;
-  const change: Change = { old: clean(a), next: clean(b), context: snap.context };
+  const change: Change = { old: clean(a), next: clean(b), context: snap.context, breaks: b.includes("\n") ? b.trim() : undefined };
   let at = 0;
   for (const t of snap.nodes) {
     const end = at + t.length;
@@ -84,10 +93,25 @@ export default function PreviewEdit() {
       const el = e.target as HTMLElement;
       if (!el.classList?.contains("pe-edit")) return;
       const snap = snaps.current.get(el);
-      if (snap && clean(textOf(el)) !== clean(snap.full)) edited.current.add(el); else edited.current.delete(el);
-      setChanges(Array.from(edited.current).map((x) => diff(snaps.current.get(x)!, textOf(x))).filter((c) => c.old !== c.next));
+      const now = textOf(el);
+      if (snap && (clean(now) !== clean(snap.full) || now.includes("\n"))) edited.current.add(el); else edited.current.delete(el);
+      setChanges(Array.from(edited.current).map((x) => diff(snaps.current.get(x)!, textOf(x))).filter((c) => c.old !== c.next || c.breaks));
     };
-    const key = (e: KeyboardEvent) => { if (e.key === "Enter" && (e.target as HTMLElement).classList?.contains("pe-edit")) { e.preventDefault(); (e.target as HTMLElement).blur(); } };
+    // Enter adds a new line, Esc (or clicking away) finishes; pasting brings in plain words only
+    const key = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement;
+      if (!t.classList?.contains("pe-edit")) return;
+      if (e.key === "Escape") { e.preventDefault(); t.blur(); }
+      else if (e.key === "Enter") { e.preventDefault(); document.execCommand("insertLineBreak"); }
+    };
+    const paste = (e: ClipboardEvent) => {
+      const t = e.target as HTMLElement;
+      if (!t.closest?.(".pe-edit")) return;
+      e.preventDefault();
+      const txt = (e.clipboardData?.getData("text/plain") || "").replace(/\r\n?/g, "\n");
+      txt.split("\n").forEach((line, i) => { if (i) document.execCommand("insertLineBreak"); if (line) document.execCommand("insertText", false, line); });
+    };
+    document.addEventListener("paste", paste, true);
     document.addEventListener("click", click, true);
     document.addEventListener("focusout", blur, true);
     document.addEventListener("keydown", key, true);
@@ -96,6 +120,7 @@ export default function PreviewEdit() {
       document.removeEventListener("click", click, true);
       document.removeEventListener("focusout", blur, true);
       document.removeEventListener("keydown", key, true);
+      document.removeEventListener("paste", paste, true);
     };
   }, [on]);
 
@@ -145,7 +170,7 @@ export default function PreviewEdit() {
           </>
         ) : (
           <>
-            <button type="button" className="pe-btn" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter or click away to finish one."); }}>Edit text</button>
+            <button type="button" className="pe-btn" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter adds a new line. Esc or click away to finish."); }}>Edit text</button>
             <button type="button" className="pe-btn" onClick={() => { setAdding(true); setMsg(""); }}>Comment</button>
             <button type="button" className={`pe-btn pe-ghost${listOpen ? " is-on" : ""}`} onClick={() => setListOpen((v) => !v)}>Comments ({count})</button>
             <button type="button" className="pe-btn pe-ghost" onClick={() => { setCleanView(true); setListOpen(false); }} title="Hide the tools, comment pins, and placeholder notes">Clean view</button>

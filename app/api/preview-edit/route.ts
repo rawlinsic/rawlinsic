@@ -27,8 +27,8 @@ export async function POST(req: Request) {
   const body = await req.json().catch(() => null) as { page?: string; name?: string; changes?: Change[] } | null;
   if (!body) return NextResponse.json({ error: "Nothing to save" }, { status: 400 });
   const who = String(body.name || "someone").replace(/[\r\n"`<>{}]/g, " ").trim().slice(0, 40) || "someone";
-  const changes = (body.changes || []).filter((c) => c && typeof c.old === "string" && typeof c.next === "string" && c.old.trim() && c.old !== c.next)
-    .map((c) => ({ old: c.old, next: c.next, nodeOld: typeof c.nodeOld === "string" ? c.nodeOld : undefined, nodeNew: typeof c.nodeNew === "string" ? c.nodeNew : undefined, context: Array.isArray(c.context) ? c.context.filter((x) => typeof x === "string").slice(0, 8) : [] }))
+  const changes = (body.changes || []).filter((c) => c && typeof c.old === "string" && typeof c.next === "string" && c.old.trim() && (c.old !== c.next || (typeof c.breaks === "string" && c.breaks.includes("\n"))))
+    .map((c) => ({ breaks: typeof c.breaks === "string" && c.breaks.includes("\n") ? c.breaks.slice(0, 4000) : undefined, old: c.old, next: c.next, nodeOld: typeof c.nodeOld === "string" ? c.nodeOld : undefined, nodeNew: typeof c.nodeNew === "string" ? c.nodeNew : undefined, context: Array.isArray(c.context) ? c.context.filter((x) => typeof x === "string").slice(0, 8) : [] }))
     .slice(0, 50);
   if (!changes.length) return NextResponse.json({ applied: 0, pending: 0 });
 
@@ -57,6 +57,8 @@ export async function POST(req: Request) {
     const pending: { c: Change; why: string }[] = [];
     let applied = 0;
     for (const c of changes) {
+      // new lines (Enter) go to Claude Code, who sets them as real line breaks or paragraphs
+      if (c.breaks) { pending.push({ c: { ...c, next: c.breaks.replace(/\n/g, " ⏎ ") }, why: "has new lines (Enter); Claude Code will set the line breaks" }); continue; }
       if (/[<>{}`\\]/.test(c.next) || (c.nodeNew && /[<>{}`\\]/.test(c.nodeNew))) { pending.push({ c, why: "has characters that can't go straight into the code" }); continue; }
       // search the files as they are after the edits already placed in this save
       const now = new Map(Array.from(text.keys()).map((p) => [p, changed.get(p) ?? text.get(p)!] as [string, string]));

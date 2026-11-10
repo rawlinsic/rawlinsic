@@ -35,6 +35,9 @@ const areaOf = (serviceId: string) => serviceById(serviceId)?.area;
    labeled (full site pass, Part 1, 2.4 and Part 4, 1). */
 const OFF_RING: Record<string, string> = { "g-capital": "No project yet", "g-mpo": "No project yet", "sub-rail": "Placeholder photo", "sub-ports": "Placeholder photo" };
 
+/* keep a month and its days on one line ("Nov 15–18") */
+const keepDates = (t: string) => t.split(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d+(?:[–-]\d+)?)/).map((part, i) => (i % 2 ? <span key={i} className="nowrap">{part}</span> : part));
+
 export default function Home() {
   /* Featured projects: Rawlins work only (no Before Rawlins cases) */
   const cases = FEATURED_CASES.map((id) => CASES.find((c) => c.id === id)!).filter((c) => c && isOurs(c));
@@ -62,20 +65,10 @@ export default function Home() {
           five areas. One panel, so it scrolls away normally. */}
       <div className="h-open">
       <FlowHero next="#h-title">
-        {/* the same words as the section below, on the hero (Nicole, Nov 9): tagline and
-            headline on the left, the line and buttons on the right */}
-        <div className="fh-grid">
-          <div className="fh-main">
-            {HOME.eyebrow && <p className="fh-tag">{HOME.eyebrow}</p>}
-            <h1 className="fh-title">{HOME.headline}</h1>
-          </div>
-          <div className="fh-side">
-            <p className="fh-line">{HOME.line}</p>
-            <div className="v8-actions fh-actions">
-              <a className="v8-btn" href="/contact">Get in touch</a>
-              <a className="v8-btn v8-btn-ghost" href="#what">See what we do</a>
-            </div>
-          </div>
+        {/* the tagline and headline on the hero, centered (Nicole, Nov 9) */}
+        <div className="fh-center">
+          {HOME.eyebrow && <p className="fh-tag">{HOME.eyebrow}</p>}
+          <h1 className="fh-title">{HOME.headline}</h1>
         </div>
       </FlowHero>
 
@@ -86,11 +79,17 @@ export default function Home() {
           <h2 id="h-title" className="h-title" data-reveal>{HOME.headline}</h2>
           <div className="h-side" data-reveal>
             <p className="h-line">{HOME.line}</p>
+            {ev?.line && (
+              <a className="h-event" href="/contact">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/pages/aam-team-meeting.webp" alt="" loading="lazy" />
+                <span>{keepDates(ev.line)} <b>Plan to meet us</b></span>
+              </a>
+            )}
             <div className="v8-actions">
               <a className="v8-btn" href="/contact">Get in touch</a>
               <a className="v8-btn v8-btn-ghost" href="#what">See what we do</a>
             </div>
-            {ev?.line && <p className="h-event"><a href="/contact">{ev.line} <b>Plan to meet us</b></a></p>}
           </div>
         </div>
         <ul className="ways" aria-label="What we do">

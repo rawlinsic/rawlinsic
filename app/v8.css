@@ -1723,3 +1723,16 @@ html.pc-adding, html.pc-adding * { cursor: crosshair !important; }
   .pe-tab { top: 84px; transform: none; min-width: 0; padding: 9px 7px; gap: 4px; }
   .pe-tab span { display: none; }
 }
+/* hero: tagline and headline centered, smaller, across the block with padding */
+.fh-in { width: min(1320px, calc(100% - clamp(48px, 10vw, 180px))); text-align: center; }
+.fh-center { display: grid; justify-items: center; }
+.fh-tag::after { display: block; }
+.fh-title { max-width: 100%; margin: 20px auto 0; font-size: clamp(1.9rem, 3.3vw, 3.3rem); line-height: 1.1; text-align: center; text-wrap: balance; }
+@media (max-width: 860px) { .fh-title { font-size: clamp(1.75rem, 7vw, 2.4rem); } }
+@media (max-width: 700px) { .fh-tag::after { display: none; } }
+.nowrap { white-space: nowrap; }
+/* section below: the event note above the buttons, with a photo on its left */
+.h-event { display: flex; align-items: center; gap: 14px; margin: 0 0 20px; padding: 10px 14px 10px 10px; border-radius: 16px; background: #eef3f9; border: 1px solid #dbe6f3; color: var(--ink-2) !important; font-size: 1rem; line-height: 1.45; text-decoration: none; max-width: 30rem; transition: border-color 0.2s, background 0.2s; }
+.h-event:hover { border-color: var(--aqua); background: #fff; }
+.h-event img { flex: none; width: 64px; height: 64px; border-radius: 12px; object-fit: cover; }
+.h-line { margin-bottom: 18px; }
