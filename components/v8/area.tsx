@@ -13,7 +13,7 @@
 import type { ReactNode } from "react";
 import { AREAS, CASES, areaHref, caseHref, isOurs, type Area } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
-import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
+import { AREA_PHOTO, SERVICE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, themeStyle, casePhoto } from "@/lib/content/v8";
 import Fit from "@/components/v8/fit";
 import AreaMark from "@/components/v8/area-mark";
@@ -47,7 +47,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
       <section className="sv-hero svh arh" data-scrub="page">
         <div className="svh-bg" aria-hidden="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={AREA_PHOTO[area.id]} alt="" />
+          <img src={AREA_PHOTO[area.id]} alt="" style={AREA_PHOTO_POS[area.id] ? { objectPosition: AREA_PHOTO_POS[area.id] } : undefined} />
         </div>
         <AreaMark kind={T.diagram} />
         <div className="v8-wrap arh-top">
@@ -148,7 +148,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
 
       <a className="sv-next" href={areaHref(next)}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={AREA_PHOTO[next.id]} alt="" loading="lazy" />
+        <img src={AREA_PHOTO[next.id]} alt="" loading="lazy" style={AREA_PHOTO_POS[next.id] ? { objectPosition: AREA_PHOTO_POS[next.id] } : undefined} />
         <span className="v8-wrap sv-next-in"><em>Next area</em><b>{next.name}</b><span>{next.tag}</span><i aria-hidden="true">→</i></span>
       </a>
       </Panels>

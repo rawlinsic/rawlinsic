@@ -12,7 +12,7 @@ import { useEffect, useRef, type CSSProperties } from "react";
 import { glideTo } from "@/components/v8/smooth";
 import { docTop } from "@/components/v8/panels";
 
-export type TourArea = { id: string; name: string; tag: string; lead: string; href: string; photo: string; services: { name: string; href: string }[] };
+export type TourArea = { id: string; name: string; tag: string; lead: string; href: string; photo: string; pos?: string; services: { name: string; href: string }[] };
 type R = { x: number; y: number; w: number; h: number };
 
 const PER = 0.95; // screen heights of scrolling per area
@@ -114,7 +114,7 @@ export default function TilesTour({ label, areas, id }: { label: string; areas: 
           <div key={a.id} className="tt-area">
             <a className="tt-tile" href={a.href} data-i={i} aria-label={a.name}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={a.photo} alt="" loading={i ? "lazy" : "eager"} />
+              <img src={a.photo} alt="" loading={i ? "lazy" : "eager"} style={a.pos ? { objectPosition: a.pos } : undefined} />
               <span className="tt-name" aria-hidden="true">{a.name}</span>
             </a>
             <div className={`tt-text ${i % 2 ? "is-left" : "is-right"}`}>

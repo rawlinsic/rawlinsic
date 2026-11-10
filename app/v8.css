@@ -2029,4 +2029,22 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .hs-areas-k { font-size: 1.1rem; }
 .hs-areas span { font-size: 1.3rem; }
 .hs-areas li:first-child span { font-size: 1.75rem; }
-.hs-areas li[data-a="aviation"] img { object-position: 18% 22%; } /* keep Alicia in the crop */
+
+/* preview-only sign-off notes: dark red text so they read clearly (Nicole, Nov 10) */
+.pg-dev { color: #8f1d1d !important; }
+.hs-proof .pg-dev { display: block; margin-top: 10px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0; line-height: 1.35; text-transform: none; }
+/* Small enough to move fast: the three numbers on one line, 2017 in a narrower column */
+.hs-pan .nums { grid-template-columns: auto 1fr 1fr; align-items: start; }
+.hs-pan .nums div { justify-content: flex-end; }
+.hs-pan .nums div:first-child { padding-right: 34px; }
+/* the diagram screens: light background, glowing lines and dark type */
+.hs-pan:has(.dg) { background: radial-gradient(70% 70% at 50% 45%, rgba(34, 211, 238, 0.12), transparent 70%), linear-gradient(165deg, #f7fafd, #e6eef7); }
+.hs-pan :is(.dg-hub) .dg-steps li { background: #fff; border: 1px solid rgba(34, 211, 238, 0.6); box-shadow: 0 6px 18px rgba(13, 27, 46, 0.08), 0 0 14px rgba(34, 211, 238, 0.2); }
+.hs-pan .dg-steps b { color: var(--head); }
+.hs-pan .dg-num { color: var(--aqua-ink); }
+.hs-pan .dg-d { color: var(--steel); }
+.hs-pan .dg-art { filter: drop-shadow(0 0 2px rgba(34, 211, 238, 0.75)); }
+.hs-pan .dg-track .dg-steps::before { background: rgba(14, 116, 144, 0.18); }
+.hs-pan .dg-track .dg-steps li::before { background: #fff; }
+/* What sets us apart lights up in the same electric blue as the How we work headline (Nicole, Nov 10) */
+.hs-gl.is-lit { color: var(--aqua); text-shadow: 0 0 22px rgba(34, 211, 238, 0.5); }

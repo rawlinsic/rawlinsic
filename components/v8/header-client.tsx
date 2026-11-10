@@ -11,7 +11,7 @@ type Hit = { label: string; kind: string; href: string };
 type Card = { title: string; who: string; href: string; photo: string; status: string; live: boolean; note?: string };
 type Line = { k?: string; t: string };
 export type NavData = {
-  areas: { id: string; n: string; name: string; tag: string; href: string; color: string; ink: string; tint: string; photo: string; services: { name: string; href: string }[]; projects: string }[];
+  areas: { id: string; n: string; name: string; tag: string; href: string; color: string; ink: string; tint: string; photo: string; pos?: string; services: { name: string; href: string }[]; projects: string }[];
   industries: { name: string; href: string; who: string; subs: { name: string; href: string }[]; challenges: string[]; feature?: Card; projects: { title: string; href: string }[]; all: { label: string; href: string } }[];
   intl?: { name: string; href: string; note: string };
   work: Link[]; inWorks: Card[];
@@ -131,7 +131,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
           {data.areas.map((a) => (
             <section key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink, ["--a-tint" as string]: a.tint } as CSSProperties}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="mx-area-ph" src={a.photo} alt="" loading="lazy" />
+              <img className="mx-area-ph" src={a.photo} alt="" loading="lazy" style={a.pos ? { objectPosition: a.pos } : undefined} />
               <a className="mx-area" href={a.href}><b>{a.name}</b><em>{a.tag}</em></a>
               <ul>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
               <a className="mx-go" href={a.projects}>Projects in this area</a>

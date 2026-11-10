@@ -4,7 +4,7 @@
    section 1, with Part 4, 3 for Who we work with). */
 import { AREAS, CASES, INDUSTRIES, LEADERS, SITE_INDEX, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, subsectorHref, type CaseIndex, CASE_STATUS } from "@/lib/content/site";
 import { INDUSTRIES as IND_DATA } from "@/lib/content/catalog";
-import { AREA_PHOTO, PAGE_PHOTO } from "@/lib/content/media";
+import { AREA_PHOTO, PAGE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, casePhoto } from "@/lib/content/v8";
 import { EVENTS, NEWS, isUpcoming } from "@/lib/content/news";
 import { RESEARCH } from "@/lib/content/research";
@@ -32,7 +32,7 @@ export default function Header() {
   const article = [...THOUGHT_LEADERSHIP].sort((a, b) => b.date.localeCompare(a.date))[0];
   const data: NavData = {
     areas: AREAS.map((a) => ({
-      id: a.id, n: THEME[a.id].n, name: a.name, tag: a.tag, href: areaHref(a), color: THEME[a.id].color, ink: THEME[a.id].ink, tint: THEME[a.id].tint, photo: AREA_PHOTO[a.id],
+      id: a.id, n: THEME[a.id].n, name: a.name, tag: a.tag, href: areaHref(a), color: THEME[a.id].color, ink: THEME[a.id].ink, tint: THEME[a.id].tint, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id],
       services: a.services.map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}` })),
       projects: `/insights/case-studies?area=${a.slug}`,
     })),

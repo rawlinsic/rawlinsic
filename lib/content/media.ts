@@ -46,8 +46,12 @@ export const AREA_PHOTO: Record<string, string> = {
   delivery: P("transportation-aerial.webp"),
   om: P("cs-hero-1.webp"), // Nashville, with a highway bridge
   tech: P("technology-bg.webp"), // the live site's Technology photo (Nicole, Nov 9)
-  aviation: P("aam-policy-planning.webp"), // Alicia in the field, from the live site (Nicole, Nov 9)
+  // Alicia launching a drone on the bridge, from the live site (Nicole, Nov 10). The v4 list had this file on its
+  // never-use list as likely another firm's photo set: confirm the rights before launch (CHANGE-LIST).
+  aviation: P("aam-lifecycle-drone.webp"),
 };
+/* where to center an area photo when it's cropped (nav cards, tiles, heroes) */
+export const AREA_PHOTO_POS: Record<string, string> = { aviation: "48% 42%" };
 
 /* Service pages (shot list 6B) */
 export const SERVICE_PHOTO: Record<string, string> = {

@@ -10,7 +10,7 @@
 import type { CSSProperties } from "react";
 import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
-import { AREA_PHOTO, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/media";
+import { AREA_PHOTO, AREA_PHOTO_POS, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/media";
 import { CaseNote } from "@/components/site/ui";
 import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
@@ -56,6 +56,8 @@ export default function Home() {
   const why = WHY;
   const people = stripPeople();
   const veterans = veteranPeople();
+  /* the TV in "We've done the job": former agency leaders first, then everyone else, so it keeps going (Nicole, Nov 10) */
+  const everyone = [...veterans, ...people.filter((p) => !veterans.some((v) => v.slug === p.slug))];
   // the ring: each industry, then its specialties, dealt round so they spread out
   const groups: Tile[][] = VISIBLE_INDUSTRIES.map((i) => [
     { src: INDUSTRY_PHOTO[i.id], label: i.name, href: industryHref(i), sub: i.who },
@@ -92,7 +94,7 @@ export default function Home() {
                 <ul>{AREAS.map((a) => (
                   <li key={a.id} data-a={a.id}><a href={areaHref(a)}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={AREA_PHOTO[a.id]} alt="" loading="lazy" /><span>{a.name}</span>
+                    <img src={AREA_PHOTO[a.id]} alt="" loading="lazy" style={AREA_PHOTO_POS[a.id] ? { objectPosition: AREA_PHOTO_POS[a.id] } : undefined} /><span>{a.name}</span>
                   </a></li>
                 ))}</ul>
               </div>
@@ -106,13 +108,13 @@ export default function Home() {
               h, p,
               link: [
                 { label: "Meet our people", href: "/about/our-people" },
-                { label: "Who we are", href: "/about/who-we-are" },
-                { label: "See the project", href: caseHref(pdn) },
+                { label: "Reach out about your project", href: "/contact" },
+                { label: "View featured projects", href: "/insights/case-studies" },
                 { label: "See Digital Solutions", href: areaHref(AREAS.find((a) => a.id === "tech")!) },
                 { label: "How we work", href: "/about/how-we-work" },
               ][i],
               visual: [
-                <PeopleStrip key="team" people={veterans} lanes={4} showDev={!PROD} />,
+                <PeopleStrip key="team" people={everyone} lanes={4} showDev={!PROD} />,
                 /* verified numbers only here; the unverified one stays out of the frame */
                 <dl key="nums" className="nums">{NUMBERS.filter((n) => n.verified).map((n) => <div key={n.label}><dt>{n.label}</dt><dd>{n.value}</dd></div>)}</dl>,
                 <a key="proof" className="hs-proof" href={caseHref(pdn)}>
@@ -123,7 +125,7 @@ export default function Home() {
                 <div key="hub" style={themeStyle("tech")}><Diagram kind="hub" steps={AREA_DATA.tech.feature.steps} center="The systems you already own" /></div>,
                 <div key="track" style={themeStyle("strategy")}><Diagram kind="track" detail steps={STEPS.map(([t, d]) => ({ t, d }))} /></div>,
               ][i],
-              phoneVisual: i === 0 ? <PeopleStrip people={veterans} across showDev={!PROD} /> : undefined,
+              phoneVisual: i === 0 ? <PeopleStrip people={everyone} across showDev={!PROD} /> : undefined,
             })),
           },
         ]}
@@ -153,7 +155,7 @@ export default function Home() {
 
       {/* 1b · our services: the five tiles pop out one by one as you scroll (Nicole, Nov 9) */}
       <TilesTour id="services" label="Our services" areas={AREAS.map((a) => ({
-        id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id].lead, href: areaHref(a), photo: AREA_PHOTO[a.id],
+        id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id].lead, href: areaHref(a), photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id],
         services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
       }))} />
 
