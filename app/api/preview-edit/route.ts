@@ -39,8 +39,9 @@ export async function POST(req: Request) {
   if (!token) return NextResponse.json({ error: "The editor isn't set up yet (GitHub token missing in Vercel)." }, { status: 503 });
   if (!branch || branch === "main") return NextResponse.json({ error: "This preview's branch can't be edited." }, { status: 403 });
 
-  const body = await req.json().catch(() => null) as { page?: string; changes?: Change[] } | null;
+  const body = await req.json().catch(() => null) as { page?: string; name?: string; changes?: Change[] } | null;
   if (!body) return NextResponse.json({ error: "Nothing to save" }, { status: 400 });
+  const who = String(body.name || "someone").replace(/[\r\n"`<>{}]/g, " ").trim().slice(0, 40) || "someone";
   const changes = (body.changes || []).filter((c) => c && typeof c.old === "string" && typeof c.next === "string" && c.old.trim() && c.old !== c.next).slice(0, 50);
   if (!changes.length) return NextResponse.json({ applied: 0, pending: 0 });
 
@@ -99,13 +100,13 @@ export async function POST(req: Request) {
       let list = "# Edits from the preview editor that need Claude Code\n\nEach line: page, old wording, new wording, and why it couldn't be placed automatically.\n\n";
       try { const f = await gh(`/contents/EDITS-PENDING.md?ref=${encodeURIComponent(branch)}`); list = Buffer.from(f.content, "base64").toString("utf8"); } catch {}
       const day = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
-      list += pending.map(({ c, why }) => `- [ ] ${day} · ${body.page || "?"} · "${c.old}" → "${c.next.trim()}" (${why})`).join("\n") + "\n";
+      list += pending.map(({ c, why }) => `- [ ] ${day} · ${who} · ${body.page || "?"} · "${c.old}" → "${c.next.trim()}" (${why})`).join("\n") + "\n";
       items.push({ path: "EDITS-PENDING.md", mode: "100644", type: "blob", content: list });
     }
     if (!items.length) return NextResponse.json({ applied: 0, pending: 0 });
 
     const newTree = await gh(`/git/trees`, { method: "POST", body: JSON.stringify({ base_tree: commit.tree.sha, tree: items }) });
-    const message = `Preview edit on ${body.page || "a page"}: ${applied} change${applied === 1 ? "" : "s"}${pending.length ? `, ${pending.length} for Claude Code` : ""}\n\n${changes.map((c) => `- "${c.old}" -> "${c.next.trim()}"`).join("\n")}\n\nMade with the preview Edit text button.`;
+    const message = `Preview edit by ${who} on ${body.page || "a page"}: ${applied} change${applied === 1 ? "" : "s"}${pending.length ? `, ${pending.length} for Claude Code` : ""}\n\n${changes.map((c) => `- "${c.old}" -> "${c.next.trim()}"`).join("\n")}\n\nMade with the preview Edit text button.`;
     const made = await gh(`/git/commits`, { method: "POST", body: JSON.stringify({ message, tree: newTree.sha, parents: [head] }) });
     await gh(`/git/refs/heads/${encodeURIComponent(branch)}`, { method: "PATCH", body: JSON.stringify({ sha: made.sha, force: false }) });
     return NextResponse.json({ applied, pending: pending.length, commit: made.sha });

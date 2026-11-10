@@ -57,9 +57,17 @@ export default function PreviewEdit() {
   const stop = () => { if (changes.length && !confirm("Leave edit mode and drop your unsaved changes?")) return; window.location.reload(); };
 
   const save = async () => {
+    // a name (not a password) so each change shows who made it; asked once, remembered here
+    let name = "";
+    try { name = localStorage.getItem("pe-name") || ""; } catch {}
+    if (!name) {
+      name = (prompt("Your name (it goes on your changes so we know who made them)") || "").trim();
+      if (!name) return;
+      try { localStorage.setItem("pe-name", name); } catch {}
+    }
     setBusy(true); setMsg("Saving…");
     try {
-      const r = await fetch("/api/preview-edit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ page: location.pathname, changes }) });
+      const r = await fetch("/api/preview-edit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ page: location.pathname, name, changes }) });
       const j = await r.json().catch(() => ({}));
       if (!r.ok) { setMsg(j.error || "Couldn't save. Nothing was changed."); return; }
       edited.current.clear(); setChanges([]);
