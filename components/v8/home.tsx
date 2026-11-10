@@ -61,13 +61,29 @@ export default function Home() {
           below it, as it was: small tagline, headline, line, buttons, event note, the
           five areas. One panel, so it scrolls away normally. */}
       <div className="h-open">
-      <FlowHero next="#h-title" />
+      <FlowHero next="#h-title">
+        {/* the same words as the section below, on the hero (Nicole, Nov 9): tagline and
+            headline on the left, the line and buttons on the right */}
+        <div className="fh-grid">
+          <div className="fh-main">
+            {HOME.eyebrow && <p className="fh-tag">{HOME.eyebrow}</p>}
+            <h1 className="fh-title">{HOME.headline}</h1>
+          </div>
+          <div className="fh-side">
+            <p className="fh-line">{HOME.line}</p>
+            <div className="v8-actions fh-actions">
+              <a className="v8-btn" href="/contact">Get in touch</a>
+              <a className="v8-btn v8-btn-ghost" href="#what">See what we do</a>
+            </div>
+          </div>
+        </div>
+      </FlowHero>
 
       {/* 1 · who we are */}
       <section className="h-hero" aria-labelledby="h-title">
         <div className="v8-wrap h-hero-top">
           {HOME.eyebrow && <p className="h-tag" data-reveal>{HOME.eyebrow}</p>}
-          <h1 id="h-title" className="h-title" data-reveal>{HOME.headline}</h1>
+          <h2 id="h-title" className="h-title" data-reveal>{HOME.headline}</h2>
           <div className="h-side" data-reveal>
             <p className="h-line">{HOME.line}</p>
             <div className="v8-actions">

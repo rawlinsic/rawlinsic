@@ -1704,3 +1704,22 @@ html.pc-adding, html.pc-adding * { cursor: crosshair !important; }
 .pe-tab span { writing-mode: vertical-rl; transform: rotate(180deg); }
 .pe-tab b { display: grid; place-items: center; min-width: 20px; height: 20px; border-radius: 999px; background: #22d3ee; color: #04131f; font-size: 0.72rem; }
 .pe-fold { display: grid; place-items: center; width: 40px; padding: 0 !important; }
+/* hero words side by side (Nicole, Nov 9): tagline + headline left, line + buttons right */
+.fh-in { width: min(1320px, calc(100% - clamp(36px, 7vw, 120px))); text-align: left; padding: clamp(24px, 4vh, 48px) 0; }
+.fh-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(28px, 4vw, 72px); align-items: end; }
+.fh-tag { display: inline-flex; }
+.fh-tag::after { display: none; }
+.fh-title { max-width: 17ch; margin: 18px 0 0; font-size: clamp(2.3rem, 4.2vw, 4.1rem); text-align: left; }
+.fh-line { max-width: 30ch; margin: 0; text-align: left; text-wrap: pretty; }
+.fh-actions { justify-content: flex-start; margin-top: 26px; }
+@media (max-width: 860px) {
+  .fh-grid { grid-template-columns: 1fr; gap: 22px; }
+  .fh-title { font-size: clamp(2rem, 8vw, 2.8rem); }
+}
+.fh-title { max-width: 21ch; font-size: clamp(2.2rem, 3.7vw, 3.6rem); line-height: 1.07; }
+@media (max-width: 860px) { .fh-title { max-width: none; font-size: clamp(2rem, 8vw, 2.8rem); } }
+/* phones: the folded tab is a small pencil near the top, clear of the words */
+@media (max-width: 700px) {
+  .pe-tab { top: 84px; transform: none; min-width: 0; padding: 9px 7px; gap: 4px; }
+  .pe-tab span { display: none; }
+}

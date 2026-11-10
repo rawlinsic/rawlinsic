@@ -103,18 +103,21 @@ export default function FlowHero({ children, next }: { children?: ReactNode; nex
 
     /* calm center: light fades out around the tagline; brightest low and at the edges */
     const hasText = !!el.querySelector(".fh-in > *");
+    /* calm behind the words: no light within 26px of any text, fading in over 110px */
+    let boxes: { x0: number; y0: number; x1: number; y1: number }[] = [];
+    const measure = () => {
+      const r = el.getBoundingClientRect(), pad = 26;
+      boxes = Array.from(el.querySelectorAll<HTMLElement>(".fh-in h1, .fh-in p, .fh-in .v8-actions")).map((t) => {
+        const b = t.getBoundingClientRect();
+        return { x0: b.left - r.left - pad, y0: b.top - r.top - pad, x1: b.right - r.left + pad, y1: b.bottom - r.top + pad };
+      });
+    };
     const mask = (x: number, y: number) => {
-      if (!hasText) { // no words on it: light everywhere, a little brighter low and at the edges
-        const low = 0.55 + 0.45 * smooth(0.4 * H, 0.95 * H, y), edge = 0.7 + 0.3 * smooth(0.15 * W, 0.46 * W, Math.abs(x - 0.5 * W));
-        return Math.max(low, edge);
-      }
-      // the text block (tagline, headline, line, buttons) sits in the middle
-      const ex = (x - 0.5 * W) / (0.43 * W), ey = (y - 0.5 * H) / (0.41 * H);
-      const d = Math.sqrt(ex * ex + ey * ey);
-      const calm = smooth(0.82, 1.3, d);
-      const low = 0.45 + 0.55 * smooth(0.45 * H, 0.95 * H, y);
-      const edge = 0.6 + 0.4 * smooth(0.18 * W, 0.46 * W, Math.abs(x - 0.5 * W));
-      return calm * Math.max(low, edge);
+      const low = 0.5 + 0.5 * smooth(0.4 * H, 0.95 * H, y), edge = 0.65 + 0.35 * smooth(0.15 * W, 0.46 * W, Math.abs(x - 0.5 * W));
+      if (!hasText) return Math.max(low, edge);
+      let d = Infinity;
+      for (const b of boxes) d = Math.min(d, Math.hypot(Math.max(b.x0 - x, 0, x - b.x1), Math.max(b.y0 - y, 0, y - b.y1)));
+      return smooth(0, 110, d) * Math.max(low, edge);
     };
 
     const draw = (time: number) => {
@@ -176,7 +179,8 @@ export default function FlowHero({ children, next }: { children?: ReactNode; nex
     const start = () => { if (!raf && visible && !pausedRef.current) { prev = 0; raf = requestAnimationFrame(frame); } };
     kick.current = () => { if (pausedRef.current) { cancelAnimationFrame(raf); raf = 0; } else start(); };
 
-    layout();
+    layout(); measure();
+    document.fonts?.ready.then(() => { measure(); draw(clock); });
     clock = LOOP * 0.37; // a good still frame to start from
     draw(clock); el.classList.add("is-live");
     start();
@@ -184,7 +188,7 @@ export default function FlowHero({ children, next }: { children?: ReactNode; nex
     io.observe(el);
     const vis = () => { visible = !document.hidden; if (visible) start(); else { cancelAnimationFrame(raf); raf = 0; } };
     document.addEventListener("visibilitychange", vis);
-    const ro = new ResizeObserver(() => { layout(); draw(clock); });
+    const ro = new ResizeObserver(() => { layout(); measure(); draw(clock); });
     ro.observe(el);
     return () => { cancelAnimationFrame(raf); io.disconnect(); ro.disconnect(); document.removeEventListener("visibilitychange", vis); };
   }, []);
