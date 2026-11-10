@@ -1,10 +1,11 @@
 /* Preview text editor (components/v8/preview-edit.tsx). Preview builds only.
-   Takes { code, page, changes: [{ old, next }] }, finds each old wording in the
+   Takes { page, changes: [{ old, next }] }, finds each old wording in the
    site's source files on this preview's branch, and commits the new wording in
    one commit. A wording that isn't found exactly once (or needs characters that
    aren't safe to drop into code) goes on EDITS-PENDING.md for Claude Code.
-   Needs, on Vercel, for Preview only: EDIT_GITHUB_TOKEN (contents read/write on
-   this repo) and EDIT_PASSCODE. Never commits to main. */
+   Needs, on Vercel, for Preview only: EDIT_GITHUB_TOKEN (write access to this
+   repo). No passcode (Nicole's call): anyone with a preview link can edit that
+   preview's branch, never main; every edit is its own commit, so it can be undone. */
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
@@ -32,20 +33,20 @@ const inComment = (spans: number[][], i: number) => spans.some(([a, b]) => i >= 
 
 export async function POST(req: Request) {
   if (process.env.VERCEL_ENV !== "preview") return NextResponse.json({ error: "Not available" }, { status: 404 });
-  const token = process.env.EDIT_GITHUB_TOKEN, pass = process.env.EDIT_PASSCODE;
+  const token = process.env.EDIT_GITHUB_TOKEN;
   const branch = process.env.VERCEL_GIT_COMMIT_REF;
   const repo = `${process.env.VERCEL_GIT_REPO_OWNER || "rawlinsic"}/${process.env.VERCEL_GIT_REPO_SLUG || "rawlinsic"}`;
-  if (!token || !pass) return NextResponse.json({ error: "The editor isn't set up yet (token or passcode missing in Vercel)." }, { status: 503 });
+  if (!token) return NextResponse.json({ error: "The editor isn't set up yet (GitHub token missing in Vercel)." }, { status: 503 });
   if (!branch || branch === "main") return NextResponse.json({ error: "This preview's branch can't be edited." }, { status: 403 });
 
-  const body = await req.json().catch(() => null) as { code?: string; page?: string; changes?: Change[] } | null;
-  if (!body || body.code !== pass) return NextResponse.json({ error: "Wrong passcode" }, { status: 401 });
+  const body = await req.json().catch(() => null) as { page?: string; changes?: Change[] } | null;
+  if (!body) return NextResponse.json({ error: "Nothing to save" }, { status: 400 });
   const changes = (body.changes || []).filter((c) => c && typeof c.old === "string" && typeof c.next === "string" && c.old.trim() && c.old !== c.next).slice(0, 50);
   if (!changes.length) return NextResponse.json({ applied: 0, pending: 0 });
 
   const gh = async (path: string, init?: RequestInit) => {
     const r = await fetch(`${GH}/repos/${repo}${path}`, { ...init, headers: { authorization: `Bearer ${token}`, accept: "application/vnd.github+json", "x-github-api-version": "2022-11-28", ...(init?.headers || {}) }, cache: "no-store" });
-    if (!r.ok) throw new Error(`GitHub ${r.status} on ${path}`);
+    if (!r.ok) throw new Error(r.status === 403 || r.status === 404 ? "GitHub won't let the editor save yet (the token needs write access to the rawlinsic repo)" : `GitHub ${r.status} on ${path}`);
     return r.json();
   };
 
@@ -72,7 +73,7 @@ export async function POST(req: Request) {
       if (/[<>{}`\\]/.test(next)) { pending.push({ c, why: "has characters that can't go straight into the code" }); continue; }
       const re = pattern(c.old);
       const hits: { path: string; index: number; match: string }[] = [];
-      for (const [path, src] of Array.from(changed.size ? new Map([...text, ...changed]) : text)) {
+      for (const [path, src] of Array.from(text.keys()).map((p) => [p, changed.get(p) ?? text.get(p)!] as [string, string])) {
         const cs = comments(src);
         for (const m of src.matchAll(re)) if (!inComment(cs, m.index ?? 0)) hits.push({ path, index: m.index ?? 0, match: m[0] });
       }
