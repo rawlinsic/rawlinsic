@@ -137,6 +137,9 @@ function personFromRoster(m: (typeof TEAM_MEMBERS)[number]): Person {
   if (m.categories.includes("operations") && group !== "Business Operations") { areas.add("project-delivery"); areas.add("operations-maintenance"); }
   if (m.categories.includes("technology") || m.categories.includes("communication-brand-design")) areas.add("digital-solutions");
   if (/Aerial|Jordan Stacy|John Zuleger/.test(`${m.role} ${m.name}`)) { areas.add("drones-advanced-air-mobility"); if (!/Infrastructure Technologies|Jordan/.test(`${m.role} ${m.name}`)) areas.delete("digital-solutions"); }
+  /* Nicole works across Strategy & Organization, Project Delivery, and Digital Solutions (her call, Nov 10;
+     not Operations & Maintenance or Drones) */
+  if (/^Nicole Arakorpi/.test(m.name)) { areas.clear(); ["strategy-organization", "project-delivery", "digital-solutions"].forEach((a) => areas.add(a)); }
   return {
     slug: memberSlug(m.name), name: m.name, photo: m.photo, role, group, areas: Array.from(areas),
     formerly: FORMERLY[bare(m.name)], location: m.location, email: m.email, phone: m.phone, linkedin: m.linkedin, background: cleanNames(m.background), achievements: cleanNames(m.achievements),
