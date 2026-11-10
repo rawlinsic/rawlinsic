@@ -19,7 +19,9 @@ export async function POST(req: Request) {
   try {
     const src = await readFile(s.gh, s.branch, FILE);
     if (src === null) return NextResponse.json({ error: "The section list is missing on this version." }, { status: 500 });
-    const at = src.indexOf("[", src.indexOf("REMOVED_SECTIONS"));
+    const m = /REMOVED_SECTIONS\s*:[^=]*=\s*/.exec(src);
+    if (!m) return NextResponse.json({ error: "The section list is unreadable on this version." }, { status: 500 });
+    const at = m.index + m[0].length;
     const list: RemovedSection[] = JSON.parse(src.slice(at, src.lastIndexOf("]") + 1) || "[]");
     if (!list.some((x) => x.page === entry.page && x.sel === entry.sel)) list.push(entry);
     const out = src.slice(0, at) + JSON.stringify(list, null, 2) + ";\n";
