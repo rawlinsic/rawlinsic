@@ -2192,3 +2192,21 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .nw .nw-tag { font-size: 0.82rem; }
 .h-orbit[data-mode="strip"]:not([data-static]) .orb-word { position: relative; }
 .h-orbit[data-mode="strip"]:not([data-static]) .orb-word .v8-dev { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+
+/* area pages: "Our services" with a straight glowing line running out to the right, no count (Nicole, Nov 10) */
+.arh-svcs-h { gap: 16px; font-size: clamp(1.2rem, 1.4vw, 1.4rem); }
+.arh-svcs-h::before { display: none; }
+.arh-svcs-h::after { content: ""; flex: 1; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--aqua), rgba(34, 211, 238, 0)); box-shadow: 0 0 10px rgba(34, 211, 238, 0.55); }
+
+/* Drones map: the current site's drawn places and icons, in our colors */
+.av-map-stage { aspect-ratio: 1000 / 660; }
+.av-scene-g { opacity: 0.7; transition: opacity 0.35s; }
+.av-scene-g.is-on { opacity: 1; }
+.av-route path { stroke-width: 2; }
+.av-place { width: 5.4%; aspect-ratio: 1; min-width: 34px; display: grid; place-items: center; border-radius: 50%; background: rgba(13, 28, 50, 0.94); border: 1.5px solid rgba(34, 211, 238, 0.55); box-shadow: 0 0 0 6px rgba(34, 211, 238, 0.08), 0 0 18px rgba(34, 211, 238, 0.3); color: var(--aqua); transform: translate(-50%, -50%); transition: box-shadow 0.25s, border-color 0.25s, background 0.25s; }
+.av-place svg { width: 56%; height: 56%; overflow: visible; filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.7)); }
+.av-place:hover, .av-place:focus-visible { border-color: var(--aqua); box-shadow: 0 0 0 6px rgba(34, 211, 238, 0.16), 0 0 26px rgba(34, 211, 238, 0.55); }
+.av-place[aria-pressed="true"] { background: #0f2a46; border: 2px solid var(--aqua); box-shadow: 0 0 0 9px rgba(34, 211, 238, 0.18), 0 0 34px var(--aqua); }
+.av-place-label { position: absolute; z-index: 1; transform: translate(-50%, -70%); padding: 4px 11px; border-radius: 999px; background: rgba(8, 18, 34, 0.82); border: 1px solid rgba(165, 243, 252, 0.25); color: #fff; font-size: clamp(0.8rem, 1vw, 1rem); font-weight: 600; white-space: nowrap; cursor: pointer; }
+.av-place-label.is-on { background: var(--aqua); border-color: var(--aqua); color: #04131f; }
+@media (max-width: 700px) { .av-map-stage { aspect-ratio: 1000 / 660; } .av-place-label { font-size: 0.66rem; padding: 2px 6px; } .av-place { min-width: 26px; } }

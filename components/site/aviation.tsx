@@ -11,15 +11,27 @@
                          not names)"), then portrait cards that open each bio
    Words follow the service pages scrub (Nov 6) and full site pass Parts 2 and 4. */
 import { useState, type CSSProperties } from "react";
+import { AamScene } from "@/components/site/aam-scene";
 
 /* ── Integrate the next layer of your transportation system ── */
+/* The current site's map (Nicole, Nov 10: "we need to see the map and what that meant"): its drawn
+   places and icons, in our colors. Places and routes sit where the current site has them (0 0 1000 660). */
+const ICONS: Record<string, string> = {
+  helicopter: '<g transform="scale(0.9) translate(2,2)"><path d="M4 12h3l2-4h6l2 4h3" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="2.5" fill="currentColor" opacity="0.8"/><line x1="3" y1="8" x2="21" y2="8" stroke="currentColor" stroke-width="1" opacity="0.6"/><line x1="12" y1="8" x2="12" y2="9.5" stroke="currentColor" stroke-width="1"/><line x1="10" y1="14.5" x2="8" y2="18" stroke="currentColor" stroke-width="1"/><line x1="14" y1="14.5" x2="16" y2="18" stroke="currentColor" stroke-width="1"/></g>',
+  package: '<g><rect x="5" y="8" width="14" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="5" y1="13" x2="19" y2="13" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="12" y1="8" x2="12" y2="20" stroke="currentColor" stroke-width="1" opacity="0.5"/><path d="M8 4L12 2L16 4" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="12" y1="2" x2="12" y2="8" stroke="currentColor" stroke-width="1"/></g>',
+  residential: '<g><path d="M3 12L12 4l9 8" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="6" y="12" width="12" height="8" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="10" y="15" width="4" height="5" stroke="currentColor" stroke-width="1" fill="none"/></g>',
+  medical: '<g><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" stroke-width="2.5"/><line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="2.5"/></g>',
+  rural: '<g><path d="M2 20L12 6l10 14" stroke="currentColor" stroke-width="1.2" fill="none"/><line x1="18" y1="20" x2="18" y2="10" stroke="currentColor" stroke-width="1.2"/><line x1="16" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="1"/><circle cx="8" cy="16" r="1" fill="currentColor" opacity="0.5"/></g>',
+  city: '<g><rect x="2" y="10" width="5" height="11" stroke="currentColor" stroke-width="1" fill="none"/><rect x="8" y="4" width="5" height="17" stroke="currentColor" stroke-width="1" fill="none"/><rect x="14" y="7" width="5" height="14" stroke="currentColor" stroke-width="1" fill="none"/><rect x="20" y="12" width="3" height="9" stroke="currentColor" stroke-width="0.8" fill="none"/></g>',
+};
+
 const NODES = [
-  { id: "urban-air-taxi", label: "Passenger aircraft", x: 175, y: 140, desc: "Electric vertical takeoff and landing (eVTOL) aircraft providing on-demand urban and regional passenger transport." },
-  { id: "package-delivery", label: "Package Delivery", x: 193, y: 420, desc: "Automated drone logistics for last-mile and middle-mile package delivery across urban and suburban areas." },
-  { id: "residential", label: "Residential Areas", x: 492, y: 160, desc: "Suburban and residential communities served by drone delivery, passenger aircraft connections, and emergency response drones." },
-  { id: "medical", label: "Medical Supplies", x: 488, y: 370, desc: "Time-critical medical supply delivery including lab samples, medications, vaccines, and emergency equipment." },
-  { id: "rural", label: "Rural & Agriculture", x: 805, y: 150, desc: "Agricultural monitoring, crop spraying, rural delivery services, and environmental data collection for remote areas." },
-  { id: "city-center", label: "City Center", x: 760, y: 400, desc: "Dense urban cores integrating vertiport networks, drone corridors, and multimodal transit connections." },
+  { id: "urban-air-taxi", label: "Passenger aircraft", icon: "helicopter", x: 174.83, y: 121.83, lx: 174.83, ly: 178, desc: "Electric vertical takeoff and landing (eVTOL) aircraft providing on-demand urban and regional passenger transport." },
+  { id: "package-delivery", label: "Package Delivery", icon: "package", x: 192.74, y: 418.69, lx: 212.74, ly: 480, desc: "Automated drone logistics for last-mile and middle-mile package delivery across urban and suburban areas." },
+  { id: "residential", label: "Residential Areas", icon: "residential", x: 491.83, y: 146.83, lx: 491.83, ly: 285, desc: "Suburban and residential communities served by drone delivery, passenger aircraft connections, and emergency response drones." },
+  { id: "medical", label: "Medical Supplies", icon: "medical", x: 487.76, y: 362.72, lx: 487.76, ly: 422, desc: "Time-critical medical supply delivery including lab samples, medications, vaccines, and emergency equipment." },
+  { id: "rural", label: "Rural & Agriculture", icon: "rural", x: 773.2, y: 132.58, lx: 773.2, ly: 266, desc: "Agricultural monitoring, crop spraying, rural delivery services, and environmental data collection for remote areas." },
+  { id: "city-center", label: "City Center", icon: "city", x: 702, y: 377.09, lx: 830, ly: 366, desc: "Dense urban cores integrating vertiport networks, drone corridors, and multimodal transit connections." },
 ];
 /* two route kinds: people and cargo (package and medical deliveries are one kind) */
 type Kind = "air" | "delivery";
@@ -29,11 +41,21 @@ const PATHS: [string, string, Kind][] = [
   ["medical", "residential", "delivery"], ["medical", "city-center", "delivery"], ["medical", "rural", "delivery"],
 ];
 const ROUTE: Record<Kind, string> = { air: "People movement", delivery: "Cargo movement" };
+const W = 1000, H = 660;
 const at = (id: string) => NODES.find((n) => n.id === id)!;
-const arc = (a: string, b: string, i: number) => {
-  const p = at(a), q = at(b);
-  return `M ${p.x} ${p.y} Q ${(p.x + q.x) / 2} ${Math.min(p.y, q.y) - 70 - (i % 3) * 22} ${q.x} ${q.y}`;
+/* the current site's sweeping routes */
+const arc = (a: string, b: string) => {
+  const p = at(a), q = at(b), mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2, k = `${a}>${b}`;
+  const c: Record<string, [number, number]> = {
+    "urban-air-taxi>rural": [mx, -50], "urban-air-taxi>residential": [mx, -20], "urban-air-taxi>city-center": [mx - 40, my - 60],
+    "residential>rural": [mx, -30], "residential>city-center": [mx + 20, my - 30], "package-delivery>residential": [mx - 60, my - 40],
+    "package-delivery>rural": [mx, my - 80], "package-delivery>city-center": [mx - 20, my + 30], "medical>residential": [mx - 30, my - 40],
+    "medical>rural": [mx + 20, my - 50],
+  };
+  const [cx, cy] = c[k] ?? [mx - (q.y - p.y) * 0.12, my + (q.x - p.x) * 0.12];
+  return `M ${p.x} ${p.y} Q ${cx} ${cy} ${q.x} ${q.y}`;
 };
+const pct = (x: number, y: number): CSSProperties => ({ left: `${(x / W) * 100}%`, top: `${(y / H) * 100}%` });
 
 export function NextLayer() {
   const [sel, setSel] = useState("urban-air-taxi");
@@ -46,34 +68,36 @@ export function NextLayer() {
         </div>
         <div className="av-map-in">
           <div className="av-map-stage">
-            <svg viewBox="0 0 1000 540" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+              <AamScene on={sel} />
               {PATHS.map(([a, b, k], i) => {
                 const on = sel === a || sel === b;
                 return (
                   <g key={i} className={`av-route is-${k}${on ? " is-on" : ""}`}>
-                    <path d={arc(a, b, i)} />
-                    {on && <circle r="5"><animateMotion dur={`${2.6 + (i % 3) * 0.5}s`} repeatCount="indefinite" path={arc(a, b, i)} /></circle>}
+                    <path d={arc(a, b)} />
+                    {on && <circle r="5"><animateMotion dur={`${2.6 + (i % 3) * 0.5}s`} repeatCount="indefinite" path={arc(a, b)} /></circle>}
                   </g>
                 );
               })}
             </svg>
             {NODES.map((n) => (
-              <button key={n.id} type="button" className="av-place" aria-pressed={sel === n.id} onClick={() => setSel(n.id)}
-                style={{ left: `${n.x / 10}%`, top: `${(n.y / 540) * 100}%` }}>
-                <i aria-hidden="true" /><span>{n.label}</span>
+              <button key={n.id} type="button" className="av-place" aria-pressed={sel === n.id} aria-label={n.label} onClick={() => setSel(n.id)} style={pct(n.x, n.y)}>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" dangerouslySetInnerHTML={{ __html: ICONS[n.icon] }} />
               </button>
+            ))}
+            {NODES.map((n) => (
+              <span key={n.id} className={`av-place-label${sel === n.id ? " is-on" : ""}`} style={pct(n.lx, n.ly)} onClick={() => setSel(n.id)} aria-hidden="true">{n.label}</span>
             ))}
           </div>
           <div className="av-map-side">
             <div className="av-map-card" aria-live="polite">
-              <p className="v8-eyebrow">Selected place</p>
               <h3>{node.label}</h3>
               <p>{node.desc}</p>
             </div>
             <ul className="av-legend">
               {(Object.keys(ROUTE) as Kind[]).map((k) => <li key={k} className={`is-${k}`}><i aria-hidden="true" />{ROUTE[k]}</li>)}
             </ul>
-            <p className="av-map-hint">Pick a place on the map to see its routes.</p>
+            <p className="av-map-hint">Pick an icon on the map to see its routes.</p>
           </div>
         </div>
       </div>

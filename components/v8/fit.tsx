@@ -5,7 +5,7 @@
      loop, cycle  the line runs back around the cards to the first step
      track        the line runs on past the last step, like a schedule
      hub          every card stands on one base: the systems you already own
-     ascent       the cards climb, and the line (and a drone) climbs with them
+     ascent       the cards climb, and one straight line (and a drone) climbs with them
    The line is drawn from where the step markers really are on screen, so it
    fits any width. Phones get the steps stacked with the line down the side.
    The words are real text; the line is decoration. */
@@ -46,7 +46,9 @@ export default function Fit({ kind, eyebrow, title, steps, base = "The systems y
       const [fx, fy] = nodes[0], [lx, ly] = nodes[nodes.length - 1];
       let pts = nodes;
       if (!stacked && kind === "track") pts = [[0, fy], ...nodes, [b.width, ly]];
-      if (!stacked && kind === "ascent") pts = [[0, fy + 18], ...nodes, [b.width, ly - 46]];
+      /* ascent: one straight line through the steps, carried on to both edges (Nicole, Nov 10) */
+      const straight = !stacked && kind === "ascent" && lx !== fx;
+      if (straight) { const m = (ly - fy) / (lx - fx); pts = [[0, fy - m * fx], [b.width, ly + m * (b.width - lx)]]; }
       let back: string | undefined;
       const again = body.querySelector(".fit-again span");
       if (!stacked && again) {
@@ -56,7 +58,7 @@ export default function Fit({ kind, eyebrow, title, steps, base = "The systems y
         const y = at(again)[1], r = 18;
         back = `M ${lx} ${ly} H ${R - r} Q ${R} ${ly} ${R} ${ly + r} V ${y - r} Q ${R} ${y} ${R - r} ${y} H ${L + r} Q ${L} ${y} ${L} ${y - r} V ${fy + r} Q ${L} ${fy} ${L + r} ${fy} H ${fx - 30}`;
       }
-      setArt({ w: b.width, h: b.height, main: through(pts), back });
+      setArt({ w: b.width, h: b.height, main: straight ? `M ${pts[0][0]} ${pts[0][1]} L ${pts[1][0]} ${pts[1][1]}` : through(pts), back });
     };
     draw();
     const ro = new ResizeObserver(draw);

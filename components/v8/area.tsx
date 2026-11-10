@@ -67,7 +67,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
           </div>
         </div>
         <div id="services" className="v8-wrap arh-svcs">
-          <h2 className="arh-svcs-h">Our services <span>{area.services.length}</span></h2>
+          <h2 className="arh-svcs-h">Our services</h2>
           <ul className={`ways ways-svc${many ? " is-many" : ""}`}>
             {area.services.map((s) => (
               <li key={s.id} className="way">
