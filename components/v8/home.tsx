@@ -16,6 +16,7 @@ import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/conten
 import { Diagram } from "@/components/v8/diagram";
 import Scene from "@/components/v8/scene";
 import Grown from "@/components/v8/grown";
+import FlowHero from "@/components/v8/flow-hero";
 import LitText from "@/components/v8/lit-text";
 import Tabs from "@/components/v8/tabs";
 import Rail from "@/components/v8/rail";
@@ -56,11 +57,15 @@ export default function Home() {
 
   return (
     <Panels>
+      {/* 0 · the opening: the tagline over moving light (Nicole, Nov 9; scale.com's
+          framed hero). The video comes from Livepeer Agent; until then, dots drawn by code. */}
+      <FlowHero next="#h-title">
+        {HOME.eyebrow && <p className="fh-tag">{HOME.eyebrow}</p>}
+      </FlowHero>
+
       {/* 1 · who we are */}
       <section className="h-hero" aria-labelledby="h-title">
         <div className="v8-wrap h-hero-top">
-          {/* tagline above the headline (Nicole, Nov 9: back, so she can set the wording) */}
-          {HOME.eyebrow && <p className="h-tag" data-reveal>{HOME.eyebrow}</p>}
           <h1 id="h-title" className="h-title" data-reveal>{HOME.headline}</h1>
           <div className="h-side" data-reveal>
             <p className="h-line">{HOME.line}</p>

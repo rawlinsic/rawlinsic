@@ -1645,3 +1645,16 @@ html.pc-adding, html.pc-adding * { cursor: crosshair !important; }
 .h-tag { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin: 0 0 -6px; color: var(--aqua-ink); font-size: clamp(0.95rem, 1.1vw, 1.08rem); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 .h-tag::before { content: ""; flex: none; width: 28px; height: 3px; border-radius: 3px; background: var(--aqua); box-shadow: 0 0 10px var(--aqua); }
 .h-hero-top { row-gap: clamp(12px, 1.4vw, 20px); }
+
+/* home opening: tagline over moving light in a framed block (flow-hero.tsx) */
+.fh { position: relative; isolation: isolate; display: grid; place-items: center; height: calc(100vh - 68px - clamp(16px, 2vw, 28px)); min-height: 520px; margin: clamp(8px, 1vw, 14px) clamp(8px, 1vw, 14px) 0; overflow: hidden; border-radius: clamp(18px, 2vw, 28px); background: radial-gradient(60% 70% at 70% 35%, rgba(34, 211, 238, 0.12), transparent 65%), linear-gradient(160deg, #1d3759 0%, #12233f 55%, #0b1830 100%); }
+.fh-canvas { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; }
+.fh::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(45% 40% at 50% 50%, rgba(11, 24, 48, 0.55), transparent 75%); pointer-events: none; }
+.fh-in { width: min(1100px, calc(100% - 48px)); text-align: center; }
+.fh-tag { margin: 0; color: #fff; font-size: clamp(2.4rem, 6vw, 5.6rem); font-weight: 600; line-height: 1.04; letter-spacing: -0.03em; text-wrap: balance; text-shadow: 0 2px 30px rgba(6, 14, 28, 0.45); }
+.fh-next { position: absolute; right: clamp(18px, 3vw, 44px); bottom: clamp(18px, 3vw, 40px); display: inline-flex; align-items: center; gap: 12px; color: #fff !important; font-size: 1rem; font-weight: 500; text-decoration: none; }
+.fh-next span { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 10px; transition: background 0.2s, border-color 0.2s; }
+.fh-next:hover span { background: rgba(34, 211, 238, 0.18); border-color: #22d3ee; }
+@media (max-width: 700px) { .fh { height: min(78vh, 640px); min-height: 440px; } .fh-next { font-size: 0.9rem; } }
+.fh-wrap { background: #fff; padding: clamp(8px, 1vw, 14px) clamp(8px, 1vw, 14px) 0; }
+.fh-wrap > .fh { margin: 0; }
