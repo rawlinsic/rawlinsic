@@ -57,26 +57,22 @@ export default function Home() {
 
   return (
     <Panels>
-      {/* 0 · the opening: the tagline over moving light (Nicole, Nov 9; scale.com's
-          framed hero). The video comes from Livepeer Agent; until then, dots drawn by code. */}
-      <FlowHero next="#h-title">
+      {/* 0 · the opening (Nicole, Nov 9): everything on the hero, over the moving
+          background (drawn in code for now; a video can replace it later) */}
+      <FlowHero next="#h-ways">
         {HOME.eyebrow && <p className="fh-tag">{HOME.eyebrow}</p>}
+        <h1 id="h-title" className="fh-title">{HOME.headline}</h1>
+        <p className="fh-line">{HOME.line}</p>
+        <div className="v8-actions fh-actions">
+          <a className="v8-btn" href="/contact">Get in touch</a>
+          <a className="v8-btn v8-btn-ghost" href="#what">See what we do</a>
+        </div>
+        {ev?.line && <p className="fh-event"><a href="/contact">{ev.line} <b>Plan to meet us</b></a></p>}
       </FlowHero>
 
-      {/* 1 · who we are */}
-      <section className="h-hero" aria-labelledby="h-title">
-        <div className="v8-wrap h-hero-top">
-          <h1 id="h-title" className="h-title" data-reveal>{HOME.headline}</h1>
-          <div className="h-side" data-reveal>
-            <p className="h-line">{HOME.line}</p>
-            <div className="v8-actions">
-              <a className="v8-btn" href="/contact">Get in touch</a>
-              <a className="v8-btn v8-btn-ghost" href="#what">See what we do</a>
-            </div>
-            {ev?.line && <p className="h-event"><a href="/contact">{ev.line} <b>Plan to meet us</b></a></p>}
-          </div>
-        </div>
-        <ul className="ways" aria-label="What we do">
+      {/* 1 · the five areas, right under the hero */}
+      <section className="h-hero h-hero-ways" aria-label="What we do">
+        <ul id="h-ways" className="ways" aria-label="What we do">
           {AREAS.map((a) => (
             <li key={a.id} className="way" style={themeStyle(a.id)}>
               <a href={areaHref(a)}>

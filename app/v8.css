@@ -1666,3 +1666,34 @@ html.pc-adding, html.pc-adding * { cursor: crosshair !important; }
 .fh-pause { position: absolute; left: clamp(18px, 3vw, 44px); bottom: clamp(18px, 3vw, 40px); display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 10px; background: rgba(11, 24, 48, 0.55); color: #fff; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
 .fh-pause:hover { background: rgba(34, 211, 238, 0.18); border-color: #22d3ee; }
 .fh-pause:focus-visible, .fh-next:focus-visible { outline: 3px solid #22d3ee; outline-offset: 3px; }
+/* review tools sit at the bottom center, clear of the hero's pause button (bottom left) */
+.pe-bar { left: 50%; transform: translateX(-50%); }
+.pe-show { left: 50%; transform: translateX(-50%); }
+.pc-list { left: 50%; transform: translateX(-50%); }
+/* home hero, everything on it (Nicole, Nov 9): small tagline, big headline, line, buttons */
+.h-hero-ways { padding-top: clamp(16px, 2vw, 28px); }
+.h-hero-ways .ways { margin-top: 0; }
+.fh-in { width: min(1180px, calc(100% - 48px)); padding: clamp(28px, 5vh, 56px) 0; }
+.fh-tag { display: inline-flex; align-items: center; gap: 12px; margin: 0; color: #a5f3fc; font-size: clamp(0.95rem, 1.05vw, 1.05rem); font-weight: 700; line-height: 1.3; letter-spacing: 0.12em; text-transform: uppercase; text-shadow: none; }
+.fh-tag::before, .fh-tag::after { content: ""; width: 26px; height: 2px; border-radius: 2px; background: #22d3ee; box-shadow: 0 0 10px #22d3ee; }
+.fh-title { max-width: 22ch; margin: 18px auto 0; color: #fff; font-size: clamp(2.3rem, 4.5vw, 4.3rem); font-weight: 600; line-height: 1.06; letter-spacing: -0.032em; text-wrap: balance; text-shadow: 0 2px 30px rgba(6, 14, 28, 0.5); }
+.fh-line { max-width: 40ch; margin: 22px auto 0; color: #dce6f2; font-size: clamp(1.15rem, 1.5vw, 1.4rem); line-height: 1.4; }
+.fh-actions { justify-content: center; margin-top: 30px; }
+.fh .v8-btn:not(.v8-btn-ghost) { background: #fff; color: #0a1220 !important; }
+.fh .v8-btn-ghost { background: rgba(11, 24, 48, 0.35); color: #fff !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65); }
+.fh-event { margin: 22px auto 0; color: #c3d1e2; font-size: 1rem; line-height: 1.45; }
+.fh-event a { color: inherit !important; text-decoration: none; }
+.fh-event b { color: #a5f3fc; }
+.fh-event b::after { content: " →"; }
+@media (max-width: 700px) { .fh { height: auto; min-height: min(92vh, 760px); } .fh-in { padding: 56px 0 96px; } }
+.fh-line { max-width: 48ch; text-wrap: balance; }
+@media (max-width: 700px) {
+  .fh-tag { font-size: 0.82rem; letter-spacing: 0.08em; }
+  .fh-tag::before, .fh-tag::after { display: none; }
+  /* review tools: one compact row on phones */
+  .pe-bar { flex-wrap: nowrap; width: max-content; max-width: calc(100vw - 20px); overflow-x: auto; bottom: 10px; padding: 6px; gap: 6px; }
+  .pe-bar .pe-btn { padding: 8px 12px; font-size: 0.85rem; white-space: nowrap; }
+  .pe-bar .pe-msg { display: none; }
+}
+/* the event note sits over the brightest light: a dark pill keeps it readable */
+.fh-event { display: inline-block; padding: 8px 16px; border-radius: 999px; background: rgba(8, 18, 34, 0.78); color: #e6edf5; box-shadow: 0 0 0 1px rgba(165, 243, 252, 0.18); }

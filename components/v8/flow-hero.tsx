@@ -103,9 +103,10 @@ export default function FlowHero({ children, next }: { children: ReactNode; next
 
     /* calm center: light fades out around the tagline; brightest low and at the edges */
     const mask = (x: number, y: number) => {
-      const ex = (x - 0.5 * W) / (0.36 * W), ey = (y - 0.47 * H) / (0.24 * H);
+      // the text block (tagline, headline, line, buttons) sits in the middle
+      const ex = (x - 0.5 * W) / (0.43 * W), ey = (y - 0.5 * H) / (0.41 * H);
       const d = Math.sqrt(ex * ex + ey * ey);
-      const calm = smooth(0.8, 1.45, d);
+      const calm = smooth(0.82, 1.3, d);
       const low = 0.45 + 0.55 * smooth(0.45 * H, 0.95 * H, y);
       const edge = 0.6 + 0.4 * smooth(0.18 * W, 0.46 * W, Math.abs(x - 0.5 * W));
       return calm * Math.max(low, edge);
