@@ -3,20 +3,52 @@
    this only when VERCEL_ENV is "preview"). Click "Edit text", click any words
    on the page, type, and hit Save. Save sends old and new wording to
    /api/preview-edit, which finds the old wording in the site's files and
-   commits the change to the branch this preview was built from. Anything it
+   commits the change to the branch this preview was built from. It sends the
+   exact piece of text that changed and the words around it, so the right spot
+   is found even when a sentence has a link in it or a wording repeats. Anything it
    can't place goes on EDITS-PENDING.md in the repo for Claude Code. */
 import { useEffect, useRef, useState } from "react";
 
-type Change = { old: string; next: string };
+type Change = { old: string; next: string; nodeOld?: string; nodeNew?: string; context?: string[] };
+type Snap = { full: string; nodes: string[]; context: string[] };
 const LEAF = "h1,h2,h3,h4,h5,p,li,blockquote,dt,dd,figcaption,b,strong,em,small,span,a,button,label,td,th";
 const clean = (s: string) => s.replace(/\s+/g, " ").trim();
+/* the words as written (textContent), not as styled: labels shown in capitals
+   are written normally in the code */
+const textOf = (el: Element) => el.textContent || "";
+const textNodes = (el: Element) => { const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); const out: string[] = []; while (w.nextNode()) out.push(w.currentNode.nodeValue || ""); return out; };
+/* words near the element on the page: its neighbors and its section heading,
+   used to pick the right spot when the same wording is in several places */
+const contextOf = (el: HTMLElement) => {
+  const out: string[] = [];
+  const add = (x: Element | null | undefined) => { const t = x ? clean(textOf(x)).slice(0, 80) : ""; if (t.length >= 6 && !out.includes(t)) out.push(t); };
+  add(el.previousElementSibling); add(el.nextElementSibling);
+  add(el.parentElement?.previousElementSibling); add(el.parentElement?.nextElementSibling);
+  const sec = el.closest("section, header, footer, nav, li");
+  add(sec?.querySelector("h1, h2, h3"));
+  return out.filter((t) => t !== clean(textOf(el))).slice(0, 6);
+};
+/* what changed: the one text node it happened in, when the edit stays inside one */
+const diff = (snap: Snap, now: string): Change => {
+  const a = snap.full, b = now;
+  let p = 0; while (p < a.length && p < b.length && a[p] === b[p]) p++;
+  let s = 0; while (s < a.length - p && s < b.length - p && a[a.length - 1 - s] === b[b.length - 1 - s]) s++;
+  const change: Change = { old: clean(a), next: clean(b), context: snap.context };
+  let at = 0;
+  for (const t of snap.nodes) {
+    const end = at + t.length;
+    if (p >= at && a.length - s <= end) { change.nodeOld = clean(t); change.nodeNew = clean(t.slice(0, p - at) + b.slice(p, b.length - s) + t.slice(a.length - s - at)); break; }
+    at = end;
+  }
+  return change;
+};
 
 export default function PreviewEdit() {
   const [on, setOn] = useState(false);
   const [changes, setChanges] = useState<Change[]>([]);
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
-  const orig = useRef(new WeakMap<HTMLElement, string>());
+  const snaps = useRef(new WeakMap<HTMLElement, Snap>());
   const edited = useRef(new Set<HTMLElement>());
 
   // in edit mode: clicks pick words to edit instead of following links
@@ -29,8 +61,8 @@ export default function PreviewEdit() {
       e.preventDefault();
       e.stopPropagation();
       const el = t.closest<HTMLElement>(LEAF);
-      if (!el || !clean(el.innerText || "")) return;
-      if (!orig.current.has(el)) orig.current.set(el, clean(el.innerText));
+      if (!el || !clean(textOf(el))) return;
+      if (!snaps.current.has(el)) snaps.current.set(el, { full: textOf(el), nodes: textNodes(el), context: contextOf(el) });
       el.contentEditable = "true";
       el.classList.add("pe-edit");
       el.focus();
@@ -38,9 +70,9 @@ export default function PreviewEdit() {
     const blur = (e: FocusEvent) => {
       const el = e.target as HTMLElement;
       if (!el.classList?.contains("pe-edit")) return;
-      const was = orig.current.get(el) ?? "", now = clean(el.innerText || "");
-      if (now !== was) edited.current.add(el); else edited.current.delete(el);
-      setChanges(Array.from(edited.current).map((x) => ({ old: orig.current.get(x) ?? "", next: clean(x.innerText || "") })).filter((c) => c.old !== c.next));
+      const snap = snaps.current.get(el);
+      if (snap && clean(textOf(el)) !== clean(snap.full)) edited.current.add(el); else edited.current.delete(el);
+      setChanges(Array.from(edited.current).map((x) => diff(snaps.current.get(x)!, textOf(x))).filter((c) => c.old !== c.next));
     };
     const key = (e: KeyboardEvent) => { if (e.key === "Enter" && (e.target as HTMLElement).classList?.contains("pe-edit")) { e.preventDefault(); (e.target as HTMLElement).blur(); } };
     document.addEventListener("click", click, true);

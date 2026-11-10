@@ -7,29 +7,14 @@
    repo). No passcode (Nicole's call): anyone with a preview link can edit that
    preview's branch, never main; every edit is its own commit, so it can be undone. */
 import { NextResponse } from "next/server";
+import { place, writeAll, type Change } from "@/lib/preview-edit-match";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type Change = { old: string; next: string };
 const GH = "https://api.github.com";
 const SEARCH = /^(lib\/.*\.ts|components\/.*\.tsx?|app\/.*\.tsx?)$/;
 const SKIP = /^(components\/home\/|components\/menu\/|app\/api\/)/; // old code nothing uses, and this file
-
-const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-/* a pattern for the wording as it may be written in code: any run of spaces or
-   line breaks, and apostrophes or quotes written plain, curly, or as entities */
-const pattern = (s: string) =>
-  new RegExp(
-    s.trim().split(/\s+/).map((w) =>
-      esc(w).replace(/['’]/g, "(?:'|’|&apos;|&#x27;|&rsquo;)").replace(/["“”]/g, '(?:"|“|”|&quot;|\\\\")'),
-    ).join("\\s+"),
-    "g",
-  );
-
-/* where the code comments are, so wording that only appears in a comment isn't counted */
-const comments = (src: string) => Array.from(src.matchAll(/\/\*[\s\S]*?\*\/|(?<=^|\s)\/\/[^\n]*/g)).map((m) => [m.index ?? 0, (m.index ?? 0) + m[0].length]);
-const inComment = (spans: number[][], i: number) => spans.some(([a, b]) => i >= a && i < b);
 
 export async function POST(req: Request) {
   if (process.env.VERCEL_ENV !== "preview") return NextResponse.json({ error: "Not available" }, { status: 404 });
@@ -42,7 +27,9 @@ export async function POST(req: Request) {
   const body = await req.json().catch(() => null) as { page?: string; name?: string; changes?: Change[] } | null;
   if (!body) return NextResponse.json({ error: "Nothing to save" }, { status: 400 });
   const who = String(body.name || "someone").replace(/[\r\n"`<>{}]/g, " ").trim().slice(0, 40) || "someone";
-  const changes = (body.changes || []).filter((c) => c && typeof c.old === "string" && typeof c.next === "string" && c.old.trim() && c.old !== c.next).slice(0, 50);
+  const changes = (body.changes || []).filter((c) => c && typeof c.old === "string" && typeof c.next === "string" && c.old.trim() && c.old !== c.next)
+    .map((c) => ({ old: c.old, next: c.next, nodeOld: typeof c.nodeOld === "string" ? c.nodeOld : undefined, nodeNew: typeof c.nodeNew === "string" ? c.nodeNew : undefined, context: Array.isArray(c.context) ? c.context.filter((x) => typeof x === "string").slice(0, 8) : [] }))
+    .slice(0, 50);
   if (!changes.length) return NextResponse.json({ applied: 0, pending: 0 });
 
   const gh = async (path: string, init?: RequestInit) => {
@@ -70,28 +57,12 @@ export async function POST(req: Request) {
     const pending: { c: Change; why: string }[] = [];
     let applied = 0;
     for (const c of changes) {
-      const next = c.next.trim();
-      if (/[<>{}`\\]/.test(next)) { pending.push({ c, why: "has characters that can't go straight into the code" }); continue; }
-      const re = pattern(c.old);
-      const hits: { path: string; index: number; match: string }[] = [];
-      for (const [path, src] of Array.from(text.keys()).map((p) => [p, changed.get(p) ?? text.get(p)!] as [string, string])) {
-        const cs = comments(src);
-        for (const m of src.matchAll(re)) if (!inComment(cs, m.index ?? 0)) hits.push({ path, index: m.index ?? 0, match: m[0] });
-      }
-      if (hits.length !== 1) { pending.push({ c, why: hits.length ? `found in ${hits.length} places` : "not found as written (it may be built from pieces)" }); continue; }
-      const h = hits[0];
-      const src = changed.get(h.path) ?? text.get(h.path)!;
-      // write the new wording the way the old one was written in that spot
-      let out = next;
-      if (/&apos;|&#x27;/.test(h.match)) out = out.replace(/'/g, "&apos;");
-      else if (h.match.includes("’") && !h.match.includes("'")) out = out.replace(/'/g, "’");
-      // quotes: typed straight double quotes become curly ones, which are safe in
-      // any string; an apostrophe inside a single-quoted string becomes curly too
-      out = out.replace(/"([^"]*)"/g, "“$1”").replace(/"/g, "”");
-      const line = src.slice(src.lastIndexOf("\n", h.index) + 1, h.index);
-      const q = (line.match(/['"`][^'"`]*$/) || [""])[0][0];
-      if (q === "'") out = out.replace(/'/g, "’");
-      changed.set(h.path, src.slice(0, h.index) + out + src.slice(h.index + h.match.length));
+      if (/[<>{}`\\]/.test(c.next) || (c.nodeNew && /[<>{}`\\]/.test(c.nodeNew))) { pending.push({ c, why: "has characters that can't go straight into the code" }); continue; }
+      // search the files as they are after the edits already placed in this save
+      const now = new Map(Array.from(text.keys()).map((p) => [p, changed.get(p) ?? text.get(p)!] as [string, string]));
+      const got = place(now, c);
+      if ("why" in got) { pending.push({ c, why: got.why }); continue; }
+      for (const path of Array.from(new Set(got.hits.map((h) => h.path)))) changed.set(path, writeAll(now.get(path)!, got.hits.filter((h) => h.path === path), got.next));
       applied++;
     }
 

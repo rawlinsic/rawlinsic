@@ -1618,3 +1618,6 @@ html.lenis { scroll-behavior: auto !important; }
 .pe-msg { flex-basis: 100%; margin: 2px 6px 4px; color: #cfdbea; font-size: 0.9rem; line-height: 1.4; }
 .pe-on :is(main, header, footer) :is(h1, h2, h3, h4, h5, p, li, blockquote, dt, dd, figcaption, b, strong, em, small, span, a, button, label, td, th):hover { outline: 2px dashed #22d3ee; outline-offset: 2px; cursor: text; }
 .pe-edit { outline: 2px solid #22d3ee !important; outline-offset: 2px; background: rgba(34, 211, 238, 0.12); }
+/* preview editor: in edit mode, word-by-word lit quotes show their plain sentence so it can be edited */
+.pe-on :is(.lit, .lit-line) > .sr-only { position: static !important; width: auto !important; height: auto !important; margin: 0 !important; overflow: visible !important; clip: auto !important; clip-path: none !important; white-space: normal !important; }
+.pe-on :is(.lit, .lit-line) > [aria-hidden="true"] { display: none !important; }
