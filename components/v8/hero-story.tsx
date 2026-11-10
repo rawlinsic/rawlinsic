@@ -94,6 +94,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
     const teaseItems = teasers.map((t) => (t ? Array.from(t.querySelectorAll<HTMLElement>("li")) : []));
     const eyebrows = texts.map((t) => (t.querySelector(".hs-intro") ? t.querySelector<HTMLElement>(".hs-k") : null));
     const solo = texts.map((_, i) => el.querySelector<HTMLElement>(`.hs-pan[data-step="${i}"][data-j="-1"]`));
+    const heads = texts.map((t) => Array.from(t.querySelectorAll<HTMLElement>(".hs-hl .hs-hw")));
     const ticks = texts.map((t) => Array.from(t.querySelectorAll<HTMLElement>(".hs-tick-b")));
     const counts = texts.map((t) => t.querySelector<HTMLElement>(".hs-count"));
     const pans = texts.map((_, i) => Array.from(el.querySelectorAll<HTMLElement>(`.hs-pan[data-step="${i}"]:not([data-j="-1"]):not([data-j="intro"])`)));
@@ -147,6 +148,10 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
         t.style.setProperty("--in", inn.toFixed(3)); t.style.setProperty("--out", out.toFixed(3));
         t.style.visibility = inn > 0 && out < 1 ? "visible" : "hidden";
         t.toggleAttribute("data-on", inn > 0.8 && out < 0.5);
+        if (heads[i].length) { // the headline's words light up electric blue, then go back to white as the next scroll comes
+          const u = a / STEP, nh = u > 0.84 ? 0 : Math.round(c01((u - 0.42) / 0.28) * heads[i].length);
+          heads[i].forEach((w, k) => w.classList.toggle("is-lit", k < nh));
+        }
         const sp = solo[i];
         if (sp) { // a one-message side's picture fills the frame once it has moved over
           // it hands over to the next side's picture (crossfade), so the video doesn't come back in between
@@ -315,7 +320,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
         ) : (
           <div key={i} className={`hs-step ${i % 2 ? "is-right" : "is-left"}`}>
             {st.k && <p className="hs-k">{st.k}</p>}
-            {st.h && <h2>{st.h}</h2>}
+            {st.h && <h2 className="hs-hl">{st.h.split(" ").map((w, wi) => <span key={wi} className="hs-hw">{wi > 0 ? " " : ""}{w}</span>)}</h2>}
             {st.p && <p>{st.p}</p>}
             {st.cta && <a className="v8-btn v8-btn-light hs-cta" href={st.cta.href}>{st.cta.label}</a>}
             {st.visual && <div className="hs-step-vis">{st.visual}</div>}

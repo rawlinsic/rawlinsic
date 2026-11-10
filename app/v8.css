@@ -2016,3 +2016,17 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .hs-pans { border-radius: var(--rad, 18px); overflow: hidden; transform: rotateY(calc(var(--x, 0) * var(--open, 0) * -18deg)) rotateX(calc(var(--open, 0) * 6deg)); pointer-events: none; }
 .hs-pan { pointer-events: auto; }
 .hs-pan :is(.dg-hub) .dg-steps li { background: linear-gradient(180deg, #17325a, #0f2340); }
+
+/* How we work: a shorter-looking paragraph (tighter lines, a little wider) */
+.hs-step:not(.hs-many) > p:not(.hs-k) { max-width: 50ch; line-height: 1.42; }
+/* the headline lights up in the electric blue, word by word, like the v9 Why Rawlins words */
+.hs-hw { transition: color 0.35s, text-shadow 0.35s; }
+.hs-hw.is-lit { color: var(--aqua); text-shadow: 0 0 22px rgba(34, 211, 238, 0.5); }
+/* the story's buttons: bigger words, and a strong electric-blue glow on hover */
+.hs-step .hs-cta, .hs-item .hs-btn { min-height: 56px; padding: 0 30px; font-size: 1.12rem; }
+.hs-step .hs-cta:hover, .hs-step .hs-cta:focus-visible, .hs-item .hs-btn:hover, .hs-item .hs-btn:focus-visible { box-shadow: 0 0 0 2px var(--aqua), 0 0 22px rgba(34, 211, 238, 0.75), 0 0 52px rgba(34, 211, 238, 0.4); }
+/* Our services on the TV: bigger */
+.hs-areas-k { font-size: 1.1rem; }
+.hs-areas span { font-size: 1.3rem; }
+.hs-areas li:first-child span { font-size: 1.75rem; }
+.hs-areas li[data-a="aviation"] img { object-position: 18% 22%; } /* keep Alicia in the crop */

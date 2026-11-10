@@ -45,8 +45,8 @@ export const AREA_PHOTO: Record<string, string> = {
   strategy: P("strategy-bg.webp"),
   delivery: P("transportation-aerial.webp"),
   om: P("cs-hero-1.webp"), // Nashville, with a highway bridge
-  tech: P("auto-team.webp"),
-  aviation: P("skylimit.webp"),
+  tech: P("technology-bg.webp"), // the live site's Technology photo (Nicole, Nov 9)
+  aviation: P("aam-policy-planning.webp"), // Alicia in the field, from the live site (Nicole, Nov 9)
 };
 
 /* Service pages (shot list 6B) */

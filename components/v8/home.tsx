@@ -90,7 +90,7 @@ export default function Home() {
               <div className="hs-areas">
                 <p className="hs-areas-k">Our services</p>
                 <ul>{AREAS.map((a) => (
-                  <li key={a.id}><a href={areaHref(a)}>
+                  <li key={a.id} data-a={a.id}><a href={areaHref(a)}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={AREA_PHOTO[a.id]} alt="" loading="lazy" /><span>{a.name}</span>
                   </a></li>
