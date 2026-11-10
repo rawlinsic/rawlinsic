@@ -90,7 +90,7 @@ export default function Home() {
 
       {/* 2 · what we do, area by area */}
       <Chapters
-        intro={{ k: "What we do", h: "What we hear, and what we bring.", lead: "Technology pays off only when the organization under it is ready: a plan people measure, a structure that can carry new work, procedures people follow, and data they trust. That is our work, and you can start with any part of it." }}
+        intro={{ k: "What we do", h: "What we hear, and what we bring.", lead: "Like many organizations today, you’re facing complex, interconnected challenges: technology-driven transformation, resource constraints, and shifting regulatory demands. That's where we come in. From strategy and proven frameworks to the systems and products that put them to work, we help you turn decisions into action." }}
         items={AREAS.map((a) => {
           const L = AREA_DATA[a.id];
           const fc = a.featuredCase ? caseById(a.featuredCase) : undefined;
