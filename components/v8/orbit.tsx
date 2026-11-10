@@ -45,9 +45,10 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
       /* one steady tilted ellipse, like scale.com: nothing is pushed or clamped, so no tile ever jumps.
          The ellipse is sized so the tiles pass around the words, not over them. */
       const W = ring.clientWidth, H = ring.clientHeight;
-      const big = Math.min(150, Math.max(104, W * 0.1)), small = big * 0.27;
-      const rx = Math.max(0, W / 2 - big / 2 - 30);
-      const ry = Math.max(0, H / 2 - big / 2 - 26);
+      /* tighter around the words (Nicole, Nov 10: "too spaced out"), and the photos at the back not so tiny */
+      const big = Math.min(160, Math.max(108, W * 0.1)), small = big * 0.42;
+      const rx = Math.max(0, Math.min(W / 2 - big / 2 - 30, 560, W * 0.4));
+      const ry = Math.max(0, Math.min(H / 2 - big / 2 - 26, 330));
       const ct = Math.cos(TILT), st = Math.sin(TILT);
       ts.forEach((t, i) => {
         const a = theta + (i / N) * Math.PI * 2;

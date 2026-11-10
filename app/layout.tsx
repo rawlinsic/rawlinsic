@@ -171,7 +171,7 @@ const LOCAL_BUSINESS_SCHEMA = {
 /* Jacob's version: links to the pages he shouldn't open look like plain text and do nothing (Nicole, Nov 10) */
 function jacobLinks() {
   // links that open a bio pop-up right on the page (people cards) stay clickable (Nicole, Nov 10)
-  const css = JACOB_DEAD_LINKS.map(([m, h]) => `a[href${m === "=" ? "" : "^"}="${h}"]:not([aria-haspopup])`).join(",");
+  const css = JACOB_DEAD_LINKS.map(([m, h]) => `a[href${m === "=" ? "" : "^"}="${h}"]:not([aria-haspopup]):not(.orb-t)`).join(",");
   return {
     css: `${css}{pointer-events:none!important;cursor:default!important;text-decoration:none!important}${css.split(",").map((x) => `${x}::after`).join(",")}{display:none!important}`,
     js: `(function(){var L=${JSON.stringify(JACOB_DEAD_LINKS)};function dead(h){if(!h)return false;h=h.split("#")[0].split("?")[0];return L.some(function(x){return x[0]==="="?h===x[1]:h.indexOf(x[1])===0})}document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a");if(a&&!a.hasAttribute("aria-haspopup")&&dead(a.getAttribute("href"))){e.preventDefault();e.stopPropagation()}},true);document.addEventListener("keydown",function(e){if(e.key!=="Enter")return;var a=document.activeElement;if(a&&a.tagName==="A"&&!a.hasAttribute("aria-haspopup")&&dead(a.getAttribute("href"))){e.preventDefault()}},true)})();`,

@@ -7,7 +7,7 @@ import { THOUGHT_LEADERSHIP, type ThoughtLeadershipArticle } from "@/components/
 import { AREAS, CASES, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, industryHref, subsectorHref } from "@/lib/content/site";
 import { STATES, STATES_ACTIVE, STATES_SERVED, STEPS } from "@/lib/content/catalog";
 import { FORMERLY, bareName as bare } from "@/lib/content/people";
-import { RESEARCH } from "@/lib/content/research";
+import { AWARDS, PUBLICATIONS, RESEARCH, TALKS } from "@/lib/content/research";
 import PeopleDirectory, { type Person } from "@/components/site/people";
 import PodcastPlayer from "@/components/site/podcast-player";
 import Grown from "@/components/v8/grown";
@@ -280,17 +280,83 @@ export function NewsPage() {
   );
 }
 
+/* Research & Publications (Nicole, Nov 10: "this page doesn't show really anything"): the reports people on our
+   team have published (each checked against the publisher's page), the research we're doing now, talks, and a
+   place for awards and wins. */
+function ByLine({ names }: { names: string[] }) {
+  const all = allPeople();
+  return (
+    <span className="rs-by">
+      {names.map((n) => {
+        const p = all.find((x) => x.name.startsWith(n));
+        return (
+          <a key={n} href={p ? `/about/our-people#${p.slug}` : "/about/our-people"}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {p?.photo && <img src={p.photo} alt="" width={40} height={40} loading="lazy" />}{n}
+          </a>
+        );
+      })}
+    </span>
+  );
+}
 export function ResearchPage() {
-  /* the list lives in lib/content/research.ts (the Insights menu reads it too) */
-  const items: { k: string; t: string; d: ReactNode }[] = RESEARCH.map((r) => ({ k: r.k, t: r.t, d: <>{r.link && <a href={r.link.href}>{r.link.label}</a>}{r.text}</> }));
+  /* the list lives in lib/content/research.ts (the Insights menu reads it too); the guide is listed with the reports */
+  const now = RESEARCH.filter((r) => r.k !== "Guidance");
   return (
     <Shell scene="crossing" photo={PAGE_PHOTO.research}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/research", "Research & Publications"]]} kicker="Insights" title="Research & Publications"
-        lead={<p>Guidance, standards, and research our team has written with the agencies and industries that use them.</p>} />
-      <Sec>
-        <ul className="pg-news">{items.map((x) => <li key={x.t}><span className="pg-case-k">{x.k}</span><b>{x.t}</b><p>{x.d}</p></li>)}</ul>
-        <Dev block>Placeholder: the full publications list (titles, years, links) comes from Paul Wheeler and the knowledge sweep.</Dev>
-      </Sec>
+        lead={<p>National research reports written by people on our team, the research we&apos;re doing now, and where our people have spoken.</p>} />
+      <section data-nofill className="pj-sec rs-pubs" id="publications">
+        <div className="pg-wrap">
+          <h2 className="pj-h">Published research</h2>
+          <p className="rs-intro">Reports our people wrote for the Transportation Research Board, the Federal Highway Administration, and state DOT research programs, most before they joined Rawlins.</p>
+          <ul className="rs-list">
+            {PUBLICATIONS.map((x) => (
+              <li key={x.href}>
+                <a className="rs-card" href={x.href} target="_blank" rel="noopener noreferrer">
+                  <span className="rs-top"><span className="rs-series">{x.series}</span><span className="rs-year">{x.year}</span></span>
+                  <b>{x.title}</b>
+                  {x.line && <p>{x.line}</p>}
+                  <span className="rs-pub">{x.publisher}{x.before ? " · Before Rawlins" : ""}</span>
+                  <span className="pj-more">Read the report</span>
+                </a>
+                <ByLine names={x.people} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      <section data-nofill className="pj-sec pj-did rs-now">
+        <div className="pg-wrap">
+          <h2 className="pj-h">Research we&apos;re doing now</h2>
+          <ul className="pj-did-list">
+            {now.map((r) => (
+              <li key={r.t}><span className="rs-k">{r.k}</span><b className="rs-now-t">{r.t}</b><p>{r.link && <a href={r.link.href}>{r.link.label}</a>}{r.text}</p></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      <section data-nofill className="pj-sec rs-talks">
+        <div className="pg-wrap rs-two">
+          <div>
+            <h2 className="pj-h">Talks</h2>
+            <ul className="rs-rows">
+              {TALKS.map((t) => (
+                <li key={t.href}><span className="rs-series">{t.when}</span><b>{t.title}</b><span className="rs-pub">{t.event}</span><ByLine names={t.people} /><a className="pj-more" href={t.href} target="_blank" rel="noopener noreferrer">Speaker page</a></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h2 className="pj-h">Awards and wins</h2>
+            <ul className="rs-rows">
+              {AWARDS.map((a) => (
+                <li key={a.href}><span className="rs-series">{a.year}{a.before ? " · Before Rawlins" : ""}</span><b>{a.title}</b><span className="rs-pub">{a.from}</span><ByLine names={a.people} /><a className="pj-more" href={a.href} target="_blank" rel="noopener noreferrer">The announcement</a></li>
+              ))}
+            </ul>
+            <Dev block>Placeholder: contract wins and awards go here as they come in, each once the client is OK with it. None are public yet.</Dev>
+          </div>
+        </div>
+      </section>
       <Talk />
     </Shell>
   );

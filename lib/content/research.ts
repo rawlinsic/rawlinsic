@@ -12,9 +12,47 @@ const caseLink = (id: string) => {
 };
 
 export const RESEARCH: ResearchItem[] = [
-  { k: "Guidance", t: "Guidance manuals on drones and advanced air mobility", text: "First-of-their-kind guidance manuals written by Paul Wheeler, a member of our team." },
+  { k: "Guidance", t: "A national guide to drone operations at transportation agencies", link: { href: "https://www.nationalacademies.org/read/29132", label: "NCHRP Research Report 1147" }, text: ", by Paul Wheeler and Aaron Organ of our team, written before they joined Rawlins." },
   { k: "Standards", t: "Multi-state drone standards and specifications", link: caseLink("cs-pooled"), text: ": a shared drone data standard and recommended practices states can adopt." },
   { k: "Research", t: "Whether and how to establish a state aeronautics division", link: caseLink("cs-aerodiv"), text: ": a national scan, stakeholder interviews, and funding options." },
   { k: "Symposium", t: "A statewide drone and advanced air mobility symposium", link: caseLink("cs-aero"), text: ": we planned and ran it." },
   { k: "Thought leadership", t: "Minimizing data governance fatigue to maximize value", link: { href: "/insights/thought-leadership/minimizing-data-governance-fatigue", label: "A Q&A with April Blackburn" }, text: ", former Florida DOT Chief Information Officer." },
+];
+
+/* Published work by people on our team (Nicole, Nov 10: "do we not actually have any of the published
+   articles?"). Each checked Nov 10 against the publisher's own page (title page or record lists the authors).
+   All were written before these people joined Rawlins, so each says so. Not listed: AASHTO GUAS-1 (the AASHTO
+   notice doesn't credit our people) and the bio-only items that couldn't be found in public records. */
+export type Publication = { series: string; title: string; year: string; publisher: string; href: string; people: string[]; line?: string; before?: boolean };
+const NAP = "Transportation Research Board, National Academies";
+export const PUBLICATIONS: Publication[] = [
+  { series: "NCHRP Research Report 1147", title: "Implementation of Uncrewed Aircraft Systems Operational Capabilities: A Guide", year: "2025", publisher: NAP,
+    href: "https://www.nationalacademies.org/read/29132", people: ["Paul Wheeler", "Aaron Organ"], before: true,
+    line: "Use cases, technology trends, and a framework state DOTs can use to coordinate drone and advanced air mobility programs." },
+  { series: "NCHRP Web-Only Document 424", title: "Uncrewed Aircraft Systems Operational Capabilities", year: "2025", publisher: NAP,
+    href: "https://www.nationalacademies.org/read/29133", people: ["Paul Wheeler", "Aaron Organ"], before: true,
+    line: "The research behind the guide (NCHRP Project 23-20)." },
+  { series: "NCHRP Research Report 1114", title: "Uncrewed Aerial Systems Applications for Bridge Inspections: Element-Level Bridge Data Collection", year: "2024", publisher: NAP,
+    href: "https://www.nationalacademies.org/read/27881", people: ["Alicia McConnell", "John Zuleger"], before: true,
+    line: "Drone flights at bridges to collect element-level inspection data, with time comparisons and data processing." },
+  { series: "FHWA-HIF-23-063", title: "EDC-5 UAS Regional Workshops Report", year: "2023", publisher: "Federal Highway Administration",
+    href: "https://rosap.ntl.bts.gov/view/dot/73628", people: ["Paul Wheeler", "Aaron Organ"], before: true },
+  { series: "NETCR117", title: "Integration of UAS Into Operations Conducted by New England Departments of Transportation: Develop Implementation Procedures for UAS Applications", year: "2021", publisher: "New England Transportation Consortium",
+    href: "https://rosap.ntl.bts.gov/view/dot/56187", people: ["Paul Wheeler"], before: true },
+  { series: "NCHRP Domestic Scan 17-01", title: "Successful Approaches for the Use of Unmanned Aerial Systems by Surface Transportation Agencies", year: "2018", publisher: "National Cooperative Highway Research Program",
+    href: "https://commons.und.edu/avi-fac/52/", people: ["Steve Cook", "Paul Wheeler"], before: true },
+];
+
+/* Talks: speaker pages that name Rawlins */
+export type Talk = { title: string; event: string; when: string; href: string; people: string[] };
+export const TALKS: Talk[] = [
+  { title: "The Evolving Landscape of Advanced Air Mobility", event: "Tennessee Drone and Advanced Air Mobility Symposium, Nashville", when: "November 2025",
+    href: "https://housmanassociates.swoogo.com/2025TDOTDAAMSymposium/speaker/1980131/paul-wheeler", people: ["Paul Wheeler"] },
+];
+
+/* Awards and wins. Contract wins go here once the client clears them (none are public yet). */
+export type Award = { title: string; from: string; year: string; href: string; people: string[]; before?: boolean };
+export const AWARDS: Award[] = [
+  { title: "Bimla G. Rhinehart Award", from: "Caltrans Outstanding Management and Engineering in Transportation Awards", year: "2025",
+    href: "https://dot.ca.gov/ctnews/archive/2025-04/news/80-management-awards", people: ["Dara Wheeler"], before: true },
 ];

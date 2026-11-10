@@ -16,7 +16,7 @@
 
 .rt-stop { position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 20px; padding: 16px 0 22px; }
 .rt-node { position: relative; z-index: 1; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 2px solid #b9cde4; transition: border-color 0.4s, background 0.4s, box-shadow 0.4s; }
-.rt-node b { color: #4d688c; font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; transition: color 0.4s; }
+.rt-node b { color: #1d3759; font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; transition: color 0.4s; }
 .rt-node::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid #22d3ee; opacity: 0; }
 .rt-stop[data-on] .rt-node { background: #10233f; border-color: #22d3ee; box-shadow: 0 0 0 5px rgba(34, 211, 238, 0.18), 0 0 22px rgba(34, 211, 238, 0.55); }
 .rt-stop[data-on] .rt-node b { color: #a5f3fc; }

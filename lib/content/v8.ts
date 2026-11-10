@@ -60,7 +60,11 @@ export const casePhoto = (c: CaseIndex) => CASE_PHOTO[c.id] ?? STATE_PHOTO[c.sta
 
 /* How we've grown: live-site photos matched to each stage (first: Reno, where Rawlins started) */
 /* 03: Aaron Organ, from our team, speaking at a 2026 symposium; 04: people working together at their computers */
-export const STORY_PHOTO = [P("cs-hero-2.webp"), P("auto-human.webp"), P("aam-reg-navigation.webp"), P("auto-collab.webp")];
+/* How we've grown photos (Nicole, Nov 10): our team for agency expertise and advisory (her photos), Alicia in the
+   air taxi cabin from the live site's Drones page for drones and air mobility, and a data dashboard for data and AI */
+export const STORY_PHOTO = [P("team-group-indoor.webp"), P("team-group-outdoor.webp"), P("aam-services-portfolio.webp"), P("auto-data.webp")];
+/* where to center each one in its wide frame */
+export const STORY_PHOTO_POS = ["50% 55%", "50% 62%", "50% 26%", "50% 50%"];
 
 /* Home: Featured projects, Rawlins work only (no Before Rawlins cases) */
 export const FEATURED_CASES = ["cs-transform", "cs-pdn", "cs-proficiency", "cs-strategic", "cs-pbmc", "cs-local-am", "cs-major", "cs-aero", "cs-nc-ipd", "cs-ia-partnering"];
