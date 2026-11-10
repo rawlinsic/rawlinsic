@@ -55,7 +55,7 @@ export default function IndustriesIndexV8() {
                 <div className="iw-txt">
                   <h2><a href={industryHref(intl)}>{intl.name}</a></h2>
                   <p className="iw-lead">{intl.lead}</p>
-                  <em className="v8-dev">Hidden on the live site until Scott and Andy approve.</em>
+                  <em className="v8-dev">Hidden on the live site unless approved.</em>
                   <a className="iw-more" href={industryHref(intl)}>Explore {intl.name}</a>
                 </div>
               </li>
@@ -63,7 +63,7 @@ export default function IndustriesIndexV8() {
           </ul>
         </section>
 
-        <section id="talk" className="svt">
+        <section id="talk" className="svt" data-nofill>
           <div className="v8-wrap svt-in">
             <div className="svt-talk">
               <h2 className="v8-h2">{TALK.title}</h2>

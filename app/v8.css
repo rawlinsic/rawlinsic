@@ -2240,3 +2240,72 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .pg-sec-navy .pg-kicker { padding: 0; background: none; }
 /* the small subtitle above a page title on navy (area, service, industry pages): same size and look as "What sets us apart" */
 .sv-area { font-size: 0.92rem !important; letter-spacing: 0.12em; color: #22d3ee !important; font-weight: 700; }
+
+/* Drones map, cleaned up (Nicole, Nov 10: "this is a mess"): quieter drawings, quieter routes until a
+   place is picked, bigger icons, smaller names that sit clear of the drawings */
+.av-scene-g { opacity: 0.45; }
+.av-scene-g.is-on { opacity: 0.95; }
+.av-route path { opacity: 0.1; }
+.av-route.is-delivery path { stroke-dasharray: 5 7; }
+.av-route.is-on path { opacity: 0.95; stroke-width: 2.5; }
+.av-place { width: 6.2%; min-width: 38px; }
+.av-place svg { width: 62%; height: 62%; }
+.av-place-label { transform: translate(-50%, -50%); padding: 3px 10px; font-size: clamp(0.8rem, 1vw, 0.98rem); background: rgba(8, 18, 34, 0.9); border-color: rgba(165, 243, 252, 0.2); }
+/* team cards: white behind the portrait (Nicole, Nov 10) */
+.av-team-ph { background: #fff; }
+
+/* ── Nov 10, round 4 (Nicole) ── */
+/* industry pages, How we help: the services we use most, as photo cards */
+.ipg-help-head .v8-lead { margin: 0; }
+.ipg-help-cards { list-style: none; margin: clamp(22px, 2.6vw, 34px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: 18px; }
+.ipg-help-cards a { display: flex; flex-direction: column; height: 100%; overflow: hidden; border-radius: 20px; background: #fff; border: 1px solid #dce6f2; color: var(--ink) !important; text-decoration: none; box-shadow: 0 16px 36px -24px rgba(13, 27, 46, 0.4); transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
+.ipg-help-cards img { display: block; width: 100%; height: 172px; object-fit: cover; border-bottom: 3px solid var(--aqua); }
+.ipg-hc-txt { display: flex; flex-direction: column; gap: 8px; flex: 1; padding: 18px 20px 22px; }
+.ipg-hc-area { color: var(--a-ink, var(--aqua-ink)); font-size: 0.86rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.ipg-help-cards b { color: var(--head); font-size: 1.28rem; font-weight: 600; line-height: 1.22; }
+.ipg-hc-line { color: #334155; font-size: 1.02rem; line-height: 1.5; }
+.ipg-hc-more { margin-top: auto; padding-top: 6px; color: var(--navy); font-weight: 700; }
+.ipg-hc-more::after { content: " →"; color: var(--aqua-ink); }
+.ipg-help-cards a:hover, .ipg-help-cards a:focus-visible { transform: translateY(-3px); border-color: var(--aqua); box-shadow: 0 0 0 2px var(--aqua), 0 18px 40px -20px rgba(34, 211, 238, 0.55); }
+
+/* closing "Talk to us" sections everywhere: a compact navy band, the glowing button, glass links */
+.svt, .pg-talk { background: radial-gradient(55% 80% at 88% 0%, rgba(34, 211, 238, 0.16), transparent 62%), var(--navy-grad); color: #fff; padding: clamp(56px, 7vw, 92px) 0; }
+.svt .v8-h2, .pg-talk .pg-h2 { color: #fff; }
+.svt .v8-lead, .pg-talk p { color: #dce6f2; }
+.svt-in { align-items: center; }
+.svt .v8-btn:not(.v8-btn-ghost), .pg-talk .pg-btn-primary { background: var(--aqua) !important; color: #0a1220 !important; border: 2px solid rgba(165, 243, 252, 0.9); box-shadow: 0 0 18px rgba(34, 211, 238, 0.5); }
+.svt .v8-btn-ghost, .pg-talk .pg-btn:not(.pg-btn-primary) { background: transparent; color: #fff !important; border-color: rgba(255, 255, 255, 0.55); }
+.svt .v8-btn:hover, .pg-talk .pg-btn:hover { box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.35), 0 0 26px rgba(34, 211, 238, 0.6); }
+.svt-links { background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(165, 243, 252, 0.25); }
+.svt .v8-eyebrow { padding: 0; background: none; color: #22d3ee; }
+.svt .sv-chips a { background: rgba(255, 255, 255, 0.08); border-color: rgba(165, 243, 252, 0.3); color: #fff !important; font-size: 1rem; }
+.svt .sv-chips a:hover, .svt .sv-chips a[aria-current="page"] { border-color: var(--aqua); background: rgba(34, 211, 238, 0.14); box-shadow: 0 0 14px rgba(34, 211, 238, 0.35); }
+.svt .sv-chips i { background: var(--aqua); box-shadow: 0 0 8px var(--aqua); }
+
+/* no text too small: breadcrumbs and the map's place names */
+.crumbs ol, .pg-crumbs ol { font-size: 1rem; }
+.av-place-label { font-size: clamp(0.88rem, 1.05vw, 1.02rem); }
+.av-map-stage .av-place svg { position: static; inset: auto; display: block; margin: auto; }
+/* project cards: photo with its status on it, areas, title, client, the challenge, a clear link */
+.pcx a { display: flex; flex-direction: column; gap: 0; padding: 0; height: 100%; overflow: hidden; border-radius: 22px; background: #fff; border: 1px solid #dce6f2; box-shadow: 0 18px 40px -26px rgba(13, 27, 46, 0.45); text-decoration: none; color: var(--ink) !important; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
+.pcx a:hover, .pcx a:focus-visible { transform: translateY(-4px); border-color: var(--aqua); box-shadow: 0 0 0 2px var(--aqua), 0 22px 46px -22px rgba(34, 211, 238, 0.55); }
+.pcx-ph { position: relative; display: block; overflow: hidden; border-bottom: 3px solid var(--aqua); }
+.pcx-ph img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.pcx a:hover .pcx-ph img { transform: scale(1.05); }
+.pcx-status { position: absolute; left: 14px; top: 14px; padding: 5px 12px; border-radius: 999px; background: rgba(10, 18, 32, 0.82); color: #fff; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; backdrop-filter: blur(6px); }
+.pcx-status.is-live { background: rgba(10, 18, 32, 0.82); color: #6ee7b7; }
+.pcx-status.is-live::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399; vertical-align: 1px; }
+.pcx-body { display: flex; flex-direction: column; gap: 9px; flex: 1; padding: 18px 20px 22px; }
+.pcx-areas { display: flex; flex-wrap: wrap; gap: 6px; }
+.pcx-areas i { font-style: normal; font-size: 0.82rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--a-tint, #e6eef8); color: var(--a-ink, var(--navy)); }
+.pcx b { padding: 0; color: var(--head); font-size: 1.24rem; font-weight: 600; line-height: 1.25; }
+.pcx-who { color: var(--steel); font-size: 0.98rem; }
+.pcx-ch { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; color: #334155; font-size: 1.02rem; line-height: 1.5; }
+.pcx .pg-dev { margin: 0; }
+.pcx-more { margin-top: auto; padding-top: 8px; color: var(--navy); font-weight: 700; }
+.pcx-more::after { content: " →"; color: var(--aqua-ink); }
+/* team cards: nothing too small */
+.av-team-list b { font-size: 1.25rem; }
+.av-team-role { font-size: 1.04rem !important; }
+.av-team-former, .av-team-loc { font-size: 0.98rem !important; }
+.av-team-more { font-size: 1.02rem !important; }

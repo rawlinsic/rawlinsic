@@ -10,11 +10,12 @@
      pieces fit  the steps as big cards joined by a line that draws itself
    The Digital and Drones areas keep their carried-over features (applied
    solutions, the AAM landscape and partners). */
+import ProjectCard from "@/components/v8/project-card";
 import type { ReactNode } from "react";
 import { AREAS, CASES, areaHref, caseHref, isOurs, type Area } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
-import { THEME, themeStyle, casePhoto } from "@/lib/content/v8";
+import { THEME, themeStyle, casePhoto, hearTitle } from "@/lib/content/v8";
 import Fit from "@/components/v8/fit";
 import AreaMark from "@/components/v8/area-mark";
 import LitText from "@/components/v8/lit-text";
@@ -37,7 +38,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
   const cases = L.cases.map((id) => CASES.find((c) => c.id === id)).filter((c) => c && isOurs(c)) as typeof CASES;
   const many = area.services.length >= 5;
   const sections: [string, string][] = [
-    ["services", "Services"], ["hear", "What we hear"], ["fit", L.feature.title], ...(extra ? [["more", "From our work"] as [string, string]] : []),
+    ["services", "Services"], ["hear", hearTitle(L.hear)], ["fit", L.feature.title], ...(extra ? [["more", "From our work"] as [string, string]] : []),
     ...(cases.length ? [["work", "Featured projects"] as [string, string]] : []), ["talk", "Talk to us"],
   ];
 
@@ -91,7 +92,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
 
       <section id="hear" className="svq">
         <div className="v8-wrap svq-in">
-          <h2 className="v8-h2">What we hear</h2>
+          <h2 className="v8-h2">{hearTitle(L.hear)}</h2>
           {/* each quote with Jacob's "What we bring" line under it (full site pass, Part 5, 2) */}
           <LitText lines={quotes(L.hear)} notes={L.bring} noteLabel="What we bring" className={`svq-q is-${Math.min(quotes(L.hear).length, 4)}${L.bring?.length ? " has-notes" : ""}`} />
         </div>
@@ -112,24 +113,13 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
           <div className="v8-wrap">
             <div className="h-row-head"><h2 className="v8-h2">Featured projects</h2><a className="v8-link" href={`/insights/case-studies?area=${area.slug}`}>All {area.name} projects</a></div>
             <ul className="sv-cases">
-              {cases.map((c) => (
-                <li key={c.id} data-reveal className="pc">
-                  <a href={caseHref(c)}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={casePhoto(c)} alt="" loading="lazy" />
-                    <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{c.status === "Ongoing" ? "In the works" : "Completed"}</span>
-                    <b>{c.title}</b>
-                    <span className="pc-who">{c.who}</span>
-                    <CaseNote id={c.id} />
-                  </a>
-                </li>
-              ))}
+              {cases.map((c) => <ProjectCard key={c.id} c={c} />)}
             </ul>
           </div>
         </section>
       )}
 
-      <section id="talk" className="svt">
+      <section id="talk" className="svt" data-nofill>
         <div className="v8-wrap svt-in">
           <div className="svt-talk">
             <h2 className="v8-h2">{TALK.title}</h2>

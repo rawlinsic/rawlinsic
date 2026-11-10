@@ -1,5 +1,6 @@
 /* Services: overview, the five heading pages, and every service page.
    Content: lib/content/catalog.ts (v11 + v12). Structure: handoff v7 section 3. */
+import { allPeople } from "@/components/site/more";
 import AutomationIntegrationInteractive from "@/components/automation-integration-interactive";
 import { AREA_PHOTO, AREA_PHOTO_POS, PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import TilesTour from "@/components/v8/tiles-tour";
@@ -26,7 +27,8 @@ export const AVIATION_PAGES = ["drone-programs", "drone-aam", "drone-emergency",
 const personSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 export const aviationCards = (): TeamCard[] => AVIATION_TEAM.map(([name]) => {
   const m = rosterFor(name);
-  return { name, title: m ? rawlinsTitle(m) : "", formerly: formerlyFor(name), photo: m?.photo, location: m?.location, href: `/about/our-people#${personSlug(m?.name ?? name)}` };
+  const slug = personSlug(m?.name ?? name);
+    return { name, title: m ? rawlinsTitle(m) : "", formerly: formerlyFor(name), photo: m?.photo, location: m?.location, href: `/about/our-people#${slug}`, person: allPeople().find((x) => x.slug === slug) };
 });
 
 /* Broad digital proof (handoff 4.12); invoicing example not cleared, left out */

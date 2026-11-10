@@ -202,7 +202,7 @@ export function People({ people }: { people: readonly (readonly string[])[] }) {
 export const TALK = { title: "Tell us what you’re working on", text: "" };
 export function Talk({ title = TALK.title, text = TALK.text }: { title?: string; text?: string }) {
   return (
-    <section className="pg-talk">
+    <section className="pg-talk" data-nofill>
       <div className="pg-wrap pg-talk-in">
         <div>
           {title && <h2 className="pg-h2">{title}</h2>}

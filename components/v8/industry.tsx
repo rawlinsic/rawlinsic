@@ -12,14 +12,16 @@
    unchanged. Which projects show (and in what order) is decided by the
    callers in components/site/industries.tsx. Styles: app/industry.css on top
    of app/v8.css. */
+import ProjectCard from "@/components/v8/project-card";
+import { allPeople } from "@/components/site/more";
 import type { CSSProperties, ReactNode } from "react";
 import {
   AREAS, VISIBLE_INDUSTRIES, areaHref, caseHref, caseTag, industryHref, serviceById, serviceHref, subsectorHref,
   type CaseIndex, type Industry, type Subsector,
 } from "@/lib/content/site";
 import { INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
-import { INDUSTRY_PHOTO } from "@/lib/content/media";
-import { casePhoto } from "@/lib/content/v8";
+import { AREA_PHOTO, INDUSTRY_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
+import { casePhoto, themeStyle } from "@/lib/content/v8";
 import Header from "@/components/v8/header";
 import Footer from "@/components/v8/footer";
 import Reveal from "@/components/v8/reveal";
@@ -48,7 +50,8 @@ const personSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").rep
 const team = (people: readonly (readonly string[])[]): TeamCard[] =>
   people.map(([name]) => {
     const m = rosterFor(name);
-    return { name, title: m ? rawlinsTitle(m) : "", formerly: formerlyFor(name), photo: m?.photo, location: m?.location, href: `/about/our-people#${personSlug(m?.name ?? name)}` };
+    const slug = personSlug(m?.name ?? name);
+    return { name, title: m ? rawlinsTitle(m) : "", formerly: formerlyFor(name), photo: m?.photo, location: m?.location, href: `/about/our-people#${slug}`, person: allPeople().find((x) => x.slug === slug) };
   });
 /* preview-only notes on the thin specialty pages, true for each page (full site pass, Part 4, 1) */
 const THIN_NOTE: Record<string, string> = {
@@ -225,18 +228,7 @@ function Work({ title, cases, all, tone }: { title: string; cases: CaseIndex[]; 
       <div className="v8-wrap">
         <div className="h-row-head"><h2 className="v8-h2">{title}</h2>{all && <a className="v8-link" href={all.href}>{all.label}</a>}</div>
         <ul className="sv-cases">
-          {cases.map((c) => (
-            <li key={c.id} data-reveal className="pc">
-              <a href={caseHref(c)}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={casePhoto(c)} alt="" loading="lazy" />
-                <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{caseTag(c)}</span>
-                <b>{c.title}</b>
-                <span className="pc-who">{c.who}</span>
-                <CaseNote id={c.id} />
-              </a>
-            </li>
-          ))}
+          {cases.map((c) => <ProjectCard key={c.id} c={c} />)}
         </ul>
       </div>
     </section>
@@ -271,38 +263,35 @@ function ServiceCards({ id, title, ids, tone }: { id: string; title: string; ids
 /* How we help: one card per service area, its services as a list of links,
    the ones we use most here first and marked */
 function Help({ ind }: { ind: Industry }) {
-  const here = Object.values(SERVICES).filter((s) => s.industries.includes(ind.id)).map((s) => s.id);
-  const groups = AREAS.map((a) => {
-    const ids = a.services.map((s) => s.id).filter((x) => ind.featured.includes(x) || here.includes(x));
-    return { a, ids: [...ids.filter((x) => ind.featured.includes(x)), ...ids.filter((x) => !ind.featured.includes(x))] };
-  }).filter((g) => g.ids.length);
-  const key = `ipg-key-${ind.id}`;
+  /* only the services we use most for this industry (Nicole, Nov 10: "why include ones that aren't used"),
+     as photo cards in area order, each with its area, its first line, and a link */
+  const ids = AREAS.flatMap((a) => a.services.map((sv) => sv.id)).filter((x) => ind.featured.includes(x));
+  if (!ids.length) return null;
   return (
     <section id="help" className="sv-sec ipg-help">
       <div className="v8-wrap">
         <div className="ipg-help-head">
           <h2 className="v8-h2">How we help</h2>
-          <p className="ipg-key" id={key}><i aria-hidden="true" />Services we use most here</p>
+          <p className="v8-lead">The services we use most here.</p>
         </div>
-        <ul className="ipg-areas">
-          {groups.map(({ a, ids }) => (
-            <li key={a.id} className="ipg-area" data-reveal>
-              <div className="ipg-area-h">
-                <h3><a href={areaHref(a)}>{a.name}</a></h3>
-                <p>{a.tag}</p>
-              </div>
-              <ul className="ipg-area-list">
-                {ids.map((x) => {
-                  const top = ind.featured.includes(x);
-                  return (
-                    <li key={x} className={top ? "is-top" : undefined}>
-                      <a href={serviceHref(x)} aria-describedby={top ? key : undefined}>{serviceById(x)!.service.name}</a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </li>
-          ))}
+        <ul className="ipg-help-cards">
+          {ids.map((x, i) => {
+            const hit = serviceById(x)!;
+            return (
+              <li key={x} style={{ ...themeStyle(hit.area.id), ["--d" as string]: `${i * 60}ms` } as CSSProperties} data-reveal>
+                <a href={serviceHref(x)}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={SERVICE_PHOTO[x] ?? AREA_PHOTO[hit.area.id]} alt="" loading="lazy" />
+                  <span className="ipg-hc-txt">
+                    <span className="ipg-hc-area">{hit.area.name}</span>
+                    <b>{hit.service.name}</b>
+                    <span className="ipg-hc-line">{firstSentence(SERVICES[x]?.intro ?? "")}</span>
+                    <span className="ipg-hc-more">Explore</span>
+                  </span>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>
@@ -313,7 +302,7 @@ function Talk({ title = TALK.title, text = TALK.text, linksTitle, links }: {
   title?: string; text?: string; linksTitle?: string; links?: { id: string; name: string; href: string; on?: boolean }[];
 }) {
   return (
-    <section id="talk" className="svt">
+    <section id="talk" className="svt" data-nofill>
       <div className="v8-wrap svt-in">
         <div className="svt-talk">
           <h2 className="v8-h2">{title}</h2>
@@ -355,7 +344,8 @@ const industryLinks = (cur: string) => VISIBLE_INDUSTRIES.map((i) => ({ id: i.id
 export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }) {
   const d = IND_DATA[ind.id];
   const subs = ind.subsectors;
-  const people = team(d.people);
+  /* "Experience on our team" is off here (Nicole, Nov 10: only on the aviation pages) */
+  const people: TeamCard[] = []; // was team(d.people)
   const work = cases.slice(0, 6);
   const next = nextIndustry(ind.id);
   const crumbs: Crumb[] = [["/industries", "Who we work with"], [industryHref(ind), ind.name]];
@@ -400,14 +390,14 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
   const d = SUBSECTORS[sub.id];
   const aviation = sub.id === "sub-aviation";
   const avTeam = aviation ? aviationCards() : [];
-  const people = team(d?.people ?? []);
+  const people = !aviation ? [] : team(d?.people ?? []);
   const deliver = d?.deliver ?? [];
   const services = d?.services ?? [];
   const k = ind.subsectors.findIndex((s) => s.id === sub.id);
   const nextSub: Subsector | undefined = ind.subsectors[k + 1];
   const nextInd = nextIndustry(ind.id);
   const sections: Nav[] = [
-    ...(d?.ch?.length ? [["hear", "What we hear"] as Nav] : []),
+    ...(d?.ch?.length ? [["hear", "Challenges we hear"] as Nav] : []),
     ...(deliver.length ? [["deliver", "What we deliver"] as Nav] : []),
     ...(avTeam.length ? [["aviation", "Our aviation team"] as Nav] : []),
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
@@ -426,7 +416,7 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
   );
   return (
     <Page sections={sections} hero={hero}>
-      {d?.ch?.length ? <Hear title="What we hear" items={d.ch} /> : null}
+      {d?.ch?.length ? <Hear title="Challenges we hear" items={d.ch} /> : null}
       {deliver.length > 0 && <Route id="deliver" title="What we deliver"><RouteList check ordered={false} stops={deliver.map((x) => ({ d: x }))} /></Route>}
       {avTeam.length > 0 && <Team id="aviation" people={avTeam} roles={AVIATION_ROLES} />}
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
@@ -442,7 +432,8 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
 
 /* ── Private Sector: its own sections, order, and words ── */
 export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: CaseIndex[]; services: readonly string[] }) {
-  const people = team(IND_DATA.private.people);
+  /* "Experience on our team" is off here (Nicole, Nov 10: only on the aviation pages) */
+  const people: TeamCard[] = []; // was team(IND_DATA.private.people)
   const next = nextIndustry(ind.id);
   const sections: Nav[] = [
     ["hear", "Sound familiar?"],

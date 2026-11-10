@@ -10,12 +10,14 @@
      Our aviation team   the six roles first (Jacob's "Team Structure (roles,
                          not names)"), then portrait cards that open each bio
    Words follow the service pages scrub (Nov 6) and full site pass Parts 2 and 4. */
-import { useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import { ProfileBody, holdPage, type Person } from "@/components/site/people";
 import { AamScene } from "@/components/site/aam-scene";
 
 /* ── Integrate the next layer of your transportation system ── */
 /* The current site's map (Nicole, Nov 10: "we need to see the map and what that meant"): its drawn
-   places and icons, in our colors. Places and routes sit where the current site has them (0 0 1000 660). */
+   places and icons, in our colors. Places and routes sit where the current site has them (0 0 1000 660).
+   Each name sits just above or below its icon, clear of the drawings and of the other names. */
 const ICONS: Record<string, string> = {
   helicopter: '<g transform="scale(0.9) translate(2,2)"><path d="M4 12h3l2-4h6l2 4h3" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="2.5" fill="currentColor" opacity="0.8"/><line x1="3" y1="8" x2="21" y2="8" stroke="currentColor" stroke-width="1" opacity="0.6"/><line x1="12" y1="8" x2="12" y2="9.5" stroke="currentColor" stroke-width="1"/><line x1="10" y1="14.5" x2="8" y2="18" stroke="currentColor" stroke-width="1"/><line x1="14" y1="14.5" x2="16" y2="18" stroke="currentColor" stroke-width="1"/></g>',
   package: '<g><rect x="5" y="8" width="14" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="5" y1="13" x2="19" y2="13" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="12" y1="8" x2="12" y2="20" stroke="currentColor" stroke-width="1" opacity="0.5"/><path d="M8 4L12 2L16 4" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="12" y1="2" x2="12" y2="8" stroke="currentColor" stroke-width="1"/></g>',
@@ -26,12 +28,12 @@ const ICONS: Record<string, string> = {
 };
 
 const NODES = [
-  { id: "urban-air-taxi", label: "Passenger aircraft", icon: "helicopter", x: 174.83, y: 121.83, lx: 174.83, ly: 178, desc: "Electric vertical takeoff and landing (eVTOL) aircraft providing on-demand urban and regional passenger transport." },
-  { id: "package-delivery", label: "Package Delivery", icon: "package", x: 192.74, y: 418.69, lx: 212.74, ly: 480, desc: "Automated drone logistics for last-mile and middle-mile package delivery across urban and suburban areas." },
-  { id: "residential", label: "Residential Areas", icon: "residential", x: 491.83, y: 146.83, lx: 491.83, ly: 285, desc: "Suburban and residential communities served by drone delivery, passenger aircraft connections, and emergency response drones." },
-  { id: "medical", label: "Medical Supplies", icon: "medical", x: 487.76, y: 362.72, lx: 487.76, ly: 422, desc: "Time-critical medical supply delivery including lab samples, medications, vaccines, and emergency equipment." },
-  { id: "rural", label: "Rural & Agriculture", icon: "rural", x: 773.2, y: 132.58, lx: 773.2, ly: 266, desc: "Agricultural monitoring, crop spraying, rural delivery services, and environmental data collection for remote areas." },
-  { id: "city-center", label: "City Center", icon: "city", x: 702, y: 377.09, lx: 830, ly: 366, desc: "Dense urban cores integrating vertiport networks, drone corridors, and multimodal transit connections." },
+  { id: "urban-air-taxi", label: "Passenger aircraft", icon: "helicopter", x: 174.83, y: 121.83, lx: 174.83, ly: 70, desc: "Electric vertical takeoff and landing (eVTOL) aircraft providing on-demand urban and regional passenger transport." },
+  { id: "package-delivery", label: "Package Delivery", icon: "package", x: 192.74, y: 418.69, lx: 192.74, ly: 470, desc: "Automated drone logistics for last-mile and middle-mile package delivery across urban and suburban areas." },
+  { id: "residential", label: "Residential Areas", icon: "residential", x: 491.83, y: 146.83, lx: 491.83, ly: 95, desc: "Suburban and residential communities served by drone delivery, passenger aircraft connections, and emergency response drones." },
+  { id: "medical", label: "Medical Supplies", icon: "medical", x: 487.76, y: 362.72, lx: 487.76, ly: 311, desc: "Time-critical medical supply delivery including lab samples, medications, vaccines, and emergency equipment." },
+  { id: "rural", label: "Rural & Agriculture", icon: "rural", x: 773.2, y: 132.58, lx: 773.2, ly: 81, desc: "Agricultural monitoring, crop spraying, rural delivery services, and environmental data collection for remote areas." },
+  { id: "city-center", label: "City Center", icon: "city", x: 702, y: 377.09, lx: 702, ly: 325, desc: "Dense urban cores integrating vertiport networks, drone corridors, and multimodal transit connections." },
 ];
 /* two route kinds: people and cargo (package and medical deliveries are one kind) */
 type Kind = "air" | "delivery";
@@ -164,9 +166,25 @@ export function AviationRoles({ roles }: { roles: readonly (readonly [string, st
 /* Portrait cards: Rawlins title and location from the roster, plus a former
    agency role when the person has one. With roles, the roles come first, then
    the people, then the link to everyone's bio (full site pass, Parts 2 and 4). */
-export type TeamCard = { name: string; title: string; formerly?: string; photo?: string; location?: string; href: string };
+export type TeamCard = { name: string; title: string; formerly?: string; photo?: string; location?: string; href: string; person?: Person };
 export function AviationTeam({ people, title = "Our aviation team", roles }: { people: TeamCard[]; title?: string; roles?: readonly (readonly [string, string])[] }) {
+  /* a card opens that person's bio in a pop-up right here (Nicole, Nov 10); it's still a real link to Our people */
+  const [open, setOpen] = useState<Person | null>(null);
+  const dlg = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const d = dlg.current;
+    if (!d) return;
+    if (open && !d.open) d.showModal();
+    if (!open && d.open) d.close();
+    holdPage(!!open);
+  }, [open]);
+  const pick = (e: MouseEvent<HTMLAnchorElement>, p?: Person) => {
+    if (!p || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    setOpen(p);
+  };
   return (
+    <>
     <section className={`av av-team${roles ? " has-roles" : ""}`}>
       <div className="v8-wrap">
         <div className="av-head av-head-row">
@@ -177,7 +195,7 @@ export function AviationTeam({ people, title = "Our aviation team", roles }: { p
         <ul className="av-team-list">
           {people.map((p, i) => (
             <li key={p.name} data-reveal style={{ ["--d" as string]: `${i * 80}ms` } as CSSProperties}>
-              <a href={p.href}>
+              <a href={p.href} onClick={(e) => pick(e, p.person)} aria-haspopup={p.person ? "dialog" : undefined}>
                 <span className="av-team-ph">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   {p.photo ? <img src={p.photo} alt="" loading="lazy" /> : <span aria-hidden="true">{p.name.slice(0, 1)}</span>}
@@ -194,5 +212,14 @@ export function AviationTeam({ people, title = "Our aviation team", roles }: { p
         {roles && <p className="av-team-all"><a className="v8-link" href="/about/our-people">Everyone&apos;s bio is on Our people</a></p>}
       </div>
     </section>
+    <dialog ref={dlg} className="pp-dialog" data-lenis-prevent onClose={() => setOpen(null)} onClick={(e) => { if (e.target === dlg.current) setOpen(null); }} aria-labelledby="pp-name">
+      {open && (
+        <div className="pp-dialog-in">
+          <button type="button" className="pp-close" onClick={() => setOpen(null)} aria-label="Close profile">×</button>
+          <ProfileBody p={open} />
+        </div>
+      )}
+    </dialog>
+    </>
   );
 }

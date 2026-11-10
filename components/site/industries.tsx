@@ -60,7 +60,7 @@ function PrivateSector({ ind }: { ind: Industry }) {
   return <PrivateV8 ind={ind} cases={cases} services={["automation", "ai", "data-governance", "dashboards", "tech-strategy", "change-mgmt"]} />;
 }
 
-/* Hidden until Scott and Andy approve: not linked anywhere, noindex. */
+/* Hidden unless approved: not linked anywhere, noindex. */
 export function International() {
   return (
     <Shell scene="globe" photo={INDUSTRY_PHOTO.intl}>

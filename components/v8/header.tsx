@@ -51,7 +51,7 @@ export default function Header() {
       };
     }),
     /* previews only: the hidden International page, with why it's hidden (Part 4, 1) */
-    intl: !PROD && intl ? { name: intl.name, href: industryHref(intl), note: "Hidden on the live site until Scott and Andy approve." } : undefined,
+    intl: !PROD && intl ? { name: intl.name, href: industryHref(intl), note: "Hidden on the live site unless approved." } : undefined,
     work: [
       { label: "All projects", href: "/insights/case-studies", note: "Every project, by area and industry" },
       { label: "Where we work", href: "/about/where-we-work", note: "The states we've worked in" },

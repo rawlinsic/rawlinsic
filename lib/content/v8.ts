@@ -64,3 +64,8 @@ export const STORY_PHOTO = [P("cs-hero-2.webp"), P("auto-human.webp"), P("aam-re
 
 /* Home: Featured projects, Rawlins work only (no Before Rawlins cases) */
 export const FEATURED_CASES = ["cs-transform", "cs-pdn", "cs-proficiency", "cs-strategic", "cs-pbmc", "cs-local-am", "cs-major", "cs-aero", "cs-nc-ipd", "cs-ia-partnering"];
+
+/* "Challenges we hear" where the quotes are problems; "What we hear" where one is a want or a plan
+   ("We want drones in the field...", "We need a plan for...") (Nicole, Nov 10: only where it makes sense) */
+export const hearTitle = (quotes: readonly string[]) =>
+  quotes.some((q) => /^\W*we (want|need a plan|'d like)\b/i.test(q) || /[.”"]\s*[“"]?we (want|need a plan)\b/i.test(q)) ? "What we hear" : "Challenges we hear";

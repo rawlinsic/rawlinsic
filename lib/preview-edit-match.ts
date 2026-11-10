@@ -258,3 +258,20 @@ export function writeWithBreaks(src: string, hits: Hit[], next: string, lines: s
   }
   return out;
 }
+
+/* Text with characters that mean something in code (< > { } ` \\), written so it shows exactly as typed
+   (Nicole, Nov 10: every save lands at once): JSX text gets {"..."}, strings get those characters escaped. */
+export function writeSpecial(src: string, hits: Hit[], next: string): string | null {
+  let out = src;
+  for (const h of hits.slice().sort((a, b) => b.index - a.index)) {
+    const line = out.slice(out.lastIndexOf("\n", h.index - 1) + 1, h.index);
+    const q = delim(out, h.index);
+    const lastQ = Math.max(line.lastIndexOf('"'), line.lastIndexOf("'"), line.lastIndexOf("`"));
+    let text: string;
+    if (!q || line.lastIndexOf(">") > lastQ) text = `{${JSON.stringify(next)}}`; // JSX text
+    else if (/[A-Za-z0-9_-]=$/.test(line.slice(0, line.lastIndexOf(q)))) text = next.replace(/[<>{}`\\]/g, (c) => `&#${c.charCodeAt(0)};`); // JSX attribute
+    else text = next.replace(/\\/g, "\\\\").replace(q === "`" ? /`|\$\{/g : /(?!)/g, (m) => (m === "`" ? "\\`" : "\\${"));
+    out = out.slice(0, h.index) + text + out.slice(h.index + h.match.length);
+  }
+  return out;
+}

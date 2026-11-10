@@ -7,6 +7,7 @@
    reach production. Full site pass Part 5: the hero panels are the doors (no
    quotes); What we do pairs what clients say with what we bring, beside each
    area's featured project; Why Rawlins keeps its card and five tabs. */
+import ProjectCard from "@/components/v8/project-card";
 import type { CSSProperties } from "react";
 import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
@@ -211,7 +212,7 @@ export default function Home() {
       {/* 2 · what we do, area by area. Hidden for now (Nicole, Nov 9: "remove this whole section for now,
           but don't delete it"). To bring it back, set SHOW_WHAT_WE_DO to true at the top of this file. */}
       {SHOW_WHAT_WE_DO && <Chapters
-        intro={{ k: "What we do", h: "What we hear, and what we bring.", lead: "Like many organizations today, you’re facing complex, interconnected challenges: technology-driven transformation, resource constraints, and shifting regulatory demands. That's where we come in. From strategy and proven frameworks to the systems and products that put them to work, we help you turn decisions into action." }}
+        intro={{ k: "What we do", h: "Challenges we hear, and what we bring.", lead: "Like many organizations today, you’re facing complex, interconnected challenges: technology-driven transformation, resource constraints, and shifting regulatory demands. That's where we come in. From strategy and proven frameworks to the systems and products that put them to work, we help you turn decisions into action." }}
         items={AREAS.map((a) => {
           const L = AREA_DATA[a.id];
           const fc = a.featuredCase ? caseById(a.featuredCase) : undefined;
@@ -248,22 +249,7 @@ export default function Home() {
             <a className="v8-link" href="/insights/case-studies">All projects</a>
           </div>
           <Rail label="Projects">
-            {cases.map((c) => {
-              const areas = Array.from(new Set(c.services.map((s) => areaOf(s)?.id).filter(Boolean) as string[]));
-              return (
-                <li key={c.id} className="pc">
-                  <a href={caseHref(c)}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={casePhoto(c)} alt="" loading="lazy" />
-                    <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{caseTag(c)}</span>
-                    <b>{c.title}</b>
-                    <span className="pc-who">{c.who}</span>
-                    <CaseNote id={c.id} />
-                    <span className="pc-areas">{areas.map((id) => <i key={id} style={themeStyle(id)}>{AREAS.find((a) => a.id === id)!.name}</i>)}</span>
-                  </a>
-                </li>
-              );
-            })}
+            {cases.map((c) => <ProjectCard key={c.id} c={c} />)}
           </Rail>
         </div>
       </section>

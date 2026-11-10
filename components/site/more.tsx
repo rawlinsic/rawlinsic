@@ -153,6 +153,8 @@ export function stripPeople(): Person[] {
     .sort((a, b) => rank(a.p) - rank(b.p) || a.i - b.i)
     .map(({ p }) => p);
 }
+/* Everyone on the roster as a profile (for the bio pop-ups on team cards) */
+export function allPeople(): Person[] { return TEAM_MEMBERS.map(personFromRoster); }
 /* The people who ran agency programs (they have a former agency role), founder first. */
 export function veteranPeople(): Person[] {
   return stripPeople().filter((p) => p.formerly);

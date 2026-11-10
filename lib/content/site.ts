@@ -164,7 +164,7 @@ export const INDUSTRIES: Industry[] = [
     projects: ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service"],
     subsectors: [],
   },
-  /* Built but hidden and noindex until Scott and Andy approve. Never linked. */
+  /* Built but hidden and noindex unless approved. Never linked. */
   {
     id: "intl", slug: "international", name: "International", scene: "globe", hidden: true,
     who: "", lead: "Our work to date is in the United States.", featured: [], subsectors: [], projects: [],

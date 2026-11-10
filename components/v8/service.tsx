@@ -11,12 +11,13 @@
    and the page ends by moving you on to the next service. The five drone
    service pages also show Our aviation team: the six roles, then the people
    (full site pass, Parts 2 and 4). */
+import ProjectCard from "@/components/v8/project-card";
 import type { CSSProperties } from "react";
 import { AREAS, CASES, areaHref, caseHref, caseTag, isOurs, serviceById, serviceHref } from "@/lib/content/site";
 import { SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { SERVICE_STEPS } from "@/lib/content/features";
-import { THEME, themeStyle, casePhoto, type DiagramKind } from "@/lib/content/v8";
+import { THEME, themeStyle, casePhoto, type DiagramKind, hearTitle } from "@/lib/content/v8";
 import Fit from "@/components/v8/fit";
 import AreaMark from "@/components/v8/area-mark";
 import LitText from "@/components/v8/lit-text";
@@ -53,7 +54,7 @@ export default function ServiceV8({ id }: { id: string }) {
   const photo = SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id];
   const aviation = AVIATION_PAGES.includes(id);
   const sections: [string, string][] = [
-    ["hear", "What we hear"], ["deliver", "What we deliver"],
+    ["hear", hearTitle(s.hear)], ["deliver", "What we deliver"],
     ...(steps ? [["how", steps.title] as [string, string]] : HAS_FEATURE.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
     ["walk", "What you walk away with"],
     ...(cases.length ? [["work", "Where we've done it"] as [string, string]] : []),
@@ -109,7 +110,7 @@ export default function ServiceV8({ id }: { id: string }) {
 
       <section id="hear" className="svq">
         <div className="v8-wrap svq-in">
-          <h2 className="v8-h2">What we hear</h2>
+          <h2 className="v8-h2">{hearTitle(s.hear)}</h2>
           <LitText lines={hear} className={`svq-q is-${Math.min(hear.length, 4)}${hear.length === 1 && hear[0].length > 120 ? " is-long" : ""}`} />
         </div>
       </section>
@@ -157,18 +158,7 @@ export default function ServiceV8({ id }: { id: string }) {
           <div className="v8-wrap">
             <div className="h-row-head"><h2 className="v8-h2">Where we&apos;ve done it</h2>{cases.length > 3 && <a className="v8-link" href={`/insights/case-studies?service=${hit.service.slug}`}>All {cases.length} projects</a>}</div>
             <ul className="sv-cases">
-              {cases.slice(0, 3).map((c) => (
-                <li key={c.id} data-reveal className="pc">
-                  <a href={caseHref(c)}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={casePhoto(c)} alt="" loading="lazy" />
-                    <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{caseTag(c)}</span>
-                    <b>{c.title}</b>
-                    <span className="pc-who">{c.who}</span>
-                    <CaseNote id={c.id} />
-                  </a>
-                </li>
-              ))}
+              {cases.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}
             </ul>
           </div>
         </section>
@@ -176,7 +166,7 @@ export default function ServiceV8({ id }: { id: string }) {
 
       {aviation && <div id="aviation" className="sv-avteam"><AviationTeam roles={AVIATION_ROLES} people={aviationCards()} /></div>}
 
-      <section id="talk" className="svt">
+      <section id="talk" className="svt" data-nofill>
         <div className="v8-wrap svt-in">
           <div className="svt-talk">
             <h2 className="v8-h2">{TALK.title}</h2>
