@@ -26,7 +26,7 @@ export const NEWS: NewsItem[] = [
    are going. Exhibiting or speaking is unverified, so it isn't claimed. */
 export const EVENTS: EventItem[] = [
   { when: "Nov 15–18, 2026", title: "AASHTO Annual Meeting", where: "Louisville, Kentucky", note: "Ten of our people will be there.", ends: "2026-11-18",
-    line: "Ten of our people will be at the AASHTO Annual Meeting in Louisville, Nov 15–18." },
+    line: "We will be at the AASHTO Annual Meeting in Louisville, Nov 15–18." },
 ];
 
 /* An event shows until the end of its last day, Pacific time (our office is in

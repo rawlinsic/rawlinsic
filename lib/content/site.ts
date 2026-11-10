@@ -195,7 +195,7 @@ export const PROBLEMS: { q: string; services: string[] }[] = [
 /* Headline: Nicole's pick, pending Ben and Scott (handoff section 9). */
 export const HOME = {
   eyebrow: "For the organizations that build and run infrastructure",
-  headline: "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology.",
+  headline: "We help organizations plan, deliver, and adopt better ways of working — from strategy through operations and technology.",
   line: "We find what's broken, fix it, and stay until it runs.",
 };
 
