@@ -2048,3 +2048,14 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .hs-pan .dg-track .dg-steps li::before { background: #fff; }
 /* What sets us apart lights up in the same electric blue as the How we work headline (Nicole, Nov 10) */
 .hs-gl.is-lit { color: var(--aqua); text-shadow: 0 0 22px rgba(34, 211, 238, 0.5); }
+
+/* reason 2: a white screen, the numbers glowing the electric blue (a touch deeper at the base so they read on white) */
+.hs-pan:has(.nums) { background: radial-gradient(70% 70% at 50% 45%, rgba(34, 211, 238, 0.1), transparent 70%), #fff; }
+.hs-pan .nums dd { color: transparent; background: linear-gradient(180deg, #45e3f7 0%, #0aa8c8 100%); -webkit-background-clip: text; background-clip: text; text-shadow: none; filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.55)); }
+.hs-pan .nums dt { color: #334155; }
+.hs-pan .nums div { border-left-color: rgba(14, 116, 144, 0.22); }
+/* reasons 4 and 5: white screens; the hub's tiles navy so they pop */
+.hs-pan:has(.dg) { background: radial-gradient(70% 70% at 50% 45%, rgba(34, 211, 238, 0.1), transparent 70%), #fff; }
+.hs-pan :is(.dg-hub) .dg-steps li { background: linear-gradient(180deg, #1d3759, #0f2340); border: 1px solid rgba(34, 211, 238, 0.7); box-shadow: 0 8px 20px rgba(13, 27, 46, 0.18), 0 0 16px rgba(34, 211, 238, 0.35); }
+.hs-pan .dg-hub .dg-steps b { color: #fff; }
+.hs-pan .dg-hub .dg-num { color: var(--aqua); }

@@ -43,6 +43,8 @@ const keepDates = (t: string) => t.split(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Se
 
 /* What we do (area by area, "What we hear, and what we bring.") is hidden for now, not deleted (Nicole, Nov 9). true brings it back. */
 const SHOW_WHAT_WE_DO = false;
+/* The tagline + headline section under the opening story is hidden for now, not deleted (Nicole, Nov 10). true brings it back. */
+const SHOW_HOME_INTRO = false;
 
 export default function Home() {
   /* Featured projects: Rawlins work only (no Before Rawlins cases) */
@@ -76,7 +78,7 @@ export default function Home() {
           frame, bounces side to side with her words, then turns into the team strip
           beside the Why Rawlins panel */}
       <HeroStory
-        next="#h-title"
+        next="#services"
         video={{ src: "/videos/home-hero-story-v3.mp4", poster: "/images/pages/home-hero-story-poster.jpg" }}
         hero={
           <div className="fh-center">
@@ -137,8 +139,9 @@ export default function Home() {
         }
       />
 
-      {/* 1 · who we are */}
-      <section className="h-hero" aria-labelledby="h-title">
+      {/* 1 · who we are: the tagline, headline, line, and buttons. Hidden on the home page for now, not
+          deleted (Nicole, Nov 10: "save the work, I'll use it in other areas"). true brings it back. */}
+      {SHOW_HOME_INTRO && <section className="h-hero" aria-labelledby="h-title">
         <div className="v8-wrap h-hero-top">
           {HOME.eyebrow && <p className="h-tag" data-reveal>{tagline(HOME.eyebrow)}</p>}
           <h2 id="h-title" className="h-title" data-reveal>{HOME.headline}</h2>
@@ -150,7 +153,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
       </div>
 
       {/* 1b · our services: the five tiles pop out one by one as you scroll (Nicole, Nov 9) */}

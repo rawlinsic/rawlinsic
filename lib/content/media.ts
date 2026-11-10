@@ -51,7 +51,7 @@ export const AREA_PHOTO: Record<string, string> = {
   aviation: P("aam-lifecycle-drone.webp"),
 };
 /* where to center an area photo when it's cropped (nav cards, tiles, heroes) */
-export const AREA_PHOTO_POS: Record<string, string> = { aviation: "48% 42%" };
+export const AREA_PHOTO_POS: Record<string, string> = { aviation: "36% 42%" };
 
 /* Service pages (shot list 6B) */
 export const SERVICE_PHOTO: Record<string, string> = {
