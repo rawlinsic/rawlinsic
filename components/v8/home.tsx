@@ -17,6 +17,7 @@ import { Diagram } from "@/components/v8/diagram";
 import Scene from "@/components/v8/scene";
 import Grown from "@/components/v8/grown";
 import FlowHero from "@/components/v8/flow-hero";
+import TilesTour from "@/components/v8/tiles-tour";
 import LitText from "@/components/v8/lit-text";
 import Tabs from "@/components/v8/tabs";
 import Rail from "@/components/v8/rail";
@@ -68,7 +69,7 @@ export default function Home() {
           below it, as it was: small tagline, headline, line, buttons, event note, the
           five areas. One panel, so it scrolls away normally. */}
       <div className="h-open">
-      <FlowHero next="#h-title">
+      <FlowHero next="#h-title" video={{ src: "/videos/home-hero-story-v3.mp4", poster: "/images/pages/home-hero-story-poster.jpg" }}>
         {/* the tagline and headline on the hero, centered (Nicole, Nov 9) */}
         <div className="fh-center">
           {HOME.eyebrow && <p className="fh-tag">{tagline(HOME.eyebrow)}</p>}
@@ -89,24 +90,14 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <p className="v8-wrap h-ways-k">Our services</p>
-        <ul className="ways" aria-label="Our services">
-          {AREAS.map((a) => (
-            <li key={a.id} className="way" style={themeStyle(a.id)}>
-              <a href={areaHref(a)}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={AREA_PHOTO[a.id]} alt="" />
-                <span className="way-txt">
-                  <b>{a.name}</b>
-                  <em>{a.tag}</em>
-                  <span className="way-more">Explore {a.name}</span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
       </section>
       </div>
+
+      {/* 1b · our services: the five tiles pop out one by one as you scroll (Nicole, Nov 9) */}
+      <TilesTour label="Our services" areas={AREAS.map((a) => ({
+        id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id].lead, href: areaHref(a), photo: AREA_PHOTO[a.id],
+        services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
+      }))} />
 
       {/* 2 · what we do, area by area */}
       <Chapters

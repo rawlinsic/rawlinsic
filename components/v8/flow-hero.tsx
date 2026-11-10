@@ -44,9 +44,10 @@ function sprite(color: string): HTMLCanvasElement {
   return c;
 }
 
-export default function FlowHero({ children, next }: { children?: ReactNode; next?: string }) {
+export default function FlowHero({ children, next, video }: { children?: ReactNode; next?: string; video?: { src: string; poster: string } }) {
   const wrap = useRef<HTMLElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
+  const vid = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(false);
   const [still, setStill] = useState(false); // reduced motion
   const pausedRef = useRef(false);
@@ -54,7 +55,7 @@ export default function FlowHero({ children, next }: { children?: ReactNode; nex
 
   useEffect(() => {
     const el = wrap.current, canvas = cv.current;
-    if (!el || !canvas) return;
+    if (!el || !canvas || video) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -193,12 +194,35 @@ export default function FlowHero({ children, next }: { children?: ReactNode; nex
     return () => { cancelAnimationFrame(raf); io.disconnect(); ro.disconnect(); document.removeEventListener("visibilitychange", vis); };
   }, []);
 
+  // the video (when given): plays muted and looping; paused off screen, in a hidden
+  // tab, and for reduced motion (then the still frame shows); the button controls it
+  useEffect(() => {
+    const el = wrap.current, v = vid.current;
+    if (!el || !v) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setStill(reduce);
+    if (reduce) { pausedRef.current = true; setPaused(true); }
+    let visible = true;
+    const sync = () => { if (visible && !document.hidden && !pausedRef.current) v.play().catch(() => {}); else v.pause(); };
+    kick.current = sync;
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }, { threshold: 0 });
+    io.observe(el);
+    document.addEventListener("visibilitychange", sync);
+    v.addEventListener("playing", () => el.classList.add("is-live"), { once: true });
+    sync();
+    return () => { io.disconnect(); document.removeEventListener("visibilitychange", sync); };
+  }, [video]);
+
   const toggle = () => { const p = !pausedRef.current; pausedRef.current = p; setPaused(p); kick.current(); };
 
   return (
     <div className="fh-wrap">
-      <section ref={wrap} className="fh" aria-label="Rawlins">
-        <canvas ref={cv} className="fh-canvas" aria-hidden="true" />
+      <section ref={wrap} className={`fh${video ? " has-video" : ""}`} aria-label="Rawlins">
+        {video ? (
+          <video ref={vid} className="fh-canvas fh-video" src={video.src} poster={video.poster} muted loop playsInline preload="auto" aria-hidden="true" />
+        ) : (
+          <canvas ref={cv} className="fh-canvas" aria-hidden="true" />
+        )}
         {children && <div className="fh-in">{children}</div>}
         <button type="button" className="fh-pause" onClick={toggle} aria-label={paused ? "Play background animation" : "Pause background animation"} title={still && paused ? "Motion is reduced in your settings. Play anyway?" : undefined}>
           {paused

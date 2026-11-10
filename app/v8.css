@@ -1750,3 +1750,43 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .pe-del-hl { outline: 3px dashed #f87171 !important; outline-offset: -3px; box-shadow: inset 0 0 0 9999px rgba(248, 113, 113, 0.08) !important; }
 .pe-danger { box-shadow: inset 0 0 0 1px rgba(248, 113, 113, 0.7) !important; }
 .pe-danger:hover { background: rgba(248, 113, 113, 0.18) !important; }
+
+/* Our services: the five tiles pop out as you scroll (tiles-tour.tsx) */
+.tt { position: relative; background: #fff; }
+.tt:not([data-static]) { height: var(--tt-len); }
+.tt-stage { position: relative; }
+.tt:not([data-static]) .tt-stage { position: sticky; top: 68px; height: calc(100vh - 68px); overflow: hidden; }
+.tt-k { margin: 0; color: var(--aqua-ink); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.tt:not([data-static]) .tt-k { position: absolute; top: 22px; left: max(clamp(18px, 4.5vw, 64px), calc((100% - 1320px) / 2 + clamp(18px, 4.5vw, 64px))); }
+.tt-tile { display: block; overflow: hidden; background: var(--navy); color: #fff !important; text-decoration: none; }
+.tt:not([data-static]) .tt-tile { position: absolute; left: 0; top: 0; will-change: transform, width, height; }
+.tt-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tt-tile::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(6, 14, 28, 0.85), rgba(6, 14, 28, 0.08) 62%); opacity: var(--lab, 1); }
+.tt-tile::after { content: ""; position: absolute; left: 0; right: 0; top: 0; z-index: 2; height: 3px; background: var(--aqua); box-shadow: 0 0 16px 2px rgba(34, 211, 238, 0.7); }
+.tt-name { position: absolute; z-index: 2; left: 20px; right: 20px; bottom: 20px; font-size: clamp(1.05rem, 1.55vw, 1.6rem); font-weight: 600; line-height: 1.12; opacity: var(--lab, 1); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); }
+.tt-tile[data-on] { box-shadow: 0 24px 60px -20px rgba(10, 18, 32, 0.45); }
+.tt:not([data-static]) .tt-tile:not([data-on]) { cursor: pointer; }
+.tt-text { display: flex; flex-direction: column; justify-content: center; }
+.tt:not([data-static]) .tt-text { position: absolute; width: 40%; opacity: var(--o, 0); transform: translateY(calc((1 - var(--o, 0)) * 22px)); pointer-events: none; }
+.tt:not([data-static]) .tt-text[data-on] { pointer-events: auto; }
+.tt-text.is-right { left: 55%; }
+.tt-text.is-left { left: 5%; }
+.tt-tag { margin: 0 0 10px; color: var(--aqua-ink); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.tt-text h3 { margin: 0 0 14px; color: #0a1220; font-size: clamp(1.9rem, 2.8vw, 2.8rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.025em; }
+.tt-lead { margin: 0 0 18px; color: var(--ink-2); font-size: clamp(1.06rem, 1.25vw, 1.2rem); line-height: 1.55; max-width: 46ch; }
+.tt-svcs { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.tt-svcs a { display: inline-block; padding: 6px 12px; border-radius: 999px; background: #eef3f9; border: 1px solid #dbe6f3; color: #1d3759 !important; font-size: 0.92rem; font-weight: 600; text-decoration: none; }
+.tt-svcs a:hover { border-color: var(--aqua); background: #fff; }
+.tt-text .v8-btn { align-self: flex-start; }
+/* phones and reduced motion: stacked cards */
+.tt[data-static] { padding: clamp(32px, 6vw, 56px) clamp(18px, 4.5vw, 64px); }
+.tt[data-static] .tt-k { margin-bottom: 16px; }
+.tt[data-static] .tt-area { display: grid; gap: 16px; margin-bottom: 36px; }
+.tt[data-static] .tt-tile { position: relative; aspect-ratio: 16 / 10; border-radius: 18px; }
+.tt[data-static] .tt-name { display: none; }
+.tt[data-static] .tt-tile::before { opacity: 0.4; }
+@media (min-width: 700px) { .tt[data-static] .tt-area { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 28px; } }
+/* hero video: a soft navy grade so it matches the brand, darker behind the words */
+.fh.has-video { background: #0b1830 url("/images/pages/home-hero-story-poster.jpg") center / cover no-repeat; }
+.fh-video { opacity: 1 !important; object-fit: cover; }
+.fh.has-video::after { background: radial-gradient(60% 55% at 50% 50%, rgba(8, 18, 34, 0.62), rgba(8, 18, 34, 0.18) 75%), linear-gradient(180deg, rgba(11, 24, 48, 0.35), rgba(11, 24, 48, 0.2) 50%, rgba(11, 24, 48, 0.45)); }
