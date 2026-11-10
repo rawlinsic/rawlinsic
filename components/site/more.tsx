@@ -42,7 +42,7 @@ export function AboutIndex() {
 export function WhoWeAre() {
   return (
     <Shell scene="hero" photo={PAGE_PHOTO.who}>
-      <Hero crumbs={[["/about", "About"], ["/about/who-we-are", "Who we are"]]} kicker="Who we are" title="Founded on agency experience (test)"
+      <Hero crumbs={[["/about", "About"], ["/about/who-we-are", "Who we are"]]} kicker="Who we are" title="Founded on agency experience"
         lead={<p>Rawlins was founded in 2017 by Scott Rawlins, former Deputy Director and Chief Engineer of the Nevada Department of Transportation. Today former agency leaders work next to an in-house team that builds the tools.</p>} />
       <Sec title="Our story">
         <div className="pg-prose">
