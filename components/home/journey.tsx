@@ -384,7 +384,7 @@ export default function Journey({ prod }: { prod: boolean }) {
           <div className="jy-finale-inner">
             <p className="jy-kicker"><span>08</span> Get in touch</p>
             <h2 id="jy-end" className="jy-statement">Tell us what you&apos;re trying to fix.</h2>
-            <p className="jy-lead">You&apos;ll talk with people who have done the job, and we&apos;ll tell you plainly where we can help.</p>
+            {/* TODO(Nicole): line to come from Nicole (the "tell you plainly where we can help" line was removed, Nov 9). This old home isn't used by the site. */}
             <div className="jy-btns">
               <a className="jy-btn jy-btn-primary" href="/contact">Get in touch</a>
               <button type="button" className="jy-btn" onClick={openMenu}>Explore the site</button>

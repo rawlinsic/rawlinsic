@@ -1942,29 +1942,37 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .hs-pan .ps-lanes .wc-col:nth-child(3) { animation-duration: 49s; }
 .hs-pan .ps-lanes .wc-col:nth-child(4) { animation-duration: 55s; }
 
-/* How we work: every service drifting sideways in the frame; each card opens its page */
-.svs { position: relative; display: grid; align-content: center; gap: 12px; height: 100%; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
-.svs-k { margin: 0 0 4px 30px; color: var(--aqua-ink); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-.svs-row { list-style: none; margin: 0; padding: 0; display: flex; gap: 12px; width: max-content; animation: svs-left 70s linear infinite; will-change: transform; }
-.svs-rev { animation-name: svs-right; animation-duration: 82s; }
-.svs-row:nth-of-type(3) { animation-duration: 76s; }
-.svs-row:nth-of-type(4) { animation-duration: 88s; }
-.svs:hover .svs-row, .svs:has(:focus-visible) .svs-row { animation-play-state: paused; }
-@keyframes svs-left { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 6px)); } }
-@keyframes svs-right { from { transform: translateX(calc(-50% - 6px)); } to { transform: translateX(0); } }
-.svs li { flex: none; }
-.svs a { display: flex; align-items: center; gap: 14px; width: 300px; height: 84px; padding: 10px 16px 10px 10px; border-radius: 14px; background: #fff; border: 1px solid #dce6f2; box-shadow: inset 3px 0 0 var(--a-ink, var(--aqua)); color: var(--ink) !important; text-decoration: none; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
-.svs img { flex: none; width: 62px; height: 62px; border-radius: 10px; object-fit: cover; background: #dce6f2; }
-.svs span { min-width: 0; }
-.svs b { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; color: var(--head); font-size: 0.98rem; font-weight: 600; line-height: 1.22; }
-.svs em { display: block; margin-top: 3px; font-style: normal; font-size: 0.8rem; font-weight: 600; color: var(--a-ink, var(--steel)); }
-.svs a:hover, .svs a:focus-visible { border-color: var(--aqua); box-shadow: inset 3px 0 0 var(--a-ink, var(--aqua)), 0 0 18px rgba(34, 211, 238, 0.35); transform: translateY(-2px); }
-.svs a:focus-visible { outline: 2px solid var(--aqua); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { .svs-row { animation: none; flex-wrap: wrap; width: auto; } .svs-row [aria-hidden] { display: none; } }
-.hs-pan-in:has(.svs) { padding: 0; align-content: stretch; }
 .hs:not([data-static]) .hs-step-vis { display: none; }
-.hs[data-static] .hs-step-vis { margin-top: 26px; padding: 16px 0; overflow: hidden; border-radius: 16px; background: #eef3f9; }
-.hs[data-static] .hs-step-vis .svs { height: auto; }
-/* the edge fade is on the lanes only, so the label stays crisp */
-.svs { -webkit-mask-image: none; mask-image: none; }
-.svs-lanes { display: grid; gap: 12px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.hs[data-static] .hs-step-vis { margin-top: 26px; overflow: hidden; border-radius: 16px; background: #eef3f9; }
+
+/* How we work: the five service areas as still tiles in the frame (Nicole, Nov 9: "just tiles, and 5 of them") */
+.hs-areas { display: grid; grid-template-rows: auto 1fr; gap: 14px; height: 100%; padding: 26px 28px 28px; }
+.hs-areas-k { margin: 0; color: var(--aqua-ink); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.hs-areas ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; min-height: 0; }
+.hs-areas li:first-child { grid-row: span 2; }
+.hs-areas a { position: relative; display: block; height: 100%; overflow: hidden; border-radius: 14px; color: #fff !important; text-decoration: none; transition: box-shadow 0.25s; }
+.hs-areas a::before { content: ""; position: absolute; left: 0; right: 0; top: 0; z-index: 2; height: 3px; background: var(--aqua); box-shadow: 0 0 12px var(--aqua); }
+.hs-areas a::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 18, 32, 0) 35%, rgba(10, 18, 32, 0.86)); }
+.hs-areas img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.hs-areas span { position: absolute; left: 14px; right: 14px; bottom: 12px; z-index: 1; font-size: 1.1rem; font-weight: 600; line-height: 1.2; }
+.hs-areas li:first-child span { left: 18px; bottom: 16px; font-size: 1.45rem; }
+.hs-areas a:hover img { transform: scale(1.05); }
+.hs-areas a:hover, .hs-areas a:focus-visible { box-shadow: 0 0 0 2px var(--aqua), 0 0 22px rgba(34, 211, 238, 0.45); }
+.hs-pan-in:has(.hs-areas) { padding: 0; align-content: stretch; }
+.hs[data-static] .hs-step-vis .hs-areas { height: auto; padding: 14px; }
+.hs[data-static] .hs-step-vis .hs-areas ul { grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-rows: 120px; }
+.hs[data-static] .hs-step-vis .hs-areas li:first-child { grid-row: auto; grid-column: span 2; }
+
+/* What sets us apart: the headline's letters glow on as you scroll */
+.hs-step .hs-intro h2.hs-glow { margin: 0; font-size: clamp(3rem, 5.4vw, 5.6rem); line-height: 1.02; letter-spacing: -0.03em; }
+.hs-gw { display: inline-block; white-space: nowrap; }
+.hs-gl { color: rgba(255, 255, 255, 0.13); transition: color 0.35s, text-shadow 0.35s; }
+.hs-gl.is-lit { color: #f2fdff; text-shadow: 0 0 14px rgba(34, 211, 238, 0.9), 0 0 38px rgba(34, 211, 238, 0.55), 0 0 80px rgba(34, 211, 238, 0.3); }
+/* ...while the TV shows the five, lighting up one by one */
+.hs-tease { background: radial-gradient(80% 70% at 30% 0%, rgba(34, 211, 238, 0.16), transparent 70%), linear-gradient(165deg, #0b1830, #10233f 60%, #15294a); }
+.hs-tease .hs-pan-in { padding: 44px 56px; }
+.hs-tease ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.hs-tease li { display: flex; align-items: baseline; gap: 18px; color: rgba(220, 230, 242, 0.2); font-size: 1.75rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.015em; transform: translateX(-8px); transition: color 0.4s, text-shadow 0.4s, transform 0.4s; }
+.hs-tease li span { min-width: 2.2em; color: rgba(34, 211, 238, 0.35); font-size: 1rem; font-weight: 700; letter-spacing: 0.1em; transition: color 0.4s, text-shadow 0.4s; }
+.hs-tease li.is-lit { color: #fff; transform: none; text-shadow: 0 0 22px rgba(34, 211, 238, 0.35); }
+.hs-tease li.is-lit span { color: var(--aqua); text-shadow: 0 0 12px rgba(34, 211, 238, 0.8); }

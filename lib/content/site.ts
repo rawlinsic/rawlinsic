@@ -283,10 +283,14 @@ export const CASES: CaseIndex[] = [
   cs("cs-proficiency", "tennessee-career-paths-and-proficiency", "Career paths and proficiency programs across a department", "Tennessee Department of Transportation", ["Tennessee"], "Ongoing", "transport", ["workforce", "org-design", "change-mgmt"]),
   cs("cs-tn-ipd", "tennessee-integrated-program-delivery", "Integrated program delivery", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["program-delivery"]),
   cs("cs-pbmc", "tennessee-performance-based-maintenance-contracts", "Launching performance-based maintenance contracts on an interstate network", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["operations", "procurement"]),
+  // TODO(launch): contract not read yet (scanned PDF). Confirm its publicity terms before launch.
   cs("cs-aero", "tennessee-aviation-program", "Statewide aviation program support: drones, advanced air mobility, and federal funding", "Tennessee Department of Transportation, Aeronautics Division", ["Tennessee"], "Ongoing", "transport", ["drone-programs", "grants", "research", "drone-aam"]),
+  // TODO(launch): needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.
   cs("cs-transform", "statewide-project-delivery-and-organization", "Statewide project delivery, prioritization, and organization", STATE_DOT, [], "Ongoing", "transport", ["program-delivery", "org-design", "change-mgmt", "strategic-planning", "automation", "data-governance"]),
+  // TODO(launch): contract not read yet (scanned PDF). Same prime as cs-transform, so treat it as needing written OK.
   cs("cs-pmdiv", "standing-up-a-project-delivery-division", "Standing up a project delivery division", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "workforce", "program-delivery"]),
   cs("cs-txmaint", "performance-based-maintenance-and-rating-program", "Performance-based maintenance contracts and a maintenance rating program", STATE_DOT, [], "Completed", "transport", ["operations", "procurement", "asset-mgmt"]),
+  // TODO(launch): needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.
   cs("cs-drt", "statewide-drone-response-team", "Statewide drone response team and drone program governance", STATE_DOT, [], "Ongoing", "transport", ["drone-programs", "drone-emergency"]),
   cs("cs-local-am", "michigan-local-asset-management", "Asset management workshops and action plans for local agencies", "State of Michigan, Michigan Infrastructure Office", ["Michigan"], "Completed", "gov", ["asset-mgmt", "workforce"]),
   cs("cs-mi-pbo", "michigan-performance-based-maintenance-operations", "Performance-based maintenance and operations", "Michigan Department of Transportation · Our team's work before Rawlins, completed 2014", ["Michigan"], "Before Rawlins", "transport", ["operations", "asset-mgmt"]),
@@ -295,7 +299,7 @@ export const CASES: CaseIndex[] = [
   cs("cs-nc-am", "north-carolina-asset-management-review", "Asset management review across modes", `North Carolina Department of Transportation${FOUNDER}`, ["North Carolina"], "Before Rawlins", "transport", ["asset-mgmt", "operations", "procurement"]),
   cs("cs-strategic", "nevada-six-year-strategic-plan", "Six-year strategic plan, action plans, and performance management", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["strategic-planning", "org-design", "dashboards"]),
   cs("cs-nv-om", "nevada-operations-maintenance-review", "Operations and maintenance program review", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt"]),
-  cs("cs-aerodiv", "nevada-aeronautics-division-research", "Research on establishing a state aeronautics division and sustainable funding", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["research", "aero-division"]),
+  cs("cs-aerodiv", "nevada-aeronautics-division-research", "Research on whether and how to establish a state aeronautics division, and how to fund it", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["research", "aero-division"]),
   cs("cs-de-tech", "delaware-technology-strategic-plan", "Technology strategic plan", "Delaware Department of Transportation", ["Delaware"], "Completed", "transport", ["tech-strategy", "strategic-planning"]),
   cs("cs-ut-am", "utah-asset-management-review", "Asset management program review", `Utah Department of Transportation${FOUNDER}`, ["Utah"], "Before Rawlins", "transport", ["asset-mgmt"]),
   cs("cs-va-maint", "virginia-performance-based-maintenance-review", "Review of performance-based highway maintenance contracts", `Virginia Department of Transportation${FOUNDER}`, ["Virginia"], "Before Rawlins", "transport", ["operations", "procurement"]),
@@ -309,16 +313,36 @@ export const CASES: CaseIndex[] = [
   cs("cs-ia-partnering", "statewide-partnering-between-a-dot-and-its-construction-industry", "Statewide partnering between a DOT and its construction industry", "A state DOT and its construction industry", [], "Completed", "transport", ["alt-delivery", "construction", "program-delivery"]),
   cs("cs-db-partnering", "partnering-through-construction-on-design-build-bridges-and-interstates", "Partnering through construction on design-build bridges and interstates", "State DOTs and their contractors", [], "Completed", "contractors", ["alt-delivery", "program-delivery", "construction"]),
   cs("cs-pooled", "multi-state-drone-standards", "Multi-state drone standards and specifications", "A multi-state pooled fund study", [], "Ongoing", "gov", ["research", "drone-programs"]),
+  // TODO(launch): needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.
   cs("cs-pdn", "project-delivery-website-and-change-system", "A project delivery website, tools, and change system staff use every day", STATE_DOT, [], "Ongoing", "transport", ["portals", "automation", "training-video", "program-delivery"]),
   cs("cs-tn-tech", "technology-modernization-and-ai-governance", "Technology modernization and AI governance", STATE_DOT, [], "Ongoing", "transport", ["tech-strategy", "data-governance", "ai"]),
+  // TODO(launch): contract not read yet (scanned PDF). Confirm before launch.
   cs("cs-hi", "construction-standards-and-statewide-support", "Construction standards, program knowledge, and statewide support", STATE_DOT, [], "Ongoing", "transport", ["construction", "portals", "program-delivery", "training-video", "drone-programs"]),
   /* Private sector: our own project, then our automation team's work before Rawlins */
+  // TODO(launch): no contract on file. Confirm there's no NDA before launch.
   cs("cs-pv-pmo", "project-management-system-for-an-engineering-firm", "A project management system for an engineering firm", "An engineering firm", [], "Ongoing", "private", ["automation", "dashboards", "data-governance"]),
   cs("cs-pv-reporting", "project-accounting-and-reporting-in-one-view", "Project accounting and reporting in one view", `A project-based technical services firm${TEAM}`, [], "Before Rawlins", "private", ["automation", "dashboards", "data-governance"]),
   cs("cs-pv-service", "project-history-that-follows-the-work-to-the-service-team", "Project history that follows the work to the service team", `An install, service, and maintenance firm${TEAM}`, [], "Before Rawlins", "private", ["automation"]),
   cs("cs-pv-field", "field-reports-the-office-can-find", "Field reports the office can find", `A field service and project delivery firm${TEAM}`, [], "Before Rawlins", "private", ["automation"]),
   cs("cs-pv-capacity", "capacity-planning-for-people-and-equipment", "Capacity planning for people and equipment", `A field services and drilling company${TEAM}`, [], "Before Rawlins", "private", ["automation", "dashboards"]),
 ];
+
+/* Preview-only "Content status" notes for In the works projects that need sign-off before launch
+   (Nov 9). Shown on each one's case card and case page, never in production. No client names here. */
+export const CASE_STATUS: Record<string, string> = {
+  "cs-transform": "Content status: needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.",
+  "cs-pdn": "Content status: needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.",
+  "cs-drt": "Content status: needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.",
+  "cs-pmdiv": "Content status: contract not read yet (scanned PDF). Same prime as cs-transform, so treat it as needing written OK.",
+  "cs-aero": "Content status: contract not read yet (scanned PDF). Confirm its publicity terms before launch.",
+  "cs-hi": "Content status: contract not read yet (scanned PDF). Confirm before launch.",
+  "cs-pv-pmo": "Content status: no contract on file. Confirm there's no NDA before launch.",
+};
+/* Lines elsewhere that come from one of those projects carry its note too (keyed by the exact line). */
+export const LINE_STATUS: Record<string, string> = {
+  "Drone data that checked debris removal quantities, and proved correct when reports disagreed": CASE_STATUS["cs-drt"],
+  "We've supported a state's drone response team with training, and used drone data to check debris removal quantities": CASE_STATUS["cs-drt"],
+};
 
 export const caseHref = (c: CaseIndex) => `/insights/case-studies/${c.slug}`;
 export const caseById = (id: string) => CASES.find((c) => c.id === id);

@@ -8,7 +8,7 @@ import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseH
 import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AAM_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
 import { SERVICE_STEPS } from "@/lib/content/features";
-import { Btn, CaseCards, Chips, Dev, Hero, List, People, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor } from "@/components/site/ui";
+import { Btn, CaseCards, Chips, Dev, Hero, List, People, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor, CaseNote } from "@/components/site/ui";
 import { AviationRoles, AviationTeam, BridgingSilos, NextLayer, type TeamCard } from "@/components/site/aviation";
 import { AVIATION_ROLES, AVIATION_TEAM, formerlyFor } from "@/lib/content/people";
 import { WhereWeLead } from "@/components/site/where-we-lead";
@@ -37,6 +37,7 @@ const DIGITAL_PROOF = [
   "A website and wiki migration with every item reviewed: keep, update, combine, move, or retire",
   "Website modernization, procedures, and Power BI dashboards for a state DOT",
   "A tracking dashboard for an advanced air mobility program",
+  // TODO(launch): needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent. (comes from cs-drt)
   "Drone data that checked debris removal quantities, and proved correct when reports disagreed",
   "An accessibility (508) compliance add-in for Microsoft Word",
   "A planned AI pilot for cash-flow modeling",
@@ -187,6 +188,7 @@ export function ServiceFeature({ id }: { id: string }) {
         ["Performance-based maintenance", "Contracts that pay for results: specifications, deduction models, and administration", ["cs-txmaint", "cs-pbmc", "cs-maint-model"]],
         ["Quality assurance and ratings", "Handbooks and rating programs decisions can rely on", ["cs-transform", "cs-txmaint"]],
         ["Fleet and facilities", "The right equipment, in the right shape, at the right cost", ["cs-nv-om"]],
+        // TODO(launch): links cs-drt. needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.
         ["Winter operations and emergency readiness", "Plans tested before they're needed, including drone response teams", ["cs-txmaint", "cs-drt"]],
       ];
       return (
@@ -195,7 +197,7 @@ export function ServiceFeature({ id }: { id: string }) {
             {parts.map(([t, d, ids]) => (
               <li key={t} className="pg-card">
                 <b>{t}</b><span>{d}</span>
-                <ul className="pj-mini">{ids.map((i) => caseById(i)).filter(Boolean).map((c) => <li key={c!.id}><a href={caseHref(c!)}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src={casePhoto(c!)} alt="" loading="lazy" /><span>{c!.title}</span></a></li>)}</ul>
+                <ul className="pj-mini">{ids.map((i) => caseById(i)).filter(Boolean).map((c) => <li key={c!.id}><a href={caseHref(c!)}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src={casePhoto(c!)} alt="" loading="lazy" /><span>{c!.title}<CaseNote id={c!.id} /></span></a></li>)}</ul>
               </li>
             ))}
           </ul>

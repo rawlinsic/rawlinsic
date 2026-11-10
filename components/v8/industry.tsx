@@ -30,7 +30,7 @@ import RouteList from "@/components/v8/route-list";
 import { AviationTeam, type TeamCard } from "@/components/site/aviation";
 import { aviationCards } from "@/components/site/services";
 import { AVIATION_ROLES, formerlyFor } from "@/lib/content/people";
-import { Dev, TALK, rawlinsTitle, rosterFor } from "@/components/site/ui";
+import { CaseNote, Dev, TALK, rawlinsTitle, rosterFor } from "@/components/site/ui";
 import "@/app/industry.css";
 
 type Crumb = [href: string, label: string];
@@ -233,6 +233,7 @@ function Work({ title, cases, all, tone }: { title: string; cases: CaseIndex[]; 
                 <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{caseTag(c)}</span>
                 <b>{c.title}</b>
                 <span className="pc-who">{c.who}</span>
+                <CaseNote id={c.id} />
               </a>
             </li>
           ))}
@@ -316,7 +317,8 @@ function Talk({ title = TALK.title, text = TALK.text, linksTitle, links }: {
       <div className="v8-wrap svt-in">
         <div className="svt-talk">
           <h2 className="v8-h2">{title}</h2>
-          <p className="v8-lead">{text}</p>
+          {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
+          {text ? <p className="v8-lead">{text}</p> : <Dev block>Content status: line to come from Nicole</Dev>}
           <div className="v8-actions">
             <a className="v8-btn v8-btn-area" href="/contact">Get in touch</a>
             <a className="v8-btn v8-btn-ghost" href="/insights/case-studies">See our projects</a>

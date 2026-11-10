@@ -10,8 +10,8 @@
 import type { CSSProperties } from "react";
 import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
-import { AREA_PHOTO, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
-import ServiceStrip from "@/components/v8/service-strip";
+import { AREA_PHOTO, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/media";
+import { CaseNote } from "@/components/site/ui";
 import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
@@ -83,15 +83,25 @@ export default function Home() {
           </div>
         }
         steps={[
-          /* side one: How we work, with every service drifting through the frame (each opens its page) */
+          /* side one: How we work, with the five service areas as still tiles in the frame (each opens its page) */
           {
             ...HOME_STORY[0],
-            visual: <ServiceStrip label="Our services" services={AREAS.flatMap((a) => a.services.map((sv) => ({ name: sv.name, area: a.name, href: `/services/${a.slug}/${sv.slug}`, photo: SERVICE_PHOTO[sv.id] ?? AREA_PHOTO[a.id], style: themeStyle(a.id) })))} />,
+            visual: (
+              <div className="hs-areas">
+                <p className="hs-areas-k">Our services</p>
+                <ul>{AREAS.map((a) => (
+                  <li key={a.id}><a href={areaHref(a)}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={AREA_PHOTO[a.id]} alt="" loading="lazy" /><span>{a.name}</span>
+                  </a></li>
+                ))}</ul>
+              </div>
+            ),
           },
           /* side two: What sets us apart, one reason per scroll, each with its picture in the frame (Nicole, Nov 9) */
           {
             k: "What sets us apart",
-            intro: { h: "What sets us apart", p: "Five things that make working with Rawlins different." },
+            intro: { h: "What sets us apart" },
             items: why.map(([h, p], i) => ({
               h, p,
               link: i === 0 ? { label: "Meet our people", href: "/about/our-people" } : i === 4 ? { label: "How we work", href: "/about/how-we-work" } : undefined,
@@ -101,7 +111,7 @@ export default function Home() {
                 <a key="proof" className="hs-proof" href={caseHref(pdn)}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={casePhoto(pdn)} alt="" loading="lazy" />
-                  <span><em>From our work</em><b>{pdn.title}</b><span>{pdn.who}</span></span>
+                  <span><em>From our work</em><b>{pdn.title}</b><span>{pdn.who}</span><CaseNote id={pdn.id} /></span>
                 </a>,
                 <div key="hub" style={themeStyle("tech")}><Diagram kind="hub" steps={AREA_DATA.tech.feature.steps} center="The systems you already own" /></div>,
                 <div key="track" style={themeStyle("strategy")}><Diagram kind="track" detail steps={STEPS.map(([t, d]) => ({ t, d }))} /></div>,
@@ -188,6 +198,7 @@ export default function Home() {
                     <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{caseTag(c)}</span>
                     <b>{c.title}</b>
                     <span className="pc-who">{c.who}</span>
+                    <CaseNote id={c.id} />
                     <span className="pc-areas">{areas.map((id) => <i key={id} style={themeStyle(id)}>{AREAS.find((a) => a.id === id)!.name}</i>)}</span>
                   </a>
                 </li>

@@ -6,7 +6,7 @@
 import { INDUSTRIES, VISIBLE_INDUSTRIES, industryHref, subsectorHref } from "@/lib/content/site";
 import { INDUSTRY_PHOTO, PAGE_PHOTO } from "@/lib/content/media";
 import Panels from "@/components/v8/panels";
-import { PROD, TALK } from "@/components/site/ui";
+import { Dev, PROD, TALK } from "@/components/site/ui";
 
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 
@@ -67,7 +67,8 @@ export default function IndustriesIndexV8() {
           <div className="v8-wrap svt-in">
             <div className="svt-talk">
               <h2 className="v8-h2">{TALK.title}</h2>
-              <p className="v8-lead">{TALK.text}</p>
+              {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
+              {TALK.text ? <p className="v8-lead">{TALK.text}</p> : <Dev block>Content status: line to come from Nicole</Dev>}
               <div className="v8-actions"><a className="v8-btn v8-btn-area" href="/contact">Get in touch</a></div>
             </div>
           </div>

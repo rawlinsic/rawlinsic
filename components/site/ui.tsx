@@ -7,7 +7,7 @@ import Footer from "@/components/v8/footer";
 import PageScene from "@/components/site/page-scene";
 import Panels from "@/components/v8/panels";
 import { TEAM_MEMBERS } from "@/lib/team-data";
-import { AREAS, CASES, caseHref, caseTag, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
+import { AREAS, CASES, CASE_STATUS, LINE_STATUS, caseHref, caseTag, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
 import { SCENE_PHOTO } from "@/lib/content/media";
 import { casePhoto } from "@/lib/content/v8";
 import { formerlyFor } from "@/lib/content/people";
@@ -79,7 +79,7 @@ export function Sec({ title, kicker, id, children, intro, tone }: { title?: stri
 }
 
 export function List({ items, cols }: { items: readonly string[]; cols?: boolean }) {
-  return <ul className={`pg-list${cols ? " pg-list-cols" : ""}`}>{items.map((x) => <li key={x}>{x}</li>)}</ul>;
+  return <ul className={`pg-list${cols ? " pg-list-cols" : ""}`}>{items.map((x) => <li key={x}>{x}<LineNote text={x} /></li>)}</ul>;
 }
 
 export function Chips({ items }: { items: { label: string; href: string }[] }) {
@@ -124,6 +124,7 @@ export function CaseCards({ ids, cases, limit }: { ids?: readonly string[]; case
             <span className="pg-case-k">{caseTag(c)}</span>
             <b>{c.title}</b>
             <span>{c.who}</span>
+            <CaseNote id={c.id} />
           </a>
         </li>
       ))}
@@ -197,14 +198,15 @@ export function People({ people }: { people: readonly (readonly string[])[] }) {
 }
 
 /* The closing ask on every page (line: full site pass, Part 2, 0.3). */
-export const TALK = { title: "Tell us what you’re working on", text: "We’ll tell you plainly where we can help, and connect you with the person on our team who has done it." };
+/* TODO(Nicole): closing line to come from Nicole (the "tell you plainly" / "connect you with the person who has done it" line was removed, Nov 9) */
+export const TALK = { title: "Tell us what you’re working on", text: "" };
 export function Talk({ title = TALK.title, text = TALK.text }: { title?: string; text?: string }) {
   return (
     <section className="pg-talk">
       <div className="pg-wrap pg-talk-in">
         <div>
-          <h2 className="pg-h2">{title}</h2>
-          <p>{text}</p>
+          {title && <h2 className="pg-h2">{title}</h2>}
+          {text ? <p>{text}</p> : <Dev block>Content status: line to come from Nicole</Dev>}
         </div>
         <div className="pg-btns">
           <Btn href="/contact" primary>Get in touch</Btn>
@@ -219,6 +221,16 @@ export function Talk({ title = TALK.title, text = TALK.text }: { title?: string;
 export function Dev({ children, block }: { children: ReactNode; block?: boolean }) {
   if (PROD) return null;
   return block ? <p className="pg-dev pg-dev-block">{children}</p> : <em className="pg-dev">{children}</em>;
+}
+
+/* the In the works sign-off note for a project, and for a line that comes from one (preview only) */
+export function CaseNote({ id, block }: { id: string; block?: boolean }) {
+  const n = CASE_STATUS[id];
+  return n ? <Dev block={block}>{n}</Dev> : null;
+}
+export function LineNote({ text }: { text: string }) {
+  const n = LINE_STATUS[text];
+  return n ? <> <Dev>{n}</Dev></> : null;
 }
 
 export function areaOf(id: string) { return AREAS.find((a) => a.id === id); }

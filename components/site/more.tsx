@@ -176,7 +176,8 @@ export function OurPeople() {
       <section className="pg-sec pg-body"><div className="pg-wrap">
         <PeopleDirectory people={people} showDev={!PROD} areas={AREAS.map((a) => ({ value: a.slug, label: a.name }))} />
       </div></section>
-      <Talk title="Talk to the right person" text="Tell us what you're working on. We'll connect you with the person on our team who has done it." />
+      {/* TODO(Nicole): title and line to come from Nicole ("Talk to the right person" and its line were removed, Nov 9) */}
+      <Talk title="" text="" />
     </Shell>
   );
 }

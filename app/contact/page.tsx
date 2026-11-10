@@ -4,7 +4,7 @@ import { ContactPageNew } from "@/components/site/contact";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with Rawlins, 10639 Professional Cir, Reno, NV 89521. Tell us what you're trying to fix, and we'll connect you with the person on our team who has done it.",
+    "Get in touch with Rawlins, 10639 Professional Cir, Reno, NV 89521.",
   openGraph: {
     title: "Contact | Rawlins",
     description:

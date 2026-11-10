@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties }
 
 type Link = { label: string; href: string; note?: string };
 type Hit = { label: string; kind: string; href: string };
-type Card = { title: string; who: string; href: string; photo: string; status: string; live: boolean };
+type Card = { title: string; who: string; href: string; photo: string; status: string; live: boolean; note?: string };
 type Line = { k?: string; t: string };
 export type NavData = {
   areas: { id: string; n: string; name: string; tag: string; href: string; color: string; ink: string; tint: string; photo: string; services: { name: string; href: string }[]; projects: string }[];
@@ -43,6 +43,7 @@ function ProjectCard({ c }: { c: Card }) {
       <span className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</span>
       <b>{c.title}</b>
       <span>{c.who}</span>
+      {c.note && <em className="pg-dev">{c.note}</em>}
     </a>
   );
 }
@@ -179,7 +180,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
               <li key={c.href}><a className="mx-proj" href={c.href}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={c.photo} alt="" loading="lazy" />
-                <span><b>{c.title}</b><span>{c.who}</span><small className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</small></span>
+                <span><b>{c.title}</b><span>{c.who}</span><small className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</small>{c.note && <em className="pg-dev">{c.note}</em>}</span>
               </a></li>
             ))}</ul>
             <a className="mx-go" href="/insights/case-studies?status=ongoing">All projects in the works</a>

@@ -4,7 +4,7 @@
    ?status=ongoing ?status=before-rawlins ?service=). */
 import { useEffect, useMemo, useState } from "react";
 
-export type CaseRow = { id: string; href: string; photo: string; title: string; who: string; status: string; tag: string; areas: string[]; services: string[]; industries: string[]; states: string[] };
+export type CaseRow = { id: string; href: string; photo: string; title: string; who: string; status: string; tag: string; note?: string; areas: string[]; services: string[]; industries: string[]; states: string[] };
 type Opt = { value: string; label: string };
 
 export default function CaseFilter({ rows, areas, industries, states, services }: { rows: CaseRow[]; areas: Opt[]; industries: Opt[]; states: Opt[]; services: Opt[] }) {
@@ -54,6 +54,7 @@ export default function CaseFilter({ rows, areas, industries, states, services }
               <span className="pg-case-k">{c.tag}</span>
               <b>{c.title}</b>
               <span>{c.who}</span>
+              {c.note && <em className="pg-dev">{c.note}</em>}
             </a>
           </li>
         ))}

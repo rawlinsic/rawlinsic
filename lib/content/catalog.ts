@@ -1128,6 +1128,7 @@ export const SERVICES: Record<string, SvcData> = {
    "operations"
   ],
   "xp": [
+   // TODO(launch): needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.
    "We've supported a state's drone response team with training, and used drone data to check debris removal quantities",
    "One of our engineers has performed and managed hundreds of complex and post-disaster bridge inspections"
   ],

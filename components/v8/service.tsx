@@ -27,7 +27,7 @@ import RouteList from "@/components/v8/route-list";
 import { AVIATION_PAGES, ServiceFeature, aviationCards } from "@/components/site/services";
 import { AviationTeam } from "@/components/site/aviation";
 import { AVIATION_ROLES } from "@/lib/content/people";
-import { TALK } from "@/components/site/ui";
+import { CaseNote, Dev, LineNote, TALK } from "@/components/site/ui";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const STATUS: Record<string, string> = { warn: "Proven, copy needed", gap: "Needs expert content" };
@@ -146,7 +146,7 @@ export default function ServiceV8({ id }: { id: string }) {
           {s.xp.length > 0 && (
             <aside id="experience" className="svw-xp" aria-labelledby="svw-xp-h" data-reveal>
               <h2 id="svw-xp-h" className="v8-eyebrow">The experience behind it</h2>
-              <ul>{s.xp.map((x) => <li key={x}>{x}</li>)}</ul>
+              <ul>{s.xp.map((x) => <li key={x}>{x}<LineNote text={x} /></li>)}</ul>
             </aside>
           )}
         </div>
@@ -165,6 +165,7 @@ export default function ServiceV8({ id }: { id: string }) {
                     <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{caseTag(c)}</span>
                     <b>{c.title}</b>
                     <span className="pc-who">{c.who}</span>
+                    <CaseNote id={c.id} />
                   </a>
                 </li>
               ))}
@@ -179,7 +180,8 @@ export default function ServiceV8({ id }: { id: string }) {
         <div className="v8-wrap svt-in">
           <div className="svt-talk">
             <h2 className="v8-h2">{TALK.title}</h2>
-            <p className="v8-lead">{TALK.text}</p>
+            {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
+            {TALK.text ? <p className="v8-lead">{TALK.text}</p> : <Dev block>Content status: line to come from Nicole</Dev>}
             <div className="v8-actions">
               <a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a>
               <a className="v8-btn v8-btn-ghost" href={areaHref(area)}>All of {area.name}</a>

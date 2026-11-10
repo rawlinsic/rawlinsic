@@ -3,10 +3,10 @@
    (next.config.js), so they no longer have their own pages here. */
 import { PAGE_PHOTO } from "@/lib/content/media";
 import { casePhoto } from "@/lib/content/v8";
-import { AREAS, CASES, VISIBLE_INDUSTRIES, caseHref, caseTag, industryHref, serviceById, slugify, type CaseIndex } from "@/lib/content/site";
+import { AREAS, CASES, VISIBLE_INDUSTRIES, caseHref, caseTag, industryHref, serviceById, slugify, type CaseIndex, CASE_STATUS } from "@/lib/content/site";
 import { CASES as CASE_DATA, SUBSECTORS } from "@/lib/content/catalog";
 import CaseFilter, { type CaseRow } from "@/components/site/case-filter";
-import { Btn, CaseCards, Chips, Hero, List, Sec, ServiceChips, Shell, Steps, Talk } from "@/components/site/ui";
+import { Btn, CaseCards, Chips, Hero, List, Sec, ServiceChips, Shell, Steps, Talk, CaseNote } from "@/components/site/ui";
 
 const areaOfService = (id: string) => serviceById(id)?.area.id;
 const sceneFor = (c: CaseIndex) => {
@@ -16,7 +16,7 @@ const sceneFor = (c: CaseIndex) => {
 
 export function CaseIndexPage() {
   const rows: CaseRow[] = CASES.map((c) => ({
-    id: c.id, href: caseHref(c), photo: casePhoto(c), title: c.title, who: c.who, status: c.status, tag: caseTag(c),
+    id: c.id, href: caseHref(c), photo: casePhoto(c), title: c.title, who: c.who, status: c.status, tag: caseTag(c), note: process.env.VERCEL_ENV === "production" ? undefined : CASE_STATUS[c.id],
     areas: Array.from(new Set(c.services.map(areaOfService).filter(Boolean) as string[])).map((id) => AREAS.find((a) => a.id === id)!.slug),
     services: c.services.map((id) => serviceById(id)?.service.slug).filter(Boolean) as string[],
     industries: [c.industry, CASE_DATA[c.id]?.industry2].filter(Boolean).map((id) => VISIBLE_INDUSTRIES.find((i) => i.id === id)?.slug).filter(Boolean) as string[],
@@ -58,7 +58,7 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
     <Shell scene={sceneFor(c)} photo={casePhoto(c)}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Projects"], [caseHref(c), c.title]]}
         kicker={caseTag(c)} title={c.title}
-        lead={<p>{lead}</p>} actions={<Btn href="/contact" primary>Talk to the team</Btn>} />
+        lead={<><p>{lead}</p><CaseNote id={c.id} block /></>} actions={<Btn href="/contact" primary>Talk to the team</Btn>} />
       <Sec title="The challenge"><div className="pg-prose"><p>{d?.ch}</p></div></Sec>
       <Sec title="What we did" tone="panel">
         <List items={d?.did ?? []} />

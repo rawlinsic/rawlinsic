@@ -21,7 +21,7 @@ import LitText from "@/components/v8/lit-text";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
-import { TALK } from "@/components/site/ui";
+import { CaseNote, Dev, TALK } from "@/components/site/ui";
 
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
@@ -120,6 +120,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
                     <span className={`pc-status${c.status === "Ongoing" ? " is-live" : ""}`}>{c.status === "Ongoing" ? "In the works" : "Completed"}</span>
                     <b>{c.title}</b>
                     <span className="pc-who">{c.who}</span>
+                    <CaseNote id={c.id} />
                   </a>
                 </li>
               ))}
@@ -132,7 +133,8 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
         <div className="v8-wrap svt-in">
           <div className="svt-talk">
             <h2 className="v8-h2">{TALK.title}</h2>
-            <p className="v8-lead">{TALK.text}</p>
+            {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
+            {TALK.text ? <p className="v8-lead">{TALK.text}</p> : <Dev block>Content status: line to come from Nicole</Dev>}
             <div className="v8-actions"><a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a></div>
           </div>
           <div className="svt-links">

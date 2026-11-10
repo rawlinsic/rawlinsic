@@ -2,7 +2,7 @@
    content layer so the browser gets only what the menu shows. Nothing is typed
    into the menu: every line comes from lib/content (full site pass, Part 1,
    section 1, with Part 4, 3 for Who we work with). */
-import { AREAS, CASES, INDUSTRIES, LEADERS, SITE_INDEX, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, subsectorHref, type CaseIndex } from "@/lib/content/site";
+import { AREAS, CASES, INDUSTRIES, LEADERS, SITE_INDEX, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, subsectorHref, type CaseIndex, CASE_STATUS } from "@/lib/content/site";
 import { INDUSTRIES as IND_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, PAGE_PHOTO } from "@/lib/content/media";
 import { THEME, casePhoto } from "@/lib/content/v8";
@@ -18,7 +18,8 @@ const IND_CARD: Record<string, string> = { transport: "cs-proficiency", gov: "cs
 /* Our work: three projects in the works (Part 1, 1.3) */
 const IN_THE_WORKS = ["cs-transform", "cs-proficiency", "cs-strategic"];
 
-const card = (c: CaseIndex) => ({ title: c.title, who: c.who, href: caseHref(c), photo: casePhoto(c), status: caseTag(c), live: c.status === "Ongoing" });
+/* note: the preview-only In the works sign-off note (never in production) */
+const card = (c: CaseIndex) => ({ title: c.title, who: c.who, href: caseHref(c), photo: casePhoto(c), status: caseTag(c), live: c.status === "Ongoing", note: process.env.VERCEL_ENV === "production" ? undefined : CASE_STATUS[c.id] });
 /* "Nov 15–18, 2026" → "Nov 15–18"; "Louisville, Kentucky" → "Louisville" */
 const eventLine = (e: (typeof EVENTS)[number]) => [e.title, e.when.replace(/,\s*\d{4}$/, ""), e.where?.split(",")[0]].filter(Boolean).join(", ");
 const monthOf = (d?: string) => (d ? Date.parse(`1 ${d}`) || 0 : 0);

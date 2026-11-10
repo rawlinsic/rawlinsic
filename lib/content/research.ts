@@ -14,7 +14,7 @@ const caseLink = (id: string) => {
 export const RESEARCH: ResearchItem[] = [
   { k: "Guidance", t: "Guidance manuals on drones and advanced air mobility", text: "First-of-their-kind guidance manuals written by Paul Wheeler, a member of our team." },
   { k: "Standards", t: "Multi-state drone standards and specifications", link: caseLink("cs-pooled"), text: ": a shared drone data standard and recommended practices states can adopt." },
-  { k: "Research", t: "Establishing a state aeronautics division", link: caseLink("cs-aerodiv"), text: ": a national scan, stakeholder interviews, and funding options." },
+  { k: "Research", t: "Whether and how to establish a state aeronautics division", link: caseLink("cs-aerodiv"), text: ": a national scan, stakeholder interviews, and funding options." },
   { k: "Symposium", t: "A statewide drone and advanced air mobility symposium", link: caseLink("cs-aero"), text: ": we planned and ran it." },
   { k: "Thought leadership", t: "Minimizing data governance fatigue to maximize value", link: { href: "/insights/thought-leadership/minimizing-data-governance-fatigue", label: "A Q&A with April Blackburn" }, text: ", former Florida DOT Chief Information Officer." },
 ];
