@@ -1658,3 +1658,11 @@ html.pc-adding, html.pc-adding * { cursor: crosshair !important; }
 @media (max-width: 700px) { .fh { height: min(78vh, 640px); min-height: 440px; } .fh-next { font-size: 0.9rem; } }
 .fh-wrap { background: #fff; padding: clamp(8px, 1vw, 14px) clamp(8px, 1vw, 14px) 0; }
 .fh-wrap > .fh { margin: 0; }
+/* v10 hero background (flow-hero.tsx): navy #0b1830 to #1d3759; until the first
+   frame, a still version in CSS (glow low and at the edges, calm center) */
+.fh { background: radial-gradient(38% 30% at 50% 100%, rgba(34, 211, 238, 0.22), transparent 70%), radial-gradient(22% 45% at 0% 70%, rgba(34, 211, 238, 0.14), transparent 70%), radial-gradient(22% 45% at 100% 70%, rgba(34, 211, 238, 0.14), transparent 70%), linear-gradient(180deg, #1d3759 0%, #12233f 50%, #0b1830 100%); }
+.fh-canvas { opacity: 0; transition: opacity 0.8s ease; }
+.fh.is-live .fh-canvas { opacity: 1; }
+.fh-pause { position: absolute; left: clamp(18px, 3vw, 44px); bottom: clamp(18px, 3vw, 40px); display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 10px; background: rgba(11, 24, 48, 0.55); color: #fff; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+.fh-pause:hover { background: rgba(34, 211, 238, 0.18); border-color: #22d3ee; }
+.fh-pause:focus-visible, .fh-next:focus-visible { outline: 3px solid #22d3ee; outline-offset: 3px; }
