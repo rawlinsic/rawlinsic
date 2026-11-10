@@ -1854,3 +1854,15 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
   .h-tag { flex-wrap: wrap; white-space: nowrap; row-gap: 4px; }
   .h-tag .tag-sep { margin: 0 4px; }
 }
+
+/* nav Get in touch: the site's electric blue (Nicole, Nov 9); dark text, since white on it is 1.8:1 */
+.hx-cta { background: var(--aqua); color: #0a1220 !important; transition: box-shadow 0.2s, transform 0.2s; }
+.hx-cta:hover { transform: translateY(-1px); box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.35), 0 0 18px rgba(34, 211, 238, 0.55); }
+
+/* home story: each side's eyebrow, headline, words, and button come in one after another as you scroll */
+.hs:not([data-static]) .hs-step { opacity: calc(1 - var(--out, 0)); transform: translateY(calc(-50% - var(--out, 0) * 24px)); }
+.hs:not([data-static]) .hs-step > * { --a: clamp(0, calc((var(--in, 0) - var(--d, 0)) * 3.5), 1); opacity: var(--a); transform: translateY(calc((1 - var(--a)) * 22px)); }
+.hs-step > :nth-child(2) { --d: 0.18; }
+.hs-step > :nth-child(3) { --d: 0.38; }
+.hs-step > :nth-child(4) { --d: 0.58; }
+.hs-step .hs-cta { margin-top: 28px; }

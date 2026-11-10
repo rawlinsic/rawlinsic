@@ -5,7 +5,9 @@
    2. the video zooms out into the layered glass frame (the planes fan out
       behind it) on navy;
    3. the frame moves right, then left, with words on the opposite side each
-      time (two sides; Nicole writes these; they're in HOME_STORY in site.ts);
+      time (two sides; Nicole writes these; they're in HOME_STORY in site.ts).
+      Each side's eyebrow, headline, words, and button come in one after
+      another as you scroll;
    4. like scale.com: the frame drifts up and fades while a white block with
       the Why Rawlins statement rises from the bottom, and the scrolling team
       strip rises into place on its left. The navy stays.
@@ -15,12 +17,13 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 type R = { x: number; y: number; w: number; h: number };
-export type Step = { k?: string; h: string; p: string };
+export type Step = { k?: string; h: string; p: string; cta?: { label: string; href: string } };
 
 const ease = (t: number) => t * t * (3 - 2 * t);
 const c01 = (x: number) => Math.max(0, Math.min(1, x));
 const mix = (a: R, b: R, t: number): R => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, w: a.w + (b.w - a.w) * t, h: a.h + (b.h - a.h) * t });
 const PER = 0.85; // screen heights of scrolling per beat
+const STEP = 1.7; // beats per side: its words come in one after another, with time to read
 
 export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next }: { video: { src: string; poster: string }; hero: ReactNode; steps: Step[]; whyLeft: ReactNode; whyRight: ReactNode; next?: string }) {
   const ref = useRef<HTMLElement>(null);
@@ -29,7 +32,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
   const pausedRef = useRef(false);
   const kick = useRef<() => void>(() => {});
   const N = steps.length;
-  const beats = N + 2.3; // zoom out, each step, the Why Rawlins panel, a short hold
+  const beats = 1 + N * STEP + 1.3; // zoom out, each side, the Why Rawlins panel, a short hold
 
   // the video: muted loop; paused off screen, in a hidden tab, and for reduced motion
   useEffect(() => {
@@ -78,17 +81,17 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
       raf = 0;
       if (!live) return;
       const r = el.getBoundingClientRect(), total = Math.max(1, el.offsetHeight - stage.clientHeight);
-      const s = c01((68 - r.top) / total) * beats;
+      const s = c01((68 - r.top) / total) * beats, sEnd = 1 + N * STEP; // sEnd: the Why Rawlins panel starts
       let rect: R, x = 0, open = 1, media = 1;
       if (s < 1) { const t = ease(c01(s)); rect = mix(full, center, t); open = t; }
-      else if (s < N + 1) {
-        const k = Math.min(N - 1, Math.floor(s - 1)), u = s - 1 - k, t = ease(c01(u / 0.35));
+      else if (s < sEnd) {
+        const k = Math.min(N - 1, Math.floor((s - 1) / STEP)), u = (s - 1 - k * STEP) / STEP, t = ease(c01(u / 0.22));
         const prev = k === 0 ? center : sides[k - 1], px = k === 0 ? 0 : sideSign(k - 1);
         rect = mix(prev, sides[k], t); x = px + (sideSign(k) - px) * t;
       } else {
         // like scale.com: the frame drifts up and fades while the white block and the
         // team strip rise from the bottom into place
-        const u = s - N - 1, up = ease(c01(u / 0.7));
+        const u = s - sEnd, up = ease(c01(u / 0.7));
         const last = sides[N - 1];
         rect = { ...last, y: last.y - up * stage.clientHeight * 0.55 }; x = sideSign(N - 1); media = 1 - c01(u / 0.6);
       }
@@ -102,12 +105,14 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
       const h = 1 - c01(s / 0.22);
       heroEl.style.opacity = h.toFixed(3); heroEl.style.visibility = h < 0.01 ? "hidden" : "visible";
       texts.forEach((t, i) => {
-        const u = s - 1 - i;
-        const inn = c01((u - 0.3) / 0.25), out = i === N - 1 ? c01((s - N - 1) / 0.2) : c01((u - 0.85) / 0.15);
-        const o = Math.min(inn, 1 - out);
-        t.style.setProperty("--o", o.toFixed(3)); t.toggleAttribute("data-on", o > 0.5);
+        const u = (s - 1 - i * STEP) / STEP;
+        // in: eyebrow, headline, words, button, one after another; out: all together
+        const inn = c01((u - 0.15) / 0.55), out = i === N - 1 ? c01((s - sEnd) / 0.2) : c01((u - 0.9) / 0.1);
+        t.style.setProperty("--in", inn.toFixed(3)); t.style.setProperty("--out", out.toFixed(3));
+        t.style.visibility = inn > 0 && out < 1 ? "visible" : "hidden";
+        t.toggleAttribute("data-on", inn > 0.8 && out < 0.5);
       });
-      const wu = s - N - 1;
+      const wu = s - sEnd;
       why.style.setProperty("--wr", ease(c01(wu / 0.8)).toFixed(3)); // the white block
       why.style.setProperty("--wl", ease(c01((wu - 0.12) / 0.8)).toFixed(3)); // the team strip, a beat behind
       why.toggleAttribute("data-on", wu > 0.5);
@@ -158,6 +163,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
             {st.k && <p className="hs-k">{st.k}</p>}
             <h2>{st.h}</h2>
             <p>{st.p}</p>
+            {st.cta && <a className="v8-btn v8-btn-light hs-cta" href={st.cta.href}>{st.cta.label}</a>}
           </div>
         ))}
         <div className="hs-why">

@@ -35,13 +35,13 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rawlinsic.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Rawlins | Consulting for the organizations that build and run infrastructure",
+    default: "Rawlins | Trusted advisors at the intersection of strategy, operations & technology",
     template: "%s | Rawlins",
   },
   description:
     "Rawlins is a consulting firm pairing strategy, operations, and technology expertise with digital solutions for the organizations that build and run infrastructure.",
   openGraph: {
-    title: "Rawlins | Consulting for the organizations that build and run infrastructure",
+    title: "Rawlins | Trusted advisors at the intersection of strategy, operations & technology",
     description:
       "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. We find what's broken, fix it, and stay until it runs.",
     url: SITE_URL,
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rawlins | Consulting for the organizations that build and run infrastructure",
+    title: "Rawlins | Trusted advisors at the intersection of strategy, operations & technology",
     description:
       "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. We find what's broken, fix it, and stay until it runs.",
     images: ["/images/pages/og-image-v2.png"],

@@ -197,8 +197,8 @@ export const PROBLEMS: { q: string; services: string[] }[] = [
    Placeholders for Nicole to write (Edit text on the preview); each is its own
    wording so an edit changes only that one. 1st: frame on the right, words on
    the left; 2nd: the other way (Nicole, Nov 9: two sides). */
-export const HOME_STORY: { k?: string; h: string; p: string }[] = [
-  { k: "One", h: "Your first headline goes here", p: "A sentence or two for the first side. Click Edit text, then click here to write it." },
+export const HOME_STORY: { k?: string; h: string; p: string; cta?: { label: string; href: string } }[] = [
+  { k: "How we work", h: "We find what's broken, fix it, and stay until it runs.", p: "Like many organizations today, you're facing complex, interconnected challenges: technology-driven transformation, resource constraints, and shifting regulatory demands. That's where we come in. From strategy and proven frameworks to the systems and products that put them to work, we help you turn decisions into action.", cta: { label: "See what we do", href: "#what" } },
   { k: "Two", h: "Your second headline goes here", p: "A sentence or two for the second side, which sits on the right." },
 ];
 
