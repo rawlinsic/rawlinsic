@@ -10,7 +10,8 @@
 import type { CSSProperties } from "react";
 import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
-import { AREA_PHOTO, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/media";
+import { AREA_PHOTO, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
+import ServiceStrip from "@/components/v8/service-strip";
 import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
@@ -39,6 +40,9 @@ const tagline = (t: string) => t.split(/(\s*•\s*)/).map((part, i) => (i % 2 ? 
 
 /* keep a month and its days on one line ("Nov 15–18") */
 const keepDates = (t: string) => t.split(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d+(?:[–-]\d+)?)/).map((part, i) => (i % 2 ? <span key={i} className="nowrap">{part}</span> : part));
+
+/* What we do (area by area, "What we hear, and what we bring.") is hidden for now, not deleted (Nicole, Nov 9). true brings it back. */
+const SHOW_WHAT_WE_DO = false;
 
 export default function Home() {
   /* Featured projects: Rawlins work only (no Before Rawlins cases) */
@@ -79,15 +83,20 @@ export default function Home() {
           </div>
         }
         steps={[
-          ...HOME_STORY,
+          /* side one: How we work, with every service drifting through the frame (each opens its page) */
+          {
+            ...HOME_STORY[0],
+            visual: <ServiceStrip label="Our services" services={AREAS.flatMap((a) => a.services.map((sv) => ({ name: sv.name, area: a.name, href: `/services/${a.slug}/${sv.slug}`, photo: SERVICE_PHOTO[sv.id] ?? AREA_PHOTO[a.id], style: themeStyle(a.id) })))} />,
+          },
           /* side two: What sets us apart, one reason per scroll, each with its picture in the frame (Nicole, Nov 9) */
           {
             k: "What sets us apart",
+            intro: { h: "What sets us apart", p: "Five things that make working with Rawlins different." },
             items: why.map(([h, p], i) => ({
               h, p,
               link: i === 0 ? { label: "Meet our people", href: "/about/our-people" } : i === 4 ? { label: "How we work", href: "/about/how-we-work" } : undefined,
               visual: [
-                <PeopleStrip key="team" people={veterans} across showDev={!PROD} />,
+                <PeopleStrip key="team" people={veterans} lanes={4} showDev={!PROD} />,
                 <dl key="nums" className="nums">{numbers.map((n) => <div key={n.label}>{!n.verified && <em className="v8-dev">Placeholder: number not verified yet.</em>}<dt>{n.label}</dt><dd>{n.value}</dd></div>)}</dl>,
                 <a key="proof" className="hs-proof" href={caseHref(pdn)}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -97,6 +106,7 @@ export default function Home() {
                 <div key="hub" style={themeStyle("tech")}><Diagram kind="hub" steps={AREA_DATA.tech.feature.steps} center="The systems you already own" /></div>,
                 <div key="track" style={themeStyle("strategy")}><Diagram kind="track" detail steps={STEPS.map(([t, d]) => ({ t, d }))} /></div>,
               ][i],
+              phoneVisual: i === 0 ? <PeopleStrip people={veterans} across showDev={!PROD} /> : undefined,
             })),
           },
         ]}
@@ -117,7 +127,7 @@ export default function Home() {
             <p className="h-line">{HOME.line}</p>
             <div className="v8-actions">
               <a className="v8-btn" href="/contact">Get in touch</a>
-              <a className="v8-btn v8-btn-ghost" href="#what">See what we do</a>
+              <a className="v8-btn v8-btn-ghost" href="/services">See what we do</a>
             </div>
           </div>
         </div>
@@ -130,8 +140,9 @@ export default function Home() {
         services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
       }))} />
 
-      {/* 2 · what we do, area by area */}
-      <Chapters
+      {/* 2 · what we do, area by area. Hidden for now (Nicole, Nov 9: "remove this whole section for now,
+          but don't delete it"). To bring it back, set SHOW_WHAT_WE_DO to true at the top of this file. */}
+      {SHOW_WHAT_WE_DO && <Chapters
         intro={{ k: "What we do", h: "What we hear, and what we bring.", lead: "Like many organizations today, you’re facing complex, interconnected challenges: technology-driven transformation, resource constraints, and shifting regulatory demands. That's where we come in. From strategy and proven frameworks to the systems and products that put them to work, we help you turn decisions into action." }}
         items={AREAS.map((a) => {
           const L = AREA_DATA[a.id];
@@ -146,7 +157,7 @@ export default function Home() {
             services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
           };
         })}
-      />
+      />}
 
       {/* 3 · why us: the Why Rawlins card now ends the opening story (hero-story.tsx) */}
 

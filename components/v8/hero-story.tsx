@@ -10,7 +10,9 @@
       items (What sets us apart) steps through them one per scroll: the
       headline and words change, the frame shows that item's picture (the
       team, the numbers, a project you can click, a diagram), and a ticker
-      shows where you are, with a skip button;
+      shows where you are, with a skip button. It can open with an intro
+      that says what the items are, on its own. A one-message side can put a
+      picture in the frame too (How we work: the services, drifting sideways);
    4. like scale.com: the frame drifts up and fades while a glass block with
       the team statement rises from the bottom (its words light up, the first
       ones in electric blue) and the scrolling team strip rises on its left.
@@ -24,8 +26,10 @@ import { glideTo } from "@/components/v8/smooth";
 import { docTop } from "@/components/v8/panels";
 
 type R = { x: number; y: number; w: number; h: number };
-export type StoryItem = { h: string; p: string; link?: { label: string; href: string }; visual?: ReactNode };
-export type Step = { k?: string; h?: string; p?: string; cta?: { label: string; href: string }; items?: StoryItem[] };
+export type StoryItem = { h: string; p: string; link?: { label: string; href: string }; visual?: ReactNode; phoneVisual?: ReactNode };
+/* a side: one message (h, p, cta, and a picture for the frame), or items stepped through one per scroll,
+   optionally after an intro that says what they are on its own first */
+export type Step = { k?: string; h?: string; p?: string; cta?: { label: string; href: string }; visual?: ReactNode; intro?: { h: string; p?: string }; items?: StoryItem[] };
 
 const ease = (t: number) => t * t * (3 - 2 * t);
 const c01 = (x: number) => Math.max(0, Math.min(1, x));
@@ -33,7 +37,7 @@ const mix = (a: R, b: R, t: number): R => ({ x: a.x + (b.x - a.x) * t, y: a.y + 
 const two = (n: number) => String(n).padStart(2, "0");
 const PER = 0.85; // screen heights of scrolling per beat
 const STEP = 1.7; // beats for a side with one message: its words come in one after another, with time to read
-const LEAD = 0.45, ITEM = 1; // a side with items: a short lead-in, then one beat per item
+const LEAD = 0.45, ITEM = 1, INTRO = 1; // a side with items: a short lead-in, its intro on its own, then one beat per item
 const PW = 720, PH = 500; // the frame's pictures are laid out at this size, then scaled to fit the frame
 
 export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next }: { video: { src: string; poster: string }; hero: ReactNode; steps: Step[]; whyLeft: ReactNode; whyRight: ReactNode; next?: string }) {
@@ -44,11 +48,12 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
   const covered = useRef(false); // a picture (or nothing) is over the video, so it needn't play
   const kick = useRef<() => void>(() => {});
   const N = steps.length;
-  const lens = steps.map((st) => (st.items?.length ? LEAD + st.items.length * ITEM : STEP));
+  const pre = steps.map((st) => (st.items?.length ? LEAD + (st.intro ? INTRO : 0) : 0)); // beats before the first item
+  const lens = steps.map((st, i) => (st.items?.length ? pre[i] + st.items.length * ITEM : STEP));
   const starts = lens.map((_, i) => 1 + lens.slice(0, i).reduce((a, b) => a + b, 0));
   const sEnd = 1 + lens.reduce((a, b) => a + b, 0); // where the team block starts
   const beats = sEnd + 1.3; // zoom out, each side, the team block, a short hold
-  const sig = lens.join(",");
+  const sig = lens.join(",") + "|" + pre.join(",");
 
   // the video: muted loop; paused off screen, in a hidden tab, while covered, and for reduced motion
   useEffect(() => {
@@ -77,10 +82,13 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
     const pause = el.querySelector<HTMLElement>(".hs-pause");
     const pansBox = el.querySelector<HTMLElement>(".hs-pans");
     const lit = Array.from(why.querySelectorAll<HTMLElement>(".lit-w"));
-    const items = texts.map((t) => Array.from(t.querySelectorAll<HTMLElement>(".hs-item")));
+    const items = texts.map((t) => Array.from(t.querySelectorAll<HTMLElement>(".hs-item:not(.hs-intro)")));
+    const intros = texts.map((t) => t.querySelector<HTMLElement>(".hs-intro"));
+    const eyebrows = texts.map((t) => (t.querySelector(".hs-intro") ? t.querySelector<HTMLElement>(".hs-k") : null));
+    const solo = texts.map((_, i) => el.querySelector<HTMLElement>(`.hs-pan[data-step="${i}"][data-j="-1"]`));
     const ticks = texts.map((t) => Array.from(t.querySelectorAll<HTMLElement>(".hs-tick-b")));
     const counts = texts.map((t) => t.querySelector<HTMLElement>(".hs-count"));
-    const pans = texts.map((_, i) => Array.from(el.querySelectorAll<HTMLElement>(`.hs-pan[data-step="${i}"]`)));
+    const pans = texts.map((_, i) => Array.from(el.querySelectorAll<HTMLElement>(`.hs-pan[data-step="${i}"]:not([data-j="-1"])`)));
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     let raf = 0, live = false, full: R, center: R, sides: R[] = [];
 
@@ -130,16 +138,29 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
         t.style.setProperty("--in", inn.toFixed(3)); t.style.setProperty("--out", out.toFixed(3));
         t.style.visibility = inn > 0 && out < 1 ? "visible" : "hidden";
         t.toggleAttribute("data-on", inn > 0.8 && out < 0.5);
+        const sp = solo[i];
+        if (sp) { // a one-message side's picture fills the frame once it has moved over
+          const o = Math.min(c01((a - 0.3) / 0.3), 1 - (i === N - 1 ? c01((s - sEnd) / 0.3) : c01((a - (lens[i] - 0.3)) / 0.25)));
+          sp.style.opacity = o.toFixed(3); sp.style.visibility = o > 0.01 ? "visible" : "hidden";
+          cover = Math.max(cover, o);
+        }
         if (!many) return;
         // one item at a time: the headline and words change, the frame's picture crossfades
-        const n = items[i].length, p = (a - LEAD) / ITEM;
+        const n = items[i].length, p = (a - pre[i]) / ITEM, hasIntro = !!intros[i];
+        const intro = intros[i], eb = eyebrows[i];
+        if (intro) { // the intro says what's coming on its own, then steps aside for the first item
+          const o = Math.min(c01((a - 0.1) / 0.25), 1 - c01((p + 0.16) / 0.1));
+          intro.style.opacity = o.toFixed(3); intro.style.transform = `translateY(${((1 - o) * 14).toFixed(1)}px)`;
+          intro.style.visibility = o > 0.01 ? "visible" : "hidden";
+        }
+        if (eb) { const o = c01((p + 0.06) / 0.12); eb.style.opacity = o.toFixed(3); eb.style.visibility = o > 0.01 ? "visible" : "hidden"; }
         items[i].forEach((it, j) => {
-          const o = Math.min(j === 0 ? c01((p + 0.35) / 0.25) : c01((p - (j - 0.06)) / 0.12), j === n - 1 ? 1 : 1 - c01((p - (j + 0.84)) / 0.1));
+          const o = Math.min(j === 0 && !hasIntro ? c01((p + 0.35) / 0.25) : c01((p - (j - 0.06)) / 0.12), j === n - 1 ? 1 : 1 - c01((p - (j + 0.84)) / 0.1));
           it.style.opacity = o.toFixed(3); it.style.transform = `translateY(${((1 - o) * 14).toFixed(1)}px)`;
           it.style.visibility = o > 0.01 ? "visible" : "hidden";
         });
         pans[i].forEach((pn, j) => {
-          const o = Math.min(j === 0 ? c01((p + 0.3) / 0.3) : c01((p - (j - 0.12)) / 0.14), j === n - 1 ? 1 : 1 - c01((p - (j + 0.9)) / 0.12));
+          const o = Math.min(j === 0 && !hasIntro ? c01((p + 0.3) / 0.3) : c01((p - (j - 0.12)) / 0.14), j === n - 1 ? 1 : 1 - c01((p - (j + 0.9)) / 0.12));
           pn.style.opacity = o.toFixed(3); pn.style.visibility = o > 0.01 ? "visible" : "hidden";
           pn.classList.toggle("is-on", o > 0.3); // diagrams draw in each time their item comes up
           cover = Math.max(cover, o);
@@ -165,7 +186,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
       if (live) { delete el.dataset.static; layout(); tick(); }
       else {
         el.dataset.static = "";
-        [vis, heroEl, why, ...texts, ...items.flat(), ...pans.flat(), ...(pause ? [pause] : [])].forEach((n) => { n.style.cssText = ""; });
+        [vis, heroEl, why, ...texts, ...items.flat(), ...pans.flat(), ...intros, ...eyebrows, ...solo, ...(pause ? [pause] : [])].forEach((n) => { if (n) n.style.cssText = ""; });
         lit.forEach((w) => w.classList.add("is-lit"));
         if (covered.current) { covered.current = false; kick.current(); }
       }
@@ -203,11 +224,11 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
               <div className="hs-plane hs-media">
                 <video ref={vid} src={video.src} poster={video.poster} muted loop playsInline preload="auto" aria-hidden="true" />
                 <i className="hs-shade" aria-hidden="true" />
-                {steps.some((st) => st.items?.length) && (
+                {steps.some((st) => st.items?.length || st.visual) && (
                   <div className="hs-pans">
-                    {steps.map((st, i) => st.items?.map((it, j) => (
-                      <div key={`${i}-${j}`} className="hs-pan" data-step={i}><div className="hs-pan-in">{it.visual}</div></div>
-                    )))}
+                    {steps.map((st, i) => st.items?.length
+                      ? st.items.map((it, j) => <div key={`${i}-${j}`} className="hs-pan" data-step={i} data-j={j}><div className="hs-pan-in">{it.visual}</div></div>)
+                      : st.visual ? <div key={`${i}-solo`} className="hs-pan" data-step={i} data-j="-1"><div className="hs-pan-in">{st.visual}</div></div> : null)}
                   </div>
                 )}
               </div>
@@ -224,21 +245,22 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
         </div>
         {steps.map((st, i) => st.items?.length ? (
           <div key={i} className={`hs-step hs-many ${i % 2 ? "is-right" : "is-left"}`}>
-            {st.k && <h2 className="hs-k">{st.k}</h2>}
+            {st.k && (st.intro ? <p className="hs-k" aria-hidden="true">{st.k}</p> : <h2 className="hs-k">{st.k}</h2>)}
             <div className="hs-items">
+              {st.intro && <div className="hs-item hs-intro"><h2>{st.intro.h}</h2>{st.intro.p && <p>{st.intro.p}</p>}</div>}
               {st.items.map((it, j) => (
                 <div key={j} className="hs-item">
                   <h3>{it.h}</h3>
                   <p>{it.p}</p>
                   {it.link && <a className="hs-link" href={it.link.href}>{it.link.label} <span aria-hidden="true">→</span></a>}
-                  {it.visual && <div className="hs-item-vis is-on">{it.visual}</div>}
+                  {(it.phoneVisual ?? it.visual) && <div className="hs-item-vis is-on">{it.phoneVisual ?? it.visual}</div>}
                 </div>
               ))}
             </div>
             <div className="hs-tick">
               <ol aria-label={`${st.k ?? "Steps"}, ${st.items.length} in all`}>
                 {st.items.map((it, j) => (
-                  <li key={j}><button type="button" className="hs-tick-b" data-go={(starts[i] + LEAD + j * ITEM + 0.45).toFixed(3)} aria-label={`${j + 1} of ${st.items!.length}: ${it.h}`}><i /></button></li>
+                  <li key={j}><button type="button" className="hs-tick-b" data-go={(starts[i] + pre[i] + j * ITEM + 0.45).toFixed(3)} aria-label={`${j + 1} of ${st.items!.length}: ${it.h}`}><i /></button></li>
                 ))}
               </ol>
               <span className="hs-count" aria-hidden="true">01 / {two(st.items.length)}</span>
@@ -254,6 +276,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
             {st.h && <h2>{st.h}</h2>}
             {st.p && <p>{st.p}</p>}
             {st.cta && <a className="v8-btn v8-btn-light hs-cta" href={st.cta.href}>{st.cta.label}</a>}
+            {st.visual && <div className="hs-step-vis">{st.visual}</div>}
           </div>
         ))}
         <div className="hs-why">
