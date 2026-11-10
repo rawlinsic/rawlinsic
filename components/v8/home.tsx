@@ -184,7 +184,7 @@ export default function Home() {
       <section id="what-we-do" className="h-ways" aria-labelledby="h-ways-h">
         <div className="v8-wrap h-ways-head" data-reveal>
           <p className="v8-eyebrow">What we do</p>
-          <h2 id="h-ways-h" className="v8-h2">From the plan to the tools people use.</h2>
+          <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use.</h2>
         </div>
         <ul className="ways" aria-label="Our services">
           {AREAS.map((a) => (
@@ -263,7 +263,7 @@ export default function Home() {
       </section>
 
       {/* 6 · how we've grown: slides sideways as you scroll (shared with Who we are) */}
-      <Grown eyebrow="Our story" title="From our story to yours." link={{ href: "/about/who-we-are", label: "Who we are" }} />
+      <Grown eyebrow="Our story to yours" title="Evolving impact" link={{ href: "/about/who-we-are", label: "Who we are" }} />
 
       {/* 7 · what's new */}
       <section className="h-new" aria-labelledby="h-new">

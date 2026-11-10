@@ -233,10 +233,10 @@ export const WHY: [string, string][] = [
 
 /* How we've grown (content updates v4, 7.6). Also shows on Who we are. */
 export const STORY: [string, string, string][] = [
-  ["Where we started", "Agency experience", "Our founder spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and started Rawlins in 2017 to bring that experience to other agencies."],
-  ["Advisory", "Strategy, delivery, and people", "We help organizations set direction, deliver their programs, and develop their people. Several clients have kept working with us for years."],
-  ["Drones", "Drones and advanced air mobility", "We help agencies run drone programs, write shared drone standards, and plan for advanced air mobility."],
-  ["Digital", "Data, automation, and AI", "Our in-house team connects the systems clients already own, automates the busywork, and puts AI to work where it helps."],
+  ["foundation", "Deep Transportation Agency Expertise", "Our founder spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and started Rawlins in 2017 to bring that experience to other agencies. Having worked successfully within complex public agencies for many years, our team applies deep insights gained from overcoming project and program constraints, navigating decision-making dynamics, and fostering organizational cultures that support collaboration and accountability."],
+  ["EVOLUTION", "Advisory Capabilities", "We partner with enterprises to modernize processes, empower team members, and embrace new technologies—coordinating these actions to achieve meaningful results. We pride ourselves on establishing long-term relationships with our family of clients."],
+  ["innovation", "Drones and Advanced Air Mobility", "We guide the planning, implementation, and integration of advanced air mobility and uncrewed aircraft systems within existing transport networks, supporting the development of multimodal connected communities."],
+  ["frontier", "Data Governance, Automation, & AI", "Our in-house team connects the systems clients already own, automates the busywork, and puts AI to work where it helps. We help agencies navigate governance structures, improve data practices, incorporate analytics, and use emerging tools. Our automation and integration specialists streamline workflows, enabling people to focus on the uniquely human work that matters most for organizational success."],
 ];
 
 export const STEPS: [string, string][] = [

@@ -54,7 +54,7 @@ export function WhoWeAre() {
     <Shell scene="hero" photo={PAGE_PHOTO.who}>
       <Hero crumbs={[["/about", "About"], ["/about/who-we-are", "Who we are"]]} kicker="Who we are" title="Founded on agency experience"
         lead={<p>Rawlins was founded in 2017 by Scott Rawlins, former Deputy Director and Chief Engineer of the Nevada Department of Transportation. Today former agency leaders work alongside an in-house digital team that builds the tools.</p>} />
-      <Sec title="Our story">
+      <Sec title="Our story to yours">
         <div className="pg-prose">
           <p>Scott Rawlins spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and then led an infrastructure asset management practice at a global consulting firm. He started Rawlins in 2017 to bring agency experience to the agencies that needed it. Some of the projects on this site come from that earlier work, or from our team&apos;s work before they joined us. Those are marked Before Rawlins.</p>
           <p>Advising agency leaders on how to deliver their programs is still a big part of what we do. Since 2017 we&apos;ve added drone and advanced air mobility work, an in-house team that builds integrations, automation, dashboards, and AI, and clients beyond transportation agencies, including local governments, contractors, and engineering firms. Our people work across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>
