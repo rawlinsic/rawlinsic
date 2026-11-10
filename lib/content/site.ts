@@ -193,6 +193,16 @@ export const PROBLEMS: { q: string; services: string[] }[] = [
 
 /* ── Home copy ───────────────────────────────────────────────── */
 /* Headline: Nicole's pick, pending Ben and Scott (handoff section 9). */
+/* The words beside the glass frame as the home hero zooms out (hero-story.tsx).
+   Placeholders for Nicole to write (Edit text on the preview); each is its own
+   wording so an edit changes only that one. 1st: frame on the right, words on
+   the left; 2nd: the other way; 3rd: like the 1st. */
+export const HOME_STORY: { k?: string; h: string; p: string }[] = [
+  { k: "One", h: "Your first headline goes here", p: "A sentence or two for the first side. Click Edit text, then click here to write it." },
+  { k: "Two", h: "Your second headline goes here", p: "A sentence or two for the second side, which sits on the right." },
+  { k: "Three", h: "Your third headline goes here", p: "A sentence or two for the third side, back on the left again." },
+];
+
 export const HOME = {
   eyebrow: "Trusted Advisors • Proven Execution",
   headline: "We help organizations plan, deliver, and adopt better ways of working — from strategy through operations and technology.",

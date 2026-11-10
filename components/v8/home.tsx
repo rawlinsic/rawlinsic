@@ -8,7 +8,7 @@
    quotes); What we do pairs what clients say with what we bring, beside each
    area's featured project; Why Rawlins keeps its card and five tabs. */
 import type { CSSProperties } from "react";
-import { AREAS, CASES, HOME, NUMBERS, PROBLEMS, STEPS, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
+import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/media";
 import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
@@ -16,7 +16,7 @@ import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/conten
 import { Diagram } from "@/components/v8/diagram";
 import Scene from "@/components/v8/scene";
 import Grown from "@/components/v8/grown";
-import FlowHero from "@/components/v8/flow-hero";
+import HeroStory from "@/components/v8/hero-story";
 import TilesTour from "@/components/v8/tiles-tour";
 import LitText from "@/components/v8/lit-text";
 import Tabs from "@/components/v8/tabs";
@@ -69,13 +69,27 @@ export default function Home() {
           below it, as it was: small tagline, headline, line, buttons, event note, the
           five areas. One panel, so it scrolls away normally. */}
       <div className="h-open">
-      <FlowHero next="#h-title" video={{ src: "/videos/home-hero-story-v3.mp4", poster: "/images/pages/home-hero-story-poster.jpg" }}>
-        {/* the tagline and headline on the hero, centered (Nicole, Nov 9) */}
-        <div className="fh-center">
-          {HOME.eyebrow && <p className="fh-tag">{tagline(HOME.eyebrow)}</p>}
-          <h1 className="fh-title">{HOME.headline}</h1>
-        </div>
-      </FlowHero>
+      {/* the hero as a scroll story (Nicole, Nov 9): the video zooms out into the glass
+          frame, bounces side to side with her words, then turns into the team strip
+          beside the Why Rawlins panel */}
+      <HeroStory
+        next="#h-title"
+        video={{ src: "/videos/home-hero-story-v3.mp4", poster: "/images/pages/home-hero-story-poster.jpg" }}
+        hero={
+          <div className="fh-center">
+            {HOME.eyebrow && <p className="fh-tag">{tagline(HOME.eyebrow)}</p>}
+            <h1 className="fh-title">{HOME.headline}</h1>
+          </div>
+        }
+        steps={HOME_STORY}
+        whyLeft={<PeopleStrip people={people} showDev={!PROD} />}
+        whyRight={
+          <div className="wc-copy">
+            <p className="v8-eyebrow">Why Rawlins</p>
+            <p className="wc-lit">Our people have run the programs you run. They do the work themselves, with an in-house team that builds the tools.</p>
+          </div>
+        }
+      />
 
       {/* 1 · who we are */}
       <section className="h-hero" aria-labelledby="h-title">
@@ -117,18 +131,7 @@ export default function Home() {
         })}
       />
 
-      {/* 3 · why us: the card holds while the sentence lights up */}
-      <Scene steps={1} per={90} className="wc" label="Why Rawlins">
-        <div className="wc-in">
-          <div className="wc-card">
-            <PeopleStrip people={people} showDev={!PROD} />
-            <div className="wc-copy">
-              <p className="v8-eyebrow">Why Rawlins</p>
-              <LitText className="wc-lit" text="Our people have run the programs you run. They do the work themselves, with an in-house team that builds the tools." />
-            </div>
-          </div>
-        </div>
-      </Scene>
+      {/* 3 · why us: the Why Rawlins card now ends the opening story (hero-story.tsx) */}
 
       {/* the proof: holds while scrolling steps through each reason */}
       <Scene steps={5} per={60} className="h-why hw" label="What sets us apart">
