@@ -11,13 +11,12 @@ import type { CSSProperties } from "react";
 import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, AREA_PHOTO_POS, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/media";
-import { CaseNote } from "@/components/site/ui";
+import { CaseNote, Dev } from "@/components/site/ui";
 import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
 import Grown from "@/components/v8/grown";
 import HeroStory from "@/components/v8/hero-story";
-import TilesTour from "@/components/v8/tiles-tour";
 import LitText from "@/components/v8/lit-text";
 import Rail from "@/components/v8/rail";
 import Panels from "@/components/v8/panels";
@@ -45,6 +44,9 @@ const keepDates = (t: string) => t.split(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Se
 const SHOW_WHAT_WE_DO = false;
 /* The tagline + headline section under the opening story is hidden for now, not deleted (Nicole, Nov 10). true brings it back. */
 const SHOW_HOME_INTRO = false;
+/* The team box at the end of the opening story ("Our people have run the programs you run", with the team
+   strip) is off the home page for now, not deleted (Nicole, Nov 10). true brings it back. */
+const SHOW_STORY_TEAM_BOX = false;
 
 export default function Home() {
   /* Featured projects: Rawlins work only (no Before Rawlins cases) */
@@ -58,8 +60,21 @@ export default function Home() {
   const why = WHY;
   const people = stripPeople();
   const veterans = veteranPeople();
-  /* the TV in "We've done the job": former agency leaders first, then everyone else, so it keeps going (Nicole, Nov 10) */
-  const everyone = [...veterans, ...people.filter((p) => !veterans.some((v) => v.slug === p.slug))];
+  /* the TV in "We've done the job" (Nicole, Nov 10): Scott, the three Pauls, and Alicia first, then the rest of
+     the aviation team, the former agency leaders, Nicole and the others; Ron, Koussay, and the admin and design
+     roles last. Everyone is in it, so it keeps going. */
+  const named = (re: RegExp) => people.filter((p) => re.test(p.name));
+  const lead = [...named(/^Scott Rawlins/), ...named(/^Paul Steinman/), ...named(/^Paul Schneider/), ...named(/^Paul Wheeler/), ...named(/^Alicia McConnell/)];
+  const aerial = named(/^(Aaron Organ|Jordan Stacy|John Zuleger)/);
+  const isLate = (p: (typeof people)[number]) => /^(Ron Crew|Koussay Khelil)/.test(p.name) || (!/^Nicole Arakorpi/.test(p.name) && /Admin|Assistant|Account|Finance|Design|Content Creator|Culture/i.test(p.role));
+  const taken = new Set([...lead, ...aerial].map((p) => p.slug));
+  const rest = people.filter((p) => !taken.has(p.slug));
+  const everyone = [
+    ...lead, ...aerial,
+    ...rest.filter((p) => p.formerly && !isLate(p)),
+    ...rest.filter((p) => !p.formerly && !isLate(p)),
+    ...rest.filter(isLate),
+  ];
   // the ring: each industry, then its specialties, dealt round so they spread out
   const groups: Tile[][] = VISIBLE_INDUSTRIES.map((i) => [
     { src: INDUSTRY_PHOTO[i.id], label: i.name, href: industryHref(i), sub: i.who },
@@ -78,7 +93,7 @@ export default function Home() {
           frame, bounces side to side with her words, then turns into the team strip
           beside the Why Rawlins panel */}
       <HeroStory
-        next="#services"
+        next="#what-we-do"
         video={{ src: "/videos/home-hero-story-v3.mp4", poster: "/images/pages/home-hero-story-poster.jpg" }}
         hero={
           <div className="fh-center">
@@ -117,8 +132,13 @@ export default function Home() {
               ][i],
               visual: [
                 <PeopleStrip key="team" people={everyone} lanes={4} showDev={!PROD} />,
-                /* verified numbers only here; the unverified one stays out of the frame */
-                <dl key="nums" className="nums">{NUMBERS.filter((n) => n.verified).map((n) => <div key={n.label}><dt>{n.label}</dt><dd>{n.value}</dd></div>)}</dl>,
+                /* combined experience in place of 2017 (Nicole, Nov 10); it carries a preview-only note until confirmed */
+                <div key="nums" className="hs-nums">
+                  <dl className="nums">{[...NUMBERS.filter((n) => /combined experience/i.test(n.label)), ...NUMBERS.filter((n) => n.verified && !/Established/.test(n.label))].map((n) => (
+                    <div key={n.label}><dt>{n.label}</dt><dd>{n.value}</dd></div>
+                  ))}</dl>
+                  <Dev>Content status: 850+ is added up from the years in 33 team bios (about 880); confirm before launch.</Dev>
+                </div>,
                 <a key="proof" className="hs-proof" href={caseHref(pdn)}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={casePhoto(pdn)} alt="" loading="lazy" />
@@ -131,12 +151,12 @@ export default function Home() {
             })),
           },
         ]}
-        whyLeft={<PeopleStrip people={people} showDev={!PROD} />}
-        whyRight={
+        whyLeft={SHOW_STORY_TEAM_BOX ? <PeopleStrip people={people} showDev={!PROD} /> : undefined}
+        whyRight={SHOW_STORY_TEAM_BOX ? (
           <div className="wc-copy">
             <LitText manual className="wc-lit" text="Our people have run the programs you run. They do the work themselves, with an in-house team that builds the tools." />
           </div>
-        }
+        ) : undefined}
       />
 
       {/* 1 · who we are: the tagline, headline, line, and buttons. Hidden on the home page for now, not
@@ -156,11 +176,30 @@ export default function Home() {
       </section>}
       </div>
 
-      {/* 1b · our services: the five tiles pop out one by one as you scroll (Nicole, Nov 9) */}
-      <TilesTour id="services" label="Our services" areas={AREAS.map((a) => ({
-        id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id].lead, href: areaHref(a), photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id],
-        services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
-      }))} />
+      {/* 1b · what we do: the five area tiles; the one you point at opens with its line, a quote, and a link
+          (Nicole, Nov 10: like the earlier home tiles). The pop-out tour now lives on the Services page. */}
+      <section id="what-we-do" className="h-ways" aria-labelledby="h-ways-h">
+        <div className="v8-wrap h-ways-head" data-reveal>
+          <p className="v8-eyebrow">What we do</p>
+          <h2 id="h-ways-h" className="v8-h2">From the plan to the tools people use.</h2>
+        </div>
+        <ul className="ways" aria-label="Our services">
+          {AREAS.map((a) => (
+            <li key={a.id} className="way" style={themeStyle(a.id)}>
+              <a href={areaHref(a)}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={AREA_PHOTO[a.id]} alt="" loading="lazy" style={AREA_PHOTO_POS[a.id] ? { objectPosition: AREA_PHOTO_POS[a.id] } : undefined} />
+                <span className="way-txt">
+                  <b>{a.name}</b>
+                  <em>{a.tag}</em>
+                  <span className="way-q">{q(AREA_DATA[a.id].hear[0])}</span>
+                  <span className="way-more">Explore {a.name}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       {/* 2 · what we do, area by area. Hidden for now (Nicole, Nov 9: "remove this whole section for now,
           but don't delete it"). To bring it back, set SHOW_WHAT_WE_DO to true at the top of this file. */}

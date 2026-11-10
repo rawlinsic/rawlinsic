@@ -20,6 +20,9 @@ export function previewGitHub(): { gh: GH; branch: string } | { error: string; s
 /* Only Nicole deletes sections: on by default, off on Jacob's version. */
 export const canDeleteSections = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => !/jacob/i.test(branch);
 
+/* The About pages are closed on Jacob's version: the menu still shows, the pages don't (Nicole, Nov 10). */
+export const aboutClosed = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => /jacob/i.test(branch);
+
 /* One commit on the branch with the given files (content null = delete the file). */
 export async function commitFiles(gh: GH, branch: string, files: { path: string; content: string | null }[], message: string) {
   const ref = await gh(`/git/ref/heads/${encodeURIComponent(branch)}`);

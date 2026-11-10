@@ -216,7 +216,9 @@ export const NUMBERS: { value: string; count?: number; suffix?: string; label: s
   /* "[N] States where we've worked" left out: the map shows the states (2.4) */
   /* 31 verified: 19 agencies directly or through a prime, plus 12 through the drone standards pooled fund */
   { value: "30+", count: 30, suffix: "+", label: "Transportation agencies served", verified: true },
-  { value: "[N]+", label: "Years of combined experience", verified: false },
+  /* 850+: the years stated in 33 of the 50 team bios add up to about 880 (Nov 10). The other 17 bios state no
+     years, so the real total is higher. Still marked unverified until Rawlins confirms it. */
+  { value: "850+", count: 850, suffix: "+", label: "Years of combined experience", verified: false },
 ];
 
 /* Why Rawlins (full site pass, Part 5, 1.3): five reasons, in display order.

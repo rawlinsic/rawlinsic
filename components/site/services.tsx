@@ -1,7 +1,8 @@
 /* Services: overview, the five heading pages, and every service page.
    Content: lib/content/catalog.ts (v11 + v12). Structure: handoff v7 section 3. */
 import AutomationIntegrationInteractive from "@/components/automation-integration-interactive";
-import { AREA_PHOTO, PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
+import { AREA_PHOTO, AREA_PHOTO_POS, PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
+import TilesTour from "@/components/v8/tiles-tour";
 import AutomationEcosystemBars from "@/components/automation-ecosystem-bars";
 import DeliverStack from "@/components/v8/deliver-stack";
 import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, subsectorHref, type Area } from "@/lib/content/site";
@@ -50,6 +51,11 @@ export function ServicesIndex() {
       <Hero crumbs={[["/services", "Services"]]} kicker="What we do" title="Many engagements draw on more than one area."
         lead={<p>We help organizations plan, deliver, run, and modernize the infrastructure they own, and strengthen the teams behind it.</p>}
         actions={<><Btn href="/contact" primary>Get in touch</Btn><Btn href="/insights/case-studies">See our work</Btn></>} />
+      {/* the five areas pop out one by one as you scroll (moved here from home, Nicole, Nov 10) */}
+      <TilesTour label="Our services" areas={AREAS.map((a) => ({
+        id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id]?.lead ?? "", href: areaHref(a), photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id],
+        services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
+      }))} />
       {AREAS.map((a, i) => (
         <Sec key={a.id} title={a.name} kicker={a.tag} tone={i % 2 ? "panel" : undefined}
           intro={<p>{AREA_DATA[a.id].lead} <a href={areaHref(a)}>More about {a.name}</a></p>}>

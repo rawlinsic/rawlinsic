@@ -26,7 +26,7 @@
    the button pauses and plays it. */
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { glideTo } from "@/components/v8/smooth";
-import { docTop } from "@/components/v8/panels";
+import { docTop, pinnedOffset } from "@/components/v8/panels";
 
 type R = { x: number; y: number; w: number; h: number };
 export type StoryItem = { h: string; p: string; link?: { label: string; href: string }; visual?: ReactNode; phoneVisual?: ReactNode };
@@ -43,7 +43,7 @@ const STEP = 1.7; // beats for a side with one message: its words come in one af
 const LEAD = 0.45, ITEM = 1, INTRO = 1.3; // a side with items: a short lead-in, its intro on its own (letters glow on), then one beat per item
 const PW = 720, PH = 500; // the frame's pictures are laid out at this size, then scaled to fit the frame
 
-export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next }: { video: { src: string; poster: string }; hero: ReactNode; steps: Step[]; whyLeft: ReactNode; whyRight: ReactNode; next?: string }) {
+export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next }: { video: { src: string; poster: string }; hero: ReactNode; steps: Step[]; whyLeft?: ReactNode; whyRight?: ReactNode; next?: string }) {
   const ref = useRef<HTMLElement>(null);
   const vid = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(false);
@@ -55,7 +55,8 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
   const lens = steps.map((st, i) => (st.items?.length ? pre[i] + st.items.length * ITEM : STEP));
   const starts = lens.map((_, i) => 1 + lens.slice(0, i).reduce((a, b) => a + b, 0));
   const sEnd = 1 + lens.reduce((a, b) => a + b, 0); // where the team block starts
-  const beats = sEnd + 1.3; // zoom out, each side, the team block, a short hold
+  const hasWhy = !!(whyLeft || whyRight); // the team block at the end (off on home for now; Nicole, Nov 10)
+  const beats = sEnd + (hasWhy ? 1.3 : 0.35); // zoom out, each side, the team block (if any), a short hold
   const sig = lens.join(",") + "|" + pre.join(",");
 
   // the video: muted loop; paused off screen, in a hidden tab, while covered, and for reduced motion
@@ -81,11 +82,11 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
     const vis = el.querySelector<HTMLElement>(".hs-vis")!;
     const heroEl = el.querySelector<HTMLElement>(".hs-hero")!;
     const texts = Array.from(el.querySelectorAll<HTMLElement>(".hs-step"));
-    const why = el.querySelector<HTMLElement>(".hs-why")!;
+    const why = el.querySelector<HTMLElement>(".hs-why");
     const pause = el.querySelector<HTMLElement>(".hs-pause");
     const nextEl = el.querySelector<HTMLElement>(".hs-next");
     const pansBox = el.querySelector<HTMLElement>(".hs-pans");
-    const lit = Array.from(why.querySelectorAll<HTMLElement>(".lit-w"));
+    const lit = why ? Array.from(why.querySelectorAll<HTMLElement>(".lit-w")) : [];
     const items = texts.map((t) => Array.from(t.querySelectorAll<HTMLElement>(".hs-item:not(.hs-intro)")));
     const intros = texts.map((t) => t.querySelector<HTMLElement>(".hs-intro"));
     const glows = texts.map((t) => Array.from(t.querySelectorAll<HTMLElement>(".hs-gl")));
@@ -124,7 +125,8 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
         const t = ease(c01((s - starts[k]) / 0.37));
         const prev = k === 0 ? center : sides[k - 1], px = k === 0 ? 0 : sideSign(k - 1);
         rect = mix(prev, sides[k], t); x = px + (sideSign(k) - px) * t;
-      } else {
+      } else if (!hasWhy) { rect = sides[N - 1]; x = sideSign(N - 1); } // no team block: the last side holds
+      else {
         // like scale.com: the frame drifts up and fades while the block and the
         // team strip rise from the bottom into place
         const u = s - sEnd, up = ease(c01(u / 0.7));
@@ -144,7 +146,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
       texts.forEach((t, i) => {
         const a = s - starts[i], many = items[i].length > 0;
         const inn = many ? c01((a - 0.1) / 0.4) : c01((a / STEP - 0.15) / 0.55);
-        const out = i === N - 1 ? c01((s - sEnd) / 0.2) : c01((a - (lens[i] - 0.17)) / 0.17);
+        const out = i === N - 1 ? (hasWhy ? c01((s - sEnd) / 0.2) : 0) : c01((a - (lens[i] - 0.17)) / 0.17);
         t.style.setProperty("--in", inn.toFixed(3)); t.style.setProperty("--out", out.toFixed(3));
         t.style.visibility = inn > 0 && out < 1 ? "visible" : "hidden";
         t.toggleAttribute("data-on", inn > 0.8 && out < 0.5);
@@ -155,7 +157,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
         const sp = solo[i];
         if (sp) { // a one-message side's picture fills the frame once it has moved over
           // it hands over to the next side's picture (crossfade), so the video doesn't come back in between
-          const o = Math.min(c01((a - 0.3) / 0.3), 1 - (i === N - 1 ? c01((s - sEnd) / 0.3) : c01((a - (lens[i] - 0.1)) / 0.2)));
+          const o = Math.min(c01((a - 0.3) / 0.3), 1 - (i === N - 1 ? (hasWhy ? c01((s - sEnd) / 0.3) : 0) : c01((a - (lens[i] - 0.1)) / 0.2)));
           sp.style.opacity = o.toFixed(3); sp.style.visibility = o > 0.01 ? "visible" : "hidden";
           cover = Math.max(cover, o);
         }
@@ -189,6 +191,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
         pans[i].forEach((pn, j) => {
           const o = Math.min(j === 0 && !hasIntro ? c01((p + 0.3) / 0.3) : c01((p - (j - 0.12)) / 0.14), j === n - 1 ? 1 : 1 - c01((p - (j + 0.9)) / 0.12));
           pn.style.opacity = o.toFixed(3); pn.style.visibility = o > 0.01 ? "visible" : "hidden";
+          pn.toggleAttribute("data-show", o > 0.01); // moving pictures (the team lanes) start from the top each time
           pn.classList.toggle("is-on", o > 0.3); // diagrams draw in each time their item comes up
           cover = Math.max(cover, o);
         });
@@ -202,12 +205,14 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
       if (pause) { const po = media * (1 - cover); pause.style.opacity = po.toFixed(3); pause.style.visibility = po < 0.01 ? "hidden" : "visible"; } // goes with the video
       // like scale.com: the white box comes up from the bottom at scroll speed, runs off the bottom of
       // the screen, and keeps going up as the page moves on (the team strip travels beside it)
+      if (why) {
       const wu = s - sEnd, perBeat = total / beats;
       why.style.setProperty("--wy", `${(stage.clientHeight - wu * perBeat).toFixed(1)}px`);
       why.style.setProperty("--wh", `${Math.round(stage.clientHeight + (beats - sEnd + 0.2) * perBeat)}px`);
       why.toggleAttribute("data-on", wu > 0.25);
       const nl = Math.round(c01((wu - 0.15) / 0.6) * lit.length); // its words light up as it rises
       lit.forEach((w, i) => w.classList.toggle("is-lit", i < nl));
+      }
     };
     const on = () => { if (!raf) raf = requestAnimationFrame(tick); };
     const mode = () => {
@@ -215,7 +220,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
       if (live) { delete el.dataset.static; layout(); tick(); }
       else {
         el.dataset.static = "";
-        [vis, heroEl, why, ...(nextEl ? [nextEl] : []), ...texts, ...items.flat(), ...pans.flat(), ...intros, ...eyebrows, ...solo, ...teasers, ...tickRows, ...(pause ? [pause] : [])].forEach((n) => { if (n) n.style.cssText = ""; });
+        [vis, heroEl, ...(why ? [why] : []), ...(nextEl ? [nextEl] : []), ...texts, ...items.flat(), ...pans.flat(), ...intros, ...eyebrows, ...solo, ...teasers, ...tickRows, ...(pause ? [pause] : [])].forEach((n) => { if (n) n.style.cssText = ""; });
         glows.flat().forEach((x) => x.classList.add("is-lit"));
         lit.forEach((w) => w.classList.add("is-lit"));
         if (covered.current) { covered.current = false; kick.current(); }
@@ -226,6 +231,12 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
       const b = (e.target as HTMLElement).closest<HTMLElement>("[data-go]");
       if (!b || !live) return;
       e.preventDefault();
+      if (b.dataset.go === "next") { // no team block: skip lands on the section after the story
+        let nx = el.closest<HTMLElement>(".pnl > *")?.nextElementSibling as HTMLElement | null;
+        while (nx && nx.matches(".sn, [data-nopanel]")) nx = nx.nextElementSibling as HTMLElement | null;
+        glideTo(nx ? Math.max(0, docTop(nx) - pinnedOffset() + 1) : docTop(el) + el.offsetHeight);
+        return;
+      }
       const total = el.offsetHeight - stage.clientHeight;
       glideTo(docTop(el) - 68 + (Number(b.dataset.go) / beats) * total);
     };
@@ -311,7 +322,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
                 ))}
               </ol>
               <span className="hs-count" aria-hidden="true">01 / {two(st.items.length)}</span>
-              <button type="button" className="skip hs-skip" data-go={(sEnd + 1.1).toFixed(3)}>
+              <button type="button" className="skip hs-skip" data-go={hasWhy ? (sEnd + 1.1).toFixed(3) : "next"}>
                 Skip to the next section
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
               </button>
@@ -326,12 +337,14 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
             {st.visual && <div className="hs-step-vis">{st.visual}</div>}
           </div>
         ))}
-        <div className="hs-why">
-          <div className="wc-card">
-            <div className="hs-why-left">{whyLeft}</div>
-            <div className="hs-why-right">{whyRight}</div>
+        {hasWhy && (
+          <div className="hs-why">
+            <div className="wc-card">
+              <div className="hs-why-left">{whyLeft}</div>
+              <div className="hs-why-right">{whyRight}</div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

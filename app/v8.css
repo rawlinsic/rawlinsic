@@ -2059,3 +2059,30 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .hs-pan :is(.dg-hub) .dg-steps li { background: linear-gradient(180deg, #1d3759, #0f2340); border: 1px solid rgba(34, 211, 238, 0.7); box-shadow: 0 8px 20px rgba(13, 27, 46, 0.18), 0 0 16px rgba(34, 211, 238, 0.35); }
 .hs-pan .dg-hub .dg-steps b { color: #fff; }
 .hs-pan .dg-hub .dg-num { color: var(--aqua); }
+
+/* home: What we do, the five area tiles (Nicole, Nov 10) */
+.h-ways { background: #fff; padding: clamp(56px, 7vw, 96px) 0; }
+.h-ways .h-ways-head { margin-top: 0; }
+.h-ways .h-ways-head .v8-h2 { margin: 8px 0 0; }
+.h-ways .ways { margin-top: clamp(22px, 2.6vw, 34px); }
+/* reason 3: a darker shade over the project photo so the words read */
+.hs-proof::after { background: linear-gradient(180deg, rgba(8, 16, 30, 0.45) 0%, rgba(8, 16, 30, 0.62) 45%, rgba(8, 16, 30, 0.94) 100%); }
+/* reasons 4 and 5: bigger, darker words on the screens */
+.hs-pan .dg-steps b { font-size: 1.22rem; line-height: 1.2; }
+.hs-pan .dg-num { font-size: 0.86rem; }
+.hs-pan .dg-hub .dg-steps li { width: 10.8rem; padding: 12px; }
+.hs-pan .dg-center { width: 9.4rem; font-size: 1.02rem; }
+.hs-pan .dg-track .dg-steps b { font-size: 1.34rem; }
+.hs-pan .dg-track .dg-d { font-size: 1.04rem; line-height: 1.42; color: #1e293b; }
+.hs-pan .nums dt .pg-dev { display: block; margin-top: 8px; font-size: 0.7rem; }
+
+/* reason 2: three equal columns on one line; the preview note sits under them */
+.hs-pan .nums { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.hs-pan .nums div:first-child { padding-right: 26px; }
+.hs-pan .nums dd { font-size: 3.9rem; }
+.hs-nums { display: grid; gap: 18px; }
+.hs-nums > .pg-dev { justify-self: start; font-size: 0.72rem; }
+/* reason 1: every lane moves up and starts from the top each time the screen comes up,
+   so Scott, the Pauls, Alicia, and the aviation team are the first faces */
+.hs-pan .ps-lanes .wc-col-down { animation-name: wc-up; }
+.hs-pan:not([data-show]) .wc-col { animation: none; }
