@@ -1866,3 +1866,56 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .hs-step > :nth-child(3) { --d: 0.38; }
 .hs-step > :nth-child(4) { --d: 0.58; }
 .hs-step .hs-cta { margin-top: 28px; }
+
+/* home story, side two (What sets us apart): one reason per scroll, its picture in the frame */
+.hs-step h2.hs-k { margin: 0 0 14px; font-size: 0.95rem; font-weight: 700; line-height: 1.3; letter-spacing: 0.1em; color: var(--aqua); }
+.hs-item h3 { margin: 0 0 16px; color: #fff; font-size: clamp(2rem, 3.2vw, 3.2rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.025em; }
+.hs:not([data-static]) .hs-items { display: grid; }
+.hs:not([data-static]) .hs-item { grid-area: 1 / 1; align-self: start; }
+.hs-link { display: inline-flex; gap: 6px; margin-top: 18px; color: var(--aqua-soft) !important; font-weight: 600; text-decoration: none; }
+.hs-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.hs-tick { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 30px; }
+.hs-tick ol { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.hs-tick-b { display: grid; align-items: center; width: 44px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; }
+.hs-tick-b i { display: block; height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--aqua) calc(var(--f, 0) * 100%), rgba(255, 255, 255, 0.24) 0); }
+.hs-tick-b:hover i { box-shadow: 0 0 10px rgba(34, 211, 238, 0.55); }
+.hs-tick-b:focus-visible { outline: 2px solid var(--aqua); outline-offset: 2px; border-radius: 4px; }
+.hs-count { color: #cfdbea; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+.hs-skip { color: #e6edf5; background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.28); }
+.hs-skip:hover { background: rgba(255, 255, 255, 0.12); }
+.hs[data-static] .hs-tick { display: none; }
+.hs[data-static] .hs-item + .hs-item { margin-top: 44px; }
+/* the frame's pictures: laid out at 720 x 500, scaled to the frame */
+.hs-pans { position: absolute; inset: 0; }
+.hs-pan { position: absolute; inset: 0; overflow: hidden; background: #eef3f9; opacity: 0; visibility: hidden; }
+.hs-pan-in { position: absolute; left: 50%; top: 50%; display: grid; align-content: center; width: 720px; height: 500px; padding: 36px 44px; color: var(--ink); transform: translate(-50%, -50%) scale(var(--fit, 0.85)); }
+.hs-pan-in:has(.hs-proof) { padding: 0; }
+.hs-pan .ps-across { margin: 0; }
+.hs-pan .nums dd { font-size: 4.2rem; }
+.hs-pan .dg { margin: 0; max-width: none; }
+.hs[data-static] .hs-pans { display: none; }
+.hs:not([data-static]) .hs-item-vis { display: none; }
+.hs[data-static] .hs-item-vis { margin-top: 20px; padding: 18px; overflow: hidden; border-radius: 16px; background: #eef3f9; color: var(--ink); }
+.hs[data-static] .hs-item-vis:has(.hs-proof) { padding: 0; }
+.hs-proof { position: relative; display: block; height: 100%; min-height: 240px; overflow: hidden; color: #fff !important; text-decoration: none; }
+.hs-proof img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hs-proof::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 18, 32, 0) 30%, rgba(10, 18, 32, 0.88)); }
+.hs-proof > span { position: absolute; left: 32px; right: 32px; bottom: 28px; z-index: 1; display: grid; gap: 6px; }
+.hs-proof em { font-style: normal; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aqua); }
+.hs-proof b { font-size: 1.7rem; font-weight: 600; line-height: 1.2; }
+.hs-proof > span > span { color: #dce6f2; }
+.hs-proof:hover b { text-decoration: underline; text-decoration-color: var(--aqua); text-underline-offset: 5px; }
+.hs[data-static] .hs-proof b { font-size: 1.25rem; }
+.hs[data-static] .hs-proof > span { left: 20px; right: 20px; bottom: 18px; }
+
+/* the team block, like scale.com's: a glass block a shade lighter than the navy, words light up, the first ones electric blue */
+.hs-why .wc-copy { justify-content: flex-start; background: radial-gradient(70% 90% at 92% 0%, rgba(34, 211, 238, 0.18), transparent 60%), linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.05)); border: 1px solid rgba(165, 243, 252, 0.24); box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.5); }
+.hs-why .wc-lit { color: #fff; max-width: 22ch; }
+.hs:not([data-static]) .hs-skip { display: inline-flex; }
+.hs-pan .ps-across .wc-p a { width: 340px; gap: 16px; padding: 14px 18px 14px 14px; }
+.hs-pan .ps-across .wc-p img { width: 84px; height: 84px; }
+.hs-pan .ps-across .wc-p b { font-size: 1.1rem; }
+.hs-pan .ps-across .wc-p em { font-size: 0.95rem; }
+/* the project photo fills the whole frame */
+.hs-pan:has(.hs-proof) .hs-pan-in { left: 0; top: 0; width: 100%; height: 100%; transform: none; }
+.hs-pan .hs-proof { position: absolute; inset: 0; height: auto; min-height: 0; }

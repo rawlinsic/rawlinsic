@@ -14,19 +14,16 @@ import { AREA_PHOTO, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/me
 import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
-import Scene from "@/components/v8/scene";
 import Grown from "@/components/v8/grown";
 import HeroStory from "@/components/v8/hero-story";
 import TilesTour from "@/components/v8/tiles-tour";
 import LitText from "@/components/v8/lit-text";
-import Tabs from "@/components/v8/tabs";
 import Rail from "@/components/v8/rail";
 import Panels from "@/components/v8/panels";
 import Chapters from "@/components/v8/chapters";
 import Orbit, { type Tile } from "@/components/v8/orbit";
 import { stripPeople, veteranPeople } from "@/components/site/more";
 import PeopleStrip from "@/components/v8/people-strip";
-import SkipNext from "@/components/v8/skip-next";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const q = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
@@ -81,12 +78,32 @@ export default function Home() {
             <h1 className="fh-title">{HOME.headline}</h1>
           </div>
         }
-        steps={HOME_STORY}
+        steps={[
+          ...HOME_STORY,
+          /* side two: What sets us apart, one reason per scroll, each with its picture in the frame (Nicole, Nov 9) */
+          {
+            k: "What sets us apart",
+            items: why.map(([h, p], i) => ({
+              h, p,
+              link: i === 0 ? { label: "Meet our people", href: "/about/our-people" } : i === 4 ? { label: "How we work", href: "/about/how-we-work" } : undefined,
+              visual: [
+                <PeopleStrip key="team" people={veterans} across showDev={!PROD} />,
+                <dl key="nums" className="nums">{numbers.map((n) => <div key={n.label}>{!n.verified && <em className="v8-dev">Placeholder: number not verified yet.</em>}<dt>{n.label}</dt><dd>{n.value}</dd></div>)}</dl>,
+                <a key="proof" className="hs-proof" href={caseHref(pdn)}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={casePhoto(pdn)} alt="" loading="lazy" />
+                  <span><em>From our work</em><b>{pdn.title}</b><span>{pdn.who}</span></span>
+                </a>,
+                <div key="hub" style={themeStyle("tech")}><Diagram kind="hub" steps={AREA_DATA.tech.feature.steps} center="The systems you already own" /></div>,
+                <div key="track" style={themeStyle("strategy")}><Diagram kind="track" detail steps={STEPS.map(([t, d]) => ({ t, d }))} /></div>,
+              ][i],
+            })),
+          },
+        ]}
         whyLeft={<PeopleStrip people={people} showDev={!PROD} />}
         whyRight={
           <div className="wc-copy">
-            <p className="v8-eyebrow">Why Rawlins</p>
-            <p className="wc-lit">Our people have run the programs you run. They do the work themselves, with an in-house team that builds the tools.</p>
+            <LitText manual className="wc-lit" text="Our people have run the programs you run. They do the work themselves, with an in-house team that builds the tools." />
           </div>
         }
       />
@@ -108,7 +125,7 @@ export default function Home() {
       </div>
 
       {/* 1b · our services: the five tiles pop out one by one as you scroll (Nicole, Nov 9) */}
-      <TilesTour label="Our services" areas={AREAS.map((a) => ({
+      <TilesTour id="services" label="Our services" areas={AREAS.map((a) => ({
         id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id].lead, href: areaHref(a), photo: AREA_PHOTO[a.id],
         services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
       }))} />
@@ -133,45 +150,7 @@ export default function Home() {
 
       {/* 3 · why us: the Why Rawlins card now ends the opening story (hero-story.tsx) */}
 
-      {/* the proof: holds while scrolling steps through each reason */}
-      <Scene steps={5} per={60} className="h-why hw" label="What sets us apart">
-        <div className="v8-wrap">
-          <div className="h-why-head h-row-head" data-reveal>
-            <h2 id="h-why" className="v8-h2">What sets us apart</h2>
-            <SkipNext />
-          </div>
-          <div data-reveal>
-            <Tabs label="What sets us apart" labels={why.map((w) => w[0])}>
-              <div className="why-p">
-                <p className="why-text">{why[0][1]}</p>
-                <PeopleStrip people={veterans} across showDev={!PROD} />
-                <a className="v8-link" href="/about/our-people">Meet our people</a>
-              </div>
-              <div className="why-p">
-                <p className="why-text">{why[1][1]}</p>
-                <dl className="nums">{numbers.map((n) => <div key={n.label}>{!n.verified && <em className="v8-dev">Placeholder: number not verified yet.</em>}<dt>{n.label}</dt><dd>{n.value}</dd></div>)}</dl>
-              </div>
-              <div className="why-p">
-                <p className="why-text">{why[2][1]}</p>
-                <a className="proof" href={caseHref(pdn)}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={casePhoto(pdn)} alt="" loading="lazy" />
-                  <span><em>From our work</em><b>{pdn.title}</b><span>{pdn.who}</span></span>
-                </a>
-              </div>
-              <div className="why-p" style={themeStyle("tech")}>
-                <p className="why-text">{why[3][1]}</p>
-                <Diagram kind="hub" steps={AREA_DATA.tech.feature.steps} center="The systems you already own" />
-              </div>
-              <div className="why-p" style={themeStyle("strategy")}>
-                <p className="why-text">{why[4][1]}</p>
-                <Diagram kind="track" detail steps={STEPS.map(([t, d]) => ({ t, d }))} />
-                <a className="v8-link" href="/about/how-we-work">How we work</a>
-              </div>
-            </Tabs>
-          </div>
-        </div>
-      </Scene>
+      {/* What sets us apart is now side two of the opening story (hero-story.tsx), one reason per scroll */}
 
       {/* 4 · who we work with: a ring of photos around the headline */}
       <Orbit tiles={tiles}>

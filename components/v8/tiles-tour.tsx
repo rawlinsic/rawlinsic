@@ -20,7 +20,7 @@ const ease = (t: number) => t * t * (3 - 2 * t);
 const c01 = (x: number) => Math.max(0, Math.min(1, x));
 const mix = (a: R, b: R, t: number): R => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, w: a.w + (b.w - a.w) * t, h: a.h + (b.h - a.h) * t });
 
-export default function TilesTour({ label, areas }: { label: string; areas: TourArea[] }) {
+export default function TilesTour({ label, areas, id }: { label: string; areas: TourArea[]; id?: string }) {
   const ref = useRef<HTMLElement>(null);
   const n = areas.length;
 
@@ -107,7 +107,7 @@ export default function TilesTour({ label, areas }: { label: string; areas: Tour
   }, [n, areas]);
 
   return (
-    <section ref={ref} className="tt" data-nofill aria-label={label} style={{ ["--tt-len" as string]: `calc(100vh + ${Math.round(n * PER * 100)}vh)` } as CSSProperties}>
+    <section ref={ref} id={id} className="tt" data-nofill aria-label={label} style={{ ["--tt-len" as string]: `calc(100vh + ${Math.round(n * PER * 100)}vh)` } as CSSProperties}>
       <div className="tt-stage">
         <p className="tt-k">{label}</p>
         {areas.map((a, i) => (

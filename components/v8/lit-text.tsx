@@ -11,11 +11,11 @@ import { docTop } from "@/components/v8/panels";
 
 const words = (s: string, from: number) => s.split(" ").map((w, i) => <span key={from + i} className="lit-w">{w} </span>);
 
-export default function LitText({ text, lines, notes, noteLabel, as: Tag = "p", className }: { text?: string; lines?: string[]; notes?: (string | undefined)[]; noteLabel?: string; as?: "p" | "h2" | "div"; className?: string }) {
+export default function LitText({ text, lines, notes, noteLabel, as: Tag = "p", className, manual = false }: { text?: string; lines?: string[]; notes?: (string | undefined)[]; noteLabel?: string; as?: "p" | "h2" | "div"; className?: string; manual?: boolean }) {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || manual) return; // manual: the scroll story around it lights the words
     const ws = Array.from(el.querySelectorAll<HTMLElement>(".lit-w"));
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { ws.forEach((w) => w.classList.add("is-lit")); return; }
     let raf = 0;
