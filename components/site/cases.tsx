@@ -4,6 +4,7 @@
 import { PAGE_PHOTO } from "@/lib/content/media";
 import { casePhoto, themeStyle } from "@/lib/content/v8";
 import ProjectCard from "@/components/v8/project-card";
+import { CASE_EXTRA } from "@/lib/content/case-extra";
 import { AREAS, CASES, VISIBLE_INDUSTRIES, areaHref, caseHref, caseTag, industryHref, serviceById, serviceHref, slugify, type CaseIndex, CASE_STATUS } from "@/lib/content/site";
 import { CASES as CASE_DATA, SERVICES as SVC_DATA, SUBSECTORS } from "@/lib/content/catalog";
 import CaseFilter, { type CaseRow } from "@/components/site/case-filter";
@@ -68,12 +69,19 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
   /* earlier work: the client line already says whose work it was */
   const lead = c.status === "Before Rawlins" ? c.who : `${c.who} · ${c.status}`;
   const [client, ...whoNote] = c.who.split(" · ");
+  /* more from our records, kept general (Nicole, Nov 10: generic rather than nothing; flagged for review on
+     previews so the client or Scott can remove a line; an emptied line drops out) */
+  const x = CASE_EXTRA[c.id] ?? {};
+  const xDid = (x.did ?? []).map((t) => t.trim()).filter(Boolean);
+  const xRes = (x.res ?? []).map((t) => t.trim()).filter(Boolean);
+  const anyExtra = !!(x.when?.trim() || xDid.length || xRes.length);
   const facts = [
     { k: "Client", v: client },
     { k: "Status", v: caseTag(c) + (whoNote.length ? ` · ${whoNote.join(" · ").replace(/^Our (team|founder)'s work before Rawlins,?\s*/i, "").replace(/^./, (x) => x.toUpperCase())}` : "") },
+    ...(x.when?.trim() ? [{ k: "When", v: x.when.trim(), review: true }] : []),
     ...(c.states.length ? [{ k: c.states.length > 1 ? "States" : "State", v: c.states.join(", ") }] : []),
     ...(ind ? [{ k: "Industry", v: ind.name }] : []),
-  ].map((f) => ({ ...f, v: f.v.replace(/ · $/, "") }));
+  ].map((f) => ({ ...f, v: f.v.replace(/ · $/, "") })) as { k: string; v: string; review?: boolean }[];
   return (
     <Shell scene={sceneFor(c)} photo={casePhoto(c)}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Projects"], [caseHref(c), c.title]]}
@@ -83,13 +91,15 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
 
       <section data-nofill className="pj-glance" aria-label="At a glance">
         <div className="pg-wrap">
-          <dl className="pj-facts">{facts.map((f) => <div key={f.k}><dt>{f.k}</dt><dd>{f.v}</dd></div>)}</dl>
+          <dl className="pj-facts">{facts.map((f) => <div key={f.k}><dt>{f.k}</dt><dd>{f.v}{f.review && <> <Dev>For review</Dev></>}</dd></div>)}</dl>
           {areaIds.length > 0 && (
             <div className="pj-areas"><span>Where it fits</span>
               <ul>{areaIds.map((id) => { const a = AREAS.find((x) => x.id === id)!; return <li key={id} style={themeStyle(id)}><a href={areaHref(a)}>{a.name}</a></li>; })}</ul>
             </div>
           )}
-          <Dev block>Our records have more on this project (dates, deliverables, results). Each piece needs the client&apos;s written OK before it goes on the site.</Dev>
+          {anyExtra
+            ? <Dev block>For review: lines marked &ldquo;For review&rdquo; come from our records and are kept general, because the client&apos;s contract may limit what we can publish. Remove any that can&apos;t go on the site (empty it with Edit text).</Dev>
+            : <Dev block>Our records have more on this project (dates, deliverables, results). Each piece needs the client&apos;s written OK before it goes on the site.</Dev>}
         </div>
       </section>
 
@@ -99,23 +109,31 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
         </section>
       ) : null}
 
-      {d?.did?.length ? (
+      {d?.did?.length || xDid.length ? (
         <section data-nofill className="pj-sec pj-did">
           <div className="pg-wrap">
             <h2 className="pj-h">What we did</h2>
-            <ol className="pj-did-list">{d.did.map((x, i) => <li key={x}><span className="pj-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><p>{x}</p></li>)}</ol>
-            {d.tools?.length ? <div className="pj-tools"><span>Tools</span><ul>{d.tools.map((t) => <li key={t}>{t}</li>)}</ul></div> : null}
+            <ol className="pj-did-list">
+              {[...(d?.did ?? []).map((t) => ({ t, review: false })), ...xDid.map((t) => ({ t, review: true }))].map((it, i) => (
+                <li key={it.t}><span className="pj-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><p>{it.t}</p>{it.review && <Dev>For review</Dev>}</li>
+              ))}
+            </ol>
+            {d?.tools?.length ? <div className="pj-tools"><span>Tools</span><ul>{d.tools.map((t) => <li key={t}>{t}</li>)}</ul></div> : null}
           </div>
         </section>
       ) : null}
 
       {d?.figure ? <Sec title={d.figure.title} intro={d.figure.intro ? <p>{d.figure.intro}</p> : undefined}><Steps steps={d.figure.steps} compact /></Sec> : null}
 
-      {d?.res?.length ? (
+      {d?.res?.length || xRes.length ? (
         <section data-nofill className="pj-sec pj-res">
           <div className="pg-wrap">
             <h2 className="pj-h">Results</h2>
-            <ul className="pj-res-list">{d.res.map((r) => <li key={r}><Check /><p>{r}</p></li>)}</ul>
+            <ul className="pj-res-list">
+              {[...(d?.res ?? []).map((t) => ({ t, review: false })), ...xRes.map((t) => ({ t, review: true }))].map((it) => (
+                <li key={it.t}><Check /><p>{it.t}{it.review && <> <Dev>For review</Dev></>}</p></li>
+              ))}
+            </ul>
           </div>
         </section>
       ) : null}

@@ -56,9 +56,9 @@ export default function Home() {
   const cases = FEATURED_CASES.map((id) => CASES.find((c) => c.id === id)!).filter((c) => c && isOurs(c));
   /* previews also show the unverified number, marked (Part 4, 1) */
   const numbers = NUMBERS.filter((n) => n.verified || !PROD);
-  /* the "recent contract win" spot shows a project in the works instead (Nicole, Nov 10) */
+  /* this spot shows a project in the works (Nicole, Nov 10: never "contract wins") */
   const wip = caseById("cs-aerodiv");
-  const news = NEWS.filter((n) => !n.offHome && (n.tag === "Win" || !n.placeholder || !PROD)).slice(0, 3);
+  const news = NEWS.filter((n) => !n.offHome && (n.tag === "Project" || !n.placeholder || !PROD)).slice(0, 3);
   const ev = EVENTS.filter((e) => (!e.placeholder || !PROD) && isUpcoming(e))[0];
   const pdn = CASES.find((c) => c.id === "cs-pdn")!;
   /* the five reasons in display order; each tab keeps its own proof (Part 5, 1.3) */
@@ -280,7 +280,7 @@ export default function Home() {
                 <a className="v8-btn v8-btn-light" href="/contact">Plan to meet us</a>
               </article>
             )}
-            {news.map((n) => n.tag === "Win" && wip ? (
+            {news.map((n) => n.tag === "Project" && wip ? (
               <a key="wip" className="nw nw-proj" href={caseHref(wip)} data-reveal>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={casePhoto(wip)} alt="" loading="lazy" />

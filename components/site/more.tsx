@@ -282,7 +282,7 @@ export function NewsPage() {
 
 /* Research & Publications (Nicole, Nov 10: "this page doesn't show really anything"): the reports people on our
    team have published (each checked against the publisher's page), the research we're doing now, talks, and a
-   place for awards and wins. */
+   place for awards and recognition. */
 function ByLine({ names }: { names: string[] }) {
   const all = allPeople();
   return (
@@ -347,13 +347,13 @@ export function ResearchPage() {
             </ul>
           </div>
           <div>
-            <h2 className="pj-h">Awards and wins</h2>
+            <h2 className="pj-h">Awards and recognition</h2>
             <ul className="rs-rows">
               {AWARDS.map((a) => (
                 <li key={a.href}><span className="rs-series">{a.year}{a.before ? " · Before Rawlins" : ""}</span><b>{a.title}</b><span className="rs-pub">{a.from}</span><ByLine names={a.people} /><a className="pj-more" href={a.href} target="_blank" rel="noopener noreferrer">The announcement</a></li>
               ))}
             </ul>
-            <Dev block>Placeholder: contract wins and awards go here as they come in, each once the client is OK with it. None are public yet.</Dev>
+            <Dev block>Placeholder: awards and recognition for Rawlins and our people go here as they come in.</Dev>
           </div>
         </div>
       </section>

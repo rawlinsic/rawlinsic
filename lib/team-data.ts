@@ -288,7 +288,7 @@ Lauren's passion is providing a meaningful impact to organizations through colla
     background: `Alicia McConnell brings over 15 years of transportation and technology experience to the Rawlins team. She began her career as a civil engineer designer, working on large roadway projects in both Wisconsin and Illinois. In 2018, an interest in technology led to her involvement in Unmanned Aerial Systems (UAS) and to investigate how these tools could be applied to improve transportation project workflows.`,
     achievements: `Alicia has developed and led UAS programs since 2018, including oversight of a nationwide network of pilots that performed UAS-based missions including surveying and mapping, bridge inspections, construction inspection and monitoring, disaster assessments, roof inspections, and thermal analyses.
 
-She is a certified Part 107 UAS pilot with significant experience in bridge inspections and building sustainable UAS programs for clients. Her work with NCHRP to develop AASHTO guidelines for UAS applications for element-level bridge inspections is ongoing.`,
+She is a certified Part 107 UAS pilot with significant experience in bridge inspections and building sustainable UAS programs for clients. She was principal investigator for NCHRP Project 12-122, published in 2024 as NCHRP Research Report 1114, which proposed AASHTO guidelines for using drones in element-level bridge inspections.`,
     categories: ['technology'],
   },
   {
@@ -352,7 +352,7 @@ A seasoned transportation industry professional, Jenica brings extensive experie
     background: `John brings 13 years of experience as a leader in structural engineering design, along with rope access and UAS bridge inspection applications, to the Rawlins team. He has led projects with various agencies across the nation ranging from design and analysis to inspection and asset management.`,
     achievements: `Notable projects include ABC bridge slides, the Leo Frigo Bridge post-collapse analysis, and the Brent Spence and Hernando de Soto Bridge emergencies. John, a SPRAT Level 3 climber, developed a small rope access team and grew it into a leading nationwide program.
 
-He incorporated the use of UAS into his inspection teams starting in 2016 and became a Part 107-certified UAS pilot in 2018. He has performed and managed hundreds of complex and post-disaster bridge inspections across the country. He is co-authoring the upcoming AASHTO guidelines for UAS applications in bridge inspections and has worked with numerous agencies to help develop rope access and UAS programs and policies.
+He incorporated the use of UAS into his inspection teams starting in 2016 and became a Part 107-certified UAS pilot in 2018. He has performed and managed hundreds of complex and post-disaster bridge inspections across the country. He co-authored NCHRP Research Report 1114 (2024), which proposed AASHTO guidelines for using drones in bridge inspections, and has worked with numerous agencies to help develop rope access and UAS programs and policies.
 
 He continues to develop next-generation tools for asset management with advanced predictive and prioritization modeling, including enhanced 3D modeling and digital twin integration.`,
     categories: ['technology'],
@@ -565,7 +565,7 @@ In 2021, she left the private sector and began her career with the Texas Departm
     background: `Aaron Organ brings more than 15 years of aviation and transportation experience to the Rawlins team. He began his career in aircraft parts manufacturing and supporting vintage aircraft fleets before transitioning to airport operations, where he worked on training programs at airports across the United States. Aaron later moved into collegiate aviation, teaching and mentoring more than 150 students per semester, developing curricula, and preparing candidates for Federal Aviation Administration (FAA) written exams. Building on this foundation, he entered consulting and has since supported a wide range of aerial innovation projects for public- and private-sector clients worldwide. His expertise centers on implementing aerial innovation solutions.`,
     achievements: `Aaron supported the Federal Highway Administration's deployment of Uncrewed Aircraft Systems (UAS), serving as Lead Technical Writer for more than a dozen cross-disciplinary reports that required coordination across legal, regulatory, technical, and public-affairs reviews. He also served as Co-Principal Investigator and Lead Researcher for a nationally distributed guidebook designed to help state departments of transportation integrate UAS and Advanced Air Mobility (AAM) into their transportation systems.
 
-He holds FAA Remote Pilot, Private Pilot (SEL), and Advanced Ground Instructor certifications, and is a Certified Member of the American Association of Airport Executives (AAAE) as well as an Airport Certified Employee (ACE) in Airfield Operations. His contributions to aviation education were recognized when he was named **Utah Aviation Educator of the Year** by the Utah Department of Transportation – Division of Aeronautics.`,
+He holds FAA Remote Pilot, Private Pilot (SEL), and Advanced Ground Instructor certifications, and is a Certified Member of the American Association of Airport Executives (AAAE) as well as an Airport Certified Employee (ACE) in Airfield Operations. His contributions to aviation education were recognized when he was named **Utah Aviation Educator of the Year** (2022) by the Utah Department of Transportation – Division of Aeronautics.`,
     categories: ['technology'],
   },
   {
@@ -674,7 +674,7 @@ Mr. McEntire develops performance-based asset maintenance and operations systems
     email: `ozzy@rawlinsic.com`,
     linkedin: `https://www.linkedin.com/in/ozzy-b-0aab3046/`,
     background: `Ozzy Bravo's career has focused on serving as a professional civil engineer in advising, planning and design of interdisciplinary, infrastructure projects. In the last decade, he has developed core competencies in business development skills including relationship building, the management and tracking of sales leads, technical proposal writing, client engagement, leadership coaching, infrastructure legislative advocacy and client relationship management best practices.`,
-    achievements: `Ozzy has been associated with national award winning projects and serves in committees & boards of ARTBA, WTS International and ACEC Missouri. He was recently recognized by ARTBA with their 2025 Guy Kelcey Planning & Design Division Award.
+    achievements: `Ozzy has been associated with national award winning projects and serves in committees & boards of ARTBA, WTS International and ACEC Missouri. ARTBA gave him its 2025 Guy Kelcey Award for service to its Planning & Design Division.
 
 Ozzy is a graduate of The University of Kansas and Texas A&M University in College Station. He serves his community through involvement on the Equity, Diversity and Inclusion Committee at WTS International and the Advisory Board for The University of Kansas Civil, Environmental and Architectural Engineering.`,
     categories: ['strategy'],
@@ -697,7 +697,7 @@ Dara's expertise includes developing Data and AI Readiness Assessments, Implemen
 
 At the national level, Dara led an AI in Transportation peer exchange with State DOTs, the Federal Highway Administration, and academic partners to accelerate progress in AI adoption across the transportation sector.
 
-Her work has been recognized with several prestigious honors, including the **Bimla Rhinehart Award,** Caltrans' highest non‑engineering award for innovation, and the **ITS America Hall of Fame for the Americas Award** for the Traffic Mobility Insights GenAI pilot.`,
+She received Caltrans' **Bimla G. Rhinehart Award** in 2025, and Caltrans' GenAI pilot to reduce highway congestion was a 2025 ITS America Hall of Fame nominee.`,
     categories: ['technology'],
   },
   {

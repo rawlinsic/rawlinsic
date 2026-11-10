@@ -2461,3 +2461,5 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 /* the first section under a page's photo has its own white ground, so nothing sits on the photo */
 .pj-sec, .pj-glance { position: relative; z-index: 2; }
 .rs-pubs, .pj-ch, .pj-svcs-sec, .rs-talks { background: #fff; }
+/* project pages: the preview-only "For review" tag on lines from our records */
+.pj-did-list .pg-dev, .pj-res-list .pg-dev, .pj-facts .pg-dev { align-self: flex-start; margin: 0; padding: 2px 8px; font-size: 0.8rem; }

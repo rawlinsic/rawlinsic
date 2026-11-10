@@ -42,7 +42,7 @@ export const SCENE_PHOTO: Record<SceneKey, string> = {
 
 /* Heading pages */
 export const AREA_PHOTO: Record<string, string> = {
-  strategy: P("strategy-bg.webp"),
+  strategy: P("team-group-indoor.webp"), // our team (Nicole, Nov 10)
   delivery: P("transportation-aerial.webp"),
   om: P("cs-hero-1.webp"), // Nashville, with a highway bridge
   tech: P("technology-bg.webp"), // the live site's Technology photo (Nicole, Nov 9)
@@ -51,7 +51,7 @@ export const AREA_PHOTO: Record<string, string> = {
   aviation: P("aam-lifecycle-drone.webp"),
 };
 /* where to center an area photo when it's cropped (nav cards, tiles, heroes) */
-export const AREA_PHOTO_POS: Record<string, string> = { aviation: "36% 42%" };
+export const AREA_PHOTO_POS: Record<string, string> = { aviation: "36% 42%", strategy: "50% 50%" };
 
 /* Service pages (shot list 6B) */
 export const SERVICE_PHOTO: Record<string, string> = {

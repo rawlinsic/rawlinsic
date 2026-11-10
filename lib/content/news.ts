@@ -1,8 +1,8 @@
-/* News & Recognition: one feed of short posts. Tags: Win, Award, Publication,
+/* News & Recognition: one feed of short posts. Tags: Project (a project in the works), Award, Publication,
    Speaking, Event, New team member. Each post can link to its LinkedIn post.
    `placeholder` items show on preview deployments only, never in production. */
 /* offHome: listed on News & recognition, not in the home "What's new" cards */
-export type NewsItem = { tag: "Win" | "Award" | "Publication" | "Research" | "Speaking" | "Event" | "New team member"; date?: string; title: string; text?: string; href?: string; linkedin?: string; placeholder?: string; offHome?: boolean };
+export type NewsItem = { tag: "Project" | "Award" | "Publication" | "Research" | "Speaking" | "Event" | "New team member"; date?: string; title: string; text?: string; href?: string; linkedin?: string; placeholder?: string; offHome?: boolean };
 /* ends: the event's last day (YYYY-MM-DD). It drops off the site the next day. */
 /* line: one sentence for under the home hero's buttons (full site pass, Part 5, 1.1) */
 export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string };
@@ -24,7 +24,8 @@ export const NEWS: NewsItem[] = [
     title: "America's Transportation Crossroads: What the 2026 Midterm Results Mean for Infrastructure, Mobility, and the Next Two Years",
     text: "Andy Palanisamy on what the election could mean for the next surface transportation bill, state DOT budgets, and transportation technology.",
     href: "https://www.linkedin.com/pulse/americas-transportation-crossroads-what-2026-midterm-mean-palanisamy-iyt2e/" },
-  { tag: "Win", title: "A recent contract win", placeholder: "cleared client name or a generic descriptor, one line on the work" },
+  /* no "contract wins" on the site (Nicole, Nov 10); on home this spot shows a project in the works */
+  { tag: "Project", title: "A project in the works", placeholder: "a project underway, from Projects (In the works)" },
   { tag: "New team member", title: "Welcome to a new team member", placeholder: "name, role, and a one-line background from Our People" },
   { tag: "Speaking", title: "A recent talk or panel", placeholder: "event, topic, and who spoke" },
 ];

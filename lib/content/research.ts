@@ -50,9 +50,15 @@ export const TALKS: Talk[] = [
     href: "https://housmanassociates.swoogo.com/2025TDOTDAAMSymposium/speaker/1980131/paul-wheeler", people: ["Paul Wheeler"] },
 ];
 
-/* Awards and wins. Contract wins go here once the client clears them (none are public yet). */
+/* Awards and recognition for Rawlins and our people (never "contract wins": Nicole, Nov 10) */
 export type Award = { title: string; from: string; year: string; href: string; people: string[]; before?: boolean };
 export const AWARDS: Award[] = [
   { title: "Bimla G. Rhinehart Award", from: "Caltrans Outstanding Management and Engineering in Transportation Awards", year: "2025",
     href: "https://dot.ca.gov/ctnews/archive/2025-04/news/80-management-awards", people: ["Dara Wheeler"], before: true },
+  /* ARTBA's release, Oct 3, 2025 (he was at Parsons then) */
+  { title: "Guy Kelcey Award", from: "American Road & Transportation Builders Association, for service to its Planning & Design Division", year: "2025",
+    href: "https://www.artba.org/news/artba-announces-2025-division-award-winners/", people: ["Ozzy Bravo"], before: true },
+  /* Jordan School District, May 2022 (via the Internet Archive), and State Aviation Journal, May 17, 2022 */
+  { title: "Utah Aviation Educator of the Year", from: "Utah Department of Transportation, Division of Aeronautics", year: "2022",
+    href: "https://stateaviationjournal.com/index.php/state-news/utah/first-ever-utah-aviation-conference-draws-500-builds-community", people: ["Aaron Organ"], before: true },
 ];
