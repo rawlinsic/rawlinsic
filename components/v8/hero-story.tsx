@@ -4,10 +4,11 @@
    1. the hero: the video fills the block, with the tagline and headline on it;
    2. the video zooms out into the layered glass frame (the planes fan out
       behind it) on navy;
-   3. the frame bounces right, left, right, with words on the opposite side
-      each time (Nicole writes these; they're in HOME_STORY in site.ts);
-   4. the frame flies to the left and turns into the scrolling team strip
-      while the Why Rawlins panel slides in beside it.
+   3. the frame moves right, then left, with words on the opposite side each
+      time (two sides; Nicole writes these; they're in HOME_STORY in site.ts);
+   4. like scale.com: the frame drifts up and fades while a white block with
+      the Why Rawlins statement rises from the bottom, and the scrolling team
+      strip rises into place on its left. The navy stays.
    Phones and reduced motion get the same pieces stacked: the hero, the steps,
    then the Why Rawlins card. The video is paused off screen, in a hidden tab,
    and for reduced motion; the button pauses and plays it. */
@@ -54,6 +55,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
     const heroEl = el.querySelector<HTMLElement>(".hs-hero")!;
     const texts = Array.from(el.querySelectorAll<HTMLElement>(".hs-step"));
     const why = el.querySelector<HTMLElement>(".hs-why")!;
+    const pause = el.querySelector<HTMLElement>(".hs-pause");
     const people = el.querySelector<HTMLElement>(".hs-why .wc-people");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     let raf = 0, live = false, full: R, center: R, sides: R[] = [], whyR: R;
@@ -84,14 +86,18 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
         const prev = k === 0 ? center : sides[k - 1], px = k === 0 ? 0 : sideSign(k - 1);
         rect = mix(prev, sides[k], t); x = px + (sideSign(k) - px) * t;
       } else {
-        const u = s - N - 1, t = ease(c01(u / 0.5));
-        rect = mix(sides[N - 1], whyR, t); x = sideSign(N - 1) * (1 - t); open = 1 - t; media = 1 - c01((u - 0.25) / 0.35);
+        // like scale.com: the frame drifts up and fades while the white block and the
+        // team strip rise from the bottom into place
+        const u = s - N - 1, up = ease(c01(u / 0.7));
+        const last = sides[N - 1];
+        rect = { ...last, y: last.y - up * stage.clientHeight * 0.55 }; x = sideSign(N - 1); media = 1 - c01(u / 0.6);
       }
       vis.style.transform = `translate3d(${rect.x.toFixed(1)}px, ${rect.y.toFixed(1)}px, 0)`;
       vis.style.width = `${rect.w.toFixed(1)}px`; vis.style.height = `${rect.h.toFixed(1)}px`;
       vis.style.setProperty("--x", x.toFixed(3)); vis.style.setProperty("--open", open.toFixed(3));
       vis.style.setProperty("--rad", `${(28 - 10 * Math.min(1, s)).toFixed(1)}px`);
       vis.style.opacity = media.toFixed(3);
+      if (pause) { pause.style.opacity = media.toFixed(3); pause.style.visibility = media < 0.01 ? "hidden" : "visible"; } // goes with the video
       el.style.setProperty("--zoom", c01(s).toFixed(3)); // navy comes up around the frame
       const h = 1 - c01(s / 0.22);
       heroEl.style.opacity = h.toFixed(3); heroEl.style.visibility = h < 0.01 ? "hidden" : "visible";
@@ -102,15 +108,15 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
         t.style.setProperty("--o", o.toFixed(3)); t.toggleAttribute("data-on", o > 0.5);
       });
       const wu = s - N - 1;
-      why.style.setProperty("--wl", c01((wu - 0.3) / 0.35).toFixed(3));
-      why.style.setProperty("--wr", ease(c01(wu / 0.6)).toFixed(3));
-      why.toggleAttribute("data-on", wu > 0.4);
+      why.style.setProperty("--wr", ease(c01(wu / 0.8)).toFixed(3)); // the white block
+      why.style.setProperty("--wl", ease(c01((wu - 0.12) / 0.8)).toFixed(3)); // the team strip, a beat behind
+      why.toggleAttribute("data-on", wu > 0.5);
     };
     const on = () => { if (!raf) raf = requestAnimationFrame(tick); };
     const mode = () => {
       live = window.innerWidth >= 960 && !reduce.matches;
       if (live) { delete el.dataset.static; layout(); tick(); }
-      else { el.dataset.static = ""; [vis, heroEl, why, ...texts].forEach((n) => { n.style.cssText = ""; }); }
+      else { el.dataset.static = ""; [vis, heroEl, why, ...texts, ...(pause ? [pause] : [])].forEach((n) => { n.style.cssText = ""; }); }
     };
     mode();
     const ro = new ResizeObserver(() => { if (live) { layout(); tick(); } });

@@ -1840,3 +1840,17 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .hs-why .wc-lit { margin: 0; color: #fff; }
 /* the upright line has no text of its own, so it gets a fixed height */
 .tag-sep { height: 16px; vertical-align: -3px; }
+/* story ending, like scale.com: navy stays; a white block and the team strip rise into place */
+.hs:not([data-static]) .hs-why-left { opacity: 1; transform: translateY(calc((1 - var(--wl, 0)) * 110vh)); }
+.hs:not([data-static]) .hs-why-right { opacity: 1; transform: translateY(calc((1 - var(--wr, 0)) * 100vh)); }
+.hs-why .wc-card { align-items: center; }
+.hs-why .wc-copy { justify-content: flex-start; gap: 22px; min-height: clamp(380px, 70vh, 640px); background: #fff; border: 0; box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.45); }
+.hs-why .wc-copy .v8-eyebrow { color: var(--aqua-ink); }
+.hs-why .wc-lit { color: #0a1220; font-size: clamp(2rem, 3.6vw, 3.6rem); line-height: 1.1; }
+
+/* phones: the Why Rawlins block fits its words; the tagline keeps each phrase whole */
+.hs[data-static] .hs-why .wc-copy { min-height: 0; }
+@media (max-width: 600px) {
+  .h-tag { flex-wrap: wrap; white-space: nowrap; row-gap: 4px; }
+  .h-tag .tag-sep { margin: 0 4px; }
+}
