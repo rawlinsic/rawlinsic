@@ -62,7 +62,9 @@ export async function POST(req: Request) {
       const now = new Map(Array.from(text.keys()).map((p) => [p, changed.get(p) ?? text.get(p)!] as [string, string]));
       const got = place(now, c);
       if ("why" in got) { pending.push({ c, why: got.why }); continue; }
-      for (const path of Array.from(new Set(got.hits.map((h) => h.path)))) changed.set(path, writeAll(now.get(path)!, got.hits.filter((h) => h.path === path), got.next));
+      const writes = Array.from(new Set(got.hits.map((h) => h.path))).map((path) => [path, writeAll(now.get(path)!, got.hits.filter((h) => h.path === path), got.next)] as const);
+      if (writes.some(([, out]) => out === null)) { pending.push({ c, why: "found it, but changing it there automatically isn't safe" }); continue; }
+      for (const [path, out] of writes) changed.set(path, out!);
       applied++;
     }
 
