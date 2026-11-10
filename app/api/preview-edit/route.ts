@@ -7,7 +7,7 @@
    repo). No passcode (Nicole's call): anyone with a preview link can edit that
    preview's branch, never main; every edit is its own commit, so it can be undone. */
 import { NextResponse } from "next/server";
-import { place, writeAll, type Change } from "@/lib/preview-edit-match";
+import { place, writeAll, writeWithBreaks, type Change } from "@/lib/preview-edit-match";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -57,14 +57,18 @@ export async function POST(req: Request) {
     const pending: { c: Change; why: string }[] = [];
     let applied = 0;
     for (const c of changes) {
-      // new lines (Enter) go to Claude Code, who sets them as real line breaks or paragraphs
-      if (c.breaks) { pending.push({ c: { ...c, next: c.breaks.replace(/\n/g, " ⏎ ") }, why: "has new lines (Enter); Claude Code will set the line breaks" }); continue; }
+      // new lines (Enter): placed like any edit, then written in as real line breaks
+      const lines = c.breaks ? c.breaks.split("\n").map((l) => l.replace(/\s+/g, " ").trim()).filter(Boolean) : null;
+      if (lines) c.next = lines.join(" ");
       if (/[<>{}`\\]/.test(c.next) || (c.nodeNew && /[<>{}`\\]/.test(c.nodeNew))) { pending.push({ c, why: "has characters that can't go straight into the code" }); continue; }
       // search the files as they are after the edits already placed in this save
       const now = new Map(Array.from(text.keys()).map((p) => [p, changed.get(p) ?? text.get(p)!] as [string, string]));
       const got = place(now, c);
       if ("why" in got) { pending.push({ c, why: got.why }); continue; }
-      const writes = Array.from(new Set(got.hits.map((h) => h.path))).map((path) => [path, writeAll(now.get(path)!, got.hits.filter((h) => h.path === path), got.next)] as const);
+      const writes = Array.from(new Set(got.hits.map((h) => h.path))).map((path) => {
+        const hits = got.hits.filter((h) => h.path === path);
+        return [path, lines && lines.length > 1 ? writeWithBreaks(now.get(path)!, hits, got.next, lines) : writeAll(now.get(path)!, hits, got.next)] as const;
+      });
       if (writes.some(([, out]) => out === null)) { pending.push({ c, why: "found it, but changing it there automatically isn't safe" }); continue; }
       for (const [path, out] of writes) changed.set(path, out!);
       applied++;

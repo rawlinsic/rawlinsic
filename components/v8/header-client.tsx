@@ -19,7 +19,7 @@ export type NavData = {
   about: Link[]; faces: { name: string; photo: string }[]; facesLine: string; search: Hit[];
 };
 type Menu = "what" | "who" | "work" | "insights" | "about" | null;
-const MENUS: [Exclude<Menu, null>, string][] = [["what", "What we do"], ["who", "Who we work with"], ["work", "Our work"], ["insights", "Insights"], ["about", "About"]];
+const MENUS: [Exclude<Menu, null>, string][] = [["what", "What We Do"], ["who", "Who We Work With"], ["work", "Our Work"], ["insights", "Insights"], ["about", "About"]];
 
 function useSearch(data: NavData["search"], q: string) {
   const [people, setPeople] = useState<Hit[]>([]);
@@ -48,7 +48,7 @@ function ProjectCard({ c }: { c: Card }) {
   );
 }
 
-export default function HeaderClient({ data }: { data: NavData }) {
+export default function HeaderClient({ data, aboutTopOnly = false }: { data: NavData; aboutTopOnly?: boolean }) {
   const [open, setOpen] = useState<Menu>(null);
   const [ind, setInd] = useState(0);
   const [sheet, setSheet] = useState(false);
@@ -112,8 +112,10 @@ export default function HeaderClient({ data }: { data: NavData }) {
           <ul>
             {MENUS.map(([m, label]) => (
               <li key={m}>
-                <button type="button" id={`hx-b-${m}`} aria-expanded={open === m} aria-controls={`hx-m-${m}`}
-                  onMouseEnter={() => hoverOpen(m)} onClick={() => toggle(m)}>{label}</button>
+                {m === "about" && aboutTopOnly
+                  ? <span className="hx-top-only">{label}</span>
+                  : <button type="button" id={`hx-b-${m}`} aria-expanded={open === m} aria-controls={`hx-m-${m}`}
+                    onMouseEnter={() => hoverOpen(m)} onClick={() => toggle(m)}>{label}</button>}
               </li>
             ))}
           </ul>
@@ -121,7 +123,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
         <button type="button" className="hx-icon" aria-label="Search" onClick={() => { setOpen(null); setFind(true); }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
         </button>
-        <a href="/contact" className="hx-cta">Get in touch</a>
+        <a href="/contact" className="hx-cta">Get In Touch</a>
         <button type="button" className="hx-burger" aria-expanded={sheet} aria-controls="hx-sheet" onClick={() => setSheet(true)}>Menu</button>
       </div>
 
@@ -200,7 +202,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
           );
         })}</ul>
       </div>
-      <div className="hx-panel" id="hx-m-about" hidden={open !== "about"} onMouseEnter={() => window.clearTimeout(timer.current)}>
+      {!aboutTopOnly && <div className="hx-panel" id="hx-m-about" hidden={open !== "about"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         <div className="mx-list mx-about">
           <ul>{data.about.map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul>
           <div className="mx-faces">
@@ -209,7 +211,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
             <a className="mx-go" href="/about/our-people">Meet our people</a>
           </div>
         </div>
-      </div>
+      </div>}
 
       {/* search */}
       {find && (
@@ -239,7 +241,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
           {q.trim().length >= 2 ? results : (
             <div className="hx-acc">
               <details open>
-                <summary>What we do</summary>
+                <summary>What We Do</summary>
                 <ul className="hx-areas">{data.areas.map((a) => (
                   <li key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink } as CSSProperties}>
                     <details><summary>{a.name}</summary>
@@ -248,7 +250,7 @@ export default function HeaderClient({ data }: { data: NavData }) {
                   </li>
                 ))}</ul>
               </details>
-              <details><summary>Who we work with</summary><ul>{data.industries.map((x) => {
+              <details><summary>Who We Work With</summary><ul>{data.industries.map((x) => {
                 const projects = [...(x.feature ? [{ title: x.feature.title, href: x.feature.href, photo: x.feature.photo }] : []), ...x.projects];
                 return (
                   <li key={x.href}>
@@ -258,12 +260,12 @@ export default function HeaderClient({ data }: { data: NavData }) {
                   </li>
                 );
               })}{data.intl && <li><a href={data.intl.href}>{data.intl.name}</a><em className="v8-dev">{data.intl.note}</em></li>}</ul></details>
-              <details><summary>Our work</summary><ul>{data.work.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>
+              <details><summary>Our Work</summary><ul>{data.work.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>
               <details><summary>Insights</summary><ul>{data.insights.map((l) => <li key={l.href}><a className="hx-noted" href={l.href}>{l.label}<span>{l.note}</span></a></li>)}</ul></details>
-              <details><summary>About</summary><ul>{data.about.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>
+              {aboutTopOnly ? <p className="hx-acc-top">About</p> : <details><summary>About</summary><ul>{data.about.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>}
             </div>
           )}
-          <a href="/contact" className="hx-cta hx-cta-big">Get in touch</a>
+          <a href="/contact" className="hx-cta hx-cta-big">Get In Touch</a>
         </div>
       )}
     </header>

@@ -2157,7 +2157,7 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 
 /* subtitles: the glowing electric blue (as "What sets us apart"), bigger; a touch deeper at the base so they
    read on white. On dark backgrounds the existing rules keep them solid electric blue. */
-.v8-eyebrow, .tt-k, .hs-areas-k, .nw:not(.nw-proj) .nw-tag { font-size: 1rem; font-weight: 800; letter-spacing: 0.12em; color: transparent; background: linear-gradient(180deg, #2fd9f0 10%, #0b93b0 95%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 7px rgba(34, 211, 238, 0.45)); }
+.v8-eyebrow, .tt-k, .hs-areas-k { font-size: 1rem; font-weight: 800; letter-spacing: 0.12em; color: transparent; background: linear-gradient(180deg, #2fd9f0 10%, #0b93b0 95%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 7px rgba(34, 211, 238, 0.45)); }
 
 /* What we do: less space above and around the heading */
 .h-ways { padding: clamp(30px, 3.6vw, 52px) 0 clamp(44px, 5vw, 72px); }
@@ -2189,7 +2189,6 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .h-orbit[data-mode="ring"] .orb-word .v8-dev { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); white-space: nowrap; }
 .h-orbit[data-mode="ring"] .orb-word { position: relative; }
 .h-orbit[data-mode="strip"] .orb-word a, .h-orbit[data-static] .orb-word a { white-space: normal; }
-.nw .nw-tag { font-size: 0.82rem; }
 .h-orbit[data-mode="strip"]:not([data-static]) .orb-word { position: relative; }
 .h-orbit[data-mode="strip"]:not([data-static]) .orb-word .v8-dev { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); white-space: nowrap; }
 
@@ -2210,3 +2209,34 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .av-place-label { position: absolute; z-index: 1; transform: translate(-50%, -70%); padding: 4px 11px; border-radius: 999px; background: rgba(8, 18, 34, 0.82); border: 1px solid rgba(165, 243, 252, 0.25); color: #fff; font-size: clamp(0.8rem, 1vw, 1rem); font-weight: 600; white-space: nowrap; cursor: pointer; }
 .av-place-label.is-on { background: var(--aqua); border-color: var(--aqua); color: #04131f; }
 @media (max-width: 700px) { .av-map-stage { aspect-ratio: 1000 / 660; } .av-place-label { font-size: 0.66rem; padding: 2px 6px; } .av-place { min-width: 26px; } }
+
+/* ── Nov 10, round 3 (Nicole) ── */
+/* subtitles look like "What sets us apart": electric blue capitals on navy. On white or light backgrounds
+   they sit on a navy tag so they read; on navy they're the plain electric blue. */
+.v8-eyebrow, .tt-k, .hs-areas-k { display: inline-block; width: auto; padding: 7px 13px; border-radius: 8px; background: #1d3759; -webkit-background-clip: border-box; background-clip: border-box; color: #22d3ee; filter: none; font-size: 0.92rem; font-weight: 700; letter-spacing: 0.12em; line-height: 1.2; }
+:is(.sv-scene, .wwd-intro, .wc-copy, .svw-xp, .fit-head, .av-map-card, .tw, .dls) .v8-eyebrow, .wwd-k { padding: 0; border-radius: 0; background: none; color: #22d3ee; }
+/* Get In Touch: bigger words, navy border */
+.hx-cta { font-size: 1.06rem; font-weight: 700; border: 2px solid #1d3759; padding: 0 20px; }
+/* Jacob's version: About is only a word in the top menu */
+.hx-top-only { display: inline-block; padding: 10px 14px; font: 600 1.06rem var(--font-sans); color: var(--navy); cursor: default; }
+@media (max-width: 1280px) { .hx-top-only { font-size: 0.98rem; padding: 10px 11px; } }
+.hx-acc-top { margin: 0; padding: 14px 4px; border-bottom: 1px solid var(--line); font-weight: 600; color: var(--navy); }
+
+/* Who we work with: white; subtitle, headline, a line of text, button; a name only under the photo you point at */
+.h-orbit { background: #fff; }
+.h-orbit .orb-center { text-align: center; }
+.orb-k { margin: 0 auto 16px; }
+.orb-h { font-size: clamp(2.2rem, 3.6vw, 3.6rem); line-height: 1.06; }
+.orb-lead { max-width: 600px; margin: 18px auto 0; color: var(--ink-2); font-size: clamp(1.02rem, 1.15vw, 1.15rem); line-height: 1.55; }
+.orb-name { position: absolute; left: 0; top: 0; z-index: 70; padding: 6px 12px; border-radius: 999px; background: #1d3759; color: #fff; font-size: 0.95rem; font-weight: 600; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.2s; box-shadow: 0 8px 22px rgba(10, 18, 32, 0.25); }
+.orb-name[data-on] { opacity: 1; }
+.orb-name::after { content: " →"; color: #22d3ee; }
+.h-orbit[data-mode="ring"] .orb-t { box-shadow: 0 10px 26px rgba(10, 18, 32, 0.16); }
+.h-orbit[data-mode="strip"] .orb-name { display: none; }
+/* a line break typed with Edit text (Enter) inside a string shows as a line break (Nov 10) */
+:where(h1, h2, h3, h4, h5, h6, p, li, blockquote, dd, dt, figcaption) { white-space: pre-line; }
+/* inner pages' subtitles match too: electric blue on a navy tag (plain electric blue in navy sections) */
+.pg-kicker { display: inline-block; padding: 7px 13px; border-radius: 8px; background: #1d3759; color: #22d3ee !important; font-size: 0.92rem; letter-spacing: 0.12em; line-height: 1.2; }
+.pg-sec-navy .pg-kicker { padding: 0; background: none; }
+/* the small subtitle above a page title on navy (area, service, industry pages): same size and look as "What sets us apart" */
+.sv-area { font-size: 0.92rem !important; letter-spacing: 0.12em; color: #22d3ee !important; font-weight: 700; }

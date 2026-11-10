@@ -26,7 +26,7 @@ export function CaseIndexPage() {
   return (
     <Shell scene="map" photo={PAGE_PHOTO.cases}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Projects"]]} kicker="Our work" title="Projects"
-        lead={<p>Every project, by service, industry, and state. Work underway is marked “In the works,” and our team’s earlier work is marked “Before Rawlins.”</p>}
+        lead={<p>Every project, by service and industry. Work underway is marked “In the works,” and our team’s earlier work is marked “Before Rawlins.”</p>}
         actions={<Btn href="/contact" primary>Get in touch</Btn>} />
       <Sec title="Browse the work">
         <CaseFilter rows={rows}

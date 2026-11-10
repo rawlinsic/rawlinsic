@@ -202,7 +202,7 @@ function phrase(files: Map<string, string>, o: string, n: string): { hits: Hit[]
 /* write the new wording the way the old one was written in that spot */
 /* the quote mark that opens the string this text sits in (if any), so a change
    that would swallow or add one, and break the code, is caught before saving */
-const delim = (src: string, i: number) => { const line = src.slice(src.lastIndexOf("\n", i - 1) + 1, i); return (line.match(/['"`][^'"`]*$/) || [""])[0][0] || ""; };
+export const delim = (src: string, i: number) => { const line = src.slice(src.lastIndexOf("\n", i - 1) + 1, i); return (line.match(/['"`][^'"`]*$/) || [""])[0][0] || ""; };
 const raw = (x: string, q: string) => (x.replace(/\\./g, "").split(q).length - 1);
 export function writeAll(src: string, hits: Hit[], next: string): string | null {
   let out = src;
@@ -225,4 +225,36 @@ export function writeAs(src: string, hit: Hit, next: string): string {
   const q = (line.match(/['"`][^'"`]*$/) || [""])[0][0];
   if (q === "'") out = out.replace(/'/g, "’");
   return src.slice(0, hit.index) + out + src.slice(hit.index + hit.match.length);
+}
+
+/* A line break (Enter) typed with Edit text, written the right way for where the words live in the code
+   (Nicole, Nov 10: everything saves at once, breaks included): JSX text gets <br />, a JSX attribute string
+   gets &#10;, a JS string gets \n (shown by the white-space: pre-line rule on text in v8.css). If the break
+   can't be matched to the placed words, the words are still saved, on one line. */
+const breakFor = (src: string, h: Hit) => {
+  const line = src.slice(src.lastIndexOf("\n", h.index - 1) + 1, h.index);
+  const q = delim(src, h.index);
+  // JSX text: no open quote, or the last thing before the words is a tag's closing ">" (class="x">words)
+  const lastQ = Math.max(line.lastIndexOf('"'), line.lastIndexOf("'"), line.lastIndexOf("`"));
+  if (!q || line.lastIndexOf(">") > lastQ) return "<br />";
+  return /[A-Za-z0-9_-]=$/.test(line.slice(0, line.lastIndexOf(q))) ? "&#10;" : "\\n";
+};
+const withBreaks = (text: string, lines: string[], token: string): string | null => {
+  let out = text, from = 0;
+  for (let k = 1; k < lines.length; k++) {
+    const i = out.indexOf(" " + lines[k], from);
+    if (i < 0) return null;
+    out = out.slice(0, i) + token + out.slice(i + 1);
+    from = i + token.length;
+  }
+  return out;
+};
+export function writeWithBreaks(src: string, hits: Hit[], next: string, lines: string[]): string | null {
+  let out: string | null = src;
+  for (const h of hits.slice().sort((a, b) => b.index - a.index)) {
+    const broken = withBreaks(next, lines, breakFor(out!, h));
+    out = (broken !== null ? writeAll(out!, [h], broken) : null) ?? writeAll(out!, [h], next);
+    if (out === null) return null;
+  }
+  return out;
 }

@@ -41,8 +41,7 @@ export default function CaseFilter({ rows, areas, industries, states, services }
         {areas.map((a) => btn("area", a.value, a.label))}
         <p className="pg-filter-label">By industry</p>
         {industries.map((a) => btn("industry", a.value, a.label))}
-        <p className="pg-filter-label">By state</p>
-        {states.map((a) => btn("state", a.value, a.label))}
+        {/* By state is off (Nicole, Nov 10); ?state= links still filter */}
       </div>
       <p className="pg-count" aria-live="polite">{svcLabel ? `${svcLabel}: ` : ""}{list.length} {list.length === 1 ? "project" : "projects"}</p>
       <ul className="pg-cases">

@@ -3,6 +3,7 @@
    into the menu: every line comes from lib/content (full site pass, Part 1,
    section 1, with Part 4, 3 for Who we work with). */
 import { AREAS, CASES, INDUSTRIES, LEADERS, SITE_INDEX, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, subsectorHref, type CaseIndex, CASE_STATUS } from "@/lib/content/site";
+import { isJacobVersion } from "@/lib/preview-gh";
 import { INDUSTRIES as IND_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, PAGE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, casePhoto } from "@/lib/content/v8";
@@ -52,8 +53,7 @@ export default function Header() {
     /* previews only: the hidden International page, with why it's hidden (Part 4, 1) */
     intl: !PROD && intl ? { name: intl.name, href: industryHref(intl), note: "Hidden on the live site until Scott and Andy approve." } : undefined,
     work: [
-      { label: "All projects", href: "/insights/case-studies", note: "Every project, by area, industry, and state" },
-      { label: "In the works", href: "/insights/case-studies?status=ongoing", note: "What we're doing now" },
+      { label: "All projects", href: "/insights/case-studies", note: "Every project, by area and industry" },
       { label: "Where we work", href: "/about/where-we-work", note: "The states we've worked in" },
     ],
     inWorks: IN_THE_WORKS.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c).map(card),
@@ -80,5 +80,5 @@ export default function Header() {
     facesLine: "More than 25 of our people built their careers inside public agencies.",
     search: [...SITE_INDEX, ...CASES.map((c) => ({ label: c.title, kind: "Project", href: caseHref(c) }))],
   };
-  return <HeaderClient data={data} />;
+  return <HeaderClient data={data} aboutTopOnly={isJacobVersion()} />;
 }

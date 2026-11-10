@@ -4,11 +4,10 @@
    photos turns slowly and steadily around the words, on its own (one turn
    about every 60 seconds). Photos at the front (lower left) are big, photos at
    the back (upper right) small; all are fully visible, and the ring always
-   fits inside the section. In the middle: the headline, a second line that
-   changes every couple of seconds through everyone we work with (in the
-   electric blue, a link to that page), and one button. Pointing at a photo
-   pauses the ring and shows that photo's name. The ring keeps clear of the
-   words. Under 1100px wide (phones and tablets) there's no ring: two rows of
+   fits inside the section. In the middle: a subtitle, the headline, a line
+   of text, and one button (Nicole, Nov 10). No name shows until someone
+   points at a photo: then the ring pauses and that photo's group (e.g.
+   Transportation Agencies) shows under it. The ring keeps clear of the words. Under 1100px wide (phones and tablets) there's no ring: two rows of
    photos slide sideways as you scroll. Reduced motion: the ring stands still
    and the names show as a list. The ring pauses off screen and in a hidden
    tab. */
@@ -18,7 +17,6 @@ import { useEffect, useRef, type ReactNode } from "react";
 export type Tile = { src: string; label: string; href: string; sub?: string; note?: string };
 
 const TURN = 60; // seconds per full turn
-const STEP = 2.4; // seconds per name
 const TILT = -0.24; // the ring's tilt on screen (its right end higher), radians
 
 export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; children: ReactNode; cta?: ReactNode }) {
@@ -29,25 +27,31 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
     const ring = el.querySelector<HTMLElement>(".orb-ring")!;
     const center = el.querySelector<HTMLElement>(".orb-center")!;
     const ts = Array.from(el.querySelectorAll<HTMLElement>(".orb-t"));
-    const words = Array.from(el.querySelectorAll<HTMLElement>(".orb-word"));
+    const name = el.querySelector<HTMLElement>(".orb-name")!;
     const N = ts.length;
-    let cur = -1;
     const show = (k: number) => {
-      if (k === cur) return;
-      cur = k;
-      [ts, words].forEach((g) => g.forEach((x, i) => x.classList.toggle("is-on", i === k)));
-      words.forEach((w, i) => w.querySelector("a")?.setAttribute("tabindex", i === k ? "0" : "-1"));
+      ts.forEach((x, i) => x.classList.toggle("is-on", i === k));
+      if (k < 0) { name.removeAttribute("data-on"); return; }
+      name.textContent = ts[k].dataset.name || "";
+      name.setAttribute("data-on", "");
+      place();
+    };
+    /* the name sits just under the photo being pointed at */
+    const place = () => {
+      if (held < 0) return;
+      const t = ts[held].getBoundingClientRect(), r = ring.getBoundingClientRect();
+      name.style.transform = `translate3d(${(t.left + t.width / 2 - r.left).toFixed(1)}px, ${(t.bottom - r.top + 10).toFixed(1)}px, 0) translateX(-50%)`;
     };
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     let mode: "ring" | "strip" = "ring", still = false, inView = false;
-    let theta = 0, last = 0, loop = 0, raf = 0, clock = 0, held = -1, speed = 1;
+    let theta = 0, last = 0, loop = 0, raf = 0, held = -1, speed = 1;
 
     /* the words' box (headline to button) plus 28px, from the ring's center */
     const block = () => {
       const rr = ring.getBoundingClientRect();
       const cx = rr.left + rr.width / 2, cy = rr.top + rr.height / 2;
       let l = Infinity, t = Infinity, r = -Infinity, b = -Infinity;
-      center.querySelectorAll(".orb-h, .orb-word.is-on a, .orb-cta").forEach((k) => {
+      center.querySelectorAll(".orb-k, .orb-h, .orb-lead, .orb-cta").forEach((k) => {
         const q = k.getBoundingClientRect();
         if (!q.width || !q.height) return;
         l = Math.min(l, q.left); t = Math.min(t, q.top); r = Math.max(r, q.right); b = Math.max(b, q.bottom);
@@ -88,12 +92,10 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
       last = now;
       speed += ((held >= 0 ? 0 : 1) - speed) * 0.1;
       theta -= dt * speed * ((Math.PI * 2) / TURN); // the bottom moves right, the top left, as on scale.com
-      draw();
+      draw(); place();
       loop = requestAnimationFrame(frame);
     };
     const go = () => { if (!loop && inView && mode === "ring" && !still) { last = 0; loop = requestAnimationFrame(frame); } };
-    /* the changing name: every couple of seconds, or the photo you point at */
-    const cycle = () => { if (held < 0 && inView && !still) show((cur + 1) % N); };
     /* phones and tablets: the rows slide with the scroll */
     const strip = () => {
       raf = 0;
@@ -116,22 +118,19 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
     const over = (e: Event) => {
       const t = (e.target as HTMLElement).closest<HTMLElement>(".orb-t");
       held = t ? ts.indexOf(t) : -1;
-      if (held >= 0) show(held);
+      show(held);
     };
-    const leave = () => { held = -1; };
+    const leave = () => { held = -1; show(-1); };
     ring.addEventListener("pointerover", over);
     ring.addEventListener("pointerleave", leave);
     document.addEventListener("visibilitychange", go);
-    show(0);
     setMode();
-    clock = window.setInterval(cycle, STEP * 1000);
     window.addEventListener("scroll", on, { passive: true });
     window.addEventListener("resize", setMode);
     reduce.addEventListener?.("change", setMode);
     return () => {
       io.disconnect();
       cancelAnimationFrame(loop); cancelAnimationFrame(raf);
-      window.clearInterval(clock);
       ring.removeEventListener("pointerover", over);
       ring.removeEventListener("pointerleave", leave);
       document.removeEventListener("visibilitychange", go);
@@ -146,22 +145,18 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
       <div className="orb-stage">
         <div className="orb-ring" aria-hidden="true">
           {tiles.map((t) => (
-            <a key={t.href + t.label} className="orb-t" href={t.href} tabIndex={-1}>
+            <a key={t.src + t.label} className="orb-t" href={t.href} tabIndex={-1} data-name={t.label}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={t.src} alt="" loading="lazy" />
             </a>
           ))}
+          <span className="orb-name" />
         </div>
         <div className="orb-center">
           {children}
-          <ul className="orb-words" aria-label="Who we work with">
-            {tiles.map((t, i) => (
-              <li key={t.href + t.label} className={`orb-word${i ? "" : " is-on"}`}>
-                {/* a long name gets a little smaller, so it's never wider than the headline */}
-                <a href={t.href} tabIndex={i ? -1 : 0} style={{ ["--fit" as string]: Math.min(1, 31 / t.label.length).toFixed(3) }}>{t.label}</a>
-                {t.note && <em className="v8-dev">{t.note}</em>}
-              </li>
-            ))}
+          {/* for keyboards and screen readers: the groups as links (the photos are decoration) */}
+          <ul className="sr-only" aria-label="Who we work with">
+            {Array.from(new Map(tiles.map((t) => [t.label, t.href])).entries()).map(([label, href]) => <li key={label}><a href={href}>{label}</a></li>)}
           </ul>
           {cta}
         </div>

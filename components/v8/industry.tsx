@@ -120,7 +120,7 @@ function PanelHero({ photo, crumbs, tag, title, lead, actions, label, subs }: {
         </div>
       </div>
       <div id="specialties" className="v8-wrap arh-svcs">
-        <h2 className="arh-svcs-h">{label} <span>{subs.length}</span></h2>
+        <h2 className="arh-svcs-h">{label}</h2>
         <ul className={`ways ways-svc ipg-ways${many ? " is-many" : ""}`}>
           {subs.map((s) => (
             <li key={s.id} className="way">

@@ -20,8 +20,15 @@ export function previewGitHub(): { gh: GH; branch: string } | { error: string; s
 /* Only Nicole deletes sections: on by default, off on Jacob's version. */
 export const canDeleteSections = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => !/jacob/i.test(branch);
 
-/* The About pages are closed on Jacob's version: the menu still shows, the pages don't (Nicole, Nov 10). */
-export const aboutClosed = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => /jacob/i.test(branch);
+/* Jacob's version (any branch named for him; Nicole, Nov 10): the About pages are closed and About shows
+   only as a top-level menu word; links to the pages below go nowhere (JACOB_DEAD_LINKS). */
+export const isJacobVersion = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => /jacob/i.test(branch);
+export const aboutClosed = isJacobVersion;
+/* links that do nothing on Jacob's version: [match, href]. "=" exact, "^" starts with */
+export const JACOB_DEAD_LINKS: [string, string][] = [
+  ["=", "/insights"], ["^", "/insights/news"], ["^", "/insights/thought-leadership"], ["^", "/insights/research"], ["^", "/insights/podcast"],
+  ["^", "/about"], ["=", "/services"], ["^", "/industries/international"],
+];
 
 /* One commit on the branch with the given files (content null = delete the file). */
 export async function commitFiles(gh: GH, branch: string, files: { path: string; content: string | null }[], message: string) {

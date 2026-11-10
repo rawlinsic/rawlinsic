@@ -13,7 +13,7 @@ import CookieBanner from '@/components/cookie-banner';
 import Smooth from "@/components/v8/smooth";
 import PreviewEdit from "@/components/v8/preview-edit";
 import { REMOVED_SECTIONS } from "@/lib/content/removed-sections";
-import { canDeleteSections } from "@/lib/preview-gh";
+import { canDeleteSections, isJacobVersion, JACOB_DEAD_LINKS } from "@/lib/preview-gh";
 
 /* Redesign type: one typeface, Source Sans 3, on every page (--font-sans in
    journey.css; the old --font-serif token points at it too). No fallback
@@ -168,6 +168,15 @@ const LOCAL_BUSINESS_SCHEMA = {
 };
 
 /* a tiny script that hides this page's deleted sections (lib/content/removed-sections.ts) */
+/* Jacob's version: links to the pages he shouldn't open look like plain text and do nothing (Nicole, Nov 10) */
+function jacobLinks() {
+  const css = JACOB_DEAD_LINKS.map(([m, h]) => `a[href${m === "=" ? "" : "^"}="${h}"]`).join(",");
+  return {
+    css: `${css}{pointer-events:none!important;cursor:default!important;text-decoration:none!important}${css.split(",").map((x) => `${x}::after`).join(",")}{display:none!important}`,
+    js: `(function(){var L=${JSON.stringify(JACOB_DEAD_LINKS)};function dead(h){if(!h)return false;h=h.split("#")[0].split("?")[0];return L.some(function(x){return x[0]==="="?h===x[1]:h.indexOf(x[1])===0})}document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a");if(a&&dead(a.getAttribute("href"))){e.preventDefault();e.stopPropagation()}},true);document.addEventListener("keydown",function(e){if(e.key!=="Enter")return;var a=document.activeElement;if(a&&a.tagName==="A"&&dead(a.getAttribute("href"))){e.preventDefault()}},true)})();`,
+  };
+}
+
 function removedScript() {
   const byPage: Record<string, string[]> = {};
   for (const r of REMOVED_SECTIONS) (byPage[r.page] ||= []).push(r.sel);
@@ -187,6 +196,7 @@ export default function RootLayout({
       >
         {/* sections deleted on the preview are hidden before the page draws */}
         {REMOVED_SECTIONS.length > 0 && <script dangerouslySetInnerHTML={{ __html: removedScript() }} />}
+        {isJacobVersion() && <><style dangerouslySetInnerHTML={{ __html: jacobLinks().css }} /><script dangerouslySetInnerHTML={{ __html: jacobLinks().js }} /></>}
         <a href="#main-content" className="skip-to-content">Skip to main content</a>
         {/* each page's <main> carries id="main-content", once per page */}
         <div>

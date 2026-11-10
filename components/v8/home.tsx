@@ -49,6 +49,9 @@ const SHOW_HOME_INTRO = false;
    strip) is off the home page for now, not deleted (Nicole, Nov 10). true brings it back. */
 const SHOW_STORY_TEAM_BOX = false;
 
+/* the names the Who we work with ring shows when you point at a photo (Nicole, Nov 10) */
+const RING_NAME: Record<string, string> = { transport: "Transportation Agencies", gov: "Government & Public Agencies", contractors: "Contractors & Engineering Firms", private: "Private Sector" };
+
 export default function Home() {
   /* Featured projects: Rawlins work only (no Before Rawlins cases) */
   const cases = FEATURED_CASES.map((id) => CASES.find((c) => c.id === id)!).filter((c) => c && isOurs(c));
@@ -80,8 +83,9 @@ export default function Home() {
   ];
   // the ring: each industry, then its specialties, dealt round so they spread out
   const groups: Tile[][] = VISIBLE_INDUSTRIES.map((i) => [
-    { src: INDUSTRY_PHOTO[i.id], label: i.name, href: industryHref(i), sub: i.who },
-    ...i.subsectors.filter((sb) => INDUSTRY_PHOTO[sb.id] && (!PROD || !OFF_RING[sb.id])).map((sb) => ({ src: INDUSTRY_PHOTO[sb.id], label: sb.name, href: subsectorHref(i, sb), sub: i.name, note: OFF_RING[sb.id] })),
+    { src: INDUSTRY_PHOTO[i.id], label: RING_NAME[i.id] ?? i.name, href: industryHref(i), sub: i.who },
+    /* a specialty's photo shows its group's name, so the ring names the four groups, not some of the specialties */
+    ...i.subsectors.filter((sb) => INDUSTRY_PHOTO[sb.id] && (!PROD || !OFF_RING[sb.id])).map((sb) => ({ src: INDUSTRY_PHOTO[sb.id], label: RING_NAME[i.id] ?? i.name, href: industryHref(i), sub: i.name, note: OFF_RING[sb.id] })),
   ]);
   const tiles: Tile[] = [];
   for (let r = 0; tiles.length < groups.flat().length; r++) groups.forEach((g) => { if (g[r]) tiles.push(g[r]); });
@@ -229,9 +233,11 @@ export default function Home() {
 
       {/* 4 · who we work with: a ring of photos around the headline */}
       <Orbit tiles={tiles} cta={<a className="v8-btn orb-cta" href="/industries">See who we work with</a>}>
-        {/* like scale.com: the headline, then a changing line with everyone we work with (Nicole, Nov 10). The
-            longer line ("More than 30 transportation agencies, ...") is on the Who we work with page. */}
-        <h2 id="orb-h" className="orb-h">Public agencies and private firms</h2>
+        {/* Nicole, Nov 10: white, a subtitle, her headline (with its line break) and her line under it;
+            the ring turns, and a name shows only when someone points at a photo */}
+        <p className="v8-eyebrow orb-k">Who we work with</p>
+        <h2 id="orb-h" className="orb-h">From Public Agencies<br /> to Private Firms</h2>
+        <p className="orb-lead">More than 30 transportation agencies so far, plus local governments, a multi-state research program, contractors, and engineering firms. Our work so far is across the United States, and our team can do it anywhere.</p>
       </Orbit>
 
       {/* 5 · our work */}
