@@ -6,7 +6,7 @@ import "./v8.css";
 
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Source_Sans_3 } from "next/font/google";
+import localFont from "next/font/local";
 import { AREAS, areaHref } from "@/lib/content/site";
 import AnalyticsWrapper from '@/components/analytics-wrapper';
 import CookieBanner from '@/components/cookie-banner';
@@ -16,10 +16,14 @@ import PreviewEdit from "@/components/v8/preview-edit";
 /* Redesign type: one typeface, Source Sans 3, on every page (--font-sans in
    journey.css; the old --font-serif token points at it too). No fallback
    metrics borrowed from other fonts. */
-const sourceSans = Source_Sans_3({
+const sourceSans = localFont({
+  // the font file lives in the site (app/fonts, 29 KB, from Google Fonts, SIL Open
+  // Font License), so builds never depend on downloading it from Google
+  src: "./fonts/SourceSans3-latin.woff2",
+  weight: "200 900",
+  style: "normal",
+  display: "swap",
   variable: "--font-source-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
   adjustFontFallback: false,
   fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
 });
