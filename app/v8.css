@@ -1697,3 +1697,10 @@ html.pc-adding, html.pc-adding * { cursor: crosshair !important; }
 }
 /* the event note sits over the brightest light: a dark pill keeps it readable */
 .fh-event { display: inline-block; padding: 8px 16px; border-radius: 999px; background: rgba(8, 18, 34, 0.78); color: #e6edf5; box-shadow: 0 0 0 1px rgba(165, 243, 252, 0.18); }
+/* review tools folded: a small tab on the left edge, out of the way */
+.pe-tab { position: fixed; left: 0; top: 50%; z-index: 2147483000; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 40px; padding: 14px 10px; border: 0; border-radius: 0 12px 12px 0; background: #0a1220; color: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(34, 211, 238, 0.5); font: 700 0.78rem var(--font-sans); letter-spacing: 0.06em; cursor: pointer; opacity: 0.85; transform: translateY(-50%); transition: opacity 0.2s, padding 0.2s; }
+.pe-tab:hover { opacity: 1; padding-left: 14px; }
+.pe-tab:focus-visible, .pe-fold:focus-visible { outline: 3px solid #22d3ee; outline-offset: 2px; opacity: 1; }
+.pe-tab span { writing-mode: vertical-rl; transform: rotate(180deg); }
+.pe-tab b { display: grid; place-items: center; min-width: 20px; height: 20px; border-radius: 999px; background: #22d3ee; color: #04131f; font-size: 0.72rem; }
+.pe-fold { display: grid; place-items: center; width: 40px; padding: 0 !important; }

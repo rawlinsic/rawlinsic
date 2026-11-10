@@ -44,7 +44,7 @@ function sprite(color: string): HTMLCanvasElement {
   return c;
 }
 
-export default function FlowHero({ children, next }: { children: ReactNode; next?: string }) {
+export default function FlowHero({ children, next }: { children?: ReactNode; next?: string }) {
   const wrap = useRef<HTMLElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
   const [paused, setPaused] = useState(false);
@@ -102,7 +102,12 @@ export default function FlowHero({ children, next }: { children: ReactNode; next
     };
 
     /* calm center: light fades out around the tagline; brightest low and at the edges */
+    const hasText = !!el.querySelector(".fh-in > *");
     const mask = (x: number, y: number) => {
+      if (!hasText) { // no words on it: light everywhere, a little brighter low and at the edges
+        const low = 0.55 + 0.45 * smooth(0.4 * H, 0.95 * H, y), edge = 0.7 + 0.3 * smooth(0.15 * W, 0.46 * W, Math.abs(x - 0.5 * W));
+        return Math.max(low, edge);
+      }
       // the text block (tagline, headline, line, buttons) sits in the middle
       const ex = (x - 0.5 * W) / (0.43 * W), ey = (y - 0.5 * H) / (0.41 * H);
       const d = Math.sqrt(ex * ex + ey * ey);
@@ -190,7 +195,7 @@ export default function FlowHero({ children, next }: { children: ReactNode; next
     <div className="fh-wrap">
       <section ref={wrap} className="fh" aria-label="Rawlins">
         <canvas ref={cv} className="fh-canvas" aria-hidden="true" />
-        <div className="fh-in">{children}</div>
+        {children && <div className="fh-in">{children}</div>}
         <button type="button" className="fh-pause" onClick={toggle} aria-label={paused ? "Play background animation" : "Pause background animation"} title={still && paused ? "Motion is reduced in your settings. Play anyway?" : undefined}>
           {paused
             ? <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>

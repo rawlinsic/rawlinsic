@@ -52,6 +52,10 @@ export default function PreviewEdit() {
   const onCount = useCallback((n: number) => setCount(n), []);
   // clean view: hide every review mark (tools, pins, placeholder notes) to see the site as it will look
   const [cleanView, setCleanView] = useState(false);
+  // the bar folds into a small tab on the left edge so it's out of the way (remembered per browser)
+  const [min, setMin] = useState(true);
+  useEffect(() => { try { setMin(localStorage.getItem("pe-min") !== "0"); } catch {} }, []);
+  const fold = (v: boolean) => { setMin(v); try { localStorage.setItem("pe-min", v ? "1" : "0"); } catch {} };
   useEffect(() => { try { setCleanView(localStorage.getItem("pe-clean") === "1"); } catch {} }, []);
   useEffect(() => { document.documentElement.classList.toggle("pe-clean", cleanView); try { localStorage.setItem("pe-clean", cleanView ? "1" : "0"); } catch {} }, [cleanView]);
   const [changes, setChanges] = useState<Change[]>([]);
@@ -110,7 +114,19 @@ export default function PreviewEdit() {
     finally { setBusy(false); }
   };
 
-  if (cleanView) return <button type="button" className="pe-show" onClick={() => setCleanView(false)} title="Show the review tools">Review tools</button>;
+  const tab = (label: string, open: () => void) => (
+    <button type="button" className="pe-tab" onClick={open} aria-label={label} title={label}>
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 17.5V20h2.5L17.8 8.7l-2.5-2.5L4 17.5zM19.7 6.8a1 1 0 0 0 0-1.4l-1.1-1.1a1 1 0 0 0-1.4 0l-1 1 2.5 2.5 1-1z" fill="currentColor" /></svg>
+      <span>Review</span>{count > 0 && <b>{count}</b>}
+    </button>
+  );
+  if (cleanView) return tab("Show the review tools", () => { setCleanView(false); fold(false); });
+  if (min && !on && !adding) return (
+    <>
+      <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={false} onCount={onCount} hidden={false} />
+      {tab("Open the review tools: edit text, comment", () => fold(false))}
+    </>
+  );
 
   return (
     <>
@@ -133,6 +149,9 @@ export default function PreviewEdit() {
             <button type="button" className="pe-btn" onClick={() => { setAdding(true); setMsg(""); }}>Comment</button>
             <button type="button" className={`pe-btn pe-ghost${listOpen ? " is-on" : ""}`} onClick={() => setListOpen((v) => !v)}>Comments ({count})</button>
             <button type="button" className="pe-btn pe-ghost" onClick={() => { setCleanView(true); setListOpen(false); }} title="Hide the tools, comment pins, and placeholder notes">Clean view</button>
+            <button type="button" className="pe-btn pe-ghost pe-fold" onClick={() => { fold(true); setListOpen(false); setMsg(""); }} aria-label="Hide the review tools" title="Hide the review tools">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
           </>
         )}
         {msg && <p className="pe-msg" aria-live="polite">{msg}</p>}
