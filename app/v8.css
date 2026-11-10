@@ -2314,3 +2314,17 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
    backgrounds the letters deepen toward the bottom so they read on white. Plain electric blue on navy. */
 .v8-eyebrow, .tt-k, .hs-areas-k, .pg-kicker { display: inline-block; padding: 0 !important; border-radius: 0; background: linear-gradient(180deg, #2fd9f0 10%, #0b93b0 95%) !important; -webkit-background-clip: text !important; background-clip: text !important; color: transparent !important; filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.4)); font-size: 1.05rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.25; }
 :is(.sv-scene, .wwd-intro, .wc-copy, .svw-xp, .fit-head, .av-map-card, .tw, .dls, .svt, .pg-sec-navy, .hs-step) :is(.v8-eyebrow, .pg-kicker), .wwd-k { background: none !important; color: #22d3ee !important; filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.45)); }
+
+/* project cards: status under the photo in navy, not green */
+.pcx-status { position: static; align-self: flex-start; padding: 4px 11px; border-radius: 999px; background: #e6eef8; color: var(--navy); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; backdrop-filter: none; }
+.pcx-status.is-live { background: #e6eef8; color: var(--navy); }
+.pcx-status.is-live::before { background: var(--aqua); box-shadow: 0 0 6px var(--aqua); }
+
+/* Who we work with: "We work with" + a line in the electric blue that fills in on hover */
+.orb-h { display: block; margin: 0; }
+.orb-fill { display: flex; align-items: center; justify-content: center; height: 1.2em; margin: 0 auto; font-size: calc(1em * var(--fit, 1)); white-space: nowrap; color: transparent; background: linear-gradient(180deg, #2fd9f0 10%, #0b93b0 95%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.45)); }
+.orb-fill[data-on] { filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.75)); }
+.h-orbit[data-mode="ring"] .orb-center { max-width: 760px; }
+.h-orbit[data-mode="ring"] .orb-t.is-on { box-shadow: 0 0 0 3px var(--aqua), 0 0 26px rgba(34, 211, 238, 0.75); }
+.h-orbit[data-mode="strip"] .orb-fill { white-space: normal; height: auto; }
+.orb-h .orb-fill { display: flex; color: transparent; background: linear-gradient(180deg, #3ee0f5 5%, #11b5d6 60%, #0c9ab9 100%); -webkit-background-clip: text; background-clip: text; }

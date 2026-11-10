@@ -35,13 +35,13 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rawlinsic.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Rawlins | Trusted advisors at the intersection of strategy, operations & technology",
+    default: "Rawlins | Trusted Advisors at the Intersection of Strategy, Operations & Technology",
     template: "%s | Rawlins",
   },
   description:
     "Rawlins is a consulting firm pairing strategy, operations, and technology expertise with digital solutions for the organizations that build and run infrastructure.",
   openGraph: {
-    title: "Rawlins | Trusted advisors at the intersection of strategy, operations & technology",
+    title: "Rawlins | Trusted Advisors at the Intersection of Strategy, Operations & Technology",
     description:
       "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. We find what's broken, fix it, and stay until it runs.",
     url: SITE_URL,
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rawlins | Trusted advisors at the intersection of strategy, operations & technology",
+    title: "Rawlins | Trusted Advisors at the Intersection of Strategy, Operations & Technology",
     description:
       "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. We find what's broken, fix it, and stay until it runs.",
     images: ["/images/pages/og-image-v2.png"],
@@ -170,10 +170,11 @@ const LOCAL_BUSINESS_SCHEMA = {
 /* a tiny script that hides this page's deleted sections (lib/content/removed-sections.ts) */
 /* Jacob's version: links to the pages he shouldn't open look like plain text and do nothing (Nicole, Nov 10) */
 function jacobLinks() {
-  const css = JACOB_DEAD_LINKS.map(([m, h]) => `a[href${m === "=" ? "" : "^"}="${h}"]`).join(",");
+  // links that open a bio pop-up right on the page (people cards) stay clickable (Nicole, Nov 10)
+  const css = JACOB_DEAD_LINKS.map(([m, h]) => `a[href${m === "=" ? "" : "^"}="${h}"]:not([aria-haspopup])`).join(",");
   return {
     css: `${css}{pointer-events:none!important;cursor:default!important;text-decoration:none!important}${css.split(",").map((x) => `${x}::after`).join(",")}{display:none!important}`,
-    js: `(function(){var L=${JSON.stringify(JACOB_DEAD_LINKS)};function dead(h){if(!h)return false;h=h.split("#")[0].split("?")[0];return L.some(function(x){return x[0]==="="?h===x[1]:h.indexOf(x[1])===0})}document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a");if(a&&dead(a.getAttribute("href"))){e.preventDefault();e.stopPropagation()}},true);document.addEventListener("keydown",function(e){if(e.key!=="Enter")return;var a=document.activeElement;if(a&&a.tagName==="A"&&dead(a.getAttribute("href"))){e.preventDefault()}},true)})();`,
+    js: `(function(){var L=${JSON.stringify(JACOB_DEAD_LINKS)};function dead(h){if(!h)return false;h=h.split("#")[0].split("?")[0];return L.some(function(x){return x[0]==="="?h===x[1]:h.indexOf(x[1])===0})}document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a");if(a&&!a.hasAttribute("aria-haspopup")&&dead(a.getAttribute("href"))){e.preventDefault();e.stopPropagation()}},true);document.addEventListener("keydown",function(e){if(e.key!=="Enter")return;var a=document.activeElement;if(a&&a.tagName==="A"&&!a.hasAttribute("aria-haspopup")&&dead(a.getAttribute("href"))){e.preventDefault()}},true)})();`,
   };
 }
 

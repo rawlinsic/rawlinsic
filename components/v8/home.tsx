@@ -9,7 +9,7 @@
    area's featured project; Why Rawlins keeps its card and five tabs. */
 import ProjectCard from "@/components/v8/project-card";
 import type { CSSProperties } from "react";
-import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
+import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, INDUSTRIES, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, AREA_PHOTO_POS, INDUSTRY_PHOTO } from "@/lib/content/media";
 import { CaseNote, Dev } from "@/components/site/ui";
@@ -50,8 +50,6 @@ const SHOW_HOME_INTRO = false;
    strip) is off the home page for now, not deleted (Nicole, Nov 10). true brings it back. */
 const SHOW_STORY_TEAM_BOX = false;
 
-/* the names the Who we work with ring shows when you point at a photo (Nicole, Nov 10) */
-const RING_NAME: Record<string, string> = { transport: "Transportation Agencies", gov: "Government & Public Agencies", contractors: "Contractors & Engineering Firms", private: "Private Sector" };
 
 export default function Home() {
   /* Featured projects: Rawlins work only (no Before Rawlins cases) */
@@ -82,14 +80,27 @@ export default function Home() {
     ...rest.filter((p) => !p.formerly && !isLate(p)),
     ...rest.filter(isLate),
   ];
-  // the ring: each industry, then its specialties, dealt round so they spread out
-  const groups: Tile[][] = VISIBLE_INDUSTRIES.map((i) => [
-    { src: INDUSTRY_PHOTO[i.id], label: RING_NAME[i.id] ?? i.name, href: industryHref(i), sub: i.who },
-    /* a specialty's photo shows its group's name, so the ring names the four groups, not some of the specialties */
-    ...i.subsectors.filter((sb) => INDUSTRY_PHOTO[sb.id] && (!PROD || !OFF_RING[sb.id])).map((sb) => ({ src: INDUSTRY_PHOTO[sb.id], label: RING_NAME[i.id] ?? i.name, href: industryHref(i), sub: i.name, note: OFF_RING[sb.id] })),
-  ]);
-  const tiles: Tile[] = [];
-  for (let r = 0; tiles.length < groups.flat().length; r++) groups.forEach((g) => { if (g[r]) tiles.push(g[r]); });
+  // the ring (Nicole, Nov 10): only names that sound like places or people, each once; things like
+  // Highways or Bridges stay off. Spread so neighbors come from different groups.
+  const ind = (id: string) => INDUSTRIES.find((i) => i.id === id)!;
+  const subOf = (iid: string, sid: string) => ind(iid).subsectors.find((x) => x.id === sid)!;
+  const ring: (Tile & { off?: boolean })[] = [
+    { src: INDUSTRY_PHOTO.transport, label: "State DOTs", href: industryHref(ind("transport")) },
+    { src: INDUSTRY_PHOTO.gov, label: "Government & Public Agencies", href: industryHref(ind("gov")) },
+    { src: INDUSTRY_PHOTO.contractors, label: "Contractors & Engineering Firms", href: industryHref(ind("contractors")) },
+    { src: INDUSTRY_PHOTO["sub-aviation"], label: "Airports", href: subsectorHref(ind("transport"), subOf("transport", "sub-aviation")) },
+    { src: INDUSTRY_PHOTO["g-asset"], label: "Local Agencies", href: subsectorHref(ind("gov"), subOf("gov", "g-asset")) },
+    { src: INDUSTRY_PHOTO.private, label: "Private Firms", href: industryHref(ind("private")) },
+    { src: "/images/pages/aam-policy-planning.webp", label: "Aeronautics Divisions", href: subsectorHref(ind("transport"), subOf("transport", "sub-aviation")) },
+    { src: INDUSTRY_PHOTO["sub-rail"], label: "Transit Agencies", href: subsectorHref(ind("transport"), subOf("transport", "sub-rail")), note: OFF_RING["sub-rail"] },
+    { src: INDUSTRY_PHOTO["g-capital"], label: "Cities", href: subsectorHref(ind("gov"), subOf("gov", "g-capital")), note: OFF_RING["g-capital"] },
+    { src: INDUSTRY_PHOTO["sub-ports"], label: "Ports & Harbors", href: subsectorHref(ind("transport"), subOf("transport", "sub-ports")), note: OFF_RING["sub-ports"] },
+    { src: INDUSTRY_PHOTO["g-mpo"], label: "Metropolitan Planning Organizations", href: subsectorHref(ind("gov"), subOf("gov", "g-mpo")), note: OFF_RING["g-mpo"] },
+    { src: INDUSTRY_PHOTO["g-federal"], label: "Multi-State & Federal Programs", href: subsectorHref(ind("gov"), subOf("gov", "g-federal")) },
+    /* International is hidden on the live site, so it's on the ring on previews only */
+    { src: INDUSTRY_PHOTO.intl, label: "International Agencies", href: industryHref(ind("intl")), note: "Hidden on the live site unless approved.", off: true },
+  ];
+  const tiles: Tile[] = ring.filter((t) => !PROD || (!t.note && !t.off)).map(({ off: _off, ...t }) => t); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return (
     <Panels>
@@ -234,10 +245,8 @@ export default function Home() {
 
       {/* 4 · who we work with: a ring of photos around the headline */}
       <Orbit tiles={tiles} cta={<a className="v8-btn orb-cta" href="/industries">See who we work with</a>}>
-        {/* Nicole, Nov 10: white, a subtitle, her headline (with its line break) and her line under it;
-            the ring turns, and a name shows only when someone points at a photo */}
-        <p className="v8-eyebrow orb-k">Who we work with</p>
-        <h2 id="orb-h" className="orb-h">From Public Agencies<br /> to Private Firms</h2>
+        {/* like scale.com (Nicole, Nov 10): "We work with" and a blue line that fills in with the photo you point at */}
+        <h2 id="orb-h" className="orb-h">We work with<span className="orb-fill" data-default="Public Agencies & Private Firms">Public Agencies & Private Firms</span></h2>
         <p className="orb-lead">More than 30 transportation agencies so far, plus local governments, a multi-state research program, contractors, and engineering firms. Our work so far is across the United States, and our team can do it anywhere.</p>
       </Orbit>
 

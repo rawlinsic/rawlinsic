@@ -4,10 +4,11 @@
    photos turns slowly and steadily around the words, on its own (one turn
    about every 60 seconds). Photos at the front (lower left) are big, photos at
    the back (upper right) small; all are fully visible, and the ring always
-   fits inside the section. In the middle: a subtitle, the headline, a line
-   of text, and one button (Nicole, Nov 10). No name shows until someone
-   points at a photo: then the ring pauses and that photo's group (e.g.
-   Transportation Agencies) shows under it. The ring keeps clear of the words. Under 1100px wide (phones and tablets) there's no ring: two rows of
+   fits inside the section. In the middle: "We work with", a line in the
+   electric blue, a line of text, and one button (Nicole, Nov 10). Pointing
+   at a photo pauses the ring, lights the photo, and fills the blue line with
+   its name (Airports, Cities, ...). One steady ellipse: no tile is ever
+   pushed or clamped, so nothing jumps. Under 1100px wide (phones and tablets) there's no ring: two rows of
    photos slide sideways as you scroll. Reduced motion: the ring stands still
    and the names show as a list. The ring pauses off screen and in a hidden
    tab. */
@@ -25,61 +26,35 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
     const el = ref.current;
     if (!el) return;
     const ring = el.querySelector<HTMLElement>(".orb-ring")!;
-    const center = el.querySelector<HTMLElement>(".orb-center")!;
     const ts = Array.from(el.querySelectorAll<HTMLElement>(".orb-t"));
-    const name = el.querySelector<HTMLElement>(".orb-name")!;
+    const fill = el.querySelector<HTMLElement>(".orb-fill")!;
     const N = ts.length;
     const show = (k: number) => {
       ts.forEach((x, i) => x.classList.toggle("is-on", i === k));
-      if (k < 0) { name.removeAttribute("data-on"); return; }
-      name.textContent = ts[k].dataset.name || "";
-      name.setAttribute("data-on", "");
-      place();
+      const next = k < 0 ? fill.dataset.default || "" : ts[k].dataset.name || "";
+      if (fill.textContent !== next) fill.textContent = next;
+      fill.style.setProperty("--fit", Math.min(1, 24 / Math.max(1, next.length)).toFixed(3));
+      fill.toggleAttribute("data-on", k >= 0);
     };
-    /* the name sits just under the photo being pointed at */
-    const place = () => {
-      if (held < 0) return;
-      const t = ts[held].getBoundingClientRect(), r = ring.getBoundingClientRect();
-      name.style.transform = `translate3d(${(t.left + t.width / 2 - r.left).toFixed(1)}px, ${(t.bottom - r.top + 10).toFixed(1)}px, 0) translateX(-50%)`;
-    };
+    const place = () => {};
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     let mode: "ring" | "strip" = "ring", still = false, inView = false;
     let theta = 0, last = 0, loop = 0, raf = 0, held = -1, speed = 1;
 
-    /* the words' box (headline to button) plus 28px, from the ring's center */
-    const block = () => {
-      const rr = ring.getBoundingClientRect();
-      const cx = rr.left + rr.width / 2, cy = rr.top + rr.height / 2;
-      let l = Infinity, t = Infinity, r = -Infinity, b = -Infinity;
-      center.querySelectorAll(".orb-k, .orb-h, .orb-lead, .orb-cta").forEach((k) => {
-        const q = k.getBoundingClientRect();
-        if (!q.width || !q.height) return;
-        l = Math.min(l, q.left); t = Math.min(t, q.top); r = Math.max(r, q.right); b = Math.max(b, q.bottom);
-      });
-      return { l: l - cx - 28, t: t - cy - 28, r: r - cx + 28, b: b - cy + 28 };
-    };
     const draw = () => {
+      /* one steady tilted ellipse, like scale.com: nothing is pushed or clamped, so no tile ever jumps.
+         The ellipse is sized so the tiles pass around the words, not over them. */
       const W = ring.clientWidth, H = ring.clientHeight;
-      const box = block();
-      const big = Math.min(140, Math.max(100, W * 0.092)), small = big * 0.27;
-      const rx = Math.max(0, Math.min(W / 2 - big / 2 - 24, W * 0.38));
-      const ry = Math.max(0, Math.min(H / 2 - big / 2 - 20, H * 0.36));
+      const big = Math.min(150, Math.max(104, W * 0.1)), small = big * 0.27;
+      const rx = Math.max(0, W / 2 - big / 2 - 30);
+      const ry = Math.max(0, H / 2 - big / 2 - 26);
       const ct = Math.cos(TILT), st = Math.sin(TILT);
       ts.forEach((t, i) => {
         const a = theta + (i / N) * Math.PI * 2;
         const ex = Math.cos(a), ey = Math.sin(a);
-        let x = rx * ex * ct - ry * ey * st, y = rx * ex * st + ry * ey * ct;
+        const x = rx * ex * ct - ry * ey * st, y = rx * ex * st + ry * ey * ct;
         const d = (1 - ex) / 2; // 1 = nearest (left end)
         const size = small + (big - small) * d, half = size / 2;
-        /* keep clear of the words: move out along the ray, but never past the section's edge */
-        if (x + half > box.l && x - half < box.r && y + half > box.t && y - half < box.b) {
-          const kx = x ? ((x > 0 ? box.r : -box.l) + half) / Math.abs(x) : Infinity;
-          const ky = y ? ((y > 0 ? box.b : -box.t) + half) / Math.abs(y) : Infinity;
-          const k = Math.max(1, Math.min(kx, ky));
-          x *= k; y *= k;
-        }
-        x = Math.max(-W / 2 + half + 8, Math.min(W / 2 - half - 8, x));
-        y = Math.max(-H / 2 + half + 8, Math.min(H / 2 - half - 8, y));
         t.style.transform = `translate3d(${(x - half).toFixed(1)}px, ${(y - half).toFixed(1)}px, 0)`;
         t.style.width = t.style.height = `${size.toFixed(1)}px`;
         t.style.zIndex = String(Math.round(d * 50));
@@ -150,7 +125,6 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
               <img src={t.src} alt="" loading="lazy" />
             </a>
           ))}
-          <span className="orb-name" />
         </div>
         <div className="orb-center">
           {children}
