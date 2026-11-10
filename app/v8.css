@@ -2087,12 +2087,7 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .hs-pan:not([data-show]) .wc-col { animation: none; }
 
 /* ── Nov 10 (Nicole) ── */
-/* top menu words: bigger, in capitals, in the subtitle style (bold, spaced out) */
-.hx-nav button { font: 700 1.02rem var(--font-sans); text-transform: uppercase; letter-spacing: 0.07em; padding: 10px 13px; }
-@media (max-width: 1280px) { .hx-nav button { font-size: 0.94rem; letter-spacing: 0.05em; padding: 10px 10px; } }
 .mx-foot { display: flex; flex-wrap: wrap; gap: 8px 28px; }
-/* subtitles on light backgrounds: the same teal as the area kickers, not grey */
-.v8-eyebrow { color: var(--aqua-ink); }
 /* the team box's lit words (when it's used): the glowing electric blue, as on the numbers screen */
 .hs-why .wc-lit .lit-w.is-lit:nth-child(-n + 6) { color: transparent; background: linear-gradient(180deg, #45e3f7 0%, #0aa8c8 100%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.5)); }
 
@@ -2154,10 +2149,46 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
   .fp-right { position: static; }
   .fp-lines { display: none; }
 }
-/* the globe: compact words in the middle (headline on two lines) so the photos have room all around;
-   a soft halo keeps the words clear of the photos passing behind them */
-.h-orbit[data-mode="ring"] .orb-center { max-width: 940px; padding: 12px 24px; }
-.h-orbit[data-mode="ring"] .orb-center::before { inset: -40px -70px; background: radial-gradient(closest-side, #eef0f3 62%, rgba(238, 240, 243, 0)); }
-.h-orbit[data-mode="ring"] .orb-h { font-size: clamp(2.1rem, 3.3vw, 3.25rem); margin-bottom: 14px; }
-.h-orbit[data-mode="ring"] .orb-center .v8-lead { max-width: 800px; font-size: 1.04rem; margin-bottom: 16px; }
-.h-orbit[data-mode="ring"] .orb-word a { font-size: clamp(1.5rem, 2.2vw, 2.1rem); }
+
+/* ── Nov 10, round 2 (Nicole) ── */
+/* top menu: back to normal capitalization, a little bigger */
+.hx-nav button { font: 600 1.06rem var(--font-sans); padding: 10px 14px; }
+@media (max-width: 1280px) { .hx-nav button { font-size: 0.98rem; padding: 10px 11px; } }
+
+/* subtitles: the glowing electric blue (as "What sets us apart"), bigger; a touch deeper at the base so they
+   read on white. On dark backgrounds the existing rules keep them solid electric blue. */
+.v8-eyebrow, .tt-k, .hs-areas-k, .nw:not(.nw-proj) .nw-tag { font-size: 1rem; font-weight: 800; letter-spacing: 0.12em; color: transparent; background: linear-gradient(180deg, #2fd9f0 10%, #0b93b0 95%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 7px rgba(34, 211, 238, 0.45)); }
+
+/* What we do: less space above and around the heading */
+.h-ways { padding: clamp(30px, 3.6vw, 52px) 0 clamp(44px, 5vw, 72px); }
+.h-ways .v8-h2 { max-width: none; }
+.h-ways .ways { margin-top: clamp(16px, 2vw, 24px); }
+
+/* Who we work with, like scale.com: light grey, one ring of photos turning around short words */
+.h-orbit { background: #ebebeb; }
+.h-orbit.h-orbit:not([data-static]) { height: auto; }
+.h-orbit.h-orbit:not([data-static]) > .orb-stage { position: relative; top: auto; }
+.h-orbit[data-mode="ring"]:not([data-static]) > .orb-stage { height: calc(100vh - 68px); min-height: 620px; max-height: 940px; }
+.h-orbit[data-mode="strip"] > .orb-stage { height: auto; }
+.orb-center::before { display: none; }
+.h-orbit[data-mode="ring"] .orb-center { max-width: 900px; padding: 0 20px; }
+.orb-h { margin: 0; color: var(--head); font-size: clamp(2.3rem, 3.9vw, 3.9rem); font-weight: 600; line-height: 1.06; letter-spacing: -0.03em; }
+.orb-words { margin-top: 2px; }
+.orb-word a { display: inline-block; font-size: clamp(2.3rem, 3.9vw, 3.9rem); font-weight: 600; line-height: 1.12; letter-spacing: -0.03em; color: transparent !important; background: linear-gradient(180deg, #2fd9f0 10%, #0b93b0 95%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.45)); padding-bottom: 0.06em; }
+.orb-word a::after { content: none; }
+.orb-word a:hover { text-decoration: underline; text-decoration-color: var(--aqua); text-decoration-thickness: 3px; text-underline-offset: 8px; }
+.orb-word .v8-dev { justify-self: center; }
+.orb-cta { margin-top: clamp(22px, 2.6vw, 34px); }
+.h-orbit[data-mode="ring"] .orb-t { opacity: 1 !important; filter: none; border-radius: 12px; outline: 0; box-shadow: 0 10px 26px rgba(10, 18, 32, 0.18); transition: box-shadow 0.25s; }
+.h-orbit[data-mode="ring"] .orb-t.is-on { box-shadow: 0 0 0 3px var(--aqua), 0 0 22px rgba(34, 211, 238, 0.6); }
+.h-orbit[data-mode="strip"] .orb-word a { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+.h-orbit[data-static] .orb-word a { font-size: 1.5rem; }
+.orb-h { display: table; margin-left: auto; margin-right: auto; }
+.orb-word a { font-size: calc(clamp(2.3rem, 3.9vw, 3.9rem) * var(--fit, 1)); white-space: nowrap; }
+.h-orbit[data-mode="ring"] .orb-word { align-content: center; min-height: 1.2em; }
+.h-orbit[data-mode="ring"] .orb-word .v8-dev { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+.h-orbit[data-mode="ring"] .orb-word { position: relative; }
+.h-orbit[data-mode="strip"] .orb-word a, .h-orbit[data-static] .orb-word a { white-space: normal; }
+.nw .nw-tag { font-size: 0.82rem; }
+.h-orbit[data-mode="strip"]:not([data-static]) .orb-word { position: relative; }
+.h-orbit[data-mode="strip"]:not([data-static]) .orb-word .v8-dev { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); white-space: nowrap; }

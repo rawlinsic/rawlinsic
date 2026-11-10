@@ -56,7 +56,7 @@ export default function Home() {
   const numbers = NUMBERS.filter((n) => n.verified || !PROD);
   /* the "recent contract win" spot shows a project in the works instead (Nicole, Nov 10) */
   const wip = caseById("cs-aerodiv");
-  const news = NEWS.filter((n) => n.tag === "Win" || !n.placeholder || !PROD).slice(0, 3);
+  const news = NEWS.filter((n) => !n.offHome && (n.tag === "Win" || !n.placeholder || !PROD)).slice(0, 3);
   const ev = EVENTS.filter((e) => (!e.placeholder || !PROD) && isUpcoming(e))[0];
   const pdn = CASES.find((c) => c.id === "cs-pdn")!;
   /* the five reasons in display order; each tab keeps its own proof (Part 5, 1.3) */
@@ -181,7 +181,7 @@ export default function Home() {
 
       {/* 1b · what we do: the five area tiles; the one you point at opens with its line, a quote, and a link
           (Nicole, Nov 10: like the earlier home tiles). The pop-out tour now lives on the Services page. */}
-      <section id="what-we-do" className="h-ways" aria-labelledby="h-ways-h">
+      <section id="what-we-do" className="h-ways" data-nofill aria-labelledby="h-ways-h">
         <div className="v8-wrap h-ways-head" data-reveal>
           <p className="v8-eyebrow">What we do</p>
           <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use.</h2>
@@ -228,10 +228,10 @@ export default function Home() {
       {/* What sets us apart is now side two of the opening story (hero-story.tsx), one reason per scroll */}
 
       {/* 4 · who we work with: a ring of photos around the headline */}
-      <Orbit tiles={tiles}>
-        <p className="v8-eyebrow">Who we work with</p>
-        <h2 id="orb-h" className="orb-h">Public agencies and private firms, <span>wherever the work is.</span></h2>
-        <p className="v8-lead">More than 30 transportation agencies, plus local governments, a multi-state research program, contractors, and engineering firms. Our work so far has been in the United States, and our team can work anywhere.</p>
+      <Orbit tiles={tiles} cta={<a className="v8-btn orb-cta" href="/industries">See who we work with</a>}>
+        {/* like scale.com: the headline, then a changing line with everyone we work with (Nicole, Nov 10). The
+            longer line ("More than 30 transportation agencies, ...") is on the Who we work with page. */}
+        <h2 id="orb-h" className="orb-h">Public agencies and private firms</h2>
       </Orbit>
 
       {/* 5 · our work */}

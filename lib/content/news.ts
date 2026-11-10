@@ -1,7 +1,8 @@
 /* News & Recognition: one feed of short posts. Tags: Win, Award, Publication,
    Speaking, Event, New team member. Each post can link to its LinkedIn post.
    `placeholder` items show on preview deployments only, never in production. */
-export type NewsItem = { tag: "Win" | "Award" | "Publication" | "Speaking" | "Event" | "New team member"; date?: string; title: string; text?: string; href?: string; linkedin?: string; placeholder?: string };
+/* offHome: listed on News & recognition, not in the home "What's new" cards */
+export type NewsItem = { tag: "Win" | "Award" | "Publication" | "Research" | "Speaking" | "Event" | "New team member"; date?: string; title: string; text?: string; href?: string; linkedin?: string; placeholder?: string; offHome?: boolean };
 /* ends: the event's last day (YYYY-MM-DD). It drops off the site the next day. */
 /* line: one sentence for under the home hero's buttons (full site pass, Part 5, 1.1) */
 export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string };
@@ -12,8 +13,14 @@ export const NEWS: NewsItem[] = [
     text: "April Blackburn, former Florida DOT Chief Information Officer, on implementing effective data governance and the essential elements of a solid foundation.",
     href: "/insights/thought-leadership/minimizing-data-governance-fatigue",
   },
-  /* Andy Palanisamy's LinkedIn article (Nov 4, 2026; shared in #ric-announcements the same day). Title copied from the article. */
-  { tag: "Publication", date: "November 2026",
+  /* Not about politics, for the home page (Nicole, Nov 10). From the Research & Publications list; the pooled fund
+     study isn't one of the projects waiting on a client's OK. */
+  { tag: "Research", title: "Multi-state drone standards and specifications",
+    text: "A shared drone data standard and recommended practices states can adopt, for a multi-state pooled fund study.",
+    href: "/insights/case-studies/multi-state-drone-standards" },
+  /* Andy Palanisamy's LinkedIn article (Nov 4, 2026; shared in #ric-announcements the same day). Title copied from the article.
+     Off the home page: it's about the election (Nicole, Nov 10). */
+  { tag: "Publication", date: "November 2026", offHome: true,
     title: "America's Transportation Crossroads: What the 2026 Midterm Results Mean for Infrastructure, Mobility, and the Next Two Years",
     text: "Andy Palanisamy on what the election could mean for the next surface transportation bill, state DOT budgets, and transportation technology.",
     href: "https://www.linkedin.com/pulse/americas-transportation-crossroads-what-2026-midterm-mean-palanisamy-iyt2e/" },
