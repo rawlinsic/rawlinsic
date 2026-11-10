@@ -2309,3 +2309,8 @@ html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
 .av-team-role { font-size: 1.04rem !important; }
 .av-team-former, .av-team-loc { font-size: 0.98rem !important; }
 .av-team-more { font-size: 1.02rem !important; }
+
+/* subtitles: no bar behind them (Nicole, Nov 10). The glowing electric blue capitals, bigger; on light
+   backgrounds the letters deepen toward the bottom so they read on white. Plain electric blue on navy. */
+.v8-eyebrow, .tt-k, .hs-areas-k, .pg-kicker { display: inline-block; padding: 0 !important; border-radius: 0; background: linear-gradient(180deg, #2fd9f0 10%, #0b93b0 95%) !important; -webkit-background-clip: text !important; background-clip: text !important; color: transparent !important; filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.4)); font-size: 1.05rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1.25; }
+:is(.sv-scene, .wwd-intro, .wc-copy, .svw-xp, .fit-head, .av-map-card, .tw, .dls, .svt, .pg-sec-navy, .hs-step) :is(.v8-eyebrow, .pg-kicker), .wwd-k { background: none !important; color: #22d3ee !important; filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.45)); }
