@@ -12,6 +12,8 @@ import AnalyticsWrapper from '@/components/analytics-wrapper';
 import CookieBanner from '@/components/cookie-banner';
 import Smooth from "@/components/v8/smooth";
 import PreviewEdit from "@/components/v8/preview-edit";
+import { REMOVED_SECTIONS } from "@/lib/content/removed-sections";
+import { canDeleteSections } from "@/lib/preview-gh";
 
 /* Redesign type: one typeface, Source Sans 3, on every page (--font-sans in
    journey.css; the old --font-serif token points at it too). No fallback
@@ -165,6 +167,13 @@ const LOCAL_BUSINESS_SCHEMA = {
   },
 };
 
+/* a tiny script that hides this page's deleted sections (lib/content/removed-sections.ts) */
+function removedScript() {
+  const byPage: Record<string, string[]> = {};
+  for (const r of REMOVED_SECTIONS) (byPage[r.page] ||= []).push(r.sel);
+  return `(function(){var m=${JSON.stringify(byPage).replace(/</g, "\\u003c")};var p=location.pathname.replace(/\\/$/,"")||"/";var s=m[p];if(!s)return;var e=document.createElement("style");e.textContent=s.map(function(x){return x+"{display:none!important}"}).join("");document.head.appendChild(e);})();`;
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -176,6 +185,8 @@ export default function RootLayout({
         className={`${sourceSans.variable} antialiased`}
         suppressHydrationWarning={true}
       >
+        {/* sections deleted on the preview are hidden before the page draws */}
+        {REMOVED_SECTIONS.length > 0 && <script dangerouslySetInnerHTML={{ __html: removedScript() }} />}
         <a href="#main-content" className="skip-to-content">Skip to main content</a>
         {/* each page's <main> carries id="main-content", once per page */}
         <div>
@@ -226,7 +237,7 @@ export default function RootLayout({
         `}</Script>
         <CookieBanner />
         {/* preview builds only: click-and-type text editor (never on the live site) */}
-        {process.env.VERCEL_ENV === "preview" && <PreviewEdit />}
+        {process.env.VERCEL_ENV === "preview" && <PreviewEdit canDelete={canDeleteSections()} />}
         <Smooth />
       </body>
     </html>

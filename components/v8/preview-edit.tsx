@@ -8,7 +8,7 @@
    is found even when a sentence has a link in it or a wording repeats. Anything it
    can't place goes on EDITS-PENDING.md in the repo for Claude Code. */
 import { useCallback, useEffect, useRef, useState } from "react";
-import PreviewComments, { askName } from "@/components/v8/preview-comments";
+import PreviewComments, { askName, cssPath } from "@/components/v8/preview-comments";
 
 type Change = { old: string; next: string; nodeOld?: string; nodeNew?: string; context?: string[]; breaks?: string };
 type Snap = { full: string; nodes: string[]; context: string[] };
@@ -53,7 +53,18 @@ const diff = (snap: Snap, now: string): Change => {
   return change;
 };
 
-export default function PreviewEdit() {
+/* every saved change made from this browser, newest last, so Undo can take it back */
+type Done = { sha: string; label: string };
+const loadHistory = (): Done[] => { try { return JSON.parse(localStorage.getItem("pe-history") || "[]"); } catch { return []; } };
+const saveHistory = (h: Done[]) => { try { localStorage.setItem("pe-history", JSON.stringify(h.slice(-30))); } catch {} };
+/* the section a click means: the nearest section, or the page block it sits in */
+const sectionOf = (t: Element) => t.closest<HTMLElement>("main section") || t.closest<HTMLElement>(".pnl > *");
+
+export default function PreviewEdit({ canDelete = false }: { canDelete?: boolean }) {
+  const [history, setHistory] = useState<Done[]>([]);
+  useEffect(() => { setHistory(loadHistory()); }, []);
+  const remember = (d: Done) => { const h = [...loadHistory(), d]; saveHistory(h); setHistory(h); };
+  const [deleting, setDeleting] = useState(false);
   const [on, setOn] = useState(false);
   const [adding, setAdding] = useState(false);
   const [listOpen, setListOpen] = useState(false);
@@ -134,10 +145,55 @@ export default function PreviewEdit() {
       const j = await r.json().catch(() => ({}));
       if (!r.ok) { setMsg(j.error || "Couldn't save. Nothing was changed."); return; }
       edited.current.clear(); setChanges([]);
+      if (j.commit) remember({ sha: j.commit, label: `${j.applied} text change${j.applied === 1 ? "" : "s"}` });
       setMsg(`Saved ${j.applied} change${j.applied === 1 ? "" : "s"}${j.pending ? `, ${j.pending} on the list for Claude Code` : ""}. The preview updates in about 2 minutes.`);
     } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
     finally { setBusy(false); }
   };
+
+  const undo = async () => {
+    const last = history[history.length - 1]; if (!last) return;
+    if (!confirm(`Undo your last saved change (${last.label})?`)) return;
+    setBusy(true); setMsg("Undoing…");
+    try {
+      const r = await fetch("/api/preview-undo", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ sha: last.sha, name: askName() }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) { setMsg(j.error || "Couldn't undo. Nothing was changed."); if (r.status === 409 || r.status === 400) { const h = loadHistory().slice(0, -1); saveHistory(h); setHistory(h); } return; }
+      const h = loadHistory().slice(0, -1); saveHistory(h); setHistory(h);
+      setMsg(`Undone: ${last.label}. The preview updates in about 2 minutes.`);
+    } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
+    finally { setBusy(false); }
+  };
+
+  // delete mode (Nicole only): the next click picks a section to delete
+  useEffect(() => {
+    if (!deleting) return;
+    document.documentElement.classList.add("pe-deleting");
+    let hl: HTMLElement | null = null;
+    const over = (e: MouseEvent) => { const t = e.target as HTMLElement; if (t.closest(".pe-bar")) return; const sec = sectionOf(t); if (sec !== hl) { hl?.classList.remove("pe-del-hl"); hl = sec; hl?.classList.add("pe-del-hl"); } };
+    const click = async (e: MouseEvent) => {
+      const t = e.target as HTMLElement;
+      if (t.closest(".pe-bar")) return;
+      e.preventDefault(); e.stopPropagation();
+      const sec = sectionOf(t); if (!sec) return;
+      const heading = (sec.querySelector("h1, h2, h3")?.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80);
+      if (!confirm(`Delete this section${heading ? `: “${heading}”` : ""}?\n\nIt comes off this version right away. Undo puts it back.`)) return;
+      const name = askName(); if (!name) return;
+      setBusy(true); setMsg("Deleting…");
+      try {
+        const r = await fetch("/api/preview-sections", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ page: location.pathname.replace(/\/$/, "") || "/", sel: cssPath(sec), heading, name }) });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok) { setMsg(j.error || "Couldn't delete it. Nothing was changed."); return; }
+        sec.style.display = "none";
+        remember({ sha: j.commit, label: `deleted section${heading ? ` “${heading.slice(0, 40)}”` : ""}` });
+        setMsg("Deleted. Undo puts it back. The preview updates in about 2 minutes."); setDeleting(false);
+      } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
+      finally { setBusy(false); }
+    };
+    document.addEventListener("mouseover", over, true);
+    document.addEventListener("click", click, true);
+    return () => { hl?.classList.remove("pe-del-hl"); document.documentElement.classList.remove("pe-deleting"); document.removeEventListener("mouseover", over, true); document.removeEventListener("click", click, true); };
+  }, [deleting]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const tab = (label: string, open: () => void) => (
     <button type="button" className="pe-tab" onClick={open} aria-label={label} title={label}>
@@ -146,7 +202,7 @@ export default function PreviewEdit() {
     </button>
   );
   if (cleanView) return tab("Show the review tools", () => { setCleanView(false); fold(false); });
-  if (min && !on && !adding) return (
+  if (min && !on && !adding && !deleting) return (
     <>
       <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={false} onCount={onCount} hidden={false} />
       {tab("Open the review tools: edit text, comment", () => fold(false))}
@@ -163,6 +219,11 @@ export default function PreviewEdit() {
             <button type="button" className="pe-btn pe-save" disabled={!changes.length || busy} onClick={save}>Save</button>
             <button type="button" className="pe-btn pe-ghost" onClick={stop}>Done</button>
           </>
+        ) : deleting ? (
+          <>
+            <span className="pe-n">Click the section to delete</span>
+            <button type="button" className="pe-btn pe-ghost" onClick={() => setDeleting(false)}>Cancel</button>
+          </>
         ) : adding ? (
           <>
             <span className="pe-n">Click the spot you want to comment on</span>
@@ -172,6 +233,8 @@ export default function PreviewEdit() {
           <>
             <button type="button" className="pe-btn" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter adds a new line. Esc or click away to finish."); }}>Edit text</button>
             <button type="button" className="pe-btn" onClick={() => { setAdding(true); setMsg(""); }}>Comment</button>
+            {history.length > 0 && <button type="button" className="pe-btn pe-ghost" disabled={busy} onClick={undo} title={`Undo: ${history[history.length - 1].label}`}>Undo</button>}
+            {canDelete && <button type="button" className="pe-btn pe-ghost pe-danger" onClick={() => { setDeleting(true); setMsg(""); }}>Delete section</button>}
             <button type="button" className={`pe-btn pe-ghost${listOpen ? " is-on" : ""}`} onClick={() => setListOpen((v) => !v)}>Comments ({count})</button>
             <button type="button" className="pe-btn pe-ghost" onClick={() => { setCleanView(true); setListOpen(false); }} title="Hide the tools, comment pins, and placeholder notes">Clean view</button>
             <button type="button" className="pe-btn pe-ghost pe-fold" onClick={() => { fold(true); setListOpen(false); setMsg(""); }} aria-label="Hide the review tools" title="Hide the review tools">

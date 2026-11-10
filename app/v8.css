@@ -1736,3 +1736,17 @@ html.pc-adding, html.pc-adding * { cursor: crosshair !important; }
 .h-event:hover { border-color: var(--aqua); background: #fff; }
 .h-event img { flex: none; width: 64px; height: 64px; border-radius: 12px; object-fit: cover; }
 .h-line { margin-bottom: 18px; }
+/* tagline: no lines beside it; a short blue line between the two phrases instead of the dot */
+.h-tag::before, .fh-tag::before, .fh-tag::after { display: none !important; }
+.tag-sep { display: inline-block; width: 32px; height: 2px; margin: 0 14px; border-radius: 2px; background: #22d3ee; box-shadow: 0 0 8px rgba(34, 211, 238, 0.7); vertical-align: middle; font-size: 0; color: transparent; overflow: hidden; }
+.h-tag .tag-sep { background: var(--aqua-ink); box-shadow: none; }
+/* home: "Our services" above the five tiles */
+.h-ways-k { margin: clamp(26px, 3vw, 40px) clamp(10px, 1.6vw, 22px) 12px; padding-left: clamp(8px, 2vw, 102px); color: var(--aqua-ink); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.h-ways-k + .ways { margin-top: 0; }
+.h-ways-k { margin-top: clamp(26px, 3vw, 40px); margin-bottom: 12px; padding-top: 0; padding-bottom: 0; }
+.v8-wrap.h-ways-k { margin-left: auto; margin-right: auto; padding-left: clamp(18px, 4.5vw, 64px); }
+/* Delete section mode (preview-edit.tsx) */
+html.pe-deleting, html.pe-deleting * { cursor: pointer !important; }
+.pe-del-hl { outline: 3px dashed #f87171 !important; outline-offset: -3px; box-shadow: inset 0 0 0 9999px rgba(248, 113, 113, 0.08) !important; }
+.pe-danger { box-shadow: inset 0 0 0 1px rgba(248, 113, 113, 0.7) !important; }
+.pe-danger:hover { background: rgba(248, 113, 113, 0.18) !important; }

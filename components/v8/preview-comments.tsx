@@ -11,7 +11,7 @@ type C = { id: number; page: string; sel: string; rx: number; ry: number; snippe
 type Draft = { x: number; y: number; sel: string; rx: number; ry: number; snippet: string };
 
 /* a path to the element that still finds it after the page reloads */
-const cssPath = (el: Element): string => {
+export const cssPath = (el: Element): string => {
   const parts: string[] = [];
   for (let e: Element | null = el; e && e !== document.body && parts.length < 14; e = e.parentElement) {
     if (e.id && /^[A-Za-z][\w-]*$/.test(e.id)) { parts.unshift(`#${e.id}`); break; }

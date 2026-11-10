@@ -35,6 +35,10 @@ const areaOf = (serviceId: string) => serviceById(serviceId)?.area;
    labeled (full site pass, Part 1, 2.4 and Part 4, 1). */
 const OFF_RING: Record<string, string> = { "g-capital": "No project yet", "g-mpo": "No project yet", "sub-rail": "Placeholder photo", "sub-ports": "Placeholder photo" };
 
+/* the tagline's "•" shows as a short blue line between the two phrases (the
+   character stays in the text, so Edit text still finds it) */
+const tagline = (t: string) => t.split(/(\s*•\s*)/).map((part, i) => (i % 2 ? <span key={i} className="tag-sep">{part}</span> : part));
+
 /* keep a month and its days on one line ("Nov 15–18") */
 const keepDates = (t: string) => t.split(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d+(?:[–-]\d+)?)/).map((part, i) => (i % 2 ? <span key={i} className="nowrap">{part}</span> : part));
 
@@ -67,7 +71,7 @@ export default function Home() {
       <FlowHero next="#h-title">
         {/* the tagline and headline on the hero, centered (Nicole, Nov 9) */}
         <div className="fh-center">
-          {HOME.eyebrow && <p className="fh-tag">{HOME.eyebrow}</p>}
+          {HOME.eyebrow && <p className="fh-tag">{tagline(HOME.eyebrow)}</p>}
           <h1 className="fh-title">{HOME.headline}</h1>
         </div>
       </FlowHero>
@@ -75,24 +79,18 @@ export default function Home() {
       {/* 1 · who we are */}
       <section className="h-hero" aria-labelledby="h-title">
         <div className="v8-wrap h-hero-top">
-          {HOME.eyebrow && <p className="h-tag" data-reveal>{HOME.eyebrow}</p>}
+          {HOME.eyebrow && <p className="h-tag" data-reveal>{tagline(HOME.eyebrow)}</p>}
           <h2 id="h-title" className="h-title" data-reveal>{HOME.headline}</h2>
           <div className="h-side" data-reveal>
             <p className="h-line">{HOME.line}</p>
-            {ev?.line && (
-              <a className="h-event" href="/contact">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/pages/aam-team-meeting.webp" alt="" loading="lazy" />
-                <span>{keepDates(ev.line)} <b>Plan to meet us</b></span>
-              </a>
-            )}
             <div className="v8-actions">
               <a className="v8-btn" href="/contact">Get in touch</a>
               <a className="v8-btn v8-btn-ghost" href="#what">See what we do</a>
             </div>
           </div>
         </div>
-        <ul className="ways" aria-label="What we do">
+        <p className="v8-wrap h-ways-k">Our services</p>
+        <ul className="ways" aria-label="Our services">
           {AREAS.map((a) => (
             <li key={a.id} className="way" style={themeStyle(a.id)}>
               <a href={areaHref(a)}>

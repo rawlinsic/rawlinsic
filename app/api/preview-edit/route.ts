@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 
 const GH = "https://api.github.com";
 const SEARCH = /^(lib\/.*\.ts|components\/.*\.tsx?|app\/.*\.tsx?)$/;
-const SKIP = /^(components\/home\/|components\/menu\/|app\/api\/)/; // old code nothing uses, and this file
+const SKIP = /^(components\/home\/|components\/menu\/|app\/api\/|lib\/content\/removed-sections\.ts|lib\/preview-)/; // old code nothing uses, and this file
 
 export async function POST(req: Request) {
   if (process.env.VERCEL_ENV !== "preview") return NextResponse.json({ error: "Not available" }, { status: 404 });
