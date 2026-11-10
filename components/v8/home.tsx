@@ -10,13 +10,14 @@
 import type { CSSProperties } from "react";
 import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
-import { AREA_PHOTO, AREA_PHOTO_POS, HOME_CLOSING_PHOTO, INDUSTRY_PHOTO } from "@/lib/content/media";
+import { AREA_PHOTO, AREA_PHOTO_POS, INDUSTRY_PHOTO } from "@/lib/content/media";
 import { CaseNote, Dev } from "@/components/site/ui";
 import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { themeStyle, casePhoto, FEATURED_CASES, STORY_PHOTO } from "@/lib/content/v8";
 import { Diagram } from "@/components/v8/diagram";
 import Grown from "@/components/v8/grown";
 import HeroStory from "@/components/v8/hero-story";
+import FixPicker from "@/components/v8/fix-picker";
 import LitText from "@/components/v8/lit-text";
 import Rail from "@/components/v8/rail";
 import Panels from "@/components/v8/panels";
@@ -53,7 +54,9 @@ export default function Home() {
   const cases = FEATURED_CASES.map((id) => CASES.find((c) => c.id === id)!).filter((c) => c && isOurs(c));
   /* previews also show the unverified number, marked (Part 4, 1) */
   const numbers = NUMBERS.filter((n) => n.verified || !PROD);
-  const news = NEWS.filter((n) => !n.placeholder || !PROD).slice(0, 3);
+  /* the "recent contract win" spot shows a project in the works instead (Nicole, Nov 10) */
+  const wip = caseById("cs-aerodiv");
+  const news = NEWS.filter((n) => n.tag === "Win" || !n.placeholder || !PROD).slice(0, 3);
   const ev = EVENTS.filter((e) => (!e.placeholder || !PROD) && isUpcoming(e))[0];
   const pdn = CASES.find((c) => c.id === "cs-pdn")!;
   /* the five reasons in display order; each tab keeps its own proof (Part 5, 1.3) */
@@ -276,7 +279,16 @@ export default function Home() {
                 <a className="v8-btn v8-btn-light" href="/contact">Plan to meet us</a>
               </article>
             )}
-            {news.map((n) => (
+            {news.map((n) => n.tag === "Win" && wip ? (
+              <a key="wip" className="nw nw-proj" href={caseHref(wip)} data-reveal>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={casePhoto(wip)} alt="" loading="lazy" />
+                <span className="nw-tag"><i aria-hidden="true" />In the works</span>
+                <b>{wip.title}</b>
+                <span className="nw-who">{wip.who}</span>
+                <CaseNote id={wip.id} />
+              </a>
+            ) : (
               <article key={n.title} className={`nw${n.placeholder ? " is-dev" : ""}`} data-reveal>
                 <span className="nw-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span>
                 <b>{n.href ? <a href={n.href} {...(/^http/.test(n.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{n.title}</a> : n.title}</b>
@@ -293,22 +305,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8 · start a conversation */}
-      <section className="h-start" aria-labelledby="h-start">
-        {/* a still photo for now (Detroit at night); a licensed U.S. clip can replace it later */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="h-start-video" src={HOME_CLOSING_PHOTO} alt="" loading="lazy" aria-hidden="true" />
+      {/* 8 · start a conversation: pick your problem, see where we'd start (Nicole, Nov 10) */}
+      <section className="h-start h-fix" aria-labelledby="h-start">
         <div className="v8-wrap h-start-in" data-reveal>
           <h2 id="h-start" className="v8-h2">Tell us what you&apos;re trying to fix.</h2>
-          <p className="v8-lead">Start with the one that sounds most like you, or write your own.</p>
-          <ul className="starts">
-            {PROBLEMS.map((p) => {
-              const a = areaOf(p.services[0]);
-              const href = `/contact?topic=${encodeURIComponent(a?.name ?? "Not sure")}&msg=${encodeURIComponent(p.q + ".")}`;
-              return <li key={p.q}><a href={href} style={a ? themeStyle(a.id) : undefined}>{q(p.q)}</a></li>;
-            })}
-          </ul>
-          <p className="h-start-direct"><a href="/contact">Write your own</a><a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a><a href="tel:+17758433822">(775) 843-3822</a></p>
+          <p className="v8-lead">Pick the one that sounds most like you, and we&apos;ll show you where we&apos;d start. Or write your own.</p>
+          <FixPicker fixes={PROBLEMS.map((p) => ({
+            q: p.q, topic: areaOf(p.services[0])?.name ?? "Not sure",
+            services: p.services.map((id) => serviceById(id)).filter(Boolean).map((h) => ({ name: h!.service.name, area: h!.area.name, href: `/services/${h!.area.slug}/${h!.service.slug}`, style: themeStyle(h!.area.id) })),
+          }))} />
         </div>
       </section>
     </Panels>

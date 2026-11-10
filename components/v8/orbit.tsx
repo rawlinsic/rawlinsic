@@ -1,16 +1,19 @@
 "use client";
-/* Who we work with, as a ring of photos around the headline (scale.com's
-   "Real Research" move). The tiles sit on a tilted ring: tiles at the front
-   are bigger and brighter, tiles at the back smaller and dimmer. As the
-   section arrives the ring opens out from behind the headline, then turns as
-   you scroll while the section holds. Each tile links to that industry.
+/* Who we work with, as a globe of photos turning slowly around the headline
+   (Nicole, Nov 10: like scale.com's, on a light grey background, nothing off
+   the page). The photos sit on a tilted sphere that keeps spinning on its own
+   and turns a little faster as you scroll: photos at the front are bigger and
+   brighter, photos at the back smaller and dimmer. The words always sit on
+   top, on a soft halo, and a photo dims while it passes behind them. The globe always fits
+   inside the section. Pointing at a photo pauses the spin so it can be
+   clicked; each one links to that industry.
    Under the headline, one name at a time steps through everyone we work with
    as you scroll (scale.com's changing word), big and readable, and its tile on
    the ring lights up. Under 1100px wide (phones and tablets) there's no ring:
    two rows of tiles slide sideways under the words as you scroll; reduced
-   motion gets the ring standing still and the names as a list. No tile may sit
-   on the words: any tile that would come within 32px of the text block (the
-   eyebrow down to the bars) is pushed outward (full site pass, Part 1, 2.4). */
+   motion gets the globe standing still and the names as a list. No tile may sit
+   on the words: the words are above every tile, and within 32px of the text
+   block (the eyebrow down to the bars) a tile dims (full site pass, Part 1, 2.4). */
 import { useEffect, useRef, type ReactNode } from "react";
 
 /* note: preview-only label on a tile production keeps off the ring ("Placeholder photo", "No project yet") */
@@ -51,30 +54,34 @@ export default function Orbit({ tiles, children }: { tiles: Tile[]; children: Re
       });
       return { l: l - cx - 32, t: t - cy - 32, r: r - cx + 32, b: b - cy + 32 };
     };
+    /* the photos' places on a sphere (spread evenly), turned by theta */
+    const pts = ts.map((_, i) => { const y = 1 - (2 * (i + 0.5)) / N, r = Math.sqrt(1 - y * y), ph = i * 2.39996; return { x: Math.cos(ph) * r, y: y * 0.92, z: Math.sin(ph) * r }; });
+    let theta = 0.6, speed = 1, target = 1, last = 0, loop = 0, inView = false;
     const draw = (open: number, turn: number) => {
       const W = ring.clientWidth, H = ring.clientHeight;
       const box = block();
-      // wide enough that the tiles pass around the words, not over them
-      const rx = Math.min(W * 0.46, 700) * (0.35 + 0.65 * open);
-      const ry = Math.min(H * 0.45, 370) * (0.35 + 0.65 * open);
-      const base = Math.min(138, Math.max(92, W * 0.09));
+      const base = Math.min(150, Math.max(96, W * 0.095)), big = 1.2;
+      // the whole globe fits inside the section, with a margin
+      const rx = Math.max(0, W / 2 - (base * big) / 2 - 28) * (0.45 + 0.55 * open);
+      const ry = Math.max(0, H / 2 - (base * big) / 2 - 28) * (0.45 + 0.55 * open);
+      const ca = Math.cos(turn), sa = Math.sin(turn), ct = Math.cos(0.3), st = Math.sin(0.3);
       ts.forEach((t, i) => {
-        const a = turn + (i / N) * Math.PI * 2;
-        let x = Math.cos(a) * rx, y = Math.sin(a) * ry;
-        const d = (1 + Math.cos(a - (3 * Math.PI) / 4)) / 2; // nearest at the lower left, as on scale.com
-        const sc = 0.5 + 0.62 * d;
-        /* keep clear of the words: push the tile out along its ray until it's outside the block */
-        const half = (base * sc) / 2;
-        if (x + half > box.l && x - half < box.r && y + half > box.t && y - half < box.b) {
-          const th = x ? ((x > 0 ? box.r : -box.l) + half) / Math.abs(x) : Infinity;
-          const tv = y ? ((y > 0 ? box.b : -box.t) + half) / Math.abs(y) : Infinity;
-          const k = Math.max(1, Math.min(th, tv));
-          x *= k; y *= k;
-        }
+        const p = pts[i];
+        const x1 = p.x * ca + p.z * sa, z1 = -p.x * sa + p.z * ca;
+        const y2 = p.y * ct - z1 * st, z2 = p.y * st + z1 * ct;
+        const d = (z2 + 1) / 2; // 1 = nearest
+        const sc = 0.48 + 0.72 * d, half = (base * sc) / 2;
+        const x = x1 * rx, y = y2 * ry;
+        /* behind the words (they always sit on top, on a soft halo), a photo dims and can't be clicked */
+        const out = Math.max(box.l - (x + half), x - half - box.r, box.t - (y + half), y - half - box.b);
+        const clear = Math.max(0, Math.min(1, out / 36));
         t.style.transform = `translate3d(${(x - base / 2).toFixed(1)}px, ${(y - base / 2).toFixed(1)}px, 0) scale(${sc.toFixed(3)})`;
         t.style.width = t.style.height = `${base}px`;
-        t.style.opacity = String((0.25 + 0.75 * d) * Math.min(1, open * 1.4));
-        t.style.zIndex = String(Math.round(d * 50));
+        // set as important so the lit tile can't jump in front of the words either
+        t.style.setProperty("opacity", ((0.3 + 0.7 * d) * (0.3 + 0.7 * clear) * Math.min(1, open * 1.4)).toFixed(3), "important");
+        t.style.setProperty("z-index", String(Math.round(d * 50)), "important");
+        t.style.pointerEvents = clear > 0.6 ? "auto" : "none";
+        t.style.filter = d < 0.35 ? `blur(${((0.35 - d) * 4).toFixed(1)}px)` : "";
       });
     };
     const tick = () => {
@@ -86,12 +93,31 @@ export default function Orbit({ tiles, children }: { tiles: Tile[]; children: Re
         show(Math.min(N - 1, Math.floor(Math.max(0, Math.min(0.999, (vh * 0.55 - r.top) / Math.max(1, r.height * 0.8))) * N)));
         return;
       }
-      if (still) { draw(1, -0.35); return; }
+      if (still) { draw(1, 0.6); return; }
       const enter = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.9)));
       const hold = Math.max(0, Math.min(1, -r.top / Math.max(1, el.offsetHeight - vh)));
-      draw(easeOut(enter), -1.1 + enter * 0.9 + hold * 1.6);
+      draw(easeOut(enter), theta + hold * 1.4);
       show(Math.min(N - 1, Math.floor(hold * 0.999 * N)));
     };
+    /* the globe keeps turning on its own while it's on screen */
+    const spin = (now: number) => {
+      loop = 0;
+      if (!inView || mode !== "ring" || still || document.hidden) return;
+      const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
+      last = now;
+      speed += (target - speed) * 0.08;
+      theta += dt * speed * ((Math.PI * 2) / 75); // one turn about every 75 seconds
+      tick();
+      loop = requestAnimationFrame(spin);
+    };
+    const go = () => { if (!loop) { last = 0; loop = requestAnimationFrame(spin); } };
+    const io = new IntersectionObserver(([e]) => { inView = e.isIntersecting; if (inView) go(); }, { threshold: 0 });
+    io.observe(el);
+    const over = (e: Event) => { target = (e.target as HTMLElement).closest(".orb-t") ? 0 : 1; };
+    const leave = () => { target = 1; };
+    ring.addEventListener("pointerover", over);
+    ring.addEventListener("pointerleave", leave);
+    document.addEventListener("visibilitychange", go);
     const on = () => { if (!raf) raf = requestAnimationFrame(tick); };
     const setMode = () => {
       mode = window.innerWidth < 1100 ? "strip" : "ring";
@@ -100,12 +126,18 @@ export default function Orbit({ tiles, children }: { tiles: Tile[]; children: Re
       if (still) el.dataset.static = ""; else delete el.dataset.static;
       if (mode === "strip") ts.forEach((t) => { t.style.cssText = ""; });
       tick();
+      go();
     };
     setMode();
     window.addEventListener("scroll", on, { passive: true });
     window.addEventListener("resize", setMode);
     reduce.addEventListener?.("change", setMode);
     return () => {
+      io.disconnect();
+      cancelAnimationFrame(loop);
+      ring.removeEventListener("pointerover", over);
+      ring.removeEventListener("pointerleave", leave);
+      document.removeEventListener("visibilitychange", go);
       window.removeEventListener("scroll", on);
       window.removeEventListener("resize", setMode);
       reduce.removeEventListener?.("change", setMode);

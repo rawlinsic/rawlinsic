@@ -37,7 +37,10 @@ export default function PeopleStrip({ people, across = false, showDev = false, l
     <>
       <div className={`wc-people${across ? " ps-across" : ""}${lanes !== 2 ? " ps-lanes" : ""}`} style={lanes !== 2 ? ({ ["--lanes" as string]: lanes } as CSSProperties) : undefined} role="region" aria-label="Some of our people. Hover to pause; select a person to read their bio." data-paused={open ? "" : undefined}>
         {Array.from({ length: lanes }, (_, col) => col).map((col) => {
-          const list = people.filter((_, i) => i % lanes === col);
+          const pick = people.filter((_, i) => i % lanes === col);
+          /* a lane that moves down shows its first few, then brings in the end of its list from the top; so the
+             rest go in reverse, and people still appear in the order given (Nicole, Nov 10: lanes up and down) */
+          const list = !across && lanes !== 2 && col % 2 ? [...pick.slice(0, 3), ...pick.slice(3).reverse()] : pick;
           const base = list.length ? Array.from({ length: Math.ceil(4 / list.length) }, () => list).flat() : []; // a short lane repeats so it never runs out
           const lane = across ? `ps-row${col % 2 ? " ps-row-rev" : ""}` : `wc-col${col % 2 ? " wc-col-down" : ""}`;
           return (
