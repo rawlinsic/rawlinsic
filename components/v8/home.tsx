@@ -59,6 +59,8 @@ export default function Home() {
       {/* 1 · who we are */}
       <section className="h-hero" aria-labelledby="h-title">
         <div className="v8-wrap h-hero-top">
+          {/* tagline above the headline (Nicole, Nov 9: back, so she can set the wording) */}
+          {HOME.eyebrow && <p className="h-tag" data-reveal>{HOME.eyebrow}</p>}
           <h1 id="h-title" className="h-title" data-reveal>{HOME.headline}</h1>
           <div className="h-side" data-reveal>
             <p className="h-line">{HOME.line}</p>
