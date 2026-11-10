@@ -3,8 +3,7 @@
    this only when VERCEL_ENV is "preview"). Click "Edit text", click any words
    on the page, type, and hit Save. Save sends old and new wording to
    /api/preview-edit, which finds the old wording in the site's files and
-   commits the change to the branch this preview was built from. The passcode
-   is asked once and remembered on this browser. Anything it
+   commits the change to the branch this preview was built from. Anything it
    can't place goes on EDITS-PENDING.md in the repo for Claude Code. */
 import { useEffect, useRef, useState } from "react";
 
@@ -58,16 +57,11 @@ export default function PreviewEdit() {
   const stop = () => { if (changes.length && !confirm("Leave edit mode and drop your unsaved changes?")) return; window.location.reload(); };
 
   const save = async () => {
-    let code = "";
-    try { code = localStorage.getItem("pe-code") || ""; } catch {}
-    if (!code) { code = prompt("Edit passcode") || ""; if (!code) return; }
     setBusy(true); setMsg("Saving…");
     try {
-      const r = await fetch("/api/preview-edit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ code, page: location.pathname, changes }) });
+      const r = await fetch("/api/preview-edit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ page: location.pathname, changes }) });
       const j = await r.json().catch(() => ({}));
-      if (r.status === 401) { try { localStorage.removeItem("pe-code"); } catch {} setMsg("Wrong passcode. Try Save again."); return; }
       if (!r.ok) { setMsg(j.error || "Couldn't save. Nothing was changed."); return; }
-      try { localStorage.setItem("pe-code", code); } catch {}
       edited.current.clear(); setChanges([]);
       setMsg(`Saved ${j.applied} change${j.applied === 1 ? "" : "s"}${j.pending ? `, ${j.pending} on the list for Claude Code` : ""}. The preview updates in about 2 minutes.`);
     } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
