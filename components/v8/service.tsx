@@ -73,7 +73,7 @@ export default function ServiceV8({ id }: { id: string }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={photo} alt="" />
         </div>
-        <AreaMark kind={T.diagram} />
+        <AreaMark kind="loop" />
         <div className="v8-wrap sv-hero-in">
           <div className="sv-hero-copy">
             <nav className="crumbs" aria-label="Breadcrumb">
@@ -89,24 +89,15 @@ export default function ServiceV8({ id }: { id: string }) {
             {!PROD && s.st !== "ok" && <em className="v8-dev">Content status (preview only): {STATUS[s.st]}</em>}
           </div>
           <figure className="sv-photo lf">
-            <span className="lf-back" aria-hidden="true" />
-            <span className="lf-mid" aria-hidden="true"><i /><i /><i /><i /></span>
             <span className="lf-front">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={photo} alt="" />
             </span>
           </figure>
         </div>
-        <nav className="sv-sibs" aria-label={`${area.name} services`}>
-          <ol className="v8-wrap">
-            {area.services.map((x, k) => (
-              <li key={x.id}><a href={`/services/${area.slug}/${x.slug}`} aria-current={x.id === id ? "page" : undefined}>{x.name}</a></li>
-            ))}
-          </ol>
-        </nav>
       </section>
 
-      <SectionNav items={sections} />
+      <SectionNav items={sections} more={{ label: `${area.name} services`, links: area.services.map((x) => ({ name: x.name, href: `/services/${area.slug}/${x.slug}`, current: x.id === id })) }} />
 
       <section id="hear" className="svq">
         <div className="v8-wrap svq-in">
@@ -117,7 +108,7 @@ export default function ServiceV8({ id }: { id: string }) {
 
       <Scene steps={1} per={Math.max(70, s.deliver.length * 17)} id="deliver" className="svd" label="What we deliver">
         <div className="v8-wrap svd-in">
-          <AreaMark kind={T.diagram} />
+          <AreaMark kind="loop" />
           <div className="svd-head">
             <h2 className="v8-h2">What we deliver</h2>
           </div>

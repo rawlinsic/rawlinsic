@@ -8,6 +8,7 @@
    quotes); What we do pairs what clients say with what we bring, beside each
    area's featured project; Why Rawlins keeps its card and five tabs. */
 import ProjectCard from "@/components/v8/project-card";
+import FanCards from "@/components/v8/fan-cards";
 import type { CSSProperties } from "react";
 import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, INDUSTRIES, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
@@ -44,6 +45,9 @@ const keepDates = (t: string) => t.split(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Se
 
 /* What we do (area by area, "What we hear, and what we bring.") is hidden for now, not deleted (Nicole, Nov 9). true brings it back. */
 const SHOW_WHAT_WE_DO = false;
+/* What we do: the five areas as fanned photo cards (Nicole, Nov 10, "like the insights"). The expanding tiles
+   are kept for the archive: set SHOW_WAYS_TILES to true to bring them back. */
+const SHOW_WAYS_TILES = false;
 /* The tagline + headline section under the opening story is hidden for now, not deleted (Nicole, Nov 10). true brings it back. */
 const SHOW_HOME_INTRO = false;
 /* The team box at the end of the opening story ("Our people have run the programs you run", with the team
@@ -197,28 +201,39 @@ export default function Home() {
 
       {/* 1b · what we do: the five area tiles; the one you point at opens with its line, a quote, and a link
           (Nicole, Nov 10: like the earlier home tiles). The pop-out tour now lives on the Services page. */}
+      {SHOW_WAYS_TILES ? (
       <section id="what-we-do" className="h-ways" data-nofill aria-labelledby="h-ways-h">
-        <div className="v8-wrap h-ways-head" data-reveal>
-          <p className="v8-eyebrow">What we do</p>
-          <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use.</h2>
-        </div>
-        <ul className="ways" aria-label="Our services">
-          {AREAS.map((a) => (
-            <li key={a.id} className="way" style={themeStyle(a.id)}>
-              <a href={areaHref(a)}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={AREA_PHOTO[a.id]} alt="" loading="lazy" style={AREA_PHOTO_POS[a.id] ? { objectPosition: AREA_PHOTO_POS[a.id] } : undefined} />
-                <span className="way-txt">
-                  <b>{a.name}</b>
-                  <em>{a.tag}</em>
-                  <span className="way-q">{q(AREA_DATA[a.id].hear[0])}</span>
-                  <span className="way-more">Explore {a.name}</span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
+          <div className="v8-wrap h-ways-head" data-reveal>
+            <p className="v8-eyebrow">What we do</p>
+            <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use.</h2>
+          </div>
+          <ul className="ways" aria-label="Our services">
+            {AREAS.map((a) => (
+              <li key={a.id} className="way" style={themeStyle(a.id)}>
+                <a href={areaHref(a)}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={AREA_PHOTO[a.id]} alt="" loading="lazy" style={AREA_PHOTO_POS[a.id] ? { objectPosition: AREA_PHOTO_POS[a.id] } : undefined} />
+                  <span className="way-txt">
+                    <b>{a.name}</b>
+                    <em>{a.tag}</em>
+                    <span className="way-q">{q(AREA_DATA[a.id].hear[0])}</span>
+                    <span className="way-more">Explore {a.name}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : (
+        <section id="what-we-do" className="h-ways h-fan" data-nofill aria-labelledby="h-ways-h">
+          <div className="v8-wrap h-ways-head" data-reveal>
+            <p className="v8-eyebrow">What we do</p>
+            <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use.</h2>
+          </div>
+          <FanCards label="What we do" start={2}
+            cards={AREAS.map((a) => ({ href: areaHref(a), tag: a.tag, title: a.name, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id] }))} />
+        </section>
+      )}
 
       {/* 2 · what we do, area by area. Hidden for now (Nicole, Nov 9: "remove this whole section for now,
           but don't delete it"). To bring it back, set SHOW_WHAT_WE_DO to true at the top of this file. */}
