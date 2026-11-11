@@ -9,7 +9,7 @@ export function ContactPageNew() {
     <Shell scene="hero" photo={PAGE_PHOTO.contact}>
       <Hero crumbs={[["/contact", "Contact"]]} kicker="Contact Rawlins" title="Tell us what you're trying to fix."
         /* TODO(Nicole): lead line to come from Nicole (the "connect you with the person who has done the work" line was removed, Nov 9) */
-        lead={<Dev block>Content status: line to come from Nicole</Dev>} />
+        lead={null} />
       <section className="pg-sec">
         <div className="pg-wrap pg-two">
           <div>

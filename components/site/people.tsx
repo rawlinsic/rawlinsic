@@ -104,7 +104,7 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
 
   return (
     <div>
-      <div className="pp-tools">
+      <div className="pp-tools pp2-tools">
         <label className="pg-search">
           <span className="sr-only">Search people</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
@@ -121,18 +121,23 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
         if (!group.length) return null;
         return (
           <section key={g} className="pp-group" aria-labelledby={`pp-${g}`}>
-            <h2 id={`pp-${g}`} className="pg-h2">{g}</h2>
+            <h2 id={`pp-${g}`} className="pg-h2">{g} <span className="pp2-count">{group.length}</span></h2>
             <p className="pp-group-text">{GROUP_TEXT[g]}</p>
             <ul className="pp-grid">
               {group.map((p) => (
                 <li key={p.slug} id={p.slug}>
-                  <button type="button" className="pp-card" onClick={() => { setOpen(p); window.history.replaceState(null, "", `#${p.slug}`); }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={p.photo} alt="" width={120} height={120} loading="lazy" />
-                    <b>{p.name}</b>
-                    <span className="pp-role">{p.role}</span>
-                    {p.location && <span className="pp-loc"><Pin />{p.location}</span>}
-                    {p.areas.length > 0 && <span className="pp-tags">{p.areas.slice(0, 3).map((a) => <i key={a}>{areas.find((x) => x.value === a)?.label}</i>)}</span>}
+                  <button type="button" className="pp-card pp2" onClick={() => { setOpen(p); window.history.replaceState(null, "", `#${p.slug}`); }}>
+                    <span className="pp2-ph">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={p.photo} alt="" width={240} height={240} loading="lazy" />
+                    </span>
+                    <span className="pp2-body">
+                      <b>{p.name}</b>
+                      <span className="pp-role">{p.role}</span>
+                      {p.location && <span className="pp-loc"><Pin />{p.location}</span>}
+                      {p.areas.length > 0 && <span className="pp-tags">{p.areas.slice(0, 3).map((a) => <i key={a}>{areas.find((x) => x.value === a)?.label}</i>)}</span>}
+                      <span className="pp2-more">Read bio</span>
+                    </span>
                   </button>
                 </li>
               ))}

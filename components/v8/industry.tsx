@@ -307,7 +307,7 @@ function Talk({ title = TALK.title, text = TALK.text, linksTitle, links }: {
         <div className="svt-talk">
           <h2 className="v8-h2">{title}</h2>
           {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
-          {text ? <p className="v8-lead">{text}</p> : <Dev block>Content status: line to come from Nicole</Dev>}
+          {text ? <p className="v8-lead">{text}</p> : null}
           <div className="v8-actions">
             <a className="v8-btn v8-btn-area" href="/contact">Get in touch</a>
             <a className="v8-btn v8-btn-ghost" href="/insights/case-studies">See our projects</a>

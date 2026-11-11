@@ -61,7 +61,7 @@ export default function Header() {
       { label: "News & recognition", href: "/insights/news", note: "Events, publications, and news", photo: PAGE_PHOTO.news,
         line: newest ? { k: "Latest", t: newest.title } : undefined,
         next: next ? { k: "Next", t: eventLine(next), ends: next.ends } : undefined },
-      { label: "Thought leadership", href: "/insights/thought-leadership", note: "Practical perspectives from our team", photo: PAGE_PHOTO.thought,
+      { label: "Thought leadership", href: THOUGHT_LEADERSHIP.length === 1 ? `/insights/thought-leadership/${THOUGHT_LEADERSHIP[0].slug}` : "/insights/thought-leadership", note: "Practical perspectives from our team", photo: PAGE_PHOTO.thought,
         line: article ? { k: "Latest", t: article.title } : undefined },
       { label: "Research & publications", href: "/insights/research", note: "Guidance manuals and research", photo: PAGE_PHOTO.research,
         line: RESEARCH[0] ? { k: "Featured", t: RESEARCH[0].t } : undefined },

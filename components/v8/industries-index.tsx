@@ -68,7 +68,7 @@ export default function IndustriesIndexV8() {
             <div className="svt-talk">
               <h2 className="v8-h2">{TALK.title}</h2>
               {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
-              {TALK.text ? <p className="v8-lead">{TALK.text}</p> : <Dev block>Content status: line to come from Nicole</Dev>}
+              {TALK.text ? <p className="v8-lead">{TALK.text}</p> : null}
               <div className="v8-actions"><a className="v8-btn v8-btn-area" href="/contact">Get in touch</a></div>
             </div>
           </div>
