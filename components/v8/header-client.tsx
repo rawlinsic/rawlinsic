@@ -133,8 +133,11 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
         <div className="mx-what">
           {data.areas.map((a) => (
             <section key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink, ["--a-tint" as string]: a.tint } as CSSProperties}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="mx-area-ph" src={a.photo} alt="" loading="lazy" style={a.pos ? { objectPosition: a.pos } : undefined} />
+              {/* the photo opens the area too (Nicole, Nov 10) */}
+              <a className="mx-area-phl" href={a.href} tabIndex={-1} aria-hidden="true">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="mx-area-ph" src={a.photo} alt="" loading="lazy" style={a.pos ? { objectPosition: a.pos } : undefined} />
+              </a>
               <a className="mx-area" href={a.href}><b>{a.name}</b><em>{a.tag}</em></a>
               <ul>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
               <a className="mx-go" href={a.projects}>Projects in this area</a>
@@ -202,6 +205,8 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             </a></li>
           );
         })}</ul>
+        {/* the Insights page itself (Nicole, Nov 10: "where is the insights page in the menu?") */}
+        <p className="mx-foot"><a href="/insights">All insights</a></p>
       </div>
       {!aboutTopOnly && <div className="hx-panel" id="hx-m-about" hidden={open !== "about"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         {/* About (Nicole, Nov 10): Who we are as a photo card, then the other pages as plain links, the same

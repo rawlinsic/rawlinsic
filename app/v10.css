@@ -312,10 +312,11 @@
 .tk2-btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.12); }
 .tk2-btn.is-white { background: #fff; border-color: #fff; color: #0a1220 !important; }
 .tk2-btn.is-white:hover { background: #a5f3fc; border-color: #a5f3fc; }
-/* the service and area pages' closing band gets the same card treatment */
-.svt { background: #fff !important; padding: clamp(48px, 6vw, 88px) 0 !important; }
-.svt > .v8-wrap { padding-top: clamp(32px, 4.4vw, 60px); padding-bottom: clamp(32px, 4.4vw, 60px); border-radius: 30px; background: radial-gradient(60% 90% at 90% 0%, rgba(34, 211, 238, 0.2), transparent 62%), linear-gradient(165deg, #10233f, #1d3759 70%, #24456f); max-width: min(1320px, calc(100% - 2 * clamp(18px, 4.5vw, 64px))); }
-.svt .v8-actions .v8-btn { background: #fff !important; border-color: #fff !important; color: #0a1220 !important; box-shadow: none !important; }
+/* service, area, and industry pages: the closing band runs the full width again (Nicole, Nov 10), with white
+   buttons and chips that read clearly */
+.svt .v8-actions .v8-btn { background: #fff !important; border: 2px solid #fff !important; color: #0a1220 !important; box-shadow: none !important; }
+.svt .v8-actions .v8-btn:hover { background: #a5f3fc !important; border-color: #a5f3fc !important; }
+.svt .sv-chips a, .svt .ipg-chips a { color: #fff !important; opacity: 1 !important; border-color: rgba(165, 243, 252, 0.5) !important; background: rgba(255, 255, 255, 0.1) !important; font-size: 1.05rem !important; font-weight: 600; }
 
 /* ── footer ── */
 /* the footer's own navy, as before (Nicole, Nov 10: the darker one was too dark) */
@@ -400,3 +401,33 @@
 .fan-card .fan-tag { text-shadow: 0 1px 8px rgba(10, 18, 32, 0.5); }
 .fan-card b { text-shadow: 0 1px 12px rgba(10, 18, 32, 0.45); }
 .fan-tag i { background: #1d3759 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322d3ee' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7l10 10M17 9v8H9'/%3E%3C/svg%3E") center / 62% no-repeat; box-shadow: 0 0 0 1px rgba(165, 243, 252, 0.35); }
+
+/* What We Do menu: the photo opens the area; the line under each name set apart from the name */
+.mx-area-phl { display: block; border-radius: 8px; overflow: hidden; }
+.mx-area-phl img { transition: transform 0.5s; }
+.mx-area-phl:hover img { transform: scale(1.04); }
+.mx-what .mx-area em { margin-top: 2px; color: #0b8aa6 !important; font-size: 0.86rem !important; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.35; }
+.mx-what .mx-area b { color: #0a1220; font-size: 1.18rem; }
+.ipg section.svt .ipg-chips a, body section.svt .sv-chips a { color: #fff !important; }
+.ipg section.svt .ipg-chips a[aria-current="page"] { background: rgba(34, 211, 238, 0.2) !important; border-color: #22d3ee !important; }
+
+/* service pages: one bar. The area's services open from the left; the page's sections follow */
+.sn.has-more { display: flex; align-items: center; max-width: none; }
+.sn.has-more > ul { flex: 1; min-width: 0; margin: 0; }
+.sn-more { position: relative; flex: none; margin-left: max(clamp(18px, 4.5vw, 64px), calc((100vw - 1320px) / 2 + clamp(18px, 4.5vw, 64px))); }
+.sn-more > summary { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; background: #1d3759; color: #fff; font-size: 0.95rem; font-weight: 700; white-space: nowrap; cursor: pointer; list-style: none; }
+.sn-more > summary::-webkit-details-marker { display: none; }
+.sn-more > summary::after { content: ""; width: 8px; height: 8px; margin-top: -3px; border-right: 2px solid #22d3ee; border-bottom: 2px solid #22d3ee; transform: rotate(45deg); transition: transform 0.2s; }
+.sn-more[open] > summary::after { margin-top: 3px; transform: rotate(-135deg); }
+.sn-more > ul { position: absolute; left: 0; top: calc(100% + 8px); z-index: 50; display: grid; gap: 2px; min-width: 320px; margin: 0; padding: 8px; list-style: none; border: 1px solid #dbe5f1; border-radius: 16px; background: #fff; box-shadow: 0 24px 50px -24px rgba(10, 18, 32, 0.45); }
+.sn-more > ul a { display: block; padding: 10px 14px; border-radius: 10px; color: #0a1220 !important; font-size: 1rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.sn-more > ul a:hover { background: #f0f5fb; }
+.sn-more > ul a[aria-current="page"] { background: #e6f9fc; box-shadow: inset 3px 0 0 #22d3ee; }
+.sn.has-more > ul { padding-left: 14px !important; }
+@media (max-width: 700px) { .sn-more > ul { min-width: 0; width: calc(100vw - 36px); } }
+
+/* home What we do: the fanned cards */
+.h-fan { overflow: hidden; background: #fff; }
+.h-fan .h-ways-head { text-align: center; }
+.h-fan .h-ways-head .v8-eyebrow { margin-left: auto; margin-right: auto; }
+.h-fan .fan { margin-bottom: clamp(20px, 3vw, 40px); }

@@ -50,7 +50,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={AREA_PHOTO[area.id]} alt="" style={AREA_PHOTO_POS[area.id] ? { objectPosition: AREA_PHOTO_POS[area.id] } : undefined} />
         </div>
-        <AreaMark kind={T.diagram} />
+        <AreaMark kind="loop" /> {/* one drawing for every What We Do page (Nicole, Nov 10) */}
         <div className="v8-wrap arh-top">
           <div>
             <nav className="crumbs" aria-label="Breadcrumb">
