@@ -4,7 +4,7 @@
    search at the top. Every area carries its own color. The menus show real
    content with pictures that mean something: area photos, projects, the
    latest items, and our people (full site pass, Part 1, 1; Part 4, 3). */
-import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 
 type Link = { label: string; href: string; note?: string };
 type Hit = { label: string; kind: string; href: string };
@@ -19,15 +19,6 @@ export type NavData = {
   about: Link[]; faces: { name: string; photo: string }[]; facesLine: string; search: Hit[];
 };
 type Menu = "what" | "who" | "work" | "insights" | "about" | null;
-/* About menu icons (line drawings in the electric blue) */
-const ic = (d: string) => <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{d.split("|").map((x) => <path key={x} d={x} />)}</svg>;
-const ABOUT_ICON: Record<string, ReactNode> = {
-  "/about/how-we-work": ic("M4 6h4v4H4z|M10 8h4|M16 6h4v4h-4z|M18 10v4|M16 14h4v4h-4z|M14 16h-4|M4 14h4v4H4z"),
-  "/about/our-people": ic("M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z|M2.5 20c.8-3.4 3.4-5.5 6.5-5.5s5.7 2.1 6.5 5.5|M16 4.3a3.5 3.5 0 0 1 0 6.4|M18.5 14.8c1.6.8 2.7 2.6 3 5.2"),
-  "/about/where-we-work": ic("M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z|M12 12.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"),
-  "/careers": ic("M4 8h16v11H4z|M9 8V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V8|M4 13h16"),
-  default: ic("M5 12h14|M13 6l6 6-6 6"),
-};
 
 const MENUS: [Exclude<Menu, null>, string][] = [["what", "What We Do"], ["who", "Who We Work With"], ["work", "Our Work"], ["insights", "Insights"], ["about", "About"]];
 
@@ -213,9 +204,9 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
         })}</ul>
       </div>
       {!aboutTopOnly && <div className="hx-panel" id="hx-m-about" hidden={open !== "about"} onMouseEnter={() => window.clearTimeout(timer.current)}>
-        {/* About (Nicole, Nov 10: "the whole menu... i hate it"): Who we are as a photo card, the other pages with
-            an icon and a line, and the faces of people who ran agency programs */}
-        <div className="ma">
+        {/* About (Nicole, Nov 10): Who we are as a photo card, then the other pages as plain links, the same
+            style as the other menus (no icons, no faces panel) */}
+        <div className="mx-list mx-about ma2">
           {data.about[0] && (
             <a className="ma-feature" href={data.about[0].href}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -223,14 +214,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
               <span><em>Since 2017</em><b>{data.about[0].label}</b><span>{data.about[0].note}</span><i>Our story</i></span>
             </a>
           )}
-          <ul className="ma-links">{data.about.slice(1).map((l) => (
-            <li key={l.href}><a href={l.href}><span className="ma-ic" aria-hidden="true">{ABOUT_ICON[l.href] ?? ABOUT_ICON.default}</span><span><b>{l.label}</b><span>{l.note}</span></span></a></li>
-          ))}</ul>
-          <div className="ma-people">
-            <ul>{data.faces.map((f) => <li key={f.photo}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src={f.photo} alt={f.name} width={64} height={64} loading="lazy" /></li>)}</ul>
-            <p>{data.facesLine}</p>
-            <a className="ma-go" href="/about/our-people">Meet our people</a>
-          </div>
+          <ul>{data.about.slice(1).map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul>
         </div>
       </div>}
 
