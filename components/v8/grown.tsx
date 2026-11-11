@@ -36,7 +36,7 @@ export default function Grown({ eyebrow, title, link }: { eyebrow?: string; titl
               <span className="hg-next-ring" aria-hidden="true" />
               <span className="grown-k">What&apos;s next</span>
               <b>Where are you headed?</b>
-              <p>Tell us where your agency wants to be, and what&apos;s in the way. We&apos;ll show you where we&apos;d start.</p>
+              <p>Tell us where you want to be, and what&apos;s in the way. We&apos;ll show you where to start.</p>
               <ul className="hg-next-areas" aria-label="Start with an area">
                 {AREAS.map((a) => <li key={a.id}><a href={areaHref(a)}>{a.name}</a></li>)}
               </ul>
