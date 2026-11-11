@@ -6,6 +6,7 @@ import Header from "@/components/v8/header";
 import Footer from "@/components/v8/footer";
 import PageScene from "@/components/site/page-scene";
 import Panels from "@/components/v8/panels";
+import Reveal from "@/components/v8/reveal";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { AREAS, CASES, CASE_STATUS, LINE_STATUS, caseHref, caseTag, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
 import { SCENE_PHOTO } from "@/lib/content/media";
@@ -20,6 +21,8 @@ export function Shell({ scene, photo, highlight, strong, children }: { scene?: s
       <Header />
       {scene && <PageScene scene={scene} photo={photo ?? SCENE_PHOTO[scene as SceneKey]} highlight={highlight} strong={strong} />}
       <main id="main-content" className={`pg${scene ? " pg-with-scene" : ""}`}><Panels className="pnl-clear">{children}</Panels></main>
+      {/* cards fade in as they arrive (project cards were left hidden on these pages) */}
+      <Reveal />
       <Footer />
     </>
   );
@@ -202,15 +205,18 @@ export function People({ people }: { people: readonly (readonly string[])[] }) {
 export const TALK = { title: "Tell us what you’re working on", text: "" };
 export function Talk({ title = TALK.title, text = TALK.text }: { title?: string; text?: string }) {
   return (
-    <section className="pg-talk" data-nofill>
-      <div className="pg-wrap pg-talk-in">
-        <div>
-          {title && <h2 className="pg-h2">{title}</h2>}
-          {text ? <p>{text}</p> : <Dev block>Content status: line to come from Nicole</Dev>}
-        </div>
-        <div className="pg-btns">
-          <Btn href="/contact" primary>Get in touch</Btn>
-          <Btn href="/insights/case-studies">See our projects</Btn>
+    /* a navy card on white, so it never runs into the footer; Get in touch is the white button (Nicole, Nov 10) */
+    <section className="pg-talk tk2" data-nofill>
+      <div className="pg-wrap">
+        <div className="tk2-card">
+          <div>
+            {title && <h2 className="tk2-h">{title}</h2>}
+            {text && <p>{text}</p>}
+          </div>
+          <div className="tk2-btns">
+            <a className="tk2-btn is-white" href="/contact">Get in touch</a>
+            <a className="tk2-btn" href="/insights/case-studies">See our projects</a>
+          </div>
         </div>
       </div>
     </section>
