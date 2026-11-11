@@ -318,7 +318,8 @@
 .svt .v8-actions .v8-btn { background: #fff !important; border-color: #fff !important; color: #0a1220 !important; box-shadow: none !important; }
 
 /* ── footer ── */
-.fx2 { padding: 0 0 28px !important; background: radial-gradient(50% 60% at 90% 0%, rgba(34, 211, 238, 0.1), transparent 60%), linear-gradient(180deg, #081426, #0a1830) !important; border-top: 1px solid rgba(34, 211, 238, 0.35); }
+/* the footer's own navy, as before (Nicole, Nov 10: the darker one was too dark) */
+.fx2 { padding: 0 0 28px !important; }
 .fx2-line { padding: clamp(44px, 6vw, 84px) clamp(18px, 4vw, 56px) clamp(36px, 4.4vw, 60px); border-bottom: 1px solid rgba(165, 243, 252, 0.14); }
 .fx2-big { margin: 0; color: #fff; font-size: clamp(1.6rem, 3.25vw, 3.6rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; text-align: center; }
 .fx2-big span { color: transparent; background: linear-gradient(180deg, #45e3f7, #12b3d4); -webkit-background-clip: text; background-clip: text; }
@@ -357,3 +358,45 @@
 .hx-panel .ma-feature::before { background: linear-gradient(180deg, rgba(10, 18, 32, 0.1) 15%, rgba(10, 18, 32, 0.92) 85%); }
 .hx-panel .ma-feature > span > span { color: #dce6f2 !important; }
 .hx-panel .ma-people p { color: #dce6f2 !important; }
+
+/* About menu, simpler (Nicole, Nov 10): the Who we are photo card, then plain links like the other menus */
+.ma2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) !important; align-items: stretch; }
+.ma2 .ma-feature { min-height: 280px; }
+.ma2 > ul { align-content: center; }
+
+/* ── fanned photo cards (Insights; Nicole's idea from scale.com, Nov 10) ── */
+.fan-sec { position: relative; z-index: 2; overflow: hidden; padding: clamp(40px, 5vw, 72px) 0 clamp(56px, 7vw, 96px); background: #fff; }
+.fan-head { text-align: center; }
+.fan-head .pg-crumbs ol { justify-content: center; }
+.fan-h { max-width: 22ch; margin: 18px auto 0; color: #0a1220; font-size: clamp(2.2rem, 4.6vw, 4.2rem); font-weight: 600; line-height: 1.06; letter-spacing: -0.03em; }
+.fan-h em { font-style: normal; color: transparent; background: linear-gradient(180deg, #2fd9f0 10%, #0b93b0 95%); -webkit-background-clip: text; background-clip: text; }
+.fan { margin-top: clamp(36px, 4vw, 56px); outline: none; }
+.fan-stage { position: relative; height: clamp(380px, 42vw, 600px); touch-action: pan-y; user-select: none; }
+.fan-card { --w: clamp(280px, 38vw, 560px); position: absolute; left: 50%; top: 50%; width: var(--w); aspect-ratio: 1 / 1.08; overflow: hidden; border-radius: 30px; color: #fff; text-decoration: none; background: #0e1a2b; isolation: isolate;
+  transform: translate(-50%, -50%) translateX(calc(var(--d) * var(--w) * 0.56)) scale(calc(1 - var(--a) * 0.16));
+  z-index: calc(10 - var(--a)); opacity: calc(1.6 - var(--a) * 0.5); filter: brightness(calc(1 - var(--a) * 0.14));
+  box-shadow: 0 30px 60px -30px rgba(10, 18, 32, 0.55); transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.7s, filter 0.7s; cursor: pointer; }
+.fan-card[aria-hidden] { opacity: 0; pointer-events: none; }
+.fan-card > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.fan-card::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 18, 32, 0.35) 0%, rgba(10, 18, 32, 0) 30%, rgba(10, 18, 32, 0) 50%, rgba(10, 18, 32, 0.82) 100%); }
+.fan-tag { position: absolute; left: clamp(20px, 2.4vw, 34px); top: clamp(20px, 2.4vw, 34px); display: inline-flex; align-items: center; gap: 10px; font-size: 0.92rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.fan-tag i { display: inline-block; width: 28px; height: 28px; border-radius: 8px; background: #fff url("/images/pages/rawlinslogo-square.png") center / 72% no-repeat; }
+.fan-card b { position: absolute; left: clamp(20px, 2.4vw, 34px); right: clamp(20px, 2.4vw, 34px); bottom: clamp(20px, 2.4vw, 34px); font-size: clamp(1.15rem, 1.7vw, 1.6rem); font-weight: 600; line-height: 1.25; }
+.fan-card.is-on b::after { content: " →"; color: #22d3ee; }
+.fan-card:not(.is-on):hover { filter: brightness(1); }
+.fan-ctrl { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: clamp(20px, 2.4vw, 32px); }
+.fan-ctrl > button { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 2px solid #1d3759; background: #fff; color: #1d3759; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: background 0.2s, color 0.2s; }
+.fan-ctrl > button:hover { background: #1d3759; color: #fff; }
+.fan-dots { display: flex; gap: 8px; }
+.fan-dots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 999px; background: #c4d8f2; cursor: pointer; transition: width 0.3s, background 0.3s; }
+.fan-dots button[aria-current] { width: 28px; background: #22d3ee; }
+.fan-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 14px; margin-top: clamp(36px, 4vw, 52px); list-style: none; }
+.fan-links a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; border: 1px solid #c4d8f2; color: #1d3759; font-size: 1.04rem; font-weight: 700; text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+.fan-links a::after { content: "→"; color: #0b93b0; }
+.fan-links a:hover { border-color: #22d3ee; background: #f0fbfd; }
+@media (max-width: 700px) { .fan-card { --w: 78vw; } .fan-stage { height: 92vw; } }
+@media (prefers-reduced-motion: reduce) { .fan-card { transition: none; } }
+.fan-card, .fan-card b, .fan-card .fan-tag { color: #fff !important; }
+.fan-card .fan-tag { text-shadow: 0 1px 8px rgba(10, 18, 32, 0.5); }
+.fan-card b { text-shadow: 0 1px 12px rgba(10, 18, 32, 0.45); }
+.fan-tag i { background: #1d3759 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322d3ee' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7l10 10M17 9v8H9'/%3E%3C/svg%3E") center / 62% no-repeat; box-shadow: 0 0 0 1px rgba(165, 243, 252, 0.35); }

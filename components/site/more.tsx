@@ -13,6 +13,8 @@ import PodcastPlayer from "@/components/site/podcast-player";
 import Grown from "@/components/v8/grown";
 import { EdBand, EdBtn, EdHero, EdSec, EdSplit, EdStats, FaceRows } from "@/components/site/editorial";
 import ReadProgress from "@/components/site/read-progress";
+import FanCards, { type FanCard } from "@/components/v8/fan-cards";
+import { casePhoto } from "@/lib/content/v8";
 import TeamWall, { type WallPerson } from "@/components/v8/team-wall";
 import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
 import { cleanNames } from "@/lib/content/clean";
@@ -271,21 +273,36 @@ export function Careers() {
 
 /* ── Insights ── */
 export function InsightsIndex() {
-  const latest = NEWS.filter((n) => !n.placeholder || !PROD).slice(0, 3);
+  /* the fanned cards (Nicole's idea, Nov 10): a mix of everything in Insights, each card going to its page */
+  const art = THOUGHT_LEADERSHIP[0];
+  const next = EVENTS.find((e) => !e.placeholder && isUpcoming(e));
+  const proj = (id: string) => CASES.find((c) => c.id === id);
+  const p1 = proj("cs-proficiency"), p2 = proj("cs-strategic");
+  const cards: FanCard[] = [
+    ...(art ? [{ href: `/insights/thought-leadership/${art.slug}`, tag: "Thought leadership", title: art.title, photo: "/images/pages/auto-data.webp" }] : []),
+    { href: "/insights/research", tag: "Research", title: PUBLICATIONS[0]?.title ?? "Research & Publications", photo: "/images/pages/aam-policy-planning.webp", pos: "40% 40%" },
+    ...(next ? [{ href: "/insights/news", tag: "Where we'll be", title: `${next.title}, ${next.where ?? ""} · ${next.when}`.replace(", ·", " ·"), photo: "/images/pages/aam-community-engagement.webp" }] : []),
+    ...(p1 ? [{ href: caseHref(p1), tag: "Project", title: p1.title, photo: casePhoto(p1) }] : []),
+    { href: "/insights/news", tag: "Recognition", title: "Awards and recognition our people have earned", photo: "/images/pages/team-group-outdoor.webp" },
+    ...(p2 ? [{ href: caseHref(p2), tag: "Project", title: p2.title, photo: casePhoto(p2) }] : []),
+    { href: "/insights/podcast", tag: "Podcast", title: "The Rawlins Way: conversations with the people doing the work", photo: PAGE_PHOTO.podcast },
+  ];
   return (
-    <Shell scene="network" photo={PAGE_PHOTO.insights}>
-      <Hero crumbs={[["/insights", "Insights"]]} kicker="Insights" title="What we've done, and what we're learning"
-        lead={<p>Projects, news and recognition, thought leadership, research, and our podcast.</p>} />
-      <Sec>
-        <Cards items={[
-          { href: "/insights/case-studies", t: "Projects", d: "Our work, by service, industry, and state.", photo: PAGE_PHOTO.cases },
-          { href: "/insights/news", t: "News & Recognition", d: "Events, publications, and news from our team.", photo: PAGE_PHOTO.news },
-          { href: THOUGHT_HREF, t: "Thought Leadership", d: "Practical perspectives from our team.", photo: PAGE_PHOTO.thought },
-          { href: "/insights/research", t: "Research & Publications", d: "Guidance manuals, standards, and research.", photo: PAGE_PHOTO.research },
-          { href: "/insights/podcast", t: "Podcast", d: "The Rawlins Way: conversations with the people doing the work.", photo: PAGE_PHOTO.podcast },
-        ]} />
-      </Sec>
-      {latest.length > 0 && <Sec title="Latest" tone="panel"><NewsList items={latest} /></Sec>}
+    <Shell>
+      <section className="fan-sec" data-nofill>
+        <div className="ed-wrap fan-head">
+          <nav className="pg-crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">Insights</span></li></ol></nav>
+          <h1 className="fan-h">What we&apos;ve done, and <em>what we&apos;re learning.</em></h1>
+        </div>
+        <FanCards cards={cards} label="Insights" start={2} />
+        <ul className="ed-wrap fan-links">
+          <li><a href="/insights/case-studies">Projects</a></li>
+          <li><a href="/insights/news">News &amp; Recognition</a></li>
+          <li><a href={THOUGHT_HREF}>Thought Leadership</a></li>
+          <li><a href="/insights/research">Research &amp; Publications</a></li>
+          <li><a href="/insights/podcast">Podcast</a></li>
+        </ul>
+      </section>
       <Talk />
     </Shell>
   );
