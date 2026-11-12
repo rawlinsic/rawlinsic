@@ -174,7 +174,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     id: "private", slug: "private-sector", name: "Private Sector", scene: "office",
-    who: "Growing firms that have outgrown their current tools or processes", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
+    who: "Firms Who Have Outgrown Their Current Tools or Processes", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
     // One Rawlins project on the page (cs-pv-pmo); the others are our automation team's work before Rawlins, and their cards say so
     // (four when the Who we work with file was written; six with live-site Examples 06 and 07 back, Nov 11).
     // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's new lead for this field was skipped.
