@@ -1969,7 +1969,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    "alt-delivery",
    "owners-rep"
   ],
-  "intro": "Our transit work so far is partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation.",
+  "intro": "Our transit work includes partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation.",
   "industry": "transport",
   "ch": [
    "Multi-agency coordination on a major transit build",
