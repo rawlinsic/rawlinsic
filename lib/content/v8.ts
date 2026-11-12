@@ -76,6 +76,11 @@ const CASE_PHOTO: Record<string, string> = {
   "cs-pa-budget": P("project-pa-budget.webp"), // two-lane state road past farmland, Lancaster County, Pennsylvania; Unsplash, Luk Ramon: unsplash.com/photos/AKMPME_7eiw
   "cs-nyc-parks": P("project-nyc-parks.webp"), // Central Park from the air in fall, New York City; Unsplash, Lumin Osity: unsplash.com/photos/kZgdZRZwqgk
   "cs-riverside": P("project-riverside.webp"), // view over Riverside from Mount Rubidoux, Riverside County, California; Unsplash, john ko: unsplash.com/photos/zb6lAJadm1c
+  /* Three projects added with the Who we work with addendum v2 (Nov 11). Stock under the Unsplash License, each used
+     nowhere else on the site, no logos or agency markings, no recognizable place. */
+  "cs-nv-fleet-program": P("project-nv-fleet-program.webp"), // two wheel loaders in an equipment yard, from above; Unsplash, Daniel Miksha: unsplash.com/photos/uPckxKYErZY
+  "cs-pv-single": P("project-pv-single.webp"), // a schedule on a tablet beside shop equipment; Unsplash, Leon Seibert: unsplash.com/photos/LJypKPEBt4I
+  "cs-pv-sales": P("project-pv-sales.webp"), // a team at a kickoff around a flip chart; Unsplash, Vitaly Gariev: unsplash.com/photos/rgKX4o2xSqI
   "cs-pv-reporting": P("auto-data.webp"),
   "cs-pv-service": P("auto-collab.webp"),
   "cs-pv-field": P("auto-optimize.webp"),
