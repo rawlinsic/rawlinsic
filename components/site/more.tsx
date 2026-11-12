@@ -164,14 +164,9 @@ export function HowWeWork() {
 export function WhereWeWork() {
   /* Nov 12 redesign (Nicole: align to the live site's page, keep the globe, open it into a flat map that zooms in
      and shows projects to click): components/site/where-map.tsx. A state lists the projects that carry its tag
-     (unnamed-client work has no state tag). The state lists below open the map on that state. */
+     (unnamed-client work has no state tag). A link ending in #map-<state> opens the map on that state. */
   const tag = (c: (typeof CASES)[number]) => (c.status === "Ongoing" ? "In the works" : c.status === "Before Rawlins" ? "Before Rawlins" : "Completed");
   const projects: Record<string, WwProject[]> = Object.fromEntries(STATES.map((s) => [s, CASES.filter((c) => c.states.includes(s)).map((c) => ({ title: c.title, href: caseHref(c), photo: casePhoto(c), tag: tag(c) }))]));
-  const chips = (list: string[]) => (
-    <ul className="pg-chips ww-chips">{[...list].sort().map((s) => (
-      <li key={s}><a href={`#map-${s.toLowerCase().replace(/\s+/g, "-")}`}>{s}{projects[s]?.length ? <b>{projects[s].length}</b> : null}</a></li>
-    ))}</ul>
-  );
   return (
     <Shell>
       <WhereMap active={STATES_ACTIVE} served={STATES_SERVED} projects={projects} copy={
@@ -182,13 +177,7 @@ export function WhereWeWork() {
           <div className="ed-lead"><p>While our project work to date has been in the United States, but our team can work anywhere. Members of our team are based in the U.S., Europe, Canada, South Africa, and the United Arab Emirates.</p></div>
         </>
       } />
-      <EdStats items={[{ n: String(STATES_ACTIVE.length), t: "States with active work" }, { n: String(STATES.length), t: "States our work has taken us" }, { n: "3", t: "Countries outside the U.S. where team members are based" }]} />
-      <section className="ed-sec" data-nofill>
-        <div className="ed-wrap ab-where">
-          <div><p className="ed-k">Active now</p><h2 className="ed-h2">Active</h2>{chips(STATES_ACTIVE)}</div>
-          <div><p className="ed-k">how we've grown</p><h2 className="ed-h2">Areas we&apos;ve served</h2>{chips(STATES_SERVED)}</div>
-        </div>
-      </section>
+      {/* the numbers row (11 / 27 / 3) and the two state lists (Active, Areas we've served) were deleted by Nicole, Nov 12 */}
       <Talk />
     </Shell>
   );
@@ -310,7 +299,7 @@ export function InsightsIndex() {
   const cards: FanCard[] = [
     ...(art ? [{ href: `/insights/thought-leadership/${art.slug}`, tag: "Thought leadership", title: art.title, photo: "/images/pages/auto-data.webp" }] : []),
     { href: "/insights/research", tag: "Research", title: PUBLICATIONS[0]?.title ?? "Research & Publications", photo: PAGE_PHOTO.research /* aam-policy-planning is on the never-use list (addendum A) */ },
-    ...(next ? [{ href: "/insights/news", tag: "Where we'll be", title: `${next.title}, ${next.where ?? ""} · ${next.when}`.replace(", ·", " ·"), photo: "/images/pages/insights-hawaii-summit-2026-team.webp" /* the Rawlins team at the first Hawaii Transportation Summit, Sept 2026 (LinkedIn; other sponsors' logos blurred) */ }] : []),
+    ...(next ? [{ href: "/insights/news", tag: "Where we'll be", title: `${next.title}, ${next.where ?? ""} · ${next.when}`.replace(", ·", " ·"), photo: next.tall ?? "/images/pages/insights-hawaii-summit-2026-team.webp" /* the event's own image when it has one (AASHTO); otherwise the Rawlins team at the first Hawaii Transportation Summit, Sept 2026 (LinkedIn; other sponsors' logos blurred) */ }] : []),
     ...(p1 ? [{ href: caseHref(p1), tag: "Project", title: p1.title, photo: casePhoto(p1) }] : []),
     { href: "/insights/news", tag: "Recognition", title: "Awards and recognition our people have earned", photo: "/images/pages/team-group-outdoor.webp" },
     ...(p2 ? [{ href: caseHref(p2), tag: "Project", title: p2.title, photo: casePhoto(p2) }] : []),

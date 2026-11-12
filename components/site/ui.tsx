@@ -206,10 +206,10 @@ export const TALK = { title: "Tell us what you’re working on", text: "" };
 /* Project Delivery's closing band, on its area page and every service page under it (content pass v7, 2.2) */
 const TALK_DELIVERY = { title: "Tell us the number you're not hitting.", text: "We'll help you find out why, build the system that fixes it, and hand it to your team to run." };
 export const talkFor = (areaId: string) => (areaId === "delivery" ? TALK_DELIVERY : TALK);
-export function Talk({ title = TALK.title, text = TALK.text }: { title?: string; text?: string }) {
+export function Talk({ title = TALK.title, text = TALK.text, id }: { title?: string; text?: string; id?: string }) {
   return (
     /* a navy card on white, so it never runs into the footer; Get in touch is the white button (Nicole, Nov 10) */
-    <section className="pg-talk tk2" data-nofill>
+    <section id={id} className="pg-talk tk2" data-nofill>
       <div className="pg-wrap">
         <div className="tk2-card">
           <div>

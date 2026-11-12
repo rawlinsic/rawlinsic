@@ -1,7 +1,7 @@
 "use client";
 /* Our People: flat, remote firm. Three groups by kind of work, each one a bar
    that opens to show its people (Nicole, Nov 11). Two filters, "Filter by
-   area" and "Filter by role" (the roles listed under each group), plus search.
+   area" and "Filter by role" (Advisors, Specialists, Business Operations), plus search.
    Photos are circles. A card opens the person's bio in a window; clicking
    outside the window closes it. A former agency role sits in the bio above the
    background text, under "Before Rawlins". No tiers.
@@ -92,7 +92,6 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
   const [shown, setShown] = useState<Record<string, boolean>>({});
   const [open, setOpen] = useState<Person | null>(null);
   const dlg = useRef<HTMLDialogElement>(null);
-  const jobOf = (p: Person) => p.job ?? p.role;
 
   /* a link to one person (#their-name) opens their group and their bio */
   useEffect(() => {
@@ -107,11 +106,9 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
     holdPage(!!open);
   }, [open]);
 
-  /* the roles under each group, for "Filter by role" */
-  const rolesBy = useMemo(() => GROUPS.map((g) => [g, Array.from(new Set(people.filter((p) => p.group === g).map(jobOf))).sort((a, b) => a.localeCompare(b))] as const), [people]); // eslint-disable-line react-hooks/exhaustive-deps
   const list = useMemo(() => {
     const s = q.trim().toLowerCase();
-    return people.filter((p) => (!area || p.areas.includes(area)) && (!role || jobOf(p) === role) && (!s || `${p.name} ${p.role} ${p.formerly ?? ""} ${p.background}`.toLowerCase().includes(s)));
+    return people.filter((p) => (!area || p.areas.includes(area)) && (!role || p.group === role) && (!s || `${p.name} ${p.role} ${p.formerly ?? ""} ${p.background}`.toLowerCase().includes(s)));
   }, [people, area, role, q]); // eslint-disable-line react-hooks/exhaustive-deps
   const filtering = !!(area || role || q.trim());
   const close = () => { setOpen(null); window.history.replaceState(null, "", window.location.pathname); };
@@ -137,7 +134,8 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
             <span className="pp3-select">
               <select id="pp-f-role" value={role} onChange={(e) => setRole(e.target.value)}>
                 <option value="">All roles</option>
-                {rolesBy.map(([g, roles]) => <optgroup key={g} label={g}>{roles.map((r) => <option key={r} value={r}>{r}</option>)}</optgroup>)}
+                {/* only the three groups (Nicole, Nov 12), not each job title */}
+                {GROUPS.map((g) => <option key={g} value={g}>{g}</option>)}
               </select>
             </span>
           </div>

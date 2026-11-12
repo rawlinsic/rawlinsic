@@ -6,7 +6,8 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from "react";
 
 /* text/more: shown when you point at the middle card (home What we do: the words the old tiles had) */
-export type FanCard = { href: string; tag: string; title: string; photo: string; pos?: string; text?: string; more?: string };
+/* sub: a second line under the title that always shows (Who we work with: who the industry covers) */
+export type FanCard = { href: string; tag: string; title: string; photo: string; pos?: string; text?: string; more?: string; sub?: string };
 
 /* tags: the line at the top of each card (off on home, Nicole, Nov 11). hoverFront: resting the pointer on a side
    card brings it to the middle (home, Nicole, Nov 11); a short pause first, and a pause after each move, so
@@ -68,8 +69,8 @@ export default function FanCards({ cards, label, start, tags = true, hoverFront 
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={c.photo} alt="" loading="lazy" draggable={false} style={c.pos ? { objectPosition: c.pos } : undefined} />
               {tags && <span className="fan-tag"><i aria-hidden="true" />{c.tag}</span>}
-              {c.text || c.more
-                ? <span className="fan-body"><b>{c.title}</b><span className="fan-txt">{c.text && <span className="fan-q">{c.text}</span>}{c.more && <span className="fan-more">{c.more}</span>}</span></span>
+              {c.text || c.more || c.sub
+                ? <span className="fan-body"><b>{c.title}</b>{c.sub && <span className="fan-sub">{c.sub}</span>}<span className="fan-txt">{c.text && <span className="fan-q">{c.text}</span>}{c.more && <span className="fan-more">{c.more}</span>}</span></span>
                 : <b>{c.title}</b>}
             </a>
           );

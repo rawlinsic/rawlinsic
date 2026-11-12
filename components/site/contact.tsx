@@ -30,7 +30,8 @@ export function ContactPageNew() {
             <dl className="pg-facts cf-facts">
               <div><dt>Email us</dt><dd><a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a></dd></div>
               <div><dt>Call us</dt><dd><a href="tel:+17758433822">(775) 843-3822</a></dd></div>
-              <div><dt>Connect</dt><dd><a href="https://www.linkedin.com/company/107078508/" target="_blank" rel="noopener noreferrer">LinkedIn</a></dd></div>
+              {/* the LinkedIn icon in place of the word (Nicole, Nov 12); the same icon as the footer's */}
+              <div><dt>Connect</dt><dd><a className="cf-in" href="https://www.linkedin.com/company/107078508/" target="_blank" rel="noopener noreferrer" aria-label="Rawlins on LinkedIn"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.6 8.65 21 11.2 21 14.4V21h-4v-5.8c0-1.38-.03-3.16-1.93-3.16-1.93 0-2.22 1.5-2.22 3.06V21H9z" /></svg></a></dd></div>
               <div><dt>Location</dt><dd><a href="https://www.google.com/maps/search/?api=1&query=10639+Professional+Cir%2C+Reno%2C+NV+89521" target="_blank" rel="noopener noreferrer">10639 Professional Cir, Reno, NV 89521</a></dd></div>
             </dl>
           </>

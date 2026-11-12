@@ -1117,3 +1117,35 @@ a.nw-more:hover, .nw-proj:hover .nw-more { text-decoration: underline; text-unde
 @media (prefers-reduced-motion: reduce) {
   .ww-view-globe, .ww-view-map, .ww.is-map .ww-view-globe, .ww.is-map .ww-view-map, .ww-globe { transition: none; animation: none; }
 }
+
+/* ── Nov 12, 2026 (2) ── Nicole's list: Contact (bright blue labels, LinkedIn icon, Send button like the header's
+   Get In Touch), Who we work with in the Insights layout, a second line on fanned cards. */
+.cw-details .pg-kicker, .cw-details .pg-facts dt { color: #22d3ee !important; }
+.cf-in { display: inline-grid; place-items: center; width: 46px; height: 46px; margin-top: 4px; border-radius: 50%; border: 2px solid #22d3ee; color: #22d3ee !important; transition: background 0.2s, color 0.2s, box-shadow 0.25s; }
+.cf-in:hover, .cf-in:focus-visible { background: #22d3ee; color: #0a1220 !important; box-shadow: 0 0 20px rgba(34, 211, 238, 0.55); }
+.cf .pg-btn.cf-send, .cf .pg-btn.cf-send:hover { width: auto; align-self: flex-start; justify-self: start; min-height: 48px; padding: 0 26px; border-radius: 999px; border: 2px solid #1d3759 !important; background: linear-gradient(#67e8f9 0%, #22d3ee 55%, #14c3e1 100%) !important; color: #0a1220 !important; font-size: 1.06rem; font-weight: 700; box-shadow: none; transition: box-shadow 0.2s, transform 0.2s; }
+.cf .pg-btn.cf-send:hover { transform: translateY(-1px); box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.35), 0 0 18px rgba(34, 211, 238, 0.55); }
+.cf .pg-btn.cf-send::after { content: none; }
+.cf .pg-btn.cf-send[disabled] { opacity: 0.7; }
+
+.fan-h.is-wide { max-width: 26ch; }
+.fan-card .fan-sub { display: block; margin-top: 8px; color: #e6eef8; font-size: clamp(1rem, 1.2vw, 1.15rem); font-weight: 600; line-height: 1.35; text-shadow: 0 1px 10px rgba(10, 18, 32, 0.6); }
+.iwx-head { max-width: 980px; margin: 0 0 clamp(28px, 3.4vw, 48px); }
+.iwx-intro { margin: 12px 0 0; color: #2e3c50; font-size: clamp(1.12rem, 1.4vw, 1.3rem); line-height: 1.6; }
+.iwx-head .ed-btns { margin-top: 24px; }
+.iwx-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.iwx-list > li { display: flex; flex-direction: column; min-width: 0; padding: clamp(22px, 2.4vw, 32px); border-radius: 24px; border: 1px solid #c4d8f2; border-top: 4px solid #22d3ee; background: #fff; box-shadow: 0 18px 40px -30px rgba(10, 18, 32, 0.45); transition: transform 0.25s, box-shadow 0.25s; }
+.iwx-list > li:hover { transform: translateY(-3px); box-shadow: 0 22px 44px -26px rgba(10, 18, 32, 0.5); }
+.iwx-list > li.is-wide { grid-column: 1 / -1; }
+.iwx-list h2 { margin: 0; font-size: clamp(1.5rem, 2.1vw, 1.95rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+.iwx-list h2 a { color: #0a1220; text-decoration: none; }
+.iwx-list h2 a:hover { color: #0b6f86; }
+.iwx-who { margin: 8px 0 0; color: #0b6f86; font-size: 1.08rem; font-weight: 700; line-height: 1.35; }
+.iwx-lead { max-width: 80ch; margin: 12px 0 0; color: #2e3c50; font-size: 1.06rem; line-height: 1.55; }
+.iwx-subs { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.iwx-subs li { min-width: 0; }
+.iwx-subs a { display: inline-flex; align-items: center; padding: 8px 15px; border-radius: 999px; border: 1px solid #c4d8f2; background: #f5f9fd; color: #1d3759; font-size: 1rem; font-weight: 600; text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+.iwx-subs a:hover { border-color: #22d3ee; background: #e8f9fc; }
+.iwx-list .ed-more { align-self: flex-start; margin-top: auto; padding-top: 20px; }
+@media (max-width: 1080px) { .iwx-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .iwx-list { grid-template-columns: minmax(0, 1fr); } }

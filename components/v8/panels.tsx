@@ -74,7 +74,7 @@ export default function Panels({ children, className }: { children: ReactNode; c
         }
       });
       // which panels hold: only those whose next panel covers everything under the bars
-      const holds = kids.map((_, i) => { const nx = kids[i + 1]; return i > 0 && !!nx && nx.offsetHeight >= vh - tops[i + 1] - 1; });
+      const holds = kids.map((_, i) => { const j = after(i), nx = kids[j]; return i > 0 && !!nx && nx.offsetHeight >= vh - tops[j] - 1; });
       // the beat before the next panel comes over: only where a panel holds (elsewhere it would just be a gap)
       kids.forEach((el, i) => { if (holds[i] && i !== kids.length - 1 && !el.matches(HELD)) el.style.marginBottom = `${Math.round(vh * DWELL)}px`; });
       // measure where each panel sits when it is not held
@@ -86,6 +86,10 @@ export default function Panels({ children, className }: { children: ReactNode; c
       // (a panel that doesn't hold gets the same treatment: it never sticks)
       kids.forEach((el, i) => el.style.setProperty("--pt", `${holds[i] ? Math.min(tops[i], vh - el.offsetHeight) : -el.offsetHeight}px`));
     };
+    /* The next panel that is on the page. A section taken off with the preview's Delete section button is
+       still in the markup but hidden, with no size: counting it as "the panel in front" made the one before
+       it read as fully covered and hid it (Who we work with, Nov 12). */
+    const after = (i: number) => { let j = i + 1; while (j < kids.length && kids[j].getClientRects().length === 0) j++; return j; };
     const unfill = () => kids.forEach((el) => { el.style.paddingTop = ""; el.style.minHeight = ""; el.style.marginBottom = ""; });
     const tick = () => {
       raf = 0;
@@ -96,11 +100,17 @@ export default function Panels({ children, className }: { children: ReactNode; c
         if (rad !== rads[i]) { rads[i] = rad; kids[i].style.setProperty("--rad", rad); }
       }
       for (let i = 0; i < kids.length - 1; i++) {
-        const cur = rs[i], nx = rs[i + 1], el = kids[i];
+        const j = after(i), cur = rs[i], el = kids[i];
+        if (j >= kids.length) { // nothing after it on the page: it is never covered
+          if ("cv" in el.dataset) { el.style.removeProperty("--cv"); delete el.dataset.cv; }
+          if ("gone" in el.dataset) delete el.dataset.gone;
+          continue;
+        }
+        const nx = rs[j];
         // how much of this panel's on-screen part the next panel covers. Panels sit
         // end to end, so this stays 0 until the next one really slides over it:
         // nothing dims while it is still being read.
-        const top = Math.max(cur.top, tops[i + 1]), bot = Math.min(cur.bottom, vh);
+        const top = Math.max(cur.top, tops[j]), bot = Math.min(cur.bottom, vh);
         const cover = bot - top > 1 ? Math.max(0, Math.min(1, (bot - nx.top) / (bot - top))) : nx.top <= top + 1 ? 1 : 0;
         const cv = cover * cover; // eased: the part still showing stays readable until it is nearly covered
         if (cv > 0.001) { el.style.setProperty("--cv", cv.toFixed(4)); el.dataset.cv = ""; }

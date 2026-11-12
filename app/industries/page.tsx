@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/components/v8/header";
-import Footer from "@/components/v8/footer";
-import Reveal from "@/components/v8/reveal";
 import IndustriesIndexV8 from "@/components/v8/industries-index";
 
 export const metadata: Metadata = {
@@ -9,13 +6,7 @@ export const metadata: Metadata = {
   description: "Who Rawlins works with: state transportation departments and other public agencies, the contractors and engineering firms that build for them, and private firms.",
   alternates: { canonical: "/industries" },
 };
+/* the page brings its own header, footer and scrolling (components/site/ui.tsx Shell), like Insights */
 export default function Page() {
-  return (
-    <>
-      <Header />
-      <main id="main-content" className="v8"><IndustriesIndexV8 /></main>
-      <Footer />
-      <Reveal />
-    </>
-  );
+  return <IndustriesIndexV8 />;
 }

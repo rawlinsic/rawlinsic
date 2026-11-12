@@ -6,7 +6,7 @@ export type NewsItem = { tag: "Project" | "Award" | "Publication" | "Research" |
 /* ends: the event's last day (YYYY-MM-DD). It drops off the site the next day. */
 /* line: one sentence for under the home hero's buttons (full site pass, Part 5, 1.1) */
 /* photo/logo/credit: a picture for the event's card on home (photo behind, the event's own logo over it) */
-export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string; photo?: string; logo?: string; badge?: string; credit?: string; banner?: boolean; /* the event's full name, for its home card */ cardTitle?: string; /* who was there for us, and the sessions they led (shown on the event's card in place of the sentence) */ who?: string; sessions?: { day: string; role: string; title: string }[] 
+export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string; photo?: string; logo?: string; badge?: string; credit?: string; banner?: boolean; /* the event's full name, for its home card */ cardTitle?: string; /* a tall image for the event's card on the Insights page */ tall?: string; /* who was there for us, and the sessions they led (shown on the event's card in place of the sentence) */ who?: string; sessions?: { day: string; role: string; title: string }[] 
   /* Nov 11 (Nicole): events show under "Where we'll be next" until they end, then under "Where we've been", so past
      events stay on the site and it's clear they're over. intl: outside the U.S. (also listed on the International page).
      role: what we did there (Speaking, Sponsor, ...). past: what to say once it's over. pos: where to center the photo.
@@ -58,7 +58,10 @@ export const EVENTS: EventItem[] = [
     /* Nov 11 (Nicole: "make the background image overlay a little darker so we can read the text"): the words in that
        image can't be darkened apart from the picture, so the image sits behind, blurred and darkened, and the card
        shows the same words as real text, with the meeting's badge. */
-    photo: "/images/pages/aashto-2026-annual-meeting.webp", banner: true, badge: "/images/pages/aashto-2026-badge.png", cardTitle: "2026 AASHTO Annual Meeting and Expo" },
+    photo: "/images/pages/aashto-2026-annual-meeting.webp", banner: true, badge: "/images/pages/aashto-2026-badge.png", cardTitle: "2026 AASHTO Annual Meeting and Expo",
+    /* Nicole, Nov 12: the Insights "Where we'll be" card shows the AASHTO event image, not our Hawaii team photo.
+       The same header image from AASHTO's event page, whole, on a blurred copy of itself so it fits the tall card. */
+    tall: "/images/pages/insights-aashto-2026-card.webp" },
   /* content pass v7, 12.2: after AASHTO, which stays first until it ends on Nov 18 */
   { when: "Dec 6–10, 2026", title: "IHEEP 2026", where: "Austin, Texas", note: "", ends: "2026-12-10", role: "Attending",
     href: "https://web.cvent.com/event/2b28935f-a05f-4812-b141-d649c7d831d1/summary",
