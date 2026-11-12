@@ -20,7 +20,8 @@ import { tvPeople, whyItems } from "@/components/v8/why-items";
 import FanCards, { type FanCard } from "@/components/v8/fan-cards";
 import { casePhoto } from "@/lib/content/v8";
 import TeamWall, { type WallPerson } from "@/components/v8/team-wall";
-import { NEWS, EVENTS, isUpcoming } from "@/lib/content/news";
+import { NEWS, EVENTS, isUpcoming, eventsByTime } from "@/lib/content/news";
+import { UpcomingEvents, PastEvents } from "@/components/site/events";
 import { cleanNames } from "@/lib/content/clean";
 import { Btn, CaseCards, Crumbs, Dev, Hero, List, People, PROD, Sec, Shell, Steps, Talk } from "@/components/site/ui";
 
@@ -348,66 +349,89 @@ function NewsList({ items }: { items: typeof NEWS }) {
 }
 
 export function NewsPage() {
+  /* Redesigned Nov 11 (Nicole: "the whole news page needs to be redesigned better", and past events in their own
+     section "so we can showcase them but it's clear"). In order: where we'll be next, where we've been (past
+     events, with photos), news from our team, awards, research. Events move from the first list to the second on
+     their own the day after they end. */
   const items = NEWS.filter((n) => !n.placeholder || !PROD);
-  const real = items.filter((n) => !n.placeholder), ph = items.filter((n) => n.placeholder);
-  const events = EVENTS.filter((e) => (!e.placeholder || !PROD) && isUpcoming(e));
+  const real = items.filter((n) => !n.placeholder && n.tag !== "Project"), ph = items.filter((n) => n.placeholder && n.tag !== "Project");
+  const { upcoming, past } = eventsByTime(EVENTS.filter((e) => !e.placeholder || !PROD));
   const [top, ...rest] = real;
   /* the featured story's picture: the article's own photo when it's our article */
   const art = THOUGHT_LEADERSHIP.find((a) => top?.href?.endsWith(a.slug));
   const ext = (h?: string) => (h && /^http/.test(h) ? { target: "_blank", rel: "noopener noreferrer" } : {});
   return (
     <Shell>
-      <EdHero crumbs={[["/insights", "Insights"], ["/insights/news", "News & Recognition"]]} kicker="Insights" title={<>News &amp; <em>Recognition</em></>}
-        lead={<p>Where we&apos;ll be, what our team is publishing, and the recognition our people have earned.</p>}
-        actions={<><EdBtn href="/insights/research">Research &amp; Publications</EdBtn><EdBtn href="/about/our-people" kind="ghost">Meet our people</EdBtn></>} />
-      {events.length > 0 && (
-        <EdSec k="Where we'll be" title="Coming up" tone="navy">
-          <ul className="nw2-events">{events.map((e) => {
-            const m = e.when.match(/^(\w+)\s+([\d–-]+),?\s*(\d{4})?/);
-            return (
-              <li key={e.title} className={e.placeholder ? "is-dev" : ""}>
-                <span className="nw2-date">{m ? <><em>{m[1]}</em><b>{m[2]}</b><small>{m[3]}</small></> : <b>{e.when}</b>}</span>
-                <span className="nw2-ev"><b>{e.title}</b>{e.where && <span>{e.where}</span>}{e.line && <p>{e.line}</p>}{e.note && <p>{e.note}</p>}{e.placeholder && <Dev>Placeholder: {e.placeholder}</Dev>}</span>
-              </li>
-            );
-          })}</ul>
-        </EdSec>
+      <EdHero dark crumbs={[["/insights", "Insights"], ["/insights/news", "News & Recognition"]]} kicker="Insights" title={<>News &amp; <em>Recognition</em></>}
+        lead={<p>Where we&apos;ll be, what our team is publishing, and the recognition our people have earned.</p>}>
+        <nav className="ed-wrap nw3-jump" aria-label="On this page">
+          {upcoming.length > 0 && <a href="#next"><b>{upcoming.length}</b>Coming up</a>}
+          {past.length > 0 && <a href="#been"><b>{past.length}</b>Past events</a>}
+          <a href="#news"><b>{real.length}</b>News</a>
+          <a href="#recognition"><b>{AWARDS.length}</b>Awards</a>
+          <a href="#research"><b>{PUBLICATIONS.length}</b>Publications</a>
+        </nav>
+      </EdHero>
+      {upcoming.length > 0 && (
+        <section id="next" className="ed-sec is-navy nw3-sec" data-nofill>
+          <div className="ed-wrap">
+            <div className="ed-sec-head"><div><p className="ed-k">Coming up</p><h2 className="ed-h2">Where we&apos;ll be next</h2></div></div>
+            <UpcomingEvents events={upcoming} />
+          </div>
+        </section>
       )}
-      <EdSec k="Latest" title="From our team">
-        <div className="nw2-latest">
-          {top && (
-            <a className="nw2-feature" href={top.href} {...ext(top.href)}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={art?.image ?? PAGE_PHOTO.news} alt="" loading="lazy" />
-              <span className="nw2-body"><span className="nw2-tag">{top.tag}{top.date ? ` · ${top.date}` : ""}</span><b>{top.title}</b>{top.text && <p>{top.text}</p>}<span className="ed-more">Read it</span></span>
-            </a>
-          )}
-          <ul className="nw2-list">
-            {rest.map((n) => (
-              /* no link, no "Read more" for a post without one (content pass v7, 12.2) */
-              <li key={n.title}>{n.href
-                ? <a href={n.href} {...ext(n.href)}><span className="nw2-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span><b>{n.title}</b>{n.text && <p>{n.text}</p>}<span className="ed-more">{/linkedin/.test(n.href) ? "Read it on LinkedIn" : "Read more"}</span></a>
-                : <div><span className="nw2-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span><b>{n.title}</b>{n.text && <p>{n.text}</p>}</div>}</li>
-            ))}
-            {ph.map((n) => <li key={n.title} className="is-dev"><div><span className="nw2-tag">{n.tag}</span><b>{n.title}</b><Dev>Placeholder: {n.placeholder}</Dev></div></li>)}
-          </ul>
+      {past.length > 0 && (
+        <section id="been" className="ed-sec nw3-sec nw3-been" data-nofill>
+          <div className="ed-wrap">
+            <div className="ed-sec-head"><div><p className="ed-k">Past events</p><h2 className="ed-h2">Where we&apos;ve been</h2></div></div>
+            <PastEvents events={past} />
+          </div>
+        </section>
+      )}
+      <section id="news" className="ed-sec is-panel nw3-sec" data-nofill>
+        <div className="ed-wrap">
+          <div className="ed-sec-head"><div><p className="ed-k">News</p><h2 className="ed-h2">From our team</h2></div></div>
+          <div className="nw2-latest">
+            {top && (
+              <a className="nw2-feature" href={top.href} {...ext(top.href)}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={art?.image ?? PAGE_PHOTO.news} alt="" loading="lazy" />
+                <span className="nw2-body"><span className="nw2-tag">{top.tag}{top.date ? ` · ${top.date}` : ""}</span><b>{top.title}</b>{top.text && <p>{top.text}</p>}<span className="ed-more">Read it</span></span>
+              </a>
+            )}
+            <ul className="nw2-list">
+              {rest.map((n) => (
+                /* no link, no "Read more" for a post without one (content pass v7, 12.2) */
+                <li key={n.title}>{n.href
+                  ? <a href={n.href} {...ext(n.href)}><span className="nw2-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span><b>{n.title}</b>{n.text && <p>{n.text}</p>}<span className="ed-more">{/linkedin/.test(n.href) ? "Read it on LinkedIn" : "Read more"}</span></a>
+                  : <div><span className="nw2-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span><b>{n.title}</b>{n.text && <p>{n.text}</p>}</div>}</li>
+              ))}
+              {ph.map((n) => <li key={n.title} className="is-dev"><div><span className="nw2-tag">{n.tag}</span><b>{n.title}</b><Dev>Placeholder: {n.placeholder}</Dev></div></li>)}
+            </ul>
+          </div>
         </div>
-      </EdSec>
-      <EdSec k="Recognition" title="Awards and recognition" tone="panel">
-        <ul className="nw2-awards">{AWARDS.map((a) => (
-          <li key={a.href}>
-            <span className="nw2-tag">{a.year}{a.before ? " · Before Rawlins" : ""}</span>
-            <b>{a.title}</b><p>{a.from}</p>
-            <ByLine names={a.people} />
-            <a className="ed-more" href={a.href} target="_blank" rel="noopener noreferrer">The announcement</a>
-          </li>
-        ))}</ul>
-      </EdSec>
-      <EdSec k="Research" title="National research by our people" link={{ href: "/insights/research", label: "All research and publications" }}>
-        <ul className="nw2-pubs">{PUBLICATIONS.slice(0, 3).map((x) => (
-          <li key={x.href}><a href={x.href} target="_blank" rel="noopener noreferrer"><span className="nw2-tag">{x.series} · {x.year}</span><b>{x.title}</b><span className="nw2-who">{x.people.join(", ")}</span></a></li>
-        ))}</ul>
-      </EdSec>
+      </section>
+      <section id="recognition" className="ed-sec nw3-sec" data-nofill>
+        <div className="ed-wrap">
+          <div className="ed-sec-head"><div><p className="ed-k">Recognition</p><h2 className="ed-h2">Awards and recognition</h2></div></div>
+          <ul className="nw2-awards">{AWARDS.map((a) => (
+            <li key={a.href}>
+              <span className="nw2-tag">{a.year}{a.before ? " · Before Rawlins" : ""}</span>
+              <b>{a.title}</b><p>{a.from}</p>
+              <ByLine names={a.people} />
+              <a className="ed-more" href={a.href} target="_blank" rel="noopener noreferrer">The announcement</a>
+            </li>
+          ))}</ul>
+        </div>
+      </section>
+      <section id="research" className="ed-sec is-panel nw3-sec" data-nofill>
+        <div className="ed-wrap">
+          <div className="ed-sec-head"><div><p className="ed-k">Research</p><h2 className="ed-h2">National research by our people</h2></div><a className="ed-more" href="/insights/research">All research and publications</a></div>
+          <ul className="nw2-pubs">{PUBLICATIONS.slice(0, 3).map((x) => (
+            <li key={x.href}><a href={x.href} target="_blank" rel="noopener noreferrer"><span className="nw2-tag">{x.series} · {x.year}</span><b>{x.title}</b><span className="nw2-who">{x.people.join(", ")}</span></a></li>
+          ))}</ul>
+        </div>
+      </section>
       <Talk />
     </Shell>
   );

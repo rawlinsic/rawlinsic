@@ -6,7 +6,12 @@ export type NewsItem = { tag: "Project" | "Award" | "Publication" | "Research" |
 /* ends: the event's last day (YYYY-MM-DD). It drops off the site the next day. */
 /* line: one sentence for under the home hero's buttons (full site pass, Part 5, 1.1) */
 /* photo/logo/credit: a picture for the event's card on home (photo behind, the event's own logo over it) */
-export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string; photo?: string; logo?: string; badge?: string; credit?: string; banner?: boolean; /* the event's full name, for its home card */ cardTitle?: string };
+export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string; photo?: string; logo?: string; badge?: string; credit?: string; banner?: boolean; /* the event's full name, for its home card */ cardTitle?: string 
+  /* Nov 11 (Nicole): events show under "Where we'll be next" until they end, then under "Where we've been", so past
+     events stay on the site and it's clear they're over. intl: outside the U.S. (also listed on the International page).
+     role: what we did there (Speaking, Sponsor, ...). past: what to say once it's over. pos: where to center the photo.
+     ends is also what orders past events; where only the month or year is known it's set to that month's end. */
+  intl?: boolean; role?: string; past?: string; pos?: string };
 
 export const NEWS: NewsItem[] = [
   {
@@ -28,30 +33,12 @@ export const NEWS: NewsItem[] = [
     href: "https://www.linkedin.com/pulse/americas-transportation-crossroads-what-2026-midterm-mean-palanisamy-iyt2e/" },
   /* no "contract wins" on the site (Nicole, Nov 10); on home this spot shows a project in the works */
   { tag: "Project", title: "A project in the works", placeholder: "a project underway, from Projects (In the works)" },
-  /* site content pass v7 addendum, Part B (Nov 11): each checked against Rawlins' or the person's own LinkedIn post, the
-     event's sponsor board, or the publisher's page. Placed here so home's What's new cards stay the same. */
-  // AMOTIA: the event's sponsor board ("Host State Night Event Sponsor") and Rawlins' LinkedIn post
-  { tag: "Speaking", date: "November 2026", title: "AMOTIA 17th Annual Conference",
-    text: "Rawlins was the Host State Night event sponsor at AMOTIA's 17th Annual Conference, November 4 to 6 in Fort Lauderdale. Scott Rawlins joined a general session panel on how asset maintenance supports asset management." },
-  // Andy's LinkedIn posts
-  { tag: "Speaking", date: "November 2026", title: "Automechanika Dubai 2026",
-    text: "Andy Palanisamy moderated sessions on smart cities and mobility integration across the Middle East and Africa, and on total lifecycle management from procurement to end of life, and spoke on enabling innovation in a regulated world. November 10 to 12, Dubai Exhibition Centre, Expo City Dubai." },
-  // Andy's LinkedIn posts
-  { tag: "Event", date: "November 2026", title: "ConTech / MENA Construction Summit 2026",
-    text: "Andy Palanisamy represented Rawlins at the ConTech / MENA Construction Summit, November 9 and 10 at Madinat Jumeirah, Dubai." },
-  // Hawaii: Ozzy Bravo's LinkedIn post ("Exclusive Sponsor for Lanyards and an Educational Session") and the sponsor board
-  { tag: "Event", date: "September 2026", title: "The first Hawaii Transportation Summit",
-    text: "Rawlins was an exclusive sponsor of the first Hawaii Transportation Summit, sponsoring the lanyards and an educational session on leadership and AI. Scott Rawlins and Alicia McConnell moderated and took part in sessions." },
-  // Andy's LinkedIn posts
-  { tag: "Speaking", date: "2026", title: "LEAP 2026, Riyadh",
-    text: "Andy Palanisamy spoke on the future of urban identity at LEAP 2026 in Riyadh." },
+  /* The event posts that were here (AMOTIA, Automechanika Dubai, ConTech / MENA, the Hawaii summit, LEAP, and the
+     STEM Bridge Challenge; content pass v7 addendum, Part B) are in EVENTS below since Nov 11, so the News page can
+     show them as past events with their photos. */
   // Andy's LinkedIn posts
   { tag: "Recognition", date: "2026", title: "Andy Palanisamy named a G100 Denim Club Country Partner",
     text: "Andy Palanisamy serves as the G100 Mission Million Denim Club Country Partner for the Smart & Sustainable Cities Wing in the UAE. G100 is a group of 100 global women leaders, and the Denim Club is its group of He-for-She champions." },
-  // Bridge Challenge: Dara Wheeler's LinkedIn post and the AASHTO Journal article (Apr 17, 2026)
-  { tag: "Event", date: "April 2026", title: "AASHTO 2026 STEM Bridge Challenge",
-    text: "Alicia McConnell helped lead the 2026 AASHTO STEM Bridge Challenge, where middle and high school teams design, build, and test model bridges. April 13, at AASHTO's Spring Meeting in Savannah.",
-    href: "https://aashtojournal.transportation.org/winners-named-in-aashto-2026-bridge-challenge/" },
   // HEEP: heep.org
   { tag: "Award", date: "2025", title: "Ken G. Close Award for the HEEP UAS Committee",
     text: "The Highway Engineering Exchange Program gave its 2025 Ken G. Close Award to its UAS Committee. Alicia McConnell and Paul Wheeler of our team serve on the committee.",
@@ -73,9 +60,35 @@ export const EVENTS: EventItem[] = [
        shows the same words as real text, with the meeting's badge. */
     photo: "/images/pages/aashto-2026-annual-meeting.webp", banner: true, badge: "/images/pages/aashto-2026-badge.png", cardTitle: "2026 AASHTO Annual Meeting and Expo" },
   /* content pass v7, 12.2: after AASHTO, which stays first until it ends on Nov 18 */
-  { when: "Dec 6–10, 2026", title: "IHEEP 2026", where: "Austin, Texas", note: "", ends: "2026-12-10",
+  { when: "Dec 6–10, 2026", title: "IHEEP 2026", where: "Austin, Texas", note: "", ends: "2026-12-10", role: "Attending",
     href: "https://web.cvent.com/event/2b28935f-a05f-4812-b141-d649c7d831d1/summary",
     line: "Our drone team will be at IHEEP 2026 in Austin, Dec 6–10." },
+  /* Everything below was a News post until Nov 11. Each was checked then against Rawlins' or the person's own LinkedIn
+     post, the event's sponsor board, or the publisher's page (content pass v7 addendum, Part B). They sit after the
+     two above so the home page and the menu keep showing AASHTO first. */
+  // Andy's LinkedIn posts, and his event graphic (three sessions, Nov 11 and 12)
+  { when: "Nov 10–12, 2026", title: "Automechanika Dubai 2026", where: "Dubai Exhibition Centre, Expo City Dubai", ends: "2026-11-12", intl: true, role: "Speaking",
+    line: "Andy Palanisamy is moderating sessions on smart cities and mobility integration across the Middle East and Africa, and on total lifecycle management from procurement to end of life, and speaking on enabling innovation in a regulated world.",
+    past: "Andy Palanisamy moderated sessions on smart cities and mobility integration across the Middle East and Africa, and on total lifecycle management from procurement to end of life, and spoke on enabling innovation in a regulated world." },
+  // Andy's LinkedIn posts
+  { when: "Nov 9–10, 2026", title: "ConTech / MENA Construction Summit 2026", where: "Madinat Jumeirah, Dubai", ends: "2026-11-10", intl: true, role: "Attending",
+    past: "Andy Palanisamy represented Rawlins at the ConTech / MENA Construction Summit." },
+  // AMOTIA: the event's sponsor board ("Host State Night Event Sponsor") and Rawlins' LinkedIn post. Photo: Scott on the general session panel, by Janine Cooper.
+  { when: "Nov 4–6, 2026", title: "AMOTIA 17th Annual Conference", where: "Fort Lauderdale, Florida", ends: "2026-11-06", role: "Sponsor and speaking",
+    photo: "/images/pages/news-amotia-2026-general-session.webp", pos: "50% 30%",
+    past: "Rawlins was the Host State Night event sponsor. Scott Rawlins joined a general session panel on how asset maintenance supports asset management." },
+  // Hawaii: Ozzy Bravo's LinkedIn post ("Exclusive Sponsor for Lanyards and an Educational Session") and the sponsor board. The month is known, not the days.
+  { when: "September 2026", title: "The first Hawaii Transportation Summit", where: "Hawaii", ends: "2026-09-30", role: "Sponsor and speaking",
+    photo: "/images/pages/insights-hawaii-summit-2026-team.webp", pos: "50% 35%",
+    past: "Rawlins was an exclusive sponsor, sponsoring the lanyards and an educational session on leadership and AI. Scott Rawlins and Alicia McConnell moderated and took part in sessions." },
+  // Andy's LinkedIn posts (photos posted early Sep 2026; Nicole's "int'l" folder). Only the year is on record, so it's ordered by when the photos were posted.
+  { when: "2026", title: "LEAP 2026", where: "Riyadh, Saudi Arabia", ends: "2026-09-03", intl: true, role: "Speaking",
+    photo: "/images/pages/news-leap-2026-speaking.webp", pos: "60% 30%",
+    past: "Andy Palanisamy spoke on the future of urban identity." },
+  // Bridge Challenge: Dara Wheeler's LinkedIn post and the AASHTO Journal article (Apr 17, 2026)
+  { when: "Apr 13, 2026", title: "AASHTO 2026 STEM Bridge Challenge", where: "Savannah, Georgia", ends: "2026-04-13", role: "Leading",
+    href: "https://aashtojournal.transportation.org/winners-named-in-aashto-2026-bridge-challenge/",
+    past: "Alicia McConnell helped lead the challenge, where middle and high school teams design, build, and test model bridges, at AASHTO's Spring Meeting." },
 ];
 
 /* An event shows until the end of its last day, Pacific time (our office is in
@@ -86,4 +99,13 @@ export const isUpcoming = (e: EventItem, now: Date = new Date()) => {
   const [y, m, d] = e.ends.split("-").map(Number);
   const nextDayPacific = Date.UTC(y, m - 1, d + 1, 8); // midnight PST (UTC-8) the day after
   return now.getTime() < nextDayPacific;
+};
+
+/* Events for a page, split by whether they're still to come: upcoming soonest first, past newest first. */
+export const eventsByTime = (list: EventItem[] = EVENTS, now: Date = new Date()) => {
+  const key = (e: EventItem) => e.ends ?? "9999";
+  return {
+    upcoming: list.filter((e) => isUpcoming(e, now)).sort((a, b) => key(a).localeCompare(key(b))),
+    past: list.filter((e) => !isUpcoming(e, now)).sort((a, b) => key(b).localeCompare(key(a))),
+  };
 };
