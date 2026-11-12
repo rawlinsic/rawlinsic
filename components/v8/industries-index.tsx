@@ -24,7 +24,7 @@ export default function IndustriesIndexV8() {
             <nav className="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Who we work with</li></ol></nav>
             <p className="sv-area">Who we work with</p>
             <h1>Public agencies and private firms, wherever the work is.</h1>
-            <p className="sv-intro">Most of our work is with organizations that own and run public infrastructure: more than 30 transportation agencies, plus local governments and a multi-state research program. We also work with contractors and engineering firms on public projects, and help private firms with their systems and workflows. Our work so far has been in the United States, and our team can work anywhere.</p>
+            <p className="sv-intro">Most of our work is with the public agencies that own and run infrastructure: more than 30 transportation agencies, local agencies, and a multi-state research program. We also work with the contractors and engineering firms that build for those agencies, and we help private firms connect their systems and workflows. Our work so far has been in the United States, and our team can work anywhere.</p>
             <div className="v8-actions"><a className="v8-btn v8-btn-area" href="/contact">Get in touch</a></div>
           </div>
         </section>

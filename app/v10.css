@@ -658,8 +658,6 @@
 .dw-play { position: absolute; right: 22px; top: 50%; width: 56px; height: 56px; margin-top: -28px; border-radius: 50%; background: #1d3759; }
 .dw-play::after { content: ""; position: absolute; left: 22px; top: 18px; border: 10px solid transparent; border-left: 16px solid #22d3ee; border-right: 0; }
 @media (max-width: 800px) { .dw-grid { grid-template-columns: 1fr; grid-template-areas: "land" "links" "form" "mail" "video"; } }
-/* International: Why it carries over */
-.intl-carry .v8-lead { max-width: 900px; margin-top: 16px; }
 /* home: the AASHTO card is as wide as its event image (two columns, one row), the image fills it, and the button sits on it */
 @media (min-width: 900px) {
   .newsgrid .ev.has-banner { grid-column: span 2; grid-row: span 1; position: relative; padding: 0; aspect-ratio: 1242 / 432; min-height: 0; overflow: hidden; justify-content: flex-end; }

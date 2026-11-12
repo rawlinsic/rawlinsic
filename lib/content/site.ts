@@ -121,47 +121,63 @@ const sub = (id: string, name: string, scene: SceneKey, line: string, thin = fal
 export const INDUSTRIES: Industry[] = [
   {
     id: "transport", slug: "transportation", name: "Transportation", scene: "interchange",
-    who: "State DOTs, Aeronautics Divisions, Harbors, & Transit",
-    lead: "Most of our work is with state departments of transportation: more than 30 transportation agencies so far. We work across highways, bridges, aviation, harbors, and transit, from how a department is organized to how its projects get delivered and its roads get maintained.",
+    who: "State DOTs, Aeronautics Divisions, Harbors, & Transit", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
+    // 31 agencies: 19 directly or through a prime, 12 through the drone standards pooled fund (CONTENT FIXES v3, section 3).
+    // Transit: one partnering project (2019). Harbors: one client. Named for what they are, with no count.
+    lead: "Most of our work is with state departments of transportation, and we've served more than 30 transportation agencies so far. We help them organize the department, choose and deliver projects, maintain and operate what they own, and put drones and digital tools to work. Most of that work is on highways and bridges. We also support state aeronautics programs, and we've worked on a light rail line and with a state harbors program.",
     featured: ["program-delivery", "preconstruction", "row", "construction", "operations", "traffic", "asset-mgmt", "portals", "drone-programs"],
     featuredCase: "cs-major",
     projects: ["cs-transform", "cs-proficiency", "cs-aero"],
     subsectors: [
-      sub("sub-highways", "Highways & Roads", "rural", "Most of our work is on highway systems: how they're planned, funded, delivered, maintained, and operated."),
-      sub("sub-bridges", "Bridges & Structures", "crossing", "From partnering on billion-dollar river crossings to bridge inspector proficiency programs and drone inspection standards."),
+      sub("sub-highways", "Highways & Roads", "rural", "Most of our work is on state highway systems: how projects are chosen, readied, built, and maintained."),
+      // "billion-dollar river crossings" was wrong: only one of them cost over a billion
+      sub("sub-bridges", "Bridges & Structures", "crossing", "Partnering on major river crossings, proficiency programs that cover bridge inspection, and a multi-state standard for drone data on structures."),
       sub("sub-aviation", "Aviation & Airports", "airport", "State aeronautics divisions, airports, and the drone and advanced air mobility programs growing around them. We help small aviation staffs run programs, plan for what's next, and compete for federal funding."),
+      // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's line for this field was skipped
       sub("sub-rail", "Rail & Transit", "rail", "Our transit work includes partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation."),
       /* v12: back under Transportation. Only harbors work so far (port security
          grant applications; one drone and uncrewed-vessel technology evaluation). */
-      sub("sub-ports", "Ports & Harbors", "harbor", "Harbors run on security, funding, and new technology. Our work here so far: port security grant applications, and an evaluation of drone and uncrewed-vessel technology.", true),
+      sub("sub-ports", "Ports & Harbors", "harbor", "Our work here so far is with one state harbors program: federal port security grant applications, and an evaluation of drones and uncrewed vessels for harbor inspection.", true),
     ],
   },
   {
     id: "gov", slug: "government-public-works", name: "Government & Public Works", scene: "street",
-    who: "Local Agencies & Multi-State Programs",
-    lead: "Local governments, and the federal and multi-state programs that support them, often with lean staffs. Our work here includes asset management with local agencies and drone standards for a multi-state research program.",
-    featured: ["asset-mgmt", "program-delivery", "lpa", "grants", "portals", "strategic-planning"],
+    who: "Local Agencies & Multi-State Programs", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
+    // cs-local-am (through a state infrastructure office) and cs-pooled are the two Rawlins projects here.
+    // Capital delivery and regional planning rest on experience from earlier roles; the lead says what that experience is.
+    lead: "Cities, counties, and regional agencies carry capital programs, permitting, and federal requirements with lean staffs. Our work here so far is asset management with local agencies, through a state infrastructure office, and a multi-state research program on drone data standards. For capital project delivery and regional planning, we bring experience from city public works and the Federal Highway Administration.",
+    featured: ["asset-mgmt", "program-delivery", "lpa", "grants", "research", "portals", "strategic-planning"], // adds "research": one of this industry's two projects is the pooled fund
     featuredCase: "cs-local-am",
     projects: ["cs-local-am", "cs-pooled"],
     subsectors: [
-      sub("g-asset", "Asset Management for Local Agencies", "street", "Local agencies can use asset management to plan their programs, but each one starts from a different place. We meet them there."),
-      sub("g-capital", "Capital Project Delivery & Permitting", "construction", "Cities carry big capital programs and land development permitting with small staffs. Clear roles, standard procedures, and a roadmap staff can follow keep projects and permits moving. Our team includes a former Director of Public Works for the City of Las Vegas.", true),
-      sub("g-mpo", "Regional & Metropolitan Planning Support", "grid", "Metropolitan planning organizations answer to federal performance and certification rules with lean staffs. Our team includes former Federal Highway Administration executives who worked with them, including all eighteen in California.", true),
+      sub("g-asset", "Asset Management for Local Agencies", "street", "Local agencies start from different places with asset management. We start from where each one is: a self-assessment, a workshop, and an action plan."),
+      sub("g-capital", "Capital Project Delivery & Permitting", "construction", "Cities deliver capital projects and review land development permits with small staffs. Experience on our team includes directing public works for the City of Las Vegas.", true),
+      sub("g-mpo", "Regional & Metropolitan Planning Support", "grid", "Metropolitan planning organizations answer to federal performance and certification rules with lean staffs. People on our team worked with them at the Federal Highway Administration, including all eighteen in California.", true),
       sub("g-federal", "Federal & Multi-State Programs", "crossing", "Some problems are bigger than one state. We facilitate a multi-state research program building a shared drone data standard and recommended practices agencies can adopt."),
     ],
   },
   {
     id: "contractors", slug: "contractors-engineering-firms", name: "Contractors & Engineering Firms", scene: "site",
-    who: "Partnering, Contracting Models, & Teaming on Public Work",
-    lead: "Contractors and engineering firms working with public owners. We help both sides of the table work together, through partnering on major projects and contracting models that work for owners and industry. Engineering firms also bring us onto their teams for state DOT work: program delivery, organization and workforce, technology, aviation, and drone programs.",
-    featured: ["alt-delivery", "owners-rep", "automation", "training-video"],
+    who: "Partnering, Contracting Models, & Teaming on Public Work", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
+    // Partnering: cs-major, cs-db-partnering, cs-ia-partnering, cs-partnering (Fiscal > Contracts and Templates > Partnering).
+    // Contracting model: cs-maint-model. Teaming: subcontracts under engineering and advisory firms (findings_cases.md, G).
+    // "aviation" dropped from the teaming list: our aviation contracts on record are direct, and the drone program work is the one through a prime.
+    // "right of way" added: right of way support on an engineering firm's district contract (2026 progress reports).
+    lead: "Contractors and engineering firms come to us for what we know about the owner's side of the table. We facilitate partnering between contractors and public owners on major projects, and we've helped the maintenance contracting industry shape a contracting model state DOTs can tailor. Engineering and advisory firms also bring us onto their teams for state DOT work: program delivery, organization and workforce, right of way, technology, and drone programs.",
+    featured: ["alt-delivery", "construction", "operations", "automation", "dashboards"],
+    // was ["alt-delivery", "owners-rep", "automation", "training-video"]. Construction and Maintenance Programs are where this page's projects sit
+    // (cs-ia-partnering, cs-db-partnering, cs-maint-model); Dashboards goes with cs-pv-pmo. Owner's Representation is a service for owners, not
+    // contractors, and no project here uses Digital Training & Video.
     featuredCase: "cs-major",
     projects: ["cs-major", "cs-db-partnering", "cs-ia-partnering", "cs-maint-model"],
     subsectors: [],
   },
   {
     id: "private", slug: "private-sector", name: "Private Sector", scene: "office",
-    who: "Growing firms that have outgrown their current tools or processes",
+    who: "Growing firms that have outgrown their current tools or processes", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
+    // One Rawlins project on the page (cs-pv-pmo); the others are our automation team's work before Rawlins, and their cards say so
+    // (four when the Who we work with file was written; six with live-site Examples 06 and 07 back, Nov 11).
+    // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's new lead for this field was skipped.
     lead: "Companies that have outgrown their spreadsheets or tools, but don't have a build team. We connect the systems you already pay for and automate the work around them.",
     featured: ["automation", "ai", "dashboards", "data-governance", "portals"],
     projects: ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service"],
@@ -181,12 +197,9 @@ export const INDUSTRIES: Industry[] = [
 export const VISIBLE_INDUSTRIES = INDUSTRIES.filter((i) => !i.hidden);
 
 /* The International page's own sections (INTERNATIONAL PAGE, Nov 11, 2026). Rendered in components/v8/industry.tsx
-   only for "intl". flag: a preview-only Content status note beside the line. */
-export const INTL: { carry: { title: string; text: string }; abroad: { title: string; items: { t: string; flag?: string }[] }; region: { title: string; items: string[]; link: { href: string; label: string } } } = {
-  carry: {
-    title: "Why it carries over",
-    text: "A U.S. state department of transportation plans, funds, builds, and maintains highways and bridges, and often oversees aviation and transit, for millions of people, with lean staffs and under public scrutiny. That is the job of a ministry of transport or a national roads authority. Our people ran the programs our clients run: chief engineers, operations and maintenance leaders, technology and data chiefs, and federal highway executives.",
-  },
+   only for "intl". flag: a preview-only Content status note beside the line.
+   "Why it carries over" (section and section-bar item) was deleted Nov 11: Nicole's lead on the page already says it. */
+export const INTL: { abroad: { title: string; items: { t: string; flag?: string }[] }; region: { title: string; items: string[]; link: { href: string; label: string } } } = {
   abroad: {
     title: "How we work outside the U.S.",
     items: [
@@ -343,9 +356,13 @@ export const CASES: CaseIndex[] = [
   cs("cs-nc-ipd", "north-carolina-integrated-program-delivery", "Integrated program delivery", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["program-delivery", "preconstruction", "grants", "operations", "alt-delivery"]),
   cs("cs-nc-am", "north-carolina-asset-management-review", "Asset management review across modes", `North Carolina Department of Transportation${FOUNDER}`, ["North Carolina"], "Before Rawlins", "transport", ["asset-mgmt", "operations", "procurement"]),
   cs("cs-strategic", "nevada-six-year-strategic-plan", "Six-year strategic plan, action plans, and performance management", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["strategic-planning", "org-design", "dashboards"]),
-  // on the live site as "Fleet Optimization & Asset Management" (Nevada page); Scott's NDOT career, so before Rawlins (Nov 11)
+  // on the live site as "Fleet Optimization & Asset Management" (Nevada page); our founder's career at the department, so before Rawlins.
+  // Rawlins' own fleet work for the department is cs-nv-fleet-program.
   cs("cs-nv-fleet", "nevada-fleet-optimization", "Fleet optimization and asset management", `Nevada Department of Transportation${FOUNDER}`, ["Nevada"], "Before Rawlins", "transport", ["operations", "asset-mgmt"]),
   cs("cs-nv-om", "nevada-operations-maintenance-review", "Operations and maintenance program review", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt"]),
+  // Rawlins work, 2022 to 2023, as a subconsultant on the same contract as cs-nv-om (work reports and scopes read Nov 11).
+  // Scope only: no findings, figures, or survey results. See CASE_STATUS.
+  cs("cs-nv-fleet-program", "nevada-fleet-analysis-and-implementation", "Fleet analysis and implementation support", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt"]),
   cs("cs-aerodiv", "nevada-aeronautics-division-research", "Research on whether and how to establish a state aeronautics division, and how to fund it", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["research", "aero-division"]),
   cs("cs-de-tech", "delaware-technology-strategic-plan", "Technology strategic plan", "Delaware Department of Transportation", ["Delaware"], "Completed", "transport", ["tech-strategy", "strategic-planning"]),
   cs("cs-ut-am", "utah-asset-management-review", "Asset management program review", `Utah Department of Transportation${FOUNDER}`, ["Utah"], "Before Rawlins", "transport", ["asset-mgmt"]),
@@ -369,12 +386,15 @@ export const CASES: CaseIndex[] = [
   // TODO(launch): purchase order read Nov 10: no publicity terms. Reconfirm current status and client permission. Keep the client unnamed.
   cs("cs-hi", "construction-standards-and-statewide-support", "Construction standards, program knowledge, and statewide support", STATE_DOT, [], "Ongoing", "transport", ["construction", "portals", "program-delivery", "training-video", "drone-programs"]),
   /* Private sector: our own project, then our automation team's work before Rawlins */
-  // TODO(launch): no contract on file. Confirm there's no NDA before launch.
+  // TODO(launch): our invoice cites a work order dated Aug 1, 2026. The agreement itself wasn't found, so its confidentiality terms aren't checked. Confirm before launch.
   cs("cs-pv-pmo", "project-management-system-for-an-engineering-firm", "A project management system for an engineering firm", "An engineering firm", [], "Ongoing", "private", ["automation", "dashboards", "data-governance"]),
   cs("cs-pv-reporting", "project-accounting-and-reporting-in-one-view", "Project accounting and reporting in one view", `A project-based technical services firm${TEAM}`, [], "Before Rawlins", "private", ["automation", "dashboards", "data-governance"]),
   cs("cs-pv-service", "project-history-that-follows-the-work-to-the-service-team", "Project history that follows the work to the service team", `An install, service, and maintenance firm${TEAM}`, [], "Before Rawlins", "private", ["automation"]),
   cs("cs-pv-field", "field-reports-the-office-can-find", "Field reports the office can find", `A field service and project delivery firm${TEAM}`, [], "Before Rawlins", "private", ["automation"]),
   cs("cs-pv-capacity", "capacity-planning-for-people-and-equipment", "Capacity planning for people and equipment", `A field services and drilling company${TEAM}`, [], "Before Rawlins", "private", ["automation", "dashboards"]),
+  // back on the site at Nicole's direction (Nov 11): live-site Examples 06 and 07
+  cs("cs-pv-single", "one-source-of-truth-for-a-manufacturing-firm", "One source of truth for a manufacturing firm", `A manufacturing firm${TEAM}`, [], "Before Rawlins", "private", ["automation", "dashboards"]),
+  cs("cs-pv-sales", "from-closed-deal-to-billing-ready-in-days", "From closed deal to billing-ready in days", `A professional services firm${TEAM}`, [], "Before Rawlins", "private", ["automation"]),
 ];
 
 /* Preview-only "Content status" notes for In the works projects that need sign-off before launch
@@ -386,10 +406,13 @@ export const CASE_STATUS: Record<string, string> = {
   "cs-drt": "Content status: needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.",
   "cs-pmdiv": "Content status: the subcontract keeps the prime's information confidential and binds us to the prime agreement's terms. Keep it unnamed and high level.",
   "cs-hi": "Content status: the purchase order has no publicity terms. Jacob's portfolio says to reconfirm current status and client permission. Keep it unnamed.",
-  "cs-pv-pmo": "Content status: no contract on file. Confirm there's no NDA before launch.",
+  "cs-pv-pmo": "Content status: our invoice cites a work order dated Aug 1, 2026. The agreement itself wasn't found, so its confidentiality terms aren't checked. Confirm before launch.",
   "cs-workforce": "Content status: the prime's subcontract keeps all deliverables and client information confidential without the prime's written permission. Needs the prime's written OK before launch.",
   "cs-txmaint": "Content status: contract publicity terms not checked yet.",
   "cs-local-am": "Content status: contract publicity terms not checked yet.",
+  /* the Nevada fleet project (Who we work with addendum v2, 1.4). cs-nv-om comes from the same contract, so it carries the same note. */
+  "cs-nv-fleet-program": "Content status: Rawlins work as a subconsultant, from our work reports and scopes (2022 to 2023). The department's master agreement says information and data from the work can't be used in a publication without its written permission, and the prime's subcontract form needs the prime's consent to share information developed in the work. The original 2021 subcontract isn't in SharePoint. Kept to what we did, with no findings or figures. Scott to confirm with the prime before launch.",
+  "cs-nv-om": "Content status: same contract as the fleet project. Kept to what we did, with no findings or figures. Scott to confirm with the prime before launch.",
 };
 /* Lines elsewhere that come from one of those projects carry its note too (keyed by the exact line). */
 export const LINE_STATUS: Record<string, string> = {
@@ -405,6 +428,29 @@ export const LINE_STATUS: Record<string, string> = {
   "Leadership transition support: briefings and handoff materials for incoming leaders": "Content status: our records say this wasn't started where it came up and is an internal client matter. Confirm before launch.",
   // TODO(launch): Jacob's portfolio says the completed tools need confirmation.
   "Man-hour and cost estimating packages": "Content status: Jacob's portfolio says the completed tools need confirmation.",
+  /* Who we work with (Nov 11) */
+  // 5.3 cs-hi's two harbors lines
+  "Supported federal port security grant applications for the department's harbors": `${CASE_STATUS["cs-hi"]} The applications were not awarded as of our Nov 2026 records.`,
+  "Evaluated drones, uncrewed surface vessels, sonar, and lidar for harbor inspection": CASE_STATUS["cs-hi"],
+  // 5.4 Aviation & Airports, What we deliver
+  "Emergency response with drones: response team training and live video into the emergency operations center": CASE_STATUS["cs-drt"],
+  // 5.5 Contractors & Engineering Firms, How firms work with us
+  // TODO(launch): the prime firms' subcontracts keep their information confidential. Keep this general.
+  "Engineering and advisory firms add us to their teams for state DOT programs: program delivery, organization and workforce, right of way, technology, and drone programs.": "Content status: the prime firms' subcontracts keep their information confidential. Keep this general: no firm names and no project details.",
+  // 5.6 Contractors & Engineering Firms, How firms work with us
+  "Our automation team connects a firm's project, time, and invoicing tools and builds the workflows around them.": CASE_STATUS["cs-pv-pmo"],
+  // 5.7 Asset Management for Local Agencies, The experience behind it
+  "We've held asset management workshops and built action plans with local agencies, for a state infrastructure office": CASE_STATUS["cs-local-am"],
+  // 5.8 Capital Project Delivery & Permitting, The experience behind it
+  // TODO(launch): started Sep 2026 under a prime; subcontract publicity terms not checked.
+  "We've begun work on a resource planning and prioritization framework for a city transportation department, on an engineering firm's team": "Content status: this work started in Sep 2026 under a prime. Subcontract publicity terms not checked yet. Keep it unnamed.",
+  // 5.9 Federal & Multi-State Programs, The experience behind it
+  // TODO(launch): delivered under a prime on a federal contract; publicity terms not checked.
+  "We helped plan and facilitate a federal peer exchange on drone programs for western state transportation departments in September 2026": "Content status: delivered under a prime on a federal contract. Publicity terms not checked yet.",
+  /* Who we work with addendum v2, Part 3: high-level lines for work we can't describe in detail */
+  "Contractors and service firms bring us in while they shape their approach to state transportation work. We review plans and proposal materials and bring the view from the owner's side of the table.": "Content status: from two closed agreements (2023 to 2024). Both keep the client's information confidential, so this stays unnamed and general. Scott to confirm it belongs on a site state DOTs read.",
+  "We've helped land developers coordinate state DOT permitting for their projects: keeping communication with the department moving, and advising on direction, timing, and permit questions.": "Content status: from three engagements with land developers (2022 to 2026). One agreement treats everything about the work as confidential, so this stays unnamed and general. Scott to confirm.",
+  "We've advised a construction materials supplier on working with a state DOT, including product approval.": "Content status: from a 2025 retainer, read from the draft agreement because the signed copy is a scan. It keeps non-public information confidential. Unnamed and general. Scott to confirm.",
 };
 
 /* Integration & Automation intro (content pass v7, Part 4) */
@@ -416,7 +462,7 @@ export const PAGE_STATUS: Record<string, string> = {
   // TODO(launch): Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.
   "owners-rep": "Content status: Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.",
   // TODO(launch): the only work behind this page is cs-hi's client. Same note as cs-hi.
-  "sub-ports": `Content status: the only work behind this page is cs-hi's client. ${CASE_STATUS["cs-hi"].replace("Content status: the", "The")}`,
+  "sub-ports": `Content status: the only work behind this page is cs-hi's client. ${CASE_STATUS["cs-hi"].replace("Content status: the", "The")} As of our Nov 2026 records the grant applications were submitted and not awarded, and the records don't show whether the planned technology demonstration was held.`,
 };
 
 export const caseHref = (c: CaseIndex) => `/insights/case-studies/${c.slug}`;

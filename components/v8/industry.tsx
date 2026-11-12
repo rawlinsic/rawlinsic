@@ -3,9 +3,13 @@
      hero          lit by the page's photo. An industry's specialties sit right
                    in it as photo panels that open on hover; a page without
                    panels shows its photo in the layered frame instead
-     we hear       the clients' words side by side as quote cards
+     we hear       the clients' words side by side as quote cards; on the industry
+                   pages each one has its "What we bring" line under it
+     ways          Contractors & Engineering Firms: "How firms work with us" as a route
      services      "Services we provide": the services we use most here as linked
                    text cards (area, name, first line), not photo cards
+     deliver, walk the specialty pages: what we deliver, then what you walk away with
+                   beside "The experience behind it" (the service page's #walk section)
      people        portrait cards that open each bio ("Experience on our team")
      projects      photo cards
    then the closing band and the next page. Content comes from lib/content,
@@ -32,7 +36,7 @@ import RouteList from "@/components/v8/route-list";
 import { AviationTeam, type TeamCard } from "@/components/site/aviation";
 import { aviationCards } from "@/components/site/services";
 import { AVIATION_ROLES, formerlyFor } from "@/lib/content/people";
-import { CaseNote, Dev, TALK, rawlinsTitle, rosterFor } from "@/components/site/ui";
+import { CaseNote, Dev, LineNote, TALK, rawlinsTitle, rosterFor } from "@/components/site/ui";
 import "@/app/industry.css";
 
 type Crumb = [href: string, label: string];
@@ -53,12 +57,16 @@ const team = (people: readonly (readonly string[])[]): TeamCard[] =>
     const slug = personSlug(m?.name ?? name);
     return { name, title: m ? rawlinsTitle(m) : "", formerly: formerlyFor(name), photo: m?.photo, location: m?.location, href: `/about/our-people#${slug}`, person: allPeople().find((x) => x.slug === slug) };
   });
-/* preview-only notes on the thin specialty pages, true for each page (full site pass, Part 4, 1) */
+/* preview-only notes on the specialty pages, true for each page (full site pass, Part 4, 1; Who we work with, Nov 11, 5.1).
+   A page shows its note whenever it has one here, in its hero and on the industry page's panel, thin or not. */
 const THIN_NOTE: Record<string, string> = {
-  "sub-ports": PAGE_STATUS["sub-ports"], // content pass v7, Part 6
-  "g-capital": "Content status: no Rawlins project yet; the page leads with experience on our team.",
+  "sub-ports": PAGE_STATUS["sub-ports"],
+  "sub-rail": "Content status: one Rawlins project stands behind this page, partnering on a light rail line in 2019. The rest is experience on our team from earlier roles.",
+  "g-capital": "Content status: no Rawlins project yet. A city project delivery and permitting assessment was scoped in Sep 2026, and our records show no signed contract. Scott or Joey to confirm whether it has started.",
   "g-mpo": "Content status: no Rawlins project yet; the page leads with experience on our team.",
 };
+/* the note a specialty carries on previews: its own, or the plain "thin" mark when it has none */
+const thinNote = (s: Subsector, fallback: string) => (THIN_NOTE[s.id] ? <Dev>{THIN_NOTE[s.id]}</Dev> : s.thin ? <Dev>{fallback}</Dev> : undefined);
 const nextIndustry = (id: string) => VISIBLE_INDUSTRIES[(VISIBLE_INDUSTRIES.findIndex((i) => i.id === id) + 1) % VISIBLE_INDUSTRIES.length];
 
 /* ── shared pieces ─────────────────────────────────────────────── */
@@ -179,13 +187,15 @@ function FrameHero({ photo, crumbs, tag, title, lead, actions, note }: {
   );
 }
 
-function Hear({ title, items }: { title: string; items: readonly string[] }) {
+/* bring: the "What we bring" line under each challenge, as on the area pages (components/v8/area.tsx). Without it
+   the cards look as they did. */
+function Hear({ title, items, bring }: { title: string; items: readonly string[]; bring?: string[] }) {
   const q = quotes(items);
   return (
     <section id="hear" className="svq">
       <div className="v8-wrap svq-in">
         <h2 className="v8-h2">{title}</h2>
-        <LitText lines={q} className={`svq-q is-${Math.min(q.length, 4)}`} />
+        <LitText lines={q} notes={bring} noteLabel="What we bring" className={`svq-q is-${Math.min(q.length, 4)}${bring?.length ? " has-notes" : ""}`} />
       </div>
     </section>
   );
@@ -320,9 +330,9 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   );
   const sections: Nav[] = [
     ...(subs.length ? [["specialties", "Specialties"] as Nav] : []),
-    ...(intl ? [["carry", INTL.carry.title] as Nav] : []),
     ...(d.ch.length ? [["hear", "Challenges we hear"] as Nav] : []),
-    ["help", "How we can help"],
+    ...(d.ways?.length ? [["ways", "How firms work with us"] as Nav] : []),
+    ["help", "How we can help"], // Nicole's wording (preview edit, Nov 11); was "Services we provide"
     ...(intl ? [["abroad", INTL.abroad.title] as Nav, ["region", "Where you'll find us"] as Nav] : []),
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ...(work.length ? [["work", "Featured projects"] as Nav] : []),
@@ -331,7 +341,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   const hero = subs.length ? (
     <PanelHero photo={INDUSTRY_PHOTO[ind.id]} crumbs={crumbs} tag="Who we work with" title={ind.name} lead={ind.lead} actions={actions}
       label={ind.id === "transport" ? "Transportation specialties" : "Specialties"}
-      subs={subs.map((s) => ({ id: s.id, name: s.name, line: s.line, href: subsectorHref(ind, s), photo: INDUSTRY_PHOTO[s.id] ?? INDUSTRY_PHOTO[ind.id], note: s.thin ? <Dev>{THIN_NOTE[s.id] ?? "Placeholder: thin content"}</Dev> : undefined }))} />
+      subs={subs.map((s) => ({ id: s.id, name: s.name, line: s.line, href: subsectorHref(ind, s), photo: INDUSTRY_PHOTO[s.id] ?? INDUSTRY_PHOTO[ind.id], note: thinNote(s, "Placeholder: thin content") }))} />
   ) : (
     <FrameHero photo={INDUSTRY_PHOTO[ind.id]} crumbs={crumbs} tag="Who we work with" title={ind.name} lead={ind.lead} actions={actions}
  />
@@ -340,12 +350,13 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   const more: SnMore | undefined = subs.length ? undefined : { label: "Industries", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) };
   return (
     <Page sections={sections} hero={hero} more={more}>
-      {intl && (
-        <section id="carry" className="sv-sec intl-carry">
-          <div className="v8-wrap"><h2 className="v8-h2">{INTL.carry.title}</h2><p className="v8-lead">{INTL.carry.text}</p></div>
-        </section>
-      )}
-      {d.ch.length > 0 && <Hear title="Challenges we hear" items={d.ch} />}
+      {d.ch.length > 0 && <Hear title="Challenges we hear" items={d.ch} bring={d.bring} />}
+      {/* Contractors & Engineering Firms only (Who we work with, Nov 11, 1.2) */}
+      {d.ways?.length ? (
+        <Route id="ways" title="How firms work with us">
+          <RouteList stops={d.ways.map((w) => ({ t: w.t, d: <>{w.d}<LineNote text={w.d} /></> }))} />
+        </Route>
+      ) : null}
       <ServiceCards id="help" title="How we can help" ids={helpIds(ind)} tone="pale" />
       {intl && (
         <Route id="abroad" title={INTL.abroad.title}>
@@ -374,6 +385,8 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
   const avTeam = aviation ? aviationCards() : [];
   const people = !aviation ? [] : team(d?.people ?? []);
   const deliver = d?.deliver ?? [];
+  const walk = d?.walk ?? [];
+  const xp = d?.xp ?? [];
   const services = d?.services ?? [];
   const k = ind.subsectors.findIndex((s) => s.id === sub.id);
   const nextSub: Subsector | undefined = ind.subsectors[k + 1];
@@ -381,6 +394,7 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
   const sections: Nav[] = [
     ...(d?.ch?.length ? [["hear", "Challenges we hear"] as Nav] : []),
     ...(deliver.length ? [["deliver", "What we deliver"] as Nav] : []),
+    ...(walk.length ? [["walk", "What you walk away with"] as Nav] : []),
     ...(avTeam.length ? [["aviation", "Our aviation team"] as Nav] : []),
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ...(services.length ? [["services", "How we can help"] as Nav] : []),
@@ -393,12 +407,30 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
       crumbs={[["/industries", "Who We Work With"], [industryHref(ind), ind.name], [subsectorHref(ind, sub), sub.name]]}
       tag={<a href={industryHref(ind)}>{ind.name}</a>} title={sub.name} lead={d?.intro || sub.line}
       actions={<><a className="v8-btn v8-btn-area" href="/contact">Talk to an expert</a>{cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See the work</a>}</>}
-      note={sub.thin ? <Dev>{THIN_NOTE[sub.id] ?? "Content status: thin content"}</Dev> : undefined} />
+      note={thinNote(sub, "Content status: thin content")} />
   );
   return (
     <Page sections={sections} hero={hero} more={{ label: "Specialties", links: sibs.map((x) => ({ name: x.name, href: x.href, current: x.on })) }}>
       {d?.ch?.length ? <Hear title="Challenges we hear" items={d.ch} /> : null}
-      {deliver.length > 0 && <Route id="deliver" title="What we deliver"><RouteList check ordered={false} stops={deliver.map((x) => ({ d: x }))} /></Route>}
+      {deliver.length > 0 && <Route id="deliver" title="What we deliver"><RouteList check ordered={false} stops={deliver.map((x) => ({ d: <>{x}<LineNote text={x} /></> }))} /></Route>}
+      {/* the service page's #walk section (components/v8/service.tsx), same markup and classes: what you walk away with,
+          and the unnamed experience lines beside it in "The experience behind it" (Who we work with, Nov 11, 1.3) */}
+      {walk.length > 0 && (
+        <section id="walk" className="sv-sec svw">
+          <div className={`v8-wrap svw-in${xp.length ? "" : " is-solo"}`}>
+            <div>
+              <h2 className="v8-h2">What you walk away with</h2>
+              <RouteList check ordered={false} stops={walk.map((w) => ({ d: <>{w}<LineNote text={w} /></> }))} />
+            </div>
+            {xp.length > 0 && (
+              <aside id="experience" className="svw-xp" aria-labelledby="svw-xp-h" data-reveal>
+                <h2 id="svw-xp-h" className="v8-eyebrow">The experience behind it</h2>
+                <ul>{xp.map((x) => <li key={x}>{x}<LineNote text={x} /></li>)}</ul>
+              </aside>
+            )}
+          </div>
+        </section>
+      )}
       {avTeam.length > 0 && <Team id="aviation" people={avTeam} roles={AVIATION_ROLES} />}
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       <ServiceCards id="services" title="How we can help" ids={services} />
@@ -418,10 +450,12 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
   const next = nextIndustry(ind.id);
   const sections: Nav[] = [
     ["hear", "Sound familiar?"],
+    ["build", "What we build"],
     ...(cases.length ? [["work", "Featured projects"] as Nav] : []),
     ["start", "Ways to start"],
     ["services", "Services"],
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
+    ["dot", "Working with a DOT"],
     ["talk", "Talk to us"],
   ];
   const hero = (
@@ -432,12 +466,19 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
   return (
     <Page sections={sections} hero={hero} more={{ label: "Industries", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) }}>
       <Hear title="Sound familiar?" items={PRIV.hear} />
+      <Route id="build" title="What we build">
+        <RouteList check ordered={false} stops={PRIV.build.map((d) => ({ d }))} />
+      </Route>
       {cases.length > 0 && <Work title="Featured projects" cases={cases} tone="pale" />}
       <Route id="start" title="Ways to start" note={<Dev block>Ways to start: confirm wording with Ben. Hours and pricing stay internal.</Dev>}>
         <RouteList stops={PRIV.start.map((s) => ({ t: s }))} />
       </Route>
       <ServiceCards id="services" title="Services" ids={services} tone="pale" />
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
+      {/* high-level, unnamed lines for work we can't describe in detail (Who we work with addendum v2, 3.2) */}
+      <Route id="dot" title="When your project depends on a state DOT">
+        <RouteList check ordered={false} stops={PRIV.dot.map((d) => ({ d: <>{d}<LineNote text={d} /></> }))} />
+      </Route>
       <Talk title="Tell us where your workflows drag" text="A short call is enough to see whether we can help, and what a small first project would look like."
         linksTitle="Who we work with" links={industryLinks(ind.id)} />
       <Next k="Next industry" name={next.name} text={next.who} href={industryHref(next)} photo={INDUSTRY_PHOTO[next.id]} />

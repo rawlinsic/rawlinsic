@@ -13,7 +13,7 @@ export function IndustriesIndex() {
   return (
     <Shell scene="interchange" photo={PAGE_PHOTO.industries}>
       <Hero crumbs={[["/industries", "Who we work with"]]} kicker="Who we work with" title="Public agencies and private firms, wherever the work is."
-        lead={<p>Most of our work is with organizations that own and run public infrastructure: more than 30 transportation agencies, plus local governments and a multi-state research program. We also work with contractors and engineering firms on public projects, and help private firms with their systems and workflows. Our work so far has been in the United States, and our team can work anywhere.</p>}
+        lead={<p>Most of our work is with the public agencies that own and run infrastructure: more than 30 transportation agencies, local agencies, and a multi-state research program. We also work with the contractors and engineering firms that build for those agencies, and we help private firms connect their systems and workflows. Our work so far has been in the United States, and our team can work anywhere.</p>}
         actions={<Btn href="/contact" primary>Get in touch</Btn>} />
       <Sec title="Industries">
         <ul className="pg-cards">
@@ -48,7 +48,7 @@ export function IndustryPage({ ind }: { ind: Industry }) {
 
 const CONTRACTOR_CASES = ["cs-major", "cs-db-partnering", "cs-ia-partnering", "cs-partnering", "cs-maint-model", "cs-pv-pmo"];
 /* Private Sector: our own project first, then our automation team's work before Rawlins (tagged) */
-const PRIVATE_CASES = ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service", "cs-pv-field"];
+const PRIVATE_CASES = ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service", "cs-pv-field", "cs-pv-single", "cs-pv-sales"];
 
 export function SubsectorPage({ ind, sub }: { ind: Industry; sub: Subsector }) {
   const list = CASES.filter((c) => CASE_DATA[c.id]?.subsectors.includes(sub.id));

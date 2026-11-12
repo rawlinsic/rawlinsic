@@ -3,8 +3,8 @@
 /* eslint-disable */
 export type SvcData = { id: string; name: string; area: string; st: string; intro: string; hear: string[]; quote: boolean; deliver: string[]; walk: string[]; industries: string[]; related: string[]; xp: string[]; cases?: string[]; src: Record<string, string> };
 export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; steps: { t: string; d: string; services: string[] }[] }; keep: string; cases: string[] };
-export type IndustryData = { id: string; ch: string[]; basis: string; services: string[]; people: string[][] };
-export type SubsectorData = { id: string; name: string; st: string; deliver: string[]; services: string[]; intro: string; industry: string; ch: string[]; people: string[][]; basis: string; thin?: boolean };
+export type IndustryData = { id: string; ch: string[]; bring?: string[]; ways?: { t: string; d: string }[]; basis: string; services: string[]; people: string[][] };
+export type SubsectorData = { id: string; name: string; st: string; deliver: string[]; walk?: string[]; xp?: string[]; services: string[]; intro: string; industry: string; ch: string[]; people: string[][]; basis: string; thin?: boolean };
 export type CaseData = { id: string; ch: string; did: string[]; res: string[]; services: string[]; subsectors: string[]; industry: string; industry2?: string | null; tools?: string[]; figure?: { title: string; intro?: string; steps: { t: string; d: string }[] } };
 export const SERVICES: Record<string, SvcData> = {
  "strategic-planning": {
@@ -729,7 +729,7 @@ export const SERVICES: Record<string, SvcData> = {
    "Performance-based and flexible maintenance contracts: specifications, deduction models, administration, and reviews of contracts already in place",
    "Maintenance quality assurance programs and maintenance rating programs",
    "Maintenance budgeting tied to performance: level-of-service targets and what each point of improvement costs",
-   // Backed by the cs-nv-om operations and maintenance review. Jacob's portfolio lists fleet and facilities as not yet delivered.
+   // Backed by the cs-nv-om review and by cs-nv-fleet-program (Rawlins fleet analysis and implementation support, 2022 to 2023).
    "Fleet and facilities: operations reviews, right-sizing, replacement planning, and predictive maintenance",
    "Winter operations, emergency readiness, and tabletop exercises",
    "Field assessments, operating standards, and crew training",
@@ -1742,6 +1742,16 @@ export const INDUSTRIES: Record<string, IndustryData> = {
    "Getting value from technology the agency already bought",
    "Standardizing how districts and divisions work"
   ],
+  "bring": [
+   // delivery networks (cs-nc-ipd, cs-transform), manuals and courses (cs-pmdiv), proficiency programs (cs-proficiency)
+   "Delivery frameworks, manuals, and proficiency programs that write down how the work is done, so newer staff can do it.",
+   // cs-strategic (plan, action plans, measures inventory), cs-transform (score sheets, prioritization tool), cs-pmdiv (measures with targets)
+   "Strategic plans with yearly actions, performance measures, and project selection methods leadership can explain.",
+   // cs-transform (apps on the agency's existing platform), cs-pdn (links to the systems staff already use)
+   "Workflows, websites, and dashboards built on the systems you already own, connected before anything new is bought.",
+   // cs-txmaint (uniform deduction method, rating matrix), cs-drt (statewide procedures), cs-proficiency (statewide rollout)
+   "Uniform maintenance contract specifications and procedures, rating programs, and training that every district applies the same way."
+  ],
   "basis": "Our People bios: former executives and engineers from Nevada, Florida, Michigan, Idaho, Arkansas, North Carolina, and California DOTs and FHWA. Approved claim: more than 30 former agency executives and engineers.",
   "services": [
    "program-delivery",
@@ -1789,7 +1799,18 @@ export const INDUSTRIES: Record<string, IndustryData> = {
   "ch": [
    "Capital programs bigger than the staff behind them",
    "Asset decisions made worst-first",
-   "Federal requirements on lean teams"
+   "Federal requirements on lean teams",
+   "States collect the same data with no shared standard"
+  ],
+  "bring": [
+   // an offer, not past work: see g-capital
+   "An assessment of how projects and permits move, and a roadmap staff can follow.",
+   // cs-local-am
+   "Self-assessments, workshops, and action plans that start from where each agency is.",
+   // cs-transform: local public agency manual chapters and responsible-charge training
+   "Local public agency manuals and training for the staff in responsible charge of federal-aid projects.",
+   // cs-pooled
+   "Facilitation that brings member states to a standard they can test and adopt."
   ],
   "basis": "Local agency asset management record; pooled fund record; bios (Las Vegas public works, FHWA)",
   "services": [],
@@ -1817,7 +1838,30 @@ export const INDUSTRIES: Record<string, IndustryData> = {
   "ch": [
    "A first progressive design-build or construction manager project with a public owner",
    "Owner and contractor relationships strained by schedule and risk",
+   "Maintenance contracts that don't fit what each DOT needs",
    "Internal workflows that don't scale with the firm"
+  ],
+  "bring": [
+   // cs-partnering
+   "A kickoff that sets the charter, shared goals, communication protocols, and an issue resolution ladder before the pressure builds.",
+   // cs-db-partnering, cs-partnering
+   "Joint risk workshops, recurring partnering sessions, and anonymous team surveys reported to both sides.",
+   // cs-maint-model
+   "Research with DOT leaders, and a set of contracting methods a DOT can combine.",
+   // cs-pv-pmo
+   "Systems connected and workflows automated around how the firm's projects run."
+  ],
+  "ways": [
+   // Contractors engaged us on the design-build and progressive design-build projects; a DOT and its industry on the statewide one.
+   { "t": "As the partnering facilitator", "d": "Contractors and public owners bring us in to set up and run partnering on a project: the charter, the risk register, the issue resolution ladder, and team evaluations through closeout." },
+   // cs-maint-model
+   { "t": "For an industry association", "d": "We research what owners need and recommend contracting models that work for DOTs and for industry." },
+   // FLAG (5.5). Subcontracts under engineering and advisory firms: findings_cases.md, G.
+   { "t": "As a teammate on public work", "d": "Engineering and advisory firms add us to their teams for state DOT programs: program delivery, organization and workforce, right of way, technology, and drone programs." },
+   // FLAG. Two closed agreements, 2023 to 2024: advice on a contractor's approach to a state DOT project, and proposal support for a service firm.
+   { "t": "As an advisor on a pursuit", "d": "Contractors and service firms bring us in while they shape their approach to state transportation work. We review plans and proposal materials and bring the view from the owner's side of the table." },
+   // FLAG (5.6). cs-pv-pmo.
+   { "t": "As the builder of your internal systems", "d": "Our automation team connects a firm's project, time, and invoicing tools and builds the workflows around them." }
   ],
   "basis": "Partnering records; major project case studies; automation examples for project-based firms",
   "services": [],
@@ -1878,29 +1922,54 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   "id": "sub-highways",
   "name": "Highways & Roads",
   "st": "ok",
-  "deliver": [
-   "Program and project delivery",
-   "Right of way and construction",
-   "Performance-based maintenance and quality assurance",
-   "Traffic operations and safety",
-   "Asset management"
-  ],
-  "services": [
-   "program-delivery",
-   "preconstruction",
-   "row",
-   "construction",
-   "operations",
-   "traffic",
-   "asset-mgmt"
-  ],
-  "intro": "Most of our work is on highway systems: how they're planned, funded, delivered, maintained, and operated.",
-  "industry": "transport",
+  "intro": "Most of our work is on state highway systems. We help departments choose and prioritize projects, get them ready and delivered, administer construction, and maintain and operate the roads afterward. That work ranges from department-wide reorganizations and project delivery frameworks to performance-based maintenance contracts and maintenance rating programs.",
   "ch": [
    "Delivering a bigger program with fewer experienced people",
    "Proving to legislatures that money is well spent",
-   "Districts that each work differently"
+   "Districts that each work differently",
+   // cs-transform challenge: "decisions siloed by funding program"
+   "Project decisions made one funding program at a time"
   ],
+  "deliver": [
+   // Jacob's portfolio, PC1: the documented framework runs from concept study through readiness for advertisement
+   "Project delivery frameworks: the steps, handoffs, tools, and templates that take a project from concept to readiness for advertisement",
+   // cs-transform: score sheets for more than a dozen programs, and a prioritization tool
+   "Project selection and prioritization: scoring methods and screening tools",
+   // cs-pmdiv, cs-transform, cs-proficiency
+   "Project management manuals, courses, and proficiency programs for the people who deliver the work",
+   // Jacob's portfolio RW1, RW2 (assessment delivered, procedure work current); cs-transform construction workflows and manual
+   "Right of way program assessments and procedures, and construction administration workflows and manuals",
+   // cs-pbmc, cs-txmaint
+   "Performance-based maintenance contracts: specifications, deduction methods, industry review, and support through administration",
+   // cs-txmaint rating matrix; cs-pbmc pass or fail criteria; maintenance academies (2022 work reports, cs-nv-om's client)
+   "Maintenance quality assurance and rating programs, and training academies for maintenance staff",
+   // 2022 work reports, cs-nv-om's client: fleet selection, centralized fleet maintenance, equipment sharing, care policy
+   "Fleet programs: equipment selection, centralized maintenance, sharing, and care policies",
+   // Jacob's portfolio TO1, TO5; cs-transform; 2023 work reports (traffic management center review and recommendations)
+   "Traffic operations: program reviews, guidance, and traffic management center recommendations"
+  ],
+  "walk": [
+   "A delivery process staff can follow, with the manuals, templates, and training to keep using it",
+   "Selection and prioritization methods leadership can explain",
+   "Maintenance contracts and quality measures every district administers the same way",
+   "Trained staff, and documentation your team owns"
+  ],
+  "xp": [
+   // cs-nc-ipd and cs-transform
+   "We've helped state transportation departments build project delivery networks: the steps, tools, and training that carry a project from concept toward construction",
+   // cs-nv-om, and the 2022 and 2023 work reports for the same client (fleet, pavement program, traffic management center)
+   "We've reviewed a state transportation department's operations and maintenance programs, with follow-on work on its fleet, its pavement program, and a traffic management center",
+   // Scott Rawlins bio
+   "Our founder was Deputy Director and Chief Engineer of the Nevada Department of Transportation, responsible for its daily operations",
+   // bios; the same list as the Transportation basis line
+   "People on our team held executive and engineering roles at the Nevada, Florida, Michigan, Idaho, Arkansas, North Carolina, and California transportation departments, and at the Federal Highway Administration",
+   // Lance Grace bio (the same line as Maintenance Programs)
+   "Florida DOT's former Director of Maintenance, who led its statewide program (12,157 centerline miles and 7,152 bridges), is on our team",
+   // Ron Crew bio
+   "One of our right of way advisors spent 43 years in Florida DOT right of way, 33 as a supervisor or manager"
+  ],
+  "services": ["program-delivery", "preconstruction", "row", "construction", "operations", "traffic", "asset-mgmt"],
+  "industry": "transport",
   "people": [],
   "basis": "Highway case studies and Our People bios"
  },
@@ -1908,25 +1977,48 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   "id": "sub-bridges",
   "name": "Bridges & Structures",
   "st": "ok",
-  "deliver": [
-   "Partnering on major crossings",
-   "Progressive design-build partnering",
-   "Multi-state standards for drone data on structures",
-   "Bridge inspection proficiency programs"
-  ],
-  "services": [
-   "alt-delivery",
-   "owners-rep",
-   "drone-programs",
-   "research"
-  ],
-  "intro": "From partnering on billion-dollar river crossings to bridge inspector proficiency programs and drone inspection standards.",
-  "industry": "transport",
+  // Rawlins doesn't design or inspect bridges (CONTENT FIXES v3; Jacob's portfolio, "Boundaries that matter in scopes").
+  // Only one crossing cost over a billion dollars, so "billion-dollar river crossings" is gone.
+  "intro": "Our bridge work is on the programs around the structure: how the owner and the contractor work together while it's built, how inspectors are trained, and how inspection data is collected. We've facilitated partnering on major river crossings, including a $1.2 billion Mississippi River bridge. We've built proficiency programs that cover bridge inspection, and we facilitate a multi-state program developing a shared standard for drone data on structures.",
   "ch": [
    "Risk on major crossings that no one has allocated",
    "A first design-build project with a new partner",
-   "Inspection data with no shared standard"
+   "Inspection data with no shared standard",
+   // cs-proficiency challenge
+   "Inspectors need a defined route to proficiency"
   ],
+  "deliver": [
+   // cs-major
+   "Partnering on major crossings: project charters, risk registers, issue resolution ladders, and team evaluations",
+   // cs-db-partnering, cs-partnering
+   "Partnering for design-build and progressive design-build bridge projects, from kickoff through closeout",
+   // cs-proficiency
+   "Proficiency programs for bridge inspection staff",
+   // cs-pooled: structure inspection working group
+   "Multi-state standards for drone data on structures",
+   // John Zuleger's comment 11 on Jacob's drone portfolio (CONTENT FIXES v3, section 6)
+   "Reviews of which inspection and maintenance tasks drones can support",
+   // Field Guide recent work list; cs-transform
+   "Screening and scoring tools for highway and bridge programs"
+  ],
+  "walk": [
+   "A signed partnering charter and an issue resolution ladder",
+   "Team evaluations through the project, reported to both sides",
+   "A written route to proficiency for inspection staff",
+   "A shared data standard and recommended practices a department can adopt"
+  ],
+  "xp": [
+   // cs-major. Public construction costs.
+   "We've facilitated partnering on a $1.2 billion Mississippi River crossing and a $275 million river bridge in Missouri",
+   // cs-db-partnering
+   "We've carried partnering from kickoff through closeout on a design-build river bridge project, with team surveys reported to both sides",
+   // research.ts: NCHRP Research Report 1114 (2024), before they joined Rawlins
+   "Two people on our team were the principal investigator and a co-author of the 2024 national research report that proposed AASHTO guidelines for drones in bridge inspection, before they joined Rawlins",
+   // John Zuleger bio; the work was at his earlier firm
+   "One of our engineers performed and managed hundreds of complex and post-disaster bridge inspections with drones and rope access, before joining Rawlins"
+  ],
+  "services": ["alt-delivery", "workforce", "research", "drone-programs", "owners-rep"], // adds "workforce" for the proficiency programs
+  "industry": "transport",
   "people": [],
   "basis": "Major project, partnering, pooled fund, and bio records"
  },
@@ -1934,27 +2026,48 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   "id": "sub-aviation",
   "name": "Aviation & Airports",
   "st": "ok",
-  "deliver": [
-   "State aeronautics programs and divisions",
-   "Statewide drone programs",
-   "Advanced air mobility planning",
-   "Review of vertiport concepts others design",
-   "Federal aviation funding"
-  ],
-  "services": [
-   "drone-programs",
-   "drone-aam",
-   "aero-division",
-   "grants"
-  ],
-  "intro": "State aeronautics divisions, airports, and the drone and advanced air mobility programs growing around them. We help small aviation staffs run programs, plan for what's next, and compete for federal funding.",
-  "industry": "transport",
+  // Airports: Jacob's drone portfolio says advisory roles only, and no airport master planning.
+  "intro": "State aeronautics programs, and the drone and advanced air mobility programs growing around them. We help small aviation staffs run those programs, plan for what's next, and compete for federal funding. With airports, our role is advisory, focused on drones and advanced air mobility.",
   "ch": [
    "Drone use spread before policy did",
    "Training and equipment vary by division",
    "AAM planning with rules still being written",
    "Small staffs competing for federal funding"
   ],
+  "deliver": [
+   // cs-aero (procedures finalized and distributed), Jacob's drone portfolio (on-call support)
+   "Statewide drone programs: operating procedures, handbooks, governance, and day-to-day support",
+   // cs-aero, cs-hi
+   "Drone training: visual observer and sensor operator courses, remote pilot training, and train-the-trainer materials",
+   // FLAG (5.4). cs-drt.
+   "Emergency response with drones: response team training and live video into the emergency operations center",
+   // cs-aero
+   "Advanced air mobility strategy, and planning guidance for local governments",
+   // cs-aerodiv
+   "Research on how a state aviation role could be organized, governed, and funded",
+   // cs-aero (application submitted). Was "Federal aviation funding": the applications on record are for drone and
+   // advanced air mobility programs, not airport funding.
+   "Federal grant applications for drone and advanced air mobility programs",
+   "Review of vertiport concepts others design"
+  ],
+  "walk": [
+   "Statewide procedures every division follows",
+   "Courses and train-the-trainer materials the agency keeps",
+   "A strategy and local planning guidance for advanced air mobility",
+   "A complete grant application, with its task structure and budget"
+  ],
+  "xp": [
+   // Jacob's drone portfolio, Offering 1 ("Doing")
+   "We work as an on-call extension of state aviation and drone program staff: program development, policy, training, and day-to-day support",
+   "One of our aviation leads has run drone programs since 2018, including a nationwide network of pilots", // as on Drone Program Development
+   // research.ts: NCHRP Research Report 1147 (2025), before they joined Rawlins
+   "Two people on our team wrote the national guide to drone operations at transportation agencies, before they joined Rawlins",
+   "Our team includes the California Department of Transportation's former Chief of Aeronautics", // as on Advanced Air Mobility
+   // Aaron Organ and Jordan Stacy bios
+   "Experience on our team includes airport operations, airfield safety, and airport training programs"
+  ],
+  "services": ["drone-programs", "drone-aam", "drone-emergency", "research", "aero-division", "grants"], // adds Emergency Response and Research & Standards
+  "industry": "transport",
   "people": [],
   "basis": "Aeronautics records and the aviation team's bios"
  },
@@ -1962,138 +2075,213 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   "id": "sub-rail",
   "name": "Rail & Transit",
   "st": "warn",
-  "deliver": [
-   "Partnering facilitation on a light rail line"
-  ],
-  "services": [
-   "alt-delivery",
-   "owners-rep"
-  ],
+  // One Rawlins project: partnering on the Southwest light rail line (2019), in cs-major. Everything on this page is that
+  // project or a person's earlier role. No new offers are invented here.
+  // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's intro for this field was skipped.
   "intro": "Our transit work includes partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation.",
-  "industry": "transport",
   "ch": [
    "Multi-agency coordination on a major transit build",
-   "Budget and risk control under public scrutiny"
+   "Budget and risk control under public scrutiny",
+   // cs-db-partnering challenge; Jacob's portfolio AD4
+   "Owner and contractor need a way to settle issues before they become disputes"
   ],
+  "deliver": [
+   // cs-major: what the partnering on the light rail line covered
+   "Partnering facilitation on major transit builds: project charter, risk register, issue resolution process, and team evaluations",
+   "Joint risk workshops between the owner and the contractor",
+   "Coordination among the agencies and contractors on a major build"
+  ],
+  "walk": [
+   "A signed partnering charter and an issue resolution ladder",
+   "A shared risk register, with an owner for each risk",
+   "Regular team evaluations through the project"
+  ],
+  "xp": [
+   // cs-major names the project
+   "We've facilitated partnering between the owner and the contractor on a $2 billion light rail line in Minneapolis",
+   // Dara Wheeler bio
+   "Our team includes the California Department of Transportation's former Chief of Rail and Mass Transportation",
+   // Jen Pihl bio
+   "One of our advisors supported economic analysis and the administration of major rail grant programs at the Federal Railroad Administration"
+  ],
+  "services": ["alt-delivery", "owners-rep"],
+  "industry": "transport",
   "people": [],
-  "basis": "Minneapolis light rail project; bios (Caltrans rail and mass transportation leadership, Federal Railroad Administration, transit performance work)"
+  "basis": "Minneapolis light rail project; bios (Caltrans rail and mass transportation leadership, Federal Railroad Administration)"
  },
  "g-asset": {
   "id": "g-asset",
   "name": "Asset Management for Local Agencies",
   "st": "ok",
-  "deliver": [
-   "Self-assessments and steering committees",
-   "Workshops on the state's competency framework",
-   "Short, mid, and long-term action plans"
-  ],
-  "services": [
-   "asset-mgmt",
-   "workforce"
-  ],
-  "intro": "Local agencies can use asset management to plan their programs, but each one starts from a different place. We meet them there.",
-  "industry": "gov",
+  // cs-local-am (Rawlins Case Study Drafts v1): kickoffs, steering committees, self-assessments, document reviews, workshops, action plans, one-pagers.
+  "intro": "Local agencies can use asset management to plan their programs and their funding, but each one starts from a different place. We start from the agency's own staff, plans, and inventories: a self-assessment, a workshop built around what it shows, and an action plan the agency can carry out.",
   "ch": [
    "No one owns asset management locally",
    "Inventories and plans are incomplete",
-   "Elected officials need it explained simply"
+   "Elected officials need it explained simply",
+   // Janine Cooper's asset management answers (findings_jacob.md, 6)
+   "Decisions get made worst-first, one department at a time"
   ],
+  "deliver": [
+   "An asset management steering committee named inside the agency",
+   "Self-assessment surveys, and a review of the agency's plans and inventories",
+   "In-person workshops built on the state's competency framework",
+   "Short, mid, and long-term action plans",
+   "One-page materials for senior managers and elected officials"
+  ],
+  "walk": [
+   "An action plan with short, mid, and long-term tasks",
+   "A steering committee that owns it",
+   "A clear view of strengths, gaps, and the resources needed",
+   "A one-page explanation elected officials can use"
+  ],
+  "xp": [
+   // FLAG (5.7). cs-local-am.
+   "We've held asset management workshops and built action plans with local agencies, for a state infrastructure office",
+   // Joey Paskey bio
+   "A former Director of Public Works for the City of Las Vegas on our team led the city's asset management programs",
+   // cs-nyc-parks and cs-riverside (Before Rawlins)
+   "Before founding Rawlins, our founder helped set an asset investment strategy for New York City's 29,000 acres of parkland, and reviewed a county's fleet and facilities operations"
+  ],
+  "services": ["asset-mgmt", "workforce"],
+  "industry": "gov",
   "people": [],
-  "basis": "Midwestern state infrastructure office record; bios"
+  "basis": "State infrastructure office record; bios"
  },
  "g-capital": {
   "id": "g-capital",
   "name": "Capital Project Delivery & Permitting",
   "st": "gap",
-  "deliver": [
-   "Capital project delivery assessment",
-   "Land development permitting review",
-   "Project management roadmap and standard operating procedures"
-  ],
-  "services": [
-   "program-delivery",
-   "org-design"
-  ],
-  "intro": "Cities carry big capital programs and land development permitting with small staffs. Clear roles, standard procedures, and a roadmap staff can follow keep projects and permits moving. Our team includes a former Director of Public Works for the City of Las Vegas.",
-  "industry": "gov",
+  // No completed city project. The deliver and walk lines describe what we offer; none claims past work.
+  // The assess-and-roadmap method is the one used in cs-nv-om and cs-hi.
+  "intro": "Cities deliver capital projects and review land development permits with small staffs, and each depends on the other. We assess how projects and permits move, from intake to acceptance, and turn the findings into a roadmap for project management, written procedures, and training. It's the assessment method we use with state transportation departments, and experience on our team includes directing public works for the City of Las Vegas.",
   "ch": [
    "Capital projects and permits stall between departments",
    "Project management varies by manager",
-   "Procedures aren't written down"
+   "Procedures aren't written down",
+   "Experienced staff are leaving, and their knowledge goes with them"
   ],
-  "people": [
-   [
-    "Joey Paskey, P.E., PTOE",
-    "Ran planning, design, construction, and maintenance as Director of Public Works, City of Las Vegas"
-   ],
-   [
-    "Chris Petersen, CPM",
-    "Coordinated Nevada DOT roadway projects with internal and outside entities"
-   ]
+  "deliver": [
+   "Capital project delivery assessment, from initiation through construction, acceptance, and closeout",
+   "Land development permitting review, from intake through approval",
+   "Current-state workflows that show the handoffs, decisions, and gaps between departments",
+   "A project management roadmap with near, mid, and longer-term actions",
+   "A prioritized set of standard operating procedures",
+   "A training and proficiency framework by role"
   ],
-  "basis": "City proposal scope (not yet delivered); bios"
+  "walk": [
+   "One assessment and roadmap that covers capital delivery and permitting together",
+   "Workflows that show who does what, and where work stalls",
+   "A short list of the procedures to write first",
+   "A training framework tied to the roadmap"
+  ],
+  "xp": [
+   // Joey Paskey bio
+   "A former Director of Public Works for the City of Las Vegas on our team oversaw planning, design, construction, and maintenance of the city's infrastructure",
+   // Amy Neidringhaus bio
+   "A former North Carolina DOT district engineer on our team was the first point of contact for utilities, developers, and eleven municipalities in a fast-growing county",
+   // Chris Petersen bio (private-sector roles)
+   "One of our project managers managed City of Las Vegas roadway projects, and later quality control on city and county improvement projects",
+   // cs-nv-om
+   "We've carried out the same kind of assessment for a state transportation department's operations and maintenance programs",
+   // FLAG (5.8). Sep and Oct 2026 work reports: best-practice research under way; the staffing assessment and the framework come next.
+   "We've begun work on a resource planning and prioritization framework for a city transportation department, on an engineering firm's team"
+  ],
+  "services": ["program-delivery", "org-design", "workforce"], // adds "workforce" for the training framework
+  "industry": "gov",
+  "people": [ // kept; not shown
+   ["Joey Paskey, P.E., PTOE", "Ran planning, design, construction, and maintenance as Director of Public Works, City of Las Vegas"],
+   ["Chris Petersen, CPM", "Coordinated Nevada DOT roadway projects with internal and outside entities"]
+  ],
+  "basis": "City scope of work (Sep 2026, not yet delivered); bios"
  },
  "g-mpo": {
   "id": "g-mpo",
   "name": "Regional & Metropolitan Planning Support",
   "st": "gap",
+  // No Rawlins project. The deliver and walk lines describe what we offer; none claims past work.
+  "intro": "Metropolitan planning organizations answer to federal performance and certification rules with lean staffs. People on our team worked with them from the federal and state side: at the Federal Highway Administration, where one worked with all eighteen in California and another trained planning organizations in performance-based planning, and as Chief of Planning and Local Assistance at the California Department of Transportation.",
+  "ch": [
+   "Federal performance-based planning and reporting requirements",
+   "Keeping the transportation improvement program and the work program current",
+   "Getting ready for a federal certification review"
+  ],
   "deliver": [
    "Performance-based planning and reporting",
+   "Project selection and prioritization methods",
    "Transportation improvement program and work program support",
+   "Performance measures and progress tracking",
    "Getting ready for federal certification reviews"
   ],
-  "services": [
-   "strategic-planning",
-   "data-governance"
+  "walk": [
+   "Performance measures and a reporting routine built around the federal requirements",
+   "A project selection method the board can explain",
+   "A readiness review ahead of certification"
   ],
-  "intro": "Metropolitan planning organizations answer to federal performance and certification rules with lean staffs. Our team includes former Federal Highway Administration executives who worked with them, including all eighteen in California.",
+  "xp": [
+   // Paul Schneider bio (the same line as Local Public Agency & Federal-Aid Programs)
+   "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
+   // Jen Pihl bio
+   "One of our advisors gave state departments and metropolitan planning organizations technical assistance and training in performance-based planning and project prioritization, at the Federal Highway Administration",
+   // Mayela Sosa bio
+   "A former Federal Highway Administration executive on our team worked with state departments, metropolitan planning organizations, and tribal and local governments on new federal grant programs",
+   // Dara Wheeler bio
+   "Our team includes the California Department of Transportation's former Chief of Planning and Local Assistance"
+  ],
+  "services": ["strategic-planning", "lpa", "dashboards", "data-governance"], // adds Local Public Agency & Federal-Aid Programs and Dashboards & Reporting
   "industry": "gov",
-  "ch": [
-   "Performance-based planning and reporting requirements",
-   "Keeping the TIP and UPWP current",
-   "Certification reviews"
+  "people": [ // kept; not shown
+   ["Paul Schneider, P.E.", "Worked with 18 MPOs on California's federal-aid program"],
+   ["Mayela Sosa", "FHWA executive who worked with MPOs, tribal, and local governments"]
   ],
-  "people": [
-   [
-    "Paul Schneider, P.E.",
-    "Worked with 18 MPOs on California's federal-aid program"
-   ],
-   [
-    "Mayela Sosa",
-    "FHWA executive who worked with MPOs, tribal, and local governments"
-   ]
-  ],
-  "basis": "MPO business development material (not yet delivered); bios"
+  "basis": "Bios (no Rawlins project)"
  },
  "g-federal": {
   "id": "g-federal",
   "name": "Federal & Multi-State Programs",
   "st": "ok",
-  "deliver": [
-   "Pooled-fund research and recommended practices",
-   "National research proposals",
-   "Federal grant programs"
-  ],
-  "services": [
-   "research",
-   "grants"
-  ],
-  "intro": "Some problems are bigger than one state. We facilitate a multi-state research program building a shared drone data standard and recommended practices agencies can adopt.",
-  "industry": "gov",
+  // cs-pooled: 18 member states (kickoff deck, Jul 2026). In progress: no results yet, and the copy claims none.
+  // Grants: cs-nc-ipd (BUILD and INFRA), cs-aero (application submitted).
+  "intro": "Some problems are bigger than one state. We facilitate a multi-state research program in which 18 member states are developing a shared drone data standard and recommended practices agencies can adopt. We also help agencies prepare applications for federal grant programs. Experience on our team includes rolling out and reviewing federal grant programs at the Federal Highway Administration and the Federal Railroad Administration.",
   "ch": [
    "States collect the same data with no shared standard",
    "Research has to reach consensus across many members",
-   "Federal programs come with new rules"
+   "Federal programs come with new rules",
+   "We're a small staff competing for federal funding"
   ],
-  "people": [
-   [
-    "Mayela Sosa",
-    "Senior FHWA executive on new federal grant programs"
-   ],
-   [
-    "Paul Wheeler",
-    "National UAS and AAM committees"
-   ]
+  "deliver": [
+   // cs-pooled
+   "Pooled-fund facilitation: working groups, subcommittees, and consensus sessions",
+   "Standards research: compiling members' existing standards and proposing a testing framework",
+   "Recommended practices and guidebooks agencies can adopt",
+   // Sep 2026 progress report: a federal peer exchange for western states' drone programs
+   "Peer exchanges: agendas, facilitation, and follow-up materials",
+   // cs-aerodiv
+   "Research plans, literature reviews, and technical advisory panels",
+   // cs-aero, cs-nc-ipd. "National research proposals" is gone: those are proposals we write to win research work, not something a client receives.
+   "Federal grant applications, including multi-state ones: narrative, budget, forms, and commitment letters"
+  ],
+  "walk": [
+   "A record of what the members agreed, and what is still open",
+   "A testing framework members can run in their own states",
+   "A shared data standard and recommended practices members can adopt",
+   "A complete grant application, ready to submit"
+  ],
+  "xp": [
+   // cs-pooled
+   "We facilitate a pooled fund study on drone standards for 18 member states",
+   // FLAG (5.9). Sep 2026 progress report.
+   "We helped plan and facilitate a federal peer exchange on drone programs for western state transportation departments in September 2026",
+   "A former Federal Highway Administration executive on our team helped 13 division offices roll out new federal grant programs", // as on Grants & Funding
+   "Members of our team serve on national drone and advanced air mobility committees", // as on Research & Standards
+   // Jen Pihl bio
+   "One of our advisors served as a technical reviewer for federal discretionary grant programs"
+  ],
+  "services": ["research", "grants"],
+  "industry": "gov",
+  "people": [ // kept; not shown
+   ["Mayela Sosa", "Senior FHWA executive on new federal grant programs"],
+   ["Paul Wheeler", "National UAS and AAM committees"]
   ],
   "basis": "Pooled fund study record; bios"
  },
@@ -2101,22 +2289,36 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   "id": "sub-ports",
   "name": "Ports & Harbors",
   "st": "gap",
-  "deliver": [
-   "Port security grant applications",
-   "Drone and uncrewed-vessel technology evaluation"
-  ],
-  "services": [
-   "grants",
-   "drone-programs"
-  ],
-  "intro": "Harbors run on security, funding, and new technology. Our work here so far: port security grant applications, and an evaluation of drone and uncrewed-vessel technology.",
-  "industry": "transport",
+  // Source: our final report to the client for its first purchase order (work through Aug 2026): four district port security
+  // grant application packages; drones, uncrewed surface vessels, multibeam sonar, and green lidar evaluated for harbor and
+  // infrastructure inspection; vendor and procurement options; a demonstration and training concept. Same client as cs-hi: keep it unnamed.
+  "intro": "Harbors run on security, funding, and new technology. Our work here so far is with one state harbors program: we supported its federal port security grant applications, and evaluated drones, uncrewed surface vessels, sonar, and lidar for inspecting harbor infrastructure.",
   "ch": [
    "Competitive federal security grants",
-   "New technology to evaluate with a small staff"
+   "New technology to evaluate with a small staff",
+   "Equipment that has to serve more than one harbor"
   ],
+  "deliver": [
+   "Port security grant applications: investment justifications, budgets, and technical narratives",
+   "Evaluation of drones, uncrewed surface vessels, sonar, and lidar for harbor and infrastructure inspection",
+   "Equipment and vendor options, with the procurement paths for each",
+   "Demonstration and training plans for new inspection technology"
+  ],
+  "walk": [
+   "Complete application packages, reusable for the next funding round",
+   "A side-by-side evaluation of the technology options",
+   "A plan for demonstrating the equipment and phasing it in"
+  ],
+  "xp": [
+   // cs-nc-am (Before Rawlins)
+   "Before founding Rawlins, our founder led an asset management review for a state transportation department that covered its ports and ferries",
+   // cs-nc-ipd (BUILD and INFRA), cs-aero (construction technology), and this page's port security applications
+   "Our grant team has prepared federal applications for highway, drone, and port security programs"
+  ],
+  "services": ["grants", "drone-programs"],
+  "industry": "transport",
   "people": [],
-  "basis": "Hawaii harbors records",
+  "basis": "Harbors records: final report on the client's first purchase order (work through Aug 2026)",
   "thin": true
  }
 };
@@ -2527,6 +2729,30 @@ export const CASES: Record<string, CaseData> = {
   "industry": "transport",
   "industry2": null
  },
+ "cs-nv-fleet-program": {
+  "id": "cs-nv-fleet-program",
+  "ch": "The department wanted its equipment chosen, shared, maintained, and replaced the same way in every district, with data behind each decision.",
+  "did": [
+   "Analyzed the equipment fleet: the inventory, the work done with it, what leadership expected, and what industry could provide, with a gap analysis and recommendations",
+   "Surveyed employees statewide on how they use equipment and what they need",
+   "Compared the department's fleet replacement and disposal process side by side with other western state DOTs",
+   "Interviewed district leadership, supervisors, mechanics, and maintenance crews in the districts",
+   "Reviewed the department's fleet policies and performance measures, with comments and recommendations",
+   "Drafted a report on current and future fleet processes"
+  ],
+  "res": [
+   "Department leadership approved the fleet analysis recommendations, and the work moved into implementation"
+  ],
+  "services": [
+   "operations",
+   "asset-mgmt"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
  "cs-aerodiv": {
   "id": "cs-aerodiv",
   "ch": "Aviation demands are changing: rural airports, drones, and advanced air mobility. The study asks how a broader aviation role could be organized, governed, and funded.",
@@ -2799,7 +3025,9 @@ export const CASES: Record<string, CaseData> = {
    "Reviewed hundreds of wiki documents and gave each one a disposition: keep, update, combine, move, or retire",
    "Backed up and preserved the original site before migration",
    "Planning the rollout of the department's construction management platform on live projects",
-   "Supported remote pilot training for about 20 candidates"
+   "Supported remote pilot training for about 20 candidates",
+   "Supported federal port security grant applications for the department's harbors",
+   "Evaluated drones, uncrewed surface vessels, sonar, and lidar for harbor inspection"
   ],
   "res": [],
   "services": [
@@ -2813,7 +3041,8 @@ export const CASES: Record<string, CaseData> = {
   ],
   "subsectors": [
    "sub-highways",
-   "sub-aviation"
+   "sub-aviation",
+   "sub-ports"
   ],
   "industry": "transport",
   "industry2": null
@@ -3037,6 +3266,63 @@ export const CASES: Record<string, CaseData> = {
    "Monday.com",
    "Make.com"
   ]
+ },
+ "cs-pv-single": {
+  "id": "cs-pv-single",
+  "ch": "Manufacturing was spread across workshops, with poor communication between the office and the floor. There was no reliable way to record time against a specific item, the data sat unused, and matching materials, time, and cost took heavy manual entry.",
+  "did": [
+   "Rebuilt the operation around one monday.com board structure",
+   "Set up one source of truth, with permission levels for each workshop",
+   "Used formulas and Make to calculate cost, materials, hours, and assignments automatically",
+   "Added time tracking and signed work orders inside monday.com"
+  ],
+  "res": [
+   "Estimated time, actual time, team, cost, and price sit in one place",
+   "Leaders track workshop speed, profitability, staffing, and capacity",
+   "Quotes and invoices are automated, and jobs are assigned by capacity"
+  ],
+  "services": [
+   "automation",
+   "dashboards"
+  ],
+  "subsectors": [],
+  "industry": "private",
+  "industry2": null,
+  "tools": [
+   "Monday.com",
+   "Make.com",
+   "Tracket",
+   "DocuSign"
+  ]
+ },
+ "cs-pv-sales": {
+  "id": "cs-pv-sales",
+  "ch": "The handoff from business development to delivery and finance ran on email and memory. Scope, fee, billing terms, and the project owner arrived late or incomplete, and project setup took one to two weeks.",
+  "did": [
+   "Set the few fields an opportunity needs before it can close as won",
+   "Required scope, fee, terms, owner, and kickoff date in Salesforce",
+   "Built an automation that creates the project record in monday.com at close",
+   "Notified finance and delivery at once, with a standard kickoff checklist"
+  ],
+  "res": [
+   "Project setup went from one to two weeks to billing-ready in days",
+   "Finance has the setup information at close",
+   "Project managers start kickoffs with what they need"
+  ],
+  "services": [
+   "automation"
+  ],
+  "subsectors": [],
+  "industry": "private",
+  "industry2": null,
+  "tools": [
+   "Salesforce",
+   "Monday.com",
+   "Make.com",
+   "QuickBooks",
+   "SharePoint",
+   "Teams"
+  ]
  }
 };
 export const APPLIED: string[][] = [
@@ -3053,6 +3339,14 @@ export const APPLIED: string[][] = [
   "a field services and drilling organization (our team's work before Rawlins)"
  ],
  [
+  "Single source of truth",
+  "a manufacturing firm of more than 100 people (our team's work before Rawlins)"
+ ],
+ [
+  "Sales to project handoff",
+  "a 130-person professional services firm (our team's work before Rawlins)"
+ ],
+ [
   "Field reporting",
   "a field service and project delivery firm (our team's work before Rawlins)"
  ],
@@ -3061,12 +3355,26 @@ export const APPLIED: string[][] = [
   "an install, service, and maintenance firm (our team's work before Rawlins)"
  ]
 ];
-export const PRIV: { hear: string[]; start: string[] } = {
+export const PRIV: { hear: string[]; build: string[]; dot: string[]; start: string[] } = {
  "hear": [
   "The same data keyed into three systems",
   "Reports built by hand every month",
   "Field records that disappear after the site visit",
   "Leadership wants AI, with no plan or policy"
+ ],
+ // What we build: each line is on a Digital Solutions service page already. Capabilities, with no claim of past private-sector results.
+ "build": [
+  "Integrations that move data between the systems you already own",
+  "Automated workflows: intake forms, routing, approvals, and document generation",
+  "Dashboards that go from the whole firm down to one project",
+  "Small custom apps where an off-the-shelf platform doesn't fit",
+  "A readiness check and a usage policy before any AI work",
+  "Documentation and training, so your team owns what we build"
+ ],
+ // FLAG, both lines. Engagement letters and agreements with land developers (2022 to 2026) and a retainer with a materials supplier (2025).
+ "dot": [
+  "We've helped land developers coordinate state DOT permitting for their projects: keeping communication with the department moving, and advising on direction, timing, and permit questions.",
+  "We've advised a construction materials supplier on working with a state DOT, including product approval."
  ],
  "start": [
   "A short call about where your workflows drag",

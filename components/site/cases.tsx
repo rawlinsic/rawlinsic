@@ -75,6 +75,9 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
   const xDid = (x.did ?? []).map((t) => t.trim()).filter(Boolean);
   const xRes = (x.res ?? []).map((t) => t.trim()).filter(Boolean);
   const anyExtra = !!(x.when?.trim() || xDid.length || xRes.length);
+  /* the automation examples (our automation team's work before Rawlins, live-site Examples 02 to 07) carry no
+     preview notes anywhere (Nicole, Nov 11: we're using them), so their pages skip the "Our records have more" note */
+  const isExample = c.industry === "private" && c.status === "Before Rawlins";
   const facts = [
     { k: "Client", v: client },
     { k: "Status", v: caseTag(c) + (whoNote.length ? ` · ${whoNote.join(" · ").replace(/^Our (team|founder)'s work before Rawlins,?\s*/i, "").replace(/^./, (x) => x.toUpperCase())}` : "") },
@@ -99,7 +102,7 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
           )}
           {anyExtra
             ? <Dev block>For review: lines marked &ldquo;For review&rdquo; come from our records and are kept general, because the client&apos;s contract may limit what we can publish. Remove any that can&apos;t go on the site (empty it with Edit text).</Dev>
-            : <Dev block>Our records have more on this project (dates, deliverables, results). Each piece needs the client&apos;s written OK before it goes on the site.</Dev>}
+            : isExample ? null : <Dev block>Our records have more on this project (dates, deliverables, results). Each piece needs the client&apos;s written OK before it goes on the site.</Dev>}
         </div>
       </section>
 

@@ -56,8 +56,8 @@ const PROOF_ICON = [
 
 /* Broad digital proof (handoff 4.12); invoicing example not cleared, left out */
 const DIGITAL_PROOF = [
-  /* examples 06 and 07 are off the site until confirmed (content updates v4, 6.5); four of the five are from before Rawlins (scrub 3.1) */
-  "Five examples of connected workflows: consultant contracting at a state DOT, and four from our automation team's work before Rawlins",
+  /* seven examples, as on the live site (06 and 07 back Nov 11); six of the seven are from before Rawlins */
+  "Seven examples of connected workflows: consultant contracting at a state DOT, and six from our automation team's work before Rawlins",
   "A statewide project delivery website, change request system, consultant contracting workflow, estimating tools, and training videos",
   "Repeated project fields filled in once from trusted agency data, and paper forms turned into web apps",
   "A website migration with every item reviewed: keep, update, combine, move, or retire", // "and wiki" off, as on the Websites page (Nicole, Nov 11)
@@ -132,10 +132,10 @@ export function DigitalShowcase() {
         </ul>
       </Sec>
       <section className="pg-sec pg-sec-navy pg-legacy">
-        {/* Nicole, Nov 11: this eyebrow, title, and line, shown without an expand arrow. TODO(launch): examples 02 to 05 are
-            our automation team's work before Rawlins (content updates v4); the line below calls them Rawlins' applied solutions. */}
+        {/* Nicole, Nov 11: this eyebrow, title, and line, shown without an expand arrow. The seven examples carry no
+            preview notes anywhere (Nicole, Nov 11: we're using them). */}
         <AutomationIntegrationInteractive embedded openIntro eyebrow="Smarter systems, streamlined workflows" title="Applied solutions"
-          intro={<p className="section-text">The graphic below showcases Rawlins&rsquo; applied solutions in practice. Tap an icon to see the challenge, what we built, and the result. <Dev>Content status: examples 02 to 05 are our automation team&apos;s work before Rawlins; this line calls them Rawlins&apos; applied solutions.</Dev></p>} />
+          intro={<p className="section-text">The graphic below showcases Rawlins&rsquo; applied solutions in practice. Tap an icon to see the challenge, what we built, and the result.</p>} />
       </section>
       <section className="pg-sec pg-sec-navy pg-legacy"><AutomationEcosystemBars /></section>
       <DeliverStack />
@@ -205,7 +205,7 @@ export function ServiceFeature({ id }: { id: string }) {
       return (
         <>
           <section className="pg-sec pg-sec-navy pg-legacy">
-            <AutomationIntegrationInteractive embedded eyebrow="Applied solutions" title="From our team's work" intro="Five examples, including how we rebuilt consultant contracting at a state DOT, step by step. The first is Rawlins work. The others are from our automation team's work before Rawlins." />
+            <AutomationIntegrationInteractive embedded eyebrow="Applied solutions" title="From our team's work" intro="Seven examples, including how we rebuilt consultant contracting at a state DOT, step by step. The first is Rawlins work. The others are from our automation team's work before Rawlins." />
           </section>
           <Sec title="Applied solutions" intro={<p>Where these came from:</p>}><List items={APPLIED.map((a) => `${a[0]}: ${a[1]}`)} cols /></Sec>
         </>
@@ -254,8 +254,8 @@ export function ServiceFeature({ id }: { id: string }) {
       const parts: [string, string, string[]][] = [
         ["Performance-based maintenance", "Contracts that pay for results: specifications, deduction models, and administration", ["cs-txmaint", "cs-pbmc", "cs-maint-model"]],
         ["Quality assurance and ratings", "Handbooks and rating programs decisions can rely on", ["cs-transform", "cs-txmaint"]],
-        // Backed by the cs-nv-om operations and maintenance review. Jacob's portfolio lists fleet and facilities as not yet delivered.
-        ["Fleet and facilities", "The right equipment, in the right shape, at the right cost", ["cs-nv-om"]],
+        // Backed by the cs-nv-om review and by cs-nv-fleet-program (Rawlins fleet analysis and implementation support, 2022 to 2023).
+        ["Fleet and facilities", "The right equipment, in the right shape, at the right cost", ["cs-nv-om", "cs-nv-fleet-program"]],
         // TODO(launch): links cs-drt. needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.
         ["Winter operations and emergency readiness", "Plans tested before they're needed, including drone response teams", ["cs-txmaint", "cs-drt"]],
       ];

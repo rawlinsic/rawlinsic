@@ -130,6 +130,9 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
       "Draft deployment plan completed", // source: drafts:386
     ],
   },
+  "cs-nv-fleet-program": {
+    when: "2022 to 2023", // source: the operations and maintenance work reports, Oct 2022 to Mar 2023, and the amendment scopes
+  },
   "cs-aerodiv": {
     when: "Since 2026", // source: drafts:406
   },

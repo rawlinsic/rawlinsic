@@ -6,7 +6,7 @@ import IndustriesIndexV8 from "@/components/v8/industries-index";
 
 export const metadata: Metadata = {
   title: "Who We Work With",
-  description: "Transportation, Government & Public Works, Contractors & Engineering Firms, and the Private Sector.",
+  description: "Who Rawlins works with: state transportation departments and other public agencies, the contractors and engineering firms that build for them, and private firms.",
   alternates: { canonical: "/industries" },
 };
 export default function Page() {
