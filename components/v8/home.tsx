@@ -226,7 +226,7 @@ export default function Home() {
       <Orbit tiles={tiles} cta={<a className="v8-btn orb-cta" href="/industries">See who we work with</a>}>
         {/* like scale.com (Nicole, Nov 10): "We work with" and a blue line that fills in with the photo you point at */}
         <h2 id="orb-h" className="orb-h">We work with<span className="orb-fill" data-default="Public Agencies & Private Firms">Public Agencies & Private Firms</span></h2>
-        <p className="orb-lead">More than 30 transportation agencies so far, plus local governments, a multi-state research program, contractors, and engineering firms. Our work so far is across the United States, and our team can do it anywhere.</p>
+        <p className="orb-lead">More than 30 transportation agencies, local governments, a multi-state research program, contractors, and engineering firms. Our work so far is across the United States, and our team can do it anywhere.</p>
       </Orbit>
 
       {/* 5 · our work */}
