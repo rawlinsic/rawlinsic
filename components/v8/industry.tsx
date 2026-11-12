@@ -322,7 +322,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
     ...(subs.length ? [["specialties", "Specialties"] as Nav] : []),
     ...(intl ? [["carry", INTL.carry.title] as Nav] : []),
     ...(d.ch.length ? [["hear", "Challenges we hear"] as Nav] : []),
-    ["help", "Services we provide"],
+    ["help", "How we can help"],
     ...(intl ? [["abroad", INTL.abroad.title] as Nav, ["region", "Where you'll find us"] as Nav] : []),
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ...(work.length ? [["work", "Featured projects"] as Nav] : []),
@@ -346,7 +346,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
         </section>
       )}
       {d.ch.length > 0 && <Hear title="Challenges we hear" items={d.ch} />}
-      <ServiceCards id="help" title="Services we provide" ids={helpIds(ind)} tone="pale" />
+      <ServiceCards id="help" title="How we can help" ids={helpIds(ind)} tone="pale" />
       {intl && (
         <Route id="abroad" title={INTL.abroad.title}>
           <RouteList check ordered={false} stops={INTL.abroad.items.map((x) => ({ d: <>{x.t}{x.flag && <> <Dev>Content status: {x.flag}</Dev></>}</> }))} />
