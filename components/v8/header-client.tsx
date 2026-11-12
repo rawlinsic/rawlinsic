@@ -150,7 +150,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
       </div>
       <div className="hx-panel" id="hx-m-who" hidden={open !== "who"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         {/* at the top, like What We Do and Insights (Nicole, Nov 12) */}
-        <p className="mx-foot mx-foot-top"><a href="/industries">All Industries</a></p>
+        <p className="mx-foot mx-foot-top"><a href="/industries">Everyone we work with</a></p>
         <div className="mx-who">
           <ul className="mx-inds">
             {data.industries.map((x, i) => (
