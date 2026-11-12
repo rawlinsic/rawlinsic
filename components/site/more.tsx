@@ -288,7 +288,7 @@ export function InsightsIndex() {
       <section className="fan-sec" data-nofill>
         <div className="ed-wrap fan-head">
           <nav className="pg-crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">Insights</span></li></ol></nav>
-          <h1 className="fan-h">What we&apos;ve done, and <em>what we&apos;re learning.</em></h1>
+          <h1 className="fan-h">What we&apos;ve done, and <em>what&apos;s in the works.</em></h1>
         </div>
         <FanCards cards={cards} label="Insights" start={2} />
         <ul className="ed-wrap fan-links">
