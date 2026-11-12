@@ -1468,7 +1468,7 @@ export const AREAS: Record<string, AreaData> = {
  "tech": {
   "id": "tech",
   "name": "Digital Solutions",
-  "tag": "Websites, tools, workflows, data, AI, and training",
+  "tag": "Websites, tools, workflows, data, AI, & training",
   "services": [
    "portals",
    "automation",

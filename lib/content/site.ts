@@ -76,7 +76,7 @@ export const AREAS: Area[] = [
   },
   {
     id: "tech", slug: "digital-solutions", name: "Digital Solutions",
-    tag: "Websites, tools, workflows, data, AI, and training", scene: "network", featuredCase: "cs-pdn",
+    tag: "Websites, tools, workflows, data, AI, & training", scene: "network", featuredCase: "cs-pdn",
     services: [
       svc("portals", "Websites, Portals & Digital Tools", "office"),
       svc("automation", "Integration & Automation"), // v12 rename (was Automation & Integration)
