@@ -166,7 +166,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             </>}
           </div>
           <div className="mx-feat">
-            {data.industries[ind].feature && <><p className="mx-k">Featured Project</p><ProjectCard c={data.industries[ind].feature!} /></>}
+            {data.industries[ind].feature && <><p className="mx-k">Featured Projects</p><ProjectCard c={data.industries[ind].feature!} /></>}
             {data.industries[ind].projects.length > 0 && (
               <ul className="mx-plinks">{data.industries[ind].projects.map((p) => <li key={p.href}><a href={p.href}>{p.title}</a></li>)}</ul>
             )}
