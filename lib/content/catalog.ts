@@ -1269,7 +1269,7 @@ export const AREAS: Record<string, AreaData> = {
  "strategy": {
   "id": "strategy",
   "name": "Strategy & Organization",
-  "tag": "Direction, structure, and people",
+  "tag": "Direction, structure, & people",
   "services": [
    "strategic-planning",
    "org-design",

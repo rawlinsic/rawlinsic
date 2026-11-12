@@ -30,7 +30,7 @@ const svc = (id: string, name: string, scene?: SceneKey): Service => ({ id, slug
 export const AREAS: Area[] = [
   {
     id: "strategy", slug: "strategy-organization", name: "Strategy & Organization",
-    tag: "Direction, structure, and people", scene: "capitol", featuredCase: "cs-strategic",
+    tag: "Direction, structure, & people", scene: "capitol", featuredCase: "cs-strategic",
     services: [
       /* v8: renamed and listed first (handoff v8, section 6, default) */
       svc("exec-advisory", "Executive Advisory"),
