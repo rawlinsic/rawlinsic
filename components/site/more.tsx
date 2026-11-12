@@ -163,7 +163,7 @@ export function WhereWeWork() {
 }
 
 /* ── Our People ── */
-const memberSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+const memberSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "&").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 /* former agency roles: lib/content/people.ts (the same list the people cards use) */
 const BUSINESS = /Accounting|Administrative Assistant|Professional Services|VP of Finance|Chief Culture|Administration & Contract/;
 const SPECIALIST = /Specialist|Designer|Engineer\b|Architect|Tester|Digital Strategy|Chief AI Strategy/;

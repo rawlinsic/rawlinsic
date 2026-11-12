@@ -43,7 +43,7 @@ const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks
 /* one card per quote: some entries hold two quotes in one string ("…” “…") */
 const quotes = (hear: readonly string[]) => hear.flatMap((h) => h.split(/["”]\s*["“]/)).map((h) => bare(h.replace(/^["“]/, "")));
 /* the anchor each person has on Our People */
-const personSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+const personSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "&").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 /* portrait cards from [name, line] pairs: the Rawlins title and location from
    the roster, plus a former agency role when there is one; the line passed in
    isn't shown (full site pass, Part 4, 4) */

@@ -24,7 +24,7 @@ const STATUS: Record<string, string> = { ok: "Content ready", warn: "Proven, cop
 export { AVIATION_ROLES, AVIATION_TEAM };
 export const AVIATION_PAGES = ["drone-programs", "drone-aam", "drone-emergency", "research", "aero-division"];
 /* the aviation team as portrait cards: Rawlins title and location from the roster, plus a former role */
-const personSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+const personSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").replace(/&/g, "&").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 export const aviationCards = (): TeamCard[] => AVIATION_TEAM.map(([name]) => {
   const m = rosterFor(name);
   const slug = personSlug(m?.name ?? name);
