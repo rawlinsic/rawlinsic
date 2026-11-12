@@ -12,9 +12,9 @@ export type Person = {
 type Opt = { value: string; label: string };
 
 const GROUP_TEXT: Record<Person["group"], string> = {
-  Advisors: "People who bring agency and industry experience: they've run the programs our clients run.",
-  Specialists: "People who build and deliver: digital tools, automation, training and video, and design.",
-  "Business Operations": "The people who keep Rawlins running.",
+  Advisors: "",
+  Specialists: "",
+  "Business Operations": "",
 };
 
 function Bio({ text }: { text: string }) {
