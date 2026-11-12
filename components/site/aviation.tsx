@@ -215,7 +215,7 @@ export function AviationTeam({ people, title = "Our aviation team", roles }: { p
           {!roles && <a className="v8-link" href="/about/our-people">Everyone on our team</a>}
         </div>
         {roles && <><p className="av-sub">what we do</p><AviationRoles roles={roles} /></>}
-        {roles && <p className="av-sub av-sub-people">The people in those roles</p>}
+        {roles && <p className="av-sub av-sub-people">the team</p>}
         <ul className="av-team-list av-team-circles">
           {people.map((p, i) => (
             <li key={p.name} data-reveal style={{ ["--d" as string]: `${i * 80}ms` } as CSSProperties}>
