@@ -383,7 +383,7 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
     ...(deliver.length ? [["deliver", "What we deliver"] as Nav] : []),
     ...(avTeam.length ? [["aviation", "Our aviation team"] as Nav] : []),
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
-    ...(services.length ? [["services", "Services behind this"] as Nav] : []),
+    ...(services.length ? [["services", "How we can help"] as Nav] : []),
     ...(cases.length ? [["work", "Where we've done this"] as Nav] : []),
     ["talk", "Talk to us"],
   ];
@@ -401,7 +401,7 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
       {deliver.length > 0 && <Route id="deliver" title="What we deliver"><RouteList check ordered={false} stops={deliver.map((x) => ({ d: x }))} /></Route>}
       {avTeam.length > 0 && <Team id="aviation" people={avTeam} roles={AVIATION_ROLES} />}
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
-      <ServiceCards id="services" title="Services behind this" ids={services} />
+      <ServiceCards id="services" title="How we can help" ids={services} />
       {cases.length > 0 && <Work title="Where we've done this" cases={cases} tone="pale" />}
       <Talk linksTitle={ind.id === "transport" ? "Transportation specialties" : "Specialties"} links={sibs} />
       {nextSub
