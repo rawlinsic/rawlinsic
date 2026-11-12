@@ -162,7 +162,7 @@ export const INDUSTRIES: Industry[] = [
   {
     id: "private", slug: "private-sector", name: "Private Sector", scene: "office",
     who: "Growing firms that have outgrown their current tools or processes",
-    lead: "Firms that have outgrown spreadsheets but don't have a build team. We connect the systems you already pay for and automate the work around them.",
+    lead: "Companies that have outgrown their spreadsheets or tools, but don't have a build team. We connect the systems you already pay for and automate the work around them.",
     featured: ["automation", "ai", "dashboards", "data-governance", "portals"],
     projects: ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service"],
     subsectors: [],

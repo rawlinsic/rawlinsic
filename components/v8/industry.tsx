@@ -426,7 +426,7 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
   ];
   const hero = (
     <FrameHero photo={INDUSTRY_PHOTO.private} crumbs={[["/industries", "Who We Work With"], [industryHref(ind), ind.name]]}
-      tag="Private sector" title="For growing firms" lead={ind.lead}
+      tag="for growing firms" title="Private Sector" lead={ind.lead}
       actions={<a className="v8-btn v8-btn-area" href="/contact">Book a short call</a>} />
   );
   return (
