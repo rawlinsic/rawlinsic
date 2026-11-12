@@ -1170,3 +1170,7 @@ a.nw-more:hover, .nw-proj:hover .nw-more { text-decoration: underline; text-unde
 body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 /* room for Undo and Redo on one row of the review bar */
 .pe-bar { max-width: min(700px, calc(100vw - 32px)); }
+
+/* ── Nov 12, 2026 (5) ── comments on menu items: a number on the menu's name while the menu is closed ── */
+.pc-pin.pc-menu { width: 26px; height: 26px; margin: 0; border-radius: 999px; background: #22d3ee; color: #04131f; font-size: 0.78rem; border-color: #0a1220; }
+.pc-pin.pc-menu:hover { background: #a5f3fc; }

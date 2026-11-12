@@ -44,6 +44,14 @@ const byWords = (snippet: string): HTMLElement | null => {
   /* enough of the same opening words to be sure: most of a short snippet, or a good run of a long one */
   return best && score >= Math.min(key.length, 18) ? best : null;
 };
+/* A comment placed on an item inside one of the header's menus (Paul, Nov 12: he put 17 comments on menu
+   items and thought they were erased). Those items are only on screen while the menu is open, and the menu
+   is the same on every page, so such a comment:
+     - shows on every page, not only the page it was made on
+     - sits on its item while the menu is open
+     - while the menu is closed, is counted in a number on the menu's name; a click on the number opens the menu */
+const menuOf = (sel: string) => /^#hx-m-(\w+)/.exec(sel)?.[1] ?? null;
+const menuButton = (m: string) => { const b = document.getElementById(`hx-b-${m}`); return b && b.getClientRects().length ? b : null; };
 const find = (sel: string, snippet = ""): HTMLElement | null => {
   const el = byPath(sel);
   if (el && el.getClientRects().length) {
@@ -82,6 +90,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
      spot is looked for again every couple of seconds (pages finish drawing late, menus open, cards turn) */
   const seen = useRef(new Map<number, { el: HTMLElement | null; t: number }>());
   const locate = (c: C) => {
+    if (menuOf(c.sel)) { const el = byPath(c.sel); return el && el.getClientRects().length ? el : null; }
     const hit = seen.current.get(c.id), now = Date.now();
     if (hit && (hit.el ? hit.el.isConnected && hit.el.getClientRects().length > 0 : now - hit.t < 2000)) return hit.el;
     const el = find(c.sel, c.snippet);
@@ -102,12 +111,13 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
     mine.current.forEach((v, id) => {
       if (now - v.t > 90000) { mine.current.delete(id); return; }
       if (!v.open) out = out.filter((c) => c.id !== id);
-      else if (v.c && !out.some((c) => c.id === id)) out = [...out, v.c];
+      else if (v.c && (v.c.page === page || menuOf(v.c.sel)) && !out.some((c) => c.id === id)) out = [...out, v.c];
     });
     return [...out].sort((a, b) => a.at.localeCompare(b.at));
-  }, []);
+  }, [page]);
   const load = useCallback(async () => {
-    try { const r = await fetch(`/api/preview-comments?page=${encodeURIComponent(page)}`); const j = await r.json(); if (r.ok) setList(settle(j.comments || [])); else setMsg(j.error || ""); } catch {}
+    /* every open comment, then this page's plus the ones on menu items (those belong to every page) */
+    try { const r = await fetch("/api/preview-comments"); const j = await r.json(); if (r.ok) setList(settle(((j.comments || []) as C[]).filter((c) => c.page === page || menuOf(c.sel)))); else setMsg(j.error || ""); } catch {}
   }, [page, settle]);
   useEffect(() => { load(); }, [load]);
   /* Undo or Redo of a comment from the bar: show the result at once */
@@ -129,7 +139,11 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
     const on = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; tick((n) => n + 1); }); };
     window.addEventListener("scroll", on, { passive: true }); window.addEventListener("resize", on);
     const t = setInterval(on, 1000);
-    return () => { window.removeEventListener("scroll", on); window.removeEventListener("resize", on); clearInterval(t); cancelAnimationFrame(raf); };
+    /* a menu opening or closing moves its comments between the menu's name and its items */
+    const head = document.querySelector("header.hx");
+    const mo = head ? new MutationObserver(on) : null;
+    if (head && mo) mo.observe(head, { attributes: true, subtree: true, attributeFilter: ["hidden", "aria-expanded"] });
+    return () => { window.removeEventListener("scroll", on); window.removeEventListener("resize", on); clearInterval(t); cancelAnimationFrame(raf); mo?.disconnect(); };
   }, []);
 
   // comment mode: the next click on the page places a note there
@@ -171,17 +185,29 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
     /* keep the pin inside the element even if it is now a different size */
     return { x: r.left + Math.min(1, Math.max(0, c.rx)) * r.width, y: r.top + Math.min(1, Math.max(0, c.ry)) * Math.min(r.height, 600) };
   };
-  const show = (c: C) => { const el = locate(c); el?.scrollIntoView({ block: "center", behavior: "smooth" }); setOpenId(c.id); };
+  const show = (c: C) => {
+    const m = menuOf(c.sel);
+    if (m) { if (!locate(c)) menuButton(m)?.click(); window.setTimeout(() => setOpenId(c.id), 150); return; }
+    const el = locate(c); el?.scrollIntoView({ block: "center", behavior: "smooth" }); setOpenId(c.id);
+  };
 
   if (hidden) return null;
   const vw = typeof window === "undefined" ? 1400 : window.innerWidth;
-  const lost = list.filter((c) => !spot(c)).map((c) => c.id);
+  /* comments inside a menu that is closed right now, by menu (only where the menu's name is on screen: on a
+     phone the menus are a different list, so there those comments park at the edge like any other) */
+  const inMenu = new Map<string, C[]>();
+  list.forEach((c) => { const m = menuOf(c.sel); if (m && !spot(c) && menuButton(m)) inMenu.set(m, [...(inMenu.get(m) || []), c]); });
+  const tucked = new Set(Array.from(inMenu.values()).flat().map((c) => c.id));
+  const lost = list.filter((c) => !spot(c) && !tucked.has(c.id)).map((c) => c.id);
+  const vh = typeof window === "undefined" ? 800 : window.innerHeight;
+  const rows = Math.max(4, Math.floor((vh - 240) / 42)); // parked pins per column
   return (
     <>
       {list.map((c, i) => {
         /* no spot on the page any more: the pin is parked down the right edge, so the comment is still there to read */
-        const at = spot(c), parked = !at;
-        const p = at ?? { x: vw - 30, y: 150 + (lost.indexOf(c.id) % 12) * 42 };
+        if (tucked.has(c.id)) return null; // counted on its menu's name until the menu opens
+        const at = spot(c), parked = !at, k = lost.indexOf(c.id);
+        const p = at ?? { x: vw - 30 - Math.floor(k / rows) * 42, y: 150 + (k % rows) * 42 };
         const open = openId === c.id;
         return (
           <div key={c.id}>
@@ -197,6 +223,13 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
             )}
           </div>
         );
+      })}
+      {/* a number on a menu's name: how many comments are on items inside it; a click opens the menu */}
+      {Array.from(inMenu.entries()).map(([m, cs]) => {
+        const b = menuButton(m); if (!b) return null;
+        const r = b.getBoundingClientRect();
+        const who = Array.from(new Set(cs.map((c) => c.who))).join(", ");
+        return <button key={`menu-${m}`} type="button" className="pc-pin pc-menu" style={{ left: r.right + 2, top: r.top + 4 }} onClick={() => b.click()} aria-label={`${cs.length} comment${cs.length === 1 ? "" : "s"} inside the ${b.textContent} menu, from ${who}. Open the menu.`} title={`${cs.length} comment${cs.length === 1 ? "" : "s"} inside this menu (${who}). Click to open it.`}>{cs.length}</button>;
       })}
       {draft && (
         <div className="pc-pop pc-new" style={{ left: Math.min(draft.x + 12, vw - 340), top: draft.y + 12 }}>
