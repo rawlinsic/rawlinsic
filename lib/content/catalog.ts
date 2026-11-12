@@ -1920,7 +1920,7 @@ export const INDUSTRIES: Record<string, IndustryData> = {
 export const SUBSECTORS: Record<string, SubsectorData> = {
  "sub-highways": {
   "id": "sub-highways",
-  "name": "Highways & Roads",
+  "name": "Highways & Bridges",
   "st": "ok",
   "intro": "Most of our work is on state highway systems. We help departments choose and prioritize projects, get them ready and delivered, administer construction, and maintain and operate the roads afterward. That work ranges from department-wide reorganizations and project delivery frameworks to performance-based maintenance contracts and maintenance rating programs.",
   "ch": [
@@ -1975,7 +1975,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
  },
  "sub-bridges": {
   "id": "sub-bridges",
-  "name": "Bridges & Structures",
+  "name": "Bridges & Structures - remove",
   "st": "ok",
   // Rawlins doesn't design or inspect bridges (CONTENT FIXES v3; Jacob's portfolio, "Boundaries that matter in scopes").
   // Only one crossing cost over a billion dollars, so "billion-dollar river crossings" is gone.

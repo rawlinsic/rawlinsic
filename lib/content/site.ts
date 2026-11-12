@@ -129,9 +129,9 @@ export const INDUSTRIES: Industry[] = [
     featuredCase: "cs-major",
     projects: ["cs-transform", "cs-proficiency", "cs-aero"],
     subsectors: [
-      sub("sub-highways", "Highways & Roads", "rural", "Most of our work is on state highway systems: how projects are chosen, readied, built, and maintained."),
+      sub("sub-highways", "Highways & Bridges", "rural", "Most of our work is on state highway systems: how projects are chosen, readied, built, and maintained."),
       // "billion-dollar river crossings" was wrong: only one of them cost over a billion
-      sub("sub-bridges", "Bridges & Structures", "crossing", "Partnering on major river crossings, proficiency programs that cover bridge inspection, and a multi-state standard for drone data on structures."),
+      sub("sub-bridges", "Bridges & Structures - remove", "crossing", "Partnering on major river crossings, proficiency programs that cover bridge inspection, and a multi-state standard for drone data on structures."),
       sub("sub-aviation", "Aviation & Airports", "airport", "State aeronautics divisions, airports, and the drone and advanced air mobility programs growing around them. We help small aviation staffs run programs, plan for what's next, and compete for federal funding."),
       // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's line for this field was skipped
       sub("sub-rail", "Rail & Transit", "rail", "Our transit work includes partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation."),

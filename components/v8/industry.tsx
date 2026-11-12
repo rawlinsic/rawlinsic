@@ -377,7 +377,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
     </>
   );
   const sections: Nav[] = [
-    ...(subs.length ? [["specialties", "Specialties"] as Nav] : []),
+    ...(subs.length ? [["specialties", "MODES"] as Nav] : []),
     ...(d.ch.length ? [["hear", "Challenges we hear"] as Nav] : []),
     ...(d.ways?.length ? [["ways", "How firms work with us"] as Nav] : []),
     ["help", "How we can help"], // Nicole's wording (preview edit, Nov 11); was "Services we provide"
@@ -388,7 +388,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   ];
   const hero = subs.length ? (
     <PanelHero photo={INDUSTRY_PHOTO[ind.id]} crumbs={crumbs} tag="Who we work with" title={ind.name} lead={ind.lead} actions={actions}
-      label={ind.id === "transport" ? "Transportation specialties" : "Specialties"}
+      label={ind.id === "transport" ? "Transportation specialties" : "MODES"}
       subs={subs.map((s) => ({ id: s.id, name: s.name, line: s.line, href: subsectorHref(ind, s), photo: INDUSTRY_PHOTO[s.id] ?? INDUSTRY_PHOTO[ind.id], note: thinNote(s, "Placeholder: thin content") }))} />
   ) : (
     <FrameHero photo={INDUSTRY_PHOTO[ind.id]} crumbs={crumbs} tag="Who we work with" title={ind.name} lead={ind.lead} actions={actions}
@@ -415,7 +415,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       {work.length > 0 && <Work title="Featured projects" cases={work} all={{ href: `/insights/case-studies?industry=${ind.slug}`, label: `All ${ind.name} projects` }} />}
       <Talk {...(subs.length
-        ? { linksTitle: ind.id === "transport" ? "Transportation specialties" : "Specialties", links: subs.map((s) => ({ id: s.id, name: s.name, href: subsectorHref(ind, s) })) }
+        ? { linksTitle: ind.id === "transport" ? "Transportation specialties" : "MODES", links: subs.map((s) => ({ id: s.id, name: s.name, href: subsectorHref(ind, s) })) }
         : { linksTitle: "Who we work with", links: industryLinks(ind.id) })} />
       <Next k="Next industry" name={next.name} text={next.who} href={industryHref(next)} photo={INDUSTRY_PHOTO[next.id]} />
     </Page>
@@ -454,7 +454,7 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
       note={thinNote(sub, "Content status: thin content")} />
   );
   return (
-    <Page sections={sections} hero={hero} more={{ label: "Specialties", links: sibs.map((x) => ({ name: x.name, href: x.href, current: x.on })) }}>
+    <Page sections={sections} hero={hero} more={{ label: "MODES", links: sibs.map((x) => ({ name: x.name, href: x.href, current: x.on })) }}>
       {d?.ch?.length ? <Hear title="Challenges we hear" items={d.ch} /> : null}
       {deliver.length > 0 && <Route id="deliver" title="What we deliver"><RouteList check ordered={false} stops={deliver.map((x) => ({ d: <>{x}<LineNote text={x} /></> }))} /></Route>}
       {/* the service page's #walk section (components/v8/service.tsx), same markup and classes: what you walk away with,
@@ -479,7 +479,7 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       <ServiceCards id="services" title="How we can help" ids={services} />
       {cases.length > 0 && <Work title="Where we've done this" cases={cases} tone="pale" />}
-      <Talk linksTitle={ind.id === "transport" ? "Transportation specialties" : "Specialties"} links={sibs} />
+      <Talk linksTitle={ind.id === "transport" ? "Transportation specialties" : "MODES"} links={sibs} />
       {nextSub
         ? <Next k={`Next in ${ind.name}`} name={nextSub.name} text={nextSub.line} href={subsectorHref(ind, nextSub)} photo={INDUSTRY_PHOTO[nextSub.id] ?? INDUSTRY_PHOTO[ind.id]} />
         : <Next k="Next industry" name={nextInd.name} text={nextInd.who} href={industryHref(nextInd)} photo={INDUSTRY_PHOTO[nextInd.id]} />}
