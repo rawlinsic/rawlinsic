@@ -56,7 +56,7 @@ export const AREAS: Area[] = [
   },
   {
     id: "om", slug: "operations-maintenance", name: "Operations & Maintenance",
-    tag: "Keeping what you own safe, working, and affordable", scene: "dusk", featuredCase: "cs-pbmc",
+    tag: "Keeping what you own safe, working, & affordable", scene: "dusk", featuredCase: "cs-pbmc",
     services: [
       svc("asset-mgmt", "Asset Management", "crossing"),
       svc("operations", "Maintenance & Operations"),
