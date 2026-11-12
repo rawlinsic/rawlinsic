@@ -150,7 +150,7 @@ export const INDUSTRIES: Industry[] = [
     featuredCase: "cs-local-am",
     projects: ["cs-local-am", "cs-pooled"],
     subsectors: [
-      sub("g-asset", "Asset Management for Local Agencies", "street", "Local agencies start from different places with asset management. We start from where each one is: a self-assessment, a workshop, and an action plan."),
+      sub("g-asset", "Asset Management", "street", "Local agencies start from different places with asset management. We start from where each one is: a self-assessment, a workshop, and an action plan."),
       sub("g-capital", "Capital Project Delivery & Permitting", "construction", "Cities deliver capital projects and review land development permits with small staffs. Experience on our team includes directing public works for the City of Las Vegas.", true),
       sub("g-mpo", "Regional & Metropolitan Planning Support", "grid", "Metropolitan planning organizations answer to federal performance and certification rules with lean staffs. People on our team worked with them at the Federal Highway Administration, including all eighteen in California.", true),
       sub("g-federal", "Federal & Multi-State Programs", "crossing", "Some problems are bigger than one state. We facilitate a multi-state research program building a shared drone data standard and recommended practices agencies can adopt."),
