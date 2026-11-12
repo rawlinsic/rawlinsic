@@ -265,7 +265,7 @@ export const HOME = {
 export const NUMBERS: { value: string; count?: number; suffix?: string; label: string; verified: boolean }[] = [
   { value: "2017", label: "Established", verified: true },
   /* 27 verified (content updates v4, section 5) */
-  { value: "25+", count: 25, suffix: "+", label: "People on our team who came from public agencies", verified: true },
+  { value: "25+", count: 25, suffix: "+", label: "People on our team came from public agencies", verified: true },
   /* "[N] States where we've worked" left out: the map shows the states (2.4) */
   /* 31 verified: 19 agencies directly or through a prime, plus 12 through the drone standards pooled fund */
   { value: "30+", count: 30, suffix: "+", label: "Transportation agencies served", verified: true },
