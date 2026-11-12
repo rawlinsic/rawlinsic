@@ -8,3 +8,4 @@ Each line: page, old wording, new wording, and why it couldn't be placed automat
 - [ ] 11/11/2026, 10:49:17 PM · Nicole · /about/our-people · "50 people" → "" (not found in the files, even as a template)
 - [ ] 11/11/2026, 11:15:02 PM · Nicole · /about/how-we-work · "Featured Project" → "relevant Projects" (not found in the files, even as a template)
 - [ ] 11/11/2026, 11:27:12 PM · Nicole · /careers · "Work with people who've done the job" → "Want to work with us? Reach out." (not found in the files, even as a template)
+- [ ] 11/11/2026, 11:38:48 PM · Nicole · /services/digital-solutions/smart-mobility-connected-systems · "The states we've worked in" → "" (not found in the files, even as a template)

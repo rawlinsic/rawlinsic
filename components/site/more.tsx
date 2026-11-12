@@ -41,7 +41,7 @@ export function AboutIndex() {
   const faces = [...veteranPeople(), ...people].filter((p, k, a) => a.findIndex((x) => x.slug === p.slug) === k).slice(0, 6);
   return (
     <Shell>
-      <EdHero crumbs={[["/about", "About"]]} kicker="About Rawlins" title={<>People who&apos;ve done the job, and a team that <em>builds the tools.</em></>}
+      <EdHero crumbs={[["/about", "About"]]} kicker="About Rawlins" title={<>, and a team that <em>builds the tools.</em></>}
         lead={<p>Founded in 2017 by a former Nevada DOT chief engineer. Today more than 25 of our people come from public agencies, and they work alongside an in-house digital team that builds websites, workflows, dashboards, training, and AI tools.</p>}
         actions={<><EdBtn href="/about/our-people">Meet our people</EdBtn><EdBtn href="/about/who-we-are" kind="ghost">Our story</EdBtn></>}
         aside={<div className="ab-hero-ph">{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/images/pages/team-group-outdoor.webp" alt="" /></div>} />

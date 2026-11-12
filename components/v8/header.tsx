@@ -72,11 +72,11 @@ export default function Header() {
         line: article ? { k: "Latest", t: article.title } : undefined },
     ],
     about: [
-      { label: "Who We Are", href: "/about/who-we-are", note: "Founded in 2017, and how we've grown" },
-      { label: "How We Work", href: "/about/how-we-work", note: "Assess, rebuild, train, hand off" },
-      { label: "Our People", href: "/about/our-people", note: "People who've done the job" },
+      { label: "Who We Are", href: "/about/who-we-are", note: "Where we started, and where we're headed" },
+      { label: "How We Work", href: "/about/how-we-work", note: "" },
+      { label: "Our People", href: "/about/our-people", note: "" },
       { label: "Where We Work", href: "/about/where-we-work", note: "" },
-      { label: "Careers", href: "/careers", note: "Work with us" },
+      { label: "Careers", href: "/careers", note: "" },
     ],
     /* About: the first eight leaders (Part 1, 1.5; 27 people verified in content updates v4, 5) */
     faces: LEADERS.slice(0, 8).map((l) => ({ name: l.name.split(",")[0], photo: `/images/team/${l.photo}.webp` })),
