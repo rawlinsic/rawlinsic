@@ -303,7 +303,7 @@ export default function Home() {
       {/* 8 · start a conversation: pick your problem, see where we'd start (Nicole, Nov 10) */}
       <section className="h-start h-fix" aria-labelledby="h-start">
         <div className="v8-wrap h-start-in" data-reveal>
-          <h2 id="h-start" className="v8-h2">Choose your starting point below.</h2>
+          <h2 id="h-start" className="v8-h2">Tell us what you'd like help with.</h2>
           <p className="v8-lead">Pick the one that sounds most like you, and we&apos;ll show you where we&apos;d start. Or write your own.</p>
           <FixPicker fixes={PROBLEMS.map((p) => ({
             q: p.q, topic: areaOf(p.services[0])?.name ?? "Not sure",

@@ -16,7 +16,7 @@ export function ContactPageNew() {
   }));
   return (
     <Shell scene="hero" photo={PAGE_PHOTO.contact}>
-      <Hero crumbs={[["/contact", "Contact"]]} kicker="Contact Rawlins" title="Choose your starting point below."
+      <Hero crumbs={[["/contact", "Contact"]]} kicker="Contact Rawlins" title="Tell us what you'd like help with."
         /* TODO(Nicole): lead line to come from Nicole (the "connect you with the person who has done the work" line was removed, Nov 9) */
         lead={null} />
       <ContactWays fixes={fixes} topics={[...AREAS.map((a) => a.name), "Not sure"]}
