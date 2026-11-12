@@ -1168,3 +1168,5 @@ a.nw-more:hover, .nw-proj:hover .nw-more { text-decoration: underline; text-unde
 .pc-pin.is-parked { border-style: dashed; border-radius: 50%; background: #1d3759; }
 /* the review bar moves up out of the way while the privacy notice is open (it sits in the same spot on a first visit) */
 body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
+/* room for Undo and Redo on one row of the review bar */
+.pe-bar { max-width: min(700px, calc(100vw - 32px)); }

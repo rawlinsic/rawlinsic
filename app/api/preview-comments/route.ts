@@ -6,7 +6,7 @@
    call: no password), the same people who can see the preview.
      GET   ?page=/path  open comments (all pages when page is left out)
      POST  { page, sel, rx, ry, snippet, text, name }  add one
-     PATCH { id }  mark one done (closes the issue) */
+     PATCH { id }  mark one done (closes the issue); { id, reopen: true } brings it back (Undo and Redo) */
 import { NextResponse } from "next/server";
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "crypto";
 
@@ -75,12 +75,14 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   const s = setup(); if ("error" in s) return s.error;
-  const b = await req.json().catch(() => null) as { id?: number } | null;
+  const b = await req.json().catch(() => null) as { id?: number; reopen?: boolean } | null;
   if (!b?.id) return NextResponse.json({ error: "Which comment?" }, { status: 400 });
   try {
     const it = await s.gh(`/issues/${Number(b.id)}`);
     if (!(it.labels || []).some((l: { name: string }) => l.name === "preview-note")) return NextResponse.json({ error: "Not a preview comment" }, { status: 400 });
-    await s.gh(`/issues/${Number(b.id)}`, { method: "PATCH", body: JSON.stringify({ state: "closed", state_reason: "completed" }) });
+    /* reopen: Undo of "Mark done", or Redo of a comment that Undo took back. Only on this version's own comments. */
+    if (b.reopen && !(it.labels || []).some((l: { name: string }) => l.name === s.label)) return NextResponse.json({ error: "That comment belongs to another version." }, { status: 400 });
+    await s.gh(`/issues/${Number(b.id)}`, { method: "PATCH", body: JSON.stringify(b.reopen ? { state: "open" } : { state: "closed", state_reason: "completed" }) });
     return NextResponse.json({ ok: true });
-  } catch (e) { return NextResponse.json({ error: `Couldn't mark it done: ${(e as Error).message}` }, { status: 500 }); }
+  } catch (e) { return NextResponse.json({ error: `Couldn't ${b.reopen ? "bring it back" : "mark it done"}: ${(e as Error).message}` }, { status: 500 }); }
 }
