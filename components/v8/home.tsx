@@ -278,7 +278,7 @@ export default function Home() {
       </section>
 
       {/* 6 · how we've grown: slides sideways as you scroll (shared with Who we are) */}
-      <Grown eyebrow="Our story to yours" title="Evolving impact" link={{ href: "/about/who-we-are", label: "Learn more about us" }} />
+      <Grown eyebrow="how we've grown" title="Evolving impact" link={{ href: "/about/who-we-are", label: "Learn more about us" }} />
 
       {/* 7 · what's new */}
       <section className="h-new" aria-labelledby="h-new">
