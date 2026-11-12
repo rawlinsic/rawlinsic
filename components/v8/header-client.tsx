@@ -160,7 +160,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
           </ul>
           <div className="mx-subs">
             {data.industries[ind].subs.length > 0 ? <>
-              <p className="mx-k">Specialties</p>
+              <p className="mx-k">MODES</p>
               <ul>{data.industries[ind].subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
             </> : data.industries[ind].challenges.length > 0 && <>
               <p className="mx-k">Challenges We Hear</p>
