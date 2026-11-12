@@ -179,7 +179,7 @@ export function WhereWeWork() {
           <Crumbs items={[["/about", "About"], ["/about/where-we-work", "Where we work"]]} />
           <p className="ed-k">Where we work</p>
           <h1 className="ed-h1">Across the United States</h1>
-          <div className="ed-lead"><p>The states where our work has taken us. Our work so far has been in the United States, and our team can work anywhere. Members of our team are based in Canada, South Africa, and the United Arab Emirates.</p></div>
+          <div className="ed-lead"><p>While our project work to date has been in the United States, but our team can work anywhere. Members of our team are based in the U.S., Europe, Canada, South Africa, and the United Arab Emirates.</p></div>
         </>
       } />
       <EdStats items={[{ n: String(STATES_ACTIVE.length), t: "States with active work" }, { n: String(STATES.length), t: "States our work has taken us" }, { n: "3", t: "Countries outside the U.S. where team members are based" }]} />
