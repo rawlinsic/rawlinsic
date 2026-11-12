@@ -183,7 +183,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             <ul className="mx-chips">{data.areas.map((a) => <li key={a.id}><a href={a.projects} style={{ ["--a" as string]: a.color } as CSSProperties}><i aria-hidden="true" />{a.name}</a></li>)}</ul>
           </div>
           <div>
-            <p className="mx-k">In the Works</p>
+            <p className="mx-k">featured projects</p>
             <ul className="mx-live">{data.inWorks.map((c) => (
               <li key={c.href}><a className="mx-proj" href={c.href}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
