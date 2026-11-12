@@ -82,7 +82,7 @@ export function WhoWeAre() {
           <p>Advising agency leaders on how to deliver their programs is still a big part of what we do. Since 2017 we&apos;ve added drone and advanced air mobility work, an in-house team that builds integrations, automation, dashboards, and AI, and clients beyond transportation agencies, including local governments, contractors, and engineering firms. Our people work across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>
         </div>
       </EdSplit>
-      <Grown eyebrow="Since 2017" title="How we've grown" />
+      <Grown eyebrow="how we've grown" title="Evolving impact" />
       <EdSec k="Why Rawlins" title="Five reasons agencies call us" tone="navy">
         <ol className="ab-why">{WHY.map(([t, d], k) => <li key={t}><span className="ab-why-n">{String(k + 1).padStart(2, "0")}</span><b>{t}</b><p>{d}</p></li>)}</ol>
       </EdSec>
@@ -151,7 +151,7 @@ export function WhereWeWork() {
       <section className="ed-sec" data-nofill>
         <div className="ed-wrap ab-where">
           <div><p className="ed-k">Active now</p><h2 className="ed-h2">Active</h2>{chips(STATES_ACTIVE)}</div>
-          <div><p className="ed-k">Since 2017</p><h2 className="ed-h2">Areas we&apos;ve served</h2>{chips(STATES_SERVED)}</div>
+          <div><p className="ed-k">how we've grown</p><h2 className="ed-h2">Areas we&apos;ve served</h2>{chips(STATES_SERVED)}</div>
         </div>
       </section>
       <Talk />

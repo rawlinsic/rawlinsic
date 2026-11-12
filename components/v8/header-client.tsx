@@ -218,7 +218,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             <a className="ma-feature" href={data.about[0].href}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/pages/team-group-outdoor.webp" alt="" loading="lazy" />
-              <span><em>Since 2017</em><b>{data.about[0].label}</b><span>{data.about[0].note}</span><i>Our Story</i></span>
+              <span><em>how we've grown</em><b>{data.about[0].label}</b><span>{data.about[0].note}</span><i>Our Story</i></span>
             </a>
           )}
           <ul>{data.about.slice(1).map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul>

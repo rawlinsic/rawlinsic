@@ -12,7 +12,7 @@ import Scene from "@/components/v8/scene";
 
 export default function Grown({ eyebrow, title, link }: { eyebrow?: string; title: string; link?: { href: string; label: string } }) {
   return (
-    <Scene steps={1} per={160} className="hg" label="How we've grown">
+    <Scene steps={1} per={160} className="hg" label="Evolving impact">
       <div className="v8-wrap h-row-head hg-head">
         <div>{eyebrow && <p className="v8-eyebrow">{eyebrow}</p>}<h2 className="v8-h2">{title}</h2></div>
         {link && <a className="v8-link hg-more" href={link.href}>{link.label}</a>}
