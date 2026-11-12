@@ -14,6 +14,7 @@ import Grown from "@/components/v8/grown";
 import { EdBand, EdBtn, EdHero, EdSec, EdSplit, EdStats, FaceRows } from "@/components/site/editorial";
 import ReadProgress from "@/components/site/read-progress";
 import AuthorPop from "@/components/site/author-pop";
+import WhereMap, { type WwProject } from "@/components/site/where-map";
 import PhotoGallery from "@/components/site/photo-gallery";
 import WhyRow from "@/components/v8/why-row";
 import { tvPeople, whyItems } from "@/components/v8/why-items";
@@ -161,22 +162,26 @@ export function HowWeWork() {
 }
 
 export function WhereWeWork() {
-  /* a state links to its projects only when a project carries its tag (unnamed-client work has no state tag) */
-  const tagged = new Set(CASES.flatMap((c) => c.states));
+  /* Nov 12 redesign (Nicole: align to the live site's page, keep the globe, open it into a flat map that zooms in
+     and shows projects to click): components/site/where-map.tsx. A state lists the projects that carry its tag
+     (unnamed-client work has no state tag). The state lists below open the map on that state. */
+  const tag = (c: (typeof CASES)[number]) => (c.status === "Ongoing" ? "In the works" : c.status === "Before Rawlins" ? "Before Rawlins" : "Completed");
+  const projects: Record<string, WwProject[]> = Object.fromEntries(STATES.map((s) => [s, CASES.filter((c) => c.states.includes(s)).map((c) => ({ title: c.title, href: caseHref(c), photo: casePhoto(c), tag: tag(c) }))]));
   const chips = (list: string[]) => (
-    <ul className="pg-chips">{[...list].sort().map((s) => <li key={s}>{tagged.has(s)
-      ? <a href={`/insights/case-studies?state=${s.toLowerCase().replace(/\s+/g, "-")}`}>{s}</a>
-      : <span className="pg-chip">{s}</span>}</li>)}</ul>
+    <ul className="pg-chips ww-chips">{[...list].sort().map((s) => (
+      <li key={s}><a href={`#map-${s.toLowerCase().replace(/\s+/g, "-")}`}>{s}{projects[s]?.length ? <b>{projects[s].length}</b> : null}</a></li>
+    ))}</ul>
   );
   return (
-    <Shell scene="map" highlight={STATES} strong={STATES_ACTIVE}>
-      <Hero crumbs={[["/about", "About"], ["/about/where-we-work", "Where we work"]]} kicker="Where we work" title="Across the United States"
-        lead={<p>The states where our work has taken us. Our work so far has been in the United States, and our team can work anywhere. Members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>} actions={<Btn href="/insights/case-studies" primary>See our projects</Btn>}>
-        <ul className="pg-map-legend" aria-label="Map key">
-          <li><i className="is-active" aria-hidden="true" />Active</li>
-          <li><i aria-hidden="true" />Areas we&apos;ve served</li>
-        </ul>
-      </Hero>
+    <Shell>
+      <WhereMap active={STATES_ACTIVE} served={STATES_SERVED} projects={projects} copy={
+        <>
+          <Crumbs items={[["/about", "About"], ["/about/where-we-work", "Where we work"]]} />
+          <p className="ed-k">Where we work</p>
+          <h1 className="ed-h1">Across the United States</h1>
+          <div className="ed-lead"><p>The states where our work has taken us. Our work so far has been in the United States, and our team can work anywhere. Members of our team are based in Canada, South Africa, and the United Arab Emirates.</p></div>
+        </>
+      } />
       <EdStats items={[{ n: String(STATES_ACTIVE.length), t: "States with active work" }, { n: String(STATES.length), t: "States our work has taken us" }, { n: "3", t: "Countries outside the U.S. where team members are based" }]} />
       <section className="ed-sec" data-nofill>
         <div className="ed-wrap ab-where">
