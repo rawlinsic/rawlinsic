@@ -19,3 +19,4 @@ Each line: page, old wording, new wording, and why it couldn't be placed automat
   (done Nov 12 by Claude Code: the "Titles pending" preview note on Our People is removed)
 - [x] 11/12/2026, 12:48:23 AM · Nicole · /about/our-people · "The people behind the work" → "The Rawlins Team" (not found in the files, even as a template)
   (done Nov 12 by Claude Code: the Our People headline reads "The Rawlins Team")
+- [ ] 11/12/2026, 3:38:55 PM · Nicole · /industries/contractors-engineering-firms · "All Industries" → "All Indus" (not found in the files, even as a template)
