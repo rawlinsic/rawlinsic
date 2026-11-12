@@ -15,7 +15,9 @@ export const SERVICES: Record<string, SvcData> = {
   "intro": "We help leadership turn its direction into goals, measures, and yearly action plans, with dashboards that show whether the plan is working and a leadership rhythm to review them.",
   "hear": [
    "We have a strategic plan. We can't show it's working.",
-   "We need a defensible way to decide what gets funded."
+   "We need a defensible way to decide what gets funded.",
+   "We have to prove to legislators and the public that the money is well spent.",
+   "The plan has to be shaped by staff at every level and turned into yearly actions."
   ],
   "quote": true,
   "deliver": [
@@ -59,7 +61,9 @@ export const SERVICES: Record<string, SvcData> = {
   "intro": "We design the organization from current to future state, with position descriptions, classification and salary analysis, and change communications. Then we fix the processes and procedures people use every day.",
   "hear": [
    "We're reorganizing, or standing up a new division.",
-   "Our procedures live in people's heads, or in five versions of the same binder."
+   "Our procedures live in people's heads, or in five versions of the same binder.",
+   "We need fewer layers of supervision and a wider span of control.",
+   "We don't have a clear picture of our vacancies, or of how peer agencies organize."
   ],
   "quote": true,
   "deliver": [
@@ -102,7 +106,9 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "We help staff understand and adopt a change, whether it's a reorganization, a new system, or a new way of delivering work: a change plan, change champions, communication, and training.",
   "hear": [
-   "A reorganization, a new system, or a new way of delivering work, and staff who have seen changes come and go before."
+   "A reorganization, a new system, or a new way of delivering work, and staff who have seen changes come and go before.",
+   "We have to bring staff through the change.",
+   "Staff, legislators, and the public all need to hear about the change."
   ],
   "quote": true,
   "deliver": [
@@ -130,8 +136,8 @@ export const SERVICES: Record<string, SvcData> = {
    "automation"
   ],
   "xp": [
-   "The person who established Florida DOT's statewide Organizational Change Management Office is on our team",
-   "So is Nevada DOT's former Assistant Director of Operations, who focused on organizational development and change management"
+   "A member of our team set up Florida DOT's statewide Organizational Change Management Office and oversaw change management plans for more than 30 projects, technology and non-technology alike",
+   "Our team includes Nevada DOT's former Assistant Director of Operations, whose work centered on organizational leadership, development, and change management"
   ],
   "src": {
    "intro": "live",
@@ -146,7 +152,10 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "warn",
   "intro": "We help agencies grow people into the jobs they need filled: proficiency programs, career paths, training curricula, train-the-trainer models, and self-paced online courses, plus the HR structure behind them.",
   "hear": [
-   "Our best people are retiring. Nobody's ready to step up."
+   "Our best people are retiring. Nobody's ready to step up.",
+   "We're delivering a bigger program with fewer experienced people.",
+   "Staff don't see a clear path to advance.",
+   "We don't know how our divisions balance staffing supply and demand."
   ],
   "quote": true,
   "deliver": [
@@ -192,7 +201,10 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "We advise agency leaders on their biggest decisions: reorganizations, new programs, and how to run and deliver their programs. For administrative functions, we provide advisory, training design, facilitation, and executive coaching, with clear processes, controls, and reporting.",
   "hear": [
-   "Leadership is stretched, and the decisions in front of it are big: a reorganization, a new program, a key seat left open."
+   "Leadership is stretched, and the decisions in front of it are big: a reorganization, a new program, a key seat left open.",
+   "Every big decision we make is under public and legislative scrutiny.",
+   "Leadership has to steer a technology modernization and decide how to govern AI.",
+   "Our administrative processes, controls, and reporting have to hold up to review."
   ],
   "quote": true,
   "deliver": [
@@ -219,6 +231,12 @@ export const SERVICES: Record<string, SvcData> = {
    "Our founder ran daily operations of a department with 1,800 employees and a budget over $1 billion",
    "Our team includes executives from the Michigan, Florida, Idaho, and Arkansas transportation departments, and Florida DOT's former Interim Assistant Secretary of Finance and Administration"
   ],
+  /* closest projects (Nicole, Nov 11): cs-tn-tech is executive advisory; the others are the nearest fits */
+  "cases": [
+   "cs-tn-tech",
+   "cs-pmdiv",
+   "cs-aerodiv"
+  ],
   "src": {
    "intro": "Current rawlinsic.com copy",
    "hear": "Written from our records",
@@ -233,7 +251,9 @@ export const SERVICES: Record<string, SvcData> = {
   "intro": "A credible work program connects investment priorities with the projects the agency can actually advance. We help agencies clarify selection methods, readiness requirements, milestones, and responsibilities, so leadership has a clearer basis for its commitments and can act when conditions change.",
   "hear": [
    "Projects keep missing the year they were promised",
-   "It's hard to explain why one project was chosen over another"
+   "It's hard to explain why one project was chosen over another",
+   "Our multi-year highway and bridge program is over-programmed",
+   "Program decisions are siloed by funding program"
   ],
   "quote": false,
   "deliver": [
@@ -281,7 +301,8 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "Projects are scoped differently every time",
    "Construction and maintenance see the design too late",
-   "New project managers don't know where to start"
+   "New project managers don't know where to start",
+   "Every manager runs projects their own way"
   ],
   "quote": false,
   "deliver": [
@@ -329,7 +350,10 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "warn",
   "intro": "We represent the owner: protecting your interests, coordinating contractors, and checking that scope, quality, schedule, and standards are met.",
   "hear": [
-   "We outsource the work. We need the contractor held to it."
+   "We outsource the work. We need the contractor held to it.",
+   "Our projects are late or over budget.",
+   "We have a major build and many agencies to coordinate.",
+   "Budget and risk have to hold up under public scrutiny."
   ],
   "quote": true,
   "deliver": [
@@ -356,6 +380,12 @@ export const SERVICES: Record<string, SvcData> = {
   "xp": [
    "We've facilitated partnering, with risk registers and issue resolution, on a $1.2 billion Mississippi River crossing and a $2 billion light rail line"
   ],
+  /* nearest owner-side work (Nicole, Nov 11); none of these is owner's representation, so the page calls them related */
+  "cases": [
+   "cs-pbmc",
+   "cs-txmaint",
+   "cs-major"
+  ],
   "src": {
    "intro": "live",
    "hear": "Partner Field Guide v1",
@@ -371,7 +401,8 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "A first project under a new delivery method",
    "Risk that no one has allocated",
-   "No agreed way to raise and resolve issues under schedule pressure"
+   "No agreed way to raise and resolve issues under schedule pressure",
+   "Choosing the right delivery method"
   ],
   "quote": false,
   "deliver": [
@@ -417,7 +448,9 @@ export const SERVICES: Record<string, SvcData> = {
   "intro": "We help organizations put resources where they count, stay compliant, and buy the services they need consistently, from budgeting through procurement and contract administration.",
   "hear": [
    "Consultant fees vary for comparable work",
-   "Budgets aren't tied to what the program has to deliver"
+   "Budgets aren't tied to what the program has to deliver",
+   "Our maintenance budget is hard to explain",
+   "Contracts industry will bid on, administered the same way in every district"
   ],
   "quote": false,
   "deliver": [
@@ -504,7 +537,8 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "Each district administers contracts differently",
    "New construction software is in place, but the workflows still live on paper",
-   "Inspectors and technicians need a clear path to proficiency"
+   "Inspectors and technicians need a clear path to proficiency",
+   "Contract time, compliance paperwork, and payment cause the most friction with contractors"
   ],
   "quote": false,
   "deliver": [
@@ -549,7 +583,8 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "Programmed funds don't turn into projects ready to advance",
    "Local agencies need clear manuals and oversight",
-   "MPOs need help with performance reporting and certification"
+   "MPOs need help with performance reporting and certification",
+   "Federal requirements land on lean teams"
   ],
   "quote": false,
   "deliver": [
@@ -589,7 +624,10 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "A strong operational idea deserves a fundable application. We help agencies find the funding, write the application reviewers can score, and issue grants of their own, so programs that would otherwise stall get started. When an award comes through, we help put it to work.",
   "hear": [
-   "There's grant money out there. Nobody has time to chase it."
+   "There's grant money out there. Nobody has time to chase it.",
+   "We're a small staff competing for federal funding.",
+   "New federal programs come with new rules.",
+   "We're issuing grants of our own, and the solicitation has to draw the right responses."
   ],
   "quote": true,
   "deliver": [
@@ -630,7 +668,10 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "We help organizations know what they own, what shape it's in, and where the next dollar does the most good. Then we set up the measures and governance that keep those decisions consistent.",
   "hear": [
-   "Rising material costs, changing technology, incomplete inventories, and too little money for aging infrastructure. Many agencies make worst-first, reactive decisions in silos, which costs more over the life of the asset."
+   "Rising material costs, changing technology, incomplete inventories, and too little money for aging infrastructure. Many agencies make worst-first, reactive decisions in silos, which costs more over the life of the asset.",
+   "No one owns asset management here.",
+   "Our elected officials need it explained simply.",
+   "We don't always know where our assets are, especially underground."
   ],
   "quote": true,
   "deliver": [
@@ -673,12 +714,15 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "operations": {
   "id": "operations",
-  "name": "Maintenance & Operations",
+  "name": "Maintenance Programs",
   "area": "om",
   "st": "warn",
   "intro": "We help maintenance and operations run the same way in every region: contracts that pay for results instead of hours, quality programs people trust, and fleets, facilities, and crews ready for winter and emergencies.",
   "hear": [
-   "Our field crews do it differently in every region."
+   "Our field crews do it differently in every region.",
+   "Maintenance costs keep climbing.",
+   "Staff and contractors are learning a new contract model together.",
+   "We need a maintenance rating program decisions can rely on."
   ],
   "quote": true,
   "deliver": [
@@ -729,7 +773,8 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "Operations and safety work is split across divisions",
    "Investments are hard to justify without a benefit-cost case",
-   "Traffic design staff need defined proficiencies"
+   "Traffic design staff need defined proficiencies",
+   "Operations guidance, manuals, and standards are out of date"
   ],
   "quote": false,
   "deliver": [
@@ -774,7 +819,8 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "Tools, manuals, and training spread across drives and intranet pages",
    "Five versions of the same form",
-   "No clear way to request a change, or to know what changed"
+   "No clear way to request a change, or to know what changed",
+   "Hundreds of documents sit on an old wiki"
   ],
   "quote": false,
   "deliver": [
@@ -814,7 +860,10 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "We connect the systems you already own so information moves on its own: construction platforms like Headlight linked to the rest of an agency's systems, repeated fields filled in once from trusted sources, and small custom apps where an integration platform doesn't fit. We document every workflow so your team can run it.",
   "hear": [
-   "We key the same information into three systems."
+   "We key the same information into three systems.",
+   "Our systems don't talk to each other.",
+   "Field records disappear after the site visit.",
+   "Handoffs run on email, spreadsheets, and scanned paper."
   ],
   "quote": true,
   "deliver": [
@@ -860,7 +909,10 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "We turn uncertain, fragmented, or person-dependent data into governed information people can find, understand, and use. Most agencies have already done some governance work on paper. We build owners, definitions, inventories, and storage rules into work already underway.",
   "hear": [
-   "Nobody can tell me which number is the right one."
+   "Nobody can tell me which number is the right one.",
+   "We don't know what data we have, who owns it, or whether to trust it.",
+   "Our data is fragmented, and it depends on whoever keeps it.",
+   "We've done governance on paper. It isn't built into the work."
   ],
   "quote": true,
   "deliver": [
@@ -907,7 +959,10 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "We put AI to work where judgment is needed, trustworthy context exists, and the result can be governed and used. When a problem needs a rule, a process, or a decision instead of a model, we say so.",
   "hear": [
-   "Our staff already use AI, and we have no policy for it."
+   "Our staff already use AI, and we have no policy for it.",
+   "We're not sure which problems actually need AI.",
+   "Nobody has decided who pays for AI licenses or who manages them.",
+   "We don't know if our data is ready for AI."
   ],
   "quote": true,
   "deliver": [
@@ -952,7 +1007,10 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "warn",
   "intro": "Dashboards and scoring tools that put the organization's own data in front of the people making decisions, built on platforms it already owns.",
   "hear": [
-   "Reports are built by hand every month, and no one is sure which number is right."
+   "Reports are built by hand every month, and no one is sure which number is right.",
+   "We've outgrown our spreadsheets.",
+   "Leaders need the big picture and each department's detail.",
+   "We can't see where equipment is, how long it's booked, or when it's down."
   ],
   "quote": true,
   "deliver": [
@@ -992,7 +1050,8 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "Training depends on who your mentor was",
    "Manuals nobody reads",
-   "New tools rolled out with no way to learn them"
+   "New tools rolled out with no way to learn them",
+   "Our people are retiring, and no one is ready"
   ],
   "quote": false,
   "deliver": [
@@ -1032,7 +1091,9 @@ export const SERVICES: Record<string, SvcData> = {
   "intro": "Start here when there's a broad mandate, competing priorities, or not enough evidence to choose what to build. We assess the technology before the purchase, then help with setup, training, and change management so the tool becomes how work gets done.",
   "hear": [
    "We bought the software, and nobody uses it.",
-   "Leadership wants AI, and no one is sure where it fits, whether we're ready, or who owns it."
+   "Leadership wants AI, and no one is sure where it fits, whether we're ready, or who owns it.",
+   "We need a technology roadmap tied to agency goals.",
+   "We have a broad mandate, competing priorities, and not enough evidence to choose what to build."
   ],
   "quote": true,
   "deliver": [
@@ -1078,7 +1139,8 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "Drone use grew division by division, with different practices",
    "Pilots and crews need consistent, compliant training",
-   "Equipment is bought without a standard"
+   "Equipment is bought without a standard",
+   "A small staff has to grow a statewide drone program"
   ],
   "quote": false,
   "deliver": [
@@ -1128,7 +1190,8 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "Local governments ask the state for guidance it doesn't have yet",
    "Siting and land use questions with no precedent",
-   "Economic case for the investment"
+   "Economic case for the investment",
+   "Planning for advanced air mobility while the rules are still being written"
   ],
   "quote": false,
   "deliver": [
@@ -1214,7 +1277,10 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "We bring agencies, manufacturers, researchers, and regulators together so the guidance agencies rely on is written with them, not around them.",
   "hear": [
-   "Agencies need guidance written with the people who will use it: states, manufacturers, researchers, and regulators."
+   "Agencies need guidance written with the people who will use it: states, manufacturers, researchers, and regulators.",
+   "States collect the same drone data with no shared, tested standard.",
+   "We need standards we can write into our specifications.",
+   "Research has to reach consensus across many member states."
   ],
   "quote": true,
   "deliver": [
@@ -1258,7 +1324,8 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "Rural airports, drones, and AAM fall between existing offices",
    "No stable funding source",
-   "Legislative and governance options aren't clear"
+   "Legislative and governance options aren't clear",
+   "The legislature has asked what role the department should play in aviation"
   ],
   "quote": false,
   "deliver": [
@@ -2051,7 +2118,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
 export const CASES: Record<string, CaseData> = {
  "cs-proficiency": {
   "id": "cs-proficiency",
-  "ch": "A department-wide restructuring set out to cut layers of supervision, update classifications and performance measures, and give staff a clear path to advance. Each new classification needed a defined route to proficiency, written with experts in dozens of disciplines. The goals were multiple career paths, pay set to industry benchmarks, and stronger checks and balances.",
+  "ch": "EPIC (Empowering People Influencing Culture), a department-wide restructuring, set out to cut layers of supervision, update classifications and performance measures, and give staff a clear path to advance. Each new classification needed a defined route to proficiency, written with experts in dozens of disciplines. The goals were multiple career paths, pay set to industry benchmarks, and stronger checks and balances.",
   "did": [
    "Built proficiency programs with agency experts in more than two dozen disciplines, from right of way and construction to bridge inspection and traffic design",
    "Drafted position descriptions and section primers for three bureaus",
@@ -2319,7 +2386,7 @@ export const CASES: Record<string, CaseData> = {
   "did": [
    "Helped design and implement a performance-based program for statewide highway maintenance",
    "Field measurement of current levels of service, and outcome-based performance measures",
-   "A cost model for maintenance activities",
+   "Benchmarking and a cost model for maintenance activities",
    "Requirements and procurement support for an enterprise asset management system"
   ],
   "res": [],
@@ -2419,6 +2486,24 @@ export const CASES: Record<string, CaseData> = {
   "industry": "transport",
   "industry2": null
  },
+ "cs-nv-fleet": {
+  "id": "cs-nv-fleet",
+  "ch": "The department needed its fleet, about 2,700 pieces of equipment, to stay available, reliable, and affordable.",
+  "did": [
+   "Led a fleet optimization program for the department's fleet of about 2,700 pieces of equipment",
+   "Predictive maintenance planning to reduce vehicle downtime and extend asset life"
+  ],
+  "res": [],
+  "services": [
+   "operations",
+   "asset-mgmt"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
  "cs-nv-om": {
   "id": "cs-nv-om",
   "ch": "The department wanted a statewide look at how its operations, maintenance, fleet, and facilities were managed.",
@@ -2461,7 +2546,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-de-tech": {
   "id": "cs-de-tech",
-  "ch": "The department's technology division needed a clear roadmap for innovation and technology investment, tied to agency goals.",
+  "ch": "The department's Division of Technology and Innovation Services, in Dover, needed a clear roadmap for innovation and technology investment, tied to agency goals.",
   "did": [
    "Leadership interviews, stakeholder engagement, and a strengths and weaknesses analysis",
    "A technology strategic plan aligned with agency goals and operating priorities",
@@ -2499,7 +2584,7 @@ export const CASES: Record<string, CaseData> = {
   "id": "cs-va-maint",
   "ch": "The department wanted to know how its statewide performance-based maintenance contracts were working and how to improve them.",
   "did": [
-   "Statewide review of performance-based highway maintenance contracts",
+   "Statewide review of Turnkey Asset Maintenance Services (TAMS), the department's performance-based highway maintenance contracts",
    "An action plan, procurement recommendations, and performance measures and levels of service for interstate maintenance"
   ],
   "res": [
@@ -2588,7 +2673,8 @@ export const CASES: Record<string, CaseData> = {
    "Partnering facilitation between the owner and contractor: project charter, risk register, issue resolution process, and team evaluations",
    "I-74 Mississippi River Crossing, Iowa and Illinois ($1.2 billion)",
    "I-70 Rocheport River Bridge, Missouri ($275 million)",
-   "Southwest Light Rail Transit, Minnesota ($2.0 billion)"
+   "Southwest Light Rail Transit, Minneapolis, Minnesota ($2.0 billion)",
+   "Project coordination, risk management, budget control, and multi-agency coordination across the three projects"
   ],
   "res": [],
   "services": [

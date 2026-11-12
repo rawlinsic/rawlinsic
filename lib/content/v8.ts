@@ -35,16 +35,20 @@ const P = (f: string) => `/images/pages/${f}`;
 const CASE_PHOTO: Record<string, string> = {
   "cs-pdn": P("auto-workflow.webp"),
   "cs-aero": P("engineersoperatingdrones.webp"),
-  "cs-major": P("aam-team-meeting.webp"), // partnering; no U.S. river bridge photo in the library yet
+  // the same photos the live site uses for these projects (Nicole, Nov 11: "all project pictures need to be the same they
+  // were"). Both files were on the v4 never-use list (majortrans: road signs that don't look U.S.; transportation: place
+  // unknown); kept because the live site shows them. Flagged on the CHANGE-LIST.
+  "cs-major": P("majortrans.webp"),
+  "cs-pa-budget": P("transportation.webp"),
   "cs-pbmc": P("transportation-aerial.webp"),
-  "cs-nyc-parks": P("auto-optimize.webp"),
+  "cs-nyc-parks": P("transportation.webp"),
   "cs-proficiency": P("tnbig.webp"),
   "cs-transform": P("auto-human.webp"),
   "cs-txmaint": P("auto-optimize.webp"),
-  "cs-riverside": P("strategy-bg.webp"),
+  "cs-riverside": P("transportation.webp"),
   "cs-ia-partnering": P("aam-planning.webp"),
   "cs-workforce": P("auto-human.webp"),
-  "cs-maint-model": P("transportation-aerial.webp"), // multi-state; its service photo (Nashville) would show the wrong place
+  "cs-maint-model": P("transportation.webp"), // live "Other states" photo
   // private-sector projects: office and data photos with no place in them, one each so the cards differ
   "cs-pv-pmo": P("auto-capability.webp"),
   "cs-pv-reporting": P("auto-data.webp"),

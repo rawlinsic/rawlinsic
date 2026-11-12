@@ -54,7 +54,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
         <div className="v8-wrap arh-top">
           <div>
             <nav className="crumbs" aria-label="Breadcrumb">
-              <ol><li><a href="/">Home</a></li><li><a href="/#what">What we do</a></li><li aria-current="page">{area.name}</li></ol>
+              <ol><li><a href="/">Home</a></li><li><a href="/#what">What We Do</a></li><li aria-current="page">{area.name}</li></ol>
             </nav>
             <p className="sv-area">{area.tag}</p>
             <h1>{area.name}</h1>

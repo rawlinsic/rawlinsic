@@ -10,7 +10,7 @@ export function PrivacyPage() {
         <span><span>Legal</span></span>
 
         <div>
-          <p>Effective date: April 7, 2026</p>
+          <p>Effective date: April 7, 2026. Last updated: November 11, 2026.</p>
 
           <div>
             <h2>1. Introduction</h2>
@@ -43,13 +43,16 @@ export function PrivacyPage() {
             </ul>
 
             <h3>III. Cookies and Similar Technologies</h3>
-            <p>We use cookies, web beacons, and similar technologies to enhance your experience, analyze site usage, and support our marketing efforts. Cookies are small data files stored on your device.</p>
-            <p>When you first visit our Site, a cookie consent banner will ask for your permission before any non-essential cookies are set. You may accept or decline at any time. To change your preference later, clear your browser&rsquo;s local storage for this site and the banner will reappear on your next visit.</p>
-            <p>We currently use the following analytics services:</p>
+            {/* Nov 11, 2026: matched to what the site runs (components/cookie-banner.tsx, lib/consent.ts, components/clarity-loader.tsx).
+                Google Analytics was listed but isn't used; Clarity used to load before any choice. */}
+            <p>We use a small number of cookies and similar technologies to run the Site, to count visits, and, with your permission, to understand how pages are used. Cookies are small data files stored on your device. We do not use advertising cookies, and we do not sell or share your personal information for targeted advertising.</p>
+            <p>When you first visit our Site, a privacy banner asks for your choice. Nothing optional loads until you choose Accept. You can change your choice at any time with the <strong>Privacy choices</strong> link at the bottom of every page. If your browser sends a Global Privacy Control signal, we treat it as a choice to decline optional tracking unless you choose Accept on our Site.</p>
+            <p>We currently use the following services:</p>
             <ul>
-              <li><strong>Vercel Web Analytics:</strong> A privacy-friendly, cookieless analytics service that collects aggregated page-view data without setting cookies or tracking individual users across sessions. We also use Vercel custom event tracking to understand how visitors interact with specific page elements, such as which content sections are opened, PDF downloads, and button clicks. These events are anonymous and aggregated.</li>
-              <li><strong>Microsoft Clarity:</strong> We use Clarity to understand how visitors interact with our Site through heat maps (showing where users click and how far they scroll) and session recordings (anonymized replays of user visits). Clarity may use cookies and captures interaction data such as mouse movements, clicks, and scrolling behavior. Clarity does not collect sensitive information and data is processed by Microsoft in accordance with its privacy policy. For more information, visit <a href="https://clarity.microsoft.com/terms">Microsoft Clarity&rsquo;s terms</a>.</li>
-              <li><strong>Google Analytics (GA4):</strong> When enabled, GA4 uses cookies to collect information about how visitors use our Site, including pages visited, session duration, and traffic sources. GA4 data is processed by Google in accordance with its privacy policy. This service is only loaded if you accept cookies via our consent banner.</li>
+              <li><strong>Vercel Web Analytics:</strong> A cookieless analytics service that counts page views in aggregate without setting cookies or tracking individual visitors across sessions. We also use Vercel custom events to understand how visitors use specific page elements, such as which sections are opened, PDF downloads, and button clicks. These events are anonymous and aggregated. These visit counts stop if you choose Decline or your browser sends a Global Privacy Control signal.</li>
+              <li><strong>Microsoft Clarity:</strong> Loads only if you choose Accept. Clarity helps us understand how visitors use our Site through heat maps (where people click and how far they scroll) and session recordings (anonymized replays of visits). It sets cookies and captures interaction data such as mouse movements, clicks, and scrolling. Data is processed by Microsoft in accordance with its privacy policy. For more information, visit <a href="https://clarity.microsoft.com/terms">Microsoft Clarity&rsquo;s terms</a>. If you later choose Decline, Clarity stops and its cookies are removed.</li>
+              <li><strong>Google reCAPTCHA:</strong> Our contact form uses Google reCAPTCHA to protect against spam and abuse. reCAPTCHA collects hardware and software information, such as device and application data, and sends it to Google for analysis. Google&rsquo;s <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</li>
+              <li><strong>Podcast player:</strong> Our podcast page embeds a player from our podcast host, which may set its own cookies when the player loads.</li>
             </ul>
             <p>You may also manage or disable cookies through your browser settings; however, doing so may affect certain site functionality.</p>
           </div>
@@ -96,7 +99,7 @@ export function PrivacyPage() {
               <li><strong>Access:</strong> Request a copy of the personal information we hold about you.</li>
               <li><strong>Correction:</strong> Request correction of inaccurate or incomplete information.</li>
               <li><strong>Deletion:</strong> Request deletion of your personal information, subject to certain exceptions.</li>
-              <li><strong>Opt-out:</strong> Unsubscribe from marketing communications at any time by following the instructions in the communication or contacting us directly.</li>
+              <li><strong>Opt-out:</strong> Unsubscribe from marketing communications at any time by following the instructions in the communication or contacting us directly. Turn off optional tracking on our Site at any time with the Privacy choices link at the bottom of every page; we also honor Global Privacy Control signals.</li>
               <li><strong>Restriction:</strong> Request that we limit the processing of your personal information under certain circumstances.</li>
             </ul>
             <p>To exercise any of these rights, please contact us at <a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a>. We will respond to your request within a reasonable timeframe and in accordance with applicable law.</p>

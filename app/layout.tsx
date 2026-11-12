@@ -11,6 +11,7 @@ import localFont from "next/font/local";
 import { AREAS, areaHref } from "@/lib/content/site";
 import AnalyticsWrapper from '@/components/analytics-wrapper';
 import CookieBanner from '@/components/cookie-banner';
+import ClarityLoader from '@/components/clarity-loader';
 import Smooth from "@/components/v8/smooth";
 import PreviewEdit from "@/components/v8/preview-edit";
 import { REMOVED_SECTIONS } from "@/lib/content/removed-sections";
@@ -236,17 +237,9 @@ export default function RootLayout({
           })();
         `}</Script>
         <AnalyticsWrapper />
-        {/* Microsoft Clarity — heat maps & session recordings
-             Skip loading for internal traffic (rawlins_internal cookie). */}
-        <Script id="microsoft-clarity" strategy="afterInteractive">{`
-          if(document.cookie.indexOf("rawlins_internal=")<0){
-            (function(c,l,a,r,i,t,y){
-              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window,document,"clarity","script","wcupxc9qmn");
-          }
-        `}</Script>
+        {/* Microsoft Clarity (heat maps, session replays): loads only after "Accept" on the privacy banner, and never
+            for internal traffic (Nov 11, 2026; before, it loaded on every visit) */}
+        <ClarityLoader />
         <CookieBanner />
         {/* preview builds only: click-and-type text editor (never on the live site) */}
         {process.env.VERCEL_ENV === "preview" && <PreviewEdit canDelete={canDeleteSections()} />}

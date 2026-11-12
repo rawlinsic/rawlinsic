@@ -62,7 +62,7 @@ export const AREAS: Area[] = [
     tag: "Keeping what you own safe, working, & affordable", scene: "dusk", featuredCase: "cs-pbmc",
     services: [
       svc("asset-mgmt", "Asset Management", "crossing"),
-      svc("operations", "Maintenance & Operations"),
+      svc("operations", "Maintenance Programs"), // renamed Nov 11 (was Maintenance & Operations; old address redirects)
       svc("traffic", "Traffic Operations & Safety", "interchange"),
     ],
   },
@@ -307,6 +307,8 @@ export const CASES: CaseIndex[] = [
   cs("cs-nc-ipd", "north-carolina-integrated-program-delivery", "Integrated program delivery", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["program-delivery", "preconstruction", "grants", "operations", "alt-delivery"]),
   cs("cs-nc-am", "north-carolina-asset-management-review", "Asset management review across modes", `North Carolina Department of Transportation${FOUNDER}`, ["North Carolina"], "Before Rawlins", "transport", ["asset-mgmt", "operations", "procurement"]),
   cs("cs-strategic", "nevada-six-year-strategic-plan", "Six-year strategic plan, action plans, and performance management", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["strategic-planning", "org-design", "dashboards"]),
+  // on the live site as "Fleet Optimization & Asset Management" (Nevada page); Scott's NDOT career, so before Rawlins (Nov 11)
+  cs("cs-nv-fleet", "nevada-fleet-optimization", "Fleet optimization and asset management", `Nevada Department of Transportation${FOUNDER}`, ["Nevada"], "Before Rawlins", "transport", ["operations", "asset-mgmt"]),
   cs("cs-nv-om", "nevada-operations-maintenance-review", "Operations and maintenance program review", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt"]),
   cs("cs-aerodiv", "nevada-aeronautics-division-research", "Research on whether and how to establish a state aeronautics division, and how to fund it", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["research", "aero-division"]),
   cs("cs-de-tech", "delaware-technology-strategic-plan", "Technology strategic plan", "Delaware Department of Transportation", ["Delaware"], "Completed", "transport", ["tech-strategy", "strategic-planning"]),
@@ -327,7 +329,7 @@ export const CASES: CaseIndex[] = [
   cs("cs-pooled", "multi-state-drone-standards", "Multi-state drone standards and specifications", "A multi-state pooled fund study", [], "Ongoing", "gov", ["research", "drone-programs"]),
   // TODO(launch): needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.
   cs("cs-pdn", "project-delivery-website-and-change-system", "A project delivery website, tools, and change system staff use every day", STATE_DOT, [], "Ongoing", "transport", ["portals", "automation", "training-video", "program-delivery", "preconstruction"]),
-  cs("cs-tn-tech", "technology-modernization-and-ai-governance", "Technology modernization and AI governance", STATE_DOT, [], "Ongoing", "transport", ["tech-strategy", "data-governance", "ai"]),
+  cs("cs-tn-tech", "technology-modernization-and-ai-governance", "Technology modernization and AI governance", STATE_DOT, [], "Ongoing", "transport", ["tech-strategy", "data-governance", "ai", "exec-advisory"]),
   // TODO(launch): purchase order read Nov 10: no publicity terms. Reconfirm current status and client permission. Keep the client unnamed.
   cs("cs-hi", "construction-standards-and-statewide-support", "Construction standards, program knowledge, and statewide support", STATE_DOT, [], "Ongoing", "transport", ["construction", "portals", "program-delivery", "training-video", "drone-programs"]),
   /* Private sector: our own project, then our automation team's work before Rawlins */
@@ -357,12 +359,14 @@ export const CASE_STATUS: Record<string, string> = {
 export const LINE_STATUS: Record<string, string> = {
   "Drone data that checked debris removal quantities, and proved correct when reports disagreed": CASE_STATUS["cs-drt"],
   "We've supported a state's drone response team with training, and used drone data to check debris removal quantities": CASE_STATUS["cs-drt"],
-  /* content pass v7, Part 4: the Maintenance & Operations row that comes partly from cs-drt */
+  /* content pass v7, Part 4: the Maintenance Programs row that comes partly from cs-drt */
   "Winter operations and emergency readiness": CASE_STATUS["cs-drt"],
   /* content pass v7, 5.2: project lines */
   // TODO(launch): Jacob's portfolio says sources describe this at different stages. Confirm it's final.
   "Finalized a maintenance quality assurance handbook": "Content status: Jacob's portfolio says sources describe this at different stages. Confirm it's final.",
   "Maintenance quality assurance handbook finalized": "Content status: Jacob's portfolio says sources describe this at different stages. Confirm it's final.",
+  // TODO(launch): findings_cases.md (Nov 6) says the Tennessee version wasn't started and is an internal client matter.
+  "Leadership transition support: briefings and handoff materials for incoming leaders": "Content status: our records say this wasn't started where it came up and is an internal client matter. Confirm before launch.",
   // TODO(launch): Jacob's portfolio says the completed tools need confirmation.
   "Man-hour and cost estimating packages": "Content status: Jacob's portfolio says the completed tools need confirmation.",
 };

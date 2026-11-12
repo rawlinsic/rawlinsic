@@ -25,7 +25,8 @@ const through = (pts: [number, number][]) =>
     return `${acc} C ${mx} ${py} ${mx} ${y} ${x} ${y}`;
   }, "");
 
-const AGAIN: Partial<Record<DiagramKind, string>> = { loop: "and round again", cycle: "and round again" };
+/* the "and round again" label under loop and cycle diagrams is off (Nicole, Nov 11) */
+const AGAIN: Partial<Record<DiagramKind, string>> = {};
 
 export default function Fit({ kind, eyebrow, title, steps, base = "The systems you already own" }: { kind: DiagramKind; eyebrow?: string; title: string; steps: readonly Step[]; base?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -81,6 +82,8 @@ export default function Fit({ kind, eyebrow, title, steps, base = "The systems y
               </marker>
             </defs>
             <path className="fit-track" d={art.main} />
+            {/* the glow: a wide, faint copy of the line (a CSS glow filter here made scrolling stutter, Nov 11) */}
+            <path className="fit-line fit-halo" d={art.main} pathLength={1} />
             <path className="fit-line" d={art.main} pathLength={1} markerEnd={kind === "track" ? `url(#${mk}a)` : undefined} />
             {art.back && <path className="fit-back" d={art.back} markerEnd={`url(#${mk}a)`} />}
             {kind === "ascent" && (

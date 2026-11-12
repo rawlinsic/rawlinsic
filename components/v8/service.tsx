@@ -51,7 +51,12 @@ export default function ServiceV8({ id }: { id: string }) {
   /* a set order when the service has one (Preconstruction, content pass v7, 2.4); otherwise our own work first,
      earlier work (tagged Before Rawlins) after it */
   const order = (c: (typeof CASES)[number]) => { const k = s.cases?.indexOf(c.id) ?? -1; return k < 0 ? 99 : k; };
-  const cases = CASES.filter((c) => c.services.includes(id)).sort((a, b) => order(a) - order(b) || Number(!isOurs(a)) - Number(!isOurs(b)));
+  /* a service's own list (s.cases) can also bring in the nearest projects that aren't tagged with it (Executive
+     Advisory, Owner's Representation; Nicole, Nov 11); then the section is "Related projects", not "Where we've done it" */
+  const tagged = CASES.filter((c) => c.services.includes(id));
+  const extra = (s.cases ?? []).map((k) => CASES.find((c) => c.id === k)).filter((c): c is (typeof CASES)[number] => !!c && !tagged.includes(c));
+  const cases = [...tagged, ...extra].sort((a, b) => order(a) - order(b) || Number(!isOurs(a)) - Number(!isOurs(b)));
+  const workTitle = extra.length ? "Related projects" : "Where we've done it";
   const talk = talkFor(area.id);
   const steps = SERVICE_STEPS[id];
   const hear = quotes(s.hear);
@@ -61,7 +66,7 @@ export default function ServiceV8({ id }: { id: string }) {
     ["hear", hearTitle(s.hear)], ["deliver", "What we deliver"],
     ...(steps ? [["how", steps.title] as [string, string]] : HAS_FEATURE.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
     ["walk", "What you walk away with"],
-    ...(cases.length ? [["work", "Where we've done it"] as [string, string]] : []),
+    ...(cases.length ? [["work", workTitle] as [string, string]] : []),
     ...(aviation ? [["aviation", "Our aviation team"] as [string, string]] : []),
     ["talk", "Talk to us"],
   ];
@@ -81,14 +86,14 @@ export default function ServiceV8({ id }: { id: string }) {
         <div className="v8-wrap sv-hero-in">
           <div className="sv-hero-copy">
             <nav className="crumbs" aria-label="Breadcrumb">
-              <ol><li><a href="/#what">What we do</a></li><li><a href={areaHref(area)}>{area.name}</a></li><li aria-current="page">{s.name}</li></ol>
+              <ol><li><a href="/#what">What We Do</a></li><li><a href={areaHref(area)}>{area.name}</a></li><li aria-current="page">{s.name}</li></ol>
             </nav>
             <p className="sv-area"><a href={areaHref(area)}>{area.name}</a></p>
             <h1>{s.name}</h1>
             <p className="sv-intro">{s.intro}<LineNote text={s.intro} /></p>
             <div className="v8-actions">
               <a className="v8-btn v8-btn-area" href="#talk">Talk to us</a>
-              {cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">Where we&apos;ve done it</a>}
+              {cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">{workTitle}</a>}
             </div>
             {!PROD && s.st !== "ok" && <em className="v8-dev">Content status (preview only): {STATUS[s.st]}</em>}
             {PAGE_STATUS[id] && <Dev>{PAGE_STATUS[id]}</Dev>}
@@ -118,7 +123,7 @@ export default function ServiceV8({ id }: { id: string }) {
             <h2 className="v8-h2">What we deliver</h2>
           </div>
           <ul className={`svd-cards${s.deliver.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
-            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span>{d}</li>)}
+            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span>{d}<LineNote text={d} /></li>)}
           </ul>
         </div>
       </Scene>
@@ -152,7 +157,7 @@ export default function ServiceV8({ id }: { id: string }) {
       {cases.length > 0 && (
         <section id="work" className="sv-sec">
           <div className="v8-wrap">
-            <div className="h-row-head"><h2 className="v8-h2">Where we&apos;ve done it</h2>{cases.length > 3 && <a className="v8-link" href={`/insights/case-studies?service=${hit.service.slug}`}>All {cases.length} projects</a>}</div>
+            <div className="h-row-head"><h2 className="v8-h2">{workTitle}</h2>{tagged.length > 3 && <a className="v8-link" href={`/insights/case-studies?service=${hit.service.slug}`}>All {tagged.length} projects</a>}</div>
             <ul className="sv-cases">
               {cases.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}
             </ul>
