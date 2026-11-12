@@ -33,24 +33,42 @@ export const themeStyle = (areaId: string): CSSProperties => {
    work; unnamed-client cases never show a state. */
 const P = (f: string) => `/images/pages/${f}`;
 const CASE_PHOTO: Record<string, string> = {
-  "cs-pdn": P("auto-workflow.webp"),
   "cs-aero": P("research-paul-wheeler-nashville-symposium-2025.webp"), // Paul Wheeler at the Tennessee Drone and AAM Symposium, Nashville, Nov 12, 2025 (AERO Media folder)
   // the same photos the live site uses for these projects (Nicole, Nov 11: "all project pictures need to be the same they
   // were"). Both files were on the v4 never-use list (majortrans: road signs that don't look U.S.; transportation: place
   // unknown); kept because the live site shows them. Flagged on the CHANGE-LIST.
   "cs-major": P("majortrans.webp"),
   "cs-pa-budget": P("transportation.webp"),
-  "cs-pbmc": P("transportation-aerial.webp"),
   "cs-nyc-parks": P("transportation.webp"),
   "cs-proficiency": P("tnbig.webp"),
-  "cs-transform": P("auto-human.webp"),
-  "cs-txmaint": P("auto-optimize.webp"),
   "cs-riverside": P("transportation.webp"),
-  "cs-ia-partnering": P("aam-planning.webp"),
-  "cs-workforce": P("auto-human.webp"),
   "cs-maint-model": P("transportation.webp"), // live "Other states" photo
+  // where the live site's state page puts two or three projects on one card photo, the second one uses that page's own
+  // header photo, so each card differs and every photo is still the live site's (Nicole, Nov 11)
+  "cs-tn-ipd": P("cs-hero-1.webp"), // live Tennessee page header: Nashville with a highway bridge
+  "cs-nc-am": P("cs-hero-3.webp"), // live North Carolina page header: Charlotte
+  "cs-strategic": P("cs-hero-2.webp"), // live Nevada page header: Reno
   // private-sector projects: office and data photos with no place in them, one each so the cards differ
-  "cs-pv-pmo": P("auto-capability.webp"),
+  /* Projects that aren't on the live site: one photo each, chosen for the work, never shared (Nicole, Nov 11: "get new
+     pictures for the projects that align"). U.S. places or no recognizable place; unnamed-client projects show no
+     place; no logos. Stock under the Unsplash or Pexels license (free commercial use, no credit required). */
+  "cs-pbmc": P("project-pbmc.webp"), // interstate through wooded hills, Tennessee (Chattanooga); Pexels, "K" (@kelly): pexels.com/photo/road-below-a-mountain-2495407
+  "cs-txmaint": P("project-txmaint.webp"), // asphalt distributor sealing a rural highway, no place shown; Unsplash, Tom Shamberger: unsplash.com/photos/-KAoVUNv9W0
+  "cs-drt": P("project-drt.webp"), // drone view of a street after a storm, no signs or landmarks; Pexels, "K" (@kelly): pexels.com/photo/4170459
+  "cs-pmdiv": P("project-pmdiv.webp"), // team mapping a process with sticky notes; Unsplash, Vitaly Gariev: unsplash.com/photos/2kHqlCwj35E
+  "cs-workforce": P("project-workforce.webp"), // rows of hard hats (staffing); Unsplash, Declan Sun: unsplash.com/photos/LutB1xxyArA
+  "cs-aerodiv": P("project-aerodiv.webp"), // jet on the taxiway at a Nevada general-aviation airport (Reno); Unsplash, Simon Hurry: unsplash.com/photos/Rn0kG2LXRvo
+  "cs-partnering": P("project-partnering.webp"), // two people in hard hats reviewing plans on a bridge deck; Pexels, Mikael Blomkvist: pexels.com/photo/8961133
+  "cs-ia-partnering": P("project-ia-partnering.webp"), // people around a table taking notes; Unsplash, Dylan Gillis: unsplash.com/photos/KdeqA3aTnBY
+  "cs-db-partnering": P("project-db-partnering.webp"), // interstate work zone and a new flyover; Unsplash, Oscar Madison: unsplash.com/photos/Jc9BPRYzJg4
+  "cs-pooled": P("project-pooled.webp"), // camera drone in flight; Unsplash, Mitch Nielsen: unsplash.com/photos/pWtNPCpvVA8
+  "cs-pdn": P("project-pdn.webp"), // professional working on a laptop with project folders; Pexels, Sora Shimazaki: pexels.com/photo/5668861
+  "cs-tn-tech": P("project-tn-tech.webp"), // leadership briefing in front of a screen; Unsplash, Vitaly Gariev: unsplash.com/photos/dekx74fJUt4
+  "cs-hi": P("project-hi.webp"), // hard hat on construction plan sheets; Pexels, Thirdman: pexels.com/photo/5583255
+  "cs-pv-pmo": P("project-pv-pmo.webp"), // engineer and manager reviewing project charts; Pexels, ANTONI SHKRABA production: pexels.com/photo/8278915
+  "cs-local-am": P("project-local-am.webp"), // local road through fall color, Michigan (Boyne Falls); Pexels, Aaron Burden: pexels.com/photo/9559194
+  "cs-transform": P("project-transform.webp"), // divided highway through farmland at sunrise, no signs; Pexels, Tom Fisk: pexels.com/photo/9708012
+  "cs-nv-fleet": P("project-nv-fleet.webp"), // snow clearing on a mountain highway, no markings; Unsplash, Tom Shamberger: unsplash.com/photos/7CffibpcnuI
   "cs-pv-reporting": P("auto-data.webp"),
   "cs-pv-service": P("auto-collab.webp"),
   "cs-pv-field": P("auto-workflow.webp"),
