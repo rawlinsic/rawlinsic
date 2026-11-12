@@ -1166,3 +1166,5 @@ a.nw-more:hover, .nw-proj:hover .nw-more { text-decoration: underline; text-unde
 .pe-who button { margin-left: 6px; padding: 0; border: 0; background: none; color: #22d3ee; font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
 .pc-pin { width: 34px; height: 34px; margin: -17px 0 0 -17px; font-size: 0.8rem; letter-spacing: 0.02em; }
 .pc-pin.is-parked { border-style: dashed; border-radius: 50%; background: #1d3759; }
+/* the review bar moves up out of the way while the privacy notice is open (it sits in the same spot on a first visit) */
+body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
