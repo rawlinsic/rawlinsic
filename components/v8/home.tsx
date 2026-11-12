@@ -283,7 +283,7 @@ export default function Home() {
       {/* 7 · what's new */}
       <section className="h-new" aria-labelledby="h-new">
         <div className="v8-wrap">
-          <div className="h-row-head" data-reveal><div><p className="v8-eyebrow">What&apos;s new</p><h2 id="h-new" className="v8-h2">Where we&apos;ll be, and what we&apos;re up to</h2></div><a className="v8-link" href="/insights/news">News &amp; Recognition</a></div>
+          <div className="h-row-head" data-reveal><div><p className="v8-eyebrow">insights</p><h2 id="h-new" className="v8-h2">Where we&apos;ll be, and what we&apos;re up to</h2></div><a className="v8-link" href="/insights/news">News &amp; Recognition</a></div>
           <div className="newsgrid">
             {ev && (
               <article className={`ev${ev.photo ? " has-photo" : ""}${ev.banner ? " has-banner" : ""}`} data-reveal>
