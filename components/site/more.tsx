@@ -50,7 +50,7 @@ export function AboutIndex() {
         <ul className="ab-bento">
           <li className="ab-b-who"><a href="/about/who-we-are">{/* eslint-disable-next-line @next/next/no-img-element */}{/* our team at the 2026 Hawaii summit; the outdoor group photo is already this page's top photo (Nicole, Nov 11: no large indoor group photo) */}<img src="/images/pages/insights-hawaii-summit-2026-team.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Who we are</b><span>Our story, how we&apos;ve grown since 2017, and why agencies call us.</span></span></a></li>
           <li className="ab-b-people"><a href="/about/our-people"><span className="ab-b-faces">{faces.map((p) => /* eslint-disable-next-line @next/next/no-img-element */ <img key={p.slug} src={p.photo} alt="" loading="lazy" />)}</span><span className="ab-b-txt"><b>Our people</b><span>{people.length} people: advisors who ran the programs, and the specialists who build the tools.</span></span></a></li>
-          <li className="ab-b-how"><a href="/about/how-we-work"><span className="ab-b-steps">{STEPS.map(([t], k) => <i key={t}><em>{String(k + 1).padStart(2, "0")}</em>{t}</i>)}</span><span className="ab-b-txt"><b>How we work</b><span>Four steps, worked out with the people who do the work.</span></span></a></li>
+          <li className="ab-b-how"><a href="/about/how-we-work"><span className="ab-b-steps">{STEPS.map(([t], k) => <i key={t}><em>{String(k + 1).padStart(2, "0")}</em>{t}</i>)}</span><span className="ab-b-txt"><b>How we work</b><span></span></span></a></li>
           <li className="ab-b-where"><a href="/about/where-we-work"><span className="ab-b-num">{STATES.length}<small>states</small></span><span className="ab-b-txt"><b>Where we work</b><span>Across the United States, with team members in Canada, South Africa, and the UAE.</span></span></a></li>
           <li className="ab-b-careers"><a href="/careers">{/* eslint-disable-next-line @next/next/no-img-element */}{/* two teammates at the 2026 company retreat, July 24, 2026 (Business Development SharePoint; cropped so there are no labels) */}<img src="/images/pages/careers-retreat-2026-teammates.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Careers</b><span>Work next to people who&apos;ve done the job.</span></span></a></li>
         </ul>
@@ -114,7 +114,7 @@ export function HowWeWork() {
   return (
     <Shell>
       <EdHero crumbs={[["/about", "About"], ["/about/how-we-work", "How we work"]]} kicker="How we work" title={<>Start with what exists. <em>Stay until it runs.</em></>}
-        lead={<p>Four steps, worked out with the people who do the work.</p>}
+        lead={<p></p>}
         actions={<><EdBtn href="/contact">Tell us what you&apos;re trying to fix</EdBtn><EdBtn href="/insights/case-studies" kind="ghost">See our projects</EdBtn></>} />
       <section className="ab-steps-sec" data-nofill>
         <ol className="ed-wrap ab-steps">{STEPS.map(([t, d], k) => <li key={t}><span className="ab-step-n">{String(k + 1).padStart(2, "0")}</span><b>{t}</b><p>{d}</p></li>)}</ol>
