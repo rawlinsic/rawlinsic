@@ -22,7 +22,7 @@ import LitText from "@/components/v8/lit-text";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
-import { CaseNote, Dev, TALK } from "@/components/site/ui";
+import { CaseNote, Dev, talkFor } from "@/components/site/ui";
 
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
@@ -122,9 +122,9 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
       <section id="talk" className="svt" data-nofill>
         <div className="v8-wrap svt-in">
           <div className="svt-talk">
-            <h2 className="v8-h2">{TALK.title}</h2>
+            <h2 className="v8-h2">{talkFor(area.id).title}</h2>
             {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
-            {TALK.text ? <p className="v8-lead">{TALK.text}</p> : null}
+            {talkFor(area.id).text ? <p className="v8-lead">{talkFor(area.id).text}</p> : null}
             <div className="v8-actions"><a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a></div>
           </div>
           <div className="svt-links">

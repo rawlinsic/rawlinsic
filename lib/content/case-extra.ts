@@ -115,7 +115,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
     when: "2017 to 2021", // source: findings:8
     did: [
       "Helped develop flexible asset maintenance contracts", // source: findings:8
-      "Process improvements for the department's technical services", // source: findings:8
+      "Improved processes in the department's technical services", // source: findings:8
       "Assessed the department's preconstruction disciplines", // source: findings:11
     ],
   },

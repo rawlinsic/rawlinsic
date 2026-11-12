@@ -10,7 +10,7 @@ import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseH
 import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AAM_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
 import { SERVICE_STEPS } from "@/lib/content/features";
-import { Btn, CaseCards, Chips, Dev, Hero, List, People, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor, CaseNote } from "@/components/site/ui";
+import { Btn, CaseCards, Chips, Dev, Hero, List, People, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor, CaseNote, LineNote } from "@/components/site/ui";
 import { AviationRoles, AviationTeam, BridgingSilos, NextLayer, type TeamCard } from "@/components/site/aviation";
 import { AVIATION_ROLES, AVIATION_TEAM, formerlyFor } from "@/lib/content/people";
 import { WhereWeLead } from "@/components/site/where-we-lead";
@@ -188,13 +188,15 @@ export function ServiceFeature({ id }: { id: string }) {
       return <Sec title={f.title} kicker={f.kicker}><Steps steps={f.steps} /></Sec>;
     }
     case "row":
-      return <Sec title="The depth behind it"><List cols items={["Acquisition and relocation", "Property management and excess land", "Appraisal and appraiser certification", "Outdoor advertising and junkyard control", "Eminent domain litigation support and mediation", "Local agency right of way projects"]} /></Sec>;
-    case "program-delivery":
+      /* individual experience on our team, not Rawlins services (content pass v7, 2.7) */
+      return <Sec title="Right of way experience on our team"><List cols items={["Acquisition and relocation", "Property management and excess land", "Appraisal and appraiser certification", "Outdoor advertising and junkyard control", "Eminent domain litigation support and mediation", "Local agency right of way projects"]} /></Sec>;
+    case "preconstruction": // moved from Program Delivery (content pass v7, 2.3)
       return <Sec title="Inside a project delivery network" kicker="From our work"><List items={["Tools, templates, and workflows for every phase", "Project management plans and commitment tracking", "Risk registers and risk training", "Online courses and a delivery website staff actually use"]} /></Sec>;
     case "operations": {
       const parts: [string, string, string[]][] = [
         ["Performance-based maintenance", "Contracts that pay for results: specifications, deduction models, and administration", ["cs-txmaint", "cs-pbmc", "cs-maint-model"]],
         ["Quality assurance and ratings", "Handbooks and rating programs decisions can rely on", ["cs-transform", "cs-txmaint"]],
+        // Backed by the cs-nv-om operations and maintenance review. Jacob's portfolio lists fleet and facilities as not yet delivered.
         ["Fleet and facilities", "The right equipment, in the right shape, at the right cost", ["cs-nv-om"]],
         // TODO(launch): links cs-drt. needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.
         ["Winter operations and emergency readiness", "Plans tested before they're needed, including drone response teams", ["cs-txmaint", "cs-drt"]],
@@ -204,7 +206,7 @@ export function ServiceFeature({ id }: { id: string }) {
           <ul className="pg-cards">
             {parts.map(([t, d, ids]) => (
               <li key={t} className="pg-card">
-                <b>{t}</b><span>{d}</span>
+                <b>{t}<LineNote text={t} /></b><span>{d}</span>
                 <ul className="pj-mini">{ids.map((i) => caseById(i)).filter(Boolean).map((c) => <li key={c!.id}><a href={caseHref(c!)}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src={casePhoto(c!)} alt="" loading="lazy" /><span>{c!.title}<CaseNote id={c!.id} /></span></a></li>)}</ul>
               </li>
             ))}

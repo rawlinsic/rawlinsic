@@ -41,6 +41,11 @@ export const PUBLICATIONS: Publication[] = [
     href: "https://rosap.ntl.bts.gov/view/dot/56187", people: ["Paul Wheeler"], before: true },
   { series: "NCHRP Domestic Scan 17-01", title: "Successful Approaches for the Use of Unmanned Aerial Systems by Surface Transportation Agencies", year: "2018", publisher: "National Cooperative Highway Research Program",
     href: "https://commons.und.edu/avi-fac/52/", people: ["Steve Cook", "Paul Wheeler"], before: true },
+  /* content pass v7, 12.1 (checked Nov 11 against the publishers' pages) */
+  { series: "Journal of Airport Management, Vol. 18, No. 2", title: "Lessons learned while planning for advanced air mobility", year: "2024", publisher: "Henry Stewart Publications",
+    href: "https://hstalks.com/article/8318/download/", people: ["Paul Wheeler", "Aaron Organ"], before: true },
+  { series: "Planning magazine", title: "Air Support for Transportation Planning", year: "2020", publisher: "American Planning Association",
+    href: "https://www.planning.org/planning/2020/nov/air-support-for-transportation-planning/", people: ["Alicia McConnell"], before: true },
 ];
 
 /* Talks: speaker pages that name Rawlins */
@@ -61,4 +66,7 @@ export const AWARDS: Award[] = [
   /* Jordan School District, May 2022 (via the Internet Archive), and State Aviation Journal, May 17, 2022 */
   { title: "Utah Aviation Educator of the Year", from: "Utah Department of Transportation, Division of Aeronautics", year: "2022",
     href: "https://stateaviationjournal.com/index.php/state-news/utah/first-ever-utah-aviation-conference-draws-500-builds-community", people: ["Aaron Organ"], before: true },
+  /* content pass v7, 12.2 (HEEP's page, checked Nov 11) */
+  { title: "Ken G. Close Award", from: "Highway Engineering Exchange Program (HEEP), given to its UAS Committee", year: "2025",
+    href: "https://www.heep.org/ken-g-close-award", people: ["Alicia McConnell", "Paul Wheeler"] },
 ];

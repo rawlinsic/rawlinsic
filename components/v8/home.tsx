@@ -231,7 +231,7 @@ export default function Home() {
             <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use.</h2>
           </div>
           <FanCards label="What we do" start={2}
-            cards={AREAS.map((a) => ({ href: areaHref(a), tag: a.tag, title: a.name, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id] }))} />
+            cards={AREAS.map((a) => ({ href: areaHref(a), tag: a.tag, title: a.name, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id], text: q(AREA_DATA[a.id].hear[0]), more: `Explore ${a.name}` }))} />
         </section>
       )}
 

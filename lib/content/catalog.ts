@@ -1,7 +1,7 @@
 /* GENERATED from wireframe v11 (final data) + handoff v7 section 4 (v12) by the redesign build.
    Edit content here or regenerate; source notes live in the `src`/`basis` fields and are never rendered. */
 /* eslint-disable */
-export type SvcData = { id: string; name: string; area: string; st: string; intro: string; hear: string[]; quote: boolean; deliver: string[]; walk: string[]; industries: string[]; related: string[]; xp: string[]; src: Record<string, string> };
+export type SvcData = { id: string; name: string; area: string; st: string; intro: string; hear: string[]; quote: boolean; deliver: string[]; walk: string[]; industries: string[]; related: string[]; xp: string[]; cases?: string[]; src: Record<string, string> };
 export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; steps: { t: string; d: string; services: string[] }[] }; keep: string; cases: string[] };
 export type IndustryData = { id: string; ch: string[]; basis: string; services: string[]; people: string[][] };
 export type SubsectorData = { id: string; name: string; st: string; deliver: string[]; services: string[]; intro: string; industry: string; ch: string[]; people: string[][]; basis: string; thin?: boolean };
@@ -14,7 +14,8 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "We help leadership turn its direction into goals, measures, and yearly action plans, with dashboards that show whether the plan is working and a leadership rhythm to review them.",
   "hear": [
-   "We have a strategic plan. We can't show it's working.” “We need a defensible way to decide what gets funded."
+   "We have a strategic plan. We can't show it's working.",
+   "We need a defensible way to decide what gets funded."
   ],
   "quote": true,
   "deliver": [
@@ -57,7 +58,8 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "We design the organization from current to future state, with position descriptions, classification and salary analysis, and change communications. Then we fix the processes and procedures people use every day.",
   "hear": [
-   "We're reorganizing, or standing up a new division.” “Our procedures live in people's heads, or in five versions of the same binder."
+   "We're reorganizing, or standing up a new division.",
+   "Our procedures live in people's heads, or in five versions of the same binder."
   ],
   "quote": true,
   "deliver": [
@@ -142,7 +144,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Workforce & Leadership Development",
   "area": "strategy",
   "st": "warn",
-  "intro": "Proficiency programs, career paths, training curricula, train-the-trainer models, and self-paced online courses, plus the HR structure behind them.",
+  "intro": "We help agencies grow people into the jobs they need filled: proficiency programs, career paths, training curricula, train-the-trainer models, and self-paced online courses, plus the HR structure behind them.",
   "hear": [
    "Our best people are retiring. Nobody's ready to step up."
   ],
@@ -188,7 +190,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Executive Advisory",
   "area": "strategy",
   "st": "ok",
-  "intro": "We advise agency leaders on how to run and deliver their programs: big decisions, reorganizations, new programs, and key seats left open. For administrative functions, we provide advisory, training design, facilitation, and executive coaching, with clear processes, controls, and reporting.",
+  "intro": "We advise agency leaders on their biggest decisions: reorganizations, new programs, and how to run and deliver their programs. For administrative functions, we provide advisory, training design, facilitation, and executive coaching, with clear processes, controls, and reporting.",
   "hear": [
    "Leadership is stretched, and the decisions in front of it are big: a reorganization, a new program, a key seat left open."
   ],
@@ -225,25 +227,29 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "program-delivery": {
   "id": "program-delivery",
-  "name": "Program & Project Delivery",
+  "name": "Program Delivery",
   "area": "delivery",
   "st": "warn",
-  "intro": "Project delivery manuals, playbooks, risk and quality tools, and role-based training, built from what already exists. We support project teams from kickoff to closeout, and when the work is outsourced, we serve as the owner's representative.",
+  "intro": "A credible work program connects investment priorities with the projects the agency can actually advance. We help agencies clarify selection methods, readiness requirements, milestones, and responsibilities, so leadership has a clearer basis for its commitments and can act when conditions change.",
   "hear": [
-   "Every manager runs projects their own way.” “We outsource the work. We need the contractor held to it."
+   "Projects keep missing the year they were promised",
+   "It's hard to explain why one project was chosen over another"
   ],
-  "quote": true,
+  "quote": false,
   "deliver": [
+   "Investment priorities and program alignment: a selection method the department can explain",
+   "Work program development: five-year programs built around what each project needs",
+   "Program controls, milestones, and performance reporting",
+   "Program assessments that become an implementation roadmap, early wins first",
+   "Consultant and professional services management: fee methods, selection, and prequalification",
+   "Program quality assurance",
    "Program and project leadership for complex, multi-agency work",
-   "Team-based project delivery frameworks",
-   "Project management and delivery manuals",
-   "Interim program leadership and program management offices",
-   "Program quality assurance"
+   "Interim program leadership and program management offices"
   ],
   "walk": [
-   "Project delivery manuals and playbooks",
-   "Risk and quality tools",
-   "Role-based training, built from what already exists"
+   "A selection method the department can defend",
+   "Interim milestones and status reporting leadership can act on",
+   "A roadmap that puts early wins first"
   ],
   "industries": [
    "transport",
@@ -264,6 +270,56 @@ export const SERVICES: Record<string, SvcData> = {
    "intro": "Current rawlinsic.com copy",
    "hear": "Partner Field Guide v1",
    "walk": "Partner Field Guide v1"
+  }
+ },
+ "preconstruction": {
+  "id": "preconstruction",
+  "name": "Preconstruction",
+  "area": "delivery",
+  "st": "ok",
+  "intro": "A project advances more reliably when every discipline knows what it must provide and when the next team needs it. We help agencies set up delivery frameworks, scoping methods, project management resources, and clearer handoffs, so staff share one process and the agency keeps its own technical judgment and decisions.",
+  "hear": [
+   "Projects are scoped differently every time",
+   "Construction and maintenance see the design too late",
+   "New project managers don't know where to start"
+  ],
+  "quote": false,
+  "deliver": [
+   "Project delivery frameworks from concept study to readiness for advertisement, with an interactive manual",
+   "Concept scoping and project evaluation",
+   "Handoffs from design through award into construction, written as business rules the agency's systems can follow",
+   "Project management functions: the unit, the manual, and staff capability",
+   "Estimating methods and tools"
+  ],
+  "walk": [
+   "An agency-owned interactive manual and process map",
+   "Scoring forms staff apply themselves",
+   "A transition plan that moves projects already underway onto the new process"
+  ],
+  "industries": [
+   "transport"
+  ],
+  /* not set by the content pass: the neighboring Project Delivery services */
+  "related": [
+   "program-delivery",
+   "construction",
+   "row"
+  ],
+  "xp": [
+   "We've built project delivery frameworks for three state DOTs, and each one looks different"
+  ],
+  /* Featured projects, in this order (content pass v7, 2.4). cs-pmdiv, cs-pdn, and cs-transform carry their notes. */
+  "cases": [
+   "cs-tn-ipd",
+   "cs-nc-ipd",
+   "cs-pmdiv",
+   "cs-pdn",
+   "cs-transform"
+  ],
+  "src": {
+   "intro": "Site content pass v7 (Nov 11 2026)",
+   "hear": "Site content pass v7 (Nov 11 2026)",
+   "walk": "Site content pass v7 (Nov 11 2026)"
   }
  },
  "owners-rep": {
@@ -311,7 +367,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Alternative Delivery & Partnering",
   "area": "delivery",
   "st": "ok",
-  "intro": "Major projects go better when the delivery method fits the job and the owner and contractor agree up front how they'll work together.",
+  "intro": "Choosing an alternative delivery method also changes the owner's job. We help agencies prepare their organization, staff, procedures, and decision methods for that change, and we support method selection, procurement readiness, and partnering while the agency keeps its decisions.",
   "hear": [
    "A first project under a new delivery method",
    "Risk that no one has allocated",
@@ -319,14 +375,17 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "quote": false,
   "deliver": [
-   "Choosing the right delivery method: design-build, progressive design-build, construction manager at risk, construction manager/general contractor, and public-private partnerships",
-   "Selection criteria, procurement documents, and risk allocation",
-   "Partnering facilitation: project charters, issue resolution ladders, joint risk workshops, and team evaluations",
+   "Alternative delivery program development: roles, manuals, procedures, and training for the agency's own team",
+   "Delivery method selection across design-build, progressive design-build, construction manager at risk (also called construction manager/general contractor), and public-private partnerships",
+   "Procurement readiness: scoring criteria and document review",
+   // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
+   "Risk allocation and partnering facilitation: project charters, issue resolution ladders, joint risk workshops, and team evaluations",
    "Owner and contractor coordination on major projects"
   ],
   "walk": [
    "A delivery method recommendation with selection criteria",
-   "Procurement documents and contract templates",
+   "Delivery method manuals, procedures, and training",
+   // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
    "A signed partnering charter and an issue resolution ladder",
    "Regular team evaluations through the project"
   ],
@@ -355,11 +414,12 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Finance, Budget & Procurement",
   "area": "delivery",
   "st": "warn",
-  "intro": "Finance, budgeting, and procurement support that helps organizations put resources where they count, stay compliant, and choose the right way to deliver the work.",
+  "intro": "We help organizations put resources where they count, stay compliant, and buy the services they need consistently, from budgeting through procurement and contract administration.",
   "hear": [
-   "Choosing the right delivery method, writing documents industry will bid on, and administering the contract the same way after award."
+   "Consultant fees vary for comparable work",
+   "Budgets aren't tied to what the program has to deliver"
   ],
-  "quote": true,
+  "quote": false,
   "deliver": [
    "Procurement advisory from solicitation to closeout",
    "Consultant contract administration",
@@ -397,15 +457,16 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Right of Way",
   "area": "delivery",
   "st": "warn",
-  "intro": "Right of way depends on specialists who take years to develop and are hard to replace. We help agencies define those skills, build the path to them, and classify and pay for them so people stay.",
+  "intro": "Right of way readiness depends on timely information and coordinated work across the project team. We help agencies assess their right of way programs, improve procedures, define responsibilities and handoffs within project delivery, and develop the specialists the work depends on.",
   "hear": [
    "Experienced agents and appraisers are retiring",
    "Classifications and pay don't reflect the specialized work",
-   "Uniform Act compliance rests on a few people"
+   "Right of way needs surface too late in design"
   ],
   "quote": false,
   "deliver": [
    "Right of way assessments and process improvement",
+   "Right of way built into project delivery: activities, handoffs, and a right of way strategy meeting",
    "Acquisition, relocation, and property management procedures",
    "Right of way specialist and appraiser proficiency programs",
    "Appraiser classification series and salary structure",
@@ -436,10 +497,10 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "construction": {
   "id": "construction",
-  "name": "Construction & Pre-Construction",
+  "name": "Construction",
   "area": "delivery",
   "st": "warn",
-  "intro": "Construction is where an agency carries the most risk and the most paperwork. We help construction offices standardize how work is administered, documented, and inspected, and get real use out of the software they already bought.",
+  "intro": "Consistent construction administration depends on current guidance, clear decisions, and workable coordination among field staff, finance, contracts, suppliers, and contractors. We help agencies find the gaps in those processes, close them, and put more usable procedures in place.",
   "hear": [
    "Each district administers contracts differently",
    "New construction software is in place, but the workflows still live on paper",
@@ -447,10 +508,11 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "quote": false,
   "deliver": [
-   "Construction management and contract administration advisory",
-   "Construction manuals, standard specifications, and inspection procedures",
+   "Construction administration and policy: change orders, claims review, approval thresholds, and contractor payments",
+   // TODO: Rawlins drafts standard specifications for a client that isn't cleared. Add specifications back only when cleared.
+   "Construction manuals, policies, and inspection procedures",
    "Construction software workflows",
-   "Constructability reviews and preconstruction support",
+   "Construction and maintenance input at every step of project development",
    "Construction, materials testing, and bridge inspection proficiency programs"
   ],
   "walk": [
@@ -539,7 +601,7 @@ export const SERVICES: Record<string, SvcData> = {
   "walk": [
    "A complete competitive application with task structure, budget, and measurement plan",
    "Task structure and budget logic reusable for the next opportunity",
-   "Or a published solicitation that attracts the right responses"
+   "A published solicitation that attracts the right responses, when the agency is the one issuing grants"
   ],
   "industries": [
    "transport",
@@ -577,7 +639,8 @@ export const SERVICES: Record<string, SvcData> = {
    "Life cycle, risk, and investment strategy, including capital priorities across asset types",
    "Asset management reviews, governance, and implementation plans, using ISO 55000 as a guide",
    "Local-agency asset management workshops",
-   "Requirements and selection support for asset management systems"
+   "Asset information and assessment technology, tested against what experienced raters see",
+   "Standing up an asset management division: section design, position descriptions, measures, and advisory to its leaders"
   ],
   "walk": [
    "Research and connection to technology that fits the agency's needs",
@@ -621,10 +684,12 @@ export const SERVICES: Record<string, SvcData> = {
   "deliver": [
    "Performance-based and flexible maintenance contracts: specifications, deduction models, administration, and reviews of contracts already in place",
    "Maintenance quality assurance programs and maintenance rating programs",
-   "Maintenance budgeting tied to performance",
+   "Maintenance budgeting tied to performance: level-of-service targets and what each point of improvement costs",
+   // Backed by the cs-nv-om operations and maintenance review. Jacob's portfolio lists fleet and facilities as not yet delivered.
    "Fleet and facilities: operations reviews, right-sizing, replacement planning, and predictive maintenance",
    "Winter operations, emergency readiness, and tabletop exercises",
-   "Field assessments, operating standards, and crew training"
+   "Field assessments, operating standards, and crew training",
+   "Maintenance sourcing: what to keep in house, what to outsource, and building a market of bidders first"
   ],
   "walk": [
    "Performance-based contract specifications and deduction models",
@@ -660,7 +725,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Traffic Operations & Safety",
   "area": "om",
   "st": "warn",
-  "intro": "Operating the system you already have is often the fastest way to make it safer and more reliable. We help agencies organize for operations and safety, and make the case for the investments that follow.",
+  "intro": "Operations investments need an organization and a delivery process that support safe, reliable use of the system. We help agencies connect operations with project development, maintenance, and investment decisions, through program reviews, guidance, and practical process support.",
   "hear": [
    "Operations and safety work is split across divisions",
    "Investments are hard to justify without a benefit-cost case",
@@ -672,7 +737,9 @@ export const SERVICES: Record<string, SvcData> = {
    "Highway safety program coordination",
    "Benefit-cost analysis for operations improvements",
    "Traffic operations division structure",
-   "Traffic design proficiency: signing, pavement markings, and signals"
+   "Traffic design proficiency: signing, pavement markings, and signals",
+   "Operations guidance, manuals, and standards brought current, with operations built into project delivery",
+   "Operations capability assessments and peer-state benchmarking"
   ],
   "walk": [
    "An operations and safety organization with clear roles",
@@ -896,7 +963,8 @@ export const SERVICES: Record<string, SvcData> = {
    "Maps and web platforms for program information"
   ],
   "walk": [
-   "Project screening and scoring tools with dashboards for capital programming"
+   "Project screening and scoring tools with dashboards for capital programming",
+   "Dashboards on platforms you already own, documented so your team can update them"
   ],
   "industries": [
    "transport",
@@ -963,7 +1031,8 @@ export const SERVICES: Record<string, SvcData> = {
   "st": "ok",
   "intro": "Start here when there's a broad mandate, competing priorities, or not enough evidence to choose what to build. We assess the technology before the purchase, then help with setup, training, and change management so the tool becomes how work gets done.",
   "hear": [
-   "We bought the software, and nobody uses it.” “Leadership wants AI, and no one is sure where it fits, whether we're ready, or who owns it."
+   "We bought the software, and nobody uses it.",
+   "Leadership wants AI, and no one is sure where it fits, whether we're ready, or who owns it."
   ],
   "quote": true,
   "deliver": [
@@ -1269,7 +1338,7 @@ export const AREAS: Record<string, AreaData> = {
  "strategy": {
   "id": "strategy",
   "name": "Strategy & Organization",
-  "tag": "Direction, structure, and people",
+  "tag": "Direction, structure, & people",
   "services": [
    "strategic-planning",
    "org-design",
@@ -1325,18 +1394,19 @@ export const AREAS: Record<string, AreaData> = {
  "delivery": {
   "id": "delivery",
   "name": "Project Delivery",
-  "tag": "Getting programs and projects built",
+  "tag": "Getting programs & projects built",
   "services": [
    "program-delivery",
-   "owners-rep",
-   "alt-delivery",
-   "procurement",
-   "row",
+   "preconstruction",
    "construction",
+   "alt-delivery",
+   "row",
+   "procurement",
    "lpa",
-   "grants"
+   "grants",
+   "owners-rep"
   ],
-  "lead": "From the first dollar programmed to the last project closed out, we help owners deliver on time, on budget, and the same way every time.",
+  "lead": "From the projects an agency chooses to how it administers construction, we help owners set up the processes, decisions, and tools that make delivery consistent, and we stay while staff put them to use.",
   "hear": [
    "Every manager runs projects their own way.",
    "Our procedures live in people's heads, or in five versions of the same binder.",
@@ -1361,7 +1431,7 @@ export const AREAS: Record<string, AreaData> = {
     },
     {
      "t": "Procure",
-     "d": "Delivery method, documents, and contracts",
+     "d": "Delivery method and procurement readiness",
      "services": [
       "alt-delivery",
       "procurement"
@@ -1369,14 +1439,14 @@ export const AREAS: Record<string, AreaData> = {
     },
     {
      "t": "Right of way",
-     "d": "Acquisition, relocation, and appraisal",
+     "d": "Readiness, procedures, and coordination",
      "services": [
       "row"
      ]
     },
     {
      "t": "Build",
-     "d": "Construction administration and inspection",
+     "d": "Construction administration and field consistency",
      "services": [
       "construction",
       "owners-rep"
@@ -1384,7 +1454,7 @@ export const AREAS: Record<string, AreaData> = {
     },
     {
      "t": "Close out",
-     "d": "Quality, lessons learned, and handoff",
+     "d": "Lessons learned and the handoff to maintenance",
      "services": [
       "program-delivery"
      ]
@@ -1401,7 +1471,7 @@ export const AREAS: Record<string, AreaData> = {
  "om": {
   "id": "om",
   "name": "Operations & Maintenance",
-  "tag": "Keeping what you own safe, working, and affordable",
+  "tag": "Keeping what you own safe, working, & affordable",
   "services": [
    "asset-mgmt",
    "operations",
@@ -1468,7 +1538,7 @@ export const AREAS: Record<string, AreaData> = {
  "tech": {
   "id": "tech",
   "name": "Digital Solutions",
-  "tag": "Websites, tools, workflows, data, AI, and training",
+  "tag": "Websites, tools, workflows, data, AI, & training",
   "services": [
    "portals",
    "automation",
@@ -1549,7 +1619,7 @@ export const AREAS: Record<string, AreaData> = {
  "aviation": {
   "id": "aviation",
   "name": "Drones & Advanced Air Mobility",
-  "tag": "Programs, planning, response, and standards",
+  "tag": "Programs, planning, response, & standards",
   "services": [
    "drone-programs",
    "drone-aam",
@@ -1745,6 +1815,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   ],
   "services": [
    "program-delivery",
+   "preconstruction",
    "row",
    "construction",
    "operations",
@@ -1823,9 +1894,8 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    "Partnering facilitation on a light rail line"
   ],
   "services": [
-   "program-delivery",
-   "owners-rep",
-   "strategic-planning"
+   "alt-delivery",
+   "owners-rep"
   ],
   "intro": "Our transit work so far is partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation.",
   "industry": "transport",
@@ -1988,7 +2058,7 @@ export const CASES: Record<string, CaseData> = {
    "Researched appraiser classifications nationwide and drafted a salary structure",
    "Designed and delivered a two-week advanced leadership program with the agency's human resources team",
    "Supported a statewide transportation worker proficiency rollout and a staffing utilization method",
-   "An appraisal tracker for the right of way appraiser program"
+   "Built an appraisal tracker for the right of way appraiser program"
   ],
   "res": [
    "Utilization process complete and in use",
@@ -2059,10 +2129,10 @@ export const CASES: Record<string, CaseData> = {
    "Planned and ran a statewide drone and advanced air mobility symposium",
    "Developed an advanced air mobility strategy and planning guidance for local governments",
    "Prepared a federal construction-technology grant application",
-   "Economic impact and market studies for advanced air mobility (in progress)",
-   "A land development study for advanced air mobility",
-   "A tracking dashboard for advanced air mobility",
-   "Train-the-trainer support for the remote pilot program"
+   "Coordinating the economic impact and market studies for advanced air mobility with the study team (in progress)",
+   "Coordinated a land development study for advanced air mobility",
+   "Built a tracking dashboard for advanced air mobility",
+   "Supported train-the-trainer work for the remote pilot program"
   ],
   "res": [
    "Symposium held",
@@ -2103,6 +2173,7 @@ export const CASES: Record<string, CaseData> = {
    "Updated step zero checklists, decision trees, and guidance for safety program projects",
    "A project manager manual and online courses, including consultant management",
    "Man-hour and cost estimating packages",
+   // TODO: two local public agency lines say the same thing; Nicole to pick one.
    "Local public agency manual and responsible-charge training",
    "Maintenance training (load securement, winter operations, first echelon maintenance, and equipment safety) with equipment demonstration checklists",
    "An interactive organization chart linking each function to its description",
@@ -2266,7 +2337,7 @@ export const CASES: Record<string, CaseData> = {
   "id": "cs-workforce",
   "ch": "The department needed a clear picture of its vacancies, how divisions balance staffing supply and demand, and how peer agencies organize.",
   "did": [
-   "Workforce analysis: vacancies, staffing by division, and how peer agencies organize"
+   "Analyzed vacancies, staffing by division, and how peer agencies organize"
   ],
   "res": [],
   "services": [
@@ -2373,7 +2444,7 @@ export const CASES: Record<string, CaseData> = {
    "Built a nine-task research plan with three implementation models",
    "Compiled a 100-source literature review",
    "Facilitated a technical advisory panel",
-   "Interviews with aviation stakeholders statewide"
+   "Interviewing aviation stakeholders statewide"
   ],
   "res": [],
   "services": [
@@ -2562,7 +2633,7 @@ export const CASES: Record<string, CaseData> = {
    "Facilitated subcommittee and consensus sessions",
    "Proposed a performance-based, sensor-neutral testing framework",
    "Compiled member states' existing standards",
-   "Working groups with 18 member states"
+   "Brought together working groups from 18 member states"
   ],
   "res": [],
   "services": [
@@ -2584,8 +2655,8 @@ export const CASES: Record<string, CaseData> = {
    "Built the delivery website and resource library: tools, scheduling, the project manager's manual, and training",
    "Linked it to the systems staff already use, including the department's scheduling system and its project reporting portal",
    "Built the change request system: a web form, a tracker, automatic routing to reviewers and the department, quality check, and close-out",
-   "Post and check updates to the scope of work generator, cost estimating tool, and other templates before release",
-   "Online courses for project managers, including video"
+   "Posting and checking updates to the scope of work generator, cost estimating tool, and other templates before release",
+   "Built online courses for project managers, including video"
   ],
   "res": [
    "Change requests tracked from submission to close-out, with every decision recorded",
@@ -2612,7 +2683,7 @@ export const CASES: Record<string, CaseData> = {
    "Wrote more than ten standard operating procedures",
    "Ran a seven-month communications campaign for the modernization",
    "Prepared an advisory committee",
-   "Executive-level strategic advisory, including AI governance"
+   "Providing executive-level strategic advisory, including AI governance"
   ],
   "res": [
    "More than ten standard operating procedures complete"
@@ -2637,7 +2708,7 @@ export const CASES: Record<string, CaseData> = {
    "Reviewed hundreds of wiki documents and gave each one a disposition: keep, update, combine, move, or retire",
    "Backed up and preserved the original site before migration",
    "Planning the rollout of the department's construction management platform on live projects",
-   "Remote pilot training for about 20 candidates"
+   "Supported remote pilot training for about 20 candidates"
   ],
   "res": [],
   "services": [
