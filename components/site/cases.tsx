@@ -8,7 +8,7 @@ import { CASE_EXTRA } from "@/lib/content/case-extra";
 import { AREAS, CASES, VISIBLE_INDUSTRIES, areaHref, caseHref, caseTag, industryHref, serviceById, serviceHref, slugify, type CaseIndex, CASE_STATUS } from "@/lib/content/site";
 import { CASES as CASE_DATA, SERVICES as SVC_DATA, SUBSECTORS } from "@/lib/content/catalog";
 import CaseFilter, { type CaseRow } from "@/components/site/case-filter";
-import { Btn, Chips, Dev, Hero, Sec, Shell, Steps, Talk, CaseNote, LineNote } from "@/components/site/ui";
+import { Btn, Chips, Dev, Hero, Sec, Shell, Steps, Talk, CaseNote } from "@/components/site/ui";
 
 const areaOfService = (id: string) => serviceById(id)?.area.id;
 const sceneFor = (c: CaseIndex) => {
@@ -115,7 +115,7 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
             <h2 className="pj-h">What we did</h2>
             <ol className="pj-did-list">
               {[...(d?.did ?? []).map((t) => ({ t, review: false })), ...xDid.map((t) => ({ t, review: true }))].map((it, i) => (
-                <li key={it.t}><span className="pj-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><p>{it.t}<LineNote text={it.t} /></p>{it.review && <Dev>For review</Dev>}</li>
+                <li key={it.t}><span className="pj-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><p>{it.t}</p>{it.review && <Dev>For review</Dev>}</li>
               ))}
             </ol>
             {d?.tools?.length ? <div className="pj-tools"><span>Tools</span><ul>{d.tools.map((t) => <li key={t}>{t}</li>)}</ul></div> : null}
@@ -131,7 +131,7 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
             <h2 className="pj-h">Results</h2>
             <ul className="pj-res-list">
               {[...(d?.res ?? []).map((t) => ({ t, review: false })), ...xRes.map((t) => ({ t, review: true }))].map((it) => (
-                <li key={it.t}><Check /><p>{it.t}<LineNote text={it.t} />{it.review && <> <Dev>For review</Dev></>}</p></li>
+                <li key={it.t}><Check /><p>{it.t}{it.review && <> <Dev>For review</Dev></>}</p></li>
               ))}
             </ul>
           </div>

@@ -431,22 +431,3 @@
 .h-fan .h-ways-head { text-align: center; }
 .h-fan .h-ways-head .v8-eyebrow { margin-left: auto; margin-right: auto; }
 .h-fan .fan { margin-bottom: clamp(20px, 3vw, 40px); }
-
-/* Nov 11: home What we do cards show the words the old tiles had when you point at the middle card */
-.fan-card .fan-body { position: absolute; left: clamp(20px, 2.4vw, 34px); right: clamp(20px, 2.4vw, 34px); bottom: clamp(20px, 2.4vw, 34px); display: grid; gap: 0; }
-.fan-card .fan-body b { position: static; }
-.fan-card .fan-txt { display: grid; gap: 12px; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.45s ease, opacity 0.35s ease, margin 0.35s ease; }
-.fan-card.is-on:hover .fan-txt, .fan-card.is-on:focus-visible .fan-txt { max-height: 16em; opacity: 1; margin-top: 14px; }
-.fan-card .fan-q { color: #fff; font-size: clamp(1rem, 1.25vw, 1.18rem); line-height: 1.5; text-shadow: 0 1px 10px rgba(10, 18, 32, 0.6); }
-.fan-card .fan-more { color: #a5f3fc; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-.fan-card .fan-more::after { content: " →"; }
-.fan-card.is-on::before { transition: background 0.35s; }
-.fan-card.is-on:hover::before, .fan-card.is-on:focus-visible::before { background: linear-gradient(180deg, rgba(10, 18, 32, 0.4) 0%, rgba(10, 18, 32, 0.15) 30%, rgba(10, 18, 32, 0.55) 55%, rgba(10, 18, 32, 0.92) 100%); }
-@media (hover: none) { .fan-card.is-on .fan-txt { max-height: 16em; opacity: 1; margin-top: 12px; } .fan-card.is-on .fan-more { display: none; } }
-
-/* Nov 11: the What We Do menu without the line under each area; a preview-only "?" beside Owner's Representation */
-.mx-what .mx-area em { display: none; }
-.mx-q { display: inline-grid; place-items: center; width: 18px; height: 18px; margin-left: 6px; border-radius: 50%; background: #fff4cc; color: #7a5b00; font-size: 0.72rem; font-weight: 700; line-height: 1; vertical-align: 2px; cursor: help; box-shadow: 0 0 0 1px #e0c35a; }
-.mx-what li:has(> .mx-q), .hx-areas li:has(> .mx-q) { display: flex; align-items: center; }
-.mx-what li:has(> .mx-q) > a, .hx-areas li:has(> .mx-q) > a { flex: 0 1 auto; }
-.mx-what li > .mx-q { flex: none; margin-left: 8px; vertical-align: 0; }

@@ -26,15 +26,8 @@ export const NEWS: NewsItem[] = [
     href: "https://www.linkedin.com/pulse/americas-transportation-crossroads-what-2026-midterm-mean-palanisamy-iyt2e/" },
   /* no "contract wins" on the site (Nicole, Nov 10); on home this spot shows a project in the works */
   { tag: "Project", title: "A project in the works", placeholder: "a project underway, from Projects (In the works)" },
-  /* content pass v7, 12.2 (Rawlins' LinkedIn posts and HEEP's page, checked Nov 11). Placed here so home's What's new cards stay the same. */
-  { tag: "Speaking", date: "November 2026", title: "AMOTIA 17th Annual Conference",
-    text: "Rawlins sponsored AMOTIA's 17th Annual Conference, November 4 to 6 in Fort Lauderdale. Scott Rawlins joined a general session on how asset maintenance supports asset management." },
-  { tag: "Event", date: "September 2026", title: "The first Hawaii Transportation Summit",
-    text: "Rawlins sponsored the summit's lanyards and an educational session on leadership and AI. Scott Rawlins and Alicia McConnell moderated and took part in sessions." },
-  { tag: "Award", date: "2025", title: "Ken G. Close Award for the HEEP UAS Committee",
-    text: "The Highway Engineering Exchange Program gave its 2025 Ken G. Close Award to its UAS Committee. Alicia McConnell and Paul Wheeler of our team serve on the committee.",
-    href: "https://www.heep.org/ken-g-close-award" },
   { tag: "New team member", title: "Welcome to a new team member", placeholder: "name, role, and a one-line background from Our People" },
+  { tag: "Speaking", title: "A recent talk or panel", placeholder: "event, topic, and who spoke" },
 ];
 
 /* AASHTO Annual Meeting (handoff v8, 4.1). Safe line only: ten of our people
@@ -42,10 +35,6 @@ export const NEWS: NewsItem[] = [
 export const EVENTS: EventItem[] = [
   { when: "Nov 15–18, 2026", title: "AASHTO Annual Meeting", where: "Louisville, Kentucky", note: "", ends: "2026-11-18",
     line: "We will be at the AASHTO Annual Meeting in Louisville, Nov 15–18." },
-  /* content pass v7, 12.2: after AASHTO, which stays first until it ends on Nov 18 */
-  { when: "Dec 6–10, 2026", title: "IHEEP 2026", where: "Austin, Texas", note: "", ends: "2026-12-10",
-    href: "https://web.cvent.com/event/2b28935f-a05f-4812-b141-d649c7d831d1/summary",
-    line: "Our drone team will be at IHEEP 2026 in Austin, Dec 6–10." },
 ];
 
 /* An event shows until the end of its last day, Pacific time (our office is in
