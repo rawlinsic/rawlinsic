@@ -157,8 +157,8 @@ export const INDUSTRIES: Industry[] = [
     ],
   },
   {
-    id: "contractors", slug: "contractors-engineering-firms", name: "Contractors & Engineering Firms", scene: "site",
-    who: "Partnering, Contracting Models, & Teaming on Public Work", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
+    id: "contractors", slug: "contractors-engineering-firms", name: "Contractors", scene: "site",
+    who: "Partnering & Contracting Methods", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
     // Partnering: cs-major, cs-db-partnering, cs-ia-partnering, cs-partnering (Fiscal > Contracts and Templates > Partnering).
     // Contracting model: cs-maint-model. Teaming: subcontracts under engineering and advisory firms (findings_cases.md, G).
     // "aviation" dropped from the teaming list: our aviation contracts on record are direct, and the drone program work is the one through a prime.
