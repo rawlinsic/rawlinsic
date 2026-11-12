@@ -120,7 +120,7 @@ const sub = (id: string, name: string, scene: SceneKey, line: string, thin = fal
 
 export const INDUSTRIES: Industry[] = [
   {
-    id: "transport", slug: "transportation", name: "Transportation", scene: "interchange",
+    id: "transport", slug: "transportation", name: "Transportation Sector", scene: "interchange",
     who: "State DOTs, Aeronautics Divisions, Harbors, & Transit", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
     // 31 agencies: 19 directly or through a prime, 12 through the drone standards pooled fund (CONTENT FIXES v3, section 3).
     // Transit: one partnering project (2019). Harbors: one client. Named for what they are, with no count.
