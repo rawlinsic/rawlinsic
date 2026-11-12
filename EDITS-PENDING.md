@@ -13,3 +13,4 @@ Each line: page, old wording, new wording, and why it couldn't be placed automat
   (done Nov 11 by Claude Code: the Careers headline, with "Reach out." in the highlight color)
 - [x] 11/11/2026, 11:38:48 PM · Nicole · /services/digital-solutions/smart-mobility-connected-systems · "The states we've worked in" → "" (not found in the files, even as a template)
   (done Nov 11 by Claude Code: both menu lines with those words were already emptied by the same edits; nothing was left to change)
+- [ ] 11/11/2026, 11:47:25 PM · Nicole · /industries/transportation/bridges-structures · "Services behind this" → "How we can help" (not found in the files, even as a template)
