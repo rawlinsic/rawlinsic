@@ -22,7 +22,7 @@ export default function Footer() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/pages/rawlinslogo-blue-wordmark.png" alt="Rawlins" width={240} height={58} />
           </a>
-          <p className="fx2-tag">Trusted advisors at the intersection of strategy, operations &amp; technology.</p>
+          <p className="fx2-tag"></p>
           <ul className="fx2-contact">
             <li><a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a></li>
             <li><a href="tel:+17758433822">(775) 843-3822</a></li>
