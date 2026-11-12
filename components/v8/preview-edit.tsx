@@ -75,7 +75,7 @@ export default function PreviewEdit({ canDelete = false, review = false }: { can
   useEffect(() => { setHistory(loadHistory()); setRedos(loadRedo()); }, []);
   const remember = (d: Done) => { const h = [...loadHistory(), d]; saveHistory(h); setHistory(h); saveRedo([]); setRedos([]); };
   const [deleting, setDeleting] = useState(false);
-  const [refresh, setRefresh] = useState(0); // bumped when Undo or Redo changes a comment, so the pins reload
+  const [refresh, setRefresh] = useState<{ n: number; id: number; open: boolean } | undefined>(undefined); // set when Undo or Redo changes a comment, so its pin goes or comes back at once
   const short = (t: string) => `“${t.replace(/\s+/g, " ").trim().slice(0, 40)}${t.trim().length > 40 ? "…" : ""}”`;
   const onSaved = (id: number, text: string) => remember({ note: id, act: "add", label: `your comment ${short(text)}` });
   const onDone = (id: number, text: string) => remember({ note: id, act: "done", label: `marking a comment done ${short(text)}` });
@@ -182,7 +182,7 @@ export default function PreviewEdit({ canDelete = false, review = false }: { can
         if (!r.ok) { setMsg(r.error || "Couldn't undo. Nothing was changed."); return; }
         const h = loadHistory().slice(0, -1); saveHistory(h); setHistory(h);
         const r2 = [...loadRedo(), last]; saveRedo(r2); setRedos(r2);
-        setRefresh((n) => n + 1);
+        setRefresh((v) => ({ n: (v?.n ?? 0) + 1, id: last.note!, open: last.act === "done" }));
         setMsg(`Undone: ${last.label}. Redo puts it back.`);
       } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
       finally { setBusy(false); }
@@ -209,7 +209,7 @@ export default function PreviewEdit({ canDelete = false, review = false }: { can
         if (!r.ok) { setMsg(r.error || "Couldn't redo. Nothing was changed."); return; }
         const r2 = loadRedo().slice(0, -1); saveRedo(r2); setRedos(r2);
         const h = [...loadHistory(), last]; saveHistory(h); setHistory(h);
-        setRefresh((n) => n + 1);
+        setRefresh((v) => ({ n: (v?.n ?? 0) + 1, id: last.note!, open: last.act !== "done" }));
         setMsg(`Redone: ${last.label}.`);
       } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
       finally { setBusy(false); }

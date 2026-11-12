@@ -69,7 +69,7 @@ export const askName = () => {
   return name;
 };
 
-export default function PreviewComments({ adding, onAdded, listOpen, onCount, hidden, onSaved, onDone, refresh = 0 }: { adding: boolean; onAdded: () => void; listOpen: boolean; onCount: (n: number) => void; hidden: boolean; /* a comment was saved / marked done (so Undo can take it back) */ onSaved?: (id: number, text: string) => void; onDone?: (id: number, text: string) => void; /* changes when the bar undid or redid a comment: load the list again */ refresh?: number }) {
+export default function PreviewComments({ adding, onAdded, listOpen, onCount, hidden, onSaved, onDone, refresh }: { adding: boolean; onAdded: () => void; listOpen: boolean; onCount: (n: number) => void; hidden: boolean; /* a comment was saved / marked done (so Undo can take it back) */ onSaved?: (id: number, text: string) => void; onDone?: (id: number, text: string) => void; /* the bar undid or redid a comment: n counts the changes, id is the comment, open is whether it should now show */ refresh?: { n: number; id: number; open: boolean } }) {
   const [list, setList] = useState<C[]>([]);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [text, setText] = useState("");
@@ -89,10 +89,38 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
     return el;
   };
 
+  /* What this browser just changed (added, marked done, undone, redone). The saved list takes a little while
+     to catch up after a change, so for a minute and a half these win over it: a comment just taken off doesn't
+     pop back, and one just added or brought back doesn't drop out. */
+  const mine = useRef(new Map<number, { open: boolean; c?: C; t: number }>());
+  /* kept for this tab too, so going to another page and back (or reloading) within that time shows the same */
+  const keep = () => { try { sessionStorage.setItem("pc-mine", JSON.stringify([...mine.current])); } catch {} };
+  useEffect(() => { try { const raw = sessionStorage.getItem("pc-mine"); if (raw) (JSON.parse(raw) as [number, { open: boolean; c?: C; t: number }][]).forEach(([id, v]) => { if (!mine.current.has(id)) mine.current.set(id, v); }); } catch {} }, []);
+  const settle = useCallback((items: C[]) => {
+    const now = Date.now();
+    let out = items;
+    mine.current.forEach((v, id) => {
+      if (now - v.t > 90000) { mine.current.delete(id); return; }
+      if (!v.open) out = out.filter((c) => c.id !== id);
+      else if (v.c && !out.some((c) => c.id === id)) out = [...out, v.c];
+    });
+    return [...out].sort((a, b) => a.at.localeCompare(b.at));
+  }, []);
   const load = useCallback(async () => {
-    try { const r = await fetch(`/api/preview-comments?page=${encodeURIComponent(page)}`); const j = await r.json(); if (r.ok) setList(j.comments || []); else setMsg(j.error || ""); } catch {}
-  }, [page]);
-  useEffect(() => { load(); }, [load, refresh]);
+    try { const r = await fetch(`/api/preview-comments?page=${encodeURIComponent(page)}`); const j = await r.json(); if (r.ok) setList(settle(j.comments || [])); else setMsg(j.error || ""); } catch {}
+  }, [page, settle]);
+  useEffect(() => { load(); }, [load]);
+  /* Undo or Redo of a comment from the bar: show the result at once */
+  useEffect(() => {
+    if (!refresh) return;
+    const { id, open } = refresh;
+    setList((l) => {
+      const had = mine.current.get(id)?.c ?? l.find((c) => c.id === id);
+      mine.current.set(id, { open, c: had, t: Date.now() }); keep();
+      return settle(l);
+    });
+    if (open) { const t = window.setTimeout(load, 4000); return () => window.clearTimeout(t); } // in case this browser never had its words
+  }, [refresh?.n]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { onCount(list.length); }, [list, onCount]);
 
   // keep pins on their spots as the page scrolls, slides, and resizes
@@ -129,11 +157,12 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
       const r = await fetch("/api/preview-comments", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ page, ...draft, text, name }) });
       const j = await r.json();
       if (!r.ok) { setMsg(j.error || "Couldn't save the comment."); return; }
+      mine.current.set(j.comment.id, { open: true, c: j.comment, t: Date.now() }); keep();
       setList((l) => [...l, j.comment]); setDraft(null); setText(""); setMsg(""); onAdded(); onSaved?.(j.comment.id, j.comment.text);
     } catch { setMsg("Couldn't reach the server. The comment wasn't saved."); }
   };
   const done = async (id: number) => {
-    try { const r = await fetch("/api/preview-comments", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id }) }); if (r.ok) { const was = list.find((c) => c.id === id); setList((l) => l.filter((c) => c.id !== id)); setOpenId(null); onDone?.(id, was?.text || ""); } } catch {}
+    try { const r = await fetch("/api/preview-comments", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id }) }); if (r.ok) { const was = list.find((c) => c.id === id); mine.current.set(id, { open: false, c: was, t: Date.now() }); keep(); setList((l) => l.filter((c) => c.id !== id)); setOpenId(null); onDone?.(id, was?.text || ""); } } catch {}
   };
   const spot = (c: C) => {
     const el = locate(c); if (!el) return null;
