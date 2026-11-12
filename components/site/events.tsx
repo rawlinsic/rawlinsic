@@ -32,7 +32,7 @@ export function UpcomingEvents({ events }: { events: EventItem[] }) {
         <li key={e.title} className={e.photo && !e.banner ? "has-photo" : e.badge ? "has-badge" : undefined}>
           <DateBlock when={e.when} />
           <div className="evx-body">
-            <p className="evx-tags">{e.intl && <i>International</i>}{e.role && <i>{e.role}</i>}</p>
+            <p className="evx-tags">{e.intl && <i>International Markets</i>}{e.role && <i>{e.role}</i>}</p>
             <h3>{e.cardTitle ?? e.title}</h3>
             {e.where && <p className="evx-where"><span className="evx-place"><Pin />{e.where}</span></p>}
             {e.sessions?.length ? <Sessions e={e} /> : (e.line ?? e.note) && <p className="evx-text">{e.line ?? e.note}</p>}
@@ -61,7 +61,7 @@ export function PastEvents({ events }: { events: EventItem[] }) {
             /* no photo on file: the date on a navy panel the same size, so the row of cards lines up */
             : <span className="evx-ph evx-noph" aria-hidden="true"><DateBlock when={e.when} /></span>}
           <div className="evx-body">
-            <p className="evx-tags"><i className="evx-over">Past event</i>{e.intl && <i>International</i>}{e.role && <i>{e.role}</i>}</p>
+            <p className="evx-tags"><i className="evx-over">Past event</i>{e.intl && <i>International Markets</i>}{e.role && <i>{e.role}</i>}</p>
             <h3>{e.title}</h3>
             <p className="evx-where"><span className="evx-when">{e.when}</span>{e.where && <span className="evx-place"><Pin />{e.where}</span>}</p>
             {e.sessions?.length ? <Sessions e={e} /> : (e.past ?? e.note) && <p className="evx-text">{e.past ?? e.note}</p>}

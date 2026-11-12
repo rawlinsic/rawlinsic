@@ -185,7 +185,7 @@ export const INDUSTRIES: Industry[] = [
   },
   /* Built but hidden and noindex unless approved. Never linked. */
   {
-    id: "intl", slug: "international", name: "International", scene: "globe", hidden: true,
+    id: "intl", slug: "international", name: "International Markets", scene: "globe", hidden: true,
     /* INTERNATIONAL PAGE (Nov 11, 2026). Hidden: noindex, never linked on the live site, listed on previews only. */
     who: "Ministries of transport, national roads and aviation authorities, and city agencies outside the United States",
     // U.S. only to date: every Rawlins client is in the U.S., including territories (Jacob's AERO portfolio, Nov 2026). Don't add an international project or client.
