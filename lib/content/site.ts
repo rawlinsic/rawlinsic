@@ -121,7 +121,7 @@ const sub = (id: string, name: string, scene: SceneKey, line: string, thin = fal
 export const INDUSTRIES: Industry[] = [
   {
     id: "transport", slug: "transportation", name: "Transportation Sector", scene: "interchange",
-    who: "State DOTs, Aeronautics Divisions, Harbors, & Transit", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
+    who: "State DOTs, Local GovernmeAeronautics Divisions, Harbors, & Transit", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
     // 31 agencies: 19 directly or through a prime, 12 through the drone standards pooled fund (CONTENT FIXES v3, section 3).
     // Transit: one partnering project (2019). Harbors: one client. Named for what they are, with no count.
     lead: "Most of our work is with state departments of transportation, and we've served more than 30 transportation agencies so far. We help them organize the department, choose and deliver projects, maintain and operate what they own, and put drones and digital tools to work. Most of that work is on highways and bridges. We also support state aeronautics programs, and we've worked on a light rail line and with a state harbors program.",
