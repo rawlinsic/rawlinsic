@@ -214,7 +214,7 @@ export const INTL: { abroad: { title: string; items: { t: string; flag?: string 
     ],
   },
   region: {
-    title: "Where you'll find us in the region",
+    title: "Where you'll find us",
     // Andy's LinkedIn posts, Nov and Sep 2026. Same items as News & Recognition.
     // Nov 12: the page now shows these as event cards from lib/content/news.ts (EVENTS marked intl); this list is the record.
     items: [
