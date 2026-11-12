@@ -47,7 +47,7 @@ export default function Panels({ children, className }: { children: ReactNode; c
     const wrap = ref.current;
     if (!wrap) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const kids = (Array.from(wrap.children) as HTMLElement[]).filter((k) => !k.matches(".sn, [data-nopanel]"));
+    const kids = (Array.from(wrap.children) as HTMLElement[]).filter((k) => !k.matches(".sn, [data-nopanel], dialog, script, template"));
     const scrubs = Array.from(wrap.querySelectorAll<HTMLElement>('[data-scrub="page"]'));
     const sn = wrap.querySelector<HTMLElement>(":scope > .sn");
     let raf = 0, live = false, vh = window.innerHeight, tops: number[] = [];

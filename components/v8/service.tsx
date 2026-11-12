@@ -14,7 +14,7 @@
 import ProjectCard from "@/components/v8/project-card";
 import type { CSSProperties } from "react";
 import { AREAS, CASES, PAGE_STATUS, areaHref, caseHref, caseTag, isOurs, serviceById, serviceHref } from "@/lib/content/site";
-import { SERVICES } from "@/lib/content/catalog";
+import { CASES as CASE_DATA, SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { SERVICE_STEPS } from "@/lib/content/features";
 import { THEME, themeStyle, casePhoto, type DiagramKind, hearTitle } from "@/lib/content/v8";
@@ -53,10 +53,18 @@ export default function ServiceV8({ id }: { id: string }) {
   const order = (c: (typeof CASES)[number]) => { const k = s.cases?.indexOf(c.id) ?? -1; return k < 0 ? 99 : k; };
   /* a service's own list (s.cases) can also bring in the nearest projects that aren't tagged with it (Executive
      Advisory, Owner's Representation; Nicole, Nov 11); then the section is "Related projects", not "Where we've done it" */
-  const tagged = CASES.filter((c) => c.services.includes(id));
-  const extra = (s.cases ?? []).map((k) => CASES.find((c) => c.id === k)).filter((c): c is (typeof CASES)[number] => !!c && !tagged.includes(c));
-  const cases = [...tagged, ...extra].sort((a, b) => order(a) - order(b) || Number(!isOurs(a)) - Number(!isOurs(b)));
-  const workTitle = extra.length ? "Related projects" : "Where we've done it";
+  /* Nov 11 (Nicole: "include any projects that are relevant for pages"): the projects tagged with this service
+     first; then a "Related projects" row with the service's own picks (s.cases) and projects whose records list
+     this service. A page with nothing tagged leads with the related row. */
+  const RELATED_SKIP: Record<string, string[]> = { "change-mgmt": ["cs-pdn"] }; // cs-pdn's "change system" is change requests, not change management
+  const byId = (k: string) => CASES.find((c) => c.id === k);
+  const tagged = CASES.filter((c) => c.services.includes(id)).sort((a, b) => order(a) - order(b) || Number(!isOurs(a)) - Number(!isOurs(b)));
+  const relIds = [...(s.cases ?? []), ...Object.values(CASE_DATA).filter((d) => d.services.includes(id)).map((d) => d.id)];
+  const related = relIds.filter((k, i) => relIds.indexOf(k) === i && !(RELATED_SKIP[id] ?? []).includes(k)).map(byId)
+    .filter((c): c is (typeof CASES)[number] => !!c && !tagged.includes(c)).sort((a, b) => order(a) - order(b) || Number(!isOurs(a)) - Number(!isOurs(b)));
+  const main = tagged.length ? tagged : related, rest = tagged.length ? related : [];
+  const cases = main;
+  const workTitle = tagged.length ? "Where we've done it" : "Related projects";
   const talk = talkFor(area.id);
   const steps = SERVICE_STEPS[id];
   const hear = quotes(s.hear);
@@ -122,7 +130,7 @@ export default function ServiceV8({ id }: { id: string }) {
           <div className="svd-head">
             <h2 className="v8-h2">What we deliver</h2>
           </div>
-          <ul className={`svd-cards${s.deliver.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
+          <ul className={`svd-cards${s.deliver.length > 6 ? " is-3 is-4" : s.deliver.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
             {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span>{d}<LineNote text={d} /></li>)}
           </ul>
         </div>
@@ -161,6 +169,12 @@ export default function ServiceV8({ id }: { id: string }) {
             <ul className="sv-cases">
               {cases.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}
             </ul>
+            {rest.length > 0 && (
+              <>
+                <h3 className="sv-rel-h">Related projects</h3>
+                <ul className="sv-cases sv-rel">{rest.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}</ul>
+              </>
+            )}
           </div>
         </section>
       )}

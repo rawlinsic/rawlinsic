@@ -6,7 +6,7 @@ export type NewsItem = { tag: "Project" | "Award" | "Publication" | "Research" |
 /* ends: the event's last day (YYYY-MM-DD). It drops off the site the next day. */
 /* line: one sentence for under the home hero's buttons (full site pass, Part 5, 1.1) */
 /* photo/logo/credit: a picture for the event's card on home (photo behind, the event's own logo over it) */
-export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string; photo?: string; logo?: string; credit?: string };
+export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string; photo?: string; logo?: string; badge?: string; credit?: string };
 
 export const NEWS: NewsItem[] = [
   {
@@ -46,7 +46,7 @@ export const EVENTS: EventItem[] = [
     /* Nicole, Nov 11: "the aashto photo/logo from their event website". The logo is the banner on AASHTO's event page
        (web.cvent.com, 2026 AASHTO Annual Meeting and Expo); the Louisville photo is from AASHTO's own announcement
        (aashtojournal.transportation.org, photo by Charles Delano, U.S. Army Corps of Engineers). */
-    photo: "/images/pages/aashto-2026-louisville.webp", logo: "/images/pages/aashto-logo-white.png", credit: "Louisville photo: Charles Delano, U.S. Army Corps of Engineers" },
+    photo: "/images/pages/aashto-2026-louisville.webp", logo: "/images/pages/aashto-logo-white.png", badge: "/images/pages/aashto-2026-badge.png" /* the meeting's badge, from the event page header Nicole sent, Nov 11 */, credit: "Louisville photo: Charles Delano, U.S. Army Corps of Engineers" },
   /* content pass v7, 12.2: after AASHTO, which stays first until it ends on Nov 18 */
   { when: "Dec 6–10, 2026", title: "IHEEP 2026", where: "Austin, Texas", note: "", ends: "2026-12-10",
     href: "https://web.cvent.com/event/2b28935f-a05f-4812-b141-d649c7d831d1/summary",
