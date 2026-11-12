@@ -2,11 +2,11 @@
    Speaking, Event, New team member. Each post can link to its LinkedIn post.
    `placeholder` items show on preview deployments only, never in production. */
 /* offHome: listed on News & recognition, not in the home "What's new" cards */
-export type NewsItem = { tag: "Project" | "Award" | "Publication" | "Research" | "Speaking" | "Event" | "New team member" | "Recognition"; date?: string; title: string; text?: string; href?: string; linkedin?: string; placeholder?: string; offHome?: boolean };
+export type NewsItem = { tag: "Project" | "Award" | "Publication" | "Research" | "Speaking" | "Event" | "New team member" | "Recognition"; date?: string; title: string; text?: string; href?: string; linkedin?: string; placeholder?: string; offHome?: boolean; /* a picture on top of its home tile */ photo?: string };
 /* ends: the event's last day (YYYY-MM-DD). It drops off the site the next day. */
 /* line: one sentence for under the home hero's buttons (full site pass, Part 5, 1.1) */
 /* photo/logo/credit: a picture for the event's card on home (photo behind, the event's own logo over it) */
-export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string; photo?: string; logo?: string; badge?: string; credit?: string; banner?: boolean };
+export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string; photo?: string; logo?: string; badge?: string; credit?: string; banner?: boolean; /* the event's full name, for its home card */ cardTitle?: string };
 
 export const NEWS: NewsItem[] = [
   {
@@ -18,7 +18,8 @@ export const NEWS: NewsItem[] = [
      study isn't one of the projects waiting on a client's OK. */
   { tag: "Research", title: "Multi-state drone standards and specifications",
     text: "A shared drone data standard and recommended practices states can adopt, for a multi-state pooled fund study.",
-    href: "/insights/case-studies/multi-state-drone-standards" },
+    href: "/insights/case-studies/multi-state-drone-standards",
+    photo: "/images/pages/skylimit.webp" }, // the project's own photo, from the live site's Advanced Air Mobility page (Nicole, Nov 11: "let's have an image for the research one")
   /* Andy Palanisamy's LinkedIn article (Nov 4, 2026; shared in #ric-announcements the same day). Title copied from the article.
      Off the home page: it's about the election (Nicole, Nov 10). */
   { tag: "Publication", date: "November 2026", offHome: true,
@@ -67,7 +68,10 @@ export const EVENTS: EventItem[] = [
        (web.cvent.com, 2026 AASHTO Annual Meeting and Expo); the Louisville photo is from AASHTO's own announcement
        (aashtojournal.transportation.org, photo by Charles Delano, U.S. Army Corps of Engineers). */
     /* the event's own header image, from AASHTO's 2026 Annual Meeting and Expo page (Nicole sent it, Nov 11) */
-    photo: "/images/pages/aashto-2026-annual-meeting.webp", banner: true },
+    /* Nov 11 (Nicole: "make the background image overlay a little darker so we can read the text"): the words in that
+       image can't be darkened apart from the picture, so the image sits behind, blurred and darkened, and the card
+       shows the same words as real text, with the meeting's badge. */
+    photo: "/images/pages/aashto-2026-annual-meeting.webp", banner: true, badge: "/images/pages/aashto-2026-badge.png", cardTitle: "2026 AASHTO Annual Meeting and Expo" },
   /* content pass v7, 12.2: after AASHTO, which stays first until it ends on Nov 18 */
   { when: "Dec 6–10, 2026", title: "IHEEP 2026", where: "Austin, Texas", note: "", ends: "2026-12-10",
     href: "https://web.cvent.com/event/2b28935f-a05f-4812-b141-d649c7d831d1/summary",

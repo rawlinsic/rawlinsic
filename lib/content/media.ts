@@ -130,7 +130,9 @@ export const PAGE_PHOTO: Record<string, string> = {
   thought: P("home-tl-bg.webp"),
   podcast: P("insights-card-3.webp"),
   careers: P("auto-collab.webp"),
-  contact: P("cs-hero-2.webp"), // Reno, where our office is
+  // a Nevada highway (our office is in Reno): the road through Valley of Fire State Park. Unsplash License, Brice Cooper:
+  // unsplash.com/photos/ja-SM5hs77o. Replaces the Reno photo (Nicole, Nov 11: "the background image on the contact page of nevada needs to be changed")
+  contact: P("contact-nevada-road.webp"),
   notFound: P("nv.webp"),
 };
 

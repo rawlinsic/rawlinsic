@@ -363,7 +363,8 @@ export const CASES: CaseIndex[] = [
   // Rawlins work, 2022 to 2023, as a subconsultant on the same contract as cs-nv-om (work reports and scopes read Nov 11).
   // Scope only: no findings, figures, or survey results. See CASE_STATUS.
   cs("cs-nv-fleet-program", "nevada-fleet-analysis-and-implementation", "Fleet analysis and implementation support", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt"]),
-  cs("cs-aerodiv", "nevada-aeronautics-division-research", "Research on whether and how to establish a state aeronautics division, and how to fund it", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["research", "aero-division"]),
+  // title reworded Nov 11 (Nicole: "worded really bad"), using the Who we work with file's line for this work
+  cs("cs-aerodiv", "nevada-aeronautics-division-research", "Research on how a state aviation role could be organized, governed, and funded", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["research", "aero-division"]),
   cs("cs-de-tech", "delaware-technology-strategic-plan", "Technology strategic plan", "Delaware Department of Transportation", ["Delaware"], "Completed", "transport", ["tech-strategy", "strategic-planning"]),
   cs("cs-ut-am", "utah-asset-management-review", "Asset management program review", `Utah Department of Transportation${FOUNDER}`, ["Utah"], "Before Rawlins", "transport", ["asset-mgmt"]),
   cs("cs-va-maint", "virginia-performance-based-maintenance-review", "Review of performance-based highway maintenance contracts", `Virginia Department of Transportation${FOUNDER}`, ["Virginia"], "Before Rawlins", "transport", ["operations", "procurement"]),
@@ -410,6 +411,9 @@ export const CASE_STATUS: Record<string, string> = {
   "cs-workforce": "Content status: the prime's subcontract keeps all deliverables and client information confidential without the prime's written permission. Needs the prime's written OK before launch.",
   "cs-txmaint": "Content status: contract publicity terms not checked yet.",
   "cs-local-am": "Content status: contract publicity terms not checked yet.",
+  // Nicole asked on Nov 11 whether we can talk about this. Our Nov 6 contract check lists this client's terms as not checked,
+  // and the study includes draft legislation, which our notes say to keep internal.
+  "cs-aerodiv": "Content status: we haven't confirmed we can talk about this. The contract's publicity terms aren't checked, and the study includes draft legislation, which stays internal. Scott or Paul to confirm with the department before launch.",
   /* the Nevada fleet project (Who we work with addendum v2, 1.4). cs-nv-om comes from the same contract, so it carries the same note. */
   "cs-nv-fleet-program": "Content status: Rawlins work as a subconsultant, from our work reports and scopes (2022 to 2023). The department's master agreement says information and data from the work can't be used in a publication without its written permission, and the prime's subcontract form needs the prime's consent to share information developed in the work. The original 2021 subcontract isn't in SharePoint. Kept to what we did, with no findings or figures. Scott to confirm with the prime before launch.",
   "cs-nv-om": "Content status: same contract as the fleet project. Kept to what we did, with no findings or figures. Scott to confirm with the prime before launch.",

@@ -62,7 +62,9 @@ export default function Home() {
   /* previews also show the unverified number, marked (Part 4, 1) */
   const numbers = NUMBERS.filter((n) => n.verified || !PROD);
   /* this spot shows a project in the works (Nicole, Nov 10: never "contract wins") */
-  const wip = caseById("cs-aerodiv");
+  /* Nov 11: this was the Nevada aeronautics research (cs-aerodiv). Nicole asked whether we're allowed to talk about
+     it, and our records don't show the department's OK, so this spot shows a project that is on the live site by name. */
+  const wip = caseById("cs-proficiency");
   const news = NEWS.filter((n) => !n.offHome && (n.tag === "Project" || !n.placeholder || !PROD)).slice(0, 3);
   const ev = EVENTS.filter((e) => (!e.placeholder || !PROD) && isUpcoming(e))[0];
   const pdn = CASES.find((c) => c.id === "cs-pdn")!;
@@ -261,7 +263,7 @@ export default function Home() {
                   </div>
                 )}
                 <span className="ev-when">{ev.when}</span>
-                <b>{ev.title}</b>
+                <b>{ev.cardTitle ?? ev.title}</b>
                 {ev.where && <span className="ev-where">{ev.where}</span>}
                 {ev.note && <p>{ev.note}</p>}
                 <a className="v8-btn v8-btn-light" href="/contact">Plan to meet us</a>
@@ -275,19 +277,24 @@ export default function Home() {
                 <b>{wip.title}</b>
                 <span className="nw-who">{wip.who}</span>
                 <CaseNote id={wip.id} />
+                <span className="nw-more">Explore</span>
               </a>
             ) : (
-              <article key={n.title} className={`nw${n.placeholder ? " is-dev" : ""}`} data-reveal>
+              <article key={n.title} className={`nw${n.placeholder ? " is-dev" : ""}${n.photo ? " has-photo" : ""}`} data-reveal>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {n.photo && <img className="nw-ph" src={n.photo} alt="" loading="lazy" />}
                 <span className="nw-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span>
                 <b>{n.href ? <a href={n.href} {...(/^http/.test(n.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{n.title}</a> : n.title}</b>
                 {n.text && <p>{n.text}</p>}
                 {n.placeholder && !PROD && <em className="v8-dev">Placeholder (preview only): {n.placeholder}</em>}
+                {/* every tile ends with Explore (Nicole, Nov 11) */}
+                {n.href && <a className="nw-more" href={n.href} aria-label={`Explore: ${n.title}`} {...(/^http/.test(n.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}>Explore</a>}
               </article>
             ))}
             <a className="pod" href="/insights/podcast" data-reveal>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/pages/insights-card-3.webp" alt="" loading="lazy" />
-              <span><em>Podcast</em><b>The Rawlins Way</b></span>
+              <span><em>Podcast</em><b>The Rawlins Way</b><i className="nw-more">Explore</i></span>
             </a>
           </div>
         </div>

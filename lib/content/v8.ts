@@ -44,7 +44,9 @@ const CASE_PHOTO: Record<string, string> = {
   // header photo, so each card differs and every photo is still the live site's (Nicole, Nov 11)
   "cs-tn-ipd": P("cs-hero-1.webp"), // live Tennessee page header: Nashville with a highway bridge
   "cs-nc-am": P("cs-hero-3.webp"), // live North Carolina page header: Charlotte
-  "cs-strategic": P("cs-hero-2.webp"), // live Nevada page header: Reno
+  // Nicole, Nov 11: "there are a TON of better nevada pictures that we can use" (it was the live Nevada page header, Reno at dusk).
+  // A Nevada highway through Valley of Fire State Park. Unsplash License, Stin-Niels Musche: unsplash.com/photos/r0Bfx2PipQM
+  "cs-strategic": P("project-strategic.webp"),
   // private-sector projects: office and data photos with no place in them, one each so the cards differ
   /* Projects that aren't on the live site: one photo each, chosen for the work, never shared (Nicole, Nov 11: "get new
      pictures for the projects that align"). U.S. places or no recognizable place; unnamed-client projects show no

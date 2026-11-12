@@ -13,7 +13,9 @@ export type Fix = { q: string; topic: string; services: FixSvc[] };
 
 const OWN = -1;
 
-export default function FixPicker({ fixes }: { fixes: Fix[] }) {
+/* onGo: when the picker sits on the Contact page itself, its button hands the choice to the form there
+   (topic and message) instead of going to /contact */
+export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic: string | undefined, msg: string) => void }) {
   const [sel, setSel] = useState(0);
   const [own, setOwn] = useState("");
   const [paths, setPaths] = useState<string[]>([]);
@@ -43,6 +45,7 @@ export default function FixPicker({ fixes }: { fixes: Fix[] }) {
   }, [draw]);
 
   const f = sel === OWN ? null : fixes[sel];
+  const go = (e: { preventDefault(): void }) => { if (!onGo) return; e.preventDefault(); if (f) onGo(f.topic, `${f.q}.`); else onGo(undefined, own.trim()); };
   const contact = f
     ? `/contact?topic=${encodeURIComponent(f.topic)}&msg=${encodeURIComponent(f.q + ".")}`
     : `/contact${own.trim() ? `?msg=${encodeURIComponent(own.trim())}` : ""}`;
@@ -80,13 +83,13 @@ export default function FixPicker({ fixes }: { fixes: Fix[] }) {
                 </li>
               ))}
             </ul>
-            <a className="v8-btn fp-go" href={contact}>Talk to us about this</a>
+            <a className="v8-btn fp-go" href={contact} onClick={go}>Talk to us about this</a>
           </>
         ) : (
           <div className="fp-own">
             <label className="fp-k" htmlFor="fp-own-box">In your own words</label>
             <textarea id="fp-own-box" rows={5} value={own} onChange={(e) => setOwn(e.target.value)} placeholder="What's going on, and what would better look like?" />
-            <a className="v8-btn fp-go" href={contact}>Send it to our team</a>
+            <a className="v8-btn fp-go" href={contact} onClick={go}>Send it to our team</a>
           </div>
         )}
       </div>
