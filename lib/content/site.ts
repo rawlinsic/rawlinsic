@@ -216,6 +216,7 @@ export const INTL: { abroad: { title: string; items: { t: string; flag?: string 
   region: {
     title: "Where you'll find us in the region",
     // Andy's LinkedIn posts, Nov and Sep 2026. Same items as News & Recognition.
+    // Nov 12: the page now shows these as event cards from lib/content/news.ts (EVENTS marked intl); this list is the record.
     items: [
       "Automechanika Dubai 2026, November: moderating and speaking on smart cities, regulation, and asset lifecycle management",
       "ConTech / MENA Construction Summit 2026, Dubai, November",

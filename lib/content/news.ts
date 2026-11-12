@@ -6,7 +6,7 @@ export type NewsItem = { tag: "Project" | "Award" | "Publication" | "Research" |
 /* ends: the event's last day (YYYY-MM-DD). It drops off the site the next day. */
 /* line: one sentence for under the home hero's buttons (full site pass, Part 5, 1.1) */
 /* photo/logo/credit: a picture for the event's card on home (photo behind, the event's own logo over it) */
-export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string; photo?: string; logo?: string; badge?: string; credit?: string; banner?: boolean; /* the event's full name, for its home card */ cardTitle?: string 
+export type EventItem = { when: string; title: string; where?: string; note?: string; href?: string; placeholder?: string; ends?: string; line?: string; photo?: string; logo?: string; badge?: string; credit?: string; banner?: boolean; /* the event's full name, for its home card */ cardTitle?: string; /* who was there for us, and the sessions they led (shown on the event's card in place of the sentence) */ who?: string; sessions?: { day: string; role: string; title: string }[] 
   /* Nov 11 (Nicole): events show under "Where we'll be next" until they end, then under "Where we've been", so past
      events stay on the site and it's clear they're over. intl: outside the U.S. (also listed on the International page).
      role: what we did there (Speaking, Sponsor, ...). past: what to say once it's over. pos: where to center the photo.
@@ -68,6 +68,13 @@ export const EVENTS: EventItem[] = [
      two above so the home page and the menu keep showing AASHTO first. */
   // Andy's LinkedIn posts, and his event graphic (three sessions, Nov 11 and 12)
   { when: "Nov 10–12, 2026", title: "Automechanika Dubai 2026", where: "Dubai Exhibition Centre, Expo City Dubai", ends: "2026-11-12", intl: true, role: "Speaking",
+    // the three sessions, as written on Andy's event graphic (Nicole's "int'l" folder, Nov 11)
+    who: "Andy Palanisamy",
+    sessions: [
+      { day: "Nov 11", role: "Moderator", title: "Smart Cities and Mobility Integration Across MEA" },
+      { day: "Nov 12", role: "Speaker", title: "Policy and Progress: Enabling Innovation in a Regulated World" },
+      { day: "Nov 12", role: "Moderator", title: "Total Lifecycle Management: From Procurement to End-of-Life Optimization" },
+    ],
     line: "Andy Palanisamy is moderating sessions on smart cities and mobility integration across the Middle East and Africa, and on total lifecycle management from procurement to end of life, and speaking on enabling innovation in a regulated world.",
     past: "Andy Palanisamy moderated sessions on smart cities and mobility integration across the Middle East and Africa, and on total lifecycle management from procurement to end of life, and spoke on enabling innovation in a regulated world." },
   // Andy's LinkedIn posts

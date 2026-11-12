@@ -14,6 +14,16 @@ function DateBlock({ when }: { when: string }) {
   return <span className={`evx-date${d ? "" : " is-text"}`}>{d ? <><em>{d.mon}</em><b>{d.days}</b>{d.year && <small>{d.year}</small>}</> : <b>{when}</b>}</span>;
 }
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
+/* The sessions one of our people led at the event, under their name. Shown in place of the sentence that says the same. */
+function Sessions({ e }: { e: EventItem }) {
+  if (!e.sessions?.length) return null;
+  return (
+    <div className="evx-sess">
+      {e.who && <p>{e.who}</p>}
+      <ul>{e.sessions.map((x) => <li key={x.title}><span><b>{x.day}</b><i>{x.role}</i></span>{x.title}</li>)}</ul>
+    </div>
+  );
+}
 
 export function UpcomingEvents({ events }: { events: EventItem[] }) {
   return (
@@ -25,7 +35,7 @@ export function UpcomingEvents({ events }: { events: EventItem[] }) {
             <p className="evx-tags">{e.intl && <i>International</i>}{e.role && <i>{e.role}</i>}</p>
             <h3>{e.cardTitle ?? e.title}</h3>
             {e.where && <p className="evx-where"><span className="evx-place"><Pin />{e.where}</span></p>}
-            {(e.line ?? e.note) && <p className="evx-text">{e.line ?? e.note}</p>}
+            {e.sessions?.length ? <Sessions e={e} /> : (e.line ?? e.note) && <p className="evx-text">{e.line ?? e.note}</p>}
             <p className="evx-go">
               <a className="ed-btn is-white" href="/contact">Plan to meet us</a>
               {e.href && <a className="ed-more" href={e.href} {...ext}>Event details</a>}
@@ -54,7 +64,7 @@ export function PastEvents({ events }: { events: EventItem[] }) {
             <p className="evx-tags"><i className="evx-over">Past event</i>{e.intl && <i>International</i>}{e.role && <i>{e.role}</i>}</p>
             <h3>{e.title}</h3>
             <p className="evx-where"><span className="evx-when">{e.when}</span>{e.where && <span className="evx-place"><Pin />{e.where}</span>}</p>
-            {(e.past ?? e.note) && <p className="evx-text">{e.past ?? e.note}</p>}
+            {e.sessions?.length ? <Sessions e={e} /> : (e.past ?? e.note) && <p className="evx-text">{e.past ?? e.note}</p>}
             {e.href && <p className="evx-go"><a className="ed-more" href={e.href} {...ext}>Read about it</a></p>}
           </div>
         </li>

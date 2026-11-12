@@ -26,6 +26,9 @@ import {
 import { INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { INDUSTRY_PHOTO } from "@/lib/content/media";
 import { casePhoto } from "@/lib/content/v8";
+import { EVENTS, NEWS, eventsByTime } from "@/lib/content/news";
+import { UpcomingEvents, PastEvents } from "@/components/site/events";
+import AuthorPop from "@/components/site/author-pop";
 import Header from "@/components/v8/header";
 import Footer from "@/components/v8/footer";
 import Reveal from "@/components/v8/reveal";
@@ -216,6 +219,51 @@ function Route({ id, title, note, children, className }: { id: string; title: st
   );
 }
 
+/* International: "Where you'll find us in the region" (Nicole, Nov 11: the international events, info and photos
+   from her "int'l" folder "should be incorporated into this page somehow and for the events related to them").
+   The same event cards as News & Recognition, only the international ones: one that hasn't ended shows as a wide
+   row, the rest as "Past event" cards. Under them, a photo from LEAP and the G100 recognition, with Andy's bio
+   one click away. Photos: Andy Palanisamy's own LinkedIn posts. His two event graphics are not placed as
+   pictures (old logo, gold); what they say is on the page as text. */
+function Region() {
+  const { upcoming, past } = eventsByTime(EVENTS.filter((e) => e.intl));
+  const andy = allPeople().find((p) => p.name === "Andy Palanisamy");
+  const g100 = NEWS.find((n) => n.title.includes("G100"));
+  return (
+    <section id="region" className="sv-sec ipg-region">
+      <div className="v8-wrap">
+        <div className="ipg-region-h">
+          <h2 className="v8-h2">{INTL.region.title}</h2>
+          <a className="ed-more" href={INTL.region.link.href}>{INTL.region.link.label}</a>
+        </div>
+        {upcoming.length > 0 && <UpcomingEvents events={upcoming} />}
+        {past.length > 0 && <PastEvents events={past} />}
+        <div className="ipg-region-more">
+          <figure className="ipg-region-ph">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/pages/news-leap-2026-orbital.webp" alt="The smart cities stage at LEAP 2026 in Riyadh" loading="lazy" />
+            <figcaption>LEAP 2026, Riyadh</figcaption>
+          </figure>
+          {g100 && (
+            <div className="ipg-region-rec">
+              <p className="ipg-region-tag">{g100.tag}{g100.date ? ` · ${g100.date}` : ""}</p>
+              <h3>{g100.title}</h3>
+              {g100.text && <p>{g100.text}</p>}
+              {andy && (
+                <AuthorPop person={andy} className="ipg-region-by">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={andy.photo} alt="" width={64} height={64} loading="lazy" />
+                  <span><b>{andy.name}</b><em>{andy.role}</em>{andy.location && <i>{andy.location}</i>}</span>
+                </AuthorPop>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* Portrait cards. Few people: the heading sits beside them. */
 function Team({ id, title, people, roles }: { id: string; title?: string; people: TeamCard[]; roles?: readonly (readonly [string, string])[] }) {
   const n = people.length;
@@ -363,11 +411,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
           <RouteList check ordered={false} stops={INTL.abroad.items.map((x) => ({ d: <>{x.t}{x.flag && <> <Dev>Content status: {x.flag}</Dev></>}</> }))} />
         </Route>
       )}
-      {intl && (
-        <Route id="region" title={INTL.region.title} note={<a className="v8-link" href={INTL.region.link.href}>{INTL.region.link.label}</a>}>
-          <RouteList check ordered={false} stops={INTL.region.items.map((t) => ({ d: t }))} />
-        </Route>
-      )}
+      {intl && <Region />}
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       {work.length > 0 && <Work title="Featured projects" cases={work} all={{ href: `/insights/case-studies?industry=${ind.slug}`, label: `All ${ind.name} projects` }} />}
       <Talk {...(subs.length
