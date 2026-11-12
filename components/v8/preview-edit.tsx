@@ -77,7 +77,7 @@ export default function PreviewEdit({ canDelete = false, review = false }: { can
   const [deleting, setDeleting] = useState(false);
   const [refresh, setRefresh] = useState<{ n: number; id: number; open: boolean } | undefined>(undefined); // set when Undo or Redo changes a comment, so its pin goes or comes back at once
   const short = (t: string) => `“${t.replace(/\s+/g, " ").trim().slice(0, 40)}${t.trim().length > 40 ? "…" : ""}”`;
-  const onSaved = (id: number, text: string) => remember({ note: id, act: "add", label: `your comment ${short(text)}` });
+  const onSaved = (id: number, text: string) => { remember({ note: id, act: "add", label: `your comment ${short(text)}` }); setMsg("Comment saved. It stays on the page as a pin with your initials. A comment on a menu item shows as a number on that menu's name."); };
   const onDone = (id: number, text: string) => remember({ note: id, act: "done", label: `marking a comment done ${short(text)}` });
   /* take a comment off (close) or bring it back (reopen) */
   const setNote = async (id: number, reopen: boolean) => {
