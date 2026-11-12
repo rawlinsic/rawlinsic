@@ -117,29 +117,31 @@ const ECO = [
   { label: "Industry", short: "Manufacturers · Technology · Integrators", desc: "Aircraft manufacturers, technology providers, and systems integrators." },
 ];
 
+/* Bridging silos (redesigned Nov 11; Nicole: "needs a better visual"): Rawlins at the center, the five groups
+   around it, each joined to the center by a line; phones get the center, then the groups as a list. */
+const HUB: [number, number][] = [[50, 13], [85, 39], [72, 83], [28, 83], [15, 39]]; // where each group sits, in % of the stage
 export function BridgingSilos() {
-  const row = (items: typeof ECO, down: boolean) => (
-    <ul className={`av-silo-row${down ? " is-down" : ""}`}>
-      {items.map((e, i) => (
-        <li key={e.label} data-reveal style={{ ["--d" as string]: `${i * 70}ms` } as CSSProperties}>
-          <h3>{e.label}</h3>
-          <p className="av-silo-who">{e.short}</p>
-          <p>{e.desc}</p>
-        </li>
-      ))}
-    </ul>
-  );
   return (
-    <section className="av av-silos">
+    <section className="av av-silos av-hub">
       <div className="v8-wrap">
         <div className="av-head">
           <h2 className="v8-h2">Bridging silos</h2>
           <p className="v8-lead">The guidance your program relies on is being written now. We sit at the table where agencies, manufacturers, researchers, and regulators work it out, and bring what we learn back to your program.</p>
         </div>
-        <div className="av-silo">
-          {row(ECO.slice(0, 3), false)}
-          <div className="av-bridge" aria-hidden="true"><b>Rawlins</b><span>bridging silos</span></div>
-          {row(ECO.slice(3), true)}
+        <div className="hub">
+          <svg className="hub-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            {HUB.slice(0, ECO.length).map(([x, y], i) => <line key={i} x1="50" y1="50" x2={x} y2={y} vectorEffect="non-scaling-stroke" />)}
+          </svg>
+          <div className="hub-core" aria-hidden="true"><b>Rawlins</b><span>at the table</span></div>
+          <ul className="hub-nodes">
+            {ECO.map((e, i) => (
+              <li key={e.label} data-reveal style={{ ["--x" as string]: `${HUB[i][0]}%`, ["--y" as string]: `${HUB[i][1]}%`, ["--d" as string]: `${i * 80}ms` } as CSSProperties}>
+                <h3>{e.label}</h3>
+                <p className="av-silo-who">{e.short}</p>
+                <p>{e.desc}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
@@ -209,9 +211,11 @@ export function AviationTeam({ people, title = "Our aviation team", roles }: { p
             </li>
           ))}
         </ul>
-        {roles && <p className="av-team-all"><a className="v8-link" href="/about/our-people">Everyone&apos;s bio is on Our people</a></p>}
+        {roles && <p className="av-team-all"><a className="v8-link" href="/about/our-people">View everyone on our team</a></p>}
       </div>
     </section>
+    {/* kept out of the page's sections (data-nopanel): as a section it dimmed this team and made a bio jump to the top (Nov 11) */}
+    <div data-nopanel className="pp-hold">
     <dialog ref={dlg} className="pp-dialog" data-lenis-prevent onClose={() => setOpen(null)} onClick={(e) => { if (e.target === dlg.current) setOpen(null); }} aria-labelledby="pp-name">
       {open && (
         <div className="pp-dialog-in">
@@ -220,6 +224,7 @@ export function AviationTeam({ people, title = "Our aviation team", roles }: { p
         </div>
       )}
     </dialog>
+    </div>
     </>
   );
 }

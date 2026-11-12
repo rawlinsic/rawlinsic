@@ -229,17 +229,27 @@ export function ServiceFeature({ id }: { id: string }) {
         // TODO(launch): links cs-drt. needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.
         ["Winter operations and emergency readiness", "Plans tested before they're needed, including drone response teams", ["cs-txmaint", "cs-drt"]],
       ];
+      /* redesigned Nov 11 (Nicole: "make that more clear"): the four kinds of work this service covers, each with
+         what it means and the projects where we've done it */
       return (
-        <Sec title="What this covers">
-          <ul className="pg-cards">
-            {parts.map(([t, d, ids]) => (
-              <li key={t} className="pg-card">
-                <b>{t}<LineNote text={t} /></b><span>{d}</span>
-                <ul className="pj-mini">{ids.map((i) => caseById(i)).filter(Boolean).map((c) => <li key={c!.id}><a href={caseHref(c!)}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src={casePhoto(c!)} alt="" loading="lazy" /><span>{c!.title}<CaseNote id={c!.id} /></span></a></li>)}</ul>
-              </li>
-            ))}
-          </ul>
-        </Sec>
+        <div className="cov">
+          <div className="v8-wrap">
+            <div className="cov-head"><p className="v8-eyebrow">What this covers</p><h2 className="v8-h2">Four kinds of maintenance work, and where we&apos;ve done each</h2></div>
+            <ol className="cov-grid">
+              {parts.map(([t, d, ids], i) => (
+                <li key={t}>
+                  <div className="cov-top"><span className="cov-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><h3>{t}<LineNote text={t} /></h3><p>{d}</p></div>
+                  <div className="cov-proj">
+                    <span className="cov-k">Where we&apos;ve done it</span>
+                    <ul>{ids.map((k) => caseById(k)).filter(Boolean).map((c) => (
+                      <li key={c!.id}><a href={caseHref(c!)}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src={casePhoto(c!)} alt="" loading="lazy" /><span><b>{c!.title}</b><small>{c!.who}</small><CaseNote id={c!.id} /></span></a></li>
+                    ))}</ul>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
       );
     }
     case "portals":

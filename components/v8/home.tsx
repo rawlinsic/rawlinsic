@@ -293,6 +293,8 @@ export default function Home() {
                     <img src={ev.photo} alt="" loading="lazy" title={ev.credit} />
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     {ev.logo && <img className="ev-logo" src={ev.logo} alt={ev.title} loading="lazy" />}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {ev.badge && <img className="ev-badge" src={ev.badge} alt="" loading="lazy" />}
                   </div>
                 )}
                 <span className="ev-when">{ev.when}</span>

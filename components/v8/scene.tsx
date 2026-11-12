@@ -71,6 +71,9 @@ export default function Scene({ steps, per = 100, id, className, label, children
       glideTo(docTop(el) + total * ((k + 0.25) / steps));
     };
     mode();
+    const inner0 = stage.firstElementChild as HTMLElement | null;
+    const grow = inner0 ? new ResizeObserver(() => { if (live && inner0.offsetHeight > stage.clientHeight + 2) mode(); }) : null;
+    if (inner0) grow?.observe(inner0);
     window.addEventListener("scroll", on, { passive: true });
     window.addEventListener("resize", mode);
     reduce.addEventListener?.("change", mode);
@@ -80,6 +83,7 @@ export default function Scene({ steps, per = 100, id, className, label, children
       window.removeEventListener("resize", mode);
       reduce.removeEventListener?.("change", mode);
       el.removeEventListener("click", go);
+      grow?.disconnect();
       cancelAnimationFrame(raf);
     };
   }, [steps]);

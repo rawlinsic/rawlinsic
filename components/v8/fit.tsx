@@ -86,11 +86,7 @@ export default function Fit({ kind, eyebrow, title, steps, base = "The systems y
             <path className="fit-line fit-halo" d={art.main} pathLength={1} />
             <path className="fit-line" d={art.main} pathLength={1} markerEnd={kind === "track" ? `url(#${mk}a)` : undefined} />
             {art.back && <path className="fit-back" d={art.back} markerEnd={`url(#${mk}a)`} />}
-            {kind === "ascent" && (
-              <circle className="fit-fly" r="6">
-                <animateMotion dur="7s" repeatCount="indefinite" path={art.main} calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines="0.45 0 0.35 1" />
-              </circle>
-            )}
+            {/* the white dot that ran along the ascent line is off (Nicole, Nov 11) */}
           </svg>
         )}
         <ol className="fit-steps">
