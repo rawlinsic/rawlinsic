@@ -56,7 +56,7 @@ export default function Header() {
     intl: !PROD && intl ? { name: intl.name, href: industryHref(intl), note: "" } : undefined,
     work: [
       { label: "All Projects", href: "/insights/case-studies", note: "" },
-      { label: "Where We Work", href: "/about/where-we-work", note: "" },
+      { label: "", href: "/about/where-we-work", note: "" },
     ],
     inWorks: IN_THE_WORKS.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c).map(card),
     insights: [
@@ -75,7 +75,7 @@ export default function Header() {
       { label: "Who We Are", href: "/about/who-we-are", note: "Where we started, and where we're headed" },
       { label: "How We Work", href: "/about/how-we-work", note: "" },
       { label: "Our People", href: "/about/our-people", note: "" },
-      { label: "Where We Work", href: "/about/where-we-work", note: "" },
+      { label: "", href: "/about/where-we-work", note: "" },
       { label: "Careers", href: "/careers", note: "" },
     ],
     /* About: the first eight leaders (Part 1, 1.5; 27 people verified in content updates v4, 5) */
