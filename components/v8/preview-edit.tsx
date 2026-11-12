@@ -146,7 +146,8 @@ export default function PreviewEdit({ canDelete = false }: { canDelete?: boolean
       if (!r.ok) { setMsg(j.error || "Couldn't save. Nothing was changed."); return; }
       edited.current.clear(); setChanges([]);
       if (j.commit) remember({ sha: j.commit, label: `${j.applied} text change${j.applied === 1 ? "" : "s"}` });
-      setMsg(`Saved ${j.applied} change${j.applied === 1 ? "" : "s"}${j.pending ? `, ${j.pending} on the list for Claude Code` : ""}. The preview updates in about 2 minutes.`);
+      /* already: wording that's already in the site, so nothing changed (Nov 11) */
+      setMsg(!j.applied && !j.pending && j.already ? `Already saved: ${j.already === 1 ? "that wording is" : "those wordings are"} in the site. Nothing changed.` : `Saved ${j.applied} change${j.applied === 1 ? "" : "s"}${j.already ? `, ${j.already} already saved` : ""}${j.pending ? `, ${j.pending} on the list for Claude Code` : ""}. The preview updates in about 2 minutes.`);
     } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
     finally { setBusy(false); }
   };
