@@ -31,10 +31,10 @@ import PeopleStrip from "@/components/v8/people-strip";
 const PROD = process.env.VERCEL_ENV === "production";
 const q = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
 const areaOf = (serviceId: string) => serviceById(serviceId)?.area;
-/* off the photo ring in production: no Rawlins work there yet (g-capital, g-mpo), and placeholder
-   photos (sub-rail; sub-ports, Philadelphia from the Ben Franklin Bridge). Previews show them,
-   labeled (full site pass, Part 1, 2.4 and Part 4, 1). */
-const OFF_RING: Record<string, string> = { "g-capital": "No project yet", "g-mpo": "No project yet", "sub-rail": "Placeholder photo", "sub-ports": "Placeholder photo" };
+/* off the photo ring in production: no Rawlins work there yet (g-capital, g-mpo). Previews show them,
+   labeled (full site pass, Part 1, 2.4 and Part 4, 1). Transit Agencies and Ports & Harbors were off too while
+   they shared a placeholder photo; each has its own photo since Nov 11, so they're on the ring everywhere. */
+const OFF_RING: Record<string, string> = { "g-capital": "No project yet", "g-mpo": "No project yet" };
 
 /* the tagline's "•" shows as a short blue line between the two phrases (the
    character stays in the text, so Edit text still finds it) */

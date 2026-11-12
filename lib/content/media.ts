@@ -29,8 +29,8 @@ export const SCENE_PHOTO: Record<SceneKey, string> = {
   rural: P("nv.webp"),
   crossing: P("tnbig.webp"), // Nashville and its bridges
   airport: P("aam-phase3.webp"),
-  rail: P("cs-hero-10.webp"), // placeholder: Philadelphia from the Ben Franklin Bridge
-  harbor: P("delaware.webp"), // stand-in until a harbor photo is chosen
+  rail: P("industry-rail-transit.webp"), // see INDUSTRY_PHOTO["sub-rail"]
+  harbor: P("industry-ports-harbors.webp"), // see INDUSTRY_PHOTO["sub-ports"]
   street: P("michigan.webp"),
   site: P("aam-planning.webp"),
   office: P("auto-dashboard.webp"),
@@ -101,8 +101,11 @@ export const INDUSTRY_PHOTO: Record<string, string> = {
   "sub-highways": P("transportation-aerial.webp"),
   "sub-bridges": P("tnbig.webp"),
   "sub-aviation": P("aam-phase3.webp"),
-  "sub-rail": P("cs-hero-10.webp"), // placeholder; the tile is off the home ring
-  "sub-ports": P("delaware.webp"), // a working riverfront, so Ports & Harbors no longer shares Rail & Transit's photo (Nicole, Nov 11); still a stand-in until a U.S. port photo is chosen
+  /* Real photos for these two (Nicole, Nov 11: "Yes, pull both"), both free under the Unsplash License. The only
+     edits: sized for the web, and one small name softened on each (the tugboat's name and home port; the transit
+     agency's mark on the side of the train), so neither shows a readable name or logo. */
+  "sub-rail": P("industry-rail-transit.webp"), // a light rail train at a downtown station, Main Street, Houston, Texas; Unsplash, Hannibal Photography: unsplash.com/photos/C-jytc7jZ90
+  "sub-ports": P("industry-ports-harbors.webp"), // container cranes and a tugboat at sunset, Port of Oakland, California; Unsplash, Ronan Furuta: unsplash.com/photos/daSq9zhROxY
   "g-asset": P("michigan.webp"), // the local agency work was in Michigan
   "g-capital": P("cs-hero-4.webp"),
   "g-mpo": P("cs-hero-9.webp"),
