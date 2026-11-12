@@ -548,12 +548,12 @@ export const MENU: MenuNode[] = [
   },
   {
     id: "about", label: "About", href: "/about", scene: "hero",
-    feature: { kind: "link", title: "the rawlins team", text: "More than 25 people from public agencies, working next to the team that builds the tools.", href: "/about/our-people", cta: "Meet the team" },
+    feature: { kind: "link", title: "our people", text: "More than 25 people from public agencies, working next to the team that builds the tools.", href: "/about/our-people", cta: "Meet the team" },
     groups: [{
       items: [
         leaf("who-we-are", "Who we are", "/about/who-we-are", "hero"),
         leaf("how-we-work", "How we work", "/about/how-we-work", "construction"),
-        leaf("our-people", "the rawlins team", "/about/our-people", "people"),
+        leaf("our-people", "our people", "/about/our-people", "people"),
         leaf("careers", "Careers", "/careers", "rise"),
       ],
     }],

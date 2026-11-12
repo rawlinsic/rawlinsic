@@ -81,7 +81,7 @@ export function AboutIndex() {
       <EdSec k="Inside Rawlins" title="Find your way around">
         <ul className="ab-bento">
           <li className="ab-b-who"><a href="/about/who-we-are">{/* eslint-disable-next-line @next/next/no-img-element */}{/* our team at the 2026 Hawaii summit; the outdoor group photo is already this page's top photo (Nicole, Nov 11: no large indoor group photo) */}<img src="/images/pages/insights-hawaii-summit-2026-team.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Who we are</b><span>Our story, how we&apos;ve grown since 2017, and why agencies call us.</span></span></a></li>
-          <li className="ab-b-people"><a href="/about/our-people"><span className="ab-b-faces">{faces.map((p) => /* eslint-disable-next-line @next/next/no-img-element */ <img key={p.slug} src={p.photo} alt="" loading="lazy" />)}</span><span className="ab-b-txt"><b>the rawlins team</b><span>{people.length} people: advisors who ran the programs, and the specialists who build the tools.</span></span></a></li>
+          <li className="ab-b-people"><a href="/about/our-people"><span className="ab-b-faces">{faces.map((p) => /* eslint-disable-next-line @next/next/no-img-element */ <img key={p.slug} src={p.photo} alt="" loading="lazy" />)}</span><span className="ab-b-txt"><b>our people</b><span>{people.length} people: advisors who ran the programs, and the specialists who build the tools.</span></span></a></li>
           <li className="ab-b-how"><a href="/about/how-we-work"><span className="ab-b-steps">{STEPS.map(([t], k) => <i key={t}><em>{String(k + 1).padStart(2, "0")}</em>{t}</i>)}</span><span className="ab-b-txt"><b>How we work</b><span></span></span></a></li>
           <li className="ab-b-where"><a href="/about/where-we-work"><span className="ab-b-num">{STATES.length}<small>states</small></span><span className="ab-b-txt"><b>Where we work</b><span>Global Reach,<br />Local Impact, with team members in Canada, South Africa, and the UAE.</span></span></a></li>
           <li className="ab-b-careers"><a href="/careers">{/* eslint-disable-next-line @next/next/no-img-element */}{/* two teammates at the 2026 company retreat, July 24, 2026 (Business Development SharePoint; cropped so there are no labels) */}<img src="/images/pages/careers-retreat-2026-teammates.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Careers</b><span>Work next to people who&apos;ve done the job.</span></span></a></li>
@@ -248,7 +248,7 @@ export function OurPeople() {
   if (founder > 0) people.unshift(people.splice(founder, 1)[0]);
   return (
     <Shell>
-      <EdHero dark crumbs={[["/about", "About"], ["/about/our-people", "the rawlins team"]]} kicker="the rawlins team" title={<>The people <em>behind the work</em></>}
+      <EdHero dark crumbs={[["/about", "About"], ["/about/our-people", "our people"]]} kicker="our people" title={<>The people <em>behind the work</em></>}
         lead={<p>More than 25 of our people came from public agencies. Our team brings together expertise in strategy, operations, and technology to deliver practical, forward-thinking solutions to complex challenges. While rooted in transportation, we continue to expand our experience across sectors. Collaboration is central to how we work.</p>}>
         {/* the sliding faces and the four counts under them were removed (Nicole, Nov 11) */}
       </EdHero>
@@ -695,7 +695,7 @@ export function SiteMapPage() {
           </ul>
           <h2 className="pg-h3"><a href="/about">About</a></h2>
           <ul>
-            <li><a href="/about/who-we-are">Who we are</a></li><li><a href="/about/how-we-work">How we work</a></li><li><a href="/about/our-people">the rawlins team</a></li>
+            <li><a href="/about/who-we-are">Who we are</a></li><li><a href="/about/how-we-work">How we work</a></li><li><a href="/about/our-people">our people</a></li>
             <li><a href="/about/where-we-work">Where we work</a></li><li><a href="/careers">Careers</a></li><li><a href="/contact">Contact</a></li>
             <li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms-of-service">Terms</a></li><li><a href="/accessibility">Accessibility</a></li>
           </ul>
