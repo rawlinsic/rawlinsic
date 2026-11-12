@@ -218,11 +218,11 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             <a className="ma-feature" href={data.about[0].href}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/pages/team-group-outdoor.webp" alt="" loading="lazy" />
-              <span><em>how we've grown</em><b>{data.about[0].label}</b><i>Our Story</i></span>
+              <span><em>how we've grown</em><b>{data.about[0].label}</b>{data.about[0].note && <span>{data.about[0].note}</span>}<i>Our Story</i></span>
             </a>
           )}
-          {/* no descriptions under the items (Nicole, Nov 11) */}
-          <ul>{data.about.slice(1).map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b></a></li>)}</ul>
+          {/* no descriptions under the items (Nicole, Nov 11): a line shows only where one is written in header.tsx */}
+          <ul>{data.about.slice(1).map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b>{l.note && <span>{l.note}</span>}</a></li>)}</ul>
         </div>
       </div>}
 
