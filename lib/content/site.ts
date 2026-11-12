@@ -278,7 +278,7 @@ export const NUMBERS: { value: string; count?: number; suffix?: string; label: s
    Home shows them as tabs, each with its own proof; Who we are numbers them. */
 export const WHY: [string, string][] = [
   ["We've done the job", "Our people ran the programs our clients run: chief engineers, operations and maintenance leaders, technology and data chiefs, a right of way manager, a city public works director, and federal highway executives to name a few. They know how budgets, decisions, and projects move inside an agency, so what we recommend fits how your agency works."],
-  ["Small enough to move fast", "We're a small firm, and that works in your favor. There's no lengthy chain of approvals between you and the people doing the work, so we get started quickly, adjust when things change, and get it done."],
+  ["Small enough to move fast", "We're a small and agile firm, and that works in your favor. There's no lengthy chain of approvals between you and the people doing the work. We get started quickly, adjust when things change, and get the job done."],
   ["Strategy and build under one roof", "Former agency leaders work alongside our in-house automation and AI team, so the plan and the tools it calls for come from one firm: websites, workflows, dashboards, and training."],
   ["We build on what you already own", "We use the systems and licenses you already own, connect them, and build new only when nothing you have can do the job. Every build is documented and handed over, so you own the result."],
   ["We stay until it runs", "Recommendations are where we start. We write the manuals and procedures, build the tools, train your people, and stay until your team runs it on its own."],
