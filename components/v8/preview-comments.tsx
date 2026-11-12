@@ -69,7 +69,7 @@ export const askName = () => {
   return name;
 };
 
-export default function PreviewComments({ adding, onAdded, listOpen, onCount, hidden }: { adding: boolean; onAdded: () => void; listOpen: boolean; onCount: (n: number) => void; hidden: boolean }) {
+export default function PreviewComments({ adding, onAdded, listOpen, onCount, hidden, onSaved, onDone, refresh = 0 }: { adding: boolean; onAdded: () => void; listOpen: boolean; onCount: (n: number) => void; hidden: boolean; /* a comment was saved / marked done (so Undo can take it back) */ onSaved?: (id: number, text: string) => void; onDone?: (id: number, text: string) => void; /* changes when the bar undid or redid a comment: load the list again */ refresh?: number }) {
   const [list, setList] = useState<C[]>([]);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [text, setText] = useState("");
@@ -92,7 +92,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
   const load = useCallback(async () => {
     try { const r = await fetch(`/api/preview-comments?page=${encodeURIComponent(page)}`); const j = await r.json(); if (r.ok) setList(j.comments || []); else setMsg(j.error || ""); } catch {}
   }, [page]);
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => { load(); }, [load, refresh]);
   useEffect(() => { onCount(list.length); }, [list, onCount]);
 
   // keep pins on their spots as the page scrolls, slides, and resizes
@@ -129,11 +129,11 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
       const r = await fetch("/api/preview-comments", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ page, ...draft, text, name }) });
       const j = await r.json();
       if (!r.ok) { setMsg(j.error || "Couldn't save the comment."); return; }
-      setList((l) => [...l, j.comment]); setDraft(null); setText(""); setMsg(""); onAdded();
+      setList((l) => [...l, j.comment]); setDraft(null); setText(""); setMsg(""); onAdded(); onSaved?.(j.comment.id, j.comment.text);
     } catch { setMsg("Couldn't reach the server. The comment wasn't saved."); }
   };
   const done = async (id: number) => {
-    try { const r = await fetch("/api/preview-comments", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id }) }); if (r.ok) { setList((l) => l.filter((c) => c.id !== id)); setOpenId(null); } } catch {}
+    try { const r = await fetch("/api/preview-comments", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id }) }); if (r.ok) { const was = list.find((c) => c.id === id); setList((l) => l.filter((c) => c.id !== id)); setOpenId(null); onDone?.(id, was?.text || ""); } } catch {}
   };
   const spot = (c: C) => {
     const el = locate(c); if (!el) return null;

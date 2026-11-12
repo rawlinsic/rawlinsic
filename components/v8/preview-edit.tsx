@@ -54,7 +54,9 @@ const diff = (snap: Snap, now: string): Change => {
 };
 
 /* every saved change made from this browser, newest last, so Undo can take it back */
-type Done = { sha: string; label: string };
+/* sha: a saved text change or a deleted section (a commit). note: a comment, by its number; act says whether
+   the change was adding it or marking it done, so Undo and Redo know which way to go. */
+type Done = { sha?: string; note?: number; act?: "add" | "done"; label: string };
 const loadHistory = (): Done[] => { try { return JSON.parse(localStorage.getItem("pe-history") || "[]"); } catch { return []; } };
 const saveHistory = (h: Done[]) => { try { localStorage.setItem("pe-history", JSON.stringify(h.slice(-30))); } catch {} };
 /* what Undo took back, newest last, so Redo can put it back (Nicole, Nov 12). A new save or delete clears it. */
@@ -73,6 +75,16 @@ export default function PreviewEdit({ canDelete = false, review = false }: { can
   useEffect(() => { setHistory(loadHistory()); setRedos(loadRedo()); }, []);
   const remember = (d: Done) => { const h = [...loadHistory(), d]; saveHistory(h); setHistory(h); saveRedo([]); setRedos([]); };
   const [deleting, setDeleting] = useState(false);
+  const [refresh, setRefresh] = useState(0); // bumped when Undo or Redo changes a comment, so the pins reload
+  const short = (t: string) => `“${t.replace(/\s+/g, " ").trim().slice(0, 40)}${t.trim().length > 40 ? "…" : ""}”`;
+  const onSaved = (id: number, text: string) => remember({ note: id, act: "add", label: `your comment ${short(text)}` });
+  const onDone = (id: number, text: string) => remember({ note: id, act: "done", label: `marking a comment done ${short(text)}` });
+  /* take a comment off (close) or bring it back (reopen) */
+  const setNote = async (id: number, reopen: boolean) => {
+    const r = await fetch("/api/preview-comments", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id, reopen }) });
+    const j = await r.json().catch(() => ({}));
+    return { ok: r.ok, error: (j.error as string) || "" };
+  };
   const [on, setOn] = useState(false);
   const [adding, setAdding] = useState(false);
   const [listOpen, setListOpen] = useState(false);
@@ -164,6 +176,18 @@ export default function PreviewEdit({ canDelete = false, review = false }: { can
     const last = history[history.length - 1]; if (!last) return;
     if (!confirm(`Undo your last saved change (${last.label})?`)) return;
     setBusy(true); setMsg("Undoing…");
+    if (last.note) { // a comment: undoing a new one takes it off; undoing "Mark done" brings it back
+      try {
+        const r = await setNote(last.note, last.act === "done");
+        if (!r.ok) { setMsg(r.error || "Couldn't undo. Nothing was changed."); return; }
+        const h = loadHistory().slice(0, -1); saveHistory(h); setHistory(h);
+        const r2 = [...loadRedo(), last]; saveRedo(r2); setRedos(r2);
+        setRefresh((n) => n + 1);
+        setMsg(`Undone: ${last.label}. Redo puts it back.`);
+      } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
+      finally { setBusy(false); }
+      return;
+    }
     try {
       const r = await fetch("/api/preview-undo", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ sha: last.sha, name: askName() }) });
       const j = await r.json().catch(() => ({}));
@@ -179,6 +203,18 @@ export default function PreviewEdit({ canDelete = false, review = false }: { can
     const last = redos[redos.length - 1]; if (!last) return;
     if (!confirm(`Redo: put back ${last.label}?`)) return;
     setBusy(true); setMsg("Redoing…");
+    if (last.note) { // a comment: redoing a new one brings it back; redoing "Mark done" takes it off again
+      try {
+        const r = await setNote(last.note, last.act !== "done");
+        if (!r.ok) { setMsg(r.error || "Couldn't redo. Nothing was changed."); return; }
+        const r2 = loadRedo().slice(0, -1); saveRedo(r2); setRedos(r2);
+        const h = [...loadHistory(), last]; saveHistory(h); setHistory(h);
+        setRefresh((n) => n + 1);
+        setMsg(`Redone: ${last.label}.`);
+      } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
+      finally { setBusy(false); }
+      return;
+    }
     try {
       const r = await fetch("/api/preview-undo", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ sha: last.sha, name: askName(), redo: true }) });
       const j = await r.json().catch(() => ({}));
@@ -229,14 +265,14 @@ export default function PreviewEdit({ canDelete = false, review = false }: { can
   if (cleanView) return tab("Show the review tools", () => { setCleanView(false); fold(false); });
   if (min && !on && !adding && !deleting) return (
     <>
-      <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={false} onCount={onCount} hidden={false} />
+      <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={false} onCount={onCount} hidden={false} onSaved={onSaved} onDone={onDone} refresh={refresh} />
       {tab("Open the review tools: edit text, comment", () => fold(false))}
     </>
   );
 
   return (
     <>
-      <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={listOpen} onCount={onCount} hidden={cleanView} />
+      <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={listOpen} onCount={onCount} hidden={cleanView} onSaved={onSaved} onDone={onDone} refresh={refresh} />
       <div className="pe-bar" role="region" aria-label="Review tools (preview only)">
         {on ? (
           <>
@@ -265,8 +301,10 @@ export default function PreviewEdit({ canDelete = false, review = false }: { can
                   <button type="button" className="pe-btn" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter adds a new line. Esc or click away to finish."); }}>Edit text</button>
                   <button type="button" className="pe-btn" onClick={() => { setAdding(true); setMsg(""); }}>Comment</button>
                 </>}
-            {history.length > 0 && <button type="button" className="pe-btn pe-ghost" disabled={busy} onClick={undo} title={`Undo: ${history[history.length - 1].label}`}>Undo</button>}
-            {redos.length > 0 && <button type="button" className="pe-btn pe-ghost" disabled={busy} onClick={redo} title={`Redo: ${redos[redos.length - 1].label}`}>Redo</button>}
+            {/* always there (Nicole, Nov 12), greyed out until there is something to undo or redo. They cover what
+                was done from this browser: a comment, marking one done, a saved text change, a deleted section. */}
+            <button type="button" className="pe-btn pe-ghost" disabled={busy || !history.length} onClick={undo} title={history.length ? `Undo: ${history[history.length - 1].label}` : "Nothing to undo yet"}>Undo</button>
+            <button type="button" className="pe-btn pe-ghost" disabled={busy || !redos.length} onClick={redo} title={redos.length ? `Redo: ${redos[redos.length - 1].label}` : "Nothing to redo yet"}>Redo</button>
             {canDelete && <button type="button" className="pe-btn pe-ghost pe-danger" onClick={() => { setDeleting(true); setMsg(""); }}>Delete section</button>}
             <button type="button" className={`pe-btn pe-ghost${listOpen ? " is-on" : ""}`} onClick={() => setListOpen((v) => !v)}>Comments ({count})</button>
             <button type="button" className="pe-btn pe-ghost" onClick={() => { setCleanView(true); setListOpen(false); }} title="Hide the tools, comment pins, and placeholder notes">Clean view</button>
