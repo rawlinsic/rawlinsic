@@ -51,7 +51,7 @@ export default function SiteFooter() {
             <ul>
               <li><a href="/about/who-we-are">Who we are</a></li>
               <li><a href="/about/how-we-work">How we work</a></li>
-              <li><a href="/about/our-people">Our people</a></li>
+              <li><a href="/about/our-people">the rawlins team</a></li>
               <li><a href="/careers">Careers</a></li>
               <li><a href="/contact">Contact</a></li>
               <li><a href="/site-map"></a></li>

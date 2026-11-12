@@ -56,7 +56,7 @@ export default function TeamWall({ people, spot }: { people: WallPerson[]; spot:
       <div className="tw-stage">
         <div className="v8-wrap tw-in">
           <div className="tw-copy">
-            <p className="v8-eyebrow">Our people</p>
+            <p className="v8-eyebrow">the rawlins team</p>
             <h2 id="tw-h" className="v8-h2">Meet the team</h2>
             <p className="v8-lead">More than 25 of our people built their careers inside public agencies. They work next to the specialists who build the tools.</p>
             <a className="v8-btn v8-btn-glow" href="/about/our-people">Meet everyone</a>
