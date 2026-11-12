@@ -204,7 +204,7 @@ export const INTL: { abroad: { title: string; items: { t: string; flag?: string 
     title: "How we work outside the U.S.",
     items: [
       // From the roster: Andy Palanisamy (Dubai); Samantha Lloyd, Kobus Pieters (Cape Town); Kiara Pienaar (Gauteng); Koussay Khelil (Ontario).
-      { t: "Members of our team are based in the United Arab Emirates, South Africa, and Canada, alongside our people across the United States." },
+      { t: "Members of our team are based in the United Arab Emirates, Europe, South Africa, and Canada, alongside our people across the United States." },
       // Andy Palanisamy's bio: Head of Practice for Smart Cities and Innovation at Parsons in Dubai, before Rawlins.
       { t: "Experience on our team includes leading the smart cities and innovation practice for a global engineering firm in Dubai, with smart city and mobility projects across the Middle East and Africa." },
       { t: "Our in-house team builds the manuals, training, dashboards, and AI tools from wherever they are based, with time on site where the work needs it." },
