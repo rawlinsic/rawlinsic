@@ -104,7 +104,7 @@ export function WhoWeAre() {
 
 const PRINCIPLES: [string, string][] = [
   ["Start where the client is", "Most organizations already have a plan, a framework, or a manual. We put what exists to work before writing anything new."],
-  ["Bridge before building", "We use the systems and licenses a client already owns, and build new only when nothing existing can do the job."],
+  ["Bridge before building", "We use the systems and licenses a client already owns, and build something new when it makes sense."],
   ["Straight answers on AI", "When a problem needs a rule, a process, or a decision instead of a model, we say so."],
   ["The client owns the result", "Every build comes with documentation and training, and your team owns it."],
 ];
@@ -119,7 +119,7 @@ export function HowWeWork() {
       <section className="ab-steps-sec" data-nofill>
         <ol className="ed-wrap ab-steps">{STEPS.map(([t, d], k) => <li key={t}><span className="ab-step-n">{String(k + 1).padStart(2, "0")}</span><b>{t}</b><p>{d}</p></li>)}</ol>
       </section>
-      <EdSec k="What guides us" title="What we hold to" tone="panel">
+      <EdSec k="What guides us" title="Our process" tone="panel">
         <ul className="ab-principles">{PRINCIPLES.map(([t, d]) => <li key={t}><b>{t}</b><p>{d}</p></li>)}</ul>
       </EdSec>
       <EdSplit k="In practice" title="What you keep">
