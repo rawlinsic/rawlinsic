@@ -81,7 +81,7 @@ export default function Home() {
   const ring: (Tile & { off?: boolean })[] = [
     { src: INDUSTRY_PHOTO.transport, label: "State DOTs", href: industryHref(ind("transport")) },
     { src: INDUSTRY_PHOTO.gov, label: "Government & Public Agencies", href: industryHref(ind("gov")) },
-    { src: INDUSTRY_PHOTO.contractors, label: "Contractors & Engineering Firms", href: industryHref(ind("contractors")) },
+    { src: INDUSTRY_PHOTO.contractors, label: "Contractors", href: industryHref(ind("contractors")) },
     { src: INDUSTRY_PHOTO["sub-aviation"], label: "Airports", href: subsectorHref(ind("transport"), subOf("transport", "sub-aviation")) },
     { src: INDUSTRY_PHOTO["g-asset"], label: "Local Agencies", href: subsectorHref(ind("gov"), subOf("gov", "g-asset")) },
     { src: INDUSTRY_PHOTO.private, label: "Private Firms", href: industryHref(ind("private")) },
