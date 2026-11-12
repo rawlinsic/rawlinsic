@@ -145,7 +145,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             </section>
           ))}
         </div>
-        <p className="mx-foot"><a href="/services">See All Services</a><a href="/contact">Not Sure Where Yours Fits? Tell Us What You&apos;re Trying to Fix</a></p>
+        <p className="mx-foot"><a href="/services">See all services</a><a href="/contact">Not sure where yours fits? Tell us what you&apos;re trying to fix</a></p>
       </div>
       <div className="hx-panel" id="hx-m-who" hidden={open !== "who"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         <div className="mx-who">
