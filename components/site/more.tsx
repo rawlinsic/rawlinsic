@@ -213,7 +213,7 @@ export function OurPeople() {
   return (
     <Shell>
       <EdHero dark crumbs={[["/about", "About"], ["/about/our-people", "Our people"]]} kicker="Our people" title={<>The people <em>behind the work</em></>}
-        lead={<p>More than 25 of our people came from public agencies. They work next to the specialists who build the tools, and you work directly with the people doing the work.</p>}>
+        lead={<p>More than 25 of our people came from public agencies. Our team brings together expertise in strategy, operations, and technology to deliver practical, forward-thinking solutions to complex challenges. While rooted in transportation, we continue to expand our experience across sectors. Collaboration is central to how we work.</p>}>
         <FaceRows people={people} />
         <dl className="ed-wrap pp-hero-stats">
           <div><dt>People on our team</dt><dd>{people.length}</dd></div>
