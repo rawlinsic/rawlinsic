@@ -196,7 +196,7 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
           </div>
         )}
       </dialog>
-      {showDev && <p className="pg-dev pg-dev-block">Titles pending: cards show current roles until Nicole prepares a titles table that is approved. Groups (Advisors, Specialists, Business Operations) and area tags are drafted from the roster&apos;s roles and categories; confirm.</p>}
+      {/* the "Titles pending" preview note was removed by Nicole (preview edit, Nov 12) */}
     </div>
   );
 }
