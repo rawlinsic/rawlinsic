@@ -121,7 +121,7 @@ const sub = (id: string, name: string, scene: SceneKey, line: string, thin = fal
 export const INDUSTRIES: Industry[] = [
   {
     id: "transport", slug: "transportation", name: "Transportation", scene: "interchange",
-    who: "State DOTs, aeronautics divisions, harbors, and transit",
+    who: "State DOTs, Aeronautics Divisions, Harbors, & Transit",
     lead: "Most of our work is with state departments of transportation: more than 30 transportation agencies so far. We work across highways, bridges, aviation, harbors, and transit, from how a department is organized to how its projects get delivered and its roads get maintained.",
     featured: ["program-delivery", "preconstruction", "row", "construction", "operations", "traffic", "asset-mgmt", "portals", "drone-programs"],
     featuredCase: "cs-major",
@@ -138,7 +138,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     id: "gov", slug: "government-public-works", name: "Government & Public Works", scene: "street",
-    who: "Local agencies and multi-state programs",
+    who: "Local Agencies & Multi-State Programs",
     lead: "Local governments, and the federal and multi-state programs that support them, often with lean staffs. Our work here includes asset management with local agencies and drone standards for a multi-state research program.",
     featured: ["asset-mgmt", "program-delivery", "lpa", "grants", "portals", "strategic-planning"],
     featuredCase: "cs-local-am",
@@ -152,7 +152,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     id: "contractors", slug: "contractors-engineering-firms", name: "Contractors & Engineering Firms", scene: "site",
-    who: "Partnering, contracting models, and teaming on public work",
+    who: "Partnering, Contracting Models, & Teaming on Public Work",
     lead: "Contractors and engineering firms working with public owners. We help both sides of the table work together, through partnering on major projects and contracting models that work for owners and industry. Engineering firms also bring us onto their teams for state DOT work: program delivery, organization and workforce, technology, aviation, and drone programs.",
     featured: ["alt-delivery", "owners-rep", "automation", "training-video"],
     featuredCase: "cs-major",
@@ -161,7 +161,7 @@ export const INDUSTRIES: Industry[] = [
   },
   {
     id: "private", slug: "private-sector", name: "Private Sector", scene: "office",
-    who: "Growing firms that have outgrown their spreadsheets",
+    who: "Growing firms that have outgrown their current tools or processes",
     lead: "Firms that have outgrown spreadsheets but don't have a build team. We connect the systems you already pay for and automate the work around them.",
     featured: ["automation", "ai", "dashboards", "data-governance", "portals"],
     projects: ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service"],
