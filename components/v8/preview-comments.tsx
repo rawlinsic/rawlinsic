@@ -200,6 +200,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
   const tucked = new Set(Array.from(inMenu.values()).flat().map((c) => c.id));
   const lost = list.filter((c) => !spot(c) && !tucked.has(c.id)).map((c) => c.id);
   const vh = typeof window === "undefined" ? 800 : window.innerHeight;
+  const over = typeof document === "undefined" ? null : document.querySelector<HTMLElement>("header.hx .hx-panel:not([hidden])")?.getBoundingClientRect() ?? null;
   const rows = Math.max(4, Math.floor((vh - 240) / 42)); // parked pins per column
   return (
     <>
@@ -207,6 +208,8 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
         /* no spot on the page any more: the pin is parked down the right edge, so the comment is still there to read */
         if (tucked.has(c.id)) return null; // counted on its menu's name until the menu opens
         const at = spot(c), parked = !at, k = lost.indexOf(c.id);
+        /* an open menu covers part of the page: a page comment's pin under it would look like it is on a menu item */
+        if (at && over && !menuOf(c.sel) && openId !== c.id && at.x >= over.left && at.x <= over.right && at.y >= over.top && at.y <= over.bottom) return null;
         const p = at ?? { x: vw - 30 - Math.floor(k / rows) * 42, y: 150 + (k % rows) * 42 };
         const open = openId === c.id;
         return (
@@ -229,7 +232,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
         const b = menuButton(m); if (!b) return null;
         const r = b.getBoundingClientRect();
         const who = Array.from(new Set(cs.map((c) => c.who))).join(", ");
-        return <button key={`menu-${m}`} type="button" className="pc-pin pc-menu" style={{ left: r.right + 2, top: r.top + 4 }} onClick={() => b.click()} aria-label={`${cs.length} comment${cs.length === 1 ? "" : "s"} inside the ${b.textContent} menu, from ${who}. Open the menu.`} title={`${cs.length} comment${cs.length === 1 ? "" : "s"} inside this menu (${who}). Click to open it.`}>{cs.length}</button>;
+        return <button key={`menu-${m}`} type="button" className="pc-pin pc-menu" style={{ left: r.right - 8, top: r.top - 6 }} onClick={() => b.click()} aria-label={`${cs.length} comment${cs.length === 1 ? "" : "s"} inside the ${b.textContent} menu, from ${who}. Open the menu.`} title={`${cs.length} comment${cs.length === 1 ? "" : "s"} inside this menu (${who}). Click to open it.`}>{cs.length}</button>;
       })}
       {draft && (
         <div className="pc-pop pc-new" style={{ left: Math.min(draft.x + 12, vw - 340), top: draft.y + 12 }}>
