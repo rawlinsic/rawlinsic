@@ -61,7 +61,8 @@ export function ProfileBody({ p, showDev = false }: { p: Person; showDev?: boole
           <p className="pp-contact">
             {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
             {p.phone && <a href={`tel:${p.phone.replace(/[^\d+]/g, "")}`}>{p.phone}</a>}
-            {p.linkedin && <a href={p.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
+            {/* the LinkedIn icon in place of the word (Nicole, Nov 12) */}
+            {p.linkedin && <a className="pp-in" href={p.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${p.name} on LinkedIn`}><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.6 8.65 21 11.2 21 14.4V21h-4v-5.8c0-1.38-.03-3.16-1.93-3.16-1.93 0-2.22 1.5-2.22 3.06V21H9z" /></svg></a>}
           </p>
         </div>
       </div>

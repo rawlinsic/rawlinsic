@@ -15,7 +15,7 @@ import ClarityLoader from '@/components/clarity-loader';
 import Smooth from "@/components/v8/smooth";
 import PreviewEdit from "@/components/v8/preview-edit";
 import { REMOVED_SECTIONS } from "@/lib/content/removed-sections";
-import { canDeleteSections, isJacobVersion, JACOB_DEAD_LINKS } from "@/lib/preview-gh";
+import { canDeleteSections, isJacobVersion, isReviewVersion, JACOB_DEAD_LINKS } from "@/lib/preview-gh";
 
 /* Redesign type: one typeface, Source Sans 3, on every page (--font-sans in
    journey.css; the old --font-serif token points at it too). No fallback
@@ -242,7 +242,7 @@ export default function RootLayout({
         <ClarityLoader />
         <CookieBanner />
         {/* preview builds only: click-and-type text editor (never on the live site) */}
-        {process.env.VERCEL_ENV === "preview" && <PreviewEdit canDelete={canDeleteSections()} />}
+        {process.env.VERCEL_ENV === "preview" && <PreviewEdit canDelete={canDeleteSections()} review={isReviewVersion()} />}
         <Smooth />
       </body>
     </html>

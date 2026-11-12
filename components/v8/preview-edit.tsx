@@ -8,7 +8,7 @@
    is found even when a sentence has a link in it or a wording repeats. Anything it
    can't place goes on EDITS-PENDING.md in the repo for Claude Code. */
 import { useCallback, useEffect, useRef, useState } from "react";
-import PreviewComments, { askName, cssPath } from "@/components/v8/preview-comments";
+import PreviewComments, { askName, changeName, cssPath, savedName } from "@/components/v8/preview-comments";
 
 type Change = { old: string; next: string; nodeOld?: string; nodeNew?: string; context?: string[]; breaks?: string };
 type Snap = { full: string; nodes: string[]; context: string[] };
@@ -63,7 +63,11 @@ const saveRedo = (h: Done[]) => { try { localStorage.setItem("pe-redo", JSON.str
 /* the section a click means: the nearest section, or the page block it sits in */
 const sectionOf = (t: Element) => t.closest<HTMLElement>("main section") || t.closest<HTMLElement>(".pnl > *");
 
-export default function PreviewEdit({ canDelete = false }: { canDelete?: boolean }) {
+/* review: the review version (the branch other people comment on). The tools start open, Comment comes first,
+   and the bar shows whose name goes on the comments. */
+export default function PreviewEdit({ canDelete = false, review = false }: { canDelete?: boolean; review?: boolean }) {
+  const [me, setMe] = useState("");
+  useEffect(() => { setMe(savedName()); }, []);
   const [history, setHistory] = useState<Done[]>([]);
   const [redos, setRedos] = useState<Done[]>([]);
   useEffect(() => { setHistory(loadHistory()); setRedos(loadRedo()); }, []);
@@ -78,7 +82,7 @@ export default function PreviewEdit({ canDelete = false }: { canDelete?: boolean
   const [cleanView, setCleanView] = useState(false);
   // the bar folds into a small tab on the left edge so it's out of the way (remembered per browser)
   const [min, setMin] = useState(true);
-  useEffect(() => { try { setMin(localStorage.getItem("pe-min") !== "0"); } catch {} }, []);
+  useEffect(() => { try { const v = localStorage.getItem("pe-min"); setMin(v === null ? !review : v !== "0"); } catch {} }, [review]);
   const fold = (v: boolean) => { setMin(v); try { localStorage.setItem("pe-min", v ? "1" : "0"); } catch {} };
   useEffect(() => { try { setCleanView(localStorage.getItem("pe-clean") === "1"); } catch {} }, []);
   useEffect(() => { document.documentElement.classList.toggle("pe-clean", cleanView); try { localStorage.setItem("pe-clean", cleanView ? "1" : "0"); } catch {} }, [cleanView]);
@@ -252,8 +256,15 @@ export default function PreviewEdit({ canDelete = false }: { canDelete?: boolean
           </>
         ) : (
           <>
-            <button type="button" className="pe-btn" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter adds a new line. Esc or click away to finish."); }}>Edit text</button>
-            <button type="button" className="pe-btn" onClick={() => { setAdding(true); setMsg(""); }}>Comment</button>
+            {review
+              ? <>
+                  <button type="button" className="pe-btn" onClick={() => { const n = askName(); if (!n) return; setMe(n); setAdding(true); setMsg(""); }}>Comment</button>
+                  <button type="button" className="pe-btn pe-ghost" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter adds a new line. Esc or click away to finish."); }}>Edit text</button>
+                </>
+              : <>
+                  <button type="button" className="pe-btn" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter adds a new line. Esc or click away to finish."); }}>Edit text</button>
+                  <button type="button" className="pe-btn" onClick={() => { setAdding(true); setMsg(""); }}>Comment</button>
+                </>}
             {history.length > 0 && <button type="button" className="pe-btn pe-ghost" disabled={busy} onClick={undo} title={`Undo: ${history[history.length - 1].label}`}>Undo</button>}
             {redos.length > 0 && <button type="button" className="pe-btn pe-ghost" disabled={busy} onClick={redo} title={`Redo: ${redos[redos.length - 1].label}`}>Redo</button>}
             {canDelete && <button type="button" className="pe-btn pe-ghost pe-danger" onClick={() => { setDeleting(true); setMsg(""); }}>Delete section</button>}
@@ -263,6 +274,10 @@ export default function PreviewEdit({ canDelete = false }: { canDelete?: boolean
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
           </>
+        )}
+        {/* whose name goes on comments and changes from this browser */}
+        {!on && !deleting && !adding && (
+          <p className="pe-who">{me ? <>Commenting as <b>{me}</b></> : "Your name goes on your comments"} <button type="button" onClick={() => setMe(changeName())}>{me ? "Change" : "Add your name"}</button></p>
         )}
         {msg && <p className="pe-msg" aria-live="polite">{msg}</p>}
       </div>

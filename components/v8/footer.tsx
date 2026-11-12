@@ -8,6 +8,8 @@ import { AREAS, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, industryHref } from "@
 import { THEME } from "@/lib/content/v8";
 import { THOUGHT_LEADERSHIP } from "@/components/thought-leadership-data";
 
+/* Rawlins' Google Business Profile (the link Nicole gave, Nov 12, without its tracking tail) */
+const GOOGLE_PROFILE = "https://www.google.com/maps/place/Rawlins/@39.4270944,-119.7560918,17z/data=!3m1!4b1!4m6!3m5!1s0xc834b8bdb96e445:0xd0e8e5a965f86123!8m2!3d39.4270944!4d-119.7535169!16s%2Fg%2F11w3b8bxf3";
 const THOUGHT = THOUGHT_LEADERSHIP.length === 1 ? `/insights/thought-leadership/${THOUGHT_LEADERSHIP[0].slug}` : "/insights/thought-leadership";
 
 /* International Markets (Nicole, Nov 12: "add international markets to the footer as a link"). The page is still
@@ -37,6 +39,9 @@ export default function Footer() {
             <a className="fx2-cta" href="/contact">Get In Touch</a>
             <a className="fx2-in" href="https://www.linkedin.com/company/107078508/" target="_blank" rel="noopener noreferrer" aria-label="Rawlins on LinkedIn">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.6 8.65 21 11.2 21 14.4V21h-4v-5.8c0-1.38-.03-3.16-1.93-3.16-1.93 0-2.22 1.5-2.22 3.06V21H9z" /></svg>
+            </a>
+            <a className="fx2-in" href={GOOGLE_PROFILE} target="_blank" rel="noopener noreferrer" aria-label="Rawlins on Google">
+              <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" fill="currentColor"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" /></svg>
             </a>
           </div>
         </div>

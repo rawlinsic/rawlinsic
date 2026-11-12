@@ -17,8 +17,12 @@ export function previewGitHub(): { gh: GH; branch: string } | { error: string; s
   return { gh, branch };
 }
 
-/* Only Nicole deletes sections: on by default, off on Jacob's version. */
-export const canDeleteSections = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => !/jacob/i.test(branch);
+/* The review version (Nicole, Nov 12): the branch other people comment on. Any branch with "review" as a word
+   in its name. Comments carry each person's name, and Delete section is off. */
+export const isReviewVersion = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => /(^|[-_/])review($|[-_/])/i.test(branch);
+
+/* Only Nicole deletes sections: on by default, off on Jacob's version and on the review version. */
+export const canDeleteSections = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => !/jacob/i.test(branch) && !isReviewVersion(branch);
 
 /* Jacob's version (any branch named for him; Nicole, Nov 10): the About pages are closed and About shows
    only as a top-level menu word; links to the pages below go nowhere (JACOB_DEAD_LINKS). */
