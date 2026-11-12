@@ -278,7 +278,7 @@ export function Careers() {
           <ul className="pg-cards">{OPEN_POSITIONS.map((p) => <li key={p.href}><a href={p.href} className="pg-card pg-card-link"><b>{p.title}</b><span>{p.summary}</span></a></li>)}</ul>
         ) : (
           <div className="ab-apply">
-            <p>Send us a note and your resumé at <a href="mailto:jobs@rawlinsic.com">jobs@rawlinsic.com</a>, and we&rsquo;ll be in touch when there&rsquo;s a fit.</p>
+            <p>Send us a note and your resumé at <a href="mailto:jobs@rawlinsic.com">jobs@rawlinsic.com</a>, and we’ll be in touch if there’s a fit.</p>
             <EdBtn href="mailto:jobs@rawlinsic.com">Send your resumé</EdBtn>
             {/* the preview-only "no open positions posted" note was emptied by Nicole (preview edit, Nov 11), so it's gone */}
           </div>
