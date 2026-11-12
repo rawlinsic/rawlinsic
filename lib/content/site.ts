@@ -65,7 +65,7 @@ export const AREAS: Area[] = [
   },
   {
     id: "aviation", slug: "drones-advanced-air-mobility", name: "Drones & Advanced Air Mobility",
-    tag: "Programs, planning, response, and standards", scene: "drone", featuredCase: "cs-aero",
+    tag: "Programs, planning, response, & standards", scene: "drone", featuredCase: "cs-aero",
     services: [
       svc("drone-programs", "Drone Program Development & Sustainment"),
       svc("drone-aam", "Advanced Air Mobility Strategy & Readiness", "sky"),

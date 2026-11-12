@@ -1549,7 +1549,7 @@ export const AREAS: Record<string, AreaData> = {
  "aviation": {
   "id": "aviation",
   "name": "Drones & Advanced Air Mobility",
-  "tag": "Programs, planning, response, and standards",
+  "tag": "Programs, planning, response, & standards",
   "services": [
    "drone-programs",
    "drone-aam",
