@@ -141,8 +141,8 @@ export const INDUSTRIES: Industry[] = [
     ],
   },
   {
-    id: "gov", slug: "government-public-works", name: "Government & Public Works", scene: "street",
-    who: "Local Agencies & Multi-State Programs", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
+    id: "gov", slug: "government-public-works", name: "Other Government Services", scene: "street",
+    who: "Non-Transportation Infrastructure Support", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
     // cs-local-am (through a state infrastructure office) and cs-pooled are the two Rawlins projects here.
     // Capital delivery and regional planning rest on experience from earlier roles; the lead says what that experience is.
     lead: "Cities, counties, and regional agencies carry capital programs, permitting, and federal requirements with lean staffs. Our work here so far is asset management with local agencies, through a state infrastructure office, and a multi-state research program on drone data standards. For capital project delivery and regional planning, we bring experience from city public works and the Federal Highway Administration.",
