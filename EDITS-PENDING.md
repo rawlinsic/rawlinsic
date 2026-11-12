@@ -17,4 +17,5 @@ Each line: page, old wording, new wording, and why it couldn't be placed automat
   (done Nov 11 by Claude Code: the heading on the Who We Work With pages reads "How we can help", in the section and in the section bar)
 - [x] 11/12/2026, 12:03:36 AM · Nicole · /about/our-people · "Titles pending: cards show current roles until Nicole and Scott approve a titles table. Groups (Advisors, Specialists, Business Operations) and area tags are drafted from the roster's roles and categories; confirm." → "" (not found in the files, even as a template)
   (done Nov 12 by Claude Code: the "Titles pending" preview note on Our People is removed)
-- [ ] 11/12/2026, 12:48:23 AM · Nicole · /about/our-people · "The people behind the work" → "The Rawlins Team" (not found in the files, even as a template)
+- [x] 11/12/2026, 12:48:23 AM · Nicole · /about/our-people · "The people behind the work" → "The Rawlins Team" (not found in the files, even as a template)
+  (done Nov 12 by Claude Code: the Our People headline reads "The Rawlins Team")

@@ -237,7 +237,7 @@ export function OurPeople() {
   if (founder > 0) people.unshift(people.splice(founder, 1)[0]);
   return (
     <Shell>
-      <EdHero dark crumbs={[["/about", "About"], ["/about/our-people", "our people"]]} kicker="our people" title={<>The people <em>behind the work</em></>}
+      <EdHero dark crumbs={[["/about", "About"], ["/about/our-people", "our people"]]} kicker="our people" title={<>The <em>Rawlins Team</em></>} /* Nicole's wording (preview edit, Nov 12); was "The people behind the work" */
         lead={<p>More than 25 of our people came from public agencies. Our team brings together expertise in strategy, operations, and technology to deliver practical, forward-thinking solutions to complex challenges. While rooted in transportation, we continue to expand our experience across sectors. Collaboration is central to how we work.</p>}>
         {/* the sliding faces and the four counts under them were removed (Nicole, Nov 11) */}
       </EdHero>

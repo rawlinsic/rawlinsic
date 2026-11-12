@@ -54,10 +54,12 @@ export default function Header() {
     }),
     /* previews only: the hidden International page, with why it's hidden (Part 4, 1) */
     intl: !PROD && intl ? { name: intl.name, href: industryHref(intl), note: "" } : undefined,
+    /* A link whose label is emptied in the preview editor is left out of the menu, so no blank row shows.
+       Nicole emptied "Where We Work" on Nov 12 (here and under About). Type the label back in to show it again. */
     work: [
       { label: "All Projects", href: "/insights/case-studies", note: "" },
       { label: "", href: "/about/where-we-work", note: "" },
-    ],
+    ].filter((l) => l.label.trim()),
     inWorks: IN_THE_WORKS.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c).map(card),
     insights: [
       { label: "News & Recognition", href: "/insights/news", note: "Events, publications, and news", photo: PAGE_PHOTO.news,
@@ -77,7 +79,7 @@ export default function Header() {
       { label: "Our People", href: "/about/our-people", note: "" },
       { label: "", href: "/about/where-we-work", note: "" },
       { label: "Careers", href: "/careers", note: "" },
-    ],
+    ].filter((l) => l.label.trim()),
     /* About: the first eight leaders (Part 1, 1.5; 27 people verified in content updates v4, 5) */
     faces: LEADERS.slice(0, 8).map((l) => ({ name: l.name.split(",")[0], photo: `/images/team/${l.photo}.webp` })),
     facesLine: "More than 25 of our people built their careers inside public agencies.",
