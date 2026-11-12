@@ -271,8 +271,8 @@ function Help({ ind }: { ind: Industry }) {
     <section id="help" className="sv-sec ipg-help">
       <div className="v8-wrap">
         <div className="ipg-help-head">
-          <h2 className="v8-h2">How we help</h2>
-          <p className="v8-lead">The services we use most here.</p>
+          <h2 className="v8-h2">Services we provide</h2>
+          <p className="v8-lead"></p>
         </div>
         <ul className="ipg-help-cards">
           {ids.map((x, i) => {
@@ -360,7 +360,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
     ...(subs.length ? [["specialties", "Specialties"] as Nav] : []),
     ...(intl ? [["carry", INTL.carry.title] as Nav] : []),
     ...(d.ch.length ? [["hear", "Challenges we hear"] as Nav] : []),
-    ["help", "How we help"],
+    ["help", "Services we provide"],
     ...(intl ? [["abroad", INTL.abroad.title] as Nav, ["region", "Where you'll find us"] as Nav] : []),
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ...(work.length ? [["work", "Featured projects"] as Nav] : []),
