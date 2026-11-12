@@ -110,15 +110,24 @@ export function NextLayer() {
 }
 
 /* ── Bridging silos ── */
+/* a line icon for each group (24 x 24, drawn in the card's corner) */
+const ECO_ICON: Record<string, string> = {
+  plane: '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>',
+  agency: '<path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M12 2 20 7H4z"/>',
+  city: '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>',
+  standards: '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
+  academic: '<path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>',
+  industry: '<path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/>',
+};
 const ECO = [
-  { label: "Aviation authorities", short: "FAA · ICAO · NASAO", desc: "Federal rules and guidance we track for agency programs, with international standards where they apply." },
-  { label: "Government agencies", short: "State DOTs · Federal agencies · Emergency management", desc: "State and federal transportation agencies and emergency management offices." },
+  { icon: "plane", label: "Aviation authorities", short: "FAA · ICAO · NASAO", desc: "Federal rules and guidance we track for agency programs, with international standards where they apply." },
+  { icon: "agency", label: "Government agencies", short: "State DOTs · Federal agencies · Emergency management", desc: "State and federal transportation agencies and emergency management offices." },
   // backed by the Tennessee advanced air mobility planning guidance for local governments (cs-aero); addendum C2, Nov 11
-  { label: "Cities & MPOs", short: "Local governments · Regional planners", desc: "Local governments and regional planning organizations preparing for air mobility, including where facilities can fit in their communities." },
+  { icon: "city", label: "Cities & MPOs", short: "Local governments · Regional planners", desc: "Local governments and regional planning organizations preparing for air mobility, including where facilities can fit in their communities." },
   /* ACRP: Airport Cooperative Research Program ("ACRA" was a typo carried over from the live site) */
-  { label: "Standards organizations", short: "ACRP · AASHTO · NCHRP", desc: "Standards and research bodies whose guidance agencies adopt. Members of our team serve on national committees." },
-  { label: "Academic institutions", short: "Research · Universities · Labs", desc: "Universities and research centers working on air mobility safety, technology, and workforce." },
-  { label: "Industry", short: "Manufacturers · Technology · Integrators", desc: "Aircraft manufacturers, technology providers, and systems integrators." },
+  { icon: "standards", label: "Standards organizations", short: "ACRP · AASHTO · NCHRP", desc: "Standards and research bodies whose guidance agencies adopt. Members of our team serve on national committees." },
+  { icon: "academic", label: "Academic institutions", short: "Research · Universities · Labs", desc: "Universities and research centers working on air mobility safety, technology, and workforce." },
+  { icon: "industry", label: "Industry", short: "Manufacturers · Technology · Integrators", desc: "Aircraft manufacturers, technology providers, and systems integrators." },
 ];
 
 /* Bridging silos (redesigned Nov 11; Nicole: "needs a better visual"): Rawlins at the center, the five groups
@@ -132,14 +141,22 @@ export function BridgingSilos() {
           <h2 className="v8-h2">Bridging silos</h2>
           <p className="v8-lead">The guidance your program relies on is being written now. We sit at the table where agencies, manufacturers, researchers, and regulators work it out, and bring what we learn back to your program.</p>
         </div>
-        <div className="hub">
+        <div className="hub hub2">
+          {/* soft rings behind everything: the table the groups sit around */}
+          <span className="hub-ring hub-ring-a" aria-hidden="true" /><span className="hub-ring hub-ring-b" aria-hidden="true" />
           <svg className="hub-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            {HUB.slice(0, ECO.length).map(([x, y], i) => <line key={`b${i}`} className="hub-line-base" x1="50" y1="50" x2={x} y2={y} vectorEffect="non-scaling-stroke" />)}
             {HUB.slice(0, ECO.length).map(([x, y], i) => <line key={i} x1="50" y1="50" x2={x} y2={y} vectorEffect="non-scaling-stroke" />)}
           </svg>
-          <div className="hub-core" aria-hidden="true"><b>Rawlins</b><span>at the table</span></div>
+          {/* the Rawlins R icon at the center, no words (Nicole, Nov 11) */}
+          <div className="hub-core hub-core-logo">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/pages/rawlins-r-icon.png" alt="Rawlins" width={512} height={495} />
+          </div>
           <ul className="hub-nodes">
             {ECO.map((e, i) => (
               <li key={e.label} data-reveal style={{ ["--x" as string]: `${HUB[i][0]}%`, ["--y" as string]: `${HUB[i][1]}%`, ["--d" as string]: `${i * 80}ms` } as CSSProperties}>
+                <span className="hub-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" focusable="false" dangerouslySetInnerHTML={{ __html: ECO_ICON[e.icon] }} /></span>
                 <h3>{e.label}</h3>
                 <p className="av-silo-who">{e.short}</p>
                 <p>{e.desc}</p>
@@ -199,7 +216,7 @@ export function AviationTeam({ people, title = "Our aviation team", roles }: { p
         </div>
         {roles && <><p className="av-sub">The roles on our aviation team</p><AviationRoles roles={roles} /></>}
         {roles && <p className="av-sub av-sub-people">The people in those roles</p>}
-        <ul className="av-team-list">
+        <ul className="av-team-list av-team-circles">
           {people.map((p, i) => (
             <li key={p.name} data-reveal style={{ ["--d" as string]: `${i * 80}ms` } as CSSProperties}>
               <a href={p.href} onClick={(e) => pick(e, p.person)} aria-haspopup={p.person ? "dialog" : undefined}>

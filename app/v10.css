@@ -668,3 +668,79 @@
   .ev.has-banner > :is(.ev-when, b, .ev-where, p) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .ev.has-banner > .v8-btn { position: absolute; z-index: 2; right: 20px; bottom: 18px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); }
 }
+
+/* ── Nov 11, round 4 (Nicole) ── */
+/* What We Do and Insights menus: the links row sits at the top of the panel, not the bottom */
+.mx-foot.mx-foot-top { border-top: 0; border-bottom: 1px solid var(--line); }
+/* "Integrate the next layer": the line under the title sits on navy, so it's light. It was added with the
+   default dark text color and nothing set it light for this section. */
+.av-map .v8-lead { color: #dce6f2; }
+.av-map .v8-lead .pg-dev { margin-top: 12px; }
+
+/* Bridging silos: the Rawlins R icon at the center (no words), soft rings behind it, an icon on each card */
+.hub2 { isolation: isolate; }
+.hub2::before { content: ""; position: absolute; left: 50%; top: 50%; z-index: -1; height: 96%; aspect-ratio: 1.5; border-radius: 50%; translate: -50% -50%; background: radial-gradient(closest-side, rgba(34, 211, 238, 0.2), rgba(196, 216, 242, 0.28) 52%, rgba(196, 216, 242, 0) 100%); }
+.hub-ring { position: absolute; left: 50%; top: 50%; z-index: 0; height: var(--s); aspect-ratio: 1; border-radius: 50%; translate: -50% -50%; pointer-events: none; }
+.hub-ring-a { --s: 44%; border: 2px solid rgba(34, 211, 238, 0.55); box-shadow: 0 0 30px rgba(34, 211, 238, 0.25), inset 0 0 30px rgba(34, 211, 238, 0.12); animation: hub-breathe 5s ease-in-out infinite; }
+.hub-ring-b { --s: 74%; border: 2px dashed rgba(29, 55, 89, 0.24); }
+@keyframes hub-breathe { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.06); opacity: 0.5; } }
+.hub-lines line.hub-line-base { stroke: #c4d8f2; stroke-width: 7; stroke-dasharray: none; opacity: 0.6; animation: none; }
+.hub2 .hub-lines line:not(.hub-line-base) { stroke-width: 2.5; opacity: 0.95; }
+.hub-core.hub-core-logo { width: clamp(156px, 15.5vw, 200px); overflow: hidden; background: #203864; box-shadow: 0 0 0 10px rgba(34, 211, 238, 0.18), 0 0 0 24px rgba(34, 211, 238, 0.08), 0 0 60px rgba(34, 211, 238, 0.55), 0 26px 50px -20px rgba(10, 18, 32, 0.6); animation: hub-glow 4s ease-in-out infinite; }
+.hub-core-logo img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.045); }
+@keyframes hub-glow {
+  0%, 100% { box-shadow: 0 0 0 10px rgba(34, 211, 238, 0.18), 0 0 0 24px rgba(34, 211, 238, 0.08), 0 0 60px rgba(34, 211, 238, 0.55), 0 26px 50px -20px rgba(10, 18, 32, 0.6); }
+  50% { box-shadow: 0 0 0 14px rgba(34, 211, 238, 0.24), 0 0 0 32px rgba(34, 211, 238, 0.1), 0 0 84px rgba(34, 211, 238, 0.7), 0 26px 50px -20px rgba(10, 18, 32, 0.6); }
+}
+.hub2 .hub-nodes li { display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 14px; align-items: center; width: clamp(236px, 23.5vw, 318px); padding: 22px 22px 20px; overflow: hidden; border-color: #c4d8f2; background: linear-gradient(180deg, #fff, #f6fafe); box-shadow: 0 22px 46px -26px rgba(10, 18, 32, 0.6); }
+.hub2 .hub-nodes li::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: linear-gradient(90deg, #22d3ee, #1d3759); }
+.hub2 .hub-nodes li:hover { border-color: #22d3ee; box-shadow: 0 26px 50px -24px rgba(10, 18, 32, 0.6), 0 0 0 3px rgba(34, 211, 238, 0.22), 0 0 34px rgba(34, 211, 238, 0.3); }
+.hub-ic { grid-row: 1 / span 2; align-self: start; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 13px; background: #e6f9fc; color: #0e7490; box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.5); }
+.hub2 .hub-nodes li:hover .hub-ic { background: #1d3759; color: #a5f3fc; }
+.hub2 .hub-nodes h3 { grid-column: 2; margin: 0 0 2px; }
+.hub2 .hub-nodes .av-silo-who { grid-column: 2; margin: 0; }
+.hub2 .hub-nodes li > p:last-child { grid-column: 1 / -1; margin-top: 12px; }
+@media (max-width: 900px) {
+  /* phones: the stage's desktop height was still applied here (set after the phone rules on Nov 11), which pushed
+     the cards up under the center and out of the stage's bottom */
+  .av-hub .hub { height: auto; }
+  .hub2::before, .hub-ring { display: none; }
+  .hub2 .hub-nodes li { width: auto; }
+  .hub-core.hub-core-logo { justify-self: center; width: 132px; margin: 14px auto 30px; }
+}
+@media (prefers-reduced-motion: reduce) { .hub-ring-a, .hub-core.hub-core-logo { animation: none; } }
+
+/* Our aviation team: the portraits as the circles the photos are (they were zoomed into tall boxes, which cut
+   the circles off). The cut-out circle fills 96% of each file, so the photo is shown a little larger than the
+   ring and centered. */
+.av-team-circles { gap: clamp(18px, 2.2vw, 34px) !important; }
+.av-team-circles a { justify-items: center; text-align: center; }
+.av-team-circles .av-team-ph { width: min(100%, 220px); aspect-ratio: 1 / 1; margin: 6px auto 18px; border-radius: 50%; background: #fff !important; box-shadow: 0 0 0 3px #22d3ee, 0 0 0 10px rgba(34, 211, 238, 0.14), 0 20px 40px -18px rgba(0, 0, 0, 0.65); }
+.av-team-circles .av-team-ph img { position: absolute; left: 50% !important; top: 50% !important; width: 104.5% !important; height: 104.5% !important; max-width: none; translate: -50% -50% !important; object-fit: cover; object-position: 50% 50%; }
+.av-team-circles a:hover .av-team-ph, .av-team-circles a:focus-visible .av-team-ph { box-shadow: 0 0 0 3px #22d3ee, 0 0 0 10px rgba(34, 211, 238, 0.26), 0 0 40px rgba(34, 211, 238, 0.5); }
+.av-team-circles .av-team-ph > span { border-radius: 50%; background: #10233f; }
+
+/* An author's photo and name that open the bio on the page (the article's byline and About the author) */
+.apop { display: inline-flex; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.apop:focus-visible { outline: 2px solid #22d3ee; outline-offset: 4px; }
+.apop.ax-by { display: flex; width: fit-content; margin-left: -8px; padding: 8px 18px 8px 8px; border-radius: 999px; transition: background 0.2s, box-shadow 0.2s; }
+.apop.ax-by:hover, .apop.ax-by:focus-visible { background: rgba(255, 255, 255, 0.1); box-shadow: inset 0 0 0 1px rgba(165, 243, 252, 0.4); }
+.apop.ax-by b { text-decoration: underline; text-decoration-color: rgba(34, 211, 238, 0.8); text-decoration-thickness: 2px; text-underline-offset: 5px; }
+.ax-author-in > .apop.ax-author-ph { border-radius: 50%; }
+.ax-author-ph img { display: block; width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px #fff, 0 0 0 6px #22d3ee; transition: box-shadow 0.2s; }
+.ax-author-ph:hover img, .ax-author-ph:focus-visible img { box-shadow: 0 0 0 4px #fff, 0 0 0 6px #22d3ee, 0 0 28px rgba(34, 211, 238, 0.65); }
+.apop.ax-author-name { display: block; }
+.apop.ax-author-name b { text-decoration: underline; text-decoration-color: #22d3ee; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.apop-card { position: fixed; z-index: 2000; display: grid; gap: 12px; width: min(400px, calc(100vw - 24px)); padding: 18px 20px 16px; border-radius: 18px; border: 1px solid #c4d8f2; background: #fff; box-shadow: 0 30px 70px -24px rgba(10, 18, 32, 0.65), 0 0 0 3px rgba(34, 211, 238, 0.2); color: #22344d; font-family: var(--font-sans); text-align: left; cursor: pointer; animation: apop-in 0.18s ease; }
+.apop-card.is-up { translate: 0 -100%; }
+@keyframes apop-in { from { opacity: 0; transform: translateY(6px); } }
+.apop-top { display: flex; gap: 14px; align-items: center; }
+.apop-top img { flex: none; width: 84px; height: 84px; border-radius: 50%; object-fit: cover; object-position: top; box-shadow: 0 0 0 3px #22d3ee; }
+.apop-top > span { display: grid; gap: 2px; }
+.apop-top b { color: #0a1220; font-size: 1.22rem; font-weight: 600; line-height: 1.2; }
+.apop-top em { color: #1d3759; font-style: normal; font-size: 1.02rem; font-weight: 600; }
+.apop-top i { color: #4d688c; font-style: normal; font-size: 0.96rem; line-height: 1.35; }
+.apop-bio { font-size: 1.02rem; line-height: 1.5; }
+.apop-more { color: #0e7490; font-size: 1rem; font-weight: 700; }
+.apop-more::after { content: " →"; }
+@media (prefers-reduced-motion: reduce) { .apop-card { animation: none; } }

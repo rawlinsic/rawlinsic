@@ -1625,7 +1625,7 @@ html.lenis { scroll-behavior: auto !important; }
 .pe-btn.is-on { background: rgba(34, 211, 238, 0.18); box-shadow: inset 0 0 0 1px #22d3ee; }
 .pe-show { position: fixed; left: 16px; bottom: 16px; z-index: 2147483000; padding: 8px 14px; border: 0; border-radius: 999px; background: rgba(10, 18, 32, 0.72); color: #fff; font: 600 0.85rem var(--font-sans); cursor: pointer; opacity: 0.55; transition: opacity 0.2s; }
 .pe-show:hover, .pe-show:focus-visible { opacity: 1; }
-html.pe-clean :is(.pg-dev, .v8-dev, .mx-intl) { display: none !important; }
+html.pe-clean :is(.pg-dev, .v8-dev) { display: none !important; }
 html.pc-adding, html.pc-adding * { cursor: crosshair !important; }
 .pc-pin { position: fixed; z-index: 2147482990; width: 30px; height: 30px; margin: -15px 0 0 -15px; display: grid; place-items: center; border: 2px solid #fff; border-radius: 50% 50% 50% 4px; background: #0e7490; color: #fff; font: 700 0.85rem var(--font-sans); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 0 0 3px rgba(34, 211, 238, 0.35); cursor: pointer; }
 .pc-pin.is-open, .pc-pin:hover { background: #22d3ee; color: #04131f; }

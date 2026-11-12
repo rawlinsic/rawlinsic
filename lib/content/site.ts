@@ -173,7 +173,7 @@ export const INDUSTRIES: Industry[] = [
     /* INTERNATIONAL PAGE (Nov 11, 2026). Hidden: noindex, never linked on the live site, listed on previews only. */
     who: "Ministries of transport, national roads and aviation authorities, and city agencies outside the United States",
     // U.S. only to date: every Rawlins client is in the U.S., including territories (Jacob's AERO portfolio, Nov 2026). Don't add an international project or client.
-    lead: "Our project work to date has been in the United States. What we do there, helping public agencies plan, deliver, and run their transportation systems, is the same job ministries of transport and national roads and aviation authorities do everywhere.",
+    lead: "While our project work to date has been in the United States, our experience helping public agencies plan, deliver, and run transportation systems is highly transferable. The core operational and infrastructure challenges we solve in the US closely mirror those faced by ministries of transport and national authorities around the world.", // Nicole's wording, Nov 11
     featured: ["strategic-planning", "org-design", "program-delivery", "asset-mgmt", "data-governance", "tech-strategy", "drone-aam", "smart-mobility"], subsectors: [], projects: [],
   },
 ];
@@ -182,7 +182,7 @@ export const VISIBLE_INDUSTRIES = INDUSTRIES.filter((i) => !i.hidden);
 
 /* The International page's own sections (INTERNATIONAL PAGE, Nov 11, 2026). Rendered in components/v8/industry.tsx
    only for "intl". flag: a preview-only Content status note beside the line. */
-export const INTL = {
+export const INTL: { carry: { title: string; text: string }; abroad: { title: string; items: { t: string; flag?: string }[] }; region: { title: string; items: string[]; link: { href: string; label: string } } } = {
   carry: {
     title: "Why it carries over",
     text: "A U.S. state department of transportation plans, funds, builds, and maintains highways and bridges, and often oversees aviation and transit, for millions of people, with lean staffs and under public scrutiny. That is the job of a ministry of transport or a national roads authority. Our people ran the programs our clients run: chief engineers, operations and maintenance leaders, technology and data chiefs, and federal highway executives.",
@@ -195,8 +195,7 @@ export const INTL = {
       // Andy Palanisamy's bio: Head of Practice for Smart Cities and Innovation at Parsons in Dubai, before Rawlins.
       { t: "Experience on our team includes leading the smart cities and innovation practice for a global engineering firm in Dubai, with smart city and mobility projects across the Middle East and Africa." },
       { t: "Our in-house team builds the manuals, training, dashboards, and AI tools from wherever they are based, with time on site where the work needs it." },
-      // TODO(launch): Scott and Andy to confirm the entity name and that it is registered.
-      { t: "Rawlins Global, our registered entity in the Middle East, contracts for work in the region.", flag: "Scott and Andy to confirm the entity name and that it is registered." },
+      // the Rawlins Global line (our registered entity in the Middle East) was removed by Nicole, Nov 11
       // TODO(launch): Scott and Andy to confirm.
       { t: "Where a project needs in-country presence, we work with local partners.", flag: "Scott and Andy to confirm." },
     ],

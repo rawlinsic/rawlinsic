@@ -4,8 +4,8 @@
                    in it as photo panels that open on hover; a page without
                    panels shows its photo in the layered frame instead
      we hear       the clients' words side by side as quote cards
-     how we help   one card per service area, its services as a plain list of
-                   links, the ones we use most here marked
+     services      "Services we provide": the services we use most here as linked
+                   text cards (area, name, first line), not photo cards
      people        portrait cards that open each bio ("Experience on our team")
      projects      photo cards
    then the closing band and the next page. Content comes from lib/content,
@@ -20,13 +20,13 @@ import {
   type CaseIndex, type Industry, type Subsector, PAGE_STATUS, INTL,
 } from "@/lib/content/site";
 import { INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
-import { AREA_PHOTO, INDUSTRY_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
-import { casePhoto, themeStyle } from "@/lib/content/v8";
+import { INDUSTRY_PHOTO } from "@/lib/content/media";
+import { casePhoto } from "@/lib/content/v8";
 import Header from "@/components/v8/header";
 import Footer from "@/components/v8/footer";
 import Reveal from "@/components/v8/reveal";
 import Panels from "@/components/v8/panels";
-import SectionNav from "@/components/v8/section-nav";
+import SectionNav, { type SnMore } from "@/components/v8/section-nav";
 import LitText from "@/components/v8/lit-text";
 import RouteList from "@/components/v8/route-list";
 import { AviationTeam, type TeamCard } from "@/components/site/aviation";
@@ -63,7 +63,9 @@ const nextIndustry = (id: string) => VISIBLE_INDUSTRIES[(VISIBLE_INDUSTRIES.find
 
 /* ── shared pieces ─────────────────────────────────────────────── */
 
-function Page({ sections, hero, children }: { sections: Nav[]; hero: ReactNode; children: ReactNode }) {
+/* more: the sibling pages (an industry's specialties, or the industries), in a list that opens from a button at
+   the start of the section bar, the same bar the What We Do service pages have (Nicole, Nov 11) */
+function Page({ sections, hero, children, more }: { sections: Nav[]; hero: ReactNode; children: ReactNode; more?: SnMore }) {
   return (
     <>
       <Header />
@@ -71,7 +73,7 @@ function Page({ sections, hero, children }: { sections: Nav[]; hero: ReactNode; 
         <div className="sv ipg">
           <Panels className="pnl-page">
             {hero}
-            <SectionNav items={sections} />
+            <SectionNav items={sections} more={more} />
             {children}
           </Panels>
         </div>
@@ -147,10 +149,10 @@ function PanelHero({ photo, crumbs, tag, title, lead, actions, label, subs }: {
 }
 
 /* Hero with the photo in the layered frame (the service page's hero), for
-   pages without panels; a row of sibling pages along its foot */
-function FrameHero({ photo, crumbs, tag, title, lead, actions, note, sibs, sibsLabel }: {
+   pages without panels. The sibling pages used to sit in a second bar along its foot; they're now in the
+   section bar's list (Nicole, Nov 11: the same menu design as the What We Do pages). */
+function FrameHero({ photo, crumbs, tag, title, lead, actions, note }: {
   photo: string; crumbs: Crumb[]; tag: ReactNode; title: string; lead: string; actions: ReactNode; note?: ReactNode;
-  sibs: { id: string; name: string; href: string; on: boolean }[]; sibsLabel: string;
 }) {
   return (
     <section className="sv-hero svh ipg-hero is-frame" data-scrub="page">
@@ -173,13 +175,6 @@ function FrameHero({ photo, crumbs, tag, title, lead, actions, note, sibs, sibsL
           </span>
         </figure>
       </div>
-      {sibs.length > 1 && (
-        <nav className="sv-sibs" aria-label={sibsLabel}>
-          <ol className="v8-wrap">
-            {sibs.map((x) => <li key={x.id}><a href={x.href} aria-current={x.on ? "page" : undefined}>{x.name}</a></li>)}
-          </ol>
-        </nav>
-      )}
     </section>
   );
 }
@@ -260,43 +255,10 @@ function ServiceCards({ id, title, ids, tone }: { id: string; title: string; ids
   );
 }
 
-/* How we help: one card per service area, its services as a list of links,
-   the ones we use most here first and marked */
-function Help({ ind }: { ind: Industry }) {
-  /* only the services we use most for this industry (Nicole, Nov 10: "why include ones that aren't used"),
-     as photo cards in area order, each with its area, its first line, and a link */
-  const ids = AREAS.flatMap((a) => a.services.map((sv) => sv.id)).filter((x) => ind.featured.includes(x));
-  if (!ids.length) return null;
-  return (
-    <section id="help" className="sv-sec ipg-help">
-      <div className="v8-wrap">
-        <div className="ipg-help-head">
-          <h2 className="v8-h2">Services we provide</h2>
-          <p className="v8-lead"></p>
-        </div>
-        <ul className="ipg-help-cards">
-          {ids.map((x, i) => {
-            const hit = serviceById(x)!;
-            return (
-              <li key={x} style={{ ...themeStyle(hit.area.id), ["--d" as string]: `${i * 60}ms` } as CSSProperties} data-reveal>
-                <a href={serviceHref(x)}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={SERVICE_PHOTO[x] ?? AREA_PHOTO[hit.area.id]} alt="" loading="lazy" />
-                  <span className="ipg-hc-txt">
-                    <span className="ipg-hc-area">{hit.area.name}</span>
-                    <b>{hit.service.name}</b>
-                    <span className="ipg-hc-line">{firstSentence(SERVICES[x]?.intro ?? "")}</span>
-                    <span className="ipg-hc-more">Explore</span>
-                  </span>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </section>
-  );
-}
+/* Services we provide (was "How we help"): only the services we use most for this industry (Nicole, Nov 10),
+   in area order. Since Nov 11 they're the linked text cards the specialty pages use (ServiceCards), not photo
+   cards: Nicole didn't want them to look like the Featured projects row that comes right after. */
+const helpIds = (ind: Industry) => AREAS.flatMap((a) => a.services.map((sv) => sv.id)).filter((x) => ind.featured.includes(x));
 
 function Talk({ title = TALK.title, text = TALK.text, linksTitle, links }: {
   title?: string; text?: string; linksTitle?: string; links?: { id: string; name: string; href: string; on?: boolean }[];
@@ -372,17 +334,19 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
       subs={subs.map((s) => ({ id: s.id, name: s.name, line: s.line, href: subsectorHref(ind, s), photo: INDUSTRY_PHOTO[s.id] ?? INDUSTRY_PHOTO[ind.id], note: s.thin ? <Dev>{THIN_NOTE[s.id] ?? "Placeholder: thin content"}</Dev> : undefined }))} />
   ) : (
     <FrameHero photo={INDUSTRY_PHOTO[ind.id]} crumbs={crumbs} tag="Who we work with" title={ind.name} lead={ind.lead} actions={actions}
-      sibs={industryLinks(ind.id)} sibsLabel="Who we work with" />
+ />
   );
+  /* pages without specialty panels list the other industries in the section bar */
+  const more: SnMore | undefined = subs.length ? undefined : { label: "Industries", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) };
   return (
-    <Page sections={sections} hero={hero}>
+    <Page sections={sections} hero={hero} more={more}>
       {intl && (
         <section id="carry" className="sv-sec intl-carry">
           <div className="v8-wrap"><h2 className="v8-h2">{INTL.carry.title}</h2><p className="v8-lead">{INTL.carry.text}</p></div>
         </section>
       )}
       {d.ch.length > 0 && <Hear title="Challenges we hear" items={d.ch} />}
-      <Help ind={ind} />
+      <ServiceCards id="help" title="Services we provide" ids={helpIds(ind)} tone="pale" />
       {intl && (
         <Route id="abroad" title={INTL.abroad.title}>
           <RouteList check ordered={false} stops={INTL.abroad.items.map((x) => ({ d: <>{x.t}{x.flag && <> <Dev>Content status: {x.flag}</Dev></>}</> }))} />
@@ -429,11 +393,10 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
       crumbs={[["/industries", "Who We Work With"], [industryHref(ind), ind.name], [subsectorHref(ind, sub), sub.name]]}
       tag={<a href={industryHref(ind)}>{ind.name}</a>} title={sub.name} lead={d?.intro || sub.line}
       actions={<><a className="v8-btn v8-btn-area" href="/contact">Talk to an expert</a>{cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See the work</a>}</>}
-      note={sub.thin ? <Dev>{THIN_NOTE[sub.id] ?? "Content status: thin content"}</Dev> : undefined}
-      sibs={sibs} sibsLabel={`${ind.name} specialties`} />
+      note={sub.thin ? <Dev>{THIN_NOTE[sub.id] ?? "Content status: thin content"}</Dev> : undefined} />
   );
   return (
-    <Page sections={sections} hero={hero}>
+    <Page sections={sections} hero={hero} more={{ label: "Specialties", links: sibs.map((x) => ({ name: x.name, href: x.href, current: x.on })) }}>
       {d?.ch?.length ? <Hear title="Challenges we hear" items={d.ch} /> : null}
       {deliver.length > 0 && <Route id="deliver" title="What we deliver"><RouteList check ordered={false} stops={deliver.map((x) => ({ d: x }))} /></Route>}
       {avTeam.length > 0 && <Team id="aviation" people={avTeam} roles={AVIATION_ROLES} />}
@@ -464,11 +427,10 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
   const hero = (
     <FrameHero photo={INDUSTRY_PHOTO.private} crumbs={[["/industries", "Who We Work With"], [industryHref(ind), ind.name]]}
       tag="Private sector" title="For growing firms" lead={ind.lead}
-      actions={<a className="v8-btn v8-btn-area" href="/contact">Book a short call</a>}
-      sibs={industryLinks(ind.id)} sibsLabel="Who we work with" />
+      actions={<a className="v8-btn v8-btn-area" href="/contact">Book a short call</a>} />
   );
   return (
-    <Page sections={sections} hero={hero}>
+    <Page sections={sections} hero={hero} more={{ label: "Industries", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) }}>
       <Hear title="Sound familiar?" items={PRIV.hear} />
       {cases.length > 0 && <Work title="Featured projects" cases={cases} tone="pale" />}
       <Route id="start" title="Ways to start" note={<Dev block>Ways to start: confirm wording with Ben. Hours and pricing stay internal.</Dev>}>

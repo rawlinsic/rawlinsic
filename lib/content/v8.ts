@@ -51,15 +51,21 @@ const CASE_PHOTO: Record<string, string> = {
      place; no logos. Stock under the Unsplash or Pexels license (free commercial use, no credit required). */
   "cs-pbmc": P("project-pbmc.webp"), // interstate through wooded hills, Tennessee (Chattanooga); Pexels, "K" (@kelly): pexels.com/photo/road-below-a-mountain-2495407
   "cs-txmaint": P("project-txmaint.webp"), // asphalt distributor sealing a rural highway, no place shown; Unsplash, Tom Shamberger: unsplash.com/photos/-KAoVUNv9W0
-  "cs-drt": P("project-drt.webp"), // drone view of a street after a storm, no signs or landmarks; Pexels, "K" (@kelly): pexels.com/photo/4170459
+  /* Drone and aviation projects use only photos from the live site's Advanced Air Mobility page, which are approved
+     (Nicole, Nov 11: "only pull the pictures off the current live site"). The stock photos first picked for these three
+     (project-drt, project-aerodiv, project-pooled) are no longer used. */
+  "cs-drt": P("engineersoperatingdrones.webp"), // a crew flying a drone in the field (live AAM page)
   "cs-pmdiv": P("project-pmdiv.webp"), // team mapping a process with sticky notes; Unsplash, Vitaly Gariev: unsplash.com/photos/2kHqlCwj35E
   "cs-workforce": P("project-workforce.webp"), // rows of hard hats (staffing); Unsplash, Declan Sun: unsplash.com/photos/LutB1xxyArA
-  "cs-aerodiv": P("project-aerodiv.webp"), // jet on the taxiway at a Nevada general-aviation airport (Reno); Unsplash, Simon Hurry: unsplash.com/photos/Rn0kG2LXRvo
+  "cs-aerodiv": P("aam-phase3.webp"), // an airport from the air (live AAM page)
   "cs-partnering": P("project-partnering.webp"), // two people in hard hats reviewing plans on a bridge deck; Pexels, Mikael Blomkvist: pexels.com/photo/8961133
   "cs-ia-partnering": P("project-ia-partnering.webp"), // people around a table taking notes; Unsplash, Dylan Gillis: unsplash.com/photos/KdeqA3aTnBY
   "cs-db-partnering": P("project-db-partnering.webp"), // interstate work zone and a new flyover; Unsplash, Oscar Madison: unsplash.com/photos/Jc9BPRYzJg4
-  "cs-pooled": P("project-pooled.webp"), // camera drone in flight; Unsplash, Mitch Nielsen: unsplash.com/photos/pWtNPCpvVA8
-  "cs-pdn": P("project-pdn.webp"), // professional working on a laptop with project folders; Pexels, Sora Shimazaki: pexels.com/photo/5668861
+  "cs-pooled": P("skylimit.webp"), // a drone and its data over a highway bridge (live AAM page)
+  // Nicole, Nov 11: "I want a different image here" (the stock photo of a woman at a laptop, project-pdn.webp, on the
+  // home page). Back to the site's own photo of a dashboard on a laptop, which this project had before; the private
+  // field-reports project that shared it now has its own (people going through paper reports beside their laptops).
+  "cs-pdn": P("auto-workflow.webp"),
   "cs-tn-tech": P("project-tn-tech.webp"), // leadership briefing in front of a screen; Unsplash, Vitaly Gariev: unsplash.com/photos/dekx74fJUt4
   "cs-hi": P("project-hi.webp"), // hard hat on construction plan sheets; Pexels, Thirdman: pexels.com/photo/5583255
   "cs-pv-pmo": P("project-pv-pmo.webp"), // engineer and manager reviewing project charts; Pexels, ANTONI SHKRABA production: pexels.com/photo/8278915
@@ -72,7 +78,7 @@ const CASE_PHOTO: Record<string, string> = {
   "cs-riverside": P("project-riverside.webp"), // view over Riverside from Mount Rubidoux, Riverside County, California; Unsplash, john ko: unsplash.com/photos/zb6lAJadm1c
   "cs-pv-reporting": P("auto-data.webp"),
   "cs-pv-service": P("auto-collab.webp"),
-  "cs-pv-field": P("auto-workflow.webp"),
+  "cs-pv-field": P("auto-optimize.webp"),
   "cs-pv-capacity": P("auto-dashboard.webp"),
 };
 const STATE_PHOTO: Record<string, string> = {
@@ -85,9 +91,11 @@ export const casePhoto = (c: CaseIndex) => CASE_PHOTO[c.id] ?? STATE_PHOTO[c.sta
 /* 03: Aaron Organ, from our team, speaking at a 2026 symposium; 04: people working together at their computers */
 /* How we've grown photos (Nicole, Nov 10): our team for agency expertise and advisory (her photos), Alicia in the
    air taxi cabin from the live site's Drones page for drones and air mobility, and a data dashboard for data and AI */
-export const STORY_PHOTO = [P("team-group-indoor.webp"), P("team-group-outdoor.webp"), P("aam-services-portfolio.webp"), P("auto-data.webp")];
+/* Nov 11 (Nicole): the indoor group photo is no longer shown large, so stage 1 is the outdoor group photo and
+   stage 2 is our team leading a workshop (her photo), so the same photo isn't on two cards side by side */
+export const STORY_PHOTO = [P("team-group-outdoor.webp"), P("change-management-workshop.webp"), P("aam-services-portfolio.webp"), P("auto-data.webp")];
 /* where to center each one in its wide frame */
-export const STORY_PHOTO_POS = ["50% 55%", "50% 62%", "50% 26%", "50% 50%"];
+export const STORY_PHOTO_POS = ["50% 62%", "50% 50%", "50% 26%", "50% 50%"];
 
 /* Home: Featured projects, Rawlins work only (no Before Rawlins cases) */
 export const FEATURED_CASES = ["cs-transform", "cs-pdn", "cs-proficiency", "cs-strategic", "cs-pbmc", "cs-local-am", "cs-major", "cs-aero", "cs-nc-ipd", "cs-ia-partnering"];

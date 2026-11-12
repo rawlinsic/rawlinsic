@@ -30,7 +30,7 @@ export const SCENE_PHOTO: Record<SceneKey, string> = {
   crossing: P("tnbig.webp"), // Nashville and its bridges
   airport: P("aam-phase3.webp"),
   rail: P("cs-hero-10.webp"), // placeholder: Philadelphia from the Ben Franklin Bridge
-  harbor: P("cs-hero-10.webp"), // mood placeholder until a harbor photo is licensed
+  harbor: P("delaware.webp"), // stand-in until a harbor photo is chosen
   street: P("michigan.webp"),
   site: P("aam-planning.webp"),
   office: P("auto-dashboard.webp"),
@@ -42,7 +42,9 @@ export const SCENE_PHOTO: Record<SceneKey, string> = {
 
 /* Heading pages */
 export const AREA_PHOTO: Record<string, string> = {
-  strategy: P("team-group-indoor.webp"), // our team (Nicole, Nov 10)
+  // our team (Nicole, Nov 10). Nov 11: the outdoor group photo wherever the photo is shown large; the indoor
+  // one stays only as the small photo in the What We Do menu (NAV_AREA_PHOTO), where faces are too small to read.
+  strategy: P("team-group-outdoor.webp"),
   delivery: P("transportation-aerial.webp"),
   om: P("cs-hero-1.webp"), // Nashville, with a highway bridge
   tech: P("technology-bg.webp"), // the live site's Technology photo (Nicole, Nov 9)
@@ -51,7 +53,10 @@ export const AREA_PHOTO: Record<string, string> = {
   aviation: P("aam-lifecycle-drone.webp"),
 };
 /* where to center an area photo when it's cropped (nav cards, tiles, heroes) */
-export const AREA_PHOTO_POS: Record<string, string> = { aviation: "36% 42%", strategy: "50% 50%" };
+export const AREA_PHOTO_POS: Record<string, string> = { aviation: "36% 42%", strategy: "50% 56%" };
+/* the What We Do menu's small photos, where they differ from the area photo */
+export const NAV_AREA_PHOTO: Record<string, string> = { strategy: P("team-group-indoor.webp") };
+export const NAV_AREA_PHOTO_POS: Record<string, string> = { strategy: "50% 50%" };
 
 /* Service pages (shot list 6B) */
 export const SERVICE_PHOTO: Record<string, string> = {
@@ -81,7 +86,7 @@ export const SERVICE_PHOTO: Record<string, string> = {
   "smart-mobility": P("cs-hero-5.webp"),
   "drone-programs": P("engineersoperatingdrones.webp"),
   "drone-aam": P("aam-aerial-view.webp"), // a real drone in flight
-  "drone-emergency": P("aam-enable-quadrocopter.webp"), // a real drone in flight
+  "drone-emergency": P("aam-enable.webp"), // a field crew with a drone, from the live site's Advanced Air Mobility page (Nicole, Nov 11: drone photos only from the live site; aam-enable-quadrocopter isn't on it)
   research: P("aam-define.webp"), // airport line drawing (also the Research page)
   "aero-division": P("aam-phase3.webp"),
 };
@@ -97,7 +102,7 @@ export const INDUSTRY_PHOTO: Record<string, string> = {
   "sub-bridges": P("tnbig.webp"),
   "sub-aviation": P("aam-phase3.webp"),
   "sub-rail": P("cs-hero-10.webp"), // placeholder; the tile is off the home ring
-  "sub-ports": P("cs-hero-10.webp"),
+  "sub-ports": P("delaware.webp"), // a working riverfront, so Ports & Harbors no longer shares Rail & Transit's photo (Nicole, Nov 11); still a stand-in until a U.S. port photo is chosen
   "g-asset": P("michigan.webp"), // the local agency work was in Michigan
   "g-capital": P("cs-hero-4.webp"),
   "g-mpo": P("cs-hero-9.webp"),

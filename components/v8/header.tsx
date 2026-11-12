@@ -6,7 +6,7 @@ import { AREAS, CASES, INDUSTRIES, LEADERS, SITE_INDEX, VISIBLE_INDUSTRIES, area
 import { isJacobVersion } from "@/lib/preview-gh";
 import { tc } from "@/lib/title-case";
 import { INDUSTRIES as IND_DATA } from "@/lib/content/catalog";
-import { AREA_PHOTO, PAGE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
+import { AREA_PHOTO, PAGE_PHOTO, AREA_PHOTO_POS, NAV_AREA_PHOTO, NAV_AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, casePhoto } from "@/lib/content/v8";
 import { EVENTS, NEWS, isUpcoming } from "@/lib/content/news";
 import { RESEARCH } from "@/lib/content/research";
@@ -34,7 +34,7 @@ export default function Header() {
   const article = [...THOUGHT_LEADERSHIP].sort((a, b) => b.date.localeCompare(a.date))[0];
   const data: NavData = {
     areas: AREAS.map((a) => ({
-      id: a.id, n: THEME[a.id].n, name: a.name, tag: a.tag, href: areaHref(a), color: THEME[a.id].color, ink: THEME[a.id].ink, tint: THEME[a.id].tint, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id],
+      id: a.id, n: THEME[a.id].n, name: a.name, tag: a.tag, href: areaHref(a), color: THEME[a.id].color, ink: THEME[a.id].ink, tint: THEME[a.id].tint, photo: NAV_AREA_PHOTO[a.id] ?? AREA_PHOTO[a.id], pos: NAV_AREA_PHOTO[a.id] ? NAV_AREA_PHOTO_POS[a.id] : AREA_PHOTO_POS[a.id],
       /* the preview-only "?" beside Owner's Representation is off (Nicole, Nov 11) */
       services: a.services.map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: undefined as string | undefined })),
       projects: `/insights/case-studies?area=${a.slug}`,
@@ -63,12 +63,13 @@ export default function Header() {
       { label: "News & Recognition", href: "/insights/news", note: "Events, publications, and news", photo: PAGE_PHOTO.news,
         line: newest ? { k: "Latest", t: newest.title } : undefined,
         next: next ? { k: "Next", t: eventLine(next), ends: next.ends } : undefined },
-      { label: "Thought Leadership", href: THOUGHT_LEADERSHIP.length === 1 ? `/insights/thought-leadership/${THOUGHT_LEADERSHIP[0].slug}` : "/insights/thought-leadership", note: "Practical perspectives from our team", photo: PAGE_PHOTO.thought,
-        line: article ? { k: "Latest", t: article.title } : undefined },
+      /* Thought Leadership sits last (Nicole, Nov 11) */
       { label: "Research & Publications", href: "/insights/research", note: "Guidance manuals and research", photo: PAGE_PHOTO.research,
         line: RESEARCH[0] ? { k: "Featured", t: RESEARCH[0].t } : undefined },
       { label: "Podcast", href: "/insights/podcast", note: "The Rawlins Way", photo: PAGE_PHOTO.podcast,
         line: { t: "The Rawlins Way: conversations with the people doing the work" } },
+      { label: "Thought Leadership", href: THOUGHT_LEADERSHIP.length === 1 ? `/insights/thought-leadership/${THOUGHT_LEADERSHIP[0].slug}` : "/insights/thought-leadership", note: "Practical perspectives from our team", photo: PAGE_PHOTO.thought,
+        line: article ? { k: "Latest", t: article.title } : undefined },
     ],
     about: [
       { label: "Who We Are", href: "/about/who-we-are", note: "Founded in 2017, and how we've grown" },

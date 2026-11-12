@@ -130,6 +130,8 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
 
       {/* desktop menus */}
       <div className="hx-panel" id="hx-m-what" hidden={open !== "what"} onMouseEnter={() => window.clearTimeout(timer.current)}>
+        {/* the two links sit at the top of the panel (Nicole, Nov 11); sentence case is her call */}
+        <p className="mx-foot mx-foot-top"><a href="/services">See all services</a><a href="/contact">Not sure where yours fits? Tell us what you&apos;re trying to fix</a></p>
         <div className="mx-what">
           {data.areas.map((a) => (
             <section key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink, ["--a-tint" as string]: a.tint } as CSSProperties}>
@@ -145,7 +147,6 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             </section>
           ))}
         </div>
-        <p className="mx-foot"><a href="/services">See all services</a><a href="/contact">Not sure where yours fits? Tell us what you&apos;re trying to fix</a></p>
       </div>
       <div className="hx-panel" id="hx-m-who" hidden={open !== "who"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         <div className="mx-who">
@@ -195,6 +196,8 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
         </div>
       </div>
       <div className="hx-panel" id="hx-m-insights" hidden={open !== "insights"} onMouseEnter={() => window.clearTimeout(timer.current)}>
+        {/* the Insights page itself (Nicole, Nov 10: "where is the insights page in the menu?"); at the top since Nov 11 */}
+        <p className="mx-foot mx-foot-top"><a href="/insights">All Insights</a></p>
         <ul className="mx-ins">{data.insights.map((l) => {
           const line = lineOf(l);
           return (
@@ -206,8 +209,6 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             </a></li>
           );
         })}</ul>
-        {/* the Insights page itself (Nicole, Nov 10: "where is the insights page in the menu?") */}
-        <p className="mx-foot"><a href="/insights">All Insights</a></p>
       </div>
       {!aboutTopOnly && <div className="hx-panel" id="hx-m-about" hidden={open !== "about"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         {/* About (Nicole, Nov 10): Who we are as a photo card, then the other pages as plain links, the same

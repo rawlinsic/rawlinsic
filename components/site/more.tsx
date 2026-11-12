@@ -13,6 +13,7 @@ import PodcastPlayer from "@/components/site/podcast-player";
 import Grown from "@/components/v8/grown";
 import { EdBand, EdBtn, EdHero, EdSec, EdSplit, EdStats, FaceRows } from "@/components/site/editorial";
 import ReadProgress from "@/components/site/read-progress";
+import AuthorPop from "@/components/site/author-pop";
 import FanCards, { type FanCard } from "@/components/v8/fan-cards";
 import { casePhoto } from "@/lib/content/v8";
 import TeamWall, { type WallPerson } from "@/components/v8/team-wall";
@@ -47,7 +48,7 @@ export function AboutIndex() {
       <EdStats items={[{ n: "2017", t: "Founded" }, { n: "25+", t: "People who came from public agencies" }, { n: String(people.length), t: "People on our team" }, { n: String(STATES.length), t: "States our work has taken us" }]} />
       <EdSec k="Inside Rawlins" title="Find your way around">
         <ul className="ab-bento">
-          <li className="ab-b-who"><a href="/about/who-we-are">{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/images/pages/team-group-indoor.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Who we are</b><span>Our story, how we&apos;ve grown since 2017, and why agencies call us.</span></span></a></li>
+          <li className="ab-b-who"><a href="/about/who-we-are">{/* eslint-disable-next-line @next/next/no-img-element */}{/* our team at the 2026 Hawaii summit; the outdoor group photo is already this page's top photo (Nicole, Nov 11: no large indoor group photo) */}<img src="/images/pages/insights-hawaii-summit-2026-team.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Who we are</b><span>Our story, how we&apos;ve grown since 2017, and why agencies call us.</span></span></a></li>
           <li className="ab-b-people"><a href="/about/our-people"><span className="ab-b-faces">{faces.map((p) => /* eslint-disable-next-line @next/next/no-img-element */ <img key={p.slug} src={p.photo} alt="" loading="lazy" />)}</span><span className="ab-b-txt"><b>Our people</b><span>{people.length} people: advisors who ran the programs, and the specialists who build the tools.</span></span></a></li>
           <li className="ab-b-how"><a href="/about/how-we-work"><span className="ab-b-steps">{STEPS.map(([t], k) => <i key={t}><em>{String(k + 1).padStart(2, "0")}</em>{t}</i>)}</span><span className="ab-b-txt"><b>How we work</b><span>Four steps, worked out with the people who do the work.</span></span></a></li>
           <li className="ab-b-where"><a href="/about/where-we-work"><span className="ab-b-num">{STATES.length}<small>states</small></span><span className="ab-b-txt"><b>Where we work</b><span>Across the United States, with team members in Canada, South Africa, and the UAE.</span></span></a></li>
@@ -73,7 +74,7 @@ export function WhoWeAre() {
             <span><b>{founder.name}</b><em>{founder.role}</em></span>
           </a>
         } />
-      <EdBand src="/images/pages/team-group-indoor.webp" pos="50% 55%" />
+      <EdBand src="/images/pages/team-group-outdoor.webp" pos="50% 58%" />
       <EdSplit k="Our story" title="From one agency to many">
         <div className="ab-story">
           <p className="ab-story-lead">Scott Rawlins spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and then led an infrastructure asset management practice at a global consulting firm. He started Rawlins in 2017 to bring agency experience to the agencies that needed it.</p>
@@ -507,6 +508,8 @@ export function ArticlePage({ a }: { a: ThoughtLeadershipArticle }) {
     if (b.type === "divider") continue;
     if (qs.length) qs[qs.length - 1].body.push(b); else pre.push(b);
   }
+  /* the author's roster profile: their photo and name open the bio here, on this page (Nicole, Nov 11) */
+  const who = allPeople().find((p) => bare(p.name) === bare(a.author));
   return (
     <Shell>
       <ReadProgress target=".ax-main" />
@@ -518,11 +521,19 @@ export function ArticlePage({ a }: { a: ThoughtLeadershipArticle }) {
           <p className="ed-k">{a.category} · {a.dateLabel}</p>
           <h1 className="ax-h1">{a.title}</h1>
           <p className="ax-sub">{a.subtitle}</p>
-          <div className="ax-by">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={a.authorImage} alt="" width={64} height={64} />
-            <span><b>{a.author}</b><em>{a.authorRole}</em></span>
-          </div>
+          {who ? (
+            <AuthorPop person={who} className="ax-by">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={a.authorImage} alt="" width={64} height={64} />
+              <span><b>{a.author}</b><em>{a.authorRole}</em></span>
+            </AuthorPop>
+          ) : (
+            <div className="ax-by">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={a.authorImage} alt="" width={64} height={64} />
+              <span><b>{a.author}</b><em>{a.authorRole}</em></span>
+            </div>
+          )}
           <div className="ed-btns"><EdBtn href={a.pdfUrl} kind="white">Download the PDF</EdBtn><EdBtn href="#q1" kind="ghost">Start reading</EdBtn></div>
         </div>
       </header>
@@ -547,11 +558,12 @@ export function ArticlePage({ a }: { a: ThoughtLeadershipArticle }) {
       </section>
       <section className="ax-author" data-nofill>
         <div className="ed-wrap ax-author-in">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={a.authorImage} alt="" width={120} height={120} />
+          {who
+            ? <AuthorPop person={who} className="ax-author-ph">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={a.authorImage} alt="" width={120} height={120} /></AuthorPop>
+            : /* eslint-disable-next-line @next/next/no-img-element */ <img src={a.authorImage} alt="" width={120} height={120} />}
           <div>
             <p className="ed-k">About the author</p>
-            <b>{a.author}</b><em>{a.authorRole}</em>
+            {who ? <AuthorPop person={who} className="ax-author-name"><b>{a.author}</b></AuthorPop> : <b>{a.author}</b>}<em>{a.authorRole}</em>
             <p className="ax-contact">
               <a href={`mailto:${a.authorEmail}`}>{a.authorEmail}</a>
               <a href={`tel:${a.authorPhone.replace(/[^\d+]/g, "")}`}>{a.authorPhone}</a>
