@@ -92,7 +92,7 @@ export default function ContactForm({ topics }: { topics: string[] }) {
       <label>Message <span aria-hidden="true">*</span><textarea name="message" rows={6} required value={f.message} onChange={on} placeholder="What are you trying to fix?" /></label>
       <button type="submit" className="pg-btn pg-btn-primary" disabled={busy}>{busy ? "Sending…" : "Send message"}</button>
       {RECAPTCHA_SITE_KEY && (
-        <p className="cf-note">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> & <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> apply.</p>
+        <p className="cf-note">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> apply.</p>
       )}
     </form>
   );

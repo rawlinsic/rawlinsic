@@ -44,14 +44,17 @@ export const AREAS: Area[] = [
     id: "delivery", slug: "project-delivery", name: "Project Delivery",
     tag: "Getting programs & projects built", scene: "construction", featuredCase: "cs-transform",
     services: [
-      svc("program-delivery", "Program & Project Delivery", "interchange"),
-      svc("owners-rep", "Owner's Representation", "site"),
+      /* content pass v7, 2.1 (Nov 11): Construction & Pre-Construction split in two; Program & Project Delivery renamed.
+         The old addresses redirect (next.config.js). */
+      svc("program-delivery", "Program Delivery", "interchange"),
+      svc("preconstruction", "Preconstruction"),
+      svc("construction", "Construction"),
       svc("alt-delivery", "Alternative Delivery & Partnering", "site"),
-      svc("procurement", "Finance, Budget & Procurement", "office"),
       svc("row", "Right of Way", "rural"),
-      svc("construction", "Construction & Pre-Construction"),
+      svc("procurement", "Finance, Budget & Procurement", "office"),
       svc("lpa", "Local Public Agency & Federal-Aid Programs", "street"),
       svc("grants", "Grants & Funding", "crossing"),
+      svc("owners-rep", "Owner's Representation", "site"),
     ],
   },
   {
@@ -120,7 +123,7 @@ export const INDUSTRIES: Industry[] = [
     id: "transport", slug: "transportation", name: "Transportation", scene: "interchange",
     who: "State DOTs, aeronautics divisions, harbors, and transit",
     lead: "Most of our work is with state departments of transportation: more than 30 transportation agencies so far. We work across highways, bridges, aviation, harbors, and transit, from how a department is organized to how its projects get delivered and its roads get maintained.",
-    featured: ["program-delivery", "row", "construction", "operations", "traffic", "asset-mgmt", "portals", "drone-programs"],
+    featured: ["program-delivery", "preconstruction", "row", "construction", "operations", "traffic", "asset-mgmt", "portals", "drone-programs"],
     featuredCase: "cs-major",
     projects: ["cs-transform", "cs-proficiency", "cs-aero"],
     subsectors: [
@@ -136,7 +139,7 @@ export const INDUSTRIES: Industry[] = [
   {
     id: "gov", slug: "government-public-works", name: "Government & Public Works", scene: "street",
     who: "Local agencies and multi-state programs",
-    lead: "Local governments and federal and multi-state programs that own and run public infrastructure, often with lean staffs. Our work here includes asset management with local agencies and drone standards for a multi-state research program.",
+    lead: "Local governments, and the federal and multi-state programs that support them, often with lean staffs. Our work here includes asset management with local agencies and drone standards for a multi-state research program.",
     featured: ["asset-mgmt", "program-delivery", "lpa", "grants", "portals", "strategic-planning"],
     featuredCase: "cs-local-am",
     projects: ["cs-local-am", "cs-pooled"],
@@ -177,7 +180,7 @@ export const subsectorHref = (i: Industry, s: Subsector) => `/industries/${i.slu
 
 /* ── "What are you trying to fix?" ───────────────────────────── */
 export const PROBLEMS: { q: string; services: string[] }[] = [
-  { q: "Our projects are late or over budget", services: ["program-delivery", "alt-delivery", "owners-rep"] },
+  { q: "Our projects are late or over budget", services: ["program-delivery", "preconstruction", "alt-delivery", "owners-rep"] },
   { q: "We're reorganizing or standing up something new", services: ["org-design", "change-mgmt"] },
   { q: "Our people are retiring and no one is ready", services: ["workforce", "training-video"] },
   { q: "We don't know what we own or what shape it's in", services: ["asset-mgmt", "data-governance"] },
@@ -234,7 +237,7 @@ export const WHY: [string, string][] = [
 /* How we've grown (content updates v4, 7.6). Also shows on Who we are. */
 export const STORY: [string, string, string][] = [
   ["foundation", "Deep Transportation Agency Expertise", "Our founder, Scott Rawlins, spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and started Rawlins in 2017 to bring that experience to other agencies. Our team has worked inside complex public agencies for years, so we know the constraints, the decision-making, and the culture it takes to get work done."],
-  ["EVOLUTION", "Advisory Capabilities", "We partner with enterprises to modernize processes, empower team members, and embrace new technologies—coordinating these actions to achieve meaningful results. We pride ourselves on establishing long-term relationships with our family of clients."],
+  ["EVOLUTION", "Advisory Capabilities", "We partner with enterprises to modernize processes, empower team members, and embrace new technologies, coordinating these actions to achieve meaningful results. We pride ourselves on establishing long-term relationships with our family of clients."],
   ["innovation", "Drones and Advanced Air Mobility", "We guide the planning, implementation, and integration of advanced air mobility and uncrewed aircraft systems within existing transport networks, supporting the development of multimodal connected communities."],
   ["frontier", "Data Governance, Automation, & AI", "Our in-house team connects the systems clients already own, automates the busywork, and puts AI to work where it helps. We help agencies navigate governance structures, improve data practices, incorporate analytics, and use emerging tools. Our automation and integration specialists streamline workflows, enabling people to focus on the uniquely human work that matters most for organizational success."],
 ];
@@ -283,21 +286,25 @@ const TEAM = " · Our team's work before Rawlins";
 
 export const CASES: CaseIndex[] = [
   cs("cs-proficiency", "tennessee-career-paths-and-proficiency", "Career paths and proficiency programs across a department", "Tennessee Department of Transportation", ["Tennessee"], "Ongoing", "transport", ["workforce", "org-design", "change-mgmt"]),
-  cs("cs-tn-ipd", "tennessee-integrated-program-delivery", "Integrated program delivery", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["program-delivery"]),
+  cs("cs-tn-ipd", "tennessee-integrated-program-delivery", "Integrated program delivery", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["program-delivery", "preconstruction"]),
   cs("cs-pbmc", "tennessee-performance-based-maintenance-contracts", "Launching performance-based maintenance contracts on an interstate network", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["operations", "procurement"]),
-  // TODO(launch): contract not read yet (scanned PDF). Confirm its publicity terms before launch.
+  // Contract read Nov 10: no publicity limit. The state keeps publication rights to the documents we produce, so don't post its documents on this site.
   cs("cs-aero", "tennessee-aviation-program", "Statewide aviation program support: drones, advanced air mobility, and federal funding", "Tennessee Department of Transportation, Aeronautics Division", ["Tennessee"], "Ongoing", "transport", ["drone-programs", "grants", "research", "drone-aam"]),
   // TODO(launch): needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.
-  cs("cs-transform", "statewide-project-delivery-and-organization", "Statewide project delivery, prioritization, and organization", STATE_DOT, [], "Ongoing", "transport", ["program-delivery", "org-design", "change-mgmt", "strategic-planning", "automation", "data-governance"]),
-  // TODO(launch): contract not read yet (scanned PDF). Same prime as cs-transform, so treat it as needing written OK.
-  cs("cs-pmdiv", "standing-up-a-project-delivery-division", "Standing up a project delivery division", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "workforce", "program-delivery"]),
+  cs("cs-transform", "statewide-project-delivery-and-organization", "Statewide project delivery, prioritization, and organization", STATE_DOT, [], "Ongoing", "transport", ["program-delivery", "preconstruction", "org-design", "change-mgmt", "strategic-planning", "automation", "data-governance"]),
+  // TODO(launch): subcontract read Nov 10: the prime's information stays confidential and the prime agreement's terms apply. Keep it unnamed and high level.
+  cs("cs-pmdiv", "standing-up-a-project-delivery-division", "Standing up a project delivery division", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "workforce", "program-delivery", "preconstruction"]),
+  // Rawlins was prime on this client's purchase order. Jacob's portfolio asks whether this is a Rawlins client; it is.
+  // TODO(launch): contract publicity terms not checked yet.
   cs("cs-txmaint", "performance-based-maintenance-and-rating-program", "Performance-based maintenance contracts and a maintenance rating program", STATE_DOT, [], "Completed", "transport", ["operations", "procurement", "asset-mgmt"]),
   // TODO(launch): needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.
   cs("cs-drt", "statewide-drone-response-team", "Statewide drone response team and drone program governance", STATE_DOT, [], "Ongoing", "transport", ["drone-programs", "drone-emergency"]),
+  // TODO(launch): contract publicity terms not checked yet.
   cs("cs-local-am", "michigan-local-asset-management", "Asset management workshops and action plans for local agencies", "State of Michigan, Michigan Infrastructure Office", ["Michigan"], "Completed", "gov", ["asset-mgmt", "workforce"]),
   cs("cs-mi-pbo", "michigan-performance-based-maintenance-operations", "Performance-based maintenance and operations", "Michigan Department of Transportation · Our team's work before Rawlins, completed 2014", ["Michigan"], "Before Rawlins", "transport", ["operations", "asset-mgmt"]),
+  // TODO(launch): the prime's subcontract (§12) keeps deliverables and client information confidential without the prime's written permission (findings_cases.md, Nov 6 sweep).
   cs("cs-workforce", "workforce-strategy-analysis", "Workforce strategy analysis", STATE_DOT, [], "Completed", "transport", ["workforce", "org-design"]),
-  cs("cs-nc-ipd", "north-carolina-integrated-program-delivery", "Integrated program delivery", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["program-delivery", "grants", "operations", "alt-delivery"]),
+  cs("cs-nc-ipd", "north-carolina-integrated-program-delivery", "Integrated program delivery", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["program-delivery", "preconstruction", "grants", "operations", "alt-delivery"]),
   cs("cs-nc-am", "north-carolina-asset-management-review", "Asset management review across modes", `North Carolina Department of Transportation${FOUNDER}`, ["North Carolina"], "Before Rawlins", "transport", ["asset-mgmt", "operations", "procurement"]),
   cs("cs-strategic", "nevada-six-year-strategic-plan", "Six-year strategic plan, action plans, and performance management", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["strategic-planning", "org-design", "dashboards"]),
   cs("cs-nv-om", "nevada-operations-maintenance-review", "Operations and maintenance program review", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt"]),
@@ -311,14 +318,17 @@ export const CASES: CaseIndex[] = [
   /* no state tag: California isn't on the map */
   cs("cs-riverside", "riverside-county-fleet-and-facilities", "Facilities and fleet operations review", `Riverside County, California${FOUNDER}`, [], "Before Rawlins", "gov", ["operations", "asset-mgmt"]),
   cs("cs-major", "major-river-crossings-and-transit", "Partnering on major river crossings and a light rail line", "Iowa, Illinois, Missouri, and Minnesota", ["Iowa", "Illinois", "Missouri", "Minnesota"], "Completed", "transport", ["program-delivery", "alt-delivery"]),
+  // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
   cs("cs-partnering", "progressive-design-build-partnering", "Partnering facilitation for a progressive design-build bridge", "A state DOT and its contractor", [], "Ongoing", "transport", ["program-delivery", "procurement", "alt-delivery"]),
+  // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
   cs("cs-ia-partnering", "statewide-partnering-between-a-dot-and-its-construction-industry", "Statewide partnering between a DOT and its construction industry", "A state DOT and its construction industry", [], "Completed", "transport", ["alt-delivery", "construction", "program-delivery"]),
+  // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
   cs("cs-db-partnering", "partnering-through-construction-on-design-build-bridges-and-interstates", "Partnering through construction on design-build bridges and interstates", "State DOTs and their contractors", [], "Completed", "contractors", ["alt-delivery", "program-delivery", "construction"]),
   cs("cs-pooled", "multi-state-drone-standards", "Multi-state drone standards and specifications", "A multi-state pooled fund study", [], "Ongoing", "gov", ["research", "drone-programs"]),
   // TODO(launch): needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.
-  cs("cs-pdn", "project-delivery-website-and-change-system", "A project delivery website, tools, and change system staff use every day", STATE_DOT, [], "Ongoing", "transport", ["portals", "automation", "training-video", "program-delivery"]),
+  cs("cs-pdn", "project-delivery-website-and-change-system", "A project delivery website, tools, and change system staff use every day", STATE_DOT, [], "Ongoing", "transport", ["portals", "automation", "training-video", "program-delivery", "preconstruction"]),
   cs("cs-tn-tech", "technology-modernization-and-ai-governance", "Technology modernization and AI governance", STATE_DOT, [], "Ongoing", "transport", ["tech-strategy", "data-governance", "ai"]),
-  // TODO(launch): contract not read yet (scanned PDF). Confirm before launch.
+  // TODO(launch): purchase order read Nov 10: no publicity terms. Reconfirm current status and client permission. Keep the client unnamed.
   cs("cs-hi", "construction-standards-and-statewide-support", "Construction standards, program knowledge, and statewide support", STATE_DOT, [], "Ongoing", "transport", ["construction", "portals", "program-delivery", "training-video", "drone-programs"]),
   /* Private sector: our own project, then our automation team's work before Rawlins */
   // TODO(launch): no contract on file. Confirm there's no NDA before launch.
@@ -331,19 +341,42 @@ export const CASES: CaseIndex[] = [
 
 /* Preview-only "Content status" notes for In the works projects that need sign-off before launch
    (Nov 9). Shown on each one's case card and case page, never in production. No client names here. */
+/* content pass v7, 5.1 (Nov 11): cs-aero's note removed (its contract has no publicity limit); three added. */
 export const CASE_STATUS: Record<string, string> = {
   "cs-transform": "Content status: needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.",
   "cs-pdn": "Content status: needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.",
   "cs-drt": "Content status: needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.",
-  "cs-pmdiv": "Content status: contract not read yet (scanned PDF). Same prime as cs-transform, so treat it as needing written OK.",
-  "cs-aero": "Content status: contract not read yet (scanned PDF). Confirm its publicity terms before launch.",
-  "cs-hi": "Content status: contract not read yet (scanned PDF). Confirm before launch.",
+  "cs-pmdiv": "Content status: the subcontract keeps the prime's information confidential and binds us to the prime agreement's terms. Keep it unnamed and high level.",
+  "cs-hi": "Content status: the purchase order has no publicity terms. Jacob's portfolio says to reconfirm current status and client permission. Keep it unnamed.",
   "cs-pv-pmo": "Content status: no contract on file. Confirm there's no NDA before launch.",
+  "cs-workforce": "Content status: the prime's subcontract keeps all deliverables and client information confidential without the prime's written permission. Needs the prime's written OK before launch.",
+  "cs-txmaint": "Content status: contract publicity terms not checked yet.",
+  "cs-local-am": "Content status: contract publicity terms not checked yet.",
 };
 /* Lines elsewhere that come from one of those projects carry its note too (keyed by the exact line). */
 export const LINE_STATUS: Record<string, string> = {
   "Drone data that checked debris removal quantities, and proved correct when reports disagreed": CASE_STATUS["cs-drt"],
   "We've supported a state's drone response team with training, and used drone data to check debris removal quantities": CASE_STATUS["cs-drt"],
+  /* content pass v7, Part 4: the Maintenance & Operations row that comes partly from cs-drt */
+  "Winter operations and emergency readiness": CASE_STATUS["cs-drt"],
+  /* content pass v7, 5.2: project lines */
+  // TODO(launch): Jacob's portfolio says sources describe this at different stages. Confirm it's final.
+  "Finalized a maintenance quality assurance handbook": "Content status: Jacob's portfolio says sources describe this at different stages. Confirm it's final.",
+  "Maintenance quality assurance handbook finalized": "Content status: Jacob's portfolio says sources describe this at different stages. Confirm it's final.",
+  // TODO(launch): Jacob's portfolio says the completed tools need confirmation.
+  "Man-hour and cost estimating packages": "Content status: Jacob's portfolio says the completed tools need confirmation.",
+};
+
+/* Integration & Automation intro (content pass v7, Part 4) */
+// TODO(launch): Headlight is named as a general example. Jacob's portfolio says vendor relationships need a leadership decision before public use.
+LINE_STATUS["We connect the systems you already own so information moves on its own: construction platforms like Headlight linked to the rest of an agency's systems, repeated fields filled in once from trusted sources, and small custom apps where an integration platform doesn't fit. We document every workflow so your team can run it."] = "Content status: Named as a general example. Jacob's portfolio says vendor relationships need a leadership decision before public use.";
+
+/* Preview-only notes for a whole page (content pass v7: Owner's Representation, 2.11; Ports & Harbors, Part 6) */
+export const PAGE_STATUS: Record<string, string> = {
+  // TODO(launch): Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.
+  "owners-rep": "Content status: Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.",
+  // TODO(launch): the only work behind this page is cs-hi's client. Same note as cs-hi.
+  "sub-ports": `Content status: the only work behind this page is cs-hi's client. ${CASE_STATUS["cs-hi"].replace("Content status: the", "The")}`,
 };
 
 export const caseHref = (c: CaseIndex) => `/insights/case-studies/${c.slug}`;

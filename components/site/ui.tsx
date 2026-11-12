@@ -203,6 +203,9 @@ export function People({ people }: { people: readonly (readonly string[])[] }) {
 /* The closing ask on every page (line: full site pass, Part 2, 0.3). */
 /* TODO(Nicole): closing line to come from Nicole (the "tell you plainly" / "connect you with the person who has done it" line was removed, Nov 9) */
 export const TALK = { title: "Tell us what you’re working on", text: "" };
+/* Project Delivery's closing band, on its area page and every service page under it (content pass v7, 2.2) */
+const TALK_DELIVERY = { title: "Tell us the number you're not hitting.", text: "We'll help you find out why, build the system that fixes it, and hand it to your team to run." };
+export const talkFor = (areaId: string) => (areaId === "delivery" ? TALK_DELIVERY : TALK);
 export function Talk({ title = TALK.title, text = TALK.text }: { title?: string; text?: string }) {
   return (
     /* a navy card on white, so it never runs into the footer; Get in touch is the white button (Nicole, Nov 10) */
