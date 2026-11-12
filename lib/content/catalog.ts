@@ -2111,7 +2111,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
  },
  "g-asset": {
   "id": "g-asset",
-  "name": "Asset Management for Local Agencies",
+  "name": "Asset Management",
   "st": "ok",
   // cs-local-am (Rawlins Case Study Drafts v1): kickoffs, steering committees, self-assessments, document reviews, workshops, action plans, one-pagers.
   "intro": "Local agencies can use asset management to plan their programs and their funding, but each one starts from a different place. We start from the agency's own staff, plans, and inventories: a self-assessment, a workshop built around what it shows, and an action plan the agency can carry out.",
