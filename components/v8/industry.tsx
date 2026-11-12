@@ -368,7 +368,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   const people: TeamCard[] = []; // was team(d.people)
   const work = cases.slice(0, 6);
   const next = nextIndustry(ind.id);
-  const crumbs: Crumb[] = [["/industries", "Industries"], [industryHref(ind), ind.name]];
+  const crumbs: Crumb[] = [["/industries", "WhoWeWorkWith"], [industryHref(ind), ind.name]];
   const intl = ind.id === "intl";
   const actions = (
     <>
@@ -395,7 +395,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
  />
   );
   /* pages without specialty panels list the other industries in the section bar */
-  const more: SnMore | undefined = subs.length ? undefined : { label: "Industries", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) };
+  const more: SnMore | undefined = subs.length ? undefined : { label: "WhoWeWorkWith", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) };
   return (
     <Page sections={sections} hero={hero} more={more}>
       {d.ch.length > 0 && <Hear title="Challenges we hear" items={d.ch} bring={d.bring} />}
@@ -448,7 +448,7 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
   const sibs = ind.subsectors.map((s) => ({ id: s.id, name: s.name, href: subsectorHref(ind, s), on: s.id === sub.id }));
   const hero = (
     <FrameHero photo={INDUSTRY_PHOTO[sub.id] ?? INDUSTRY_PHOTO[ind.id]}
-      crumbs={[["/industries", "Industries"], [industryHref(ind), ind.name], [subsectorHref(ind, sub), sub.name]]}
+      crumbs={[["/industries", "WhoWeWorkWith"], [industryHref(ind), ind.name], [subsectorHref(ind, sub), sub.name]]}
       tag={<a href={industryHref(ind)}>{ind.name}</a>} title={sub.name} lead={d?.intro || sub.line}
       actions={<><a className="v8-btn v8-btn-area" href="/contact">Talk to an expert</a>{cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See the work</a>}</>}
       note={thinNote(sub, "Content status: thin content")} />
@@ -503,12 +503,12 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
     ["talk", "Talk to us"],
   ];
   const hero = (
-    <FrameHero photo={INDUSTRY_PHOTO.private} crumbs={[["/industries", "Industries"], [industryHref(ind), ind.name]]}
+    <FrameHero photo={INDUSTRY_PHOTO.private} crumbs={[["/industries", "WhoWeWorkWith"], [industryHref(ind), ind.name]]}
       tag="for growing firms" title="Private Sector" lead={ind.lead}
       actions={<a className="v8-btn v8-btn-area" href="/contact">Book a short call</a>} />
   );
   return (
-    <Page sections={sections} hero={hero} more={{ label: "Industries", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) }}>
+    <Page sections={sections} hero={hero} more={{ label: "WhoWeWorkWith", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) }}>
       <Hear title="Sound familiar?" items={PRIV.hear} />
       <Route id="build" title="What we build">
         <RouteList check ordered={false} stops={PRIV.build.map((d) => ({ d }))} />
