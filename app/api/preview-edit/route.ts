@@ -5,9 +5,13 @@
    aren't safe to drop into code) goes on EDITS-PENDING.md for Claude Code.
    Needs, on Vercel, for Preview only: EDIT_GITHUB_TOKEN (write access to this
    repo). No passcode (Nicole's call): anyone with a preview link can edit that
-   preview's branch, never main; every edit is its own commit, so it can be undone. */
+   preview's branch, never main; every edit is its own commit, so it can be undone.
+   Nov 11 (Nicole: "a save can never change code"): edits only land in page text, a save whose wording is
+   already in the files changes nothing, and each changed file must read as the same code afterwards
+   (lib/preview-edit-safe.ts); anything else goes on EDITS-PENDING.md with the reason. */
 import { NextResponse } from "next/server";
 import { place, writeAll, writeSpecial, writeWithBreaks, type Change } from "@/lib/preview-edit-match";
+import { inText, onlyTextChanged, textSpans } from "@/lib/preview-edit-safe";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -55,7 +59,17 @@ export async function POST(req: Request) {
 
     const changed = new Map<string, string>();
     const pending: { c: Change; why: string }[] = [];
-    let applied = 0;
+    let applied = 0, already = 0;
+    // page text in each file as it is now (worked out once per version of a file)
+    const spanCache = new Map<string, { src: string; spans: [number, number][] }>();
+    const spansFor = (path: string, src: string) => {
+      const hit = spanCache.get(path);
+      if (hit && hit.src === src) return hit.spans;
+      let spans: [number, number][] = [];
+      try { spans = textSpans(path, src); } catch { spans = []; } // can't read it: nothing in it counts as page text
+      spanCache.set(path, { src, spans });
+      return spans;
+    };
     for (const c of changes) {
       // new lines (Enter): placed like any edit, then written in as real line breaks
       const lines = c.breaks ? c.breaks.split("\n").map((l) => l.replace(/\s+/g, " ").trim()).filter(Boolean) : null;
@@ -63,7 +77,9 @@ export async function POST(req: Request) {
       const special = /[<>{}`\\]/.test(c.next) || (!!c.nodeNew && /[<>{}`\\]/.test(c.nodeNew)); // written escaped, so it still saves at once
       // search the files as they are after the edits already placed in this save
       const now = new Map(Array.from(text.keys()).map((p) => [p, changed.get(p) ?? text.get(p)!] as [string, string]));
-      const got = place(now, c);
+      const isText = (path: string, from: number, to: number) => inText(spansFor(path, now.get(path) ?? ""), from, to);
+      const got = place(now, c, { isText });
+      if ("already" in got) { already++; continue; } // the new wording is already there: nothing to change
       if ("why" in got) { pending.push({ c, why: got.why }); continue; }
       const writes = Array.from(new Set(got.hits.map((h) => h.path))).map((path) => {
         const hits = got.hits.filter((h) => h.path === path);
@@ -71,6 +87,8 @@ export async function POST(req: Request) {
         return [path, lines && lines.length > 1 ? writeWithBreaks(now.get(path)!, hits, got.next, lines) : writeAll(now.get(path)!, hits, got.next)] as const;
       });
       if (writes.some(([, out]) => out === null)) { pending.push({ c, why: "found it, but changing it there automatically isn't safe" }); continue; }
+      // the file must read as the same code afterwards, with only page text different
+      if (writes.some(([path, out]) => !onlyTextChanged(path, now.get(path)!, out!))) { pending.push({ c, why: "saving it there would have changed code, not just page text" }); continue; }
       for (const [path, out] of writes) changed.set(path, out!);
       applied++;
     }
@@ -83,13 +101,13 @@ export async function POST(req: Request) {
       list += pending.map(({ c, why }) => `- [ ] ${day} · ${who} · ${body.page || "?"} · "${c.old}" → "${c.next.trim()}" (${why})`).join("\n") + "\n";
       items.push({ path: "EDITS-PENDING.md", mode: "100644", type: "blob", content: list });
     }
-    if (!items.length) return NextResponse.json({ applied: 0, pending: 0 });
+    if (!items.length) return NextResponse.json({ applied: 0, pending: 0, already });
 
     const newTree = await gh(`/git/trees`, { method: "POST", body: JSON.stringify({ base_tree: commit.tree.sha, tree: items }) });
     const message = `Preview edit by ${who} on ${body.page || "a page"}: ${applied} change${applied === 1 ? "" : "s"}${pending.length ? `, ${pending.length} for Claude Code` : ""}\n\n${changes.map((c) => `- "${c.old}" -> "${c.next.trim()}"`).join("\n")}\n\nMade with the preview Edit text button.`;
     const made = await gh(`/git/commits`, { method: "POST", body: JSON.stringify({ message, tree: newTree.sha, parents: [head] }) });
     await gh(`/git/refs/heads/${encodeURIComponent(branch)}`, { method: "PATCH", body: JSON.stringify({ sha: made.sha, force: false }) });
-    return NextResponse.json({ applied, pending: pending.length, commit: made.sha });
+    return NextResponse.json({ applied, pending: pending.length, already, commit: made.sha });
   } catch (e) {
     return NextResponse.json({ error: `Couldn't save: ${(e as Error).message}. Nothing was changed. Try again in a minute.` }, { status: 500 });
   }
