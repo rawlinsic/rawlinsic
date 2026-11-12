@@ -191,7 +191,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                 <span><b>{c.title}</b><span>{c.who}</span><small className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</small>{c.note && <em className="pg-dev">{c.note}</em>}</span>
               </a></li>
             ))}</ul>
-            <a className="mx-go" href="/insights/case-studies?status=ongoing">All Projects in the Works</a>
+            <a className="mx-go" href="/insights/case-studies?status=ongoing">View All Projects</a>
           </div>
         </div>
       </div>
