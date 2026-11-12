@@ -246,10 +246,10 @@ export function Careers() {
   return (
     <Shell>
       <EdHero crumbs={[["/careers", "Careers"]]} kicker="Careers at Rawlins" title={<>Work with people who&apos;ve <em>done the job</em></>}
-        lead={<p>We hire people who&rsquo;ve done the work inside public agencies, and people who build the tools that make the work easier. If that sounds like you, we&rsquo;d like to hear from you.</p>}
+        lead={<p>We’re always interested in connecting with thoughtful, driven professionals who are passionate about solving complex challenges and creating meaningful impact. If that sounds like you, we’d like to hear from you.</p>}
         actions={<><EdBtn href="mailto:jobs@rawlinsic.com">Email jobs@rawlinsic.com</EdBtn><EdBtn href="/about/our-people" kind="ghost">Meet our people</EdBtn></>}
         aside={<div className="ab-hero-ph">{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/images/pages/team-group-outdoor.webp" alt="" /></div>} />
-      <EdSec k="What it's like here" title="Why people join us" tone="panel">
+      <EdSec k="why rawlins" title="why rawlins" tone="panel">
         <ol className="ab-principles ab-careers">{CAREERS_WHY.map(([t, d], k) => <li key={t}><span className="ab-why-n">{String(k + 1).padStart(2, "0")}</span><b>{t}</b><p>{d}</p></li>)}</ol>
       </EdSec>
       <EdSec k="Open positions" title={OPEN_POSITIONS.length ? "Open positions" : "No open positions right now"}>
@@ -257,9 +257,9 @@ export function Careers() {
           <ul className="pg-cards">{OPEN_POSITIONS.map((p) => <li key={p.href}><a href={p.href} className="pg-card pg-card-link"><b>{p.title}</b><span>{p.summary}</span></a></li>)}</ul>
         ) : (
           <div className="ab-apply">
-            <p>Send us a note and your résumé at <a href="mailto:jobs@rawlinsic.com">jobs@rawlinsic.com</a>, and we&rsquo;ll be in touch when there&rsquo;s a fit.</p>
-            <EdBtn href="mailto:jobs@rawlinsic.com">Send your résumé</EdBtn>
-            <Dev>Placeholder: no open positions posted.</Dev>
+            <p>Send us a note and your resumé at <a href="mailto:jobs@rawlinsic.com">jobs@rawlinsic.com</a>, and we&rsquo;ll be in touch when there&rsquo;s a fit.</p>
+            <EdBtn href="mailto:jobs@rawlinsic.com">Send your resumé</EdBtn>
+            <Dev></Dev>
           </div>
         )}
       </EdSec>
