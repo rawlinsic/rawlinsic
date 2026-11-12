@@ -55,8 +55,8 @@ export default function Header() {
     /* previews only: the hidden International page, with why it's hidden (Part 4, 1) */
     intl: !PROD && intl ? { name: intl.name, href: industryHref(intl), note: "" } : undefined,
     work: [
-      { label: "All Projects", href: "/insights/case-studies", note: "Every project, by area and industry" },
-      { label: "Where We Work", href: "/about/where-we-work", note: "The states we've worked in" },
+      { label: "All Projects", href: "/insights/case-studies", note: "" },
+      { label: "Where We Work", href: "/about/where-we-work", note: "" },
     ],
     inWorks: IN_THE_WORKS.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c).map(card),
     insights: [
@@ -75,7 +75,7 @@ export default function Header() {
       { label: "Who We Are", href: "/about/who-we-are", note: "Founded in 2017, and how we've grown" },
       { label: "How We Work", href: "/about/how-we-work", note: "Assess, rebuild, train, hand off" },
       { label: "Our People", href: "/about/our-people", note: "People who've done the job" },
-      { label: "Where We Work", href: "/about/where-we-work", note: "The states we've worked in" },
+      { label: "Where We Work", href: "/about/where-we-work", note: "" },
       { label: "Careers", href: "/careers", note: "Work with us" },
     ],
     /* About: the first eight leaders (Part 1, 1.5; 27 people verified in content updates v4, 5) */
