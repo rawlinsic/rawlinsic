@@ -15,7 +15,7 @@ export function IndustriesIndex() {
       <Hero crumbs={[["/industries", "Who we work with"]]} kicker="Who we work with" title="Public agencies and private firms, wherever the work is."
         lead={<p>Most of our work is with the public agencies that own and run infrastructure: more than 30 transportation agencies, local agencies, and a multi-state research program. We also work with the contractors and engineering firms that build for those agencies, and we help private firms connect their systems and workflows. Our work so far has been in the United States, and our team can work anywhere.</p>}
         actions={<Btn href="/contact" primary>Get in touch</Btn>} />
-      <Sec title="WhoWeWorkWith">
+      <Sec title="Who We Work With">
         <ul className="pg-cards">
           {VISIBLE_INDUSTRIES.map((i) => (
             <li key={i.id}>

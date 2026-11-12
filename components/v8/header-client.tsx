@@ -20,7 +20,7 @@ export type NavData = {
 };
 type Menu = "what" | "who" | "work" | "insights" | "about" | null;
 
-const MENUS: [Exclude<Menu, null>, string][] = [["what", "What We Do"], ["who", "WhoWeWorkWith"], ["work", "Our Work"], ["insights", "Insights"], ["about", "About"]];
+const MENUS: [Exclude<Menu, null>, string][] = [["what", "What We Do"], ["who", "Who We Work With"], ["work", "Our Work"], ["insights", "Insights"], ["about", "About"]];
 
 function useSearch(data: NavData["search"], q: string) {
   const [people, setPeople] = useState<Hit[]>([]);
@@ -264,7 +264,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                   </li>
                 ))}</ul>
               </details>
-              <details><summary>WhoWeWorkWith</summary><ul>{data.industries.map((x) => {
+              <details><summary>Who We Work With</summary><ul>{data.industries.map((x) => {
                 const projects = [...(x.feature ? [{ title: x.feature.title, href: x.feature.href, photo: x.feature.photo }] : []), ...x.projects];
                 return (
                   <li key={x.href}>
