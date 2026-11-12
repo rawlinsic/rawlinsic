@@ -83,7 +83,7 @@ export function AboutIndex() {
           <li className="ab-b-who"><a href="/about/who-we-are">{/* eslint-disable-next-line @next/next/no-img-element */}{/* our team at the 2026 Hawaii summit; the outdoor group photo is already this page's top photo (Nicole, Nov 11: no large indoor group photo) */}<img src="/images/pages/insights-hawaii-summit-2026-team.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Who we are</b><span>Our story, how we&apos;ve grown since 2017, and why agencies call us.</span></span></a></li>
           <li className="ab-b-people"><a href="/about/our-people"><span className="ab-b-faces">{faces.map((p) => /* eslint-disable-next-line @next/next/no-img-element */ <img key={p.slug} src={p.photo} alt="" loading="lazy" />)}</span><span className="ab-b-txt"><b>the rawlins team</b><span>{people.length} people: advisors who ran the programs, and the specialists who build the tools.</span></span></a></li>
           <li className="ab-b-how"><a href="/about/how-we-work"><span className="ab-b-steps">{STEPS.map(([t], k) => <i key={t}><em>{String(k + 1).padStart(2, "0")}</em>{t}</i>)}</span><span className="ab-b-txt"><b>How we work</b><span></span></span></a></li>
-          <li className="ab-b-where"><a href="/about/where-we-work"><span className="ab-b-num">{STATES.length}<small>states</small></span><span className="ab-b-txt"><b>Where we work</b><span>Across the United States, with team members in Canada, South Africa, and the UAE.</span></span></a></li>
+          <li className="ab-b-where"><a href="/about/where-we-work"><span className="ab-b-num">{STATES.length}<small>states</small></span><span className="ab-b-txt"><b>Where we work</b><span>Global Reach,<br />Local Impact, with team members in Canada, South Africa, and the UAE.</span></span></a></li>
           <li className="ab-b-careers"><a href="/careers">{/* eslint-disable-next-line @next/next/no-img-element */}{/* two teammates at the 2026 company retreat, July 24, 2026 (Business Development SharePoint; cropped so there are no labels) */}<img src="/images/pages/careers-retreat-2026-teammates.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Careers</b><span>Work next to people who&apos;ve done the job.</span></span></a></li>
         </ul>
       </EdSec>
@@ -178,7 +178,7 @@ export function WhereWeWork() {
         <>
           <Crumbs items={[["/about", "About"], ["/about/where-we-work", "Where we work"]]} />
           <p className="ed-k">Where we work</p>
-          <h1 className="ed-h1">Across the United States</h1>
+          <h1 className="ed-h1">Global Reach,<br />Local Impact</h1>
           <div className="ed-lead"><p>While our project work to date has been in the United States, but our team can work anywhere. Members of our team are based in the U.S., Europe, Canada, South Africa, and the United Arab Emirates.</p></div>
         </>
       } />
