@@ -38,11 +38,8 @@ const CASE_PHOTO: Record<string, string> = {
   // were"). Both files were on the v4 never-use list (majortrans: road signs that don't look U.S.; transportation: place
   // unknown); kept because the live site shows them. Flagged on the CHANGE-LIST.
   "cs-major": P("majortrans.webp"),
-  "cs-pa-budget": P("transportation.webp"),
-  "cs-nyc-parks": P("transportation.webp"),
   "cs-proficiency": P("tnbig.webp"),
-  "cs-riverside": P("transportation.webp"),
-  "cs-maint-model": P("transportation.webp"), // live "Other states" photo
+  "cs-maint-model": P("transportation.webp"), // live "Other states" photo; the other three "Other states" projects now have their own (Nicole, Nov 11: split them)
   // where the live site's state page puts two or three projects on one card photo, the second one uses that page's own
   // header photo, so each card differs and every photo is still the live site's (Nicole, Nov 11)
   "cs-tn-ipd": P("cs-hero-1.webp"), // live Tennessee page header: Nashville with a highway bridge
@@ -69,6 +66,10 @@ const CASE_PHOTO: Record<string, string> = {
   "cs-local-am": P("project-local-am.webp"), // local road through fall color, Michigan (Boyne Falls); Pexels, Aaron Burden: pexels.com/photo/9559194
   "cs-transform": P("project-transform.webp"), // divided highway through farmland at sunrise, no signs; Pexels, Tom Fisk: pexels.com/photo/9708012
   "cs-nv-fleet": P("project-nv-fleet.webp"), // snow clearing on a mountain highway, no markings; Unsplash, Tom Shamberger: unsplash.com/photos/7CffibpcnuI
+  // the live site gave these three the same "Other states" photo as cs-maint-model; Nicole asked to split them (Nov 11)
+  "cs-pa-budget": P("project-pa-budget.webp"), // two-lane state road past farmland, Lancaster County, Pennsylvania; Unsplash, Luk Ramon: unsplash.com/photos/AKMPME_7eiw
+  "cs-nyc-parks": P("project-nyc-parks.webp"), // Central Park from the air in fall, New York City; Unsplash, Lumin Osity: unsplash.com/photos/kZgdZRZwqgk
+  "cs-riverside": P("project-riverside.webp"), // view over Riverside from Mount Rubidoux, Riverside County, California; Unsplash, john ko: unsplash.com/photos/zb6lAJadm1c
   "cs-pv-reporting": P("auto-data.webp"),
   "cs-pv-service": P("auto-collab.webp"),
   "cs-pv-field": P("auto-workflow.webp"),
