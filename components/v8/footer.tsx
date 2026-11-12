@@ -42,7 +42,7 @@ export default function Footer() {
         <nav aria-label="About"><h2>About</h2><ul><li><a href="/about/who-we-are">Who We Are</a></li><li><a href="/about/how-we-work">How We Work</a></li><li><a href="/about/our-people">Our People</a></li><li><a href="/careers">Careers</a></li></ul></nav>
       </div>
       <div className="v8-wrap fx2-legal">
-        <span>© 2026 Rawlins</span><a href="/privacy-policy">Privacy</a><PrivacyChoicesLink /><a href="/terms-of-service">Terms</a><a href="/accessibility">Accessibility</a><a href="/site-map">Site map</a>
+        <span>© 2026 Rawlins</span><a href="/privacy-policy">Privacy</a><PrivacyChoicesLink /><a href="/terms-of-service">Terms</a><a href="/accessibility">Accessibility</a><a href="/site-map"></a>
         <a className="fx2-top" href="#main-content">Back to top <span aria-hidden="true">↑</span></a>
       </div>
     </footer>

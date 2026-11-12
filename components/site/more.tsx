@@ -622,7 +622,7 @@ export function Podcast() {
 export function SiteMapPage() {
   return (
     <Shell>
-      <Hero scene={false} crumbs={[["/site-map", "Site map"]]} title="Site map" />
+      <Hero scene={false} crumbs={[["/site-map", ""]]} title="" />
       <section className="pg-sec pg-body"><div className="pg-wrap pg-sitemap">
         <div>
           <h2 className="pg-h3"><a href="/#what">What we do</a></h2>

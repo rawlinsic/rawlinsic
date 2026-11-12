@@ -17,7 +17,7 @@ export default function SiteFooter() {
           </p>
           <a href="/contact" className="ft-cta">Get in touch</a>
         </div>
-        <nav className="ft-map" aria-label="Site map">
+        <nav className="ft-map" aria-label="">
           <div>
             <h2>What we do</h2>
             <ul>
@@ -54,7 +54,7 @@ export default function SiteFooter() {
               <li><a href="/about/our-people">Our people</a></li>
               <li><a href="/careers">Careers</a></li>
               <li><a href="/contact">Contact</a></li>
-              <li><a href="/site-map">Site map</a></li>
+              <li><a href="/site-map"></a></li>
             </ul>
           </div>
         </nav>
