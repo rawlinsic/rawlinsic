@@ -15,7 +15,10 @@ export async function POST(req: Request) {
   const b = await req.json().catch(() => null) as { page?: string; sel?: string; heading?: string; name?: string } | null;
   const clip = (x: unknown, n: number) => String(x ?? "").replace(/\s+/g, " ").trim().slice(0, n);
   const entry: RemovedSection = { page: clip(b?.page, 300) || "/", sel: clip(b?.sel, 600), heading: clip(b?.heading, 120), by: clip(b?.name, 40) || "someone", at: new Date().toISOString() };
-  if (!entry.sel || /[{}<>;]/.test(entry.sel)) return NextResponse.json({ error: "Couldn't tell which section that was." }, { status: 400 });
+  /* A section's address is a path like "#main-content > div > section:nth-of-type(2)". ">" used to be refused
+     here, so only a section with its own id could be deleted (Nicole, Nov 12: "the delete section never works").
+     Still refused: the characters that could end the rule or the tag it is written into. */
+  if (!entry.sel || /[{}<;]/.test(entry.sel)) return NextResponse.json({ error: "Couldn't tell which section that was." }, { status: 400 });
   try {
     const src = await readFile(s.gh, s.branch, FILE);
     if (src === null) return NextResponse.json({ error: "The section list is missing on this version." }, { status: 500 });

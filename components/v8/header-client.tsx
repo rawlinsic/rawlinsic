@@ -149,12 +149,14 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
         </div>
       </div>
       <div className="hx-panel" id="hx-m-who" hidden={open !== "who"} onMouseEnter={() => window.clearTimeout(timer.current)}>
+        {/* at the top, like What We Do and Insights (Nicole, Nov 12) */}
+        <p className="mx-foot mx-foot-top"><a href="/industries">Everyone We Work With</a></p>
         <div className="mx-who">
           <ul className="mx-inds">
             {data.industries.map((x, i) => (
               <li key={x.href}><a href={x.href} onMouseEnter={() => setInd(i)} onFocus={() => setInd(i)} aria-current={ind === i ? "true" : undefined}><b>{x.name}</b><span>{x.who}</span></a></li>
             ))}
-            {data.intl && <li className="mx-intl"><a href={data.intl.href}><b>{data.intl.name}</b></a><em className="v8-dev">{data.intl.note}</em></li>}
+            {data.intl && <li className="mx-intl"><a href={data.intl.href}><b>{data.intl.name}</b></a>{data.intl.note && <em className="v8-dev">{data.intl.note}</em>}</li>}
           </ul>
           <div className="mx-subs">
             {data.industries[ind].subs.length > 0 ? <>
@@ -173,7 +175,6 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             <a className="mx-go" href={data.industries[ind].all.href}>{data.industries[ind].all.label}</a>
           </div>
         </div>
-        <p className="mx-foot"><a href="/industries">Everyone We Work With</a></p>
       </div>
       <div className="hx-panel" id="hx-m-work" hidden={open !== "work"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         <div className="mx-list mx-work">
@@ -191,7 +192,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                 <span><b>{c.title}</b><span>{c.who}</span><small className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</small>{c.note && <em className="pg-dev">{c.note}</em>}</span>
               </a></li>
             ))}</ul>
-            <a className="mx-go" href="/insights/case-studies?status=ongoing">View All Projects</a>
+            <a className="mx-go" href="/insights/case-studies">View All Projects</a>
           </div>
         </div>
       </div>

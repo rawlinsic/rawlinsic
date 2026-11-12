@@ -54,7 +54,6 @@ export default function SiteFooter() {
               <li><a href="/about/our-people">our people</a></li>
               <li><a href="/careers">Careers</a></li>
               <li><a href="/contact">Contact</a></li>
-              <li><a href="/site-map"></a></li>
             </ul>
           </div>
         </nav>

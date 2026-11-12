@@ -57,13 +57,17 @@ const diff = (snap: Snap, now: string): Change => {
 type Done = { sha: string; label: string };
 const loadHistory = (): Done[] => { try { return JSON.parse(localStorage.getItem("pe-history") || "[]"); } catch { return []; } };
 const saveHistory = (h: Done[]) => { try { localStorage.setItem("pe-history", JSON.stringify(h.slice(-30))); } catch {} };
+/* what Undo took back, newest last, so Redo can put it back (Nicole, Nov 12). A new save or delete clears it. */
+const loadRedo = (): Done[] => { try { return JSON.parse(localStorage.getItem("pe-redo") || "[]"); } catch { return []; } };
+const saveRedo = (h: Done[]) => { try { localStorage.setItem("pe-redo", JSON.stringify(h.slice(-30))); } catch {} };
 /* the section a click means: the nearest section, or the page block it sits in */
 const sectionOf = (t: Element) => t.closest<HTMLElement>("main section") || t.closest<HTMLElement>(".pnl > *");
 
 export default function PreviewEdit({ canDelete = false }: { canDelete?: boolean }) {
   const [history, setHistory] = useState<Done[]>([]);
-  useEffect(() => { setHistory(loadHistory()); }, []);
-  const remember = (d: Done) => { const h = [...loadHistory(), d]; saveHistory(h); setHistory(h); };
+  const [redos, setRedos] = useState<Done[]>([]);
+  useEffect(() => { setHistory(loadHistory()); setRedos(loadRedo()); }, []);
+  const remember = (d: Done) => { const h = [...loadHistory(), d]; saveHistory(h); setHistory(h); saveRedo([]); setRedos([]); };
   const [deleting, setDeleting] = useState(false);
   const [on, setOn] = useState(false);
   const [adding, setAdding] = useState(false);
@@ -161,7 +165,23 @@ export default function PreviewEdit({ canDelete = false }: { canDelete?: boolean
       const j = await r.json().catch(() => ({}));
       if (!r.ok) { setMsg(j.error || "Couldn't undo. Nothing was changed."); if (r.status === 409 || r.status === 400) { const h = loadHistory().slice(0, -1); saveHistory(h); setHistory(h); } return; }
       const h = loadHistory().slice(0, -1); saveHistory(h); setHistory(h);
-      setMsg(`Undone: ${last.label}. The preview updates in about 2 minutes.`);
+      if (j.commit) { const r2 = [...loadRedo(), { sha: j.commit as string, label: last.label }]; saveRedo(r2); setRedos(r2); }
+      setMsg(`Undone: ${last.label}. Redo puts it back. The preview updates in about 2 minutes.`);
+    } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
+    finally { setBusy(false); }
+  };
+  /* Redo: put back the change the last Undo took away (it undoes that Undo) */
+  const redo = async () => {
+    const last = redos[redos.length - 1]; if (!last) return;
+    if (!confirm(`Redo: put back ${last.label}?`)) return;
+    setBusy(true); setMsg("Redoing…");
+    try {
+      const r = await fetch("/api/preview-undo", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ sha: last.sha, name: askName(), redo: true }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) { setMsg(j.error || "Couldn't redo. Nothing was changed."); if (r.status === 409 || r.status === 400) { const r2 = loadRedo().slice(0, -1); saveRedo(r2); setRedos(r2); } return; }
+      const r2 = loadRedo().slice(0, -1); saveRedo(r2); setRedos(r2);
+      if (j.commit) { const h = [...loadHistory(), { sha: j.commit as string, label: last.label }]; saveHistory(h); setHistory(h); }
+      setMsg(`Redone: ${last.label}. The preview updates in about 2 minutes.`);
     } catch { setMsg("Couldn't reach the server. Nothing was changed."); }
     finally { setBusy(false); }
   };
@@ -235,6 +255,7 @@ export default function PreviewEdit({ canDelete = false }: { canDelete?: boolean
             <button type="button" className="pe-btn" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter adds a new line. Esc or click away to finish."); }}>Edit text</button>
             <button type="button" className="pe-btn" onClick={() => { setAdding(true); setMsg(""); }}>Comment</button>
             {history.length > 0 && <button type="button" className="pe-btn pe-ghost" disabled={busy} onClick={undo} title={`Undo: ${history[history.length - 1].label}`}>Undo</button>}
+            {redos.length > 0 && <button type="button" className="pe-btn pe-ghost" disabled={busy} onClick={redo} title={`Redo: ${redos[redos.length - 1].label}`}>Redo</button>}
             {canDelete && <button type="button" className="pe-btn pe-ghost pe-danger" onClick={() => { setDeleting(true); setMsg(""); }}>Delete section</button>}
             <button type="button" className={`pe-btn pe-ghost${listOpen ? " is-on" : ""}`} onClick={() => setListOpen((v) => !v)}>Comments ({count})</button>
             <button type="button" className="pe-btn pe-ghost" onClick={() => { setCleanView(true); setListOpen(false); }} title="Hide the tools, comment pins, and placeholder notes">Clean view</button>

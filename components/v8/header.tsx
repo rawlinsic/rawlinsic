@@ -7,7 +7,7 @@ import { isJacobVersion } from "@/lib/preview-gh";
 import { tc } from "@/lib/title-case";
 import { INDUSTRIES as IND_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, PAGE_PHOTO, AREA_PHOTO_POS, NAV_AREA_PHOTO, NAV_AREA_PHOTO_POS } from "@/lib/content/media";
-import { THEME, casePhoto } from "@/lib/content/v8";
+import { THEME, casePhoto, FEATURED_CASES } from "@/lib/content/v8";
 import { EVENTS, NEWS, isUpcoming } from "@/lib/content/news";
 import { RESEARCH } from "@/lib/content/research";
 import { THOUGHT_LEADERSHIP } from "@/components/thought-leadership-data";
@@ -17,8 +17,10 @@ const PROD = process.env.VERCEL_ENV === "production";
 
 /* Who we work with: the project shown as a photo card for each industry (Part 4, 3) */
 const IND_CARD: Record<string, string> = { transport: "cs-proficiency", gov: "cs-local-am", contractors: "cs-major", private: "cs-pv-pmo" };
-/* Our work: three projects in the works (Part 1, 1.3) */
-const IN_THE_WORKS = ["cs-transform", "cs-proficiency", "cs-strategic"];
+/* Our work menu, "featured projects" (Nicole renamed it from "In the Works", Nov 12, and asked for the best
+   featured projects): the first three finished projects on the home page's Featured projects list
+   (lib/content/v8.ts FEATURED_CASES), so the menu shows completed work for named clients. */
+const MENU_FEATURED = FEATURED_CASES.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c && c.status === "Completed").slice(0, 3);
 
 /* note: the preview-only In the works sign-off note (never in production) */
 const card = (c: CaseIndex) => ({ title: tc(c.title), who: c.who, href: caseHref(c), photo: casePhoto(c), status: caseTag(c), live: c.status === "Ongoing", note: process.env.VERCEL_ENV === "production" ? undefined : CASE_STATUS[c.id] });
@@ -55,12 +57,11 @@ export default function Header() {
     /* previews only: the hidden International page, with why it's hidden (Part 4, 1) */
     intl: !PROD && intl ? { name: intl.name, href: industryHref(intl), note: "" } : undefined,
     /* A link whose label is emptied in the preview editor is left out of the menu, so no blank row shows.
-       Nicole emptied "Where We Work" on Nov 12 (here and under About). Type the label back in to show it again. */
+       "Where We Work" is under About only (Nicole, Nov 12), not here. */
     work: [
       { label: "All Projects", href: "/insights/case-studies", note: "" },
-      { label: "", href: "/about/where-we-work", note: "" },
     ].filter((l) => l.label.trim()),
-    inWorks: IN_THE_WORKS.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c).map(card),
+    inWorks: MENU_FEATURED.map(card),
     insights: [
       { label: "News & Recognition", href: "/insights/news", note: "Events, publications, and news", photo: PAGE_PHOTO.news,
         line: newest ? { k: "Latest", t: newest.title } : undefined,
@@ -77,7 +78,7 @@ export default function Header() {
       { label: "Who We Are", href: "/about/who-we-are", note: "Where we started, and where we're headed" },
       { label: "How We Work", href: "/about/how-we-work", note: "" },
       { label: "Our People", href: "/about/our-people", note: "" },
-      { label: "", href: "/about/where-we-work", note: "" },
+      { label: "Where We Work", href: "/about/where-we-work", note: "" },
       { label: "Careers", href: "/careers", note: "" },
     ].filter((l) => l.label.trim()),
     /* About: the first eight leaders (Part 1, 1.5; 27 people verified in content updates v4, 5) */

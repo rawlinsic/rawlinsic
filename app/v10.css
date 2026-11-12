@@ -1149,3 +1149,10 @@ a.nw-more:hover, .nw-proj:hover .nw-more { text-decoration: underline; text-unde
 .iwx-list .ed-more { align-self: flex-start; margin-top: auto; padding-top: 20px; }
 @media (max-width: 1080px) { .iwx-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 700px) { .iwx-list { grid-template-columns: minmax(0, 1fr); } }
+
+/* ── Nov 12, 2026 (3) ── Nicole's list: Who we work with intro under the headline; Our People photos with the
+   blue glow ring the aviation team's circles have. */
+.fan-intro { max-width: 78ch; margin: 22px auto 0; color: #2e3c50; font-size: clamp(1.1rem, 1.35vw, 1.26rem); line-height: 1.6; }
+.pp3-ph { margin: 12px auto 20px; box-shadow: 0 0 0 3px #22d3ee, 0 0 0 9px rgba(34, 211, 238, 0.16), 0 16px 30px -18px rgba(10, 18, 32, 0.5); }
+.pp-card.pp3:hover .pp3-ph, .pp-card.pp3:focus-visible .pp3-ph { box-shadow: 0 0 0 3px #22d3ee, 0 0 0 9px rgba(34, 211, 238, 0.3), 0 0 34px rgba(34, 211, 238, 0.55); }
+.pp3-faces img { box-shadow: 0 0 0 2px #22d3ee; }

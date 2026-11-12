@@ -266,7 +266,7 @@ export default function Home() {
                 <b>{ev.cardTitle ?? ev.title}</b>
                 {ev.where && <span className="ev-where">{ev.where}</span>}
                 {ev.note && <p>{ev.note}</p>}
-                <a className="v8-btn v8-btn-light" href="/contact">Plan to meet us</a>
+                <a className="v8-btn v8-btn-light" href="/contact#message">Plan to meet us</a>
               </article>
             )}
             {news.map((n) => n.tag === "Project" && wip ? (

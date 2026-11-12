@@ -312,7 +312,7 @@ export function InsightsIndex() {
           <nav className="pg-crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">Insights</span></li></ol></nav>
           <h1 className="fan-h">What we&apos;ve done, and <em>what&apos;s in the works.</em></h1>
         </div>
-        <FanCards cards={cards} label="Insights" start={2} />
+        <FanCards cards={cards} label="Insights" start={2} hoverFront />
         <ul className="ed-wrap fan-links">
           <li><a href="/insights/case-studies">Projects</a></li>
           <li><a href="/insights/news">News &amp; Recognition</a></li>

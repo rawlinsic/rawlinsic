@@ -73,6 +73,10 @@ export default function Panels({ children, className }: { children: ReactNode; c
           el.style.minHeight = `${room}px`;
         }
       });
+      // Later panels always sit in front of earlier ones. Sections carry their own z-index (some 2, some none),
+      // so a section with none slid *under* the held one before it instead of over it (Who we are: the growth
+      // row went under "Our story", Nicole, Nov 12). The "On this page" bar stays above them all (z-index 40).
+      kids.forEach((el, i) => { el.style.zIndex = String(i + 2); });
       // which panels hold: only those whose next panel covers everything under the bars
       const holds = kids.map((_, i) => { const j = after(i), nx = kids[j]; return i > 0 && !!nx && nx.offsetHeight >= vh - tops[j] - 1; });
       // the beat before the next panel comes over: only where a panel holds (elsewhere it would just be a gap)
@@ -131,7 +135,7 @@ export default function Panels({ children, className }: { children: ReactNode; c
       else {
         delete wrap.dataset.live;
         unfill();
-        kids.forEach((el) => { NATURAL.delete(el); el.style.removeProperty("--cv"); delete el.dataset.cv; delete el.dataset.gone; });
+        kids.forEach((el) => { el.style.zIndex = ""; NATURAL.delete(el); el.style.removeProperty("--cv"); delete el.dataset.cv; delete el.dataset.gone; });
         scrubs.forEach((s) => s.style.setProperty("--sp", "1"));
       }
     };

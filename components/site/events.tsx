@@ -37,7 +37,7 @@ export function UpcomingEvents({ events }: { events: EventItem[] }) {
             {e.where && <p className="evx-where"><span className="evx-place"><Pin />{e.where}</span></p>}
             {e.sessions?.length ? <Sessions e={e} /> : (e.line ?? e.note) && <p className="evx-text">{e.line ?? e.note}</p>}
             <p className="evx-go">
-              <a className="ed-btn is-white" href="/contact">Plan to meet us</a>
+              <a className="ed-btn is-white" href="/contact#message">Plan to meet us</a>
               {e.href && <a className="ed-more" href={e.href} {...ext}>Event details</a>}
             </p>
           </div>
