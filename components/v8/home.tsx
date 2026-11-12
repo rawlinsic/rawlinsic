@@ -102,7 +102,7 @@ export default function Home() {
     { src: INDUSTRY_PHOTO["g-mpo"], label: "Metropolitan Planning Organizations", href: subsectorHref(ind("gov"), subOf("gov", "g-mpo")), note: OFF_RING["g-mpo"] },
     { src: INDUSTRY_PHOTO["g-federal"], label: "Multi-State & Federal Programs", href: subsectorHref(ind("gov"), subOf("gov", "g-federal")) },
     /* International is hidden on the live site, so it's on the ring on previews only */
-    { src: INDUSTRY_PHOTO.intl, label: "International Agencies", href: industryHref(ind("intl")), note: "Hidden on the live site unless approved.", off: true },
+    { src: INDUSTRY_PHOTO.intl, label: "International Agencies", href: industryHref(ind("intl")), note: "", off: true },
   ];
   const tiles: Tile[] = ring.filter((t) => !PROD || (!t.note && !t.off)).map(({ off: _off, ...t }) => t); // eslint-disable-line @typescript-eslint/no-unused-vars
 

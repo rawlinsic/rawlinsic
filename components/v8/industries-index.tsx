@@ -55,7 +55,7 @@ export default function IndustriesIndexV8() {
                 <div className="iw-txt">
                   <h2><a href={industryHref(intl)}>{intl.name}</a></h2>
                   <p className="iw-lead">{intl.lead}</p>
-                  <em className="v8-dev">Hidden on the live site unless approved.</em>
+                  <em className="v8-dev"></em>
                   <a className="iw-more" href={industryHref(intl)}>Explore {intl.name}</a>
                 </div>
               </li>
