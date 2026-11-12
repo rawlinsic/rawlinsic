@@ -1325,7 +1325,7 @@ export const AREAS: Record<string, AreaData> = {
  "delivery": {
   "id": "delivery",
   "name": "Project Delivery",
-  "tag": "Getting programs and projects built",
+  "tag": "Getting programs & projects built",
   "services": [
    "program-delivery",
    "owners-rep",

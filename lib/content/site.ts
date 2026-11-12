@@ -42,7 +42,7 @@ export const AREAS: Area[] = [
   },
   {
     id: "delivery", slug: "project-delivery", name: "Project Delivery",
-    tag: "Getting programs and projects built", scene: "construction", featuredCase: "cs-transform",
+    tag: "Getting programs & projects built", scene: "construction", featuredCase: "cs-transform",
     services: [
       svc("program-delivery", "Program & Project Delivery", "interchange"),
       svc("owners-rep", "Owner's Representation", "site"),
