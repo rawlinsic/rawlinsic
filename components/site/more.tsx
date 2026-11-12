@@ -86,8 +86,7 @@ export function WhoWeAre() {
         <ol className="ab-why">{WHY.map(([t, d], k) => <li key={t}><span className="ab-why-n">{String(k + 1).padStart(2, "0")}</span><b>{t}</b><p>{d}</p></li>)}</ol>
       </EdSec>
       <EdSec k="Before Rawlins" title="Where our people have been" intro={<p>Our people ran the programs our clients run. A few of the roles they held:</p>} link={{ href: "/about/our-people", label: "Everyone on our team" }}>
-        {/* only founder and former roles: the list is "roles they held" (content pass v7, 8.2) */}
-        <ul className="ab-leaders">{LEADERS.filter((l) => /^(Founder|Former)/.test(l.role)).map((l) => (
+        <ul className="ab-leaders">{LEADERS.map((l) => (
           <li key={l.name}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/images/team/${l.photo}.webp`} alt="" loading="lazy" />
@@ -105,10 +104,15 @@ const PRINCIPLES: [string, string][] = [
   ["Start where the client is", "Most organizations already have a plan, a framework, or a manual. We put what exists to work before writing anything new."],
   ["Bridge before building", "We use the systems and licenses a client already owns, and build new only when nothing existing can do the job."],
   ["Straight answers on AI", "When a problem needs a rule, a process, or a decision instead of a model, we say so."],
-  ["The client owns the result", "Every build comes with documentation and training, and your team owns it."],
+  ["The client owns the result", "Every build comes with documentation and training, and you own it."],
+  ["We stay through execution", "Recommendations are where we start. We help put them into practice."],
 ];
-/* content pass v7, 8.3: "We stay through execution" and "How a project usually runs" removed (the four steps say it) */
-const KEEP = ["Processes and manuals your staff can follow and update", "Tools and templates built on systems you already own", "People trained to run it, with support while they learn"];
+const RUNS: [string, string][] = [
+  ["Start with what exists", "Your plans, manuals, data, and systems"],
+  ["Work with your own experts", "In working groups and workshops"],
+  ["Build the tools people will use", "Manuals, templates, training, dashboards, and working apps"],
+  ["Stay through rollout", "Training, onboarding, and support while staff learn the new way"],
+];
 export function HowWeWork() {
   return (
     <Shell>
@@ -118,11 +122,11 @@ export function HowWeWork() {
       <section className="ab-steps-sec" data-nofill>
         <ol className="ed-wrap ab-steps">{STEPS.map(([t, d], k) => <li key={t}><span className="ab-step-n">{String(k + 1).padStart(2, "0")}</span><b>{t}</b><p>{d}</p></li>)}</ol>
       </section>
-      <EdSec k="What guides us" title="What we hold to" tone="panel">
+      <EdSec k="What guides us" title="Principles" tone="panel">
         <ul className="ab-principles">{PRINCIPLES.map(([t, d]) => <li key={t}><b>{t}</b><p>{d}</p></li>)}</ul>
       </EdSec>
-      <EdSplit k="In practice" title="What you keep">
-        <ol className="ab-runs ab-keep">{KEEP.map((t) => <li key={t}><b>{t}</b></li>)}</ol>
+      <EdSplit k="In practice" title="How a project usually runs">
+        <ol className="ab-runs">{RUNS.map(([t, d]) => <li key={t}><b>{t}</b><p>{d}</p></li>)}</ol>
       </EdSplit>
       <Talk />
     </Shell>
@@ -357,10 +361,7 @@ export function NewsPage() {
           )}
           <ul className="nw2-list">
             {rest.map((n) => (
-              /* no link, no "Read more" for a post without one (content pass v7, 12.2) */
-              <li key={n.title}>{n.href
-                ? <a href={n.href} {...ext(n.href)}><span className="nw2-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span><b>{n.title}</b>{n.text && <p>{n.text}</p>}<span className="ed-more">{/linkedin/.test(n.href) ? "Read it on LinkedIn" : "Read more"}</span></a>
-                : <div><span className="nw2-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span><b>{n.title}</b>{n.text && <p>{n.text}</p>}</div>}</li>
+              <li key={n.title}><a href={n.href} {...ext(n.href)}><span className="nw2-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span><b>{n.title}</b>{n.text && <p>{n.text}</p>}<span className="ed-more">{n.href && /linkedin/.test(n.href) ? "Read it on LinkedIn" : "Read more"}</span></a></li>
             ))}
             {ph.map((n) => <li key={n.title} className="is-dev"><div><span className="nw2-tag">{n.tag}</span><b>{n.title}</b><Dev>Placeholder: {n.placeholder}</Dev></div></li>)}
           </ul>
@@ -407,16 +408,15 @@ function ByLine({ names }: { names: string[] }) {
 }
 export function ResearchPage() {
   /* the list lives in lib/content/research.ts (the Insights menu reads it too); the guide is listed with the reports */
-  /* the April Q&A is an article, not current research; it stays in RESEARCH for the menu (content pass v7, 12.1) */
-  const now = RESEARCH.filter((r) => r.k !== "Guidance" && r.k !== "Thought leadership");
+  const now = RESEARCH.filter((r) => r.k !== "Guidance");
   return (
     <Shell scene="crossing" photo={PAGE_PHOTO.research}>
       <Hero crumbs={[["/insights", "Insights"], ["/insights/research", "Research & Publications"]]} kicker="Insights" title="Research & Publications"
-        lead={<p>Research reports and articles by people on our team, what we&apos;re working on now, and where our people have spoken.</p>} />
+        lead={<p>National research reports written by people on our team, the research we&apos;re doing now, and where our people have spoken.</p>} />
       <section data-nofill className="pj-sec rs-pubs" id="publications">
         <div className="pg-wrap">
           <h2 className="pj-h">Published research</h2>
-          <p className="rs-intro">Reports and articles our people wrote for the Transportation Research Board, the Federal Highway Administration, state DOT research programs, and professional journals, most before they joined Rawlins.</p>
+          <p className="rs-intro">Reports our people wrote for the Transportation Research Board, the Federal Highway Administration, and state DOT research programs, most before they joined Rawlins.</p>
           <ul className="rs-list">
             {PUBLICATIONS.map((x) => (
               <li key={x.href}>
@@ -425,7 +425,7 @@ export function ResearchPage() {
                   <b>{x.title}</b>
                   {x.line && <p>{x.line}</p>}
                   <span className="rs-pub">{x.publisher}{x.before ? " · Before Rawlins" : ""}</span>
-                  <span className="pj-more">Read it</span>
+                  <span className="pj-more">Read the report</span>
                 </a>
                 <ByLine names={x.people} />
               </li>
@@ -435,7 +435,7 @@ export function ResearchPage() {
       </section>
       <section data-nofill className="pj-sec pj-did rs-now">
         <div className="pg-wrap">
-          <h2 className="pj-h">What we&apos;re working on now</h2>
+          <h2 className="pj-h">Research we&apos;re doing now</h2>
           <ul className="pj-did-list">
             {now.map((r) => (
               <li key={r.t}><span className="rs-k">{r.k}</span><b className="rs-now-t">{r.t}</b><p>{r.link && <a href={r.link.href}>{r.link.label}</a>}{r.text}</p></li>

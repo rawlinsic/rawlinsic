@@ -5,8 +5,7 @@
    holds while you point at it; with reduced motion it only moves when you ask. Styles: app/v10.css (fan-). */
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from "react";
 
-/* text/more: shown when you point at the middle card (home What we do: the words the old tiles had) */
-export type FanCard = { href: string; tag: string; title: string; photo: string; pos?: string; text?: string; more?: string };
+export type FanCard = { href: string; tag: string; title: string; photo: string; pos?: string };
 
 export default function FanCards({ cards, label, start }: { cards: FanCard[]; label: string; start?: number }) {
   const n = cards.length;
@@ -54,9 +53,7 @@ export default function FanCards({ cards, label, start }: { cards: FanCard[]; la
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={c.photo} alt="" loading="lazy" draggable={false} style={c.pos ? { objectPosition: c.pos } : undefined} />
               <span className="fan-tag"><i aria-hidden="true" />{c.tag}</span>
-              {c.text || c.more
-                ? <span className="fan-body"><b>{c.title}</b><span className="fan-txt">{c.text && <span className="fan-q">{c.text}</span>}{c.more && <span className="fan-more">{c.more}</span>}</span></span>
-                : <b>{c.title}</b>}
+              <b>{c.title}</b>
             </a>
           );
         })}

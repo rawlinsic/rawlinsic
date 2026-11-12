@@ -34,8 +34,7 @@ export default function Header() {
   const data: NavData = {
     areas: AREAS.map((a) => ({
       id: a.id, n: THEME[a.id].n, name: a.name, tag: a.tag, href: areaHref(a), color: THEME[a.id].color, ink: THEME[a.id].ink, tint: THEME[a.id].tint, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id],
-      /* q: a preview-only "?" beside Owner's Representation (content pass v7, Part 11) */
-      services: a.services.map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: !PROD && s.id === "owners-rep" ? "Role still being defined" : undefined })),
+      services: a.services.map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}` })),
       projects: `/insights/case-studies?area=${a.slug}`,
     })),
     industries: VISIBLE_INDUSTRIES.map((i) => {

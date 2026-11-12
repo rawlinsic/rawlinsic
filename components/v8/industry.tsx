@@ -17,7 +17,7 @@ import { allPeople } from "@/components/site/more";
 import type { CSSProperties, ReactNode } from "react";
 import {
   AREAS, VISIBLE_INDUSTRIES, areaHref, caseHref, caseTag, industryHref, serviceById, serviceHref, subsectorHref,
-  type CaseIndex, type Industry, type Subsector, PAGE_STATUS,
+  type CaseIndex, type Industry, type Subsector,
 } from "@/lib/content/site";
 import { INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AREA_PHOTO, INDUSTRY_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
@@ -55,7 +55,7 @@ const team = (people: readonly (readonly string[])[]): TeamCard[] =>
   });
 /* preview-only notes on the thin specialty pages, true for each page (full site pass, Part 4, 1) */
 const THIN_NOTE: Record<string, string> = {
-  "sub-ports": PAGE_STATUS["sub-ports"], // content pass v7, Part 6
+  "sub-ports": "Content status: only the harbors work stands behind this page so far.",
   "g-capital": "Content status: no Rawlins project yet; the page leads with experience on our team.",
   "g-mpo": "Content status: no Rawlins project yet; the page leads with experience on our team.",
 };

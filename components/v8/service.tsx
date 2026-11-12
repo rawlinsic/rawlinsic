@@ -13,7 +13,7 @@
    (full site pass, Parts 2 and 4). */
 import ProjectCard from "@/components/v8/project-card";
 import type { CSSProperties } from "react";
-import { AREAS, CASES, PAGE_STATUS, areaHref, caseHref, caseTag, isOurs, serviceById, serviceHref } from "@/lib/content/site";
+import { AREAS, CASES, areaHref, caseHref, caseTag, isOurs, serviceById, serviceHref } from "@/lib/content/site";
 import { SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { SERVICE_STEPS } from "@/lib/content/features";
@@ -28,13 +28,12 @@ import RouteList from "@/components/v8/route-list";
 import { AVIATION_PAGES, ServiceFeature, aviationCards } from "@/components/site/services";
 import { AviationTeam } from "@/components/site/aviation";
 import { AVIATION_ROLES } from "@/lib/content/people";
-import { CaseNote, Dev, LineNote, talkFor } from "@/components/site/ui";
+import { CaseNote, Dev, LineNote, TALK } from "@/components/site/ui";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const STATUS: Record<string, string> = { warn: "Proven, copy needed", gap: "Needs expert content" };
 const STEP_KIND: Record<string, DiagramKind> = { "asset-mgmt": "cycle", "strategic-planning": "loop", workforce: "track", "training-video": "track" };
-/* "Inside a project delivery network" moved from Program Delivery to Preconstruction (content pass v7, 2.3) */
-const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "preconstruction", "operations", "portals", "drone-aam", "drone-programs"];
+const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "program-delivery", "operations", "portals", "drone-aam", "drone-programs"];
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
 /* one card per quote: some entries hold two quotes in one string ("…” “…") */
@@ -48,11 +47,8 @@ export default function ServiceV8({ id }: { id: string }) {
   const i = area.services.findIndex((x) => x.id === id);
   const nextSvc = area.services[i + 1];
   const nextArea = AREAS[(AREAS.findIndex((a) => a.id === area.id) + 1) % AREAS.length];
-  /* a set order when the service has one (Preconstruction, content pass v7, 2.4); otherwise our own work first,
-     earlier work (tagged Before Rawlins) after it */
-  const order = (c: (typeof CASES)[number]) => { const k = s.cases?.indexOf(c.id) ?? -1; return k < 0 ? 99 : k; };
-  const cases = CASES.filter((c) => c.services.includes(id)).sort((a, b) => order(a) - order(b) || Number(!isOurs(a)) - Number(!isOurs(b)));
-  const talk = talkFor(area.id);
+  /* our own work first; earlier work (tagged Before Rawlins) after it */
+  const cases = CASES.filter((c) => c.services.includes(id)).sort((a, b) => Number(!isOurs(a)) - Number(!isOurs(b)));
   const steps = SERVICE_STEPS[id];
   const hear = quotes(s.hear);
   const photo = SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id];
@@ -85,13 +81,12 @@ export default function ServiceV8({ id }: { id: string }) {
             </nav>
             <p className="sv-area"><a href={areaHref(area)}>{area.name}</a></p>
             <h1>{s.name}</h1>
-            <p className="sv-intro">{s.intro}<LineNote text={s.intro} /></p>
+            <p className="sv-intro">{s.intro}</p>
             <div className="v8-actions">
               <a className="v8-btn v8-btn-area" href="#talk">Talk to us</a>
               {cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">Where we&apos;ve done it</a>}
             </div>
             {!PROD && s.st !== "ok" && <em className="v8-dev">Content status (preview only): {STATUS[s.st]}</em>}
-            {PAGE_STATUS[id] && <Dev>{PAGE_STATUS[id]}</Dev>}
           </div>
           <figure className="sv-photo lf">
             <span className="lf-front">
@@ -165,9 +160,9 @@ export default function ServiceV8({ id }: { id: string }) {
       <section id="talk" className="svt" data-nofill>
         <div className="v8-wrap svt-in">
           <div className="svt-talk">
-            <h2 className="v8-h2">{talk.title}</h2>
+            <h2 className="v8-h2">{TALK.title}</h2>
             {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
-            {talk.text ? <p className="v8-lead">{talk.text}</p> : null}
+            {TALK.text ? <p className="v8-lead">{TALK.text}</p> : null}
             <div className="v8-actions">
               <a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a>
               <a className="v8-btn v8-btn-ghost" href={areaHref(area)}>All of {area.name}</a>
