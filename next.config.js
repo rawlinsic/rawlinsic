@@ -37,6 +37,9 @@ const nextConfig = {
       { source: "/our-team", destination: "/about/our-people", permanent: true },
       { source: "/team", destination: "/about/our-people", permanent: true },
       { source: "/pxl-template/:slug*", destination: "/about/our-people", permanent: true },
+      // Content pass v7, Part 11 (Nov 11): Project Delivery services renamed and split
+      { source: "/services/project-delivery/program-project-delivery", destination: "/services/project-delivery/program-delivery", permanent: true },
+      { source: "/services/project-delivery/construction-pre-construction", destination: "/services/project-delivery/construction", permanent: true },
       // Redesign (handoff v7 section 7): old structure -> new, permanent
       { source: "/capabilities", destination: "/services", permanent: true },
       { source: "/services/strategy-organization/executive-administrative-advisory", destination: "/services/strategy-organization/executive-advisory", permanent: true },
