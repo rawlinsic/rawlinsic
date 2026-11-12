@@ -744,3 +744,137 @@
 .apop-more { color: #0e7490; font-size: 1rem; font-weight: 700; }
 .apop-more::after { content: " →"; }
 @media (prefers-reduced-motion: reduce) { .apop-card { animation: none; } }
+
+/* ── Nov 11, round 5 (Nicole) ── */
+/* Our People: two labeled filters, groups that open from a bar, circle photos */
+.pp3-tools { position: static; display: grid; gap: 18px; padding: 0 0 22px; margin-bottom: 8px; border-bottom: 1px solid #e3ebf5; }
+.pp3-filters { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px 40px; align-items: end; }
+.pp3-label { display: block; margin: 0 0 10px; color: #0a1220; font-size: 1.12rem; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.pp3-filter .pg-filter { margin: 0; }
+.pp3-filter .pg-filter button { min-height: 42px; padding: 0 16px; font-size: 0.98rem; }
+.pp3-filter .pg-filter button[aria-pressed="true"] { background: #1d3759; border-color: #1d3759; box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.35); }
+.pp3-select { position: relative; display: inline-block; }
+.pp3-select::after { content: ""; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px; margin-top: -7px; border-right: 2px solid #0b93b0; border-bottom: 2px solid #0b93b0; transform: rotate(45deg); pointer-events: none; }
+.pp3-select select { min-width: 280px; min-height: 42px; padding: 0 44px 0 18px; border-radius: 999px; border: 1px solid #c4d8f2; background: #fff; color: #0a1220; font: 600 0.98rem/1 var(--font-sans); -webkit-appearance: none; appearance: none; cursor: pointer; }
+.pp3-select select:focus-visible { outline: 2px solid #22d3ee; outline-offset: 2px; }
+.pp3-none { margin: 22px 0; color: #2e3c50; font-size: 1.05rem; }
+.pp3-none button { border: 0; background: none; color: #1d3759; font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
+.pp3-group { margin-top: 18px; overflow: hidden; border: 1px solid #c4d8f2; border-radius: 26px; background: #fff; box-shadow: 0 18px 40px -30px rgba(10, 18, 32, 0.4); }
+.pp3-h { margin: 0; }
+.pp3-bar { display: flex; align-items: center; gap: 16px; width: 100%; padding: 22px clamp(18px, 2.4vw, 30px); border: 0; background: linear-gradient(180deg, #fff, #f5f9fd); color: #0a1220; font: inherit; text-align: left; cursor: pointer; transition: background 0.2s; }
+.pp3-bar:hover:not(:disabled), .pp3-bar:focus-visible { background: linear-gradient(180deg, #f5fbfe, #e9f6fb); }
+.pp3-bar:disabled { cursor: default; }
+.pp3-bar:focus-visible { outline: 2px solid #22d3ee; outline-offset: -4px; }
+.pp3-name { font-size: clamp(1.5rem, 2.4vw, 2.1rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; }
+.pp3-faces { display: flex; align-items: center; margin-left: auto; padding-left: 12px; }
+.pp3-faces img { width: 46px; height: 46px; margin-left: -12px; border-radius: 50%; border: 2px solid #fff; background: #fff; object-fit: cover; box-shadow: 0 0 0 1px #c4d8f2; }
+.pp3-faces i { display: inline-grid; place-items: center; min-width: 46px; height: 46px; margin-left: -12px; padding: 0 8px; border-radius: 999px; border: 2px solid #fff; background: #1d3759; color: #fff; font-style: normal; font-size: 0.9rem; font-weight: 700; }
+.pp3-toggle { display: inline-flex; align-items: center; gap: 10px; margin-left: 18px; color: #1d3759; font-size: 1rem; font-weight: 700; white-space: nowrap; }
+.pp3-group.is-open .pp3-toggle { margin-left: auto; }
+.pp3-toggle::after { content: ""; width: 9px; height: 9px; margin-top: -4px; border-right: 2px solid #0b93b0; border-bottom: 2px solid #0b93b0; transform: rotate(45deg); transition: transform 0.2s; }
+.pp3-group.is-open .pp3-toggle::after { margin-top: 4px; transform: rotate(-135deg); }
+.pp3-group.is-open .pp3-bar { border-bottom: 1px solid #e3ebf5; }
+.pp3-group .pp-group-text { margin: 18px clamp(18px, 2.4vw, 30px) 0; }
+.pp-grid.pp3-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 196px), 1fr)) !important; gap: 22px 14px !important; padding: 26px clamp(14px, 2vw, 26px) 30px; }
+.pp-grid.pp3-grid[hidden] { display: none !important; }
+.pp-card.pp3 { justify-items: center; align-content: start; gap: 4px; padding: 14px 10px 16px; border: 0; border-radius: 20px; background: none; text-align: center; box-shadow: none; }
+.pp-card.pp3:hover, .pp-card.pp3:focus-visible { transform: translateY(-3px); background: #f3f8fd; border: 0; box-shadow: none; }
+.pp3-ph { position: relative; display: block; width: min(100%, 164px); aspect-ratio: 1 / 1; margin: 0 auto 12px; overflow: hidden; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px #fff, 0 0 0 5px #c4d8f2, 0 16px 30px -18px rgba(10, 18, 32, 0.55); transition: box-shadow 0.25s; }
+.pp-card.pp3 .pp3-ph img { position: absolute; left: 50%; top: 50%; width: 104.5% !important; height: 104.5% !important; max-width: none; margin: 0 !important; border-radius: 0 !important; translate: -50% -50%; object-fit: cover; object-position: 50% 50%; background: #fff; }
+.pp-card.pp3:hover .pp3-ph, .pp-card.pp3:focus-visible .pp3-ph { box-shadow: 0 0 0 3px #fff, 0 0 0 5px #22d3ee, 0 0 28px rgba(34, 211, 238, 0.5); }
+.pp-card.pp3 b { font-size: 1.12rem; line-height: 1.25; }
+.pp-card.pp3 .pp-role { font-size: 0.98rem !important; line-height: 1.35; }
+.pp-card.pp3 .pp-loc { justify-content: center; }
+.pp-card.pp3 .pp-tags { justify-content: center; margin-top: 6px; }
+.pp3-more { margin-top: 8px; color: #1d3759; font-size: 0.98rem; font-weight: 700; }
+.pp3-more::after { content: " →"; color: #0b93b0; }
+@media (max-width: 900px) { .pp3-filters { grid-template-columns: 1fr; } .pp3-select, .pp3-select select { width: 100%; min-width: 0; } .pp3-faces img:nth-child(n + 4) { display: none; } }
+@media (max-width: 560px) { .pp3-faces { display: none; } .pp3-toggle { margin-left: auto; } .pp-grid.pp3-grid { grid-template-columns: 1fr 1fr !important; } }
+/* a bio: the former agency role leads into the text, under "Before Rawlins" (it used to sit under the current title) */
+.pp-before { margin: 0 0 16px !important; padding: 12px 16px; border-left: 4px solid #22d3ee; border-radius: 0 14px 14px 0; background: #f0f7fd; color: #0a1220; font-size: 1.04rem; font-weight: 600; line-height: 1.45; }
+.pp-before span { display: block; margin-bottom: 2px; color: #0b6f86; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+/* people photos are circles everywhere, never a circle inside a square */
+.ab-b-faces img { border-radius: 50%; object-position: 50% 50%; background: #fff; }
+
+/* Who we are: Scott's quote with his photo (the card opens his bio on the page) */
+.ab-quote { position: relative; margin: 0; padding: clamp(28px, 3vw, 42px) clamp(24px, 2.8vw, 40px) clamp(22px, 2.4vw, 32px); border-radius: 28px; color: #fff; background: radial-gradient(70% 80% at 92% 0%, rgba(34, 211, 238, 0.24), transparent 62%), linear-gradient(165deg, #0b1830, #10233f 55%, #1d3759); box-shadow: 0 30px 70px -36px rgba(10, 18, 32, 0.6), inset 0 0 0 1px rgba(165, 243, 252, 0.22); }
+.ab-quote::before { content: "\201C"; display: block; height: 0.5em; margin-bottom: 14px; color: #22d3ee; font-size: 5rem; font-weight: 700; line-height: 1; text-shadow: 0 0 22px rgba(34, 211, 238, 0.5); }
+.ab-quote blockquote { margin: 0; }
+.ab-quote blockquote p { margin: 0; color: #fff; font-size: clamp(1.22rem, 1.6vw, 1.5rem); font-weight: 500; line-height: 1.45; }
+.ab-quote figcaption { margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(165, 243, 252, 0.28); }
+.apop.ab-quote-by { display: flex; align-items: center; gap: 16px; width: 100%; padding: 8px; border-radius: 18px; transition: background 0.2s, box-shadow 0.2s; }
+.apop.ab-quote-by:hover, .apop.ab-quote-by:focus-visible { background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 0 0 1px rgba(165, 243, 252, 0.4); }
+.ab-quote-ph { position: relative; flex: none; width: 88px; height: 88px; overflow: hidden; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px #22d3ee, 0 0 24px rgba(34, 211, 238, 0.45); }
+.ab-quote-ph img { position: absolute; left: 50%; top: 50%; width: 104.5%; height: 104.5%; max-width: none; translate: -50% -50%; object-fit: cover; }
+.ab-quote-who { display: grid; gap: 2px; }
+.ab-quote-who b { color: #fff; font-size: 1.25rem; font-weight: 600; line-height: 1.2; }
+.ab-quote-who em { color: #dce6f2; font-size: 1.02rem; font-style: normal; }
+.ab-quote-who small { display: inline-flex; align-items: center; gap: 5px; color: #b9c6d6; font-size: 0.96rem; }
+.ab-quote-who i { margin-top: 4px; color: #a5f3fc; font-size: 1rem; font-style: normal; font-weight: 700; }
+.ab-quote-who i::after { content: " →"; }
+
+/* Who we are: the gallery of team photos (two rows drifting opposite ways; a photo opens large) */
+.gal { --g: clamp(10px, 1.2vw, 16px); position: relative; z-index: 2; display: grid; gap: var(--g); padding: clamp(14px, 2vw, 26px) 0 clamp(20px, 2.6vw, 34px); overflow: hidden; background: #fff; }
+.gal-view { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); }
+.gal-row { display: flex; gap: var(--g); width: max-content; margin: 0; padding: 8px 0; list-style: none; animation: gal-slide calc(var(--n) * 8s) linear infinite; will-change: transform; }
+.gal-row.is-rev { animation-direction: reverse; }
+.gal:hover .gal-row, .gal:focus-within .gal-row { animation-play-state: paused; }
+@keyframes gal-slide { to { transform: translateX(calc(-50% - var(--g) / 2)); } }
+.gal-row li { flex: none; height: clamp(180px, 20vw, 290px); aspect-ratio: var(--ar); }
+.gal-row button { display: block; width: 100%; height: 100%; padding: 0; overflow: hidden; border: 0; border-radius: 20px; background: #dce6f2; box-shadow: 0 14px 30px -20px rgba(10, 18, 32, 0.55); cursor: zoom-in; transition: transform 0.3s, box-shadow 0.3s; }
+.gal-row img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+.gal-row button:hover, .gal-row button:focus-visible { transform: translateY(-4px); outline: 0; box-shadow: 0 0 0 3px #22d3ee, 0 0 30px rgba(34, 211, 238, 0.45); }
+.gal-row button:hover img { transform: scale(1.04); }
+.gal-box { width: 100vw; max-width: none; height: 100vh; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; }
+.gal-box[open] { display: grid; place-items: center; }
+.gal-box::backdrop { background: rgba(8, 14, 26, 0.88); }
+.gal-fig { position: relative; margin: 0; }
+.gal-fig img { display: block; max-width: min(90vw, 1500px); max-height: 82vh; border-radius: 18px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55); }
+.gal-x, .gal-nav { position: absolute; display: grid; place-items: center; width: 46px; height: 46px; border: 0; border-radius: 50%; background: #fff; color: #0a1220; font-size: 1.4rem; line-height: 1; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); }
+.gal-x { top: -18px; right: -18px; }
+.gal-nav { top: 50%; translate: 0 -50%; }
+.gal-nav.is-prev { left: -23px; }
+.gal-nav.is-next { right: -23px; }
+.gal-x:hover, .gal-nav:hover, .gal-x:focus-visible, .gal-nav:focus-visible { outline: 0; box-shadow: 0 0 0 3px #22d3ee, 0 0 22px rgba(34, 211, 238, 0.6); }
+.gal-fig figcaption { position: absolute; left: 0; right: 0; bottom: -36px; color: #dce6f2; font-size: 1rem; font-weight: 600; letter-spacing: 0.06em; text-align: center; }
+@media (prefers-reduced-motion: reduce) { .gal-row { animation: none; } .gal-row li[aria-hidden] { display: none; } .gal-view { overflow-x: auto; -webkit-mask-image: none; mask-image: none; } }
+@media (max-width: 700px) { .gal-nav.is-prev { left: 6px; } .gal-nav.is-next { right: 6px; } .gal-x { top: 8px; right: 8px; } }
+
+/* "What sets us apart" as its own row (Who we are): the home story's row, held while you scroll through the reasons */
+.wr { position: relative; z-index: 2; color: #fff; background: var(--navy-grad); }
+.wr:not([data-static]) { height: var(--wr-len); }
+.wr:not([data-static]) .wr-stage { position: sticky; top: 68px; display: grid; align-items: center; height: calc(100vh - 68px); overflow: hidden; }
+.wr-in { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); gap: clamp(28px, 5vw, 84px); align-items: center; width: 100%; max-width: 1480px; margin: 0 auto; padding: 0 clamp(18px, 4.5vw, 64px); }
+.wr-frame { position: relative; width: 100%; aspect-ratio: 1.45; max-height: 66vh; justify-self: center; overflow: hidden; border-radius: 22px; background: #eef3f9; box-shadow: 0 0 44px rgba(34, 211, 238, 0.22), 0 40px 80px -40px rgba(0, 0, 0, 0.65); }
+.wr-frame .hs-pans { transform: none; border-radius: 22px; }
+.wr-frame .hs-pan { transition: opacity 0.45s ease, visibility 0.45s; }
+.wr-glass { position: absolute; inset: 0; border-radius: 22px; border: 1px solid rgba(165, 243, 252, 0.6); box-shadow: inset 0 0 30px rgba(34, 211, 238, 0.1); pointer-events: none; }
+.wr-items { display: grid; }
+.wr:not([data-static]) .wr-item { grid-area: 1 / 1; align-self: start; opacity: 0; visibility: hidden; transform: translateY(14px); transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s; }
+.wr:not([data-static]) .wr-item.is-on { opacity: 1; visibility: visible; transform: none; }
+.wr-item h3 { margin: 0 0 16px; color: #fff; font-size: clamp(2rem, 3.2vw, 3.2rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.025em; }
+.wr-item p { margin: 0; max-width: 44ch; color: #cfdbea; font-size: clamp(1.08rem, 1.3vw, 1.25rem); line-height: 1.55; }
+.wr-item .hs-btn { min-height: 56px; margin-top: 24px; padding: 0 30px; font-size: 1.12rem; }
+.wr-item .hs-btn:hover, .wr-item .hs-btn:focus-visible { box-shadow: 0 0 0 2px var(--aqua), 0 0 22px rgba(34, 211, 238, 0.75), 0 0 52px rgba(34, 211, 238, 0.4); }
+.wr:not([data-static]) .hs-skip { display: inline-flex; }
+.wr:not([data-static]) .wr-item-vis { display: none; }
+.wr[data-static] { padding: clamp(56px, 8vw, 88px) 0; }
+.wr[data-static] .wr-in { grid-template-columns: 1fr; }
+.wr[data-static] .wr-frame, .wr[data-static] .wr-tick { display: none; }
+.wr[data-static] .wr-item + .wr-item { margin-top: 44px; }
+.wr[data-static] .wr-item-vis { margin-top: 20px; overflow: hidden; border-radius: 16px; }
+/* the row sits on pages outside the v8 shell, so it carries the palette its pieces expect */
+.wr, .apop-card {
+  --ink: #0d0d0d; --ink-2: #2e3c50; --muted: #4d688c; --paper: #ffffff; --paper-2: #eef3f9; --pale: #dce6f2; --line: #c4d8f2;
+  --head: #0a1220; --navy: #1d3759; --blue: #1d3759; --steel: #4d688c; --deep: #0e1a2b; --aqua: #22d3ee; --aqua-soft: #a5f3fc; --aqua-ink: #0e7490;
+}
+/* the moving people lanes (home and Who we are): each photo is a circle, not a circle inside a square */
+.wc-people.ps-lanes .wc-p img { width: calc(100% - 30px); margin: 14px auto 2px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.7); }
+.wc-people.ps-lanes .wc-p span { text-align: center; }
+.wc-people.ps-lanes .wc-p .wc-loc { justify-content: center; }
+/* Careers: the whole team, shown whole in a wide frame */
+.ab-hero-ph.is-team { aspect-ratio: 2400 / 1064; border-radius: 22px; }
+.ed-hero.has-aside:has(.ab-hero-ph.is-team) .ed-hero-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+@media (max-width: 900px) { .ed-hero.has-aside:has(.ab-hero-ph.is-team) .ed-hero-in { grid-template-columns: 1fr; } }
+/* About menu: with no descriptions, the items read as a simple list */
+.ma2 ul a b { font-size: 1.12rem; }

@@ -166,7 +166,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             </>}
           </div>
           <div className="mx-feat">
-            {data.industries[ind].feature && <><p className="mx-k">Featured Projects</p><ProjectCard c={data.industries[ind].feature!} /></>}
+            {data.industries[ind].feature && <><p className="mx-k">Relevant Projects</p><ProjectCard c={data.industries[ind].feature!} /></>}
             {data.industries[ind].projects.length > 0 && (
               <ul className="mx-plinks">{data.industries[ind].projects.map((p) => <li key={p.href}><a href={p.href}>{p.title}</a></li>)}</ul>
             )}
@@ -218,10 +218,11 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             <a className="ma-feature" href={data.about[0].href}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/pages/team-group-outdoor.webp" alt="" loading="lazy" />
-              <span><em>how we've grown</em><b>{data.about[0].label}</b><span>{data.about[0].note}</span><i>Our Story</i></span>
+              <span><em>how we've grown</em><b>{data.about[0].label}</b><i>Our Story</i></span>
             </a>
           )}
-          <ul>{data.about.slice(1).map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul>
+          {/* no descriptions under the items (Nicole, Nov 11) */}
+          <ul>{data.about.slice(1).map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b></a></li>)}</ul>
         </div>
       </div>}
 
@@ -268,7 +269,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                   <li key={x.href}>
                     <a href={x.href}>{x.name}</a>
                     {x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}
-                    {projects.length > 0 && <><p className="mx-k">Featured Projects</p><ul className="mx-projs">{projects.map((p) => <li key={p.href}><a className={"photo" in p ? "mx-proj" : undefined} href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{"photo" in p && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}</span></a></li>)}</ul></>}
+                    {projects.length > 0 && <><p className="mx-k">Relevant Projects</p><ul className="mx-projs">{projects.map((p) => <li key={p.href}><a className={"photo" in p ? "mx-proj" : undefined} href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{"photo" in p && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}</span></a></li>)}</ul></>}
                   </li>
                 );
               })}{data.intl && <li><a href={data.intl.href}>{data.intl.name}</a><em className="v8-dev">{data.intl.note}</em></li>}</ul></details>

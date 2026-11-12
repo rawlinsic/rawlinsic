@@ -8,12 +8,15 @@ import { AREAS, CASES, LEADERS, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, ind
 import { STATES, STATES_ACTIVE, STATES_SERVED, STEPS } from "@/lib/content/catalog";
 import { FORMERLY, bareName as bare } from "@/lib/content/people";
 import { AWARDS, PUBLICATIONS, RESEARCH, TALKS } from "@/lib/content/research";
-import PeopleDirectory, { type Person } from "@/components/site/people";
+import PeopleDirectory, { Pin, type Person } from "@/components/site/people";
 import PodcastPlayer from "@/components/site/podcast-player";
 import Grown from "@/components/v8/grown";
 import { EdBand, EdBtn, EdHero, EdSec, EdSplit, EdStats, FaceRows } from "@/components/site/editorial";
 import ReadProgress from "@/components/site/read-progress";
 import AuthorPop from "@/components/site/author-pop";
+import PhotoGallery from "@/components/site/photo-gallery";
+import WhyRow from "@/components/v8/why-row";
+import { tvPeople, whyItems } from "@/components/v8/why-items";
 import FanCards, { type FanCard } from "@/components/v8/fan-cards";
 import { casePhoto } from "@/lib/content/v8";
 import TeamWall, { type WallPerson } from "@/components/v8/team-wall";
@@ -33,6 +36,33 @@ const Cards = ({ items }: { items: { href: string; t: string; d: string; photo?:
     </li>
   ))}</ul>
 );
+
+/* Team photos for the Who we are gallery (Nicole's folder "about page gallery", Nov 11). Sized for the web with
+   location data removed; one is cropped above a drink bottle. The Hawaii and AMOTIA photos are the copies already
+   on the site (other sponsors' logos blurred). Left out: the AASHTO STEM challenge photo (AASHTO's own photo, and
+   it shows children). */
+const G = (f: string, alt: string, w: number, h: number) => ({ src: `/images/gallery/${f}.webp`, alt, w, h });
+const TEAM_GALLERY = [
+  { src: "/images/pages/team-group-indoor.webp", alt: "Our whole team at the 2026 retreat", w: 1800, h: 797 },
+  G("lakeside-three", "Three teammates on a lakeside dock", 1400, 1050),
+  G("retreat-data-session", "A teammate presenting a data session at our retreat", 1400, 1050),
+  { src: "/images/pages/team-group-outdoor.webp", alt: "Our team together outdoors at a 2026 conference", w: 2000, h: 1500 },
+  G("ocean-balcony", "Teammates on a balcony above the ocean", 1400, 1050),
+  { src: "/images/pages/research-paul-wheeler-nashville-symposium-2025.webp", alt: "A teammate presenting at a drone and advanced air mobility symposium", w: 1600, h: 1032 },
+  G("lake-evening-five", "Five teammates by the lake at dusk", 1400, 1050),
+  G("conference-session-sign", "Two teammates at a conference general session", 1055, 1400),
+  { src: "/images/pages/insights-hawaii-summit-2026-team.webp", alt: "Our team at a 2026 summit in Hawaii", w: 1600, h: 840 },
+  G("retreat-drone-session", "A teammate presenting drone imagery at our retreat", 1400, 1050),
+  G("lake-evening-selfie", "Teammates together by the lake in the evening", 1400, 756),
+  G("team-savannah", "Our team on the steps of a building in Savannah", 596, 640),
+  { src: "/images/pages/news-amotia-2026-general-session.webp", alt: "Our founder on a general session panel", w: 1600, h: 1036 },
+  G("winter-three", "Three teammates on a winter day", 1050, 1400),
+  G("lake-evening-three", "Three teammates at sunset", 1400, 1050),
+  G("palm-trees", "Teammates behind palm trees", 480, 640),
+  G("lake-night-three", "Three teammates in the evening", 1050, 1400),
+  G("mural-two", "Two teammates in front of a mural", 853, 1400),
+  G("lake-window-two", "Two teammates by a window over the lake", 1050, 1400),
+];
 
 /* ── About ── */
 export function AboutIndex() {
@@ -61,20 +91,29 @@ export function AboutIndex() {
 }
 
 export function WhoWeAre() {
-  const founder = LEADERS[0];
+  /* Scott's card: the same details every other card shows (title, location), not his former role, and it opens
+     his bio on this page (Nicole, Nov 11). His quote, from the live site's Our People page, sits with his photo. */
+  const scott = allPeople().find((p) => /^Scott Rawlins/.test(p.name));
   return (
     <Shell>
       <EdHero crumbs={[["/about", "About"], ["/about/who-we-are", "Who we are"]]} kicker="Who we are" title={<>Founded on <em>agency experience</em></>}
         lead={<p>Rawlins was founded in 2017 by Scott Rawlins, former Deputy Director and Chief Engineer of the Nevada Department of Transportation. Today former agency leaders work alongside an in-house digital team that builds the tools.</p>}
         actions={<><EdBtn href="/about/our-people">Meet our people</EdBtn><EdBtn href="/contact" kind="ghost">Get in touch</EdBtn></>}
-        aside={
-          <a className="ab-founder" href="/about/our-people#scott-rawlins-pe">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/images/team/${founder.photo}.webp`} alt="" />
-            <span><b>{founder.name}</b><em>{founder.role}</em></span>
-          </a>
-        } />
-      <EdBand src="/images/pages/team-group-outdoor.webp" pos="50% 58%" />
+        aside={scott && (
+          <figure className="ab-quote">
+            {/* the live site's quote; its dash is a comma here (the site uses no long dashes) */}
+            <blockquote><p>We&rsquo;ve built this firm on trust, working in close partnership with our clients to understand their reality and bring the right mix of perspectives, delivering outcomes that truly fit their needs.</p></blockquote>
+            <figcaption>
+              <AuthorPop person={scott} className="ab-quote-by">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <span className="ab-quote-ph"><img src={scott.photo} alt="" width={120} height={120} /></span>
+                <span className="ab-quote-who"><b>{scott.name}</b><em>{scott.role}</em>{scott.location && <small><Pin />{scott.location}</small>}<i>Read bio</i></span>
+              </AuthorPop>
+            </figcaption>
+          </figure>
+        )} />
+      {/* a gallery of team photos in place of the one big photo (Nicole, Nov 11) */}
+      <PhotoGallery photos={TEAM_GALLERY} />
       <EdSplit k="Our story" title="From one agency to many">
         <div className="ab-story">
           <p className="ab-story-lead">Scott Rawlins spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and then led an infrastructure asset management practice at a global consulting firm. He started Rawlins in 2017 to bring agency experience to the agencies that needed it.</p>
@@ -83,20 +122,10 @@ export function WhoWeAre() {
         </div>
       </EdSplit>
       <Grown eyebrow="how we've grown" title="Evolving impact" />
-      <EdSec k="Why Rawlins" title="Five reasons agencies call us" tone="navy">
-        <ol className="ab-why">{WHY.map(([t, d], k) => <li key={t}><span className="ab-why-n">{String(k + 1).padStart(2, "0")}</span><b>{t}</b><p>{d}</p></li>)}</ol>
-      </EdSec>
-      <EdSec k="Before Rawlins" title="Where our people have been" intro={<p>Our people ran the programs our clients run. A few of the roles they held:</p>} link={{ href: "/about/our-people", label: "Everyone on our team" }}>
-        {/* only founder and former roles: the list is "roles they held" (content pass v7, 8.2) */}
-        <ul className="ab-leaders">{LEADERS.filter((l) => /^(Founder|Former)/.test(l.role)).map((l) => (
-          <li key={l.name}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/images/team/${l.photo}.webp`} alt="" loading="lazy" />
-            <span><b>{l.name}</b><em>{l.role}</em></span>
-          </li>
-        ))}</ul>
-      </EdSec>
-      <TeamWall people={wallPeople()} spot={veteranPeople().map(wall)} />
+      {/* the same row as the home page's "What sets us apart" (Nicole, Nov 11). "Where our people have been" was
+          removed: each person's former role now leads their bio, under "Before Rawlins". "Meet the team" was
+          removed too. */}
+      <WhyRow items={whyItems(tvPeople(stripPeople()), !PROD)} />
       <Talk />
     </Shell>
   );
@@ -164,9 +193,11 @@ const memberSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").rep
 /* former agency roles: lib/content/people.ts (the same list the people cards use) */
 const BUSINESS = /Accounting|Administrative Assistant|Professional Services|VP of Finance|Chief Culture|Administration & Contract/;
 const SPECIALIST = /Specialist|Designer|Engineer\b|Architect|Tester|Digital Strategy|Chief AI Strategy/;
+const ADVISORS_BY_NAME = /^(Debbie Cmar|Lauren LeJeune)\b/;
 function personFromRoster(m: (typeof TEAM_MEMBERS)[number]): Person {
   const role = m.title && m.title !== m.role ? `${m.title}, ${m.role}` : m.role;
-  const group: Person["group"] = BUSINESS.test(m.role) ? "Business Operations" : SPECIALIST.test(m.role) ? "Specialists" : "Advisors";
+  /* Nicole, Nov 11: Debbie Cmar and Lauren LeJeune are advisors (their roster roles alone would put them in Business Operations) */
+  const group: Person["group"] = ADVISORS_BY_NAME.test(m.name) ? "Advisors" : BUSINESS.test(m.role) ? "Business Operations" : SPECIALIST.test(m.role) ? "Specialists" : "Advisors";
   const areas = new Set<string>();
   if (m.categories.includes("strategy")) areas.add("strategy-organization");
   if (m.categories.includes("operations") && group !== "Business Operations") { areas.add("project-delivery"); areas.add("operations-maintenance"); }
@@ -176,7 +207,7 @@ function personFromRoster(m: (typeof TEAM_MEMBERS)[number]): Person {
      not Operations & Maintenance or Drones) */
   if (/^Nicole Arakorpi/.test(m.name)) { areas.clear(); ["strategy-organization", "project-delivery", "digital-solutions"].forEach((a) => areas.add(a)); }
   return {
-    slug: memberSlug(m.name), name: m.name, photo: m.photo, role, group, areas: Array.from(areas),
+    slug: memberSlug(m.name), name: m.name, photo: m.photo, role, job: m.role, group, areas: Array.from(areas),
     formerly: FORMERLY[bare(m.name)], location: m.location, email: m.email, phone: m.phone, linkedin: m.linkedin, background: cleanNames(m.background), achievements: cleanNames(m.achievements),
   };
 }
@@ -209,18 +240,11 @@ export function OurPeople() {
   const people = TEAM_MEMBERS.map(personFromRoster);
   const founder = people.findIndex((p) => /Founder/.test(p.role));
   if (founder > 0) people.unshift(people.splice(founder, 1)[0]);
-  const count = (g: Person["group"]) => people.filter((p) => p.group === g).length;
   return (
     <Shell>
       <EdHero dark crumbs={[["/about", "About"], ["/about/our-people", "Our people"]]} kicker="Our people" title={<>The people <em>behind the work</em></>}
         lead={<p>More than 25 of our people came from public agencies. Our team brings together expertise in strategy, operations, and technology to deliver practical, forward-thinking solutions to complex challenges. While rooted in transportation, we continue to expand our experience across sectors. Collaboration is central to how we work.</p>}>
-        <FaceRows people={people} />
-        <dl className="ed-wrap pp-hero-stats">
-          <div><dt>People on our team</dt><dd>{people.length}</dd></div>
-          <div><dt>Advisors</dt><dd>{count("Advisors")}</dd></div>
-          <div><dt>Specialists</dt><dd>{count("Specialists")}</dd></div>
-          <div><dt>Business operations</dt><dd>{count("Business Operations")}</dd></div>
-        </dl>
+        {/* the sliding faces and the four counts under them were removed (Nicole, Nov 11) */}
       </EdHero>
       <section className="pg-sec pg-body pp-body" data-nofill><div className="pg-wrap">
         <PeopleDirectory people={people} showDev={!PROD} areas={AREAS.map((a) => ({ value: a.slug, label: a.name }))} />
@@ -245,11 +269,13 @@ export const OPEN_POSITIONS: Position[] = [];
 export function Careers() {
   return (
     <Shell>
-      <EdHero crumbs={[["/careers", "Careers"]]} kicker="Careers at Rawlins" title={<>Work with people who&apos;ve <em>done the job</em></>}
+      <EdHero crumbs={[["/careers", "Careers"]]} kicker="Careers at Rawlins" title={<>Want to work with us? <em>Reach out.</em></>}
         lead={<p>We’re always interested in connecting with thoughtful, driven professionals who are passionate about solving complex challenges and creating meaningful impact. If that sounds like you, we’d like to hear from you.</p>}
         actions={<><EdBtn href="mailto:jobs@rawlinsic.com">Email jobs@rawlinsic.com</EdBtn><EdBtn href="/about/our-people" kind="ghost">Meet our people</EdBtn></>}
-        aside={<div className="ab-hero-ph">{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/images/pages/team-group-outdoor.webp" alt="" /></div>} />
-      <EdSec k="why rawlins" title="why rawlins" tone="panel">
+        /* the whole team, shown whole (Nicole, Nov 11: "first picture should be the one of the full team") */
+        aside={<div className="ab-hero-ph is-team">{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/images/pages/team-group-indoor.webp" alt="Our whole team at the 2026 retreat" /></div>} />
+      {/* Nicole's preview edits, Nov 11: the small line reads "why rawlins" and the title "What it's like here" (the editor had set both to "why rawlins") */}
+      <EdSec k="why rawlins" title="What it's like here" tone="panel">
         <ol className="ab-principles ab-careers">{CAREERS_WHY.map(([t, d], k) => <li key={t}><span className="ab-why-n">{String(k + 1).padStart(2, "0")}</span><b>{t}</b><p>{d}</p></li>)}</ol>
       </EdSec>
       <EdSec k="Open positions" title={OPEN_POSITIONS.length ? "Open positions" : "No open positions right now"}>

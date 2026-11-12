@@ -1,12 +1,15 @@
 "use client";
-/* Our People: flat, remote firm. Grouped by kind of work, filters by service
-   area, search, and a profile with the person's bio. Cards show the Rawlins
-   title and location; a former agency role is in the profile. No tiers.
+/* Our People: flat, remote firm. Three groups by kind of work, each one a bar
+   that opens to show its people (Nicole, Nov 11). Two filters, "Filter by
+   area" and "Filter by role" (the roles listed under each group), plus search.
+   Photos are circles. A card opens the person's bio in a window; clicking
+   outside the window closes it. A former agency role sits in the bio above the
+   background text, under "Before Rawlins". No tiers.
    Source: lib/team-data.ts (the live roster). */
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export type Person = {
-  slug: string; name: string; photo: string; role: string; group: "Advisors" | "Specialists" | "Business Operations";
+  slug: string; name: string; photo: string; role: string; /* the roster role alone, for the role filter */ job?: string; group: "Advisors" | "Specialists" | "Business Operations";
   areas: string[]; formerly?: string; location?: string; email?: string; phone?: string; linkedin?: string; background: string; achievements: string;
 };
 type Opt = { value: string; label: string };
@@ -54,7 +57,6 @@ export function ProfileBody({ p, showDev = false }: { p: Person; showDev?: boole
         <div>
           <h2 id="pp-name" className="pg-h2">{p.name}</h2>
           <p className="pp-role">{p.role}</p>
-          {p.formerly && <p className="pp-formerly">{p.formerly}</p>}
           {p.location && <p className="pp-loc"><Pin />Located in {p.location}</p>}
           <p className="pp-contact">
             {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
@@ -64,6 +66,8 @@ export function ProfileBody({ p, showDev = false }: { p: Person; showDev?: boole
         </div>
       </div>
       <div className="pp-bio">
+        {/* the former agency role: not under the current title, but leading into the bio (Nicole, Nov 11) */}
+        {p.formerly && <p className="pp-before"><span>Before Rawlins</span>{p.formerly.replace(/^Former\s+/, "").replace(/^./, (c) => c.toUpperCase())}</p>}
         {p.background.trim() === "Coming soon!"
           ? (showDev ? <p className="pg-dev pg-dev-block">Placeholder: bio needed</p> : null)
           : <><h3 className="pg-h3">Background</h3><Bio text={p.background} /></>}
@@ -79,15 +83,21 @@ export function holdPage(on: boolean) {
   if (on) l?.stop(); else l?.start();
 }
 
+const GROUPS = ["Advisors", "Specialists", "Business Operations"] as const;
+
 export default function PeopleDirectory({ people, areas, showDev }: { people: Person[]; areas: Opt[]; showDev: boolean }) {
   const [area, setArea] = useState("");
+  const [role, setRole] = useState("");
   const [q, setQ] = useState("");
+  const [shown, setShown] = useState<Record<string, boolean>>({});
   const [open, setOpen] = useState<Person | null>(null);
   const dlg = useRef<HTMLDialogElement>(null);
+  const jobOf = (p: Person) => p.job ?? p.role;
 
+  /* a link to one person (#their-name) opens their group and their bio */
   useEffect(() => {
     const id = window.location.hash.slice(1);
-    if (id) { const p = people.find((x) => x.slug === id); if (p) setOpen(p); }
+    if (id) { const p = people.find((x) => x.slug === id); if (p) { setShown((o) => ({ ...o, [p.group]: true })); setOpen(p); } }
   }, [people]);
   useEffect(() => {
     const d = dlg.current;
@@ -97,47 +107,79 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
     holdPage(!!open);
   }, [open]);
 
+  /* the roles under each group, for "Filter by role" */
+  const rolesBy = useMemo(() => GROUPS.map((g) => [g, Array.from(new Set(people.filter((p) => p.group === g).map(jobOf))).sort((a, b) => a.localeCompare(b))] as const), [people]); // eslint-disable-line react-hooks/exhaustive-deps
   const list = useMemo(() => {
     const s = q.trim().toLowerCase();
-    return people.filter((p) => (!area || p.areas.includes(area)) && (!s || `${p.name} ${p.role} ${p.formerly ?? ""} ${p.background}`.toLowerCase().includes(s)));
-  }, [people, area, q]);
+    return people.filter((p) => (!area || p.areas.includes(area)) && (!role || jobOf(p) === role) && (!s || `${p.name} ${p.role} ${p.formerly ?? ""} ${p.background}`.toLowerCase().includes(s)));
+  }, [people, area, role, q]); // eslint-disable-line react-hooks/exhaustive-deps
+  const filtering = !!(area || role || q.trim());
+  const close = () => { setOpen(null); window.history.replaceState(null, "", window.location.pathname); };
 
   return (
     <div>
-      <div className="pp-tools pp2-tools">
+      <div className="pp-tools pp3-tools">
         <label className="pg-search">
           <span className="sr-only">Search people</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
           <input type="search" placeholder="Search by name, role, or experience" value={q} onChange={(e) => setQ(e.target.value)} />
         </label>
-        <div className="pg-filter" role="group" aria-label="Filter by service area">
-          <button type="button" aria-pressed={!area} onClick={() => setArea("")}>Everyone</button>
-          {areas.map((a) => <button key={a.value} type="button" aria-pressed={area === a.value} onClick={() => setArea(a.value)}>{a.label}</button>)}
+        <div className="pp3-filters">
+          <div className="pp3-filter">
+            <p className="pp3-label" id="pp-f-area">Filter by area</p>
+            <div className="pg-filter" role="group" aria-labelledby="pp-f-area">
+              <button type="button" aria-pressed={!area} onClick={() => setArea("")}>All areas</button>
+              {areas.map((a) => <button key={a.value} type="button" aria-pressed={area === a.value} onClick={() => setArea(a.value)}>{a.label}</button>)}
+            </div>
+          </div>
+          <div className="pp3-filter">
+            <label className="pp3-label" htmlFor="pp-f-role">Filter by role</label>
+            <span className="pp3-select">
+              <select id="pp-f-role" value={role} onChange={(e) => setRole(e.target.value)}>
+                <option value="">All roles</option>
+                {rolesBy.map(([g, roles]) => <optgroup key={g} label={g}>{roles.map((r) => <option key={r} value={r}>{r}</option>)}</optgroup>)}
+              </select>
+            </span>
+          </div>
         </div>
-        <p className="pg-count" aria-live="polite">{list.length} {list.length === 1 ? "person" : "people"}</p>
       </div>
-      {(["Advisors", "Specialists", "Business Operations"] as const).map((g) => {
+      {filtering && list.length === 0 && <p className="pp3-none" aria-live="polite">No one matches those filters. <button type="button" onClick={() => { setArea(""); setRole(""); setQ(""); }}>Clear filters</button></p>}
+      {GROUPS.map((g) => {
         const group = list.filter((p) => p.group === g);
         if (!group.length) return null;
+        /* a group opens from its bar; while a filter or search is on, every group with a match is open */
+        const isOpen = filtering || !!shown[g];
+        const id = `pp-${g.replace(/\s+/g, "-").toLowerCase()}`;
         return (
-          <section key={g} className="pp-group" aria-labelledby={`pp-${g}`}>
-            <h2 id={`pp-${g}`} className="pg-h2">{g} <span className="pp2-count">{group.length}</span></h2>
-            <p className="pp-group-text">{GROUP_TEXT[g]}</p>
-            <ul className="pp-grid">
+          <section key={g} className={`pp-group pp3-group${isOpen ? " is-open" : ""}`} aria-labelledby={`${id}-h`}>
+            <h2 id={`${id}-h`} className="pp3-h">
+              <button type="button" className="pp3-bar" aria-expanded={isOpen} aria-controls={`${id}-list`} disabled={filtering} onClick={() => setShown((o) => ({ ...o, [g]: !o[g] }))}>
+                <span className="pp3-name">{g}</span>
+                <span className="pp2-count">{group.length}</span>
+                {!isOpen && (
+                  <span className="pp3-faces" aria-hidden="true">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {group.slice(0, 7).map((p) => <img key={p.slug} src={p.photo} alt="" width={44} height={44} loading="lazy" />)}
+                    {group.length > 7 && <i>+{group.length - 7}</i>}
+                  </span>
+                )}
+                {!filtering && <span className="pp3-toggle">{isOpen ? "Hide" : "Show all"}</span>}
+              </button>
+            </h2>
+            {GROUP_TEXT[g] && isOpen && <p className="pp-group-text">{GROUP_TEXT[g]}</p>}
+            <ul id={`${id}-list`} className="pp-grid pp3-grid" hidden={!isOpen}>
               {group.map((p) => (
                 <li key={p.slug} id={p.slug}>
-                  <button type="button" className="pp-card pp2" onClick={() => { setOpen(p); window.history.replaceState(null, "", `#${p.slug}`); }}>
-                    <span className="pp2-ph">
+                  <button type="button" className="pp-card pp3" onClick={() => { setOpen(p); window.history.replaceState(null, "", `#${p.slug}`); }}>
+                    <span className="pp3-ph">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={p.photo} alt="" width={240} height={240} loading="lazy" />
                     </span>
-                    <span className="pp2-body">
-                      <b>{p.name}</b>
-                      <span className="pp-role">{p.role}</span>
-                      {p.location && <span className="pp-loc"><Pin />{p.location}</span>}
-                      {p.areas.length > 0 && <span className="pp-tags">{p.areas.slice(0, 3).map((a) => <i key={a}>{areas.find((x) => x.value === a)?.label}</i>)}</span>}
-                      <span className="pp2-more">Read bio</span>
-                    </span>
+                    <b>{p.name}</b>
+                    <span className="pp-role">{p.role}</span>
+                    {p.location && <span className="pp-loc"><Pin />{p.location}</span>}
+                    {p.areas.length > 0 && <span className="pp-tags">{p.areas.slice(0, 3).map((a) => <i key={a}>{areas.find((x) => x.value === a)?.label}</i>)}</span>}
+                    <span className="pp3-more">Read bio</span>
                   </button>
                 </li>
               ))}
@@ -145,7 +187,8 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
           </section>
         );
       })}
-      <dialog ref={dlg} className="pp-dialog" data-lenis-prevent onClose={() => { setOpen(null); window.history.replaceState(null, "", window.location.pathname); }} aria-labelledby="pp-name">
+      {/* clicking outside the window closes it, as well as the x (Nicole, Nov 11) */}
+      <dialog ref={dlg} className="pp-dialog" data-lenis-prevent onClose={close} onClick={(e) => { if (e.target === dlg.current) close(); }} aria-labelledby="pp-name">
         {open && (
           <div className="pp-dialog-in">
             <button type="button" className="pp-close" onClick={() => setOpen(null)} aria-label="Close profile">×</button>

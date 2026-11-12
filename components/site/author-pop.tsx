@@ -66,7 +66,7 @@ export default function AuthorPop({ person, children, className }: { person: Per
           <span className="apop-top">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={person.photo} alt="" width={84} height={84} />
-            <span><b>{person.name}</b><em>{person.role}</em>{person.formerly && <i>{person.formerly}</i>}</span>
+            <span><b>{person.name}</b><em>{person.role}</em>{person.location && <i>{person.location}</i>}</span>
           </span>
           {hasBio && <span className="apop-bio">{start(person.background)}</span>}
           <span className="apop-more">Read full bio</span>

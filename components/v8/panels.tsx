@@ -10,6 +10,11 @@
    starts to come over it. Panels that hold on their own (scroll scenes)
    are left as they are, and the first panel (the hero) scrolls away
    normally.
+   A panel holds only when the one after it is tall enough to cover the
+   whole screen. If the next one is shorter (a slim band, a short section),
+   the held panel would keep showing above and below it, so that panel
+   scrolls away normally instead (Nicole, Nov 11: "a row coming out that
+   covers another part", "the top row shows in the background").
      --pt  on each panel: where it holds (its sticky top)
      --cv  on each covered panel: how far the next one has covered it, 0 to 1
      --rad on each panel: 1 while it slides in as a rounded card, easing to 0
@@ -67,15 +72,19 @@ export default function Panels({ children, className }: { children: ReactNode; c
           el.style.paddingTop = `${parseFloat(getComputedStyle(el).paddingTop) + (room - h) / 2}px`;
           el.style.minHeight = `${room}px`;
         }
-        el.style.marginBottom = `${Math.round(vh * DWELL)}px`;
       });
+      // which panels hold: only those whose next panel covers everything under the bars
+      const holds = kids.map((_, i) => { const nx = kids[i + 1]; return i > 0 && !!nx && nx.offsetHeight >= vh - tops[i + 1] - 1; });
+      // the beat before the next panel comes over: only where a panel holds (elsewhere it would just be a gap)
+      kids.forEach((el, i) => { if (holds[i] && i !== kids.length - 1 && !el.matches(HELD)) el.style.marginBottom = `${Math.round(vh * DWELL)}px`; });
       // measure where each panel sits when it is not held
       wrap.dataset.measure = "";
       kids.forEach((el) => NATURAL.set(el, el.getBoundingClientRect().top + window.scrollY));
       delete wrap.dataset.measure;
       // the first panel (the hero) doesn't hold: it scrolls away normally, so what sits at
       // its bottom (photo panels, buttons) is never covered the moment you start scrolling
-      kids.forEach((el, i) => el.style.setProperty("--pt", `${i ? Math.min(tops[i], vh - el.offsetHeight) : -el.offsetHeight}px`));
+      // (a panel that doesn't hold gets the same treatment: it never sticks)
+      kids.forEach((el, i) => el.style.setProperty("--pt", `${holds[i] ? Math.min(tops[i], vh - el.offsetHeight) : -el.offsetHeight}px`));
     };
     const unfill = () => kids.forEach((el) => { el.style.paddingTop = ""; el.style.minHeight = ""; el.style.marginBottom = ""; });
     const tick = () => {
@@ -96,8 +105,10 @@ export default function Panels({ children, className }: { children: ReactNode; c
         const cv = cover * cover; // eased: the part still showing stays readable until it is nearly covered
         if (cv > 0.001) { el.style.setProperty("--cv", cv.toFixed(4)); el.dataset.cv = ""; }
         else if ("cv" in el.dataset) { el.style.removeProperty("--cv"); delete el.dataset.cv; }
-        // hidden only once the panel in front covers everything of it that is on screen
-        const gone = cover > 0.999 && nx.bottom >= bot - 1;
+        // hidden once the panel in front has covered everything of it that is on screen, and it stays hidden
+        // after that panel scrolls on: a held panel stays stuck to the end of the page, so without this it
+        // showed again behind any later section with a see-through background (the closing band)
+        const gone = cover > 0.999;
         if (gone !== ("gone" in el.dataset)) { if (gone) el.dataset.gone = ""; else delete el.dataset.gone; }
       }
       const sp = Math.max(0, Math.min(1, window.scrollY / (vh * 0.75)));
