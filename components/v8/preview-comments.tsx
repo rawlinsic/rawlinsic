@@ -94,7 +94,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
      pop back, and one just added or brought back doesn't drop out. */
   const mine = useRef(new Map<number, { open: boolean; c?: C; t: number }>());
   /* kept for this tab too, so going to another page and back (or reloading) within that time shows the same */
-  const keep = () => { try { sessionStorage.setItem("pc-mine", JSON.stringify([...mine.current])); } catch {} };
+  const keep = () => { try { sessionStorage.setItem("pc-mine", JSON.stringify(Array.from(mine.current))); } catch {} };
   useEffect(() => { try { const raw = sessionStorage.getItem("pc-mine"); if (raw) (JSON.parse(raw) as [number, { open: boolean; c?: C; t: number }][]).forEach(([id, v]) => { if (!mine.current.has(id)) mine.current.set(id, v); }); } catch {} }, []);
   const settle = useCallback((items: C[]) => {
     const now = Date.now();
