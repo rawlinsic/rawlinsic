@@ -46,24 +46,32 @@ const DIGITAL_PROOF = [
   "A planned AI pilot for cash-flow modeling",
 ];
 
+/* Inside a project delivery network (Preconstruction): each piece with a simple line icon */
+const ic = (d: string) => <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
+const NETWORK: [string, ReturnType<typeof ic>][] = [
+  ["Tools, templates, and workflows for every phase", ic("M4 5h7v6H4zM13 5h7v6h-7zM4 13h7v6H4zM13 16h7M16.5 13v6")],
+  ["Project management plans and commitment tracking", ic("M9 6h11M9 12h11M9 18h11M4 6l1.2 1.2L7 5M4 12l1.2 1.2L7 11M4 18l1.2 1.2L7 17")],
+  ["Risk registers and risk training", ic("M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6zM12 8v5M12 16v.5")],
+  ["Online courses and a delivery website staff actually use", ic("M3 5h18v11H3zM8 20h8M12 16v4M10 8.5v4l3.5-2z")],
+];
+
 /* ── Overview ── */
 export function ServicesIndex() {
   return (
     <Shell scene="grid" photo={PAGE_PHOTO.services}>
       <Hero crumbs={[["/services", "Services"]]} kicker="What we do" title="Many engagements draw on more than one area."
-        lead={<p>We help organizations plan, deliver, run, and modernize the infrastructure they own, and strengthen the teams behind it.</p>}
+        lead={<p>We help organizations plan and deliver their programs, run and modernize what they own and the systems behind it, and strengthen the teams that do the work.</p>}
         actions={<><Btn href="/contact" primary>Get in touch</Btn><Btn href="/insights/case-studies">See our work</Btn></>} />
-      {/* the five areas pop out one by one as you scroll (moved here from home, Nicole, Nov 10) */}
-      <TilesTour label="Our services" areas={AREAS.map((a) => ({
+      {/* the five areas pop out one by one as you scroll (moved here from home, Nicole, Nov 10); the same eyebrow
+          and title as home's What we do (Nicole, Nov 11) */}
+      <section className="tt-head" data-nofill aria-labelledby="tt-head-h">
+        <div className="v8-wrap"><p className="v8-eyebrow">What we do</p><h2 id="tt-head-h" className="v8-h2">From the plan, to the tools people use</h2></div>
+      </section>
+      <TilesTour label="What we do" hideLabel areas={AREAS.map((a) => ({
         id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id]?.lead ?? "", href: areaHref(a), photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id],
         services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
       }))} />
-      {AREAS.map((a, i) => (
-        <Sec key={a.id} title={a.name} kicker={a.tag} tone={i % 2 ? "panel" : undefined}
-          intro={<p>{AREA_DATA[a.id].lead} <a href={areaHref(a)}>More about {a.name}</a></p>}>
-          <ServiceCards ids={a.services.map((s) => s.id)} blurb={(id) => firstSentence(SERVICES[id]?.intro ?? "")} />
-        </Sec>
-      ))}
+      {/* the area-by-area service cards that repeated the tour are off (Nicole, Nov 11) */}
       <Talk />
     </Shell>
   );
@@ -188,10 +196,30 @@ export function ServiceFeature({ id }: { id: string }) {
       return <Sec title={f.title} kicker={f.kicker}><Steps steps={f.steps} /></Sec>;
     }
     case "row":
-      /* individual experience on our team, not Rawlins services (content pass v7, 2.7) */
-      return <Sec title="Right of way experience on our team"><List cols items={["Acquisition and relocation", "Property management and excess land", "Appraisal and appraiser certification", "Outdoor advertising and junkyard control", "Eminent domain litigation support and mediation", "Local agency right of way projects"]} /></Sec>;
-    case "preconstruction": // moved from Program Delivery (content pass v7, 2.3)
-      return <Sec title="Inside a project delivery network" kicker="From our work"><List items={["Tools, templates, and workflows for every phase", "Project management plans and commitment tracking", "Risk registers and risk training", "Online courses and a delivery website staff actually use"]} /></Sec>;
+      /* individual experience on our team, not Rawlins services (content pass v7, 2.7); redesigned Nov 11 */
+      return (
+        <div className="xg">
+          <div className="v8-wrap">
+            <div className="xg-head"><p className="v8-eyebrow">Our team</p><h2 className="v8-h2">Right of way experience on our team</h2></div>
+            <ol className="xg-grid">
+              {["Acquisition and relocation", "Property management and excess land", "Appraisal and appraiser certification", "Outdoor advertising and junkyard control", "Eminent domain litigation support and mediation", "Local agency right of way projects"].map((t, i) => (
+                <li key={t}><span className="xg-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><b>{t}</b></li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      );
+    case "preconstruction": // moved from Program Delivery (content pass v7, 2.3); redesigned Nov 11
+      return (
+        <div className="nwk">
+          <div className="v8-wrap nwk-in">
+            <div className="nwk-head"><p className="v8-eyebrow">From our work</p><h2 className="v8-h2">Inside a project delivery network</h2></div>
+            <ul className="nwk-grid">
+              {NETWORK.map(([t, icon]) => <li key={t}><span className="nwk-ic" aria-hidden="true">{icon}</span><b>{t}</b></li>)}
+            </ul>
+          </div>
+        </div>
+      );
     case "operations": {
       const parts: [string, string, string[]][] = [
         ["Performance-based maintenance", "Contracts that pay for results: specifications, deduction models, and administration", ["cs-txmaint", "cs-pbmc", "cs-maint-model"]],

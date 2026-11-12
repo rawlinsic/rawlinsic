@@ -8,12 +8,23 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties, type Keyb
 /* text/more: shown when you point at the middle card (home What we do: the words the old tiles had) */
 export type FanCard = { href: string; tag: string; title: string; photo: string; pos?: string; text?: string; more?: string };
 
-export default function FanCards({ cards, label, start }: { cards: FanCard[]; label: string; start?: number }) {
+/* tags: the line at the top of each card (off on home, Nicole, Nov 11). hoverFront: resting the pointer on a side
+   card brings it to the middle (home, Nicole, Nov 11); a short pause first, and a pause after each move, so
+   sweeping across the cards doesn't set them spinning */
+export default function FanCards({ cards, label, start, tags = true, hoverFront = false }: { cards: FanCard[]; label: string; start?: number; tags?: boolean; hoverFront?: boolean }) {
   const n = cards.length;
   const [at, setAt] = useState(start ?? Math.floor(n / 2));
   const [hold, setHold] = useState(false);
   const down = useRef<number | null>(null);
-  const go = useCallback((k: number) => setAt(((k % n) + n) % n), [n]);
+  const lock = useRef(0), wait = useRef<number | null>(null);
+  const go = useCallback((k: number) => { lock.current = Date.now() + 750; setAt(((k % n) + n) % n); }, [n]);
+  const rest = (i: number) => {
+    if (!hoverFront || window.matchMedia("(hover: none)").matches) return;
+    if (wait.current) window.clearTimeout(wait.current);
+    wait.current = window.setTimeout(() => { wait.current = null; if (Date.now() >= lock.current) go(i); }, 160);
+  };
+  const leave = () => { if (wait.current) { window.clearTimeout(wait.current); wait.current = null; } };
+  useEffect(() => () => leave(), []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (hold || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -50,10 +61,12 @@ export default function FanCards({ cards, label, start }: { cards: FanCard[]; la
               style={{ ["--d" as string]: d, ["--a" as string]: a } as CSSProperties}
               aria-hidden={a > 2 || undefined} tabIndex={d === 0 ? 0 : -1}
               aria-label={d === 0 ? `${c.tag}: ${c.title}` : `Show ${c.tag}: ${c.title}`}
-              onClick={(e) => { if (d !== 0) { e.preventDefault(); go(i); } }}>
+              onClick={(e) => { if (d !== 0) { e.preventDefault(); go(i); } }}
+              onPointerMove={d !== 0 && a <= 2 ? (e) => { if (e.pointerType === "mouse") rest(i); } : undefined}
+              onPointerLeave={leave}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={c.photo} alt="" loading="lazy" draggable={false} style={c.pos ? { objectPosition: c.pos } : undefined} />
-              <span className="fan-tag"><i aria-hidden="true" />{c.tag}</span>
+              {tags && <span className="fan-tag"><i aria-hidden="true" />{c.tag}</span>}
               {c.text || c.more
                 ? <span className="fan-body"><b>{c.title}</b><span className="fan-txt">{c.text && <span className="fan-q">{c.text}</span>}{c.more && <span className="fan-more">{c.more}</span>}</span></span>
                 : <b>{c.title}</b>}

@@ -160,7 +160,6 @@ export default function Home() {
                   <dl className="nums">{[...NUMBERS.filter((n) => /combined experience/i.test(n.label)), ...NUMBERS.filter((n) => n.verified && !/Established/.test(n.label))].map((n) => (
                     <div key={n.label}><dt>{n.label}</dt><dd>{n.value}</dd></div>
                   ))}</dl>
-                  <Dev>Content status: 850+ is added up from the years in 33 team bios (about 880); confirm before launch.</Dev>
                 </div>,
                 <a key="proof" className="hs-proof" href={caseHref(pdn)}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -205,7 +204,7 @@ export default function Home() {
       <section id="what-we-do" className="h-ways" data-nofill aria-labelledby="h-ways-h">
           <div className="v8-wrap h-ways-head" data-reveal>
             <p className="v8-eyebrow">What we do</p>
-            <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use.</h2>
+            <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use</h2>
           </div>
           <ul className="ways" aria-label="Our services">
             {AREAS.map((a) => (
@@ -228,9 +227,9 @@ export default function Home() {
         <section id="what-we-do" className="h-ways h-fan" data-nofill aria-labelledby="h-ways-h">
           <div className="v8-wrap h-ways-head" data-reveal>
             <p className="v8-eyebrow">What we do</p>
-            <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use.</h2>
+            <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use</h2>
           </div>
-          <FanCards label="What we do" start={2}
+          <FanCards label="What we do" start={2} tags={false} hoverFront
             cards={AREAS.map((a) => ({ href: areaHref(a), tag: a.tag, title: a.name, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id], text: q(AREA_DATA[a.id].hear[0]), more: `Explore ${a.name}` }))} />
         </section>
       )}
@@ -287,7 +286,15 @@ export default function Home() {
           <div className="h-row-head" data-reveal><div><p className="v8-eyebrow">What&apos;s new</p><h2 id="h-new" className="v8-h2">Where we&apos;ll be, and what we&apos;re up to</h2></div><a className="v8-link" href="/insights/news">News &amp; recognition</a></div>
           <div className="newsgrid">
             {ev && (
-              <article className="ev" data-reveal>
+              <article className={`ev${ev.photo ? " has-photo" : ""}`} data-reveal>
+                {ev.photo && (
+                  <div className="ev-ph">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={ev.photo} alt="" loading="lazy" title={ev.credit} />
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {ev.logo && <img className="ev-logo" src={ev.logo} alt={ev.title} loading="lazy" />}
+                  </div>
+                )}
                 <span className="ev-when">{ev.when}</span>
                 <b>{ev.title}</b>
                 {ev.where && <span className="ev-where">{ev.where}</span>}

@@ -22,7 +22,7 @@ function save(f: Map<string, string>, c: Change) {
   const got = place(f, c, { isText });
   if ("already" in got || "why" in got) return got;
   const out = new Map(f);
-  for (const p of new Set(got.hits.map((h) => h.path))) {
+  for (const p of Array.from(new Set(got.hits.map((h) => h.path)))) {
     const w = writeAll(f.get(p)!, got.hits.filter((h) => h.path === p), got.next);
     if (w === null || !onlyTextChanged(p, f.get(p)!, w)) return { why: "would change code" };
     out.set(p, w);

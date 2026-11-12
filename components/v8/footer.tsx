@@ -3,6 +3,7 @@
    bigger, then contact and the site's sections, then the legal line and a way back to the top. Contact
    details as on the live site. */
 import type { CSSProperties } from "react";
+import { PrivacyChoicesLink } from "@/components/cookie-banner";
 import { AREAS, VISIBLE_INDUSTRIES, areaHref, industryHref } from "@/lib/content/site";
 import { THEME } from "@/lib/content/v8";
 import { THOUGHT_LEADERSHIP } from "@/components/thought-leadership-data";
@@ -41,7 +42,7 @@ export default function Footer() {
         <nav aria-label="About"><h2>About</h2><ul><li><a href="/about/who-we-are">Who we are</a></li><li><a href="/about/how-we-work">How we work</a></li><li><a href="/about/our-people">Our people</a></li><li><a href="/careers">Careers</a></li></ul></nav>
       </div>
       <div className="v8-wrap fx2-legal">
-        <span>© 2026 Rawlins</span><a href="/privacy-policy">Privacy</a><a href="/terms-of-service">Terms</a><a href="/accessibility">Accessibility</a><a href="/site-map">Site map</a>
+        <span>© 2026 Rawlins</span><a href="/privacy-policy">Privacy</a><PrivacyChoicesLink /><a href="/terms-of-service">Terms</a><a href="/accessibility">Accessibility</a><a href="/site-map">Site map</a>
         <a className="fx2-top" href="#main-content">Back to top <span aria-hidden="true">↑</span></a>
       </div>
     </footer>

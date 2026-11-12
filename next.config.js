@@ -37,6 +37,8 @@ const nextConfig = {
       { source: "/our-team", destination: "/about/our-people", permanent: true },
       { source: "/team", destination: "/about/our-people", permanent: true },
       { source: "/pxl-template/:slug*", destination: "/about/our-people", permanent: true },
+      // Nov 11: Maintenance & Operations renamed Maintenance Programs
+      { source: "/services/operations-maintenance/maintenance-operations", destination: "/services/operations-maintenance/maintenance-programs", permanent: true },
       // Content pass v7, Part 11 (Nov 11): Project Delivery services renamed and split
       { source: "/services/project-delivery/program-project-delivery", destination: "/services/project-delivery/program-delivery", permanent: true },
       { source: "/services/project-delivery/construction-pre-construction", destination: "/services/project-delivery/construction", permanent: true },

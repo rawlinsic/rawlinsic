@@ -348,7 +348,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   const people: TeamCard[] = []; // was team(d.people)
   const work = cases.slice(0, 6);
   const next = nextIndustry(ind.id);
-  const crumbs: Crumb[] = [["/industries", "Who we work with"], [industryHref(ind), ind.name]];
+  const crumbs: Crumb[] = [["/industries", "Who We Work With"], [industryHref(ind), ind.name]];
   const actions = (
     <>
       <a className="v8-btn v8-btn-area" href="/contact">Get in touch</a>
@@ -408,7 +408,7 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
   const sibs = ind.subsectors.map((s) => ({ id: s.id, name: s.name, href: subsectorHref(ind, s), on: s.id === sub.id }));
   const hero = (
     <FrameHero photo={INDUSTRY_PHOTO[sub.id] ?? INDUSTRY_PHOTO[ind.id]}
-      crumbs={[["/industries", "Who we work with"], [industryHref(ind), ind.name], [subsectorHref(ind, sub), sub.name]]}
+      crumbs={[["/industries", "Who We Work With"], [industryHref(ind), ind.name], [subsectorHref(ind, sub), sub.name]]}
       tag={<a href={industryHref(ind)}>{ind.name}</a>} title={sub.name} lead={d?.intro || sub.line}
       actions={<><a className="v8-btn v8-btn-area" href="/contact">Talk to an expert</a>{cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See the work</a>}</>}
       note={sub.thin ? <Dev>{THIN_NOTE[sub.id] ?? "Content status: thin content"}</Dev> : undefined}
@@ -444,7 +444,7 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
     ["talk", "Talk to us"],
   ];
   const hero = (
-    <FrameHero photo={INDUSTRY_PHOTO.private} crumbs={[["/industries", "Who we work with"], [industryHref(ind), ind.name]]}
+    <FrameHero photo={INDUSTRY_PHOTO.private} crumbs={[["/industries", "Who We Work With"], [industryHref(ind), ind.name]]}
       tag="Private sector" title="For growing firms" lead={ind.lead}
       actions={<a className="v8-btn v8-btn-area" href="/contact">Book a short call</a>}
       sibs={industryLinks(ind.id)} sibsLabel="Who we work with" />

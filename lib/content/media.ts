@@ -57,8 +57,8 @@ export const AREA_PHOTO_POS: Record<string, string> = { aviation: "36% 42%", str
 export const SERVICE_PHOTO: Record<string, string> = {
   "strategic-planning": P("strategy-bg.webp"),
   "org-design": P("auto-human.webp"),
-  "change-mgmt": P("aam-regulatory-navigation.webp"),
-  workforce: P("aam-reg-navigation.webp"), // a member of our team speaking at a symposium
+  "change-mgmt": P("change-management-workshop.webp"), // Nicole's photo, Nov 11: a culture workshop led by our team
+  workforce: P("aam-community-engagement.webp"), // a field crew training session (Nicole, Nov 11: a better picture than the speaker)
   "exec-advisory": P("strategy-bg.webp"),
   "program-delivery": P("transportation-aerial.webp"),
   "owners-rep": P("transportation-aerial.webp"),
