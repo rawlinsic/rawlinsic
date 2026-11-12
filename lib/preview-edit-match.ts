@@ -11,9 +11,6 @@
 
 export type Change = { old: string; next: string; nodeOld?: string; nodeNew?: string; context?: string[]; breaks?: string };
 export type Hit = { path: string; index: number; match: string };
-/* where page text is (lib/preview-edit-safe.ts); a hit outside page text is never used (Nov 11) */
-export type IsText = (path: string, from: number, to: number) => boolean;
-export type PlaceOpts = { nested?: boolean; isText?: IsText };
 
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /* the wording as it may be written in code: any run of spaces or line breaks,
@@ -32,18 +29,13 @@ export const pattern = (s: string) =>
 const comments = (src: string) => Array.from(src.matchAll(/\/\*[\s\S]*?\*\/|(?<=^|\s)\/\/[^\n]*/g)).map((m) => [m.index ?? 0, (m.index ?? 0) + m[0].length]);
 const inComment = (spans: number[][], i: number) => spans.some(([a, b]) => i >= a && i < b);
 
-export function findHits(files: Map<string, string>, text: string, isText?: IsText): Hit[] {
+export function findHits(files: Map<string, string>, text: string): Hit[] {
   const t = text.trim();
   if (t.length < 2) return [];
   const re = pattern(t), hits: Hit[] = [];
   for (const [path, src] of Array.from(files.entries())) {
     const cs = comments(src);
-    for (const m of Array.from(src.matchAll(re))) {
-      const i = m.index ?? 0;
-      if (inComment(cs, i)) continue;
-      if (isText && !isText(path, i, i + m[0].length)) continue; // in the code, not page text
-      hits.push({ path, index: i, match: m[0] });
-    }
+    for (const m of Array.from(src.matchAll(re))) if (!inComment(cs, m.index ?? 0)) hits.push({ path, index: m.index ?? 0, match: m[0] });
   }
   return hits;
 }
@@ -88,16 +80,14 @@ function score(files: Map<string, string>, hit: Hit, context: string[]): number 
   return s;
 }
 
-export type Placed = { hits: Hit[]; next: string } | { why: string } | { already: true };
-export function place(files: Map<string, string>, c: Change, opts: PlaceOpts = {}): Placed {
-  const { nested = false, isText } = opts;
+export function place(files: Map<string, string>, c: Change, nested = false): { hits: Hit[]; next: string } | { why: string } {
   const tries: [string, string][] = [];
   if (c.nodeOld && c.nodeNew !== undefined && c.nodeOld.trim() && c.nodeOld.trim() !== c.old.trim()) tries.push([c.nodeOld, c.nodeNew]);
   tries.push([c.old, c.next]);
   let many = 0;
   for (const [o, n] of tries) {
     for (const [vo, vn] of variants(o, n)) {
-      const hits = findHits(files, vo, isText);
+      const hits = findHits(files, vo);
       if (hits.length === 1) return { hits, next: vn.trim() };
       if (hits.length > 1) {
         many = Math.max(many, hits.length);
@@ -108,32 +98,17 @@ export function place(files: Map<string, string>, c: Change, opts: PlaceOpts = {
         // phrase of 4+ words; a word or two inside other sentences is left alone
         const whole = hits.filter((h) => isWhole(files.get(h.path) ?? "", h));
         if (vo.trim().split(/\s+/).length >= 4) return { hits, next: vn.trim() };
-        // (never for a small word like "and": every copy of it isn't the same label, Nov 11)
-        if (whole.length && !SMALL.has(vo.trim().toLowerCase()) && vo.trim().length >= 3) return { hits: whole, next: vn.trim() };
+        if (whole.length) return { hits: whole, next: vn.trim() };
         // otherwise the words around it on the page pick the right spot
         const ranked = hits.map((h) => ({ h, s: score(files, h, c.context || []) })).sort((a, b) => b.s - a.s);
         if (ranked[0].s > 0 && ranked[0].s > ranked[1].s) return { hits: [ranked[0].h], next: vn.trim() };
       }
     }
   }
-  // already saved (Nov 11): the old wording isn't in the files but the new wording is, next to the same words
-  // as on the page (or, with nothing around it on the page, anywhere). Nothing to change. This is the case
-  // that once fell through to the last try below and swapped a lone "and" for "&" in code (d94d08a).
-  if (!nested && !many) {
-    for (const [o, n] of tries) for (const [vo, vn] of variants(o, n)) {
-      if (vo.trim() === vn.trim()) continue;
-      if (findHits(files, vo).length) continue; // the old wording is still in the files (in code): not already saved
-      // the new wording written as a whole label or sentence (or 4+ words), not a word inside other text
-      const there = findHits(files, vn, isText).filter((h) => vn.trim().split(/\s+/).length >= 4 || isWhole(files.get(h.path) ?? "", h));
-      if (!there.length) continue;
-      const ctx = (c.context || []).filter((x) => x.trim().length >= 4);
-      if (!ctx.length || there.some((h) => score(files, h, ctx) > 0)) return { already: true };
-    }
-  }
   // text the page puts together, like `All ${name} projects` or `${n} · ${label}`
   if (!nested) {
-    for (const [o, n] of tries) { const t = template(files, o, n, c, isText); if (t) return t; }
-    for (const [o, n] of tries) { const t = phrase(files, o, n, isText); if (t) return t; }
+    for (const [o, n] of tries) { const t = template(files, o, n, c); if (t) return t; }
+    for (const [o, n] of tries) { const t = phrase(files, o, n); if (t) return t; }
   }
   return { why: many ? `the same wording is in ${many} places and the page around it didn't say which` : "not found in the files, even as a template" };
 }
@@ -141,7 +116,7 @@ export function place(files: Map<string, string>, c: Change, opts: PlaceOpts = {
 const VAR = "(\\$\\{[^`\\n]*?\\}|\\{[^{}<>\\n]*?\\})"; // ${expr} in a template string, or {expr} in JSX
 /* split the text into fixed words and up to two filled-in values, and look for a
    template in the code with the same fixed words around ${...} or {...} */
-function template(files: Map<string, string>, o: string, n: string, c: Change, isText?: IsText): { hits: Hit[]; next: string } | null {
+function template(files: Map<string, string>, o: string, n: string, c: Change): { hits: Hit[]; next: string } | null {
   const words = o.trim().split(/\s+/);
   if (words.length < 2 || words.length > 12) return null;
   const tries: number[][] = [];
@@ -173,7 +148,7 @@ function template(files: Map<string, string>, o: string, n: string, c: Change, i
     const newPiece = (pieces[hitSeg.i].slice(0, p - hitSeg.st) + b.slice(p, b.length - s2) + pieces[hitSeg.i].slice(a.length - s2 - hitSeg.st)).trim();
     if (!g.fixed) {
       // the edit is in a filled-in value: change that value where it's written
-      const inner = place(files, { old: pieces[hitSeg.i], next: newPiece, context: c.context }, { nested: true, isText });
+      const inner = place(files, { old: pieces[hitSeg.i], next: newPiece, context: c.context }, true);
       if ("hits" in inner) return inner;
       continue;
     }
@@ -184,7 +159,7 @@ function template(files: Map<string, string>, o: string, n: string, c: Change, i
       for (let k = 0; k < segs.length; k++) {
         const grp = m[k + 1] ?? "";
         const idx = (files.get(path) ?? "").indexOf(grp, off);
-        if (k === hitSeg.i) { if (!isText || isText(path, idx, idx + grp.length)) hits.push({ path, index: idx, match: grp }); break; }
+        if (k === hitSeg.i) { hits.push({ path, index: idx, match: grp }); break; }
         off = idx + grp.length;
       }
     }
@@ -195,9 +170,7 @@ function template(files: Map<string, string>, o: string, n: string, c: Change, i
 
 /* last try: the smallest run of words around the change that is written
    somewhere as it is (a label, or a phrase found once) */
-/* small words never placed on their own: "and" alone matched code once (d94d08a) */
-const SMALL = new Set(["a", "an", "and", "or", "nor", "but", "the", "of", "to", "in", "on", "at", "by", "for", "with", "from", "as", "is", "are", "be", "it", "its", "we", "our", "us", "you", "your", "&", "+", "-", "–", "—", "·", "|", "/"]);
-function phrase(files: Map<string, string>, o: string, n: string, isText?: IsText): { hits: Hit[]; next: string } | null {
+function phrase(files: Map<string, string>, o: string, n: string): { hits: Hit[]; next: string } | null {
   const a = o.trim(), b = n.trim();
   let p = 0; while (p < a.length && p < b.length && a[p] === b[p]) p++;
   let s2 = 0; while (s2 < a.length - p && s2 < b.length - p && a[a.length - 1 - s2] === b[b.length - 1 - s2]) s2++;
@@ -213,11 +186,9 @@ function phrase(files: Map<string, string>, o: string, n: string, isText?: IsTex
       const piece = a.slice(st, en);
       const next = (piece.slice(0, p - st) + b.slice(p, b.length - s2) + piece.slice(a.length - s2 - st)).trim();
       if (piece.length < 3) continue;
-      // one word on its own only when it's a real word, written as a whole label in exactly one place
-      if (size === 1 && (SMALL.has(piece.toLowerCase()) || piece.length < 4)) continue;
-      const hits = findHits(files, piece, isText);
+      const hits = findHits(files, piece);
       const whole = hits.filter((h) => isWhole(files.get(h.path) ?? "", h));
-      if (whole.length && (size > 1 || whole.length === 1)) return { hits: whole, next };
+      if (whole.length) return { hits: whole, next };
       if (hits.length === 1 && size >= 2) return { hits, next };
       // text the page shortens, like "Louisville" from "Louisville, Kentucky":
       // the piece written at the start of exactly one string, before a comma
