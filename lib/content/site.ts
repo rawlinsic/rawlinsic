@@ -170,11 +170,48 @@ export const INDUSTRIES: Industry[] = [
   /* Built but hidden and noindex unless approved. Never linked. */
   {
     id: "intl", slug: "international", name: "International", scene: "globe", hidden: true,
-    who: "", lead: "Our work to date is in the United States.", featured: [], subsectors: [], projects: [],
+    /* INTERNATIONAL PAGE (Nov 11, 2026). Hidden: noindex, never linked on the live site, listed on previews only. */
+    who: "Ministries of transport, national roads and aviation authorities, and city agencies outside the United States",
+    // U.S. only to date: every Rawlins client is in the U.S., including territories (Jacob's AERO portfolio, Nov 2026). Don't add an international project or client.
+    lead: "Our project work to date has been in the United States. What we do there, helping public agencies plan, deliver, and run their transportation systems, is the same job ministries of transport and national roads and aviation authorities do everywhere.",
+    featured: ["strategic-planning", "org-design", "program-delivery", "asset-mgmt", "data-governance", "tech-strategy", "drone-aam", "smart-mobility"], subsectors: [], projects: [],
   },
 ];
 
 export const VISIBLE_INDUSTRIES = INDUSTRIES.filter((i) => !i.hidden);
+
+/* The International page's own sections (INTERNATIONAL PAGE, Nov 11, 2026). Rendered in components/v8/industry.tsx
+   only for "intl". flag: a preview-only Content status note beside the line. */
+export const INTL = {
+  carry: {
+    title: "Why it carries over",
+    text: "A U.S. state department of transportation plans, funds, builds, and maintains highways and bridges, and often oversees aviation and transit, for millions of people, with lean staffs and under public scrutiny. That is the job of a ministry of transport or a national roads authority. Our people ran the programs our clients run: chief engineers, operations and maintenance leaders, technology and data chiefs, and federal highway executives.",
+  },
+  abroad: {
+    title: "How we work outside the U.S.",
+    items: [
+      // From the roster: Andy Palanisamy (Dubai); Samantha Lloyd, Kobus Pieters (Cape Town); Kiara Pienaar (Gauteng); Koussay Khelil (Ontario).
+      { t: "Members of our team are based in the United Arab Emirates, South Africa, and Canada, alongside our people across the United States." },
+      // Andy Palanisamy's bio: Head of Practice for Smart Cities and Innovation at Parsons in Dubai, before Rawlins.
+      { t: "Experience on our team includes leading the smart cities and innovation practice for a global engineering firm in Dubai, with smart city and mobility projects across the Middle East and Africa." },
+      { t: "Our in-house team builds the manuals, training, dashboards, and AI tools from wherever they are based, with time on site where the work needs it." },
+      // TODO(launch): Scott and Andy to confirm the entity name and that it is registered.
+      { t: "Rawlins Global, our registered entity in the Middle East, contracts for work in the region.", flag: "Scott and Andy to confirm the entity name and that it is registered." },
+      // TODO(launch): Scott and Andy to confirm.
+      { t: "Where a project needs in-country presence, we work with local partners.", flag: "Scott and Andy to confirm." },
+    ],
+  },
+  region: {
+    title: "Where you'll find us in the region",
+    // Andy's LinkedIn posts, Nov and Sep 2026. Same items as News & Recognition.
+    items: [
+      "Automechanika Dubai 2026, November: moderating and speaking on smart cities, regulation, and asset lifecycle management",
+      "ConTech / MENA Construction Summit 2026, Dubai, November",
+      "LEAP 2026, Riyadh: speaking on the future of urban identity",
+    ],
+    link: { href: "/insights/news", label: "See all news" },
+  },
+};
 export const industryHref = (i: Industry) => `/industries/${i.slug}`;
 export const subsectorHref = (i: Industry, s: Subsector) => `/industries/${i.slug}/${s.slug}`;
 

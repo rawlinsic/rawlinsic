@@ -113,8 +113,12 @@ export const PAGE_PHOTO: Record<string, string> = {
   who: P("aam-community-engagement.webp"),
   how: P("auto-human.webp"),
   insights: P("insights-hero.webp"),
-  news: P("aam-reg-navigation.webp"),
-  research: P("aam-define.webp"),
+  // the AASHTO 2026 Annual Meeting and Expo header (AASHTO's event page), shown whole over a blurred copy of itself
+  // (Nicole, Nov 11, after the addendum: "news and recognition photo ... should have aashto event image"). The addendum's
+  // AMOTIA photo (news-amotia-2026-general-session.webp, Scott on the general session panel, by Janine Cooper) is kept in the library.
+  news: P("news-aashto-2026.webp"),
+  // Paul Wheeler presenting on advanced air mobility at the Tennessee Drone and Advanced Air Mobility Symposium, Nashville, Nov 12, 2025 (our team's AERO Media folder)
+  research: P("research-paul-wheeler-nashville-symposium-2025.webp"),
   thought: P("home-tl-bg.webp"),
   podcast: P("insights-card-3.webp"),
   careers: P("auto-collab.webp"),

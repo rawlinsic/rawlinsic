@@ -614,6 +614,7 @@ Her achievements reflect a deep commitment to innovation, collaboration, and pur
     id: 6,
     name: `Andy Palanisamy`,
     photo: `/images/team/andy.webp`,
+    // TODO(Nicole): Andy's title differs by place: the roster says "Infrastructure Advisor"; his event graphics say "Infrastructure Advisor & Regional Head (GCC)"; the G100 graphic says "Regional Head, Infrastructure AI Advisory". (addendum B6)
     role: `Infrastructure Advisor`,
     location: `Michigan, USA / Dubai, UAE`,
     phone: `+1 240-426-6065`,
@@ -629,7 +630,7 @@ Until recently, he served as the Head of Practice for Smart Cities and Innovatio
 Before joining Ford, Andy spent nearly fifteen years supporting various federal initiatives at the U.S. Department of Transportation (USDOT) and the NASA Jet Propulsion Laboratory.
 
 Andy holds a Master in Public Administration from Harvard Kennedy School and a Bachelor in Civil Engineering.`,
-    achievements: `As an industry thought leader, Andy is recognized for his contributions to the USDOT's pioneering Intelligent Transportation Systems program and to the Federal Highway Administration's Connected Automated Vehicle research program at the Turner‑Fairbank Highway Research Center.`,
+    achievements: `As an industry thought leader, Andy is recognized for his contributions to the USDOT's pioneering Intelligent Transportation Systems program and to the Federal Highway Administration's Connected Automated Vehicle research program at the Turner‑Fairbank Highway Research Center. He serves as the G100 Mission Million Denim Club Country Partner for the Smart & Sustainable Cities Wing in the UAE.`,
     categories: ['strategy', 'technology'],
   },
   {

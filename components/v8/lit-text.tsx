@@ -17,7 +17,10 @@ export default function LitText({ text, lines, notes, noteLabel, as: Tag = "p", 
     const el = ref.current;
     if (!el || manual) return; // manual: the scroll story around it lights the words
     const ws = Array.from(el.querySelectorAll<HTMLElement>(".lit-w"));
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { ws.forEach((w) => w.classList.add("is-lit")); return; }
+    const cards = Array.from(el.querySelectorAll<HTMLElement>(":scope > .lit-line"));
+    const starts = cards.map((c) => ws.indexOf(c.querySelector<HTMLElement>(".lit-w")!)); // each card's first word
+    el.classList.add("lit-seq");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { ws.forEach((w) => w.classList.add("is-lit")); cards.forEach((c) => c.classList.add("is-in")); return; }
     let raf = 0;
     const tick = () => {
       raf = 0;
@@ -31,10 +34,12 @@ export default function LitText({ text, lines, notes, noteLabel, as: Tag = "p", 
         // where it sits in the page, not on screen: a section that holds in place
         // still finishes lighting as you keep scrolling
         const top = docTop(el) - window.scrollY;
-        p = Math.max(0, Math.min(1, (vh * 0.98 - top) / (vh * 0.4)));
+        /* quote cards: spread over more of the scroll so they come in one by one (Nicole, Nov 11) */
+        p = Math.max(0, Math.min(1, (vh * 0.98 - top) / (vh * (cards.length > 1 ? 0.75 : 0.4))));
       }
       const n = Math.round(p * ws.length);
       ws.forEach((w, i) => w.classList.toggle("is-lit", i < n));
+      cards.forEach((c, k) => c.classList.toggle("is-in", n > starts[k] || p >= 1));
     };
     const on = () => { if (!raf) raf = requestAnimationFrame(tick); };
     tick();

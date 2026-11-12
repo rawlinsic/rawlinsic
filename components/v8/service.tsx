@@ -115,7 +115,7 @@ export default function ServiceV8({ id }: { id: string }) {
         </div>
       </section>
 
-      <SectionNav items={sections} more={{ label: `${area.name} services`, links: area.services.map((x) => ({ name: x.name, href: `/services/${area.slug}/${x.slug}`, current: x.id === id })) }} />
+      <SectionNav items={sections} more={{ label: "Services", links: area.services.map((x) => ({ name: x.name, href: `/services/${area.slug}/${x.slug}`, current: x.id === id })) }} />
 
       <section id="hear" className="svq">
         <div className="v8-wrap svq-in">

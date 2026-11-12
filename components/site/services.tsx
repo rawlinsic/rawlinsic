@@ -31,13 +31,36 @@ export const aviationCards = (): TeamCard[] => AVIATION_TEAM.map(([name]) => {
     return { name, title: m ? rawlinsTitle(m) : "", formerly: formerlyFor(name), photo: m?.photo, location: m?.location, href: `/about/our-people#${slug}`, person: allPeople().find((x) => x.slug === slug) };
 });
 
+const svgI = (d: string) => <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>;
+/* icons for the advanced air mobility services, in the order of AAM_SERVICES */
+const AAM_ICON = [
+  "M4 19l5-14 6 9 5-6M4 19h16", // statewide studies and roadmaps
+  "M12 21s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10zM12 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0", // local siting
+  "M4 20h16M7 16v-5M12 16V8M17 16v-8", // economic and environmental impact
+  "M6 3h9l3 3v15H6zM9 10h6M9 14h6M9 18h4", // policy and regulatory tracking
+  "M4 7h16v12H4zM4 7l8 6 8-6", // solicitations and grants
+  "M3 12h4l3-7 4 14 3-7h4", // manufacturer and market tracking
+];
+/* icons for the examples below, in the same order */
+const PROOF_ICON = [
+  "M6 6h4v4H6zM14 14h4v4h-4zM10 8h3a2 2 0 0 1 2 2v4M8 10v3a2 2 0 0 0 2 2h4", // connected workflows
+  "M3 5h18v14H3zM3 9h18M7 7h.01M10 7h.01", // a website
+  "M5 4h14v16H5zM8 8h8M8 12h8M8 16h5", // a form filled in once
+  "M4 6h7v5H4zM13 13h7v5h-7zM11 8.5h4.5v4.5M15.5 13l-2-2", // a site migration
+  "M4 20V10M10 20V4M16 20v-7M22 20H2", // dashboards
+  "M3 17l5-5 4 3 7-8M15 7h4v4", // a tracking dashboard
+  "M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M5 5l4.5 4.5M19 5l-4.5 4.5M5 19l4.5-4.5M19 19l-4.5-4.5M3 5h4M17 5h4M3 19h4M17 19h4", // drone data
+  "M12 4m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0M5 8h14M12 8v12M8 20l4-6 4 6", // accessibility
+  "M8 8h8v8H8zM10 8V5M14 8V5M10 19v-3M14 19v-3M8 10H5M8 14H5M19 10h-3M19 14h-3", // AI
+];
+
 /* Broad digital proof (handoff 4.12); invoicing example not cleared, left out */
 const DIGITAL_PROOF = [
   /* examples 06 and 07 are off the site until confirmed (content updates v4, 6.5); four of the five are from before Rawlins (scrub 3.1) */
   "Five examples of connected workflows: consultant contracting at a state DOT, and four from our automation team's work before Rawlins",
   "A statewide project delivery website, change request system, consultant contracting workflow, estimating tools, and training videos",
   "Repeated project fields filled in once from trusted agency data, and paper forms turned into web apps",
-  "A website and wiki migration with every item reviewed: keep, update, combine, move, or retire",
+  "A website migration with every item reviewed: keep, update, combine, move, or retire", // "and wiki" off, as on the Websites page (Nicole, Nov 11)
   "Website modernization, procedures, and Power BI dashboards for a state DOT",
   "A tracking dashboard for an advanced air mobility program",
   // TODO(launch): needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent. (comes from cs-drt)
@@ -100,12 +123,19 @@ export function AreaPage({ area }: { area: Area }) {
 export function DigitalShowcase() {
   return (
     <>
-      <Sec title="Making systems connect" kicker="What we build"
+      <Sec title="Making systems connect" kicker="What we build" className="mk"
         intro={<p>Most of our digital work starts with systems that don&apos;t talk to each other. We connect the platforms, data, and tools an organization already pays for, then automate the busywork and add AI where it helps, with people in the loop.</p>}>
-        <List items={DIGITAL_PROOF} cols />
+        <ul className="mk-grid">
+          {DIGITAL_PROOF.map((t, i) => (
+            <li key={t}><span className="mk-ic">{svgI(PROOF_ICON[i] ?? PROOF_ICON[0])}</span><p>{t}<LineNote text={t} /></p></li>
+          ))}
+        </ul>
       </Sec>
       <section className="pg-sec pg-sec-navy pg-legacy">
-        <AutomationIntegrationInteractive embedded eyebrow="Applied solutions" title="Examples from our team's work" intro="Click an example to step through how it was built. The first is Rawlins work for a state DOT. The others are from our automation team's work before Rawlins." />
+        {/* Nicole, Nov 11: this eyebrow, title, and line, shown without an expand arrow. TODO(launch): examples 02 to 05 are
+            our automation team's work before Rawlins (content updates v4); the line below calls them Rawlins' applied solutions. */}
+        <AutomationIntegrationInteractive embedded openIntro eyebrow="Smarter systems, streamlined workflows" title="Applied solutions"
+          intro={<p className="section-text">The graphic below showcases Rawlins&rsquo; applied solutions in practice. Tap an icon to see the challenge, what we built, and the result. <Dev>Content status: examples 02 to 05 are our automation team&apos;s work before Rawlins; this line calls them Rawlins&apos; applied solutions.</Dev></p>} />
       </section>
       <section className="pg-sec pg-sec-navy pg-legacy"><AutomationEcosystemBars /></section>
       <DeliverStack />
@@ -253,7 +283,24 @@ export function ServiceFeature({ id }: { id: string }) {
       );
     }
     case "portals":
-      return <Sec title="Inside a delivery website" kicker="From our work"><List items={["A landing page with the program's tools, resource library, manuals, and training one click away", "Links to the systems staff already use: scheduling, status reporting, and dashboards", "A change request form tied to a tracker, with automatic routing to reviewers and decision makers", "Email at each step, from submission through quality check and close-out", "How-to videos and online courses published next to the tools they teach"]} /></Sec>;
+      /* Inside a delivery website (redesigned Nov 11): the five parts drawn as the site itself, in a browser window */
+      return (
+        <div className="dw">
+          <div className="v8-wrap dw-in">
+            <div className="dw-head"><p className="v8-eyebrow">From our work</p><h2 className="v8-h2">Inside a delivery website</h2></div>
+            <div className="dw-win" role="list">
+              <div className="dw-bar" aria-hidden="true"><i /><i /><i /><span>Project delivery website</span></div>
+              <div className="dw-grid">
+                <div className="dw-part dw-land" role="listitem"><b>01</b><p>A landing page with the program&apos;s tools, resource library, manuals, and training one click away</p></div>
+                <div className="dw-part dw-links" role="listitem"><b>02</b><p>Links to the systems staff already use: scheduling, status reporting, and dashboards</p><span className="dw-chips" aria-hidden="true"><i>Scheduling</i><i>Status</i><i>Dashboards</i></span></div>
+                <div className="dw-part dw-form" role="listitem"><b>03</b><p>A change request form tied to a tracker, with automatic routing to reviewers and decision makers</p><span className="dw-flow" aria-hidden="true"><i>Form</i><em /><i>Review</i><em /><i>Decision</i></span></div>
+                <div className="dw-part dw-mail" role="listitem"><b>04</b><p>Email at each step, from submission through quality check and close-out</p></div>
+                <div className="dw-part dw-video" role="listitem"><b>05</b><p>How-to videos and online courses published next to the tools they teach</p><span className="dw-play" aria-hidden="true" /></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
     case "training-video": {
       const f = SERVICE_STEPS[id];
       return <Sec title={f.title} kicker={f.kicker}><Steps steps={f.steps} /></Sec>;
@@ -262,7 +309,15 @@ export function ServiceFeature({ id }: { id: string }) {
       return (
         <>
           <NextLayer />
-          <Sec title="Advanced air mobility services" tone="panel"><List items={AAM_SERVICES} cols /></Sec>
+          {/* redesigned Nov 11 (Nicole: "needs better design") */}
+          <div className="aams">
+            <div className="v8-wrap">
+              <div className="aams-head"><p className="v8-eyebrow">What we offer</p><h2 className="v8-h2">Advanced air mobility services</h2></div>
+              <ul className="aams-grid">
+                {AAM_SERVICES.map((t, i) => <li key={t}><span className="aams-ic">{svgI(AAM_ICON[i] ?? AAM_ICON[0])}</span><b>{t}</b></li>)}
+              </ul>
+            </div>
+          </div>
         </>
       );
     case "drone-programs":

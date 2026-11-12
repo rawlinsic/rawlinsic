@@ -51,7 +51,7 @@ export function AboutIndex() {
           <li className="ab-b-people"><a href="/about/our-people"><span className="ab-b-faces">{faces.map((p) => /* eslint-disable-next-line @next/next/no-img-element */ <img key={p.slug} src={p.photo} alt="" loading="lazy" />)}</span><span className="ab-b-txt"><b>Our people</b><span>{people.length} people: advisors who ran the programs, and the specialists who build the tools.</span></span></a></li>
           <li className="ab-b-how"><a href="/about/how-we-work"><span className="ab-b-steps">{STEPS.map(([t], k) => <i key={t}><em>{String(k + 1).padStart(2, "0")}</em>{t}</i>)}</span><span className="ab-b-txt"><b>How we work</b><span>Four steps, worked out with the people who do the work.</span></span></a></li>
           <li className="ab-b-where"><a href="/about/where-we-work"><span className="ab-b-num">{STATES.length}<small>states</small></span><span className="ab-b-txt"><b>Where we work</b><span>Across the United States, with team members in Canada, South Africa, and the UAE.</span></span></a></li>
-          <li className="ab-b-careers"><a href="/careers">{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/images/pages/aam-community-engagement.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Careers</b><span>Work next to people who&apos;ve done the job.</span></span></a></li>
+          <li className="ab-b-careers"><a href="/careers">{/* eslint-disable-next-line @next/next/no-img-element */}{/* two teammates at the 2026 company retreat, July 24, 2026 (Business Development SharePoint; cropped so there are no labels) */}<img src="/images/pages/careers-retreat-2026-teammates.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Careers</b><span>Work next to people who&apos;ve done the job.</span></span></a></li>
         </ul>
       </EdSec>
       <Talk />
@@ -276,8 +276,8 @@ export function InsightsIndex() {
   const p1 = proj("cs-proficiency"), p2 = proj("cs-strategic");
   const cards: FanCard[] = [
     ...(art ? [{ href: `/insights/thought-leadership/${art.slug}`, tag: "Thought leadership", title: art.title, photo: "/images/pages/auto-data.webp" }] : []),
-    { href: "/insights/research", tag: "Research", title: PUBLICATIONS[0]?.title ?? "Research & Publications", photo: "/images/pages/aam-policy-planning.webp", pos: "40% 40%" },
-    ...(next ? [{ href: "/insights/news", tag: "Where we'll be", title: `${next.title}, ${next.where ?? ""} · ${next.when}`.replace(", ·", " ·"), photo: "/images/pages/aam-community-engagement.webp" }] : []),
+    { href: "/insights/research", tag: "Research", title: PUBLICATIONS[0]?.title ?? "Research & Publications", photo: PAGE_PHOTO.research /* aam-policy-planning is on the never-use list (addendum A) */ },
+    ...(next ? [{ href: "/insights/news", tag: "Where we'll be", title: `${next.title}, ${next.where ?? ""} · ${next.when}`.replace(", ·", " ·"), photo: "/images/pages/insights-hawaii-summit-2026-team.webp" /* the Rawlins team at the first Hawaii Transportation Summit, Sept 2026 (LinkedIn; other sponsors' logos blurred) */ }] : []),
     ...(p1 ? [{ href: caseHref(p1), tag: "Project", title: p1.title, photo: casePhoto(p1) }] : []),
     { href: "/insights/news", tag: "Recognition", title: "Awards and recognition our people have earned", photo: "/images/pages/team-group-outdoor.webp" },
     ...(p2 ? [{ href: caseHref(p2), tag: "Project", title: p2.title, photo: casePhoto(p2) }] : []),

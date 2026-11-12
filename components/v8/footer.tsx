@@ -37,9 +37,9 @@ export default function Footer() {
         </div>
         <nav aria-label="What we do"><h2>What We Do</h2><ul>{AREAS.map((a) => <li key={a.id}><a href={areaHref(a)} style={{ ["--a" as string]: THEME[a.id].color } as CSSProperties}><i aria-hidden="true" />{a.name}</a></li>)}</ul></nav>
         <nav aria-label="Who we work with"><h2>Who We Work With</h2><ul>{VISIBLE_INDUSTRIES.map((i) => <li key={i.id}><a href={industryHref(i)}>{i.name}</a></li>)}</ul></nav>
-        <nav aria-label="Our work and insights"><h2>Our Work</h2><ul><li><a href="/insights/case-studies">All projects</a></li><li><a href="/about/where-we-work">Where we work</a></li></ul>
-          <h2>Insights</h2><ul><li><a href={THOUGHT}>Thought leadership</a></li><li><a href="/insights/podcast">Podcast</a></li><li><a href="/insights/news">News &amp; recognition</a></li><li><a href="/insights/research">Research &amp; publications</a></li></ul></nav>
-        <nav aria-label="About"><h2>About</h2><ul><li><a href="/about/who-we-are">Who we are</a></li><li><a href="/about/how-we-work">How we work</a></li><li><a href="/about/our-people">Our people</a></li><li><a href="/careers">Careers</a></li></ul></nav>
+        <nav aria-label="Our work and insights"><h2>Our Work</h2><ul><li><a href="/insights/case-studies">All Projects</a></li><li><a href="/about/where-we-work">Where We Work</a></li></ul>
+          <h2>Insights</h2><ul><li><a href={THOUGHT}>Thought Leadership</a></li><li><a href="/insights/podcast">Podcast</a></li><li><a href="/insights/news">News &amp; Recognition</a></li><li><a href="/insights/research">Research &amp; Publications</a></li></ul></nav>
+        <nav aria-label="About"><h2>About</h2><ul><li><a href="/about/who-we-are">Who We Are</a></li><li><a href="/about/how-we-work">How We Work</a></li><li><a href="/about/our-people">Our People</a></li><li><a href="/careers">Careers</a></li></ul></nav>
       </div>
       <div className="v8-wrap fx2-legal">
         <span>© 2026 Rawlins</span><a href="/privacy-policy">Privacy</a><PrivacyChoicesLink /><a href="/terms-of-service">Terms</a><a href="/accessibility">Accessibility</a><a href="/site-map">Site map</a>

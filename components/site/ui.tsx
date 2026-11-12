@@ -64,9 +64,9 @@ export function Btn({ href, children, primary }: { href: string; children: React
   return <a href={href} className={`pg-btn${primary ? " pg-btn-primary" : ""}`}>{children}</a>;
 }
 
-export function Sec({ title, kicker, id, children, intro, tone }: { title?: string; kicker?: string; id?: string; children: ReactNode; intro?: ReactNode; tone?: "panel" | "navy" }) {
+export function Sec({ title, kicker, id, children, intro, tone, className }: { title?: string; kicker?: string; id?: string; children: ReactNode; intro?: ReactNode; tone?: "panel" | "navy"; className?: string }) {
   return (
-    <section className={`pg-sec${tone ? ` pg-sec-${tone}` : ""}`} id={id}>
+    <section className={`pg-sec${tone ? ` pg-sec-${tone}` : ""}${className ? ` ${className}` : ""}`} id={id}>
       <div className="pg-wrap">
         {(title || kicker) && (
           <div className="pg-sec-head">

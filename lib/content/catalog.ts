@@ -820,7 +820,7 @@ export const SERVICES: Record<string, SvcData> = {
    "Tools, manuals, and training spread across drives and intranet pages",
    "Five versions of the same form",
    "No clear way to request a change, or to know what changed",
-   "Hundreds of documents sit on an old wiki"
+   "Hundreds of documents sit on a separate, outdated site"
   ],
   "quote": false,
   "deliver": [
@@ -829,7 +829,7 @@ export const SERVICES: Record<string, SvcData> = {
    "Forms turned into web apps on shared, trusted data",
    "Manuals and guidance published and kept current online",
    "Change request systems: submit, route, decide, update, and close out",
-   "Website and wiki migrations, with every item reviewed: keep, update, combine, move, or retire"
+   "Website migrations, with every item reviewed: keep, update, combine, move, or retire"
   ],
   "walk": [
    "A live site with one source of truth",
@@ -1862,7 +1862,12 @@ export const INDUSTRIES: Record<string, IndustryData> = {
  },
  "intl": {
   "id": "intl",
-  "ch": [],
+  "ch": [
+   "Investment is growing faster than our organization",
+   "Our data sits in separate systems, and no one owns it",
+   "We want to use AI, and need rules for it first",
+   "We're planning for drones and air mobility while the rules are still being written"
+  ],
   "basis": "",
   "services": [],
   "people": []

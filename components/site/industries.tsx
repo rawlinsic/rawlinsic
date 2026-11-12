@@ -35,7 +35,7 @@ export function IndustriesIndex() {
 
 export function IndustryPage({ ind }: { ind: Industry }) {
   if (ind.id === "private") return <PrivateSector ind={ind} />;
-  if (ind.id === "intl") return <International />;
+  if (ind.id === "intl") return <IndustryV8 ind={ind} cases={[]} />; // the same layout as the other industries (INTERNATIONAL PAGE, Nov 11)
   /* Featured projects: Rawlins work only (no Before Rawlins cases). Contractors &
      Engineering Firms shows its own list, in this order (an engineering firm is
      the client on cs-pv-pmo). The page shows the first six. */

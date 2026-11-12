@@ -14,8 +14,8 @@ const G = ({ children }: { children: ReactNode }) => (
 
 const LAYERS: { n: string; t: string; line: ReactNode; g: ReactNode }[] = [
   { n: "01", t: "Data governance", line: <>We set up <a href="/services/digital-solutions/data-governance">data governance</a> people follow.</>, g: <><path d="M12 3l8 3v5c0 4.6-3.2 8.2-8 10-4.8-1.8-8-5.4-8-10V6z" /><path d="M9 12l2 2 4-4" /></> },
-  { n: "02", t: "Digital solutions", line: "We build digital tools that take routine work off people's plates.", g: <><path d="M5 3v4M3 5h4M19 15v4M17 17h4" /><path d="M12 4l2.2 5.8L20 12l-5.8 2.2L12 20l-2.2-5.8L4 12l5.8-2.2z" /></> },
-  { n: "03", t: "Connected workflows", line: "We connect workflows so information is entered once and moves on its own.", g: <><circle cx="6" cy="6" r="2.5" /><circle cx="18" cy="6" r="2.5" /><circle cx="12" cy="18" r="2.5" /><path d="M8.5 6h7M17 8.2l-4 7.5M7 8.2l4 7.5" /></> },
+  { n: "02", t: "Digital tools and automation", line: "We build digital tools that take manual work off people's plates.", g: <><path d="M5 3v4M3 5h4M19 15v4M17 17h4" /><path d="M12 4l2.2 5.8L20 12l-5.8 2.2L12 20l-2.2-5.8L4 12l5.8-2.2z" /></> },
+  { n: "03", t: "Connected systems", line: "We connect the systems you already own so information is entered once and moves on its own.", g: <><circle cx="6" cy="6" r="2.5" /><circle cx="18" cy="6" r="2.5" /><circle cx="12" cy="18" r="2.5" /><path d="M8.5 6h7M17 8.2l-4 7.5M7 8.2l4 7.5" /></> },
   { n: "04", t: "AI adoption", line: "We find the AI uses worth doing and plan how to adopt them.", g: <><rect x="8" y="8" width="8" height="8" rx="1.5" /><path d="M10 8V5M14 8V5M10 19v-3M14 19v-3M8 10H5M8 14H5M19 10h-3M19 14h-3" /></> },
   { n: "05", t: "Organizational change", line: <>We help people take up <a href="/services/strategy-organization/change-management">the new way of working</a>, with training and support.</>, g: <><circle cx="9" cy="8" r="3" /><circle cx="17" cy="9.5" r="2.2" /><path d="M4 19c0-2.8 2.2-5 5-5s5 2.2 5 5M15 14.5c2.3 0 4 1.8 4 4.5" /></> },
 ];

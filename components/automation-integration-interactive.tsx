@@ -748,8 +748,9 @@ function StoryScene3D({ sceneId, tone }: { sceneId: string; tone: string }) {
   return <div className="rai-vis" ref={host} />;
 }
 
-type HubProps = { embedded?: boolean; eyebrow?: React.ReactNode; title?: React.ReactNode; intro?: React.ReactNode };
-export default function AutomationIntegrationInteractive({ embedded = false, eyebrow, title, intro }: HubProps = {}) {
+/* openIntro: the intro shows as plain text, with no expand arrow (Digital Solutions page, Nicole, Nov 11) */
+type HubProps = { embedded?: boolean; eyebrow?: React.ReactNode; title?: React.ReactNode; intro?: React.ReactNode; openIntro?: boolean };
+export default function AutomationIntegrationInteractive({ embedded = false, eyebrow, title, intro, openIntro = false }: HubProps = {}) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [step, setStep] = useState(0);
   const [introOpen, setIntroOpen] = useState(false);
@@ -1046,6 +1047,7 @@ export default function AutomationIntegrationInteractive({ embedded = false, eye
       <header className="rai-intro">
         <p className="section-label"><span className="gold-text">{eyebrow ?? "Automation & AI"}</span></p>
         <h1 className="section-title">{title ?? <>Applied <em>Solutions</em></>}</h1>
+        {openIntro ? <div className="rai-intro-open">{intro}</div> : <>
         <button
           type="button"
           className={`intro-expand-btn${introOpen ? " expanded" : ""}`}
@@ -1063,8 +1065,9 @@ export default function AutomationIntegrationInteractive({ embedded = false, eye
         <div id="rai-intro-more" className={`intro-expandable${introOpen ? " expanded" : ""}`}>
           {intro ?? <p className="section-text">Smarter systems, proven in practice. Every challenge started the same way — disconnected tools, duplicated work, and information scattered across systems. We connected what each team already used, automated the manual steps, and brought the full picture into one clear view.</p>}
         </div>
+        </>}
       </header>
-      <div className="rai-hint"><span className="dot" /><span>Applied solutions &bull; click to explore &bull; drag to rotate</span></div>
+      <div className="rai-hint"><span className="dot" /><span>click to explore &bull; drag to rotate</span></div>
       <div className="rai-stage" ref={sceneRef}>
         <canvas className="rai-canvas" ref={canvasRef} />
         {NODES.map((n, i) => (

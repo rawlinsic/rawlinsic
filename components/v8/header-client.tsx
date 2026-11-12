@@ -141,11 +141,11 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
               {/* no line under the name (Nicole, Nov 11) */}
               <a className="mx-area" href={a.href}><b>{a.name}</b></a>
               <ul>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a>{s.q && <span className="mx-q" title={s.q} tabIndex={0} aria-label={s.q}>?</span>}</li>)}</ul>
-              <a className="mx-go" href={a.projects}>Projects in this area</a>
+              <a className="mx-go" href={a.projects}>Projects in This Area</a>
             </section>
           ))}
         </div>
-        <p className="mx-foot"><a href="/services">See all services</a><a href="/contact">Not sure where yours fits? Tell us what you&apos;re trying to fix</a></p>
+        <p className="mx-foot"><a href="/services">See All Services</a><a href="/contact">Not Sure Where Yours Fits? Tell Us What You&apos;re Trying to Fix</a></p>
       </div>
       <div className="hx-panel" id="hx-m-who" hidden={open !== "who"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         <div className="mx-who">
@@ -160,29 +160,29 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
               <p className="mx-k">Specialties</p>
               <ul>{data.industries[ind].subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>
             </> : data.industries[ind].challenges.length > 0 && <>
-              <p className="mx-k">Challenges we hear</p>
+              <p className="mx-k">Challenges We Hear</p>
               <ul className="mx-hear">{data.industries[ind].challenges.map((c) => <li key={c}>{c}</li>)}</ul>
             </>}
           </div>
           <div className="mx-feat">
-            {data.industries[ind].feature && <><p className="mx-k">Featured project</p><ProjectCard c={data.industries[ind].feature!} /></>}
+            {data.industries[ind].feature && <><p className="mx-k">Featured Project</p><ProjectCard c={data.industries[ind].feature!} /></>}
             {data.industries[ind].projects.length > 0 && (
               <ul className="mx-plinks">{data.industries[ind].projects.map((p) => <li key={p.href}><a href={p.href}>{p.title}</a></li>)}</ul>
             )}
             <a className="mx-go" href={data.industries[ind].all.href}>{data.industries[ind].all.label}</a>
           </div>
         </div>
-        <p className="mx-foot"><a href="/industries">Everyone we work with</a></p>
+        <p className="mx-foot"><a href="/industries">Everyone We Work With</a></p>
       </div>
       <div className="hx-panel" id="hx-m-work" hidden={open !== "work"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         <div className="mx-list mx-work">
           <div>
             <ul>{data.work.map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul>
-            <p className="mx-k mx-k-gap">Browse by area</p>
+            <p className="mx-k mx-k-gap">Browse by Area</p>
             <ul className="mx-chips">{data.areas.map((a) => <li key={a.id}><a href={a.projects} style={{ ["--a" as string]: a.color } as CSSProperties}><i aria-hidden="true" />{a.name}</a></li>)}</ul>
           </div>
           <div>
-            <p className="mx-k">In the works</p>
+            <p className="mx-k">In the Works</p>
             <ul className="mx-live">{data.inWorks.map((c) => (
               <li key={c.href}><a className="mx-proj" href={c.href}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -190,7 +190,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                 <span><b>{c.title}</b><span>{c.who}</span><small className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</small>{c.note && <em className="pg-dev">{c.note}</em>}</span>
               </a></li>
             ))}</ul>
-            <a className="mx-go" href="/insights/case-studies?status=ongoing">All projects in the works</a>
+            <a className="mx-go" href="/insights/case-studies?status=ongoing">All Projects in the Works</a>
           </div>
         </div>
       </div>
@@ -207,7 +207,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
           );
         })}</ul>
         {/* the Insights page itself (Nicole, Nov 10: "where is the insights page in the menu?") */}
-        <p className="mx-foot"><a href="/insights">All insights</a></p>
+        <p className="mx-foot"><a href="/insights">All Insights</a></p>
       </div>
       {!aboutTopOnly && <div className="hx-panel" id="hx-m-about" hidden={open !== "about"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         {/* About (Nicole, Nov 10): Who we are as a photo card, then the other pages as plain links, the same
@@ -217,7 +217,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
             <a className="ma-feature" href={data.about[0].href}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/pages/team-group-outdoor.webp" alt="" loading="lazy" />
-              <span><em>Since 2017</em><b>{data.about[0].label}</b><span>{data.about[0].note}</span><i>Our story</i></span>
+              <span><em>Since 2017</em><b>{data.about[0].label}</b><span>{data.about[0].note}</span><i>Our Story</i></span>
             </a>
           )}
           <ul>{data.about.slice(1).map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul>
@@ -256,7 +256,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                 <ul className="hx-areas">{data.areas.map((a) => (
                   <li key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink } as CSSProperties}>
                     <details><summary>{a.name}</summary>
-                      <ul><li><a href={a.href}>{a.name} overview</a></li>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a>{s.q && <span className="mx-q" title={s.q} aria-label={s.q}>?</span>}</li>)}<li><a href={a.projects}>Projects in this area</a></li></ul>
+                      <ul><li><a href={a.href}>{a.name} Overview</a></li>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a>{s.q && <span className="mx-q" title={s.q} aria-label={s.q}>?</span>}</li>)}<li><a href={a.projects}>Projects in This Area</a></li></ul>
                     </details>
                   </li>
                 ))}</ul>
@@ -267,7 +267,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                   <li key={x.href}>
                     <a href={x.href}>{x.name}</a>
                     {x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}
-                    {projects.length > 0 && <><p className="mx-k">Featured projects</p><ul className="mx-projs">{projects.map((p) => <li key={p.href}><a className={"photo" in p ? "mx-proj" : undefined} href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{"photo" in p && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}</span></a></li>)}</ul></>}
+                    {projects.length > 0 && <><p className="mx-k">Featured Projects</p><ul className="mx-projs">{projects.map((p) => <li key={p.href}><a className={"photo" in p ? "mx-proj" : undefined} href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{"photo" in p && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}</span></a></li>)}</ul></>}
                   </li>
                 );
               })}{data.intl && <li><a href={data.intl.href}>{data.intl.name}</a><em className="v8-dev">{data.intl.note}</em></li>}</ul></details>

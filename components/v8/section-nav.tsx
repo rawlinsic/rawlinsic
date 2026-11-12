@@ -2,6 +2,7 @@
 /* Service pages: a slim bar of the page's sections that tracks where you are. On a service page it also
    holds the area's other services in a list that opens from the left (Nicole, Nov 10: no second bar). */
 import { useEffect, useRef, useState } from "react";
+import { tc } from "@/lib/title-case";
 
 export type SnMore = { label: string; links: { name: string; href: string; current?: boolean }[] };
 import { docTop } from "@/components/v8/panels";
@@ -36,13 +37,13 @@ export default function SectionNav({ items, more }: { items: [string, string][];
     <nav className={`sn${more ? " has-more" : ""}`} aria-label="On this page">
       {more && (
         <details className="sn-more" ref={box}>
-          <summary>{more.label}</summary>
+          <summary>{tc(more.label)}</summary>
           <ul>{more.links.map((l) => <li key={l.href}><a href={l.href} aria-current={l.current ? "page" : undefined}>{l.name}</a></li>)}</ul>
         </details>
       )}
       <ul>
         {items.map(([id, label]) => (
-          <li key={id}><a href={`#${id}`} aria-current={on === id ? "true" : undefined}>{label}</a></li>
+          <li key={id}><a href={`#${id}`} aria-current={on === id ? "true" : undefined}>{tc(label)}</a></li>
         ))}
       </ul>
     </nav>

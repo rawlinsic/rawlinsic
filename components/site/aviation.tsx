@@ -1,4 +1,5 @@
 "use client";
+import { Dev } from "@/components/site/ui";
 /* The Drones & Advanced Air Mobility page's own sections (v9), carried over
    from the current site and rebuilt so they read at a glance:
      (Where we lead lives in where-we-lead.tsx)
@@ -67,6 +68,8 @@ export function NextLayer() {
       <div className="v8-wrap">
         <div className="av-head">
           <h2 className="v8-h2">Integrate the next layer of your transportation system</h2>
+          {/* TODO(launch): Jacob's AERO portfolio lists the multimodal angle as an open leadership decision. (addendum C1, Nov 11) */}
+          <p className="v8-lead av-next-lead">Drones already inspect infrastructure and support emergency response, and advanced air mobility is being planned for cargo, medical supplies, and passenger travel. Planned well, these aircraft work alongside roads, rail, and ports instead of around them. <Dev>Content status: Jacob&apos;s AERO portfolio lists the multimodal angle as an open leadership decision.</Dev></p>
         </div>
         <div className="av-map-in">
           <div className="av-map-stage">
@@ -77,7 +80,6 @@ export function NextLayer() {
                 return (
                   <g key={i} className={`av-route is-${k}${on ? " is-on" : ""}`}>
                     <path d={arc(a, b)} />
-                    {on && <circle r="5"><animateMotion dur={`${2.6 + (i % 3) * 0.5}s`} repeatCount="indefinite" path={arc(a, b)} /></circle>}
                   </g>
                 );
               })}
@@ -111,6 +113,8 @@ export function NextLayer() {
 const ECO = [
   { label: "Aviation authorities", short: "FAA · ICAO · NASAO", desc: "Federal rules and guidance we track for agency programs, with international standards where they apply." },
   { label: "Government agencies", short: "State DOTs · Federal agencies · Emergency management", desc: "State and federal transportation agencies and emergency management offices." },
+  // backed by the Tennessee advanced air mobility planning guidance for local governments (cs-aero); addendum C2, Nov 11
+  { label: "Cities & MPOs", short: "Local governments · Regional planners", desc: "Local governments and regional planning organizations preparing for air mobility, including where facilities can fit in their communities." },
   /* ACRP: Airport Cooperative Research Program ("ACRA" was a typo carried over from the live site) */
   { label: "Standards organizations", short: "ACRP · AASHTO · NCHRP", desc: "Standards and research bodies whose guidance agencies adopt. Members of our team serve on national committees." },
   { label: "Academic institutions", short: "Research · Universities · Labs", desc: "Universities and research centers working on air mobility safety, technology, and workforce." },
@@ -119,7 +123,7 @@ const ECO = [
 
 /* Bridging silos (redesigned Nov 11; Nicole: "needs a better visual"): Rawlins at the center, the five groups
    around it, each joined to the center by a line; phones get the center, then the groups as a list. */
-const HUB: [number, number][] = [[50, 13], [85, 39], [72, 83], [28, 83], [15, 39]]; // where each group sits, in % of the stage
+const HUB: [number, number][] = [[50, 12], [81, 31], [81, 69], [50, 88], [19, 69], [19, 31]]; // six groups around the center, in % of the stage
 export function BridgingSilos() {
   return (
     <section className="av av-silos av-hub">
@@ -193,7 +197,8 @@ export function AviationTeam({ people, title = "Our aviation team", roles }: { p
           <h2 className="v8-h2">{title}</h2>
           {!roles && <a className="v8-link" href="/about/our-people">Everyone on our team</a>}
         </div>
-        {roles && <AviationRoles roles={roles} />}
+        {roles && <><p className="av-sub">The six roles on our aviation team</p><AviationRoles roles={roles} /></>}
+        {roles && <p className="av-sub av-sub-people">The people in those roles</p>}
         <ul className="av-team-list">
           {people.map((p, i) => (
             <li key={p.name} data-reveal style={{ ["--d" as string]: `${i * 80}ms` } as CSSProperties}>

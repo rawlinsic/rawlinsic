@@ -585,3 +585,86 @@
 .av-team-ph img { top: 18% !important; width: 132.2% !important; }
 /* What this covers: the heading on two lines */
 .cov-head { max-width: 1100px; }
+
+/* ── Nov 11, round 3 ── */
+/* home cards: move quickly; the words show right away */
+.fan-card { transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.45s, filter 0.45s !important; }
+.fan-card .fan-txt { transition: max-height 0.3s ease, opacity 0.2s ease, margin 0.2s ease !important; }
+.fan-card .fan-q { font-size: clamp(1.02rem, 1.2vw, 1.15rem); }
+/* AASHTO card: the event's own header image, shown whole */
+.ev.has-banner .ev-ph { flex: 0 0 auto; min-height: 0; aspect-ratio: 1242 / 432; }
+.ev.has-banner .ev-ph::after { display: none; }
+.ev.has-banner .ev-ph > img:first-child { object-fit: cover; object-position: 50% 50%; }
+.ev.has-banner { justify-content: flex-start; }
+/* the bar of sections: always on one line and never wider than the screen (no scrolling) */
+.sn { overflow: visible !important; }
+.sn > ul { flex-wrap: nowrap; overflow: visible !important; gap: clamp(2px, 0.6vw, 10px) !important; }
+.sn > ul a { white-space: nowrap; padding-left: clamp(6px, 0.7vw, 14px) !important; padding-right: clamp(6px, 0.7vw, 14px) !important; font-size: clamp(0.86rem, 0.95vw, 1.02rem) !important; }
+.sn-more summary { white-space: nowrap; }
+@media (max-width: 1100px) { .sn > ul { flex-wrap: wrap; row-gap: 2px; justify-content: center; } }
+/* Challenges we hear: each card comes in as you scroll to it */
+.lit-seq > .lit-line { opacity: 0; transform: translateY(26px); transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.lit-seq > .lit-line.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .lit-seq > .lit-line { opacity: 1; transform: none; } }
+/* Our aviation team: what the boxes are */
+.av-sub { margin: 0 0 14px; color: #a5f3fc; font-size: 1.02rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.av-sub-people { margin-top: clamp(30px, 3.5vw, 48px); }
+.av-silos .av-sub, .av-silos .av-sub-people { color: #0b8aa6; }
+.av-next-lead { max-width: 780px; margin-top: 14px; }
+/* Bridging silos with six groups */
+.av-hub .hub { height: clamp(660px, 56vw, 760px); }
+/* legacy sections (Applied solutions, How it works together): text the same size as the rest of the site */
+:is(.sv-legacy, .pg-legacy, .pg-showcase) .section-label { font-size: 1.05rem !important; font-weight: 800 !important; letter-spacing: 0.12em !important; }
+:is(.sv-legacy, .pg-legacy, .pg-showcase) .section-text, .rai-intro-open .section-text, .eco-sub { font-size: clamp(1.08rem, 1.25vw, 1.22rem) !important; line-height: 1.6 !important; }
+.rai-intro-open { max-width: 780px; margin: 14px auto 0; }
+.rai-hint, .eco-hint { font-size: 1rem !important; }
+/* Making systems connect */
+.mk-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.mk-grid li { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start; padding: 20px; border-radius: 18px; background: #fff; border: 1px solid #dbe5f1; box-shadow: 0 14px 30px -26px rgba(10, 18, 32, 0.5); transition: border-color 0.2s, transform 0.2s; }
+.mk-grid li:hover { border-color: #22d3ee; transform: translateY(-2px); }
+.mk-ic { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #1d3759; color: #22d3ee; }
+.mk-grid p { margin: 2px 0 0; color: #0a1220; font-size: 1.04rem; line-height: 1.45; }
+@media (max-width: 1000px) { .mk-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .mk-grid { grid-template-columns: 1fr; } }
+/* Advanced air mobility services */
+.aams { padding: clamp(60px, 7vw, 100px) 0; background: radial-gradient(60% 80% at 90% 0%, rgba(34, 211, 238, 0.14), transparent 70%), linear-gradient(160deg, #10233f, #1d3759); color: #fff; }
+.aams-head .v8-eyebrow { color: #22d3ee; }
+.aams-head .v8-h2 { margin: 10px 0 clamp(24px, 3vw, 40px); color: #fff !important; }
+.aams-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.aams-grid li { display: grid; gap: 16px; align-content: start; min-height: 150px; padding: 24px; border-radius: 20px; background: linear-gradient(180deg, rgba(40, 68, 108, 0.96), rgba(28, 50, 84, 0.96)); border: 1px solid rgba(165, 243, 252, 0.28); transition: transform 0.25s, border-color 0.25s; }
+.aams-grid li:hover { transform: translateY(-3px); border-color: #22d3ee; }
+.aams-ic { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 14px; background: #0f2037; color: #22d3ee; box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.45); }
+.aams-grid b { color: #fff; font-size: clamp(1.15rem, 1.4vw, 1.32rem); font-weight: 600; line-height: 1.3; }
+@media (max-width: 900px) { .aams-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .aams-grid { grid-template-columns: 1fr; } }
+/* Inside a delivery website: the site drawn in a browser window */
+.dw { padding: clamp(60px, 7vw, 100px) 0; background: linear-gradient(180deg, #eef3f9, #fff); }
+.dw-head .v8-h2 { margin: 10px 0 clamp(24px, 3vw, 36px); color: #0a1220; }
+.dw-win { border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid #c9dcef; box-shadow: 0 40px 80px -40px rgba(10, 18, 32, 0.45); }
+.dw-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: #1d3759; color: #cfe6f5; font-size: 0.92rem; font-weight: 600; }
+.dw-bar i { width: 11px; height: 11px; border-radius: 50%; background: #6b84a6; }
+.dw-bar i:first-child { background: #22d3ee; }
+.dw-bar span { margin-left: 12px; padding: 5px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.1); }
+.dw-grid { display: grid; grid-template-columns: 1fr 1.6fr; grid-template-areas: "land land" "links form" "mail video"; gap: 14px; padding: 18px; background: #f4f8fc; }
+.dw-part { position: relative; display: grid; gap: 10px; align-content: start; padding: 20px 22px; border-radius: 16px; background: #fff; border: 1px solid #dbe5f1; }
+.dw-part b { color: #0b8aa6; font-size: 0.92rem; font-weight: 800; letter-spacing: 0.08em; }
+.dw-part p { margin: 0; color: #0a1220; font-size: 1.05rem; line-height: 1.45; }
+.dw-land { grid-area: land; background: linear-gradient(120deg, #1d3759, #2a4d7f); border: 0; }
+.dw-land b { color: #22d3ee; } .dw-land p { color: #fff; font-size: 1.15rem; max-width: 760px; }
+.dw-links { grid-area: links; } .dw-form { grid-area: form; } .dw-mail { grid-area: mail; } .dw-video { grid-area: video; padding-right: 96px; }
+.dw-chips, .dw-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.dw-chips i, .dw-flow i { font-style: normal; padding: 5px 12px; border-radius: 999px; background: #eef3f9; border: 1px solid #dbe5f1; color: #1d3759; font-size: 0.88rem; font-weight: 600; }
+.dw-flow em { width: 22px; height: 2px; background: #22d3ee; }
+.dw-play { position: absolute; right: 22px; top: 50%; width: 56px; height: 56px; margin-top: -28px; border-radius: 50%; background: #1d3759; }
+.dw-play::after { content: ""; position: absolute; left: 22px; top: 18px; border: 10px solid transparent; border-left: 16px solid #22d3ee; border-right: 0; }
+@media (max-width: 800px) { .dw-grid { grid-template-columns: 1fr; grid-template-areas: "land" "links" "form" "mail" "video"; } }
+/* International: Why it carries over */
+.intl-carry .v8-lead { max-width: 900px; margin-top: 16px; }
+/* home: the AASHTO card is as wide as its event image (two columns, one row), the image fills it, and the button sits on it */
+@media (min-width: 900px) {
+  .newsgrid .ev.has-banner { grid-column: span 2; grid-row: span 1; position: relative; padding: 0; aspect-ratio: 1242 / 432; min-height: 0; overflow: hidden; justify-content: flex-end; }
+  .ev.has-banner .ev-ph { position: absolute; inset: 0; margin: 0; aspect-ratio: auto; }
+  .ev.has-banner .ev-ph > img:first-child { object-fit: cover; }
+  .ev.has-banner > :is(.ev-when, b, .ev-where, p) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .ev.has-banner > .v8-btn { position: absolute; z-index: 2; right: 20px; bottom: 18px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); }
+}

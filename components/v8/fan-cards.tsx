@@ -17,11 +17,11 @@ export default function FanCards({ cards, label, start, tags = true, hoverFront 
   const [hold, setHold] = useState(false);
   const down = useRef<number | null>(null);
   const lock = useRef(0), wait = useRef<number | null>(null);
-  const go = useCallback((k: number) => { lock.current = Date.now() + 750; setAt(((k % n) + n) % n); }, [n]);
+  const go = useCallback((k: number) => { lock.current = Date.now() + 380; setAt(((k % n) + n) % n); }, [n]);
+  /* right away (Nicole, Nov 11: "it needs to go right away"); a short lock stops cards swapping back and forth */
   const rest = (i: number) => {
     if (!hoverFront || window.matchMedia("(hover: none)").matches) return;
-    if (wait.current) window.clearTimeout(wait.current);
-    wait.current = window.setTimeout(() => { wait.current = null; if (Date.now() >= lock.current) go(i); }, 160);
+    if (Date.now() >= lock.current) go(i);
   };
   const leave = () => { if (wait.current) { window.clearTimeout(wait.current); wait.current = null; } };
   useEffect(() => () => leave(), []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -62,6 +62,7 @@ export default function FanCards({ cards, label, start, tags = true, hoverFront 
               aria-hidden={a > 2 || undefined} tabIndex={d === 0 ? 0 : -1}
               aria-label={d === 0 ? `${c.tag}: ${c.title}` : `Show ${c.tag}: ${c.title}`}
               onClick={(e) => { if (d !== 0) { e.preventDefault(); go(i); } }}
+              onPointerEnter={d !== 0 && a <= 2 ? (e) => { if (e.pointerType === "mouse") rest(i); } : undefined}
               onPointerMove={d !== 0 && a <= 2 ? (e) => { if (e.pointerType === "mouse") rest(i); } : undefined}
               onPointerLeave={leave}>
               {/* eslint-disable-next-line @next/next/no-img-element */}

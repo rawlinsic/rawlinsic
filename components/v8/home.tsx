@@ -230,7 +230,7 @@ export default function Home() {
             <h2 id="h-ways-h" className="v8-h2">From the plan, to the tools people use</h2>
           </div>
           <FanCards label="What we do" start={2} tags={false} hoverFront
-            cards={AREAS.map((a) => ({ href: areaHref(a), tag: a.tag, title: a.name, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id], text: q(AREA_DATA[a.id].hear[0]), more: `Explore ${a.name}` }))} />
+            cards={AREAS.map((a) => ({ href: areaHref(a), tag: a.tag, title: a.name, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id], text: a.tag, more: "Explore" }))} /* a brief description of the area, then Explore (Nicole, Nov 11) */ />
         </section>
       )}
 
@@ -283,10 +283,10 @@ export default function Home() {
       {/* 7 · what's new */}
       <section className="h-new" aria-labelledby="h-new">
         <div className="v8-wrap">
-          <div className="h-row-head" data-reveal><div><p className="v8-eyebrow">What&apos;s new</p><h2 id="h-new" className="v8-h2">Where we&apos;ll be, and what we&apos;re up to</h2></div><a className="v8-link" href="/insights/news">News &amp; recognition</a></div>
+          <div className="h-row-head" data-reveal><div><p className="v8-eyebrow">What&apos;s new</p><h2 id="h-new" className="v8-h2">Where we&apos;ll be, and what we&apos;re up to</h2></div><a className="v8-link" href="/insights/news">News &amp; Recognition</a></div>
           <div className="newsgrid">
             {ev && (
-              <article className={`ev${ev.photo ? " has-photo" : ""}`} data-reveal>
+              <article className={`ev${ev.photo ? " has-photo" : ""}${ev.banner ? " has-banner" : ""}`} data-reveal>
                 {ev.photo && (
                   <div className="ev-ph">
                     {/* eslint-disable-next-line @next/next/no-img-element */}

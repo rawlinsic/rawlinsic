@@ -72,7 +72,7 @@ export default function AutomationEcosystemBars() {
       <div className="aam-container">
         <div className="aam-section-header reveal">
           <p className="section-label"><span className="gold-text">How the pieces fit</span></p>
-          <h2 className="section-title">How the data, automation, and <em>AI</em> pieces build on each other</h2>
+          <h2 className="section-title">How the data, automation, and <em>AI</em> work together</h2>
           <p className="eco-sub">A client can start at any step. This is the order the pieces depend on.</p>
         </div>
 

@@ -17,7 +17,7 @@ import { allPeople } from "@/components/site/more";
 import type { CSSProperties, ReactNode } from "react";
 import {
   AREAS, VISIBLE_INDUSTRIES, areaHref, caseHref, caseTag, industryHref, serviceById, serviceHref, subsectorHref,
-  type CaseIndex, type Industry, type Subsector, PAGE_STATUS,
+  type CaseIndex, type Industry, type Subsector, PAGE_STATUS, INTL,
 } from "@/lib/content/site";
 import { INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AREA_PHOTO, INDUSTRY_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
@@ -349,16 +349,19 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   const work = cases.slice(0, 6);
   const next = nextIndustry(ind.id);
   const crumbs: Crumb[] = [["/industries", "Who We Work With"], [industryHref(ind), ind.name]];
+  const intl = ind.id === "intl";
   const actions = (
     <>
       <a className="v8-btn v8-btn-area" href="/contact">Get in touch</a>
-      <a className="v8-btn v8-btn-ghost" href="#work">See the work</a>
+      {work.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See the work</a>}
     </>
   );
   const sections: Nav[] = [
     ...(subs.length ? [["specialties", "Specialties"] as Nav] : []),
+    ...(intl ? [["carry", INTL.carry.title] as Nav] : []),
     ...(d.ch.length ? [["hear", "Challenges we hear"] as Nav] : []),
     ["help", "How we help"],
+    ...(intl ? [["abroad", INTL.abroad.title] as Nav, ["region", "Where you'll find us"] as Nav] : []),
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ...(work.length ? [["work", "Featured projects"] as Nav] : []),
     ["talk", "Talk to us"],
@@ -373,8 +376,23 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   );
   return (
     <Page sections={sections} hero={hero}>
+      {intl && (
+        <section id="carry" className="sv-sec intl-carry">
+          <div className="v8-wrap"><h2 className="v8-h2">{INTL.carry.title}</h2><p className="v8-lead">{INTL.carry.text}</p></div>
+        </section>
+      )}
       {d.ch.length > 0 && <Hear title="Challenges we hear" items={d.ch} />}
       <Help ind={ind} />
+      {intl && (
+        <Route id="abroad" title={INTL.abroad.title}>
+          <RouteList check ordered={false} stops={INTL.abroad.items.map((x) => ({ d: <>{x.t}{x.flag && <> <Dev>Content status: {x.flag}</Dev></>}</> }))} />
+        </Route>
+      )}
+      {intl && (
+        <Route id="region" title={INTL.region.title} note={<a className="v8-link" href={INTL.region.link.href}>{INTL.region.link.label}</a>}>
+          <RouteList check ordered={false} stops={INTL.region.items.map((t) => ({ d: t }))} />
+        </Route>
+      )}
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       {work.length > 0 && <Work title="Featured projects" cases={work} all={{ href: `/insights/case-studies?industry=${ind.slug}`, label: `All ${ind.name} projects` }} />}
       <Talk {...(subs.length

@@ -27,9 +27,6 @@ function Art({ kind }: { kind: DiagramKind }) {
         {ys.map((y, i) => <circle key={`n${y}`} className="svm-node svm-faint" cx="20" cy={y} r="6" style={{ animationDelay: `${i * 0.4}s` }} />)}
         <circle className="svm-node" cx="520" cy="300" r="9" />
         <circle className="svm-ping" cx="790" cy="300" r="10" />
-        <circle className="svm-fly" r="7">
-          <animateMotion dur="7s" repeatCount="indefinite" path={`${into(80)} H 790`} calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines="0.45 0 0.35 1" />
-        </circle>
       </>
     );
   }
@@ -78,9 +75,6 @@ function Art({ kind }: { kind: DiagramKind }) {
       <path className="svm-draw svm-dash" d={d} />
       {[30, 62, 94].map((r, i) => <circle key={r} className="svm-ping" cx="770" cy="90" r={r} style={{ animationDelay: `${i * 0.7}s` }} />)}
       <circle className="svm-node" cx="30" cy="540" r="8" />
-      <circle className="svm-fly" r="9">
-        <animateMotion dur="8s" repeatCount="indefinite" path={d} keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.45 0 0.35 1" />
-      </circle>
     </>
   );
 }

@@ -29,7 +29,6 @@ function Art({ kind, n }: { kind: DiagramKind; n: number }) {
       <svg className="dg-art" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         <path className="dg-ground" d="M0 92 H100" />
         <path className="dg-path" d={d} pathLength={1} />
-        <circle className="dg-drone" r="1.4"><animateMotion dur="6s" repeatCount="indefinite" path={d} /></circle>
       </svg>
     );
   }

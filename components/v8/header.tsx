@@ -4,6 +4,7 @@
    section 1, with Part 4, 3 for Who we work with). */
 import { AREAS, CASES, INDUSTRIES, LEADERS, SITE_INDEX, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, subsectorHref, type CaseIndex, CASE_STATUS } from "@/lib/content/site";
 import { isJacobVersion } from "@/lib/preview-gh";
+import { tc } from "@/lib/title-case";
 import { INDUSTRIES as IND_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, PAGE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, casePhoto } from "@/lib/content/v8";
@@ -20,7 +21,7 @@ const IND_CARD: Record<string, string> = { transport: "cs-proficiency", gov: "cs
 const IN_THE_WORKS = ["cs-transform", "cs-proficiency", "cs-strategic"];
 
 /* note: the preview-only In the works sign-off note (never in production) */
-const card = (c: CaseIndex) => ({ title: c.title, who: c.who, href: caseHref(c), photo: casePhoto(c), status: caseTag(c), live: c.status === "Ongoing", note: process.env.VERCEL_ENV === "production" ? undefined : CASE_STATUS[c.id] });
+const card = (c: CaseIndex) => ({ title: tc(c.title), who: c.who, href: caseHref(c), photo: casePhoto(c), status: caseTag(c), live: c.status === "Ongoing", note: process.env.VERCEL_ENV === "production" ? undefined : CASE_STATUS[c.id] });
 /* "Nov 15–18, 2026" → "Nov 15–18"; "Louisville, Kentucky" → "Louisville" */
 const eventLine = (e: (typeof EVENTS)[number]) => [e.title, e.when.replace(/,\s*\d{4}$/, ""), e.where?.split(",")[0]].filter(Boolean).join(", ");
 const monthOf = (d?: string) => (d ? Date.parse(`1 ${d}`) || 0 : 0);
@@ -34,8 +35,8 @@ export default function Header() {
   const data: NavData = {
     areas: AREAS.map((a) => ({
       id: a.id, n: THEME[a.id].n, name: a.name, tag: a.tag, href: areaHref(a), color: THEME[a.id].color, ink: THEME[a.id].ink, tint: THEME[a.id].tint, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id],
-      /* q: a preview-only "?" beside Owner's Representation (content pass v7, Part 11) */
-      services: a.services.map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: !PROD && s.id === "owners-rep" ? "Role still being defined" : undefined })),
+      /* the preview-only "?" beside Owner's Representation is off (Nicole, Nov 11) */
+      services: a.services.map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: undefined as string | undefined })),
       projects: `/insights/case-studies?area=${a.slug}`,
     })),
     industries: VISIBLE_INDUSTRIES.map((i) => {
@@ -47,33 +48,33 @@ export default function Header() {
         challenges: i.subsectors.length ? [] : IND_DATA[i.id]?.ch ?? [],
         feature: feature && isOurs(feature) ? card(feature) : undefined,
         /* the industry's other featured projects: Rawlins work only (Part 1, 0.4) */
-        projects: i.projects.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c && isOurs(c) && c.id !== feature?.id).map((c) => ({ title: c.title, href: caseHref(c) })),
-        all: { label: `All ${i.name} projects`, href: `/insights/case-studies?industry=${i.slug}` },
+        projects: i.projects.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c && isOurs(c) && c.id !== feature?.id).map((c) => ({ title: tc(c.title), href: caseHref(c) })),
+        all: { label: `All ${i.name} Projects`, href: `/insights/case-studies?industry=${i.slug}` },
       };
     }),
     /* previews only: the hidden International page, with why it's hidden (Part 4, 1) */
     intl: !PROD && intl ? { name: intl.name, href: industryHref(intl), note: "Hidden on the live site unless approved." } : undefined,
     work: [
-      { label: "All projects", href: "/insights/case-studies", note: "Every project, by area and industry" },
-      { label: "Where we work", href: "/about/where-we-work", note: "The states we've worked in" },
+      { label: "All Projects", href: "/insights/case-studies", note: "Every project, by area and industry" },
+      { label: "Where We Work", href: "/about/where-we-work", note: "The states we've worked in" },
     ],
     inWorks: IN_THE_WORKS.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c).map(card),
     insights: [
-      { label: "News & recognition", href: "/insights/news", note: "Events, publications, and news", photo: PAGE_PHOTO.news,
+      { label: "News & Recognition", href: "/insights/news", note: "Events, publications, and news", photo: PAGE_PHOTO.news,
         line: newest ? { k: "Latest", t: newest.title } : undefined,
         next: next ? { k: "Next", t: eventLine(next), ends: next.ends } : undefined },
-      { label: "Thought leadership", href: THOUGHT_LEADERSHIP.length === 1 ? `/insights/thought-leadership/${THOUGHT_LEADERSHIP[0].slug}` : "/insights/thought-leadership", note: "Practical perspectives from our team", photo: PAGE_PHOTO.thought,
+      { label: "Thought Leadership", href: THOUGHT_LEADERSHIP.length === 1 ? `/insights/thought-leadership/${THOUGHT_LEADERSHIP[0].slug}` : "/insights/thought-leadership", note: "Practical perspectives from our team", photo: PAGE_PHOTO.thought,
         line: article ? { k: "Latest", t: article.title } : undefined },
-      { label: "Research & publications", href: "/insights/research", note: "Guidance manuals and research", photo: PAGE_PHOTO.research,
+      { label: "Research & Publications", href: "/insights/research", note: "Guidance manuals and research", photo: PAGE_PHOTO.research,
         line: RESEARCH[0] ? { k: "Featured", t: RESEARCH[0].t } : undefined },
       { label: "Podcast", href: "/insights/podcast", note: "The Rawlins Way", photo: PAGE_PHOTO.podcast,
         line: { t: "The Rawlins Way: conversations with the people doing the work" } },
     ],
     about: [
-      { label: "Who we are", href: "/about/who-we-are", note: "Founded in 2017, and how we've grown" },
-      { label: "How we work", href: "/about/how-we-work", note: "Assess, rebuild, train, hand off" },
-      { label: "Our people", href: "/about/our-people", note: "People who've done the job" },
-      { label: "Where we work", href: "/about/where-we-work", note: "The states we've worked in" },
+      { label: "Who We Are", href: "/about/who-we-are", note: "Founded in 2017, and how we've grown" },
+      { label: "How We Work", href: "/about/how-we-work", note: "Assess, rebuild, train, hand off" },
+      { label: "Our People", href: "/about/our-people", note: "People who've done the job" },
+      { label: "Where We Work", href: "/about/where-we-work", note: "The states we've worked in" },
       { label: "Careers", href: "/careers", note: "Work with us" },
     ],
     /* About: the first eight leaders (Part 1, 1.5; 27 people verified in content updates v4, 5) */
