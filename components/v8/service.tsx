@@ -41,11 +41,12 @@ const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "preconstruct
 const FEATURE_FROM: Record<string, string> = { "asset-mgmt": "operations" };
 /* papers and talks from our team shown under a page's projects, by title from lib/content/research.ts (John's review
    comment, Nov 12: Advanced Air Mobility Strategy & Readiness needs more than one example) */
-/* each with a picture (Nicole, Nov 12: "they're too plain"), both from the live site's AAM page. The talk doesn't use the
-   photo of Paul at that symposium: the Tennessee project beside it in the same row already shows it */
+/* each with a picture (Nicole, Nov 12: "they're too plain"). The talk shows that event: Paul presenting at the Nashville
+   symposium (Nicole: "the talk picture needs to be of that event"). The paper has no picture of its own; the airport from
+   the air is from the live site's AAM page */
 const READING: Record<string, { t: string; photo: string }[]> = { "drone-aam": [
   { t: "Lessons learned while planning for advanced air mobility", photo: "/images/pages/aam-phase3.webp" },
-  { t: "The Evolving Landscape of Advanced Air Mobility", photo: "/images/pages/skylimit.webp" },
+  { t: "The Evolving Landscape of Advanced Air Mobility", photo: "/images/pages/research-paul-wheeler-nashville-symposium-2025.webp" },
 ] };
 const names = (p: string[]) => (p.length > 1 ? `${p.slice(0, -1).join(", ")} and ${p[p.length - 1]}` : p[0] ?? "");
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
