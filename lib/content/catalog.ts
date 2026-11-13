@@ -1563,7 +1563,7 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "smart-mobility": {
   "id": "smart-mobility",
-  "name": "Smart Mobility & Connected Systems - remove",
+  "name": "Smart Mobility & Connected Systems",
   "area": "tech",
   "st": "warn",
   "intro": "Vehicles, signals, chargers, and fleets now produce data an agency has to plan for, govern, and use. We help agencies get ready for connected and automated vehicles, tie fleet and telematics data into their own systems, and plan electrification and shared mobility so the pieces work together.",

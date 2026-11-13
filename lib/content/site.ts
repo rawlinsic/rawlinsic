@@ -97,7 +97,7 @@ export const AREAS: Area[] = [
       svc("dashboards", "Dashboards & Reporting", "office"),
       svc("training-video", "Videos", "site"),
       svc("tech-strategy", "Technology & AI Strategy", "grid"),
-      svc("smart-mobility", "Smart Mobility & Connected Systems - remove", "dusk"), // v12 new
+      svc("smart-mobility", "Smart Mobility & Connected Systems", "dusk"), // v12 new
     ],
   },
 ];
