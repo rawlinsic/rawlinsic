@@ -6,7 +6,7 @@
 import { CASES, VISIBLE_INDUSTRIES, caseById, industryHref, isOurs, type CaseIndex, type Industry, type Subsector } from "@/lib/content/site";
 import { INDUSTRY_PHOTO, PAGE_PHOTO } from "@/lib/content/media";
 import { CASES as CASE_DATA } from "@/lib/content/catalog";
-import { Btn, Dev, Hero, List, Sec, ServiceChips, Shell, Talk } from "@/components/site/ui";
+import { Btn, Hero, List, Sec, ServiceChips, Shell, Talk } from "@/components/site/ui";
 import { IndustryV8, PrivateV8, SubsectorV8 } from "@/components/v8/industry";
 
 export function IndustriesIndex() {
@@ -41,7 +41,7 @@ export function IndustryPage({ ind }: { ind: Industry }) {
      the client on cs-pv-pmo). The page shows the first six. */
   const cases = (ind.id === "contractors"
     ? CONTRACTOR_CASES.map((id) => caseById(id)).filter(Boolean) as CaseIndex[]
-    : [...ind.projects.map((id) => caseById(id)).filter(Boolean) as CaseIndex[], ...CASES.filter((c) => c.industry === ind.id && !ind.projects.includes(c.id)),
+    : [...[...ind.projects, ...(ind.more ?? [])].map((id) => caseById(id)).filter(Boolean) as CaseIndex[], ...CASES.filter((c) => c.industry === ind.id && !ind.projects.includes(c.id) && !(ind.more ?? []).includes(c.id)),
       /* a headline page (Public Sector) goes on to the projects of the sectors under it (Nov 12) */
       ...CASES.filter((c) => VISIBLE_INDUSTRIES.some((i) => i.parent === ind.id && i.id === c.industry) && !ind.projects.includes(c.id))]
   ).filter(isOurs);
@@ -62,14 +62,13 @@ function PrivateSector({ ind }: { ind: Industry }) {
   return <PrivateV8 ind={ind} cases={cases} services={["automation", "ai", "data-governance", "dashboards", "tech-strategy", "change-mgmt"]} />;
 }
 
-/* Hidden unless approved: not linked anywhere, noindex. */
+/* The International page before Nov 11 (not used: International Markets uses IndustryV8). */
 export function International() {
   return (
     <Shell scene="globe" photo={INDUSTRY_PHOTO.intl}>
       <Hero crumbs={[["/industries", "Who we work with"], ["/industries/international", "International Markets"]]} kicker="International Markets" title="Transport agencies everywhere do the same job"
         lead={<p><b>Our work to date is in the United States.</b> A U.S. state department of transportation runs highways, bridges, aviation, and transit for millions of people. That&apos;s the same job a ministry of transport or a national roads authority does, and the lessons carry over.</p>}
         actions={<Btn href="/contact" primary>Get in touch</Btn>}>
-        <Dev>Hidden page: not linked, noindex. Needs Scott and Andy&apos;s approval before it goes live.</Dev>
       </Hero>
       <Sec title="What carries over">
         <List cols items={[

@@ -32,10 +32,6 @@ import { tvPeople, whyItems } from "@/components/v8/why-items";
 const PROD = process.env.VERCEL_ENV === "production";
 const q = (s: string) => `“${s.replace(/[.”"]+$/, "")}.”`;
 const areaOf = (serviceId: string) => serviceById(serviceId)?.area;
-/* off the photo ring in production: no Rawlins work there yet (g-capital, g-mpo). Previews show them,
-   labeled (full site pass, Part 1, 2.4 and Part 4, 1). Transit Agencies and Ports & Harbors were off too while
-   they shared a placeholder photo; each has its own photo since Nov 11, so they're on the ring everywhere. */
-const OFF_RING: Record<string, string> = { "g-capital": "No project yet", "g-mpo": "No project yet" };
 
 /* the tagline's "•" shows as a short blue line between the two phrases (the
    character stays in the text, so Edit text still finds it) */
@@ -74,29 +70,25 @@ export default function Home() {
   const veterans = veteranPeople();
   /* the TV in "We've done the job": everyone, in the order components/v8/why-items.tsx sets (shared with Who we are) */
   const everyone = tvPeople(people);
-  // the ring (Nicole, Nov 10): only names that sound like places or people, each once; things like
-  // Highways or Bridges stay off. Spread so neighbors come from different groups.
+  /* the ring (Nicole's Operations & Maintenance file v8, Part 3, Nov 12): who we work with, the same groups as the menu, not
+     what an agency runs. Eight photos, the same on the live site and on previews, with no notes. Spread so neighbors come
+     from different groups. Federal Government, Local Governments, Aeronautics Organizations, and Growing Companies keep
+     the photos of the tiles they replace (Multi-State & Federal Programs, Local Agencies, Aeronautics Divisions, Private
+     Firms). Off the ring: Government & Public Agencies, Airports, Transit Agencies, Ports & Harbors, Cities, and
+     Metropolitan Planning Organizations. */
   const ind = (id: string) => INDUSTRIES.find((i) => i.id === id)!;
   const subOf = (iid: string, sid: string) => ind(iid).subsectors.find((x) => x.id === sid)!;
-  /* Nov 12 (Nicole): Other Government Services and its four modes are off the site. Their tiles stay on the ring and
-     open the Public Sector page, or Statewide & Metropolitan Planning for the planning organizations. */
-  const ring: (Tile & { off?: boolean })[] = [
+  const tiles: Tile[] = [
     { src: INDUSTRY_PHOTO.transport, label: "State DOTs", href: industryHref(ind("transport")) },
-    { src: INDUSTRY_PHOTO.gov, label: "Government & Public Agencies", href: industryHref(ind("gov")) },
     { src: INDUSTRY_PHOTO.contractors, label: "Contractors", href: industryHref(ind("contractors")) },
-    { src: INDUSTRY_PHOTO["sub-aviation"], label: "Airports", href: subsectorHref(ind("transport"), subOf("transport", "sub-aviation")) },
-    { src: INDUSTRY_PHOTO["g-asset"], label: "Local Agencies", href: industryHref(ind("gov")) },
-    { src: INDUSTRY_PHOTO.private, label: "Private Firms", href: industryHref(ind("private")) },
-    { src: "/images/pages/aam-policy-planning.webp", label: "Aeronautics Divisions", href: subsectorHref(ind("transport"), subOf("transport", "sub-aviation")) },
-    { src: INDUSTRY_PHOTO["sub-rail"], label: "Transit Agencies", href: subsectorHref(ind("transport"), subOf("transport", "sub-rail")), note: OFF_RING["sub-rail"] },
-    { src: INDUSTRY_PHOTO["g-capital"], label: "Cities", href: industryHref(ind("gov")), note: OFF_RING["g-capital"] },
-    { src: INDUSTRY_PHOTO["sub-ports"], label: "Ports & Harbors", href: subsectorHref(ind("transport"), subOf("transport", "sub-ports")), note: OFF_RING["sub-ports"] },
-    { src: INDUSTRY_PHOTO["g-mpo"], label: "Metropolitan Planning Organizations", href: serviceHref("planning"), note: OFF_RING["g-mpo"] },
-    { src: INDUSTRY_PHOTO["g-federal"], label: "Multi-State & Federal Programs", href: industryHref(ind("gov")) },
-    /* International is hidden on the live site, so it's on the ring on previews only */
-    { src: INDUSTRY_PHOTO.intl, label: "International Agencies", href: industryHref(ind("intl")), note: "", off: true },
+    { src: INDUSTRY_PHOTO["g-federal"], label: "Federal Government", href: industryHref(ind("transport")) },
+    { src: "/images/pages/aam-policy-planning.webp", label: "Aeronautics Organizations", href: subsectorHref(ind("transport"), subOf("transport", "sub-aviation")) },
+    /* a photo already on the site (the Organizational Design page) and not on the ring */
+    { src: "/images/pages/auto-human.webp", label: "Engineering & Consulting Firms", href: industryHref(ind("contractors")) },
+    { src: INDUSTRY_PHOTO["g-asset"], label: "Local Governments", href: industryHref(ind("transport")) },
+    { src: INDUSTRY_PHOTO.private, label: "Growing Companies", href: industryHref(ind("private")) },
+    { src: INDUSTRY_PHOTO.intl, label: "International Agencies", href: industryHref(ind("intl")) },
   ];
-  const tiles: Tile[] = ring.filter((t) => !PROD || (!t.note && !t.off)).map(({ off: _off, ...t }) => t); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return (
     <Panels>
@@ -228,7 +220,7 @@ export default function Home() {
       <Orbit tiles={tiles} cta={<a className="v8-btn orb-cta" href="/industries">See who we work with</a>}>
         {/* like scale.com (Nicole, Nov 10): "We work with" and a blue line that fills in with the photo you point at */}
         <h2 id="orb-h" className="orb-h">We work with<span className="orb-fill" data-default="Public Agencies & Private Firms">Public Agencies & Private Firms</span></h2>
-        <p className="orb-lead">More than 30 transportation agencies, local governments, a multi-state research program, contractors, and engineering firms. Our work so far is across the United States, and our team can do it anywhere.</p>
+        <p className="orb-lead">Most of our work is with the public agencies that own and run transportation systems, more than 30 to date. We also work with the private sector: contractors, engineering and consulting firms, and growing companies. Our work so far is across the United States, and our team can do it anywhere.</p>
       </Orbit>
 
       {/* 5 · our work */}

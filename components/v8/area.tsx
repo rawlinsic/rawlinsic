@@ -60,7 +60,8 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
             <h1>{area.name}</h1>
           </div>
           <div className="arh-side">
-            <p className="sv-intro">{L.lead}</p>
+            {/* paragraphs split on a blank line (Nov 12) */}
+            {L.lead.split("\n\n").map((p, k) => <p key={k} className="sv-intro">{p}</p>)}
             <div className="v8-actions">
               <a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a>
               {cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See our work</a>}
@@ -78,7 +79,8 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
                   {many && <span className="way-v" aria-hidden="true">{s.name}</span>}
                   <span className="way-txt">
                     <b>{s.name}</b>
-                    <span className="way-q">{firstSentence(SERVICES[s.id]?.intro ?? "")}</span>
+                    {/* the area's own line for the service where it has one (Operations & Maintenance, Nov 12) */}
+                    <span className="way-q">{L.lines?.[s.id] ?? firstSentence(SERVICES[s.id]?.intro ?? "")}</span>
                     <span className="way-more">Explore</span>
                   </span>
                 </a>

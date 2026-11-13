@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const a = AREAS.find((x) => x.slug === slug);
   if (!a) return {};
-  return { title: a.name, description: AREA_DATA[a.id].lead, alternates: { canonical: `/services/${a.slug}` } };
+  return { title: a.name, description: AREA_DATA[a.id].lead.split("\n\n")[0], alternates: { canonical: `/services/${a.slug}` } };
 }
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

@@ -1,8 +1,15 @@
 /* GENERATED from wireframe v11 (final data) + handoff v7 section 4 (v12) by the redesign build.
    Edit content here or regenerate; source notes live in the `src`/`basis` fields and are never rendered. */
 /* eslint-disable */
-export type SvcData = { id: string; name: string; area: string; st: string; intro: string; hear: string[]; quote: boolean; deliver: string[]; walk: string[]; industries: string[]; related: string[]; xp: string[]; cases?: string[]; src: Record<string, string> };
-export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; steps: { t: string; d: string; services: string[] }[] }; keep: string; cases: string[] };
+export type SvcData = { id: string; name: string; area: string; st: string; intro: string; hear: string[]; quote: boolean; deliver: string[]; walk: string[]; industries: string[]; related: string[]; xp: string[]; cases?: string[]; src: Record<string, string>;
+  /* Nov 12 (Nicole's Operations & Maintenance file): intro paragraphs split on a blank line; links: phrases in the intro that open
+     another service; done: the "Where we've done it" lines ("**Label:** text" sets the bold lead-in) */
+  links?: Record<string, string>; done?: string[];
+  /* the What we deliver section's title where the page has its own (Operations & Maintenance: "What this service covers") */
+  deliverTitle?: string };
+export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; steps: { t: string; d: string; services: string[] }[] }; keep: string; cases: string[];
+  /* lines: a short line per service on the area page's service panels, where the area has one (Nov 12, Operations & Maintenance) */
+  lines?: Record<string, string> };
 export type IndustryData = { id: string; ch: string[]; bring?: string[]; ways?: { t: string; d: string }[]; basis: string; services: string[]; people: string[][] };
 export type SubsectorData = { id: string; name: string; st: string; deliver: string[]; walk?: string[]; xp?: string[]; services: string[]; intro: string; industry: string; ch: string[]; people: string[][]; basis: string; thin?: boolean };
 export type CaseData = { id: string; ch: string; did: string[]; res: string[]; services: string[]; subsectors: string[]; industry: string; industry2?: string | null; tools?: string[]; figure?: { title: string; intro?: string; steps: { t: string; d: string }[] } };
@@ -873,29 +880,42 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Asset Management",
   "area": "om",
   "st": "ok",
-  "intro": "We help organizations know what they own, what shape it's in, and where the next dollar does the most good. Then we set up the measures and governance that keep those decisions consistent.",
+  "intro": "Asset management is how an organization brings together the right people, skills, and actions to make better decisions about its assets over time. It is more than the Transportation Asset Management Plan. It connects decisions across the whole organization.\n\nWe help agencies build that: a clear picture of what they own and what condition it is in, measures that connect strategy to field work, and a management structure that turns the agency's objectives into coordinated decisions.\n\nMaintenance quality assurance, maintenance outsourcing, performance-based maintenance contracting, and fleet and facilities are all part of asset management. Each has its own page.",
+  "links": {
+   "Maintenance quality assurance": "mqa",
+   "maintenance outsourcing": "outsourcing",
+   "performance-based maintenance contracting": "pbmc",
+   "fleet and facilities": "fleet"
+  },
   "hear": [
-   "Rising material costs, changing technology, incomplete inventories, and too little money for aging infrastructure. Many agencies make worst-first, reactive decisions in silos, which costs more over the life of the asset.",
+   "We fix the worst first, and it costs us more over the life of the asset.",
    "No one owns asset management here.",
-   "Our elected officials need it explained simply.",
-   "We don't always know where our assets are, especially underground."
+   "Each division makes its decisions on its own.",
+   "We don't always know where our assets are, especially underground.",
+   "Keeping the inventory current takes time and money we don't have."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Asset data foundation, inventories, and inspection protocols",
-   "Performance-based management and levels of service",
-   "Life cycle, risk, and investment strategy, including capital priorities across asset types",
-   "Asset management reviews, governance, and implementation plans, using ISO 55000 as a guide",
-   "Local-agency asset management workshops",
-   "Asset information and assessment technology, tested against what experienced raters see",
-   "Standing up an asset management division: section design, position descriptions, measures, and advisory to its leaders"
+   "**The asset management organization:** the function's purpose, who owns the data, the analysis, and the budget recommendations, the organizational design, role descriptions, and support to its leaders as it starts up",
+   "**Asset data foundation:** inventories, asset hierarchies, data collection specifications, and condition methods",
+   "**Performance management:** levels of service, key performance indicators, and reporting tools",
+   "**Life cycle and cost planning:** life cycle strategies and the timing of preservation work",
+   "**Risk and resilience:** risk identification and risk management frameworks",
+   "**Financial and investment strategy:** priorities based on condition, performance, and risk, aligned with programming and with federal requirements such as the Transportation Asset Management Plan",
+   "**Governance and implementation:** policies, procedures, proficiency programs, and tracking of what gets put in place",
+   "**Systems and data integration:** enterprise asset management systems and asset data governance",
+   "**Asset information and assessment technology:** defining what information is needed, and comparing ways to collect and assess it, including automated methods checked against field assessment",
+   "**Local agencies:** self-assessments, workshops, and action plans that start from where each agency is",
+   "**Maintenance quality assurance, outsourcing, performance-based contracting, and fleet and facilities:** see their own pages"
   ],
   "walk": [
-   "Research and connection to technology that fits the agency's needs",
+   "A functional model with role and responsibility definitions",
    "Performance measures that support the organization's goals",
    "Life cycle and cost planning strategies",
-   "Proficiency programs that develop staff",
-   "Frameworks that align asset data, performance management, and governance"
+   "Frameworks that align asset data, performance management, and governance",
+   "Research on technology that fits the agency's needs",
+   "Proficiency programs that develop staff"
   ],
   "industries": [
    "transport",
@@ -908,45 +928,245 @@ export const SERVICES: Record<string, SvcData> = {
    "operations"
   ],
   "xp": [
-   "One of our advisors co-founded a performance-based asset maintenance firm that grew from two people to operations in 43 states",
    "Our founder led Nevada DOT's statewide asset management plan",
-   "One of our advisors has done life cycle cost analysis for highway assets on public and privately financed projects",
-   "Before founding Rawlins, our founder led asset management reviews for the Utah and North Carolina transportation departments and New York City Parks"
+   "Before founding Rawlins, our founder led asset management reviews for the Utah and North Carolina transportation departments and New York City Parks",
+   "One of our advisors has done life cycle cost analysis for highway assets on public and privately financed projects"
+  ],
+  "done": [
+   "**Tennessee Department of Transportation:** we supported its Asset Management Division with section primers, position descriptions, onboarding, and sustained advice to the division's leadership.",
+   "**Nevada Department of Transportation:** asset management visioning workshops with executive leadership and a performance measures inventory, as part of the strategic plan.",
+   "**Michigan Infrastructure Office:** asset management workshops and action plans with local agencies.",
+   "**Nevada and one other state DOT:** key performance indicator work with our data team."
   ],
   "src": {
-   "intro": "Janine Cooper, asset management answers",
-   "hear": "Janine Cooper, asset management answers",
-   "walk": "Janine Cooper, asset management answers"
+   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+  }
+ },
+ "mqa": {
+  "id": "mqa",
+  "name": "Maintenance Quality Assurance",
+  "area": "om",
+  "st": "ok",
+  "intro": "A maintenance quality assurance program shows whether the features you maintain meet expectations, and which maintenance needs should get the next dollar. Some states call it a maintenance rating program.\n\nWe develop these programs so that the inventory, the condition standards, the way conditions are observed, and the way managers use the results all connect. The same program supports the agency's own management and, where maintenance is contracted, a performance-based contract.",
+  "hear": [
+   "We need a maintenance rating program decisions can rely on.",
+   "Each district rates conditions its own way.",
+   "We can't show which maintenance needs should come first.",
+   "We outsource the work. We need the contractor held to it."
+  ],
+  "quote": true,
+  "deliverTitle": "What this service covers",
+  "deliver": [
+   "**What to rate:** the assets and characteristics, how the results will be used, and whether the inventory is good enough to support it",
+   "**Performance standards:** an observable standard for each feature",
+   "**Sampling and rating:** sampling design, rating procedures, forms, and field data collection tools",
+   "**Rater preparation and quality control:** training and checks so every district rates the same way",
+   "**Piloting:** testing consistency, and deciding how results are rolled up and compared with service expectations",
+   "**Scoring and targets:** condition against target, and what it costs to improve it, calculated from the agency's own data",
+   "**The management routine:** explaining results, identifying priority needs, and connecting condition findings with budget and work planning",
+   "**Contract use:** using the same standards to check a contractor's work",
+   "**The handbook:** one document staff and contractors work from"
+  ],
+  "walk": [
+   "Standards for each maintained feature",
+   "Rating and sampling procedures, with the forms or app to collect them",
+   "Training resources for raters",
+   "A reporting structure",
+   "Guidance for using the results, in a handbook"
+  ],
+  "industries": [
+   "transport",
+   "gov"
+  ],
+  "related": [],
+  "xp": [
+   "Florida DOT's former Director of Maintenance, who led its statewide program, is on our team",
+   "Our team includes the owner's view and the contractor's view of how condition standards are measured"
+  ],
+  "done": [
+   "**Tennessee Department of Transportation:** we converted the quality measures to pass or fail criteria, finalized the field assessment approach, standards, and training, and reviewed sampling at 268 sites on one region's interstates.",
+   "**A state DOT:** we finalized its Maintenance Quality Assurance Handbook and supported the field data collection app that goes with it.",
+   "**A state DOT:** we facilitated its maintenance rating program working group and built the rating matrix: asset priorities, tolerances, and weighted scoring."
+  ],
+  "src": {
+   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+  }
+ },
+ "outsourcing": {
+  "id": "outsourcing",
+  "name": "Maintenance Outsourcing",
+  "area": "om",
+  "st": "ok",
+  "intro": "Maintenance responsibilities keep growing while staff capacity stays tight. We help agencies decide which work to keep, which to contract, and which to combine, and then get ready to run the model they choose.\n\nOur team includes people who have done this as owners and as contractors. That helps test whether the standards, the information, and the way risk is assigned will work in practice.",
+  "hear": [
+   "Our maintenance responsibilities keep growing, and our staff doesn't.",
+   "We can't hire or keep enough maintenance staff.",
+   "We don't know what it really costs us to do this work ourselves.",
+   "We outsource the work. We need the contractor held to it."
+  ],
+  "quote": true,
+  "deliverTitle": "What this service covers",
+  "deliver": [
+   "**Sourcing assessment:** the work required, the workforce and equipment the agency has, the service expected, and the contractor market available",
+   "**Sourcing models:** the options compared, including the oversight and emergency responsibilities the agency keeps",
+   "**In-house cost analysis:** the staff, equipment, and materials the work takes today, and the savings that could offset a contract",
+   "**Contracting methods:** from staff support to full performance-based contracts, and how to combine them",
+   "**Program requirements:** inventory assumptions, performance standards, measurement, payment logic, risk responsibilities, and exceptions, worked out with procurement and legal staff",
+   "**Market engagement:** bringing industry and prospective bidders in before anything is advertised",
+   "**Transition:** moving to the new model, and building the agency's ability to manage contracts"
+  ],
+  "walk": [
+   "A sourcing assessment",
+   "A recommended operating model",
+   "Program requirements",
+   "A performance and oversight framework",
+   "Transition support"
+  ],
+  "industries": [
+   "transport",
+   "gov"
+  ],
+  "related": [],
+  "xp": [],
+  "done": [
+   "**Tennessee Department of Transportation:** we worked out the staffing, equipment, and material needs and the internal savings that could offset new maintenance contracts, and helped run an industry forum before the contracts were advertised.",
+   "**AMOTIA, the maintenance contractors' association:** we interviewed DOT leaders in six states about their maintenance needs and recommended four contracting methods a DOT can combine."
+  ],
+  "src": {
+   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+  }
+ },
+ "pbmc": {
+  "id": "pbmc",
+  "name": "Performance-Based Maintenance Contracting",
+  "area": "om",
+  "st": "ok",
+  "intro": "A performance-based maintenance contract pays a contractor to keep a road in a defined condition, instead of paying for each unit of work. Some states call these asset maintenance contracts or flexible asset maintenance contracts.\n\nWe help agencies develop the program, write the contract, take it to industry, and administer it once it is awarded.",
+  "hear": [
+   "Staff and contractors are learning a new contract model together.",
+   "Every district administers the contract its own way.",
+   "We outsource the work. We need the contractor held to it."
+  ],
+  "quote": true,
+  "deliverTitle": "What this service covers",
+  "deliver": [
+   "**Program design:** which corridors or areas, what work is included, and for how long",
+   "**Performance standards and measurement:** what the contractor is held to and how it is checked, tied to the quality assurance program",
+   "**Contract documents:** the scope, special specifications, and request for proposals",
+   "**Payment and deductions:** how the contractor is paid, and what happens when a standard is missed, applied the same way in every district",
+   "**Contractor's-side review:** reading the agency's draft documents the way a bidder will",
+   "**Industry review:** forums, comment matrices, and recommended responses before the contract is final",
+   "**Contract administration:** contractor onboarding, regular advisory calls, field ride-alongs, and deduction tracking",
+   "**Reviews of contracts already in place:** how they are working and what to change",
+   "**Financial analysis:** the contract compared with the in-house cost",
+   "**Lessons learned:** captured for the next contracts"
+  ],
+  "walk": [
+   "Contract scope, specifications, and procurement documents",
+   "A deduction method and a tracker to apply it",
+   "Industry comments with recommended responses",
+   "A financial analysis",
+   "Support through the first contracts"
+  ],
+  "industries": [
+   "transport",
+   "gov"
+  ],
+  "related": [],
+  /* hidden until Scott confirms (content fixes v1, 8.5): "We've piloted performance-based maintenance in a Michigan DOT region" */
+  "xp": [
+   "One of our advisors co-founded a performance-based asset maintenance firm that grew from two people to operations in 43 states",
+   "Members of our team built Michigan DOT's performance-based maintenance program, at the agency and as its consultant",
+   "Before founding Rawlins, our founder reviewed Virginia DOT's performance-based interstate maintenance contracts"
+  ],
+  "done": [
+   "**Tennessee Department of Transportation:** we led the kickoff, helped run the industry forum, and drafted the scope, contract, and request for proposals. Two contracts were awarded on one region's interstates, and we supported both contractors and region leadership through administration.",
+   "**A state DOT:** we drafted special specifications for flexible asset maintenance contracts in two districts, wrote a uniform deduction method, and ran the industry review.",
+   "**North Carolina Department of Transportation:** we helped develop performance-based maintenance contracts for two districts."
+  ],
+  "src": {
+   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+  }
+ },
+ "fleet": {
+  "id": "fleet",
+  "name": "Fleet & Facilities",
+  "area": "om",
+  "st": "ok",
+  "intro": "Fleet and facilities sustain the transportation program, but replacement choices, condition information, and responsibilities often don't get the same discipline as roadway assets.\n\nWe help agencies manage them as assets: how equipment is chosen, shared, maintained, and replaced, what the buildings need, and who decides.",
+  "hear": [
+   "Every district chooses and replaces equipment its own way.",
+   "Equipment sits unused in one district while another rents the same thing.",
+   "Our facilities needs keep waiting."
+  ],
+  "quote": true,
+  "deliverTitle": "What this service covers",
+  "deliver": [
+   "**The starting picture:** the assets, who decides, what depends on them, the records that exist, and the management questions to answer",
+   "**How decisions are made:** a review of purchase, maintenance, replacement, and facility investment decisions and how they are documented",
+   "**Fleet analysis:** the inventory, how it is used, what leadership expects of it, and where the gaps are",
+   "**Selection, replacement, and disposal:** a process with criteria based on data, compared with other states",
+   "**Own, lease, share, or rent:** the mix that fits the service level",
+   "**Sharing and utilization:** what is shared today, what is underused, and a team that manages it",
+   "**Equipment care:** policies, preventive maintenance measures, and training",
+   "**Life cycle strategy:** the information and analysis a long-term fleet and facilities strategy needs",
+   "**Facilities:** preservation needs grouped and costed",
+   "**Responsibilities and implementation:** who owns what, the decision criteria, and a plan to put it in place"
+  ],
+  "walk": [
+   "A management assessment with recommendations",
+   "A side-by-side comparison with other states",
+   "Decision criteria for replacement and disposal",
+   "Reviewed policies and performance measures",
+   "An implementation plan"
+  ],
+  "industries": [
+   "transport",
+   "gov"
+  ],
+  "related": [],
+  "xp": [
+   "Our founder led Nevada DOT's fleet program, with 2,700 pieces of equipment",
+   "A former Michigan DOT division administrator on our team led a division that included statewide fleet and facilities",
+   "Before founding Rawlins, our founder reviewed a county's fleet and facilities operations"
+  ],
+  "done": [
+   "**Nevada Department of Transportation:** we analyzed the equipment fleet, surveyed employees statewide, compared the department's replacement and disposal process with other western states, interviewed district staff, and reviewed its fleet policies and performance measures. Department leadership approved the recommendations, and the work moved into implementation.",
+   "**Tennessee Department of Transportation:** fleet and facilities is one of the functions in the Asset Management Division we supported."
+  ],
+  "src": {
+   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
   }
  },
  "operations": {
   "id": "operations",
   "name": "Maintenance Programs",
   "area": "om",
-  "st": "warn",
-  "intro": "We help maintenance and operations run the same way in every region: contracts that pay for results instead of hours, quality programs people trust, and fleets, facilities, and crews ready for winter and emergencies.",
+  "st": "ok",
+  "intro": "We help maintenance programs run the same way in every district: a clear view of how the program is working, a budget tied to the condition you want, standards crews can follow, and staff trained to apply them.",
   "hear": [
    "Our field crews do it differently in every region.",
    "Maintenance costs keep climbing.",
-   "Staff and contractors are learning a new contract model together.",
-   "We need a maintenance rating program decisions can rely on."
+   "Experienced people are retiring, and new staff need to learn the work."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Performance-based and flexible maintenance contracts: specifications, deduction models, administration, and reviews of contracts already in place",
-   "Maintenance quality assurance programs and maintenance rating programs",
-   "Maintenance budgeting tied to performance: level-of-service targets and what each point of improvement costs",
-   // Backed by the cs-nv-om review and by cs-nv-fleet-program (Rawlins fleet analysis and implementation support, 2022 to 2023).
-   "Fleet and facilities: operations reviews, right-sizing, replacement planning, and predictive maintenance",
-   "Winter operations, emergency readiness, and tabletop exercises",
-   "Field assessments, operating standards, and crew training",
-   "Maintenance sourcing: what to keep in house, what to outsource, and building a market of bidders first"
+   "**Program reviews:** a statewide look at operations and maintenance: organization, budgeting, district operations, and performance management",
+   "**Budgeting tied to performance:** level-of-service targets and what it costs to meet them",
+   "**Pavement preservation:** selecting projects with data, and timing treatments",
+   "**Operating standards and procedures:** written once and applied in every district, with field checklists",
+   "**Warranty programs:** administration guides for warranted work",
+   "**Training:** maintenance academies and courses for crews and supervisors",
+   "**Winter operations and emergency readiness:** plans, and tabletop exercises that test them before an emergency does",
+   "**Maintenance in project development:** constructability and maintenance reviews built into the delivery process"
   ],
   "walk": [
-   "Performance-based contract specifications and deduction models",
-   "Quality assurance programs",
-   "Field assessments, operating standards, checklists, and crew training",
-   "Tabletop exercises that test plans before an emergency does"
+   "A program assessment with recommendations",
+   "Operating standards, procedures, and checklists",
+   "Training courses and materials",
+   "A tabletop exercise and what it showed",
+   "A budget method tied to level of service"
   ],
   "industries": [
    "transport",
@@ -958,44 +1178,51 @@ export const SERVICES: Record<string, SvcData> = {
    "drone-emergency"
   ],
   "xp": [
-   "Florida DOT's former Director of Maintenance, who led its statewide program (12,157 centerline miles and 7,152 bridges), is on our team",
-   "A former Michigan DOT division administrator on our team led its statewide maintenance operations alignment and chaired the negotiations for a five-year statewide contract with the county road agencies",
-   /* hidden until Scott confirms (content fixes v1, 8.5): "We've piloted performance-based maintenance in a Michigan DOT region" */
-   "Our founder led Nevada DOT's fleet program, with 2,700 pieces of equipment",
-   "Members of our team built Michigan DOT's performance-based maintenance program, at the agency and as its consultant",
-   "Before founding Rawlins, our founder reviewed Virginia DOT's performance-based interstate maintenance contracts, Pennsylvania DOT's maintenance budgeting, and a county's fleet and facilities operations"
+   "Florida DOT's former Director of Maintenance, who led its statewide program, is on our team",
+   "A former Michigan DOT division administrator on our team led its statewide maintenance operations alignment",
+   "Before founding Rawlins, our founder reviewed Pennsylvania DOT's maintenance budgeting"
+  ],
+  "done": [
+   "**Nevada Department of Transportation:** a statewide review of its operations and maintenance programs, work on a maintenance academy, a draft warranty administration guide for chip seals, and reviews for its pavement program.",
+   "**A state DOT:** equipment safety demonstration checklists, and training on winter operations and load securement.",
+   "**A state DOT:** a winter operations tabletop exercise concept and a two-page winter weather response guide."
   ],
   "src": {
-   "intro": "Current rawlinsic.com copy",
-   "hear": "Partner Field Guide v1",
-   "walk": "Partner Field Guide v1"
+   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
   }
  },
  "traffic": {
   "id": "traffic",
   "name": "Traffic Operations & Safety",
   "area": "om",
-  "st": "warn",
+  "st": "ok",
   "intro": "Operations investments need an organization and a delivery process that support safe, reliable use of the system. We help agencies connect operations with project development, maintenance, and investment decisions, through program reviews, guidance, and practical process support.",
   "hear": [
-   "Operations and safety work is split across divisions",
-   "Investments are hard to justify without a benefit-cost case",
-   "Traffic design staff need defined proficiencies",
-   "Operations guidance, manuals, and standards are out of date"
+   "Operations and safety work is split across divisions.",
+   "Operations projects compete with other needs, and we can't show their value the same way in every region.",
+   "Our operations guidance, manuals, and standards are out of date.",
+   "Traffic design staff need defined proficiencies."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Transportation systems management and operations planning and organization",
-   "Highway safety program coordination",
-   "Benefit-cost analysis for operations improvements",
-   "Traffic operations division structure",
-   "Traffic design proficiency: signing, pavement markings, and signals",
-   "Operations guidance, manuals, and standards brought current, with operations built into project delivery",
-   "Operations capability assessments and peer-state benchmarking"
+   "**Operations strategy and program development:** how the agency organizes, funds, prioritizes, and keeps up its operations and technology programs, including reviews of the plans it has",
+   "**Capability assessment:** peer-practice and document reviews, a facilitated assessment, and an agreed list of gaps and actions",
+   "**Investment prioritization:** criteria and evidence for safety, reliability, readiness, and operating cost, and a repeatable way to choose operations projects",
+   "**Benefit-cost analysis:** the case for an operations improvement",
+   "**Reliability performance:** explaining the federal reliability measures and connecting them to operations decisions",
+   "**Guidance and manuals:** an inventory of governing documents, and guidance brought current with agency and peer practice",
+   "**Operations in project delivery:** traffic and technology activities built into the delivery process",
+   "**Traffic management centers:** reviews, stakeholder needs, and recommendations",
+   "**Organization:** operations division structure, and where safety and operations work sits",
+   "**Proficiency programs:** for traffic design staff: signing, pavement markings, and signals",
+   "**Safety program coordination:** steps and checklists that bring safety projects through the delivery process"
   ],
   "walk": [
-   "An operations and safety organization with clear roles",
-   "A benefit-cost case for investments",
+   "A program review with recommendations",
+   "An assessment report with prioritized actions",
+   "Updated guidance or manual content",
+   "A benefit-cost case for an operations investment",
    "Proficiency programs for traffic design staff"
   ],
   "industries": [
@@ -1008,13 +1235,17 @@ export const SERVICES: Record<string, SvcData> = {
    "dashboards"
   ],
   "xp": [
-   "Former Michigan DOT leaders on our team ran its operations division, including traffic and safety, led its connected vehicle and operations plan, and ran a region's intelligent transportation systems",
+   "Former Michigan DOT leaders on our team ran its operations division, including traffic and safety, and ran a region's intelligent transportation systems",
    "A former City of Las Vegas Director of Public Works on our team championed the city's Vision Zero initiative"
   ],
+  "done": [
+   "**Nevada Department of Transportation:** we reviewed the study for a northern Nevada traffic management center, met with the agencies involved, and developed recommendations.",
+   "**Two state DOTs:** best-practice reviews comparing each department's operations documents with peer practice.",
+   "**A state DOT:** a benefit-cost analysis for an interstate operations project.",
+   "**Tennessee Department of Transportation:** proficiency programs for traffic design."
+  ],
   "src": {
-   "intro": "Based on Gulf South DOT Tasks 13 and 33; Southeastern DOT traffic design proficiency; bios",
-   "hear": "Written from our records",
-   "walk": "Based on Tennessee and Louisiana records"
+   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
   }
  },
  "portals": {
@@ -1757,20 +1988,35 @@ export const AREAS: Record<string, AreaData> = {
   "tag": "Keeping what you own safe, working, & affordable",
   "services": [
    "asset-mgmt",
+   "mqa",
+   "outsourcing",
+   "pbmc",
+   "fleet",
    "operations",
    "traffic"
   ],
-  "lead": "Keeping what you already own safe and working takes a big share of the budget. We help make every dollar of that count.",
+  "lead": "Keeping what you already own safe and working takes a big share of the budget. We help make every dollar of that count.\n\nWe help agencies understand the condition of what they own, direct resources to it, and organize maintenance around clear service expectations. Asset management connects that work to the agency's objectives and investment choices. Maintenance quality assurance shows how the system is performing. Sourcing and contract design decide how the work gets done.",
   "hear": [
    "We fix whatever's worst first, and we're always reacting.",
+   "We can't hire or keep enough maintenance staff.",
    "We outsource the work. We need the contractor held to it.",
    "Our field crews do it differently in every region."
   ],
   "bring": [
    "A clear picture of what you own, what shape it's in, and where the next dollar does the most good, with measures that keep those decisions consistent.",
+   "",
    "Performance-based contract specifications, deduction models, quality assurance programs, and owner's representation.",
    "Field assessments, operating standards, checklists, crew training, and tabletop exercises that test plans before an emergency does."
   ],
+  "lines": {
+   "asset-mgmt": "Know what you own, and who decides.",
+   "mqa": "See how it is performing against a target.",
+   "outsourcing": "Decide who does the work.",
+   "pbmc": "Contract for condition.",
+   "fleet": "Manage the equipment and buildings behind the work.",
+   "operations": "Put the budget, standards, and training behind it.",
+   "traffic": "Run the system you have."
+  },
   "feature": {
    "title": "Across the asset life cycle",
    "steps": [
@@ -2376,7 +2622,10 @@ export const CASES: Record<string, CaseData> = {
   ],
   "services": [
    "operations",
-   "procurement"
+   "procurement",
+   "pbmc",
+   "mqa",
+   "outsourcing"
   ],
   "subsectors": [
    "sub-highways"
@@ -2463,7 +2712,8 @@ export const CASES: Record<string, CaseData> = {
    "asset-mgmt",
    "construction",
    "traffic",
-   "lpa"
+   "lpa",
+   "mqa"
   ],
   "subsectors": [
    "sub-highways"
@@ -2520,7 +2770,9 @@ export const CASES: Record<string, CaseData> = {
    "operations",
    "procurement",
    "asset-mgmt",
-   "dashboards"
+   "dashboards",
+   "pbmc",
+   "mqa"
   ],
   "subsectors": [
    "sub-highways"
@@ -2626,7 +2878,8 @@ export const CASES: Record<string, CaseData> = {
    "program-delivery",
    "grants",
    "operations",
-   "alt-delivery"
+   "alt-delivery",
+   "pbmc"
   ],
   "subsectors": [
    "sub-highways"
@@ -2733,7 +2986,8 @@ export const CASES: Record<string, CaseData> = {
   ],
   "services": [
    "operations",
-   "asset-mgmt"
+   "asset-mgmt",
+   "fleet"
   ],
   "subsectors": [
    "sub-highways"
@@ -2829,7 +3083,8 @@ export const CASES: Record<string, CaseData> = {
   "res": [],
   "services": [
    "operations",
-   "procurement"
+   "procurement",
+   "outsourcing"
   ],
   "subsectors": [
    "sub-highways"

@@ -13,7 +13,6 @@ import { RESEARCH } from "@/lib/content/research";
 import { THOUGHT_LEADERSHIP } from "@/components/thought-leadership-data";
 import HeaderClient, { type NavData } from "@/components/v8/header-client";
 
-const PROD = process.env.VERCEL_ENV === "production";
 
 /* Who we work with: the project shown as a photo card for each industry (Part 4, 3) */
 const IND_CARD: Record<string, string> = { transport: "cs-proficiency", gov: "cs-local-am", contractors: "cs-major", private: "cs-pv-pmo" };
@@ -59,7 +58,8 @@ export default function Header() {
       };
     }),
     /* previews only: the hidden International page, with why it's hidden (Part 4, 1) */
-    intl: !PROD && intl ? { name: intl.name, href: industryHref(intl), note: "" } : undefined,
+    /* International Markets: on its own line at the bottom, on the live site too since Nov 12 */
+    intl: intl ? { name: intl.name, href: industryHref(intl), note: "" } : undefined,
     /* A link whose label is emptied in the preview editor is left out of the menu, so no blank row shows.
        "Where We Work" is under About only (Nicole, Nov 12), not here. */
     work: [

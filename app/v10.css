@@ -1207,3 +1207,17 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .hx-panel:is([data-fit="3"], [data-fit="4"]) .mx-foot { padding-top: 8px; padding-bottom: 8px; }
 .hx-panel[data-fit="4"] .mx-what ul a { padding: 2px 0; font-size: 0.85rem; line-height: 1.25; }
 .hx-panel[data-fit="4"] .mx-what .mx-area b { font-size: 1.02rem; }
+
+/* Nov 12 (Operations & Maintenance pages): intro paragraphs, links in them, and the "Where we've done it" lines */
+.sv-intro:has(+ .sv-intro) { margin-bottom: 12px; }
+.sv-intro a { color: inherit; text-decoration: underline; text-decoration-color: var(--aqua); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.sv-intro a:hover { color: #fff; }
+.sv-done { list-style: none; margin: 0 0 36px; padding: 0; display: grid; gap: 16px; max-width: 76ch; }
+.sv-done li { position: relative; padding-left: 24px; color: var(--ink-2); font-size: clamp(1.04rem, 1.2vw, 1.16rem); line-height: 1.55; }
+.sv-done li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 9px; height: 9px; border-radius: 50%; background: var(--a, var(--aqua)); }
+.sv-done b, .svd-cards li b { color: inherit; font-weight: 600; }
+.sv-done b { color: var(--head); }
+.fit-card.is-text p { color: #fff; font-size: clamp(1.02rem, 1.15vw, 1.16rem); line-height: 1.45; }
+.svd-t .svd-name { display: block; margin-bottom: 6px; color: var(--head, #0a1220); font-weight: 600; line-height: 1.25; }
+.svd-t .svd-line { display: block; color: var(--ink-2, #3a4a5e); font-size: 0.92em; font-weight: 400; line-height: 1.45; }
+.svd-t .svd-line::first-letter { text-transform: uppercase; }

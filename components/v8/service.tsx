@@ -39,6 +39,18 @@ const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
 /* one card per quote: some entries hold two quotes in one string ("…” “…") */
 const quotes = (hear: string[]) => hear.flatMap((h) => h.split(/["”]\s*["“]/)).map((h) => bare(h.replace(/^["“]/, "")));
+/* Nov 12 (Nicole's Operations & Maintenance file): "**Label:** text" shows the label in bold */
+/* the same "**Name:** line" as a card: the name on top, its line under it (Nicole, Nov 12: "each item shown as a name and a line").
+   The line's first letter is capitalized in CSS only, so Edit text still finds the words as written. */
+const nameLine = (t: string) => { const m = t.match(/^\*\*(.+?):?\*\*\s*([\s\S]*)$/); return m ? <><b className="svd-name">{m[1]}</b><span className="svd-line">{m[2]}</span></> : t; };
+const boldLead = (t: string) => { const m = t.match(/^\*\*(.+?)\*\*\s*([\s\S]*)$/); return m ? <><b>{m[1]}</b> {m[2]}</> : t; };
+/* an intro paragraph with its links to other services (Asset Management names the four services under it) */
+const linked = (p: string, links?: Record<string, string>) => {
+  const keys = Object.keys(links ?? {}).filter((k) => p.includes(k));
+  if (!links || !keys.length) return p;
+  const re = new RegExp(`(${keys.map((k) => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`);
+  return p.split(re).map((part, k) => (links[part] ? <a key={k} href={serviceHref(links[part])}>{part}</a> : part));
+};
 
 export default function ServiceV8({ id }: { id: string }) {
   const hit = serviceById(id)!;
@@ -62,19 +74,25 @@ export default function ServiceV8({ id }: { id: string }) {
   const relIds = [...(s.cases ?? []), ...Object.values(CASE_DATA).filter((d) => d.services.includes(id)).map((d) => d.id)];
   const related = relIds.filter((k, i) => relIds.indexOf(k) === i && !(RELATED_SKIP[id] ?? []).includes(k)).map(byId)
     .filter((c): c is (typeof CASES)[number] => !!c && !tagged.includes(c)).sort((a, b) => order(a) - order(b) || Number(!isOurs(a)) - Number(!isOurs(b)));
-  const main = tagged.length ? tagged : related, rest = tagged.length ? related : [];
+  /* done: the page's own "Where we've done it" lines (Nov 12, Operations & Maintenance); its tagged projects follow them */
+  const done = s.done ?? [];
+  const own = tagged.length > 0 || done.length > 0;
+  const main = own ? tagged : related, rest = own ? related : [];
   const cases = main;
-  const workTitle = tagged.length ? "Where we've done it" : "Related projects";
+  const workTitle = own ? "Where we've done it" : "Related projects";
+  const hasWork = cases.length > 0 || done.length > 0;
   const talk = talkFor(area.id);
   const steps = SERVICE_STEPS[id];
   const hear = quotes(s.hear);
+  /* "What this service covers" on the Operations & Maintenance pages (Nicole, Nov 12); "What we deliver" elsewhere */
+  const deliverTitle = s.deliverTitle ?? "What we deliver";
   const photo = SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id];
   const aviation = AVIATION_PAGES.includes(id);
   const sections: [string, string][] = [
-    ["hear", hearTitle(s.hear)], ["deliver", "What we deliver"],
+    ["hear", hearTitle(s.hear)], ["deliver", deliverTitle],
     ...(steps ? [["how", steps.title] as [string, string]] : HAS_FEATURE.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
     ["walk", "What you walk away with"],
-    ...(cases.length ? [["work", workTitle] as [string, string]] : []),
+    ...(hasWork ? [["work", workTitle] as [string, string]] : []),
     ...(aviation ? [["aviation", "Our aviation team"] as [string, string]] : []),
     ["talk", "Talk to us"],
   ];
@@ -98,10 +116,11 @@ export default function ServiceV8({ id }: { id: string }) {
             </nav>
             <p className="sv-area"><a href={areaHref(area)}>{area.name}</a></p>
             <h1>{s.name}</h1>
-            <p className="sv-intro">{s.intro}<LineNote text={s.intro} /></p>
+            {/* paragraphs split on a blank line (Nov 12) */}
+            {s.intro.split("\n\n").map((p, k, all) => <p key={k} className="sv-intro">{linked(p, s.links)}{k === all.length - 1 && <LineNote text={s.intro} />}</p>)}
             <div className="v8-actions">
               <a className="v8-btn v8-btn-area" href="#talk">Talk to us</a>
-              {cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">{workTitle}</a>}
+              {hasWork && <a className="v8-btn v8-btn-ghost" href="#work">{workTitle}</a>}
             </div>
             {!PROD && s.st !== "ok" && <em className="v8-dev">Content status (preview only): {STATUS[s.st]}</em>}
             {PAGE_STATUS[id] && <Dev>{PAGE_STATUS[id]}</Dev>}
@@ -124,14 +143,14 @@ export default function ServiceV8({ id }: { id: string }) {
         </div>
       </section>
 
-      <Scene steps={1} per={Math.max(70, s.deliver.length * 17)} id="deliver" className="svd" label="What we deliver">
+      <Scene steps={1} per={Math.max(70, s.deliver.length * 17)} id="deliver" className="svd" label={deliverTitle}>
         <div className="v8-wrap svd-in">
           <AreaMark kind="loop" />
           <div className="svd-head">
-            <h2 className="v8-h2">What we deliver</h2>
+            <h2 className="v8-h2">{deliverTitle}</h2>
           </div>
           <ul className={`svd-cards${s.deliver.length > 6 ? " is-3 is-4" : s.deliver.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
-            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span>{d}<LineNote text={d} /></li>)}
+            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span><div className="svd-t">{nameLine(d)}<LineNote text={d} /></div></li>)}
           </ul>
         </div>
       </Scene>
@@ -162,13 +181,14 @@ export default function ServiceV8({ id }: { id: string }) {
         </div>
       </section>
 
-      {cases.length > 0 && (
+      {hasWork && (
         <section id="work" className="sv-sec">
           <div className="v8-wrap">
             <div className="h-row-head"><h2 className="v8-h2">{workTitle}</h2>{tagged.length > 3 && <a className="v8-link" href={`/insights/case-studies?service=${hit.service.slug}`}>All {tagged.length} projects</a>}</div>
-            <ul className="sv-cases">
+            {done.length > 0 && <ul className="sv-done">{done.map((d) => <li key={d}>{boldLead(d)}<LineNote text={d} /></li>)}</ul>}
+            {cases.length > 0 && <ul className="sv-cases">
               {cases.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}
-            </ul>
+            </ul>}
             {rest.length > 0 && (
               <>
                 <h3 className="sv-rel-h">Related projects</h3>

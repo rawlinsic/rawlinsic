@@ -79,6 +79,11 @@ export const SERVICE_PHOTO: Record<string, string> = {
   "federal-aid": P("michigan.webp"), // Local Public Agency & Federal-Aid Programs
   planning: P("cs-hero-9.webp"), // Regional & Metropolitan Planning Support
   "asset-mgmt": P("tnbig.webp"),
+  /* Nov 12: the four pages under Asset Management use the photo of a project shown on each */
+  mqa: P("project-txmaint.webp"), // the maintenance rating program project
+  outsourcing: P("transportation.webp"), // the contractors' association model
+  pbmc: P("project-pbmc.webp"), // Tennessee performance-based maintenance contracts
+  fleet: P("project-nv-fleet-program.webp"), // Nevada fleet analysis and implementation
   operations: P("cs-hero-1.webp"),
   traffic: P("transportation-aerial.webp"),
   portals: P("auto-workflow.webp"),

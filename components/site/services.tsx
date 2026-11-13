@@ -177,7 +177,7 @@ export function ServicePage({ id }: { id: string }) {
       <Sec title="What you walk away with"><List items={s.walk} /></Sec>
       {s.xp.length > 0 && <Sec title="The experience behind it" tone="panel"><List items={s.xp} /></Sec>}
       <Sec title="Where we do this">
-        <Chips items={s.industries.map((i) => INDUSTRIES.find((x) => x.id === i)).filter((x) => x && !x.hidden).map((x) => ({ label: x!.name, href: industryHref(x!) }))} />
+        <Chips items={s.industries.map((i) => INDUSTRIES.find((x) => x.id === i)).filter((x) => x && !x.apart).map((x) => ({ label: x!.name, href: industryHref(x!) }))} />
         {subs.length > 0 && (
           <div style={{ marginTop: 14 }}>
             <p className="pg-kicker">Sector specialties</p>

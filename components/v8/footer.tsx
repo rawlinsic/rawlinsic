@@ -12,10 +12,9 @@ import { THOUGHT_LEADERSHIP } from "@/components/thought-leadership-data";
 const GOOGLE_PROFILE = "https://www.google.com/maps/place/Rawlins/@39.4270944,-119.7560918,17z/data=!3m1!4b1!4m6!3m5!1s0xc834b8bdb96e445:0xd0e8e5a965f86123!8m2!3d39.4270944!4d-119.7535169!16s%2Fg%2F11w3b8bxf3";
 const THOUGHT = THOUGHT_LEADERSHIP.length === 1 ? `/insights/thought-leadership/${THOUGHT_LEADERSHIP[0].slug}` : "/insights/thought-leadership";
 
-/* International Markets (Nicole, Nov 12: "add international markets to the footer as a link"). The page is still
-   hidden from the live site until it is approved, the same as its menu link, so this shows on previews and
-   turns on for the live site with the page. */
-const INTL = process.env.VERCEL_ENV === "production" ? undefined : INDUSTRIES.find((i) => i.id === "intl");
+/* International Markets (Nicole, Nov 12: "add international markets to the footer as a link"). On the live site too
+   since Nov 12, with the page and its menu link. */
+const INTL = INDUSTRIES.find((i) => i.id === "intl");
 
 export default function Footer() {
   return (

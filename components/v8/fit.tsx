@@ -91,10 +91,11 @@ export default function Fit({ kind, eyebrow, title, steps, base = "The systems y
         )}
         <ol className="fit-steps">
           {steps.map((s, i) => (
-            <li key={s.t} style={{ ["--i" as string]: i } as CSSProperties}>
+            <li key={`${i}-${s.t}`} style={{ ["--i" as string]: i } as CSSProperties}>
               <span className="fit-node" aria-hidden="true"><i>{String(i + 1).padStart(2, "0")}</i></span>
-              <div className="fit-card">
-                <h3>{s.t}</h3>
+              {/* a step with no title is one sentence of text (the Operations & Maintenance "How we do it", Nov 12) */}
+              <div className={`fit-card${s.t ? "" : " is-text"}`}>
+                {s.t && <h3>{s.t}</h3>}
                 {s.d && <p>{s.d}</p>}
               </div>
             </li>

@@ -7,11 +7,11 @@
 import { INDUSTRIES, VISIBLE_INDUSTRIES, industryHref } from "@/lib/content/site";
 import { INDUSTRY_PHOTO } from "@/lib/content/media";
 import FanCards, { type FanCard } from "@/components/v8/fan-cards";
-import { PROD, Shell, Talk } from "@/components/site/ui";
+import { Shell, Talk } from "@/components/site/ui";
 
 
 export default function IndustriesIndexV8() {
-  const intl = PROD ? undefined : INDUSTRIES.find((i) => i.id === "intl");
+  const intl = INDUSTRIES.find((i) => i.id === "intl"); // on the live site too since Nov 12
   const all = [...VISIBLE_INDUSTRIES, ...(intl ? [intl] : [])];
   const cards: FanCard[] = all.map((i) => ({ href: industryHref(i), tag: "Who we work with", title: i.name, sub: i.who, more: `Explore ${i.name}`, photo: INDUSTRY_PHOTO[i.id] }));
   return (

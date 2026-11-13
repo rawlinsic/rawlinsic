@@ -33,6 +33,8 @@ const nextConfig = {
       // Old WordPress/Joomla URLs still in Google's index (Search Console
       // 404 report, 2026-10-14) -> permanent redirects to the matching page.
       { source: "/Home", destination: "/", permanent: true },
+      // Nov 12: Smart Mobility & Connected Systems was briefly renamed "... - remove" with Edit text; its address followed
+      { source: "/services/digital-solutions/smart-mobility-connected-systems-remove", destination: "/services/digital-solutions/smart-mobility-connected-systems", permanent: false },
       { source: "/about-us", destination: "/about/our-people", permanent: true },
       { source: "/our-team", destination: "/about/our-people", permanent: true },
       { source: "/team", destination: "/about/our-people", permanent: true },

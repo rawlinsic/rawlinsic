@@ -11,8 +11,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!i) return {};
   return {
     title: i.name, description: i.lead, alternates: { canonical: `/industries/${i.slug}` },
-    /* International stays out of search until approved */
-    ...(i.hidden ? { robots: { index: false, follow: false } } : {}),
   };
 }
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
