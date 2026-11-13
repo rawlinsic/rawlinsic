@@ -13,7 +13,7 @@
 import ProjectCard from "@/components/v8/project-card";
 import Rail from "@/components/v8/rail";
 import type { ReactNode } from "react";
-import { AREAS, CASES, areaHref, caseHref, isOurs, type Area } from "@/lib/content/site";
+import { AREAS, CASES, areaHref, caseHref, isOurs, type Area, LISTS_OFF } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, themeStyle, casePhoto, hearTitle } from "@/lib/content/v8";
@@ -37,7 +37,9 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
   const next = AREAS[(k + 1) % AREAS.length];
   /* Featured projects: Rawlins work only (no Before Rawlins cases) */
   const cases = L.cases.map((id) => CASES.find((c) => c.id === id)).filter((c) => c && isOurs(c)) as typeof CASES;
-  const many = area.services.length >= 5;
+  /* the area's services as listed on its page (LISTS_OFF: off the lists for now, Nov 13) */
+  const listed = area.services.filter((s) => !LISTS_OFF.includes(s.id));
+  const many = listed.length >= 5;
   const sections: [string, string][] = [
     ["services", "Services"], ["hear", hearTitle(L.hear)], ["fit", L.feature.title], ...(extra ? [["more", "From our work"] as [string, string]] : []),
     ...(cases.length ? [["work", "Featured projects"] as [string, string]] : []), ["talk", "Talk to us"],
@@ -72,7 +74,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
         <div id="services" className="v8-wrap arh-svcs">
           <h2 className="arh-svcs-h">Our services</h2>
           <ul className={`ways ways-svc${many ? " is-many" : ""}`}>
-            {area.services.map((s) => (
+            {listed.map((s) => (
               <li key={s.id} className="way">
                 <a href={`/services/${area.slug}/${s.slug}`}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -133,7 +135,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
           <div className="svt-links">
             <div>
               <h3 className="v8-eyebrow">{area.name} services</h3>
-              <ul className="sv-chips">{area.services.map((s) => <li key={s.id}><a href={`/services/${area.slug}/${s.slug}`}><i aria-hidden="true" />{s.name}</a></li>)}</ul>
+              <ul className="sv-chips">{listed.map((s) => <li key={s.id}><a href={`/services/${area.slug}/${s.slug}`}><i aria-hidden="true" />{s.name}</a></li>)}</ul>
             </div>
           </div>
         </div>

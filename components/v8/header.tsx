@@ -2,7 +2,7 @@
    content layer so the browser gets only what the menu shows. Nothing is typed
    into the menu: every line comes from lib/content (full site pass, Part 1,
    section 1, with Part 4, 3 for Who we work with). */
-import { AREAS, CASES, INDUSTRIES, LEADERS, SITE_INDEX, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, subsectorHref, type CaseIndex, CASE_STATUS } from "@/lib/content/site";
+import { AREAS, CASES, INDUSTRIES, LEADERS, SITE_INDEX, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, subsectorHref, type CaseIndex, CASE_STATUS, LISTS_OFF } from "@/lib/content/site";
 import { isJacobVersion } from "@/lib/preview-gh";
 import { tc } from "@/lib/title-case";
 import { INDUSTRIES as IND_DATA } from "@/lib/content/catalog";
@@ -27,9 +27,6 @@ const card = (c: CaseIndex) => ({ title: tc(c.title), who: c.who, href: caseHref
 const eventLine = (e: (typeof EVENTS)[number]) => [e.title, e.when.replace(/,\s*\d{4}$/, ""), e.where?.split(",")[0]].filter(Boolean).join(", ");
 const monthOf = (d?: string) => (d ? Date.parse(`1 ${d}`) || 0 : 0);
 
-/* services left out of the menu for now (their pages stay up) */
-const MENU_OFF = ["smart-mobility"];
-
 export default function Header() {
   const intl = INDUSTRIES.find((i) => i.id === "intl");
   /* News: the next event while it's upcoming (the browser checks the date again), then the newest post */
@@ -42,7 +39,7 @@ export default function Header() {
       /* the preview-only "?" beside Owner's Representation is off (Nicole, Nov 11) */
       /* child: sits under the service before it in the list (Preconstruction and Construction under Project Delivery; Nicole, Nov 12) */
       /* Smart Mobility & Connected Systems is out of the menu for now (Nicole, Nov 13); its page is still up */
-      services: a.services.filter((s) => !MENU_OFF.includes(s.id)).map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: undefined as string | undefined, child: !!s.parent })),
+      services: a.services.filter((s) => !LISTS_OFF.includes(s.id)).map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: undefined as string | undefined, child: !!s.parent })),
       projects: `/insights/case-studies?area=${a.slug}`,
     })),
     industries: VISIBLE_INDUSTRIES.map((i) => {

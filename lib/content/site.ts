@@ -491,6 +491,10 @@ export const LINE_STATUS: Record<string, string> = {
 LINE_STATUS["We connect the systems you already own so information moves on its own: construction platforms like Headlight linked to the rest of an agency's systems, repeated fields filled in once from trusted sources, and small custom apps where an integration platform doesn't fit. We document every workflow so your team can run it."] = "Content status: Named as a general example. Jacob's portfolio says vendor relationships need a leadership decision before public use.";
 
 /* Preview-only notes for a whole page (content pass v7: Owner's Representation, 2.11; Ports & Harbors, Part 6) */
+/* services left out of the menu and their area page for now; their pages stay up (Nicole, Nov 13: Smart Mobility &
+   Connected Systems, "for right now") */
+export const LISTS_OFF = ["smart-mobility"];
+
 export const PAGE_STATUS: Record<string, string> = {
   /* Nov 12: the "To confirm" notes in Nicole's Operations & Maintenance file (v8), preview only */
   "asset-mgmt": "Content status: The Tennessee division line and the key performance indicator line rest on Jacob's interview with Janine. He says the details need the actual documents. Janine can confirm both in one line.",
