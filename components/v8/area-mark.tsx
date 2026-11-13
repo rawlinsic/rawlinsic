@@ -79,7 +79,10 @@ function Art({ kind }: { kind: DiagramKind }) {
   );
 }
 
+/* Off everywhere (Nicole, Nov 12: "remove the weird designs behind" the page backgrounds). The drawings stay in this
+   file; return the svg below to bring them back. */
 export default function AreaMark({ kind }: { kind: DiagramKind }) {
+  if (kind) return null;
   return (
     <svg className={`svm svm-${kind}`} viewBox="0 0 800 600" aria-hidden="true" focusable="false">
       <Art kind={kind} />
