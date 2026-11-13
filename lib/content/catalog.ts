@@ -857,7 +857,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Project Delivery",
   "area": "delivery",
   "st": "ok",
-  "intro": "From concept study to construction closeout, we help owners set up the processes, handoffs, and tools that make project delivery consistent, and we stay while staff put them to use.\n\nA project delivery framework, which some agencies call a project delivery network, sets out the steps, what each discipline does in each one, who is accountable, and what has to be complete before a project moves on. We build it with the agency's own experts, from what they already have.",
+  "intro": "From concept study to construction closeout, we help you set up the processes, handoffs, and tools that make project delivery consistent, and we stay while staff put them to use.\n\nA project delivery network (PDN) lays out every step of a project, what each discipline does at each step, who is accountable, and what must be finished before the project moves forward. We build it with the agency’s own experts, starting from the processes and tools they already use.",
   "hear": [
    "Every manager runs projects their own way.",
    "Our procedures live in people's heads, or in five versions of the same binder.",
