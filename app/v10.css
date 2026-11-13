@@ -1289,12 +1289,18 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
   .hg-head > div, .hg-head .v8-eyebrow, .hg-head .v8-h2 { text-align: left; margin-left: 0; margin-right: 0; }
   .hg-head .hg-more { align-self: flex-start; padding-bottom: 0; }
 }
-/* Nov 12 (Nicole, phone screenshot): on a service page the area's button and the section links don't fit on one line.
-   Phones and small tablets: the button on its own row, the links in one row under it that you can swipe sideways */
+/* Nov 13 (Nicole, phone screenshot of a service page): on phones and small tablets the bar is the area's button on the
+   left and a three-line button on the right; the page's sections open as a list under the bar from it */
+.sn-burger { display: none; }
 @media (max-width: 900px) {
-  .sn.has-more { flex-wrap: wrap; align-items: stretch; }
-  .sn.has-more .sn-more { margin: 8px 16px 2px; }
-  .sn.has-more > ul { flex: 1 0 100%; flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto !important; padding: 4px 12px 8px !important; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  .sn.has-more > ul::-webkit-scrollbar { display: none; }
-  .sn.has-more > ul > li { flex: none; }
+  .sn.has-more { flex-wrap: nowrap; align-items: center; }
+  .sn.has-more .sn-more { margin: 8px auto 8px 16px; min-width: 0; }
+  .sn.has-more .sn-more > summary { max-width: calc(100vw - 100px); overflow: hidden; text-overflow: ellipsis; }
+  .sn-burger { display: inline-grid; place-items: center; flex: none; width: 44px; height: 44px; margin: 0 16px 0 10px; border-radius: 50%; border: 1px solid #c4d8f2; background: #fff; color: #0a1220; cursor: pointer; }
+  .sn.has-more.is-open .sn-burger { background: #1d3759; border-color: #1d3759; color: #fff; }
+  .sn.has-more > ul { display: none !important; }
+  .sn.has-more.is-open > ul { display: grid !important; position: absolute; left: 0; right: 0; top: 100%; z-index: 30; gap: 2px; margin: 0; padding: 8px 16px 14px !important; background: #fff; border-bottom: 1px solid #dbe5f1; box-shadow: 0 18px 30px -18px rgba(10, 18, 32, 0.35); }
+  .sn.has-more.is-open > ul { justify-content: stretch !important; justify-items: stretch; grid-template-columns: 1fr; max-width: none; }
+  .sn.has-more.is-open > ul a { padding: 11px 14px !important; font-size: 1rem !important; border-radius: 12px; color: #0a1220; }
+  .sn.has-more.is-open > ul a[aria-current="true"] { background: #e6f9fc; box-shadow: inset 3px 0 0 #22d3ee; }
 }
