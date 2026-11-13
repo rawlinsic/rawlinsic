@@ -388,7 +388,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   ];
   const hero = subs.length ? (
     <PanelHero photo={INDUSTRY_PHOTO[ind.id]} crumbs={crumbs} tag="Who we work with" title={ind.name} lead={ind.lead} actions={actions}
-      label={ind.id === "transport" ? "Transportation specialties" : "MODES"}
+      label={ind.id === "transport" ? "Transportation modes" : "MODES"}
       subs={subs.map((s) => ({ id: s.id, name: s.name, line: s.line, href: subsectorHref(ind, s), photo: INDUSTRY_PHOTO[s.id] ?? INDUSTRY_PHOTO[ind.id], note: thinNote(s, "Placeholder: thin content") }))} />
   ) : (
     <FrameHero photo={INDUSTRY_PHOTO[ind.id]} crumbs={crumbs} tag="Who we work with" title={ind.name} lead={ind.lead} actions={actions}
@@ -415,7 +415,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       {work.length > 0 && <Work title="Featured projects" cases={work} all={{ href: `/insights/case-studies?industry=${ind.slug}`, label: `All ${ind.name} projects` }} />}
       <Talk {...(subs.length
-        ? { linksTitle: ind.id === "transport" ? "Transportation specialties" : "MODES", links: subs.map((s) => ({ id: s.id, name: s.name, href: subsectorHref(ind, s) })) }
+        ? { linksTitle: ind.id === "transport" ? "Transportation modes" : "MODES", links: subs.map((s) => ({ id: s.id, name: s.name, href: subsectorHref(ind, s) })) }
         : { linksTitle: "Who we work with", links: industryLinks(ind.id) })} />
       <Next k="Next industry" name={next.name} text={next.who} href={industryHref(next)} photo={INDUSTRY_PHOTO[next.id]} />
     </Page>
@@ -479,7 +479,7 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       <ServiceCards id="services" title="How we can help" ids={services} />
       {cases.length > 0 && <Work title="Where we've done this" cases={cases} tone="pale" />}
-      <Talk linksTitle={ind.id === "transport" ? "Transportation specialties" : "MODES"} links={sibs} />
+      <Talk linksTitle={ind.id === "transport" ? "Transportation modes" : "MODES"} links={sibs} />
       {nextSub
         ? <Next k={`Next in ${ind.name}`} name={nextSub.name} text={nextSub.line} href={subsectorHref(ind, nextSub)} photo={INDUSTRY_PHOTO[nextSub.id] ?? INDUSTRY_PHOTO[ind.id]} />
         : <Next k="Next industry" name={nextInd.name} text={nextInd.who} href={industryHref(nextInd)} photo={INDUSTRY_PHOTO[nextInd.id]} />}
