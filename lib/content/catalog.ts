@@ -32,7 +32,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Strategic Planning & Performance Management",
   "area": "strategy",
   "st": "ok",
-  "intro": "We help leadership turn its direction into goals, measures, and yearly action plans, with dashboards that show whether the plan is working and a leadership rhythm to review them.",
+  "intro": "We help leadership turn its direction into goals, measures, and yearly action plans, with dashboards that show whether the plan is working and a leadership rhythm to review them.\n\nWe build the plan with the people who will carry it out: executives, staff, and outside partners, through interviews, surveys, focus groups, and workshops. We stay through the first action plans and the monitoring that follows.",
   "hear": [
    "We have a strategic plan. We can't show it's working.",
    "We need a defensible way to decide what gets funded.",
@@ -40,16 +40,20 @@ export const SERVICES: Record<string, SvcData> = {
    "The plan has to be shaped by staff at every level and turned into yearly actions."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Strategic plans and multi-year action plans",
-   "Performance measure libraries, measure profiles, and dashboard roadmaps",
-   "Program effectiveness assessments",
-   "Prioritization frameworks, scoring criteria, and screening tools",
-   "Peer benchmarking and best-practice reviews"
+   "**Strategic plans:** mission, vision, and values, goals, strategies, and measures, built with leadership, staff, and partners",
+   "**Multi-year action plans:** yearly actions by division and district, with a framework to monitor and evaluate them",
+   "**Performance measure libraries and measure profiles:** every measure the agency uses, who owns it, where its data comes from, and its target",
+   "**Dashboard roadmaps:** which measures leadership reviews, how often, and what has to be built to show them",
+   "**Program effectiveness assessments:** how a program is working against what it was set up to do",
+   "**Prioritization frameworks, scoring criteria, and screening tools:** a written method for choosing what gets funded",
+   "**Peer benchmarking and best-practice reviews:** how other agencies plan, measure, and report"
   ],
   "walk": [
+   "A strategic plan staff helped shape",
    "Performance measures, KPI inventories, and dashboard approaches tied to the plan's goals, plus the leadership rhythm to review them",
-   "Prioritization frameworks, scoring criteria, screening tools, and a decision structure that holds up when someone asks why",
+   "Prioritization frameworks, scoring criteria, screening tools, and a written record of how each decision was made",
    "Action plan and monitoring frameworks that turn the plan into yearly work"
   ],
   "industries": [
@@ -67,6 +71,8 @@ export const SERVICES: Record<string, SvcData> = {
    "Our founder drove the development of Nevada DOT's five-year program of projects and its statewide asset management plan",
    "A former Federal Highway Administration executive set up an annual strategic planning process that reached every level of the California Division"
   ],
+  /* the project cards under "Where we've done it", in this order (Strategy & Organization file v2, Nov 13) */
+  "cards": ["cs-strategic", "cs-measures", "cs-de-tech", "cs-tn-it", "cs-pmdiv"],
   "src": {
    "intro": "Current rawlinsic.com copy",
    "hear": "Partner Field Guide v1",
@@ -78,7 +84,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Organizational Design & Process Improvement",
   "area": "strategy",
   "st": "ok",
-  "intro": "We design the organization from current to future state, with position descriptions, classification and salary analysis, and change communications. Then we fix the processes and procedures people use every day.",
+  "intro": "We design the organization from current to future state, with position descriptions, classification and salary analysis, and change communications. Then we work on the processes and procedures people use every day.\n\nWe do the work with the people who run each unit. An assessment starts from interviews and the unit's own documents, and a new structure comes with what staff need to move into it: position descriptions, primers, and a transition plan.",
   "hear": [
    "We're reorganizing, or standing up a new division.",
    "Our procedures live in people's heads, or in five versions of the same binder.",
@@ -86,17 +92,21 @@ export const SERVICES: Record<string, SvcData> = {
    "We don't have a clear picture of our vacancies, or of how peer agencies organize."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Current and future-state organizational analysis",
-   "Position descriptions, primers, and classification",
-   "Business process inventory and improvement",
-   "Consolidated procedures, manuals, and policies",
-   "Program quality assurance frameworks"
+   "**Current and future-state organizational analysis:** from assessment interviews to a proposed organization chart, compared with how peer agencies organize the same work",
+   "**New divisions and offices:** the purpose of the function, its structure, its roles, and a hiring plan",
+   "**Position descriptions, primers, and classification:** what each position does, what each section is for, and where each sits in the classification and pay structure",
+   "**Transition planning:** tracking the move of staff into the new structure, what the structure costs, and a status report for leadership",
+   "**Business process inventory and improvement:** process maps, responsibility charts, and where work stalls",
+   "**Consolidated procedures, manuals, and policies:** one current version, with an inventory of what is missing, outdated, or duplicated",
+   "**Program quality assurance frameworks:** how a program checks its own work"
   ],
   "walk": [
    "Organizational design from current to future state",
    "Position descriptions, classification, and salary analysis",
-   "Consolidated procedures and policies, with an inventory of what is missing, outdated, or duplicated"
+   "Consolidated procedures and policies, with an inventory of what is missing, outdated, or duplicated",
+   "A transition plan, with a way to track it"
   ],
   "industries": [
    "transport",
@@ -113,6 +123,8 @@ export const SERVICES: Record<string, SvcData> = {
    "Members of our team helped reorganize Michigan DOT around transportation systems management and operations",
    "A former Arkansas DOT Deputy Director led restructuring and performance improvement across operations"
   ],
+  /* the project cards under "Where we've done it", in this order (Strategy & Organization file v2, Nov 13) */
+  "cards": ["cs-tn-reorg", "cs-reorg", "cs-tn-amdiv", "cs-pmdiv", "cs-p3-division", "cs-tn-it", "cs-hr", "cs-pd-prof", "cs-workforce"],
   "src": {
    "intro": "live",
    "hear": "Partner Field Guide v1",
@@ -124,25 +136,26 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Change Management",
   "area": "strategy",
   "st": "ok",
-  "intro": "We help staff understand and adopt a change, whether it's a reorganization, a new system, or a new way of delivering work: a change plan, change champions, communication, and training.",
+  "intro": "We help staff understand and adopt a change, whether it's a reorganization, a new system, or a new way of delivering work: a change plan, change champions, communication, and training.\n\nWe build change management into a reorganization, a new delivery process, or a technology project from the start, with the leaders who will carry the message.",
   "hear": [
    "A reorganization, a new system, or a new way of delivering work, and staff who have seen changes come and go before.",
    "We have to bring staff through the change.",
    "Staff, legislators, and the public all need to hear about the change."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Change strategy and leadership alignment",
-   "Change champion networks",
-   "Change impact assessments and responsibility charts",
-   "Stakeholder, legislative, and public communications",
-   "Training and adoption support"
+   "**Change strategy and leadership alignment:** what is changing, for whom, and what leaders will say and do",
+   "**Change champion networks:** staff in each unit who carry the change and bring back what they hear",
+   "**Change impact assessments and responsibility charts:** what changes for each role, and who decides, who does the work, and who is kept informed",
+   "**Stakeholder, legislative, and public communications:** stakeholder registers, communications plans, talking points, and answers to common questions",
+   "**Training and adoption support:** rollout workshops, training, and check-ins with the people affected after the change takes effect"
   ],
   "walk": [
    "A change strategy and communications plan",
    "A network of change champions inside the organization",
    "Tools to track change impacts by role",
-   "Training that turns a new process into how work gets done"
+   "Training tied to the new process"
   ],
   "industries": [
    "transport",
@@ -159,6 +172,8 @@ export const SERVICES: Record<string, SvcData> = {
    "A member of our team set up Florida DOT's statewide Organizational Change Management Office and oversaw change management plans for more than 30 projects, technology and non-technology alike",
    "Our team includes Nevada DOT's former Assistant Director of Operations, whose work centered on organizational leadership, development, and change management"
   ],
+  /* the project cards under "Where we've done it", in this order (Strategy & Organization file v2, Nov 13) */
+  "cards": ["cs-reorg", "cs-tn-reorg", "cs-pdn", "cs-pmdiv", "cs-tn-tech", "cs-proficiency", "cs-hr"],
   "src": {
    "intro": "live",
    "hear": "Written from our records",
@@ -169,8 +184,8 @@ export const SERVICES: Record<string, SvcData> = {
   "id": "workforce",
   "name": "Leadership and Workforce Development",
   "area": "strategy",
-  "st": "warn",
-  "intro": "We help agencies grow people into the jobs they need filled: proficiency programs, career paths, training curricula, train-the-trainer models, and self-paced online courses, plus the HR structure behind them.",
+  "st": "ok",
+  "intro": "We help agencies grow people into the jobs they need filled: proficiency programs, career paths, training curricula, train-the-trainer models, and self-paced online courses, plus the HR structure behind them.\n\nWe write each program with the agency's own experts in the discipline, roll it out to staff through workshops and academies, and hand it to the agency to run.",
   "hear": [
    "Our best people are retiring. Nobody's ready to step up.",
    "We're delivering a bigger program with fewer experienced people.",
@@ -178,14 +193,15 @@ export const SERVICES: Record<string, SvcData> = {
    "We don't know how our divisions balance staffing supply and demand."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Technical specialist proficiency programs",
-   "Leadership academies and manager workshops",
-   "Career pathways and succession planning",
-   "Knowledge transfer and retention strategy",
-   "HR advisory, process maps, classifications, and salary surveys",
-   "Course and curriculum design, computer-based training",
-   "Engineer trainee and rotation programs"
+   "**Technical specialist proficiency programs:** what staff at each level need to be able to do, with task sheets and scored demonstrations",
+   "**Leadership academies and manager workshops:** curricula, facilitation, and executive coaching",
+   "**Career pathways and succession planning:** classification series, career paths, and who is ready for which role",
+   "**Knowledge transfer and retention strategy:** recording what experienced staff know while they are still on the job",
+   "**HR advisory, process maps, classifications, and salary surveys:** how hiring, classification, and pay work today, and where they slow down",
+   "**Course and curriculum design, computer-based training:** classroom, online, and self-paced courses",
+   "**Engineer trainee and rotation programs:** rotation curricula by discipline for new engineers"
   ],
   "walk": [
    "Proficiency programs and career paths",
@@ -208,6 +224,8 @@ export const SERVICES: Record<string, SvcData> = {
    "A member of our team reworked Michigan DOT's maintenance training as its statewide maintenance program coordinator, and is active on AASHTO's TC3 training committee",
    "One of our trainers has led more than 8,000 classroom hours"
   ],
+  /* the project cards under "Where we've done it", in this order (Strategy & Organization file v2, Nov 13) */
+  "cards": ["cs-proficiency", "cs-pd-prof", "cs-pmdiv", "cs-hr", "cs-workforce", "cs-mqa-fleet", "cs-reorg", "cs-local-am"],
   "src": {
    "intro": "Past proposal language",
    "hear": "Partner Field Guide v1",
@@ -227,11 +245,13 @@ export const SERVICES: Record<string, SvcData> = {
    "Our administrative processes, controls, and reporting have to hold up to review."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Strategic advisory to executive leadership",
-   "Interim leadership and PMO structuring",
-   "Administrative program services",
-   "Leadership transition support: briefings and handoff materials for incoming leaders"
+   "**Strategic advisory to executive leadership:** standing support to an executive, with regular working sessions, time on site, and written recommendations",
+   "**Interim leadership and PMO structuring:** a senior advisor in the seat, or a program management office set up, while the agency hires",
+   "**Administrative program services:** advisory, training design, and facilitation for finance, human resources, procurement, and information technology",
+   "**Leadership transition support:** briefings and handoff materials for incoming leaders",
+   "**Support for new leaders:** 100-day plans for new directors, coaching for new executives, and interview panels for leadership hires"
   ],
   "walk": [
    "A senior advisor who has held the job before",
@@ -257,6 +277,8 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-pmdiv",
    "cs-aerodiv"
   ],
+  /* the project cards under "Where we've done it", in this order (Strategy & Organization file v2, Nov 13) */
+  "cards": ["cs-tn-tech", "cs-tn-reorg", "cs-reorg", "cs-pmdiv", "cs-measures", "cs-aerodiv", "cs-hi"],
   "src": {
    "intro": "Current rawlinsic.com copy",
    "hear": "Written from our records",
@@ -1944,49 +1966,82 @@ export const AREAS: Record<string, AreaData> = {
    "workforce",
    "exec-advisory"
   ],
-  "lead": "Plans people measure, organizations built to carry the work, and people ready to do it.",
+  "lead": "We help agencies set a direction, organize around it, and prepare their people for the work. That covers strategic plans with measures and yearly action plans, organization design from current to future state, change management, proficiency programs and training, and advice to the executives leading the change. We do the work with agency staff, and the agency owns the result.",
   "hear": [
    "We have a strategic plan. We can't show it's working.",
+   "We need a defensible way to decide what gets funded.",
    "We're reorganizing, or standing up a new division.",
+   "Staff have seen changes come and go before.",
    "Our best people are retiring. Nobody's ready to step up.",
-   "We need a defensible way to decide what gets funded."
+   "Leadership is stretched, and the decisions in front of it are big."
   ],
   "bring": [
    "Performance measures, KPI inventories, and dashboard approaches tied to the plan's goals, plus the leadership rhythm to review them.",
+   "Prioritization frameworks, scoring criteria, screening tools, and a written record of how each decision was made.",
    "Organization design from current to future state, position descriptions, classification and salary analysis, and change communications.",
+   "A change plan, a network of change champions inside the organization, communications, and training.",
    "Proficiency programs, career paths, training curricula, train-the-trainer models, and self-paced online courses.",
-   "Prioritization frameworks, scoring criteria, screening tools, and a decision structure that holds up when someone asks why."
+   "A senior advisor who has held the job, standing support to executives, and 100-day plans for new directors."
   ],
+  "lines": {
+   "strategic-planning": "Strategic plans, action plans, measures, & prioritization",
+   "org-design": "Organization design, position descriptions, & procedures",
+   "change-mgmt": "Change plans, champions, communications, & adoption",
+   "workforce": "Proficiency programs, career paths, training, & HR",
+   "exec-advisory": "Advice to executives, interim support, & leadership transitions"
+  },
   "feature": {
    "title": "From plan to practice",
+   "links": true,
+   "lead": "The work runs in four stages: a plan, an organization shaped to carry it, people prepared for the change, and leadership tracking the result. Each of our services sits at one or more of those stages.",
    "steps": [
     {
      "t": "Plan",
      "d": "Goals, measures, and priorities people helped shape",
-     "services": []
+     "services": [
+      "strategic-planning",
+      "exec-advisory"
+     ]
     },
     {
      "t": "Organize",
      "d": "Structure, roles, and processes that can carry the plan",
-     "services": []
+     "services": [
+      "org-design",
+      "exec-advisory"
+     ]
     },
     {
      "t": "Prepare people",
      "d": "Proficiency paths, training, and leaders ready for the change",
-     "services": []
+     "services": [
+      "workforce",
+      "change-mgmt"
+     ]
     },
     {
      "t": "Track",
      "d": "Action plans and dashboards leadership reviews",
-     "services": []
+     "services": [
+      "strategic-planning",
+      "dashboards"
+     ]
     }
    ]
   },
   "keep": "",
+  "xp": [
+   "Our founder ran daily operations of a department with 1,800 employees and a budget over $1 billion",
+   "A former Federal Highway Administration executive set up an annual strategic planning process that reached every level of the California Division",
+   "Members of our team helped reorganize Michigan DOT around transportation systems management and operations",
+   "A member of our team set up Florida DOT's statewide Organizational Change Management Office and oversaw change management plans for more than 30 projects, technology and non-technology alike",
+   "A former Florida DOT leader on our team ran its statewide training, quality management, and policy programs"
+  ],
+  /* Featured projects (Strategy & Organization file v2, Nov 13) */
   "cases": [
    "cs-strategic",
-   "cs-proficiency",
-   "cs-pmdiv"
+   "cs-tn-reorg",
+   "cs-proficiency"
   ]
  },
  "delivery": {

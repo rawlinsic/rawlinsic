@@ -138,6 +138,25 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
     { t: "", d: "Track commitments, deficiencies, and risks, and raise issues early." },
     { t: "", d: "Build the owner's own staff into the role." },
   ] },
+  /* Nov 13 (Strategy & Organization file v2): How we do it on three pages */
+  "org-design": { title: "How we do it", steps: [
+    { t: "", d: "Assess the unit: interviews, its documents, its workload, and how peer agencies organize the same work." },
+    { t: "", d: "Propose the structure, and work through it with leadership and human resources." },
+    { t: "", d: "Write the position descriptions and primers with the unit's own experts." },
+    { t: "", d: "Plan the move: who goes where, what it costs, and how progress is tracked." },
+  ] },
+  "change-mgmt": { title: "How we do it", steps: [
+    { t: "", d: "Define the change: what is different, who is affected, and when." },
+    { t: "", d: "Assess the impact by role, and agree the message with leadership." },
+    { t: "", d: "Build the communications plan and the network of change champions." },
+    { t: "", d: "Support the rollout with workshops and training, and check how it is going with the people affected." },
+  ] },
+  "exec-advisory": { title: "How we do it", steps: [
+    { t: "", d: "Agree what the executive needs: the decisions ahead, the time frame, and how we will work together." },
+    { t: "", d: "Set a standing rhythm: working sessions, written follow-up, and time on site." },
+    { t: "", d: "Bring the research, the options, and the experience of people who have held the job." },
+    { t: "", d: "Leave the documents behind: charters, plans, and briefing materials the office keeps using." },
+  ] },
 };
 
 /* Asset Management's steps before Nov 12 ("The asset life cycle"), kept for the record: the page now shows How we do it. */

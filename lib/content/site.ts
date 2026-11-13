@@ -413,7 +413,7 @@ export const CASES: CaseIndex[] = [
   cs("cs-tn-psm", "tennessee-professional-services-manuals", "Manuals and templates for buying consultant services", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["procurement", "alt-delivery"]),
   /* Nov 13 (M&O file v10, Part 4): new page, separate work orders from the reorganization */
   cs("cs-tn-leading", "tennessee-maintenance-and-traffic-leading-practices", "Leading practices reviews for maintenance and traffic operations", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["traffic", "operations"]),
-  cs("cs-tn-it", "tennessee-it-strategic-plan-and-organization", "An IT strategic plan and a new IT organization", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["tech-strategy", "org-design"]),
+  cs("cs-tn-it", "tennessee-it-strategic-plan-and-organization", "An IT strategic plan and a new IT organization", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["tech-strategy", "org-design", "strategic-planning"]),
   cs("cs-tn-ipd", "tennessee-integrated-program-delivery", "Integrated program delivery: transition projects, risk, and consultant onboarding", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["program-delivery", "preconstruction", "proj-delivery"]),
   cs("cs-pbmc", "tennessee-performance-based-maintenance-contracts", "Launching performance-based maintenance contracts on an interstate network", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["operations", "procurement", "pbmc", "mqa", "outsourcing", "owners-rep", "finance"]),
   // Contract read Nov 10: no publicity limit. The state keeps publication rights to the documents we produce, so don't post its documents on this site.
@@ -429,7 +429,7 @@ export const CASES: CaseIndex[] = [
   cs("cs-reorg", "department-reorganization-from-chart-to-rollout", "A department reorganization, from functional chart to rollout", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "exec-advisory", "workforce", "finance"]),
   cs("cs-measures", "performance-measures-from-strategy-to-dashboards", "Performance measures, from strategy to dashboards", STATE_DOT, [], "Ongoing", "transport", ["strategic-planning", "dashboards", "exec-advisory", "asset-mgmt"]),
   // TODO(launch): subcontract read Nov 10: the prime's information stays confidential and the prime agreement's terms apply. Keep it unnamed and high level.
-  cs("cs-pmdiv", "standing-up-a-project-delivery-division", "Standing up a project delivery division", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "workforce", "program-delivery", "preconstruction", "proj-delivery", "construction", "exec-advisory", "dashboards"]),
+  cs("cs-pmdiv", "standing-up-a-project-delivery-division", "Standing up a project delivery division", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "workforce", "program-delivery", "preconstruction", "proj-delivery", "construction", "exec-advisory", "dashboards", "strategic-planning"]),
   // Rawlins was prime on this client's purchase order. Jacob's portfolio asks whether this is a Rawlins client; it is.
   // TODO(launch): contract publicity terms not checked yet.
   cs("cs-txmaint", "performance-based-maintenance-and-rating-program", "Performance-based maintenance contracts and a maintenance rating program", STATE_DOT, [], "Completed", "transport", ["operations", "procurement", "asset-mgmt", "pbmc", "mqa", "owners-rep", "dashboards"]),
@@ -579,6 +579,8 @@ export const LISTS_OFF = ["smart-mobility"];
 export const isListed = (id: string) => !LISTS_OFF.includes(id);
 
 export const PAGE_STATUS: Record<string, string> = {
+  /* Nov 13: the "To confirm" note in the Strategy & Organization file (v2), preview only */
+  "exec-advisory": "Content status: Interim leadership and program management office structuring are on the live site as services, so the card stays. No project in our records shows them delivered yet.",
   /* Nov 13: the "To confirm" notes in the Who We Work With file (v1), preview only */
   fed: "Content status: The peer exchange was delivered under a prime on a federal contract. Publicity terms not checked yet. No federal agency is a direct client in our records, so the page says the work runs through programs the states take part in.",
   local: "Content status: The city work started in September 2026 under a prime. Subcontract publicity terms not checked yet. Keep it unnamed.",
