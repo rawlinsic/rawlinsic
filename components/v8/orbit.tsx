@@ -19,9 +19,11 @@ import { useEffect, useRef, type ReactNode } from "react";
 export type Tile = { src: string; label: string; href: string; sub?: string; note?: string };
 
 const TURN = 60; // seconds per full turn
+const STRIP_UNDER = 0; // screens narrower than this get the grid of photos with names instead of the ring
 const TILT = -0.24; // the ring's tilt on screen (its right end higher), radians
 
-export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; children: ReactNode; cta?: ReactNode }) {
+/* after: shown under the ring on phones only (the home page's paragraph, which the ring would cover there) */
+export default function Orbit({ tiles, children, cta, after }: { tiles: Tile[]; children: ReactNode; cta?: ReactNode; after?: ReactNode }) {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -35,21 +37,28 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
       const next = k < 0 ? fill.dataset.default || "" : ts[k].dataset.name || "";
       if (fill.textContent !== next) fill.textContent = next;
       fill.style.setProperty("--fit", Math.min(1, 24 / Math.max(1, next.length)).toFixed(3));
+      /* and never wider than the space it has (phones, Nov 12) */
+      const room = (fill.parentElement?.clientWidth ?? 0) - 8, need = fill.scrollWidth;
+      if (room > 0 && need > room) fill.style.setProperty("--fit", (parseFloat(fill.style.getPropertyValue("--fit")) * room / need).toFixed(3));
       fill.toggleAttribute("data-on", k >= 0);
     };
     const place = () => {};
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     let mode: "ring" | "strip" = "ring", still = false, inView = false;
-    let theta = 0, last = 0, loop = 0, raf = 0, held = -1, speed = 1;
+    let theta = 0, last = 0, loop = 0, raf = 0, held = -1, speed = 1, front = -1;
+    const touch = window.matchMedia("(hover: none)").matches;
 
     const draw = () => {
       /* one steady tilted ellipse, like scale.com: nothing is pushed or clamped, so no tile ever jumps.
          The ellipse is sized so the tiles pass around the words, not over them. */
       const W = ring.clientWidth, H = ring.clientHeight;
-      /* tighter around the words (Nicole, Nov 10: "too spaced out"), and the photos at the back not so tiny */
-      const big = Math.min(160, Math.max(108, W * 0.1)), small = big * 0.42;
-      const rx = Math.max(0, Math.min(W / 2 - big / 2 - 30, 560, W * 0.4));
-      const ry = Math.max(0, Math.min(H / 2 - big / 2 - 26, 330));
+      /* tighter around the words (Nicole, Nov 10: "too spaced out"), and the photos at the back not so tiny.
+         Phones (Nov 12, like scale.com on a phone): bigger photos for the screen, and a wider ring whose ends run
+         past the screen's edges, so the photos pass above, below, and beside the words, not over them */
+      const phone = W < 700;
+      const big = phone ? W * 0.27 : Math.min(160, Math.max(108, W * 0.1)), small = big * (phone ? 0.5 : 0.42);
+      const rx = phone ? W * 0.56 : Math.max(0, Math.min(W / 2 - big / 2 - 30, 560, W * 0.4));
+      const ry = phone ? H * 0.41 : Math.max(0, Math.min(H / 2 - big / 2 - 26, 330));
       const ct = Math.cos(TILT), st = Math.sin(TILT);
       ts.forEach((t, i) => {
         const a = theta + (i / N) * Math.PI * 2;
@@ -70,6 +79,12 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
       speed += ((held >= 0 ? 0 : 1) - speed) * 0.1;
       theta -= dt * speed * ((Math.PI * 2) / TURN); // the bottom moves right, the top left, as on scale.com
       draw(); place();
+      /* phones and tablets can't point at a photo: the blue line names the photo at the front, as scale.com's does */
+      if (touch && held < 0) {
+        let k = 0, best = -2;
+        ts.forEach((_, i) => { const c = Math.cos(theta + (i / N) * Math.PI * 2); if (-c > best) { best = -c; k = i; } });
+        if (k !== front) { front = k; show(k); }
+      }
       loop = requestAnimationFrame(frame);
     };
     const go = () => { if (!loop && inView && mode === "ring" && !still) { last = 0; loop = requestAnimationFrame(frame); } };
@@ -82,7 +97,9 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
     };
     const on = () => { if (mode === "strip" && !raf) raf = requestAnimationFrame(strip); };
     const setMode = () => {
-      mode = window.innerWidth < 1100 ? "strip" : "ring";
+      /* Nov 12 (Nicole: phones like scale.com, as close to the computer as looks right): the ring on every screen.
+         The grid of photos with names ("strip") stays below in case it's wanted back: set STRIP_UNDER to 1100. */
+      mode = window.innerWidth < STRIP_UNDER ? "strip" : "ring";
       still = reduce.matches;
       el.dataset.mode = mode;
       if (still) el.dataset.static = ""; else delete el.dataset.static;
@@ -139,6 +156,7 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
           {cta}
         </div>
       </div>
+      {after && <div className="orb-after">{after}</div>}
     </section>
   );
 }

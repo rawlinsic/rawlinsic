@@ -22,17 +22,38 @@ type Menu = "what" | "who" | "work" | "insights" | "about" | null;
 
 const MENUS: [Exclude<Menu, null>, string][] = [["what", "What We Do"], ["who", "Who We Work With"], ["work", "Our Work"], ["insights", "Insights"], ["about", "About"]];
 
+/* Search (Nov 12, Nicole: "the search on the site doesn't work right"). The full list (pages plus the words around them:
+   a service's opening, a project's client and states, people's titles) loads from /search-index.json the first time
+   someone types; until then the menu's own list is used. Every word typed has to be found, in any order; a match in
+   the page's name ranks above a match in the words around it. */
+const SMALL = new Set(["a", "an", "and", "or", "the", "of", "for", "to", "in", "on", "with", "&"]);
+const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[’']/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+/* services and who-we-work-with pages first, then projects, then other pages, then people (by the page's address) */
+const rank = (h: Hit) => (/^\/(services|industries)\//.test(h.href) ? 8 : h.href.startsWith("/insights/case-studies/") ? 6 : h.href === "/about/our-people" && h.label !== "Our People" ? 0 : 3);
 function useSearch(data: NavData["search"], q: string) {
-  const [people, setPeople] = useState<Hit[]>([]);
+  const [all, setAll] = useState<(Hit & { text?: string })[]>([]);
   useEffect(() => {
-    if (q.trim().length < 2 || people.length) return;
-    fetch("/people-index.json").then((r) => r.json()).then(setPeople).catch(() => {});
-  }, [q, people.length]);
+    if (q.trim().length < 2 || all.length) return;
+    fetch("/search-index.json").then((r) => r.json()).then(setAll).catch(() => {});
+  }, [q, all.length]);
   return useMemo(() => {
-    const s = q.trim().toLowerCase();
+    const s = norm(q);
     if (s.length < 2) return [];
-    return [...data, ...people].filter((h) => `${h.label} ${h.kind}`.toLowerCase().includes(s)).slice(0, 10);
-  }, [q, data, people]);
+    const words = s.split(" ").filter((w) => w && !SMALL.has(w));
+    if (!words.length) return [];
+    const list = all.length ? all : data;
+    const seen = new Set<string>();
+    return list.map((h) => {
+      const name = norm(h.label), hay = `${name} ${norm(h.kind)} ${norm((h as { text?: string }).text ?? "")}`;
+      if (!words.every((w) => hay.includes(w))) return null;
+      const score = (name === s ? 100 : 0) + (name.startsWith(s) ? 60 : 0) + (name.includes(s) ? 30 : 0)
+        + words.filter((w) => name.includes(w)).length * 12 + rank(h) - name.length / 40;
+      return { h, score };
+    }).filter((x): x is { h: Hit; score: number } => !!x)
+      .sort((a, b) => b.score - a.score)
+      .filter(({ h }) => { const k = h.label + h.href; if (seen.has(k)) return false; seen.add(k); return true; })
+      .slice(0, 12).map(({ h }) => h);
+  }, [q, data, all]);
 }
 
 /* A project as a photo card: photo, status, title, client line */
@@ -157,7 +178,10 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
         </button>
         <a href="/contact" className="hx-cta">Get In Touch</a>
-        <button type="button" className="hx-burger" aria-expanded={sheet} aria-controls="hx-sheet" onClick={() => setSheet(true)}>Menu</button>
+        {/* three lines, not the word "Menu" (Nicole, Nov 12) */}
+        <button type="button" className="hx-burger" aria-label="Menu" aria-expanded={sheet} aria-controls="hx-sheet" onClick={() => setSheet(true)}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
       </div>
 
       {/* desktop menus */}

@@ -217,7 +217,8 @@ export default function Home() {
       {/* What sets us apart is now side two of the opening story (hero-story.tsx), one reason per scroll */}
 
       {/* 4 · who we work with: a ring of photos around the headline */}
-      <Orbit tiles={tiles} cta={<a className="v8-btn orb-cta" href="/industries">See who we work with</a>}>
+      {/* on phones the paragraph sits under the ring (after), where the photos don't cover it (Nov 12) */}
+      <Orbit tiles={tiles} cta={<a className="v8-btn orb-cta" href="/industries">See who we work with</a>} after={<p className="orb-lead">Most of our work is with the public agencies that own and run transportation systems, more than 30 to date. We also work with the private sector: contractors, engineering and consulting firms, and growing companies. Our work so far is across the United States, and our team can do it anywhere.</p>}>
         {/* like scale.com (Nicole, Nov 10): "We work with" and a blue line that fills in with the photo you point at */}
         <h2 id="orb-h" className="orb-h">We work with<span className="orb-fill" data-default="Public Agencies & Private Firms">Public Agencies & Private Firms</span></h2>
         <p className="orb-lead">Most of our work is with the public agencies that own and run transportation systems, more than 30 to date. We also work with the private sector: contractors, engineering and consulting firms, and growing companies. Our work so far is across the United States, and our team can do it anywhere.</p>

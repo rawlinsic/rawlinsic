@@ -12,11 +12,13 @@ export type FixSvc = { name: string; area: string; href: string; style?: CSSProp
 export type Fix = { q: string; topic: string; services: FixSvc[] };
 
 const OWN = -1;
+const NONE = -2; // nothing picked yet: the list shows on its own (Nicole, Nov 12)
 
 /* onGo: when the picker sits on the Contact page itself, its button hands the choice to the form there
    (topic and message) instead of going to /contact */
 export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic: string | undefined, msg: string) => void }) {
-  const [sel, setSel] = useState(0);
+  const [sel, setSel] = useState(NONE);
+  const pick = (k: number) => setSel((cur) => (cur === k ? NONE : k)); // tapping the open one again closes it
   const [own, setOwn] = useState("");
   const [paths, setPaths] = useState<string[]>([]);
   /* phones (Nicole, Nov 12: it "doesn't make sense how it is"): the answer opens right under the choice you tap,
@@ -53,13 +55,13 @@ export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic
     return () => { ro.disconnect(); window.removeEventListener("resize", draw); };
   }, [draw]);
 
-  const f = sel === OWN ? null : fixes[sel];
+  const f = sel >= 0 ? fixes[sel] : null;
   const go = (e: { preventDefault(): void }) => { if (!onGo) return; e.preventDefault(); if (f) onGo(f.topic, `${f.q}.`); else onGo(undefined, own.trim()); };
   const contact = f
     ? `/contact?topic=${encodeURIComponent(f.topic)}&msg=${encodeURIComponent(f.q + ".")}`
     : `/contact${own.trim() ? `?msg=${encodeURIComponent(own.trim())}` : ""}`;
 
-  const answer = f ? (
+  const answer = sel === NONE ? null : f ? (
     <>
       <p className="fp-k">Where we&apos;d start</p>
       <ul className="fp-svcs">
@@ -89,14 +91,14 @@ export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic
         <ul className="fp-list" aria-labelledby="fp-k">
           {fixes.map((x, i) => (
             <li key={x.q}>
-              <button type="button" className="fp-q" aria-pressed={sel === i} onClick={() => setSel(i)}>
+              <button type="button" className="fp-q" aria-pressed={sel === i} onClick={() => pick(i)}>
                 <span className="fp-dot" aria-hidden="true" />{x.q}
               </button>
               {narrow && sel === i && <div className="fp-inline" aria-live="polite">{answer}</div>}
             </li>
           ))}
           <li>
-            <button type="button" className="fp-q fp-q-own" aria-pressed={sel === OWN} onClick={() => setSel(OWN)}>
+            <button type="button" className="fp-q fp-q-own" aria-pressed={sel === OWN} onClick={() => pick(OWN)}>
               <span className="fp-dot" aria-hidden="true" />Write your own
             </button>
             {narrow && sel === OWN && <div className="fp-inline" aria-live="polite">{answer}</div>}

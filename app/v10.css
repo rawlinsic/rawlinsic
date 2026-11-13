@@ -1229,8 +1229,17 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .sn-more > ul > li.is-top { margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid #dbe5f1; }
 .sn-more > ul > li.is-top a { color: #0e5a6b !important; font-weight: 700; }
 /* Nov 12 (Nicole, phones): the help picker's answer opens under the choice you tap */
-.fp-inline { margin: 12px 0 16px; padding: 18px; border-radius: 18px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(165, 243, 252, 0.35); }
-.fp-inline .fp-own { padding: 0; border: 0; background: none; box-shadow: none; }
+/* the glowing line: drawn down from the choice you tapped, with a short branch to each service (like the lines on a
+   computer) */
+.fp-inline { position: relative; margin: 10px 0 18px 22px; padding: 6px 0 4px 26px; }
+.fp-inline::before { content: ""; position: absolute; left: 0; top: -10px; bottom: 30px; width: 2px; border-radius: 2px; background: #22d3ee; box-shadow: 0 0 10px rgba(34, 211, 238, 0.85), 0 0 24px rgba(34, 211, 238, 0.45); transform-origin: top; animation: fp-down 0.5s ease-out both; }
+.fp-inline .fp-svcs li { position: relative; }
+.fp-inline .fp-svcs li::before { content: ""; position: absolute; left: -26px; top: 50%; width: 26px; height: 2px; background: #22d3ee; box-shadow: 0 0 10px rgba(34, 211, 238, 0.85); transform-origin: left; animation: fp-across 0.35s ease-out both; animation-delay: calc(0.35s + var(--k, 0) * 0.1s); }
+.fp-inline .fp-svcs li:nth-child(2)::before { --k: 1; } .fp-inline .fp-svcs li:nth-child(3)::before { --k: 2; } .fp-inline .fp-svcs li:nth-child(4)::before { --k: 3; }
+.fp-inline .fp-own { padding: 18px; }
+@keyframes fp-down { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes fp-across { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .fp-inline::before, .fp-inline .fp-svcs li::before { animation: none; } }
 /* Nov 12 (Nicole, phones): Who we work with is a grid of all eight photos with their names, nothing sliding or cut off */
 .h-orbit[data-mode="strip"] .orb-ring { transform: none !important; display: grid; grid-auto-flow: row; grid-template-rows: none; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-columns: auto; gap: 12px; width: auto; max-width: 1100px; margin: 0 auto; padding: 0 18px; }
 .h-orbit[data-mode="strip"] .orb-t { aspect-ratio: 4 / 3; pointer-events: auto; }
@@ -1247,3 +1256,45 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .h-start.h-fix { margin: 0; border-radius: 30px 30px 0 0; }
 /* no dot pattern behind the help picker and the contact panel ("remove the weird designs behind") */
 .h-fix, .cw { background: radial-gradient(60% 70% at 85% 10%, rgba(34, 211, 238, 0.14), transparent 65%), var(--navy-grad); }
+/* Nov 12 (Nicole): on phones Who we work with is the same ring as on a computer, like scale.com on a phone. The ring
+   circles the headline and button; the paragraph sits under the ring. */
+.orb-after { display: none; }
+@media (max-width: 699px) {
+  .h-orbit[data-mode="ring"] .orb-stage { min-height: 0; height: calc(100svh - 68px); max-height: 760px; }
+  .h-orbit[data-mode="ring"] .orb-center { padding: 0 24px; }
+  .h-orbit[data-mode="ring"] .orb-center .orb-lead { display: none; }
+  .h-orbit[data-mode="ring"] .orb-after { display: block; padding: 0 22px 48px; text-align: center; }
+  .h-orbit[data-mode="ring"] .orb-after .orb-lead { margin: 0 auto; }
+}
+/* Nov 12 (Nicole: the search "looks like shit with the blue outline"): no box around the search field, just its
+   underline, which turns the electric blue while you type */
+.hx-q input:focus, .hx-q input:focus-visible { outline: none !important; box-shadow: none !important; border-radius: 0; }
+.hx-q { border-bottom-width: 2px; transition: border-color 0.2s, box-shadow 0.2s; }
+.hx-q:focus-within { border-color: #22d3ee; box-shadow: 0 2px 0 0 rgba(34, 211, 238, 0.35); }
+.hx-results a { transition: border-color 0.2s, background 0.2s; }
+.hx-results a:hover, .hx-results a:focus-visible { border-color: #22d3ee; background: #f3fbfd; outline: none; }
+/* Nov 12 (Nicole): the phone menu button is the three-line icon */
+.hx-burger { justify-content: center; width: 44px; padding: 0; }
+/* Nov 12 (Nicole, phones): Featured projects. Arrows above the row to move left and right; the cards don't slide in
+   as they appear; and an up-and-down swipe on the cards scrolls the page, not the row */
+@media (max-width: 700px) {
+  .rl-btns { position: static; display: flex; justify-content: flex-end; gap: 10px; margin: 0 0 14px; }
+  .rl-track { touch-action: pan-y; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; }
+  .rl-track [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+/* Nov 12 (Nicole, phones): How we've grown (home and Who We Are): the small heading, the heading, and Learn more about us
+   all line up on the left */
+@media (max-width: 700px) {
+  .hg-head { flex-direction: column; align-items: flex-start !important; text-align: left; gap: 10px; }
+  .hg-head > div, .hg-head .v8-eyebrow, .hg-head .v8-h2 { text-align: left; margin-left: 0; margin-right: 0; }
+  .hg-head .hg-more { align-self: flex-start; padding-bottom: 0; }
+}
+/* Nov 12 (Nicole, phone screenshot): on a service page the area's button and the section links don't fit on one line.
+   Phones and small tablets: the button on its own row, the links in one row under it that you can swipe sideways */
+@media (max-width: 900px) {
+  .sn.has-more { flex-wrap: wrap; align-items: stretch; }
+  .sn.has-more .sn-more { margin: 8px 16px 2px; }
+  .sn.has-more > ul { flex: 1 0 100%; flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto !important; padding: 4px 12px 8px !important; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .sn.has-more > ul::-webkit-scrollbar { display: none; }
+  .sn.has-more > ul > li { flex: none; }
+}
