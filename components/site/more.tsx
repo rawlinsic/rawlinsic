@@ -82,7 +82,7 @@ export function AboutIndex() {
         <ul className="ab-bento">
           <li className="ab-b-who"><a href="/about/who-we-are">{/* eslint-disable-next-line @next/next/no-img-element */}{/* our team at the 2026 Hawaii summit; the outdoor group photo is already this page's top photo (Nicole, Nov 11: no large indoor group photo) */}<img src="/images/pages/insights-hawaii-summit-2026-team.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Who we are</b><span>Our story, how we&apos;ve grown since 2017, and why agencies call us.</span></span></a></li>
           <li className="ab-b-people"><a href="/about/our-people"><span className="ab-b-faces">{faces.map((p) => /* eslint-disable-next-line @next/next/no-img-element */ <img key={p.slug} src={p.photo} alt="" loading="lazy" />)}</span><span className="ab-b-txt"><b>our people</b><span>{people.length} people: advisors who ran the programs, and the specialists who build the tools.</span></span></a></li>
-          <li className="ab-b-how"><a href="/about/how-we-work"><span className="ab-b-steps">{STEPS.map(([t], k) => <i key={t}><em>{String(k + 1).padStart(2, "0")}</em>{t}</i>)}</span><span className="ab-b-txt"><b>How we work</b><span></span></span></a></li>
+          <li className="ab-b-how"><a href="/about/how-we-work"><span className="ab-b-steps">{STEPS.map(([t], k) => <i key={t}><em>{String(k + 1).padStart(2, "0")}</em>{t}</i>)}</span><span className="ab-b-txt"><b>How we work</b><span>Four steps, from assessment to handoff, and what guides the work.</span></span></a></li>
           <li className="ab-b-where"><a href="/about/where-we-work"><span className="ab-b-num">{STATES.length}<small>states</small></span><span className="ab-b-txt"><b>Where we work</b><span>Global Reach,<br />Local Impact, with team members in Canada, South Africa, and the UAE.</span></span></a></li>
           <li className="ab-b-careers"><a href="/careers">{/* eslint-disable-next-line @next/next/no-img-element */}{/* two teammates at the 2026 company retreat, July 24, 2026 (Business Development SharePoint; cropped so there are no labels) */}<img src="/images/pages/careers-retreat-2026-teammates.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Careers</b><span>Work next to people who&apos;ve done the job.</span></span></a></li>
         </ul>
@@ -117,10 +117,13 @@ export function WhoWeAre() {
       {/* a gallery of team photos in place of the one big photo (Nicole, Nov 11) */}
       <PhotoGallery photos={TEAM_GALLERY} />
       <EdSplit k="Our story" title="From one agency to many">
+        {/* About: How we work and Our story file v1 (Nov 13) */}
         <div className="ab-story">
-          <p className="ab-story-lead">Scott Rawlins spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and then led an infrastructure asset management practice at a global consulting firm. He started Rawlins in 2017 to bring agency experience to the agencies that needed it.</p>
-          <p>Some of the projects on this site come from that earlier work, or from our team&apos;s work before they joined us. Those are marked Before Rawlins.</p>
-          <p>Advising agency leaders on how to deliver their programs is still a big part of what we do. Since 2017 we&apos;ve added drone and advanced air mobility work, an in-house team that builds integrations, automation, dashboards, and AI, and clients beyond transportation agencies, including local governments, contractors, and engineering firms. Our people work across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>
+          <p className="ab-story-lead">Scott Rawlins spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer. He then led an infrastructure asset management practice at a global consulting firm. In 2017 he started Rawlins, so that people who have run agency programs could work alongside the people running them today.</p>
+          <p>Advising agency leaders on how to organize and deliver their programs is where the firm started, and it is still a large part of our work. Since 2017 we have added drone and advanced air mobility work, and an in-house team that builds websites, integrations, automation, dashboards, training, and AI tools.</p>
+          <p>Most of our work is with state departments of transportation. We also work with local governments, contractors, engineering firms, and private companies.</p>
+          <p>More than 25 of our people came from public agencies. Our team works across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>
+          <p>Some projects on this site come from Scott&apos;s earlier work, or from work our people did before they joined us. Each of those is marked Before Rawlins.</p>
         </div>
       </EdSplit>
       <Grown eyebrow="how we've grown" title="Evolving impact" />
@@ -133,29 +136,45 @@ export function WhoWeAre() {
   );
 }
 
+/* How we work (About: How we work file v1, Nov 13) */
 const PRINCIPLES: [string, string][] = [
-  ["Start where the client is", "Most organizations already have a plan, a framework, or a manual. We put what exists to work before writing anything new."],
-  ["Bridge before building", "We use the systems and licenses a client already owns, and build something new when it makes sense."],
-  ["Straight answers on AI", "When a problem needs a rule, a process, or a decision instead of a model, we say so."],
-  ["The client owns the result", "Every build comes with documentation and training, and your team owns it."],
+  ["Start where the client is", "Most organizations already have a plan, a framework, or a manual. We put what exists to work before we write anything new."],
+  ["Work with the staff responsible", "We build with the people who will use the result, so it reflects how the work is done and they can keep it current."],
+  ["Bridge before building", "We use the systems and licenses a client already owns, and connect them. We build something new when that is the better fit."],
+  ["Straight answers on AI", "When a problem calls for a rule, a process, or a decision instead of a model, we say so."],
+  ["The client owns the result", "Every manual, tool, and build comes with documentation and training, and the client's team owns it."],
 ];
 /* content pass v7, 8.3: "We stay through execution" and "How a project usually runs" removed (the four steps say it) */
-const KEEP = ["Processes and manuals your staff can follow and update", "Tools and templates built on systems you already own", "People trained to run it, with support while they learn"];
+const KEEP = ["Processes and manuals your staff can follow and update", "Tools and templates built on systems you already own", "People trained to run it, with support while they learn", "A record of how each piece works and who keeps it current"];
+/* Ways to work with us (new, Nov 13) */
+const WAYS: [string, string][] = [
+  ["A focused assessment", "a look at one program, process, or function, with findings and a sequence of next steps"],
+  ["Framework or program development", "a delivery framework, a manual, a proficiency program, or a new program, built with staff"],
+  ["A targeted process improvement", "one process or handoff, worked through from start to finish"],
+  ["Implementation support", "help putting a plan or a new process into use, with coaching and revisions along the way"],
+  ["Advisory support", "advice for leaders within an agreed scope"],
+  ["A specialist review or facilitation", "a document review, a workshop, or a partnering session"],
+];
 export function HowWeWork() {
   return (
     <Shell>
-      <EdHero crumbs={[["/about", "About"], ["/about/how-we-work", "How we work"]]} kicker="How we work" title={<>Start with what exists. <em>Stay until it runs.</em></>}
-        lead={<p></p>}
+      <EdHero crumbs={[["/about", "About"], ["/about/how-we-work", "How we work"]]} kicker="How we work" title={<>We start with what exists, <em>and stay until it runs.</em></>}
+        lead={<p>We begin with the plans, manuals, systems, and staff knowledge an organization already has. We do the work with the people responsible for it, and we stay while they put the changes to use. What we build belongs to the client.</p>}
         actions={<><EdBtn href="/contact">Tell us what you&apos;re trying to fix</EdBtn><EdBtn href="/insights/case-studies" kind="ghost">See our projects</EdBtn></>} />
       <section className="ab-steps-sec" data-nofill>
         <ol className="ed-wrap ab-steps">{STEPS.map(([t, d], k) => <li key={t}><span className="ab-step-n">{String(k + 1).padStart(2, "0")}</span><b>{t}</b><p>{d}</p></li>)}</ol>
       </section>
-      <EdSec k="What guides us" title="Our process" tone="panel">
+      <EdSec k="Our approach" title="What guides the work" tone="panel">
         <ul className="ab-principles">{PRINCIPLES.map(([t, d]) => <li key={t}><b>{t}</b><p>{d}</p></li>)}</ul>
       </EdSec>
       <EdSplit k="In practice" title="What you keep">
         <ol className="ab-runs ab-keep">{KEEP.map((t) => <li key={t}><b>{t}</b></li>)}</ol>
       </EdSplit>
+      <EdSec k="Getting started" title="Ways to work with us">
+        <p className="ab-ways-lead">The work is shaped to the need. These are the forms it most often takes.</p>
+        <ul className="ab-ways">{WAYS.map(([t, d]) => <li key={t}><b>{t}</b><p>{d}</p></li>)}</ul>
+        <p className="ab-ways-foot">We work directly for an owner, as part of another firm&apos;s team, and for contractors and private companies.</p>
+      </EdSec>
       <Talk />
     </Shell>
   );

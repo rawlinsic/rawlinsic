@@ -320,11 +320,12 @@ export const STORY: [string, string, string][] = [
   ["frontier", "Data Governance, Automation, & AI", "Our in-house team connects the systems clients already own, automates the busywork, and puts AI to work where it helps. We help agencies navigate governance structures, improve data practices, incorporate analytics, and use emerging tools. Our automation and integration specialists streamline workflows, enabling people to focus on the uniquely human work that matters most for organizational success."],
 ];
 
+/* the four steps (About: How we work file v1, Nov 13); the same text is in lib/content/catalog.ts STEPS */
 export const STEPS: [string, string][] = [
-  ["Assess", "We find what's working, what isn't, and why, with the people who do the work."],
-  ["Rebuild", "We fix the structure, process, contract, or system that's holding things back."],
-  ["Train", "We get your people ready to run it: manuals, courses, and hands-on support."],
-  ["Hand off", "We stay until it runs on its own, and you own everything we built."],
+  ["Assess", "We agree on the decision the work has to support. Then we look at the written requirements and the actual practice side by side, with the people who do the work."],
+  ["Rebuild", "We develop the structure, process, contract, or tool with the staff who will use it, and test it on real cases before it goes into use."],
+  ["Train", "We prepare the people who will run it, with manuals, courses, short references, and support on the job."],
+  ["Hand off", "We agree where it lives, who keeps it current, and how staff get help. The client owns everything we built, and we remain available for support afterward."],
 ];
 
 /* Former roles (Who We Are leaders list; photos from the live roster) */

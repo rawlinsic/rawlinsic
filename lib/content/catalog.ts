@@ -3794,18 +3794,18 @@ export const STATES: string[] = [...STATES_ACTIVE, ...STATES_SERVED].sort();
 export const STEPS: string[][] = [
  [
   "Assess",
-  "We find what's working, what isn't, and why, with the people who do the work."
+  "We agree on the decision the work has to support. Then we look at the written requirements and the actual practice side by side, with the people who do the work."
  ],
  [
   "Rebuild",
-  "We fix the structure, process, contract, or system that's holding things back."
+  "We develop the structure, process, contract, or tool with the staff who will use it, and test it on real cases before it goes into use."
  ],
  [
   "Train",
-  "We get your people ready to run it: manuals, courses, and hands-on support."
+  "We prepare the people who will run it, with manuals, courses, short references, and support on the job."
  ],
  [
   "Hand off",
-  "We stay until it runs on its own, and you own everything we built."
+  "We agree where it lives, who keeps it current, and how staff get help. The client owns everything we built, and we remain available for support afterward."
  ]
 ];
