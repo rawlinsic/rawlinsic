@@ -42,7 +42,8 @@ export const AREAS: Area[] = [
     ],
   },
   {
-    id: "delivery", slug: "project-delivery", name: "Program & Project Delivery",
+    id: "delivery", slug: "program-project-delivery", name: "Program & Project Delivery",
+    /* Nov 13 (Nicole: "this link needs to be updated"): the address matches the name; /services/project-delivery redirects */
     tag: "Programs, projects, procurement, & funding", scene: "construction", featuredCase: "cs-transform",
     services: [
       /* content pass v7, 2.1 (Nov 11): Construction & Pre-Construction split in two; Program & Project Delivery renamed.

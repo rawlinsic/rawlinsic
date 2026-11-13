@@ -5,6 +5,9 @@ import { addMove, movedPath } from "@/lib/moved-pages";
 describe("moved pages", () => {
   it("follows a renamed page, through more than one rename", () => {
     expect(movedPath("/services/strategy-organization/executive-advisory")).toBe("/services/strategy-organization/executive-advisory-services");
+    expect(movedPath("/services/project-delivery")).toBe("/services/program-project-delivery");
+    expect(movedPath("/services/project-delivery/project-delivery")).toBe("/services/program-project-delivery/project-delivery");
+    expect(movedPath("/services/project-delivery-x")).toBe("/services/project-delivery-x");
     expect(movedPath("/services/x/a", { a: "b", b: "c" })).toBe("/services/x/c");
     expect(movedPath("/services/x/live", { a: "b" })).toBe("/services/x/live");
   });

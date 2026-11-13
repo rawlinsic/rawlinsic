@@ -1,5 +1,8 @@
 {
   "_why": "Pages whose address changed because their name was renamed (most often with Edit text). Each old address segment -> the new one. next.config.js redirects the old addresses, and preview comments saved on an old address show on the page it moved to. The preview editor adds to this list when a save renames a service or a sub-sector.",
+  "paths": {
+    "/services/project-delivery": "/services/program-project-delivery"
+  },
   "slugs": {
     "executive-advisory": "executive-advisory-services",
     "workforce-leadership-development": "leadership-and-workforce-development",
