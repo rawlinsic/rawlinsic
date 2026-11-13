@@ -8,7 +8,10 @@
    preview's branch, never main; every edit is its own commit, so it can be undone.
    Nov 11 (Nicole: "a save can never change code"): edits only land in page text, a save whose wording is
    already in the files changes nothing, and each changed file must read as the same code afterwards
-   (lib/preview-edit-safe.ts); anything else goes on EDITS-PENDING.md with the reason. */
+   (lib/preview-edit-safe.ts); anything else goes on EDITS-PENDING.md with the reason.
+   Nov 12: the page can be older than the files (a save takes about 2 minutes to show, and a page left open
+   keeps its old wording). The page sends the commit it was built from; when its old wording isn't in the
+   files, the saves made since that commit say what that wording became, and the edit lands on that. */
 import { NextResponse } from "next/server";
 import { place, writeAll, writeSpecial, writeWithBreaks, type Change } from "@/lib/preview-edit-match";
 import { inText, onlyTextChanged, textSpans } from "@/lib/preview-edit-safe";
@@ -28,7 +31,7 @@ export async function POST(req: Request) {
   if (!token) return NextResponse.json({ error: "The editor isn't set up yet (GitHub token missing in Vercel)." }, { status: 503 });
   if (!branch || branch === "main") return NextResponse.json({ error: "This preview's branch can't be edited." }, { status: 403 });
 
-  const body = await req.json().catch(() => null) as { page?: string; name?: string; changes?: Change[] } | null;
+  const body = await req.json().catch(() => null) as { page?: string; name?: string; built?: string; changes?: Change[] } | null;
   if (!body) return NextResponse.json({ error: "Nothing to save" }, { status: 400 });
   const who = String(body.name || "someone").replace(/[\r\n"`<>{}]/g, " ").trim().slice(0, 40) || "someone";
   const changes = (body.changes || []).filter((c) => c && typeof c.old === "string" && typeof c.next === "string" && c.old.trim() && (c.old !== c.next || (typeof c.breaks === "string" && c.breaks.includes("\n"))))
@@ -57,6 +60,25 @@ export async function POST(req: Request) {
       }));
     }
 
+    // saves made after this page was built, oldest first: [old wording, new wording]
+    const built = typeof body.built === "string" && /^[0-9a-f]{40}$/.test(body.built) ? body.built : "";
+    let later: [string, string][] | null = null;
+    const laterSaves = async () => {
+      if (later) return later;
+      later = [];
+      if (!built || built === head) return later;
+      try {
+        const cmp = await gh(`/compare/${built}...${head}?per_page=100`);
+        for (const k of (cmp.commits || []) as { commit?: { message?: string } }[]) {
+          const m = String(k.commit?.message || "");
+          if (!/^Preview edit /.test(m)) continue;
+          for (const line of m.split("\n")) { const x = /^- "(.*)" -> "(.*)"$/.exec(line); if (x) later.push([x[1].trim(), x[2].trim()]); }
+        }
+      } catch { later = []; } // can't tell: the edit goes on the list, as before
+      return later;
+    };
+    const latest = (old: string, pairs: [string, string][]) => { let cur = old.trim(); for (const [a, b] of pairs) if (a === cur) cur = b; return cur; };
+
     const changed = new Map<string, string>();
     const pending: { c: Change; why: string }[] = [];
     let applied = 0, already = 0;
@@ -78,7 +100,16 @@ export async function POST(req: Request) {
       // search the files as they are after the edits already placed in this save
       const now = new Map(Array.from(text.keys()).map((p) => [p, changed.get(p) ?? text.get(p)!] as [string, string]));
       const isText = (path: string, from: number, to: number) => inText(spansFor(path, now.get(path) ?? ""), from, to);
-      const got = place(now, c, { isText });
+      let got = place(now, c, { isText });
+      if ("why" in got) { // not in the files: the page may be older than a save that changed this wording
+        const cur = latest(c.old, await laterSaves());
+        if (cur !== c.old.trim()) {
+          if (cur === c.next.trim()) { already++; continue; }
+          const again = place(now, { ...c, old: cur, nodeOld: undefined, nodeNew: undefined }, { isText });
+          if ("already" in again) { already++; continue; }
+          if (!("why" in again)) { got = again; c.old = cur; c.nodeOld = undefined; c.nodeNew = undefined; } // the commit message then says what was really replaced
+        }
+      }
       if ("already" in got) { already++; continue; } // the new wording is already there: nothing to change
       if ("why" in got) { pending.push({ c, why: got.why }); continue; }
       const writes = Array.from(new Set(got.hits.map((h) => h.path))).map((path) => {
