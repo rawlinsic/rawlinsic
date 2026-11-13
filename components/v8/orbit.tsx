@@ -38,7 +38,8 @@ export default function Orbit({ tiles, children, cta, after }: { tiles: Tile[]; 
       if (fill.textContent !== next) fill.textContent = next;
       fill.style.setProperty("--fit", Math.min(1, 24 / Math.max(1, next.length)).toFixed(3));
       /* and never wider than the space it has (phones, Nov 12) */
-      const room = (fill.parentElement?.clientWidth ?? 0) - 8, need = fill.scrollWidth;
+      const range = document.createRange(); range.selectNodeContents(fill);
+      const room = (fill.parentElement?.clientWidth ?? 0) - 8, need = range.getBoundingClientRect().width; // the text itself (it spills out on both sides when centered)
       if (room > 0 && need > room) fill.style.setProperty("--fit", (parseFloat(fill.style.getPropertyValue("--fit")) * room / need).toFixed(3));
       fill.toggleAttribute("data-on", k >= 0);
     };
@@ -55,16 +56,20 @@ export default function Orbit({ tiles, children, cta, after }: { tiles: Tile[]; 
       /* tighter around the words (Nicole, Nov 10: "too spaced out"), and the photos at the back not so tiny.
          Phones (Nov 12, like scale.com on a phone): bigger photos for the screen, and a wider ring whose ends run
          past the screen's edges, so the photos pass above, below, and beside the words, not over them */
+      /* Nov 13 (Nicole: "the pictures are going off the page"): on phones every photo stays on the screen. The photo
+         at the bottom is nearest (biggest) and the top one farthest, so the ones passing beside the words are mid-size,
+         and the words in the middle are kept narrower than the gap between them (app/v10.css) */
       const phone = W < 700;
-      const big = phone ? W * 0.27 : Math.min(160, Math.max(108, W * 0.1)), small = big * (phone ? 0.5 : 0.42);
-      const rx = phone ? W * 0.56 : Math.max(0, Math.min(W / 2 - big / 2 - 30, 560, W * 0.4));
-      const ry = phone ? H * 0.41 : Math.max(0, Math.min(H / 2 - big / 2 - 26, 330));
-      const ct = Math.cos(TILT), st = Math.sin(TILT);
+      const big = phone ? W * 0.24 : Math.min(160, Math.max(108, W * 0.1)), small = big * (phone ? 0.5 : 0.42);
+      const rx = phone ? W / 2 - (big + small) / 4 - 8 : Math.max(0, Math.min(W / 2 - big / 2 - 30, 560, W * 0.4));
+      const ry = phone ? H / 2 - big / 2 - 14 : Math.max(0, Math.min(H / 2 - big / 2 - 26, 330));
+      const tilt = phone ? -0.1 : TILT;
+      const ct = Math.cos(tilt), st = Math.sin(tilt);
       ts.forEach((t, i) => {
         const a = theta + (i / N) * Math.PI * 2;
         const ex = Math.cos(a), ey = Math.sin(a);
         const x = rx * ex * ct - ry * ey * st, y = rx * ex * st + ry * ey * ct;
-        const d = (1 - ex) / 2; // 1 = nearest (left end)
+        const d = phone ? (1 + ey) / 2 : (1 - ex) / 2; // 1 = nearest (the left end; on phones the bottom)
         const size = small + (big - small) * d, half = size / 2;
         t.style.transform = `translate3d(${(x - half).toFixed(1)}px, ${(y - half).toFixed(1)}px, 0)`;
         t.style.width = t.style.height = `${size.toFixed(1)}px`;
@@ -79,12 +84,6 @@ export default function Orbit({ tiles, children, cta, after }: { tiles: Tile[]; 
       speed += ((held >= 0 ? 0 : 1) - speed) * 0.1;
       theta -= dt * speed * ((Math.PI * 2) / TURN); // the bottom moves right, the top left, as on scale.com
       draw(); place();
-      /* phones and tablets can't point at a photo: the blue line names the photo at the front, as scale.com's does */
-      if (touch && held < 0) {
-        let k = 0, best = -2;
-        ts.forEach((_, i) => { const c = Math.cos(theta + (i / N) * Math.PI * 2); if (-c > best) { best = -c; k = i; } });
-        if (k !== front) { front = k; show(k); }
-      }
       loop = requestAnimationFrame(frame);
     };
     const go = () => { if (!loop && inView && mode === "ring" && !still) { last = 0; loop = requestAnimationFrame(frame); } };
@@ -105,24 +104,54 @@ export default function Orbit({ tiles, children, cta, after }: { tiles: Tile[]; 
       if (still) el.dataset.static = ""; else delete el.dataset.static;
       if (mode === "strip") { ts.forEach((t) => { t.style.cssText = ""; }); strip(); }
       else draw();
+      if (!touch || front < 0) show(-1); // the default line, sized to fit too (phones, Nov 13)
       go();
     };
-    const io = new IntersectionObserver(([e]) => { inView = e.isIntersecting; go(); }, { threshold: 0 });
+    /* the default line is measured again once the fonts are in and when the section comes into view (Nov 13) */
+    const refit = () => { if (front < 0 && held < 0 && !fill.hasAttribute("data-on")) show(-1); };
+    document.fonts?.ready.then(refit).catch(() => {});
+    const io = new IntersectionObserver(([e]) => { inView = e.isIntersecting; if (inView) refit(); go(); }, { threshold: 0 });
     io.observe(el);
     const over = (e: Event) => {
+      if (touch) return;
       const t = (e.target as HTMLElement).closest<HTMLElement>(".orb-t");
       held = t ? ts.indexOf(t) : -1;
       show(held);
     };
-    const leave = () => { held = -1; show(-1); };
+    const leave = () => { if (touch) return; held = -1; show(-1); };
     ring.addEventListener("pointerover", over);
     ring.addEventListener("pointerleave", leave);
+    /* phones and tablets (Nov 13, Nicole, like scale.com on a phone): the name in the middle changes every 2 seconds;
+       tapping a photo shows its name and turns the button into "Learn more" for that group; tapping the same photo
+       again opens its page */
+    const cta = el.querySelector<HTMLAnchorElement>(".orb-cta");
+    const ctaText = cta?.textContent ?? "", ctaHref = cta?.getAttribute("href") ?? "";
+    let picked = -1;
+    const tick = window.setInterval(() => {
+      if (!touch || picked >= 0 || !inView || document.hidden || mode !== "ring") return;
+      front = (front + 1) % N;
+      show(front);
+    }, 2000);
+    const tap = (e: MouseEvent) => {
+      if (!touch) return;
+      const t = (e.target as HTMLElement).closest<HTMLAnchorElement>(".orb-t");
+      if (!t) return;
+      const k = ts.indexOf(t);
+      if (k === picked) return; // a second tap on the same photo opens its page
+      e.preventDefault();
+      picked = k; show(k);
+      if (cta) { cta.textContent = "Learn more"; cta.setAttribute("href", t.getAttribute("href") || ctaHref); }
+    };
+    ring.addEventListener("click", tap);
+    void ctaText;
     document.addEventListener("visibilitychange", go);
     setMode();
     window.addEventListener("scroll", on, { passive: true });
     window.addEventListener("resize", setMode);
     reduce.addEventListener?.("change", setMode);
     return () => {
+      window.clearInterval(tick);
+      ring.removeEventListener("click", tap);
       io.disconnect();
       cancelAnimationFrame(loop); cancelAnimationFrame(raf);
       ring.removeEventListener("pointerover", over);

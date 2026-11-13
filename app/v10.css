@@ -1263,7 +1263,9 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
   .h-orbit[data-mode="ring"] .orb-stage { min-height: 0; height: calc(100svh - 68px); max-height: 760px; }
   .h-orbit[data-mode="ring"] .orb-center { padding: 0 24px; }
   .h-orbit[data-mode="ring"] .orb-center .orb-lead { display: none; }
-  .h-orbit[data-mode="ring"] .orb-after { display: block; padding: 0 22px 48px; text-align: center; }
+  .h-orbit[data-mode="ring"] .orb-after { display: block; padding: 8px 22px 120px; text-align: center; } /* room so the next section doesn't cover it (Nov 13) */
+  /* the words stay inside the gap between the photos passing on each side (Nov 13) */
+  .h-orbit[data-mode="ring"] .orb-h { max-width: calc(64vw - 28px); margin-left: auto; margin-right: auto; font-size: min(2.2rem, 9vw); }
   .h-orbit[data-mode="ring"] .orb-after .orb-lead { margin: 0 auto; }
 }
 /* Nov 12 (Nicole: the search "looks like shit with the blue outline"): no box around the search field, just its
@@ -1304,3 +1306,5 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
   .sn.has-more.is-open > ul a { padding: 11px 14px !important; font-size: 1rem !important; border-radius: 12px; color: #0a1220; }
   .sn.has-more.is-open > ul a[aria-current="true"] { background: #e6f9fc; box-shadow: inset 3px 0 0 #22d3ee; }
 }
+/* Write your own now leads the list (Nov 13): the small gap goes under it instead of above */
+.fp-list > li:first-child > .fp-q-own { margin-top: 0; margin-bottom: 6px; }

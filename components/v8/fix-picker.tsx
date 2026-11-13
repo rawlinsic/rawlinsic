@@ -89,6 +89,13 @@ export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic
       <div className="fp-left">
         <p className="fp-k" id="fp-k">Pick the one that sounds most like you</p>
         <ul className="fp-list" aria-labelledby="fp-k">
+          {/* Write your own first (Nicole, Nov 13) */}
+          <li>
+            <button type="button" className="fp-q fp-q-own" aria-pressed={sel === OWN} onClick={() => pick(OWN)}>
+              <span className="fp-dot" aria-hidden="true" />Write your own
+            </button>
+            {narrow && sel === OWN && <div className="fp-inline" aria-live="polite">{answer}</div>}
+          </li>
           {fixes.map((x, i) => (
             <li key={x.q}>
               <button type="button" className="fp-q" aria-pressed={sel === i} onClick={() => pick(i)}>
@@ -97,12 +104,6 @@ export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic
               {narrow && sel === i && <div className="fp-inline" aria-live="polite">{answer}</div>}
             </li>
           ))}
-          <li>
-            <button type="button" className="fp-q fp-q-own" aria-pressed={sel === OWN} onClick={() => pick(OWN)}>
-              <span className="fp-dot" aria-hidden="true" />Write your own
-            </button>
-            {narrow && sel === OWN && <div className="fp-inline" aria-live="polite">{answer}</div>}
-          </li>
         </ul>
       </div>
       {!narrow && <div className="fp-right" aria-live="polite">{answer}</div>}
