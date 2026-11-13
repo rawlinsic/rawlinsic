@@ -12,6 +12,7 @@
 import { NextResponse } from "next/server";
 import { place, writeAll, writeSpecial, writeWithBreaks, type Change } from "@/lib/preview-edit-match";
 import { inText, onlyTextChanged, textSpans } from "@/lib/preview-edit-safe";
+import { BACKUP_LOCKED, isBackupVersion } from "@/lib/preview-gh";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,6 +28,7 @@ export async function POST(req: Request) {
   const repo = `${process.env.VERCEL_GIT_REPO_OWNER || "rawlinsic"}/${process.env.VERCEL_GIT_REPO_SLUG || "rawlinsic"}`;
   if (!token) return NextResponse.json({ error: "The editor isn't set up yet (GitHub token missing in Vercel)." }, { status: 503 });
   if (!branch || branch === "main") return NextResponse.json({ error: "This preview's branch can't be edited." }, { status: 403 });
+  if (isBackupVersion(branch)) return NextResponse.json({ error: BACKUP_LOCKED }, { status: 403 });
 
   const body = await req.json().catch(() => null) as { page?: string; name?: string; changes?: Change[] } | null;
   if (!body) return NextResponse.json({ error: "Nothing to save" }, { status: 400 });

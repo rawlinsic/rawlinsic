@@ -8,6 +8,7 @@ export function previewGitHub(): { gh: GH; branch: string } | { error: string; s
   const token = process.env.EDIT_GITHUB_TOKEN, branch = process.env.VERCEL_GIT_COMMIT_REF;
   if (!token) return { error: "The review tools aren't set up yet (GitHub token missing in Vercel).", status: 503 };
   if (!branch || branch === "main") return { error: "This preview's branch can't be changed.", status: 403 };
+  if (isBackupVersion(branch)) return { error: BACKUP_LOCKED, status: 403 };
   const repo = `${process.env.VERCEL_GIT_REPO_OWNER || "rawlinsic"}/${process.env.VERCEL_GIT_REPO_SLUG || "rawlinsic"}`;
   const gh: GH = async (path, init) => {
     const r = await fetch(`https://api.github.com/repos/${repo}${path}`, { ...init, headers: { authorization: `Bearer ${token}`, accept: "application/vnd.github+json", "x-github-api-version": "2022-11-28", ...(init?.headers || {}) }, cache: "no-store" });
@@ -20,6 +21,11 @@ export function previewGitHub(): { gh: GH; branch: string } | { error: string; s
 /* The review version (Nicole, Nov 12): the branch other people comment on. Any branch with "review" as a word
    in its name. Comments carry each person's name, and Delete section is off. */
 export const isReviewVersion = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => /(^|[-_/])review($|[-_/])/i.test(branch);
+
+/* A backup (Nicole, Nov 12): a frozen copy to look back at while the site changes. Any branch with "backup" as a
+   word in its name. It shows the site as it was, with no review tools, and nothing can be saved to it. */
+export const isBackupVersion = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => /(^|[-_/])backup($|[-_/])/i.test(branch);
+export const BACKUP_LOCKED = "This is a backup copy. It can't be changed.";
 
 /* Only Nicole deletes sections: on by default, off on Jacob's version and on the review version. */
 export const canDeleteSections = (branch = process.env.VERCEL_GIT_COMMIT_REF || "") => !/jacob/i.test(branch) && !isReviewVersion(branch);
