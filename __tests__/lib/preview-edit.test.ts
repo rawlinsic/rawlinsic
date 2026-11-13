@@ -65,4 +65,15 @@ describe("preview Edit text never changes code", () => {
     expect(onlyTextChanged("x.tsx", `const B = <p>Hi there</p>;`, `const B = <p>Hi<br />there</p>;`)).toBe(true);
     expect(onlyTextChanged("x.tsx", `const B = <p className="a">Hi</p>;`, `const B = <p className="b">Hi</p>;`)).toBe(false);
   });
+
+  it("finds a paragraph that starts after a line break written in the string (Nov 12)", () => {
+    const f = new Map<string, string>([["lib/content/catalog.ts", `export const SERVICES = { "x": { "intro": "First part.\\n\\nMaintenance quality assurance is part of it. Each has its own page." } };`]]);
+    const del = save(f, { old: "Maintenance quality assurance is part of it. Each has its own page.", next: "" });
+    expect((del as { out: Map<string, string> }).out.get("lib/content/catalog.ts")).toContain(`"intro": "First part.\\n\\n"`);
+    const ed = save(f, { old: "Maintenance quality assurance is part of it.", next: "Quality assurance is part of it." });
+    expect((ed as { out: Map<string, string> }).out.get("lib/content/catalog.ts")).toContain(`\\n\\nQuality assurance is part of it. Each`);
+    // a word glued to letters is still not a match
+    const g = new Map<string, string>([["lib/content/site.ts", `export const A = { tag: "Replanning matters" };`]]);
+    expect("why" in place(g, { old: "planning matters", next: "x" })).toBe(true);
+  });
 });

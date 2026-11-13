@@ -256,15 +256,16 @@ export function ServiceFeature({ id }: { id: string }) {
         ["Quality assurance and ratings", "Handbooks and rating programs decisions can rely on", ["cs-transform", "cs-txmaint"]],
         // Backed by the cs-nv-om review and by cs-nv-fleet-program (Rawlins fleet analysis and implementation support, 2022 to 2023).
         ["Fleet and facilities", "The right equipment, in the right shape, at the right cost", ["cs-nv-om", "cs-nv-fleet-program"]],
-        // TODO(launch): links cs-drt. needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.
-        ["Winter operations and emergency readiness", "Plans tested before they're needed, including drone response teams", ["cs-txmaint", "cs-drt"]],
+        /* Nov 12 (Nicole): the graphic now shows on Asset Management, and she had this part taken off it (it is Maintenance
+           Programs work). Kept for the record:
+           ["Winter operations and emergency readiness", "Plans tested before they're needed, including drone response teams", ["cs-txmaint", "cs-drt"]] */
       ];
-      /* redesigned Nov 11 (Nicole: "make that more clear"): the four kinds of work this service covers, each with
+      /* redesigned Nov 11 (Nicole: "make that more clear"): the kinds of work this service covers (three since Nov 12), each with
          what it means and the projects where we've done it */
       return (
         <div className="cov">
           <div className="v8-wrap">
-            <div className="cov-head"><p className="v8-eyebrow">What this covers</p><h2 className="v8-h2">Four kinds of maintenance work, and where we&apos;ve done each</h2></div>
+            <div className="cov-head"><p className="v8-eyebrow">What this covers</p><h2 className="v8-h2">Three kinds of maintenance work, and where we&apos;ve done each</h2></div>
             <ol className="cov-grid">
               {parts.map(([t, d, ids], i) => (
                 <li key={t}>

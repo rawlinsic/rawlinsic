@@ -61,7 +61,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
           </div>
           <div className="arh-side">
             {/* paragraphs split on a blank line (Nov 12) */}
-            {L.lead.split("\n\n").map((p, k) => <p key={k} className="sv-intro">{p}</p>)}
+            {L.lead.split("\n\n").filter((p) => p.trim()).map((p, k) => <p key={k} className="sv-intro">{p}</p>)}
             <div className="v8-actions">
               <a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a>
               {cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See our work</a>}

@@ -16,15 +16,18 @@ export type IsText = (path: string, from: number, to: number) => boolean;
 export type PlaceOpts = { nested?: boolean; isText?: IsText };
 
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/* the wording starts and ends at word edges. A line break written in a string (\n) counts as an edge, so a paragraph
+   that starts right after one is found too (Nov 12: deleting the third paragraph of a service's opening didn't save) */
+const LB = "(?<!(?<!\\\\)[A-Za-z0-9_])", LA = "(?![A-Za-z0-9_])";
 /* the wording as it may be written in code: any run of spaces or line breaks,
    and apostrophes or quotes written plain, curly, as entities, or escaped */
 export const pattern = (s: string) =>
   new RegExp(
-    (/^\w/.test(s.trim()) ? "(?<![A-Za-z0-9_])" : "") +
+    (/^\w/.test(s.trim()) ? LB : "") +
     s.trim().split(/\s+/).map((w) =>
       esc(w).replace(/&/g, "(?:&|&amp;)").replace(/['’]/g, "(?:'|’|&apos;|&#x27;|&rsquo;|\\\\')").replace(/["“”]/g, '(?:"|“|”|&quot;|\\\\")'),
     ).join("\\s+") +
-    (/\w$/.test(s.trim()) ? "(?![A-Za-z0-9_])" : ""),
+    (/\w$/.test(s.trim()) ? LA : ""),
     "g",
   );
 
@@ -149,7 +152,7 @@ function template(files: Map<string, string>, o: string, n: string, c: Change, i
     tries.push([a, b]);
     for (let a2 = b + 1; a2 < words.length; a2++) for (let b2 = a2 + 1; b2 <= words.length; b2++) tries.push([a, b, a2, b2]);
   }
-  const part = (ws: string[]) => (ws.length ? pattern(ws.join(" ")).source.replace(/^\(\?<!\[A-Za-z0-9_\]\)|\(\?!\[A-Za-z0-9_\]\)$/g, "") : "");
+  const part = (ws: string[]) => { if (!ws.length) return ""; let x = pattern(ws.join(" ")).source; if (x.startsWith(LB)) x = x.slice(LB.length); if (x.endsWith(LA)) x = x.slice(0, -LA.length); return x; };
   for (const cut of tries) {
     const segs: { fixed: boolean; ws: string[] }[] = [];
     let at = 0;

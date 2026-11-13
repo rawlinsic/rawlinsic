@@ -35,8 +35,8 @@ const STATUS: Record<string, string> = { warn: "Proven, copy needed", gap: "Need
 const STEP_KIND: Record<string, DiagramKind> = { "asset-mgmt": "cycle", "strategic-planning": "loop", workforce: "track", "training-video": "track" };
 /* "Inside a project delivery network" moved from Program Delivery to Preconstruction (content pass v7, 2.3) */
 const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "preconstruction", "operations", "portals", "drone-aam", "drone-programs"];
-/* a page that shows another page's graphic after its own steps (Nicole, Nov 12: the Maintenance Programs graphic,
-   "Four kinds of maintenance work", goes on Asset Management, where three of its four parts now have their pages) */
+/* a page that shows another page's graphic after its own steps (Nicole, Nov 12: the Maintenance Programs graphic goes on
+   Asset Management, where its parts now have their own pages; its winter operations part came off) */
 const FEATURE_FROM: Record<string, string> = { "asset-mgmt": "operations" };
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
@@ -121,7 +121,7 @@ export default function ServiceV8({ id }: { id: string }) {
             <p className="sv-area"><a href={areaHref(area)}>{area.name}</a></p>
             <h1>{s.name}</h1>
             {/* paragraphs split on a blank line (Nov 12) */}
-            {s.intro.split("\n\n").map((p, k, all) => <p key={k} className="sv-intro">{linked(p, s.links)}{k === all.length - 1 && <LineNote text={s.intro} />}</p>)}
+            {s.intro.split("\n\n").filter((p) => p.trim()).map((p, k, all) => <p key={k} className="sv-intro">{linked(p, s.links)}{k === all.length - 1 && <LineNote text={s.intro} />}</p>)}
             <div className="v8-actions">
               <a className="v8-btn v8-btn-area" href="#talk">Talk to us</a>
               {hasWork && <a className="v8-btn v8-btn-ghost" href="#work">{workTitle}</a>}

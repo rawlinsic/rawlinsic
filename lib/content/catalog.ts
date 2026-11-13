@@ -880,13 +880,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Asset Management",
   "area": "om",
   "st": "ok",
-  "intro": "Asset management is how an organization brings together the right people, skills, and actions to make better decisions about its assets over time. It is more than the Transportation Asset Management Plan. It connects decisions across the whole organization.\n\nWe help agencies build that: a clear picture of what they own and what condition it is in, measures that connect strategy to field work, and a management structure that turns the agency's objectives into coordinated decisions.\n\nMaintenance quality assurance, maintenance outsourcing, performance-based maintenance contracting, and fleet and facilities are all part of asset management. Each has its own page.",
-  "links": {
-   "Maintenance quality assurance": "mqa",
-   "maintenance outsourcing": "outsourcing",
-   "performance-based maintenance contracting": "pbmc",
-   "fleet and facilities": "fleet"
-  },
+  "intro": "Asset management is how an organization brings together the right people, skills, and actions to make better decisions about its assets over time. It is more than the Transportation Asset Management Plan. It connects decisions across the whole organization.\n\nWe help agencies build that: a clear picture of what they own and what condition it is in, measures that connect strategy to field work, and a management structure that turns the agency's objectives into coordinated decisions.",
   "hear": [
    "We fix the worst first, and it costs us more over the life of the asset.",
    "No one owns asset management here.",
