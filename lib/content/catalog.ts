@@ -407,7 +407,7 @@ export const SERVICES: Record<string, SvcData> = {
   "walk": [
    "A single point of accountability on the owner's side",
    "Regular reporting on scope, schedule, cost, and quality",
-   "Issues raised and resolved early, before they become claims"
+   "Issues raised early, with a record of how each was resolved"
   ],
   "industries": [
    "transport",
@@ -500,7 +500,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Consultant & Contractor Procurement",
   "area": "delivery",
   "st": "ok",
-  "intro": "We help organizations stay compliant and buy the services they need consistently, from solicitation through contract administration and closeout.\n\nConsultant work is often acquired through steps that don't connect: the scope, the effort estimate, the evaluation, the negotiation, and what the manager expects afterward. We map that process with the units that run it and write the procedures and templates. Where it helps, we build the workflow into a system staff use every day.",
+  "intro": "We help organizations stay compliant and buy the services they need consistently, from solicitation through contract administration and closeout.\n\nBuying consultant work runs through several steps: the scope, the effort estimate, the evaluation, the negotiation, and how the work is managed afterward. We map that process with the units that run it, connect the steps, and write the procedures and templates. Where it helps, we build the workflow into a working system.",
   "hear": [
    "Consultant fees vary for comparable work.",
    "We need contracts industry will bid on, administered the same way in every district.",
@@ -620,7 +620,7 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "walk": [
    "A construction administration manual and inspection procedures",
-   "Software workflows staff actually use",
+   "Written workflows for the agency's construction software",
    "Proficiency programs for inspectors and technicians",
    "Reconciled guidance, with an owner for updates"
   ],
@@ -640,7 +640,7 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "done": [
    "**A state DOT:** we interviewed seven districts, surveyed peer states, and briefed construction leadership. Then we wrote a Construction Administration Manual matched to the department's 2026 standard specifications, with flow charts for calendar-day and working-day contracts and guidance on change orders.",
-   "**Tennessee Department of Transportation:** we built a construction technician proficiency program with task sheets for every level, rolled it out through academy workshops in the regions, and completed it in April 2025. The materials and tests program is complete, and the department now runs it itself. A bridge inspection program followed, with its kickoff set for April 2025.",
+   "**Tennessee Department of Transportation:** we built a construction technician proficiency program with task sheets for every level, rolled it out through academy workshops in the regions, and completed it in April 2025. The materials and tests program is complete, and the department now runs it itself. A bridge inspection program followed in spring 2025.",
    "**Another state DOT:** we identified field staffing for 31 field offices and presented recommendations on its construction division to executives.",
    "**A state DOT:** proficiency programs for its construction engineers and its materials and tests engineers, each reviewed with the department's own experts.",
    "**A state DOT:** we assessed three of its platforms (design and construction documents, capital program management, and inspection) for overlap and integration, built a materials source inventory, and reviewed contractor claims with its districts."
@@ -655,7 +655,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Local Public Agency Programs",
   "area": "delivery",
   "st": "ok",
-  "intro": "Local agencies deliver federal-aid projects with lean teams. We help states and local agencies with the manuals, oversight, certification, and training that keep those projects moving.\n\nA state answers for the federal-aid projects its local agencies deliver. We help the state set up the program: who does what at headquarters, in the districts, and at the local agency; a manual that covers a project from start to closeout; a certification process; and training built on the manual.",
+  "intro": "We help states and local agencies with the manuals, oversight, certification, and training that keep local federal-aid projects moving.\n\nA state answers for the federal-aid projects its local agencies deliver. We help the state set up the program: who does what at headquarters, in the districts, and at the local agency; a manual that covers a project from start to closeout; a certification process; and training built on the manual.",
   "hear": [
    "Local agencies need clear manuals and oversight.",
    "Federal requirements land on lean teams.",
@@ -664,11 +664,10 @@ export const SERVICES: Record<string, SvcData> = {
   "quote": true,
   "deliverTitle": "What this service covers",
   "deliver": [
-   "**Local public agency manuals, oversight, and certification:** the manual local agencies follow, a certification process, and an oversight policy",
-   "**Training for local agencies:** courses on what a federal-aid project requires of a local agency",
+   "**The local public agency manual:** chapters from federal-aid basics through financial management, including agencies that let their own contracts",
+   "**Certification and oversight:** a certification process and an oversight policy",
+   "**Training:** a core course on what a federal-aid project requires of a local agency, and training for the staff in responsible charge",
    "**Program structure:** roles for headquarters, districts, and local agencies",
-   "**Manual chapters** from federal-aid basics through financial management, including agencies that let their own contracts",
-   "**Core training and Responsible Charge training:** a core course, and training for the staff in responsible charge of federal-aid projects",
    "**The local programs office:** assessment and organization"
   ],
   "walk": [
@@ -704,7 +703,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Grant Applications & Delivery",
   "area": "delivery",
   "st": "ok",
-  "intro": "A strong operational idea deserves a fundable application. We help agencies find the funding, write the application reviewers can score, and issue grants of their own, so programs that would otherwise stall get started. When an award comes through, we help put it to work.",
+  "intro": "We help agencies find funding, write applications reviewers can score, and put an award to work once it comes through. For agencies that award funds themselves, we help write and run the solicitation.",
   "hear": [
    "There's grant money out there. Nobody has time to chase it.",
    "We're a small staff competing for federal funding.",
@@ -722,7 +721,7 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "walk": [
    "A complete competitive application with task structure, budget, and measurement plan",
-   "Task structure and budget logic reusable for the next opportunity",
+   "A task structure and a budget that can be used again for the next opportunity",
    "A published solicitation that attracts the right responses, when the agency is the one issuing grants"
   ],
   "industries": [
@@ -802,7 +801,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Statewide & Metropolitan Planning",
   "area": "delivery",
   "st": "ok",
-  "intro": "A long-range plan, an improvement program, and a work program each make a promise. We help agencies keep the three connected, so what the plan calls a priority is what gets programmed, and what gets programmed can be delivered.\n\nFor a state department, that is the planning function itself: how it is organized, how the Statewide Transportation Improvement Program is built and kept current, and how it lines up with the asset management plan. For a metropolitan planning organization, it is meeting federal performance and certification rules with a lean staff.",
+  "intro": "We help agencies keep the long-range plan, the improvement program, and the work program connected, so the priorities in the plan carry through to what is programmed and to what is ready to deliver.\n\nFor a state department, that is the planning function itself: how it is organized, how the Statewide Transportation Improvement Program is built and kept current, and how it lines up with the asset management plan. For a metropolitan planning organization, it is meeting federal performance and certification rules with a lean staff.",
   "hear": [
    "The statewide program and the asset management plan don't agree.",
    "Keeping the transportation improvement program and the work program current takes everything we have.",
@@ -922,7 +921,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Federal-Aid Programs",
   "area": "delivery",
   "st": "ok",
-  "intro": "For a federal program to succeed, programmed funding must turn into projects that are ready to advance. We help states and local agencies get there.\n\nReadiness is the hard part: environmental work, right of way, utilities, design, and procurement each carry schedule and funding risk. So does oversight, when a local agency delivers the project and the state answers for it. We help agencies write the guidance, set the oversight, and prepare the staff who carry both.",
+  "intro": "For a federal program to succeed, programmed funding must turn into projects that are ready to advance. We help states and local agencies get there.\n\nGetting a project ready means environmental work, right of way, utilities, design, and procurement, and each carries schedule and funding risk. So does oversight, when a local agency delivers the project and the state answers for it. We help agencies write the guidance, set the oversight, and prepare the staff who carry both.",
   "hear": [
    "Programmed funds don't turn into projects ready to advance.",
    "New federal programs come with new rules.",
@@ -939,7 +938,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Benefit-cost analysis** with the federal tools"
   ],
   "walk": [
-   "A program that moves funded projects to construction",
+   "A review of the program that shows which projects are ready and what the others need",
    "Written guidance for the federal programs staff run",
    "Oversight steps sized to the risk"
   ],
@@ -979,7 +978,7 @@ export const SERVICES: Record<string, SvcData> = {
   "quote": true,
   "deliverTitle": "What this service covers",
   "deliver": [
-   "**Risk allocation and partnering facilitation:** project charters, issue resolution ladders, joint risk workshops, and team evaluations",
+   "**Partnering facilitation** between an owner and its contractor, from kickoff through closeout",
    "**A kickoff** that sets the charter, shared goals, communication protocols, and an issue resolution ladder before the pressure builds",
    "**Joint risk workshops, recurring partnering sessions, and anonymous team surveys** reported to both sides",
    "**Owner and contractor coordination** on major projects",
@@ -2050,7 +2049,7 @@ export const AREAS: Record<string, AreaData> = {
   ],
   "lead": "From the projects an agency chooses to how it administers construction, we help owners set up the processes, decisions, and tools that make delivery consistent, and we stay while staff put them to use. We do the work with agency staff, and the agency owns the result.",
   "hear": [
-   "Projects keep missing the year they were promised.",
+   "Projects keep missing deadlines.",
    "There's grant money out there. Nobody has time to chase it.",
    "Every manager runs projects their own way.",
    "Our procedures live in people's heads, or in five versions of the same binder.",
@@ -3435,8 +3434,8 @@ export const CASES: Record<string, CaseData> = {
    "Starting a concept study pilot for pavement preservation projects",
    "## The tools",
    "Built the toolkit project teams use: a Master Scope of Work template and generator, a Cost Estimating Tool, a risk register and Risk Management Plan, a Project Commitment Document, a Project Status Report, concept study report templates and checklists, quality control checklists, and request forms for utilities, railroad, right of way, geotechnical, hydraulic, and bridge work",
-   "Tied the Project Manager's Manual and a staff-hour estimating tool to the network's tasks",
-   "Built staff-hour and cost estimating packages",
+   "Tied the Project Manager's Manual and a man-hour estimating tool to the network's tasks",
+   "Built man-hour and cost estimating packages",
    "Posting and checking updates to the scope of work generator, cost estimating tool, and other templates before release",
    "Published clean copies of every tool and template, with tracked changes and reviewer comments removed",
    "## The website",
@@ -3875,7 +3874,7 @@ export const CASES: Record<string, CaseData> = {
    "Rebuilt the first six steps of consultant contracting as one connected workflow, starting from a single intake form",
    "Built the workflow on the department's work management platform: intake forms with conditional logic, an advertisement request board, a proposal scoring engine with weighted criteria and firm ranking, contract execution routing, letters generated from records, task order and purchase order tracking, invoice review gates, and audit holds",
    "Turned the agreement request form and the consensus scoring tool into standalone web applications",
-   "Wrote general engineering services scopes, and a staff-hour estimating tool tied to the delivery network's tasks"
+   "Wrote general engineering services scopes, and a man-hour estimating tool tied to the delivery network's tasks"
   ],
   "res": [
    "National best practices report approved in October 2025",

@@ -91,7 +91,7 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
     { t: "", d: "Put them to use: prepare staff, name owners, and place projects already under way at the right point." },
   ] },
   construction: { title: "How we do it", steps: [
-    { t: "", d: "Map the administrative process, the governing documents, the approval thresholds, and the escalation paths. Find the real cause of the delay." },
+    { t: "", d: "Map the administrative process, the governing documents, the approval thresholds, and the escalation paths, and note where decisions and approvals slow down." },
     { t: "", d: "Reconcile the manuals, the directives, and day-to-day practice with the people who own each one." },
     { t: "", d: "Redesign the workflow across units, and write down the information, approvals, exceptions, and records it needs." },
     { t: "", d: "Pilot the change, help staff take it up, and name an owner for updates." },

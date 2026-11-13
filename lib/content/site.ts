@@ -314,10 +314,10 @@ export const WHY: [string, string][] = [
 
 /* How we've grown (content updates v4, 7.6). Also shows on Who we are. */
 export const STORY: [string, string, string][] = [
-  ["foundation", "Deep Transportation Agency Expertise", "Our founder, Scott Rawlins, spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer, and started Rawlins in 2017 to bring that experience to other agencies. Our team has worked inside complex public agencies for years, so we know the constraints, the decision-making, and the culture it takes to get work done."],
-  ["EVOLUTION", "Advisory Capabilities", "We partner with enterprises to modernize processes, empower team members, and embrace new technologies, coordinating these actions to achieve meaningful results. We pride ourselves on establishing long-term relationships with our family of clients."],
-  ["innovation", "Drones and Advanced Air Mobility", "We guide the planning, implementation, and integration of advanced air mobility and uncrewed aircraft systems within existing transport networks, supporting the development of multimodal connected communities."],
-  ["frontier", "Data Governance, Automation, & AI", "Our in-house team connects the systems clients already own, automates the busywork, and puts AI to work where it helps. We help agencies navigate governance structures, improve data practices, incorporate analytics, and use emerging tools. Our automation and integration specialists streamline workflows, enabling people to focus on the uniquely human work that matters most for organizational success."],
+  ["foundation", "Deep Transportation Agency Expertise", "Rawlins started with people who had worked inside public agencies. We know the constraints, the decision-making, and the culture it takes to get work done there."],
+  ["EVOLUTION", "Advisory Capabilities", "We advise agency leaders on how to organize and deliver their programs: the plan, the structure, the processes, and the people who carry them out."],
+  ["innovation", "Drones and Advanced Air Mobility", "We help agencies set up and run drone programs and plan for advanced air mobility: procedures, pilot training, emergency response, and guidance for local governments."],
+  ["frontier", "Data Governance, Automation, & AI", "Our in-house team connects the systems clients already own, automates repeated steps, and puts AI to work where it helps. We also help agencies set up data governance, so the numbers behind a decision can be trusted."],
 ];
 
 /* the four steps (About: How we work file v1, Nov 13); the same text is in lib/content/catalog.ts STEPS */

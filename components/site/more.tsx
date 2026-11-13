@@ -73,7 +73,7 @@ export function AboutIndex() {
   const faces = [...veteranPeople(), ...people].filter((p, k, a) => a.findIndex((x) => x.slug === p.slug) === k).slice(0, 6);
   return (
     <Shell>
-      <EdHero crumbs={[["/about", "About"]]} kicker="About Rawlins" title={<>, and a team that <em>builds the tools.</em></>}
+      <EdHero crumbs={[["/about", "About"]]} kicker="About Rawlins" title={<>Agency experience, and a team that <em>builds the tools.</em></>}
         lead={<p>Founded in 2017 by a former Nevada DOT chief engineer. Today more than 25 of our people come from public agencies, and they work alongside an in-house digital team that builds websites, workflows, dashboards, training, and AI tools.</p>}
         actions={<><EdBtn href="/about/our-people">Meet our people</EdBtn><EdBtn href="/about/who-we-are" kind="ghost">Our story</EdBtn></>}
         aside={<div className="ab-hero-ph">{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/images/pages/team-group-outdoor.webp" alt="" /></div>} />
@@ -81,10 +81,10 @@ export function AboutIndex() {
       <EdSec k="Inside Rawlins" title="Find your way around">
         <ul className="ab-bento">
           <li className="ab-b-who"><a href="/about/who-we-are">{/* eslint-disable-next-line @next/next/no-img-element */}{/* our team at the 2026 Hawaii summit; the outdoor group photo is already this page's top photo (Nicole, Nov 11: no large indoor group photo) */}<img src="/images/pages/insights-hawaii-summit-2026-team.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Who we are</b><span>Our story, how we&apos;ve grown since 2017, and why agencies call us.</span></span></a></li>
-          <li className="ab-b-people"><a href="/about/our-people"><span className="ab-b-faces">{faces.map((p) => /* eslint-disable-next-line @next/next/no-img-element */ <img key={p.slug} src={p.photo} alt="" loading="lazy" />)}</span><span className="ab-b-txt"><b>our people</b><span>{people.length} people: advisors who ran the programs, and the specialists who build the tools.</span></span></a></li>
+          <li className="ab-b-people"><a href="/about/our-people"><span className="ab-b-faces">{faces.map((p) => /* eslint-disable-next-line @next/next/no-img-element */ <img key={p.slug} src={p.photo} alt="" loading="lazy" />)}</span><span className="ab-b-txt"><b>Our people</b><span>{people.length} people: advisors who ran the programs, and the specialists who build the tools.</span></span></a></li>
           <li className="ab-b-how"><a href="/about/how-we-work"><span className="ab-b-steps">{STEPS.map(([t], k) => <i key={t}><em>{String(k + 1).padStart(2, "0")}</em>{t}</i>)}</span><span className="ab-b-txt"><b>How we work</b><span>Four steps, from assessment to handoff, and what guides the work.</span></span></a></li>
           <li className="ab-b-where"><a href="/about/where-we-work"><span className="ab-b-num">{STATES.length}<small>states</small></span><span className="ab-b-txt"><b>Where we work</b><span>Global Reach,<br />Local Impact, with team members in Canada, South Africa, and the UAE.</span></span></a></li>
-          <li className="ab-b-careers"><a href="/careers">{/* eslint-disable-next-line @next/next/no-img-element */}{/* two teammates at the 2026 company retreat, July 24, 2026 (Business Development SharePoint; cropped so there are no labels) */}<img src="/images/pages/careers-retreat-2026-teammates.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Careers</b><span>Work next to people who&apos;ve done the job.</span></span></a></li>
+          <li className="ab-b-careers"><a href="/careers">{/* eslint-disable-next-line @next/next/no-img-element */}{/* two teammates at the 2026 company retreat, July 24, 2026 (Business Development SharePoint; cropped so there are no labels) */}<img src="/images/pages/careers-retreat-2026-teammates.webp" alt="" loading="lazy" /><span className="ab-b-txt"><b>Careers</b><span>Want to work with us? Reach out.</span></span></a></li>
         </ul>
       </EdSec>
       <Talk />
