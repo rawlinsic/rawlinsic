@@ -436,7 +436,7 @@ export const SERVICES: Record<string, SvcData> = {
   "hear": [
    "This is our first project under a new delivery method.",
    "There is risk on this project that no one has allocated.",
-   "How do we choose the right delivery method?",
+   "How do we choose the right delivery method",
    "We want to use alternative delivery, and no one inside owns it."
   ],
   "quote": true,
