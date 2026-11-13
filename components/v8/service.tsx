@@ -36,6 +36,9 @@ const PROD = process.env.VERCEL_ENV === "production";
 const STATUS: Record<string, string> = { warn: "Proven, copy needed", gap: "Needs expert content" };
 const STEP_KIND: Record<string, DiagramKind> = { "asset-mgmt": "cycle", "strategic-planning": "loop", workforce: "track", "training-video": "track" };
 /* "Inside a project delivery network" moved from Program Delivery to Preconstruction (content pass v7, 2.3) */
+/* pages that show their "From our work" block and their How we do it steps, the block first (Preconstruction's "Inside a
+   project delivery network", put back by Nicole's Program & Project Delivery file v7, Nov 13) */
+const FEATURE_AND_STEPS = ["preconstruction"];
 const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "preconstruction", "operations", "portals", "drone-aam", "drone-programs"];
 /* a page that shows another page's graphic after its own steps (Nicole, Nov 12: the Maintenance Programs graphic goes on
    Asset Management, where its parts now have their own pages; its winter operations part came off) */
@@ -113,6 +116,7 @@ export default function ServiceV8({ id }: { id: string }) {
   const aviation = AVIATION_PAGES.includes(id);
   const sections: [string, string][] = [
     ["hear", hearTitle(s.hear)], ["deliver", deliverTitle],
+    ...(steps && FEATURE_AND_STEPS.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
     ...(steps ? [["how", steps.title] as [string, string]] : HAS_FEATURE.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
     ...(FEATURE_FROM[id] ? [["feature", "What this covers"] as [string, string]] : []),
     ["walk", "What you walk away with"],
@@ -186,6 +190,9 @@ export default function ServiceV8({ id }: { id: string }) {
         </div>
       </Scene>
 
+      {steps && FEATURE_AND_STEPS.includes(id) && (
+        <section id="feature" className="sv-legacy"><ServiceFeature id={id} /></section>
+      )}
       {steps && (
         <Scene steps={1} per={100} id="how" className="sv-scene fit-scene" label={steps.title}>
           <div className="v8-wrap fit-in">

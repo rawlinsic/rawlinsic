@@ -275,7 +275,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Program assessments and roadmaps:** why the system is missing its commitments, and a sequence of improvements with owners",
    "**Program development manuals:** selection, programming, and the call for projects, written down for the people who run them",
    "**Workload and capacity planning:** staff effort by discipline matched to the program, and a plan for what goes to consultants",
-   "**Program quality assurance**",
+   "**Program quality assurance:** quality checks at set points in delivery, with the checklists staff use for them",
    "**Program and project leadership** for complex, multi-agency work, including interim program leadership and program management offices"
   ],
   "walk": [
@@ -325,10 +325,12 @@ export const SERVICES: Record<string, SvcData> = {
   "deliverTitle": "What this service covers",
   "deliver": [
    "**Project delivery frameworks** from concept study to readiness for advertisement, with an interactive manual",
-   "**Concept scoping and project evaluation**",
+   "**Every discipline's part in the process:** activities, deliverables, and handoffs for planning, survey, road design, bridge design, pavement, hydraulics, geotechnical, environmental, traffic engineering, highway safety, intelligent transportation systems, right of way, and utilities, with construction and maintenance review along the way",
+   "**Quality and cost estimate checks:** set points in the process where every discipline's work and the cost estimate are checked",
+   "**Concept scoping and project evaluation:** a repeatable way to scope a project idea and compare candidates on the same basis",
    "**Handoffs from design through award into construction,** written as business rules the agency's systems can follow",
    "**Project management functions:** the unit, the manual, and staff capability",
-   "**Estimating methods and tools**",
+   "**Estimating methods and tools:** what an estimate has to contain at each stage, who reviews it, and the tools behind it",
    "**Right of way built into project delivery:** activities, handoffs, and a right of way strategy meeting",
    "**Right of way programs:** assessments, procedures, appraiser career paths, and proficiency programs for right of way staff",
    "**Utilities:** coordination, relocation practice, and what other states do",
@@ -363,7 +365,7 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-transform"
   ],
   "done": [
-   "**A state DOT:** inside its project delivery framework, we built the tools project teams use: a Master Scope of Work template and generator, a Cost Estimating Tool, a risk register and Risk Management Plan, a Project Commitment Document, study report templates, quality control checklists, and request forms for utilities, railroad, right of way, geotechnical, hydraulic, and bridge work.",
+   "**A state DOT:** inside its project delivery network, we wrote the activities for every discipline with the department's own experts, and built the tools project teams use: a Master Scope of Work template and generator, a Cost Estimating Tool, a risk register and Risk Management Plan, a Project Commitment Document, study report templates, quality control checklists, and request forms for utilities, railroad, right of way, geotechnical, hydraulic, and bridge work.",
    "**Tennessee Department of Transportation:** we assessed its right of way program and its utilities function, reviewed its environmental program, and worked with its regions on environmental reevaluations and clearance for maintenance activities. We surveyed other state DOTs on utility cost estimates and relocation reimbursement for a policy presentation to the Commissioner. We drafted right of way proficiencies with its statewide representatives, and a classification series for its right of way agents and appraisers.",
    "**Another state DOT:** an interactive Project Delivery Manual with chapters on scope, schedule, cost and budget, risk, quality, change management, stakeholder coordination, and project controls.",
    "**A state DOT:** we documented its project delivery workflows by discipline with its design staff, in a week on site.",
@@ -388,10 +390,10 @@ export const SERVICES: Record<string, SvcData> = {
   "quote": true,
   "deliverTitle": "What this service covers",
   "deliver": [
-   "**Representation of the owner's interests**",
-   "**Contractor and consultant coordination**",
-   "**Scope, quality, schedule, and standards oversight**",
-   "**Commitment and risk tracking**",
+   "**Representation of the owner's interests:** an advisor on the owner's side in contract meetings and field reviews",
+   "**Contractor and consultant coordination:** regular calls with the contractor and the agency on how the contract is being administered",
+   "**Scope, quality, schedule, and standards oversight:** the work checked against the contract's requirements and standards",
+   "**Commitment and risk tracking:** what each side has agreed to do, and the risks still open, kept on record",
    "**Contract start-up:** onboarding the contractor, mobilization, and launch",
    "**Performance reviews:** field reviews, deficiency and remedy calls, and scoring against the contract"
   ],
@@ -446,7 +448,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Delivery method selection** across design-build, progressive design-build, construction manager at risk (also called construction manager/general contractor), and public-private partnerships",
    "**Procurement readiness:** scoring criteria and document review",
    "**The alternative delivery organization:** the division, its roles, and position descriptions",
-   "**Design-build procurement manuals and documents**",
+   "**Design-build procurement manuals and documents:** the procurement manual, request for proposals language, and scoring method",
    "**Bridge bundling:** which bridges to bundle, and how to procure the bundles"
   ],
   "walk": [
@@ -477,7 +479,7 @@ export const SERVICES: Record<string, SvcData> = {
   "done": [
    "**Tennessee Department of Transportation:** we wrote its Design-Build Procurement Manual and flowcharts for every delivery method, and drafted an adjusted-score design-build request for proposals. Our study of contracting methods for maintenance ended in a workshop and a final report recommending a design-build job order contract for its safety improvement program.",
    "**A state DOT:** national research on progressive design-build, peer review questions, and a State of the Practice Workshop.",
-   "**A state DOT:** an alternative delivery and public-private partnership screening tool and selection matrix, built into its project delivery framework. For its bridges: bundling options, a bundling list with maps by district, and procurement recommendations.",
+   "**A state DOT:** an alternative delivery and public-private partnership screening tool and selection matrix, built into its project delivery network. For its bridges: bundling options, a bundling list with maps by district, and procurement recommendations.",
    "**A state DOT:** a new division for major projects, public-private partnerships, and tolling, defined from its organization structure to position descriptions for the whole division. Before that, for the same department: a primer for its public-private partnership division, position descriptions for its alternative delivery project managers, and alternative delivery proficiencies reviewed with its experts."
   ],
   "src": {
@@ -499,15 +501,15 @@ export const SERVICES: Record<string, SvcData> = {
   "deliverTitle": "What this service covers",
   "deliver": [
    "**Procurement advisory** from solicitation to closeout",
-   "**Consultant contract administration**",
-   "**Cost and price analysis and negotiation**",
+   "**Consultant contract administration:** process documentation, templates, and invoice review, set against what other states do",
+   "**Cost and price analysis and negotiation:** rate analysis, negotiation memo templates, and a negotiations manual",
    "**Consultant and professional services management:** fee methods, selection, and prequalification",
    "**Policies and procedures manuals** for professional services",
    "**Scope templates** by contract type and discipline",
    "**Advertisement and selection:** one-phase and two-phase processes, evaluation criteria, and scoring",
-   "**Effort estimating and negotiation tools**",
+   "**Effort estimating and negotiation tools:** a tool that estimates the hours a scope should take, tied to the tasks in the delivery process",
    "**Consultant acquisition planning:** what goes to consultants, and when",
-   "**Contract tracking and close-out**",
+   "**Contract tracking and close-out:** an active contract list and a written close-out process",
    "**Contracting workflow systems:** intake, routing, scoring, generated letters, and invoice review"
   ],
   "walk": [
@@ -599,11 +601,11 @@ export const SERVICES: Record<string, SvcData> = {
   "deliverTitle": "What this service covers",
   "deliver": [
    "**Construction administration and policy:** change orders, claims review, approval thresholds, and contractor payments",
-   "**Construction manuals, policies, and inspection procedures**",
-   "**Construction software workflows**",
+   "**Construction manuals, policies, and inspection procedures:** written or updated to match current specifications and field practice",
+   "**Construction software workflows:** how the work moves through the agency's inspection, materials, and contract systems, and where those systems overlap",
    "**Construction and maintenance input** at every step of project development",
-   "**Construction, materials testing, and bridge inspection proficiency programs**",
-   "**Field office staffing and organization**",
+   "**Construction, materials testing, and bridge inspection proficiency programs:** what staff at each level need to be able to do, with task sheets and workshops to roll them out",
+   "**Field office staffing and organization:** staffing for each field office, and how district construction offices are organized",
    "**Claims and issue support:** the record organized, the issues laid out, and the discussion facilitated"
   ],
   "walk": [
@@ -651,11 +653,11 @@ export const SERVICES: Record<string, SvcData> = {
   "quote": true,
   "deliverTitle": "What this service covers",
   "deliver": [
-   "**Local public agency manuals, oversight, and certification**",
-   "**Training for local agencies**",
+   "**Local public agency manuals, oversight, and certification:** the manual local agencies follow, a certification process, and an oversight policy",
+   "**Training for local agencies:** courses on what a federal-aid project requires of a local agency",
    "**Program structure:** roles for headquarters, districts, and local agencies",
    "**Manual chapters** from federal-aid basics through financial management, including agencies that let their own contracts",
-   "**Core training and Responsible Charge training**",
+   "**Core training and Responsible Charge training:** a core course, and training for the staff in responsible charge of federal-aid projects",
    "**The local programs office:** assessment and organization"
   ],
   "walk": [
@@ -700,11 +702,11 @@ export const SERVICES: Record<string, SvcData> = {
   "quote": true,
   "deliverTitle": "What this service covers",
   "deliver": [
-   "**Funding opportunity matching**",
+   "**Funding opportunity matching:** a running tracker of funding programs, matched to what the agency wants to do",
    "**Federal grant applications:** task structure, budget, narrative",
    "**Partners and support:** letters of support and coordination with the partners an application names",
-   "**Issuing grants and solicitations on an agency's behalf**",
-   "**Turning awards into working programs**"
+   "**Issuing grants and solicitations on an agency's behalf:** writing the solicitation, publishing it, and evaluating what comes back",
+   "**Turning awards into working programs:** the training, procurement, and progress reporting an award needs once it is won"
   ],
   "walk": [
    "A complete competitive application with task structure, budget, and measurement plan",
@@ -754,7 +756,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Contract financial analysis:** the financial effect of contracting work out, built from the agency's contracts, fleet, fuel, and staffing records",
    "**Performance-based budgeting:** budgets tied to condition and service targets",
    "**Program funds management:** budget partitions, target allocations, and how estimate changes are handled",
-   "**Financial and utilization analysis**"
+   "**Financial and utilization analysis:** staff effort by discipline set against the work program, to show what the agency can deliver in house and what goes to consultants"
   ],
   "walk": [
    "Budgets tied to what the program has to deliver",
@@ -798,11 +800,11 @@ export const SERVICES: Record<string, SvcData> = {
   "deliver": [
    "**The planning organization:** how long-range planning, short-range planning, multimodal, freight, and local programs are organized and staffed",
    "**Statewide Transportation Improvement Program guidance:** grouped projects, fiscal constraint, and how the program lines up with the asset management plan",
-   "**Performance-based planning and reporting**",
-   "**Project selection and prioritization methods**",
-   "**Transportation improvement program and work program support**",
-   "**Performance measures and progress tracking**",
-   "**Getting ready for federal certification reviews**",
+   "**Performance-based planning and reporting:** the federal performance measures, target setting, and the reports that go with them",
+   "**Project selection and prioritization methods:** criteria, scoring, and a record of why each project was chosen",
+   "**Transportation improvement program and work program support:** building the improvement program and the planning work program, and keeping both current",
+   "**Performance measures and progress tracking:** measures tied to the plan's goals, and a routine for reporting progress",
+   "**Getting ready for federal certification reviews:** a review of documents and processes ahead of the federal review",
    "**Planning staff development:** proficiency programs for forecasting, modeling, data visualization, and statewide planning"
   ],
   "walk": [
@@ -841,7 +843,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Project Delivery",
   "area": "delivery",
   "st": "ok",
-  "intro": "From concept study to construction closeout, we help owners set up the processes, handoffs, and tools that make project delivery consistent, and we stay while staff put them to use.\n\nA project delivery framework sets out the steps, what each discipline does in each one, who is accountable, and what has to be complete before a project moves on. We build it with the agency's own experts, from what they already have.",
+  "intro": "From concept study to construction closeout, we help owners set up the processes, handoffs, and tools that make project delivery consistent, and we stay while staff put them to use.\n\nA project delivery framework, which some agencies call a project delivery network, sets out the steps, what each discipline does in each one, who is accountable, and what has to be complete before a project moves on. We build it with the agency's own experts, from what they already have.",
   "hear": [
    "Every manager runs projects their own way.",
    "Our procedures live in people's heads, or in five versions of the same binder.",
@@ -855,7 +857,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Project delivery manuals, playbooks, risk and quality tools, and role-based training,** built from what already exists",
    "**Construction and maintenance input** at every step of project development",
    "**The project management organization:** the unit, its roles, position descriptions, and measures",
-   "**Project manager's manuals and training**",
+   "**Project manager's manuals and training:** the manual, courses, and onboarding that new and experienced project managers work from",
    "**Toolkits:** scope of work, cost estimating, risk, commitment and status reports, and request forms",
    "**Rollout:** orientation, pilot projects, and a plan for projects already under way",
    "**A home for it:** a website with a searchable library, computer-based training, and a way for staff to ask for changes"
@@ -886,7 +888,7 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-transform"
   ],
   "done": [
-   "**A state DOT:** we built its project delivery framework with the department's own experts: the process mapped step by step for every discipline, with more than 200 task sheets. The first version went to the department in December 2025. Since then: training for project managers, orientation sessions for leadership and delivery staff, pilot projects, a toolkit, computer-based training, its own website, and version 2.3 in October 2026.",
+   "**A state DOT:** we built its project delivery network with the department's own experts: five steps from concept study to plans, specifications, and estimate, mapped for 17 disciplines, with more than 200 task sheets. The first version went to the department in December 2025. Since then: training for project managers, orientation sessions for leadership and delivery staff, pilot projects, a toolkit, computer-based training, its own website, and version 2.3 in October 2026.",
    "**Another state DOT:** we designed its new project management organization, approved in June 2026, with three new roles and nine position descriptions. With it came an interactive Project Delivery Manual, eleven project manager courses, and executive measures with a dashboard.",
    "**Tennessee Department of Transportation:** we worked the department's transition projects in two regions, with project schedules, master scopes of work, risk assessment meetings, and risk registers. An onboarding process we wrote for consultants was shared with all regions for statewide use.",
    "**A state DOT:** position descriptions and proficiency programs for its project managers and senior project managers, finalized in 2025. At the department's request they cover project funding, value engineering, and Federal Highway Administration major projects.",
@@ -917,7 +919,7 @@ export const SERVICES: Record<string, SvcData> = {
   "quote": true,
   "deliverTitle": "What this service covers",
   "deliver": [
-   "**Federal-aid program development and compliance**",
+   "**Federal-aid program development and compliance:** how the program is set up to meet federal requirements, from eligibility through financial management",
    "**Local public agency manuals and training** for the staff in responsible charge of federal-aid projects",
    "**Statewide Transportation Improvement Program guidance:** grouped projects and fiscal constraint",
    "**Program guidance for federal funding programs:** selection score sheets, eligibility, and the federal correspondence that goes with them",

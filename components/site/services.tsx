@@ -72,6 +72,9 @@ const DIGITAL_PROOF = [
 /* Inside a project delivery network (Preconstruction): each piece with a simple line icon */
 const ic = (d: string) => <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
 const NETWORK: [string, ReturnType<typeof ic>][] = [
+  /* Nov 13 (Nicole's Program & Project Delivery file, v7): two new lines first */
+  ["Five steps, from concept study to plans, specifications, and estimate", ic("M3 19h4v-4h4v-4h4V7h4V3")],
+  ["Activities for 17 disciplines, each with its deliverables and responsible parties", ic("M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z")],
   ["Tools, templates, and workflows for every phase", ic("M4 5h7v6H4zM13 5h7v6h-7zM4 13h7v6H4zM13 16h7M16.5 13v6")],
   ["Project management plans and commitment tracking", ic("M9 6h11M9 12h11M9 18h11M4 6l1.2 1.2L7 5M4 12l1.2 1.2L7 11M4 18l1.2 1.2L7 17")],
   ["Risk registers and risk training", ic("M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6zM12 8v5M12 16v.5")],

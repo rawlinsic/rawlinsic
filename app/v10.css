@@ -1358,3 +1358,7 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .rl-btns button:disabled { opacity: 0.35; cursor: default; background: #fff; color: var(--ink); }
 .h-work .h-row-head { padding-right: 0; }
 .rl-track { padding-bottom: 18px; }
+
+/* Nov 13 (Program & Project Delivery file v7): the network block has six pieces now (three rows); the dashed line joins
+   the middles of the first and last rows */
+.nwk-grid:has(> li:nth-child(5))::before { top: 16.7%; bottom: 16.7%; }
