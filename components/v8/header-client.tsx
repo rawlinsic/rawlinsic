@@ -94,6 +94,24 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
   /* a click right after hover-open keeps the menu open (it used to close it) */
   const toggle = (m: Menu) => { window.clearTimeout(timer.current); if (open === m && Date.now() - openedAt.current > 500) setOpen(null); else show(m); };
   const hoverClose = () => { window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setOpen(null), 160); };
+  /* Review comments on menu items (Nicole, Nov 12: "the comments disappear and you can't click them"). The pins and
+     their cards are drawn outside the header, so moving the mouse onto one counted as leaving the menu: it closed
+     and took the pin with it. A menu now stays open while the mouse is on a pin or a comment card, and while a
+     card is open (being read or written). It closes as before once the mouse is somewhere else. */
+  const onTool = (t: EventTarget | null) => t instanceof Element && !!t.closest(".pc-pin, .pc-pop");
+  const cardOpen = () => !!document.querySelector(".pc-pop");
+  const leave = (e: { relatedTarget: EventTarget | null }) => { if (onTool(e.relatedTarget) || cardOpen()) { window.clearTimeout(timer.current); return; } hoverClose(); };
+  useEffect(() => {
+    if (!open) return;
+    const over = (e: MouseEvent) => {
+      const t = e.target instanceof Element ? e.target : null;
+      if (!t || t.closest("header.hx")) return; // inside the header: its own handlers decide
+      if (onTool(t) || cardOpen()) { window.clearTimeout(timer.current); return; }
+      window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setOpen(null), 160);
+    };
+    document.addEventListener("mouseover", over);
+    return () => document.removeEventListener("mouseover", over);
+  }, [open]);
 
   const results = (
     <div className="hx-results" aria-live="polite">
@@ -104,7 +122,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
   );
 
   return (
-    <header className={`hx${scrolled ? " is-scrolled" : ""}${open ? " is-open" : ""}`} onMouseLeave={hoverClose}>
+    <header className={`hx${scrolled ? " is-scrolled" : ""}${open ? " is-open" : ""}`} onMouseLeave={leave}>
       <div className="hx-bar" ref={bar}>
         <a href="/" className="hx-logo" aria-label="Rawlins home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
