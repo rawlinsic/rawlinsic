@@ -2064,7 +2064,7 @@ export const AREAS: Record<string, AreaData> = {
    "title": "Across the project life cycle",
    "steps": [
     {
-     "t": "Plan and program",
+     "t": "Plan",
      "d": "Selection, prioritization, and funding",
      "services": [
       "program-delivery",
