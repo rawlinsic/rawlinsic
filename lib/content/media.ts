@@ -73,6 +73,11 @@ export const SERVICE_PHOTO: Record<string, string> = {
   construction: P("transportation-aerial.webp"),
   lpa: P("michigan.webp"),
   grants: P("tnbig.webp"),
+  /* Nov 12: pages split off or added to Program & Project Delivery reuse the photo of the page their text came from */
+  finance: P("auto-optimize.webp"), // Finance, Budget & Procurement
+  partnering: P("aam-team-meeting.webp"), // Alternative Delivery & Partnering
+  "federal-aid": P("michigan.webp"), // Local Public Agency & Federal-Aid Programs
+  planning: P("cs-hero-9.webp"), // Regional & Metropolitan Planning Support
   "asset-mgmt": P("tnbig.webp"),
   operations: P("cs-hero-1.webp"),
   traffic: P("transportation-aerial.webp"),

@@ -1174,3 +1174,18 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 /* ── Nov 12, 2026 (5) ── comments on menu items: a number on the menu's name while the menu is closed ── */
 .pc-pin.pc-menu { width: 26px; height: 26px; margin: 0; border-radius: 999px; background: #22d3ee; color: #04131f; font-size: 0.78rem; border-color: #0a1220; }
 .pc-pin.pc-menu:hover { background: #a5f3fc; }
+
+/* ── Nov 12, 2026 (Nicole): menu structure ─────────────────────────────
+   What We Do: Preconstruction and Construction sit under Project Delivery.
+   Who We Work With: Public Sector and Private Sector are headlines (each still opens its page, no line under it);
+   Transportation Sector and Contractors sit under them; International Markets stays on its own at the bottom. */
+.mx-what li.is-child > a, .hx-areas li.is-child > a { position: relative; padding-left: 18px; }
+.mx-what li.is-child > a::before, .hx-areas li.is-child > a::before { content: ""; position: absolute; left: 3px; top: 50%; width: 9px; height: 1px; background: currentColor; opacity: 0.5; }
+.mx-inds li.mx-head > a { padding: 6px 14px 4px; }
+.mx-inds li.mx-head > a b { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy, #1f3864); }
+.mx-inds li.mx-head > a:hover b, .mx-inds li.mx-head > a[aria-current="true"] b { color: var(--blue); }
+.mx-inds li.mx-head:not(:first-child) { margin-top: 12px; }
+.mx-inds li.mx-child { padding-left: 12px; }
+.mx-inds li.mx-intl { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.hx-acc li.mx-head > a { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding-bottom: 4px; }
+.hx-acc li.mx-child { padding-left: 14px; }

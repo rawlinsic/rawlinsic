@@ -65,8 +65,6 @@ const team = (people: readonly (readonly string[])[]): TeamCard[] =>
 const THIN_NOTE: Record<string, string> = {
   "sub-ports": PAGE_STATUS["sub-ports"],
   "sub-rail": "Content status: one Rawlins project stands behind this page, partnering on a light rail line in 2019. The rest is experience on our team from earlier roles.",
-  "g-capital": "Content status: no Rawlins project yet. A city project delivery and permitting assessment was scoped in Sep 2026, and our records show no signed contract. Scott or Joey to confirm whether it has started.",
-  "g-mpo": "Content status: no Rawlins project yet; the page leads with experience on our team.",
 };
 /* the note a specialty carries on previews: its own, or the plain "thin" mark when it has none */
 const thinNote = (s: Subsector, fallback: string) => (THIN_NOTE[s.id] ? <Dev>{THIN_NOTE[s.id]}</Dev> : s.thin ? <Dev>{fallback}</Dev> : undefined);
@@ -368,11 +366,15 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   const people: TeamCard[] = []; // was team(d.people)
   const work = cases.slice(0, 6);
   const next = nextIndustry(ind.id);
-  const crumbs: Crumb[] = [["/industries", "Who We Work With"], [industryHref(ind), ind.name]];
+  /* Nov 12 (Nicole): a sector under a headline shows the headline in its trail; a headline page links to what is under it */
+  const parent = VISIBLE_INDUSTRIES.find((i) => i.id === ind.parent);
+  const kids = VISIBLE_INDUSTRIES.filter((i) => i.parent === ind.id);
+  const crumbs: Crumb[] = [["/industries", "Who We Work With"], ...(parent ? [[industryHref(parent), parent.name] as Crumb] : []), [industryHref(ind), ind.name]];
   const intl = ind.id === "intl";
   const actions = (
     <>
       <a className="v8-btn v8-btn-area" href="/contact">Get in touch</a>
+      {kids.map((k) => <a key={k.id} className="v8-btn v8-btn-ghost" href={industryHref(k)}>{k.name}</a>)}
       {work.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See the work</a>}
     </>
   );
@@ -505,7 +507,7 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
   const hero = (
     <FrameHero photo={INDUSTRY_PHOTO.private} crumbs={[["/industries", "Who We Work With"], [industryHref(ind), ind.name]]}
       tag="for growing firms" title="Private Sector" lead={ind.lead}
-      actions={<a className="v8-btn v8-btn-area" href="/contact">Book a short call</a>} />
+      actions={<><a className="v8-btn v8-btn-area" href="/contact">Book a short call</a>{VISIBLE_INDUSTRIES.filter((i) => i.parent === ind.id).map((k) => <a key={k.id} className="v8-btn v8-btn-ghost" href={industryHref(k)}>{k.name}</a>)}</>} />
   );
   return (
     <Page sections={sections} hero={hero} more={{ label: "Who We Work With", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) }}>

@@ -41,7 +41,9 @@ export function IndustryPage({ ind }: { ind: Industry }) {
      the client on cs-pv-pmo). The page shows the first six. */
   const cases = (ind.id === "contractors"
     ? CONTRACTOR_CASES.map((id) => caseById(id)).filter(Boolean) as CaseIndex[]
-    : [...ind.projects.map((id) => caseById(id)).filter(Boolean) as CaseIndex[], ...CASES.filter((c) => c.industry === ind.id && !ind.projects.includes(c.id))]
+    : [...ind.projects.map((id) => caseById(id)).filter(Boolean) as CaseIndex[], ...CASES.filter((c) => c.industry === ind.id && !ind.projects.includes(c.id)),
+      /* a headline page (Public Sector) goes on to the projects of the sectors under it (Nov 12) */
+      ...CASES.filter((c) => VISIBLE_INDUSTRIES.some((i) => i.parent === ind.id && i.id === c.industry) && !ind.projects.includes(c.id))]
   ).filter(isOurs);
   return <IndustryV8 ind={ind} cases={cases} />;
 }

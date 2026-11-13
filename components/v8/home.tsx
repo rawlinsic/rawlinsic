@@ -10,7 +10,7 @@
 import ProjectCard from "@/components/v8/project-card";
 import FanCards from "@/components/v8/fan-cards";
 import type { CSSProperties } from "react";
-import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, INDUSTRIES, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, subsectorHref } from "@/lib/content/site";
+import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, INDUSTRIES, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, serviceHref, subsectorHref } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, AREA_PHOTO_POS, INDUSTRY_PHOTO } from "@/lib/content/media";
 import { CaseNote, Dev } from "@/components/site/ui";
@@ -78,19 +78,21 @@ export default function Home() {
   // Highways or Bridges stay off. Spread so neighbors come from different groups.
   const ind = (id: string) => INDUSTRIES.find((i) => i.id === id)!;
   const subOf = (iid: string, sid: string) => ind(iid).subsectors.find((x) => x.id === sid)!;
+  /* Nov 12 (Nicole): Other Government Services and its four modes are off the site. Their tiles stay on the ring and
+     open the Public Sector page, or Statewide & Metropolitan Planning for the planning organizations. */
   const ring: (Tile & { off?: boolean })[] = [
     { src: INDUSTRY_PHOTO.transport, label: "State DOTs", href: industryHref(ind("transport")) },
     { src: INDUSTRY_PHOTO.gov, label: "Government & Public Agencies", href: industryHref(ind("gov")) },
     { src: INDUSTRY_PHOTO.contractors, label: "Contractors", href: industryHref(ind("contractors")) },
     { src: INDUSTRY_PHOTO["sub-aviation"], label: "Airports", href: subsectorHref(ind("transport"), subOf("transport", "sub-aviation")) },
-    { src: INDUSTRY_PHOTO["g-asset"], label: "Local Agencies", href: subsectorHref(ind("gov"), subOf("gov", "g-asset")) },
+    { src: INDUSTRY_PHOTO["g-asset"], label: "Local Agencies", href: industryHref(ind("gov")) },
     { src: INDUSTRY_PHOTO.private, label: "Private Firms", href: industryHref(ind("private")) },
     { src: "/images/pages/aam-policy-planning.webp", label: "Aeronautics Divisions", href: subsectorHref(ind("transport"), subOf("transport", "sub-aviation")) },
     { src: INDUSTRY_PHOTO["sub-rail"], label: "Transit Agencies", href: subsectorHref(ind("transport"), subOf("transport", "sub-rail")), note: OFF_RING["sub-rail"] },
-    { src: INDUSTRY_PHOTO["g-capital"], label: "Cities", href: subsectorHref(ind("gov"), subOf("gov", "g-capital")), note: OFF_RING["g-capital"] },
+    { src: INDUSTRY_PHOTO["g-capital"], label: "Cities", href: industryHref(ind("gov")), note: OFF_RING["g-capital"] },
     { src: INDUSTRY_PHOTO["sub-ports"], label: "Ports & Harbors", href: subsectorHref(ind("transport"), subOf("transport", "sub-ports")), note: OFF_RING["sub-ports"] },
-    { src: INDUSTRY_PHOTO["g-mpo"], label: "Metropolitan Planning Organizations", href: subsectorHref(ind("gov"), subOf("gov", "g-mpo")), note: OFF_RING["g-mpo"] },
-    { src: INDUSTRY_PHOTO["g-federal"], label: "Multi-State & Federal Programs", href: subsectorHref(ind("gov"), subOf("gov", "g-federal")) },
+    { src: INDUSTRY_PHOTO["g-mpo"], label: "Metropolitan Planning Organizations", href: serviceHref("planning"), note: OFF_RING["g-mpo"] },
+    { src: INDUSTRY_PHOTO["g-federal"], label: "Multi-State & Federal Programs", href: industryHref(ind("gov")) },
     /* International is hidden on the live site, so it's on the ring on previews only */
     { src: INDUSTRY_PHOTO.intl, label: "International Agencies", href: industryHref(ind("intl")), note: "", off: true },
   ];

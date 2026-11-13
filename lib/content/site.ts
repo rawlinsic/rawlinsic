@@ -19,7 +19,8 @@ export type SceneKey =
   | "office" | "map" | "rise" | "sky" | "globe";
 
 /* ── Services: five headings ─────────────────────────────────── */
-export type Service = { id: string; slug: string; name: string; scene?: SceneKey };
+/* parent: the service it sits under in the menus (Nicole, Nov 12: Preconstruction and Construction under Project Delivery) */
+export type Service = { id: string; slug: string; name: string; scene?: SceneKey; parent?: string };
 export type Area = {
   id: string; slug: string; name: string; tag: string; scene: SceneKey;
   services: Service[]; featuredCase?: string;
@@ -41,19 +42,27 @@ export const AREAS: Area[] = [
     ],
   },
   {
-    id: "delivery", slug: "project-delivery", name: "Program &Project Delivery",
+    id: "delivery", slug: "project-delivery", name: "Program & Project Delivery",
     tag: "Getting programs & projects built", scene: "construction", featuredCase: "cs-transform",
     services: [
       /* content pass v7, 2.1 (Nov 11): Construction & Pre-Construction split in two; Program & Project Delivery renamed.
-         The old addresses redirect (next.config.js). */
+         Nov 12 (Nicole's list for this menu, in her order): Finance, Budget & Procurement split into Finance & Budget and
+         Consultant & Contractor Procurement; Alternative Delivery & Partnering split in two; Local Public Agency &
+         Federal-Aid Programs split in two; Grants & Funding renamed; Statewide & Metropolitan Planning and Project
+         Delivery added; Preconstruction and Construction sit under Project Delivery; Right of Way is off the site
+         (her note: it is part of preconstruction). The old addresses redirect (next.config.js). */
       svc("program-delivery", "Program Development", "interchange"),
-      svc("preconstruction", "Preconstruction"),
-      svc("construction", "Construction"),
-      svc("alt-delivery", "Alternative Delivery & Partnering", "site"),
-      svc("row", "Right of Way - remove part of precons. all tech specialty areas on PDN - these need to be mentioned on preconstruction", "rural"),
-      svc("procurement", "Finance, Budget & Procurement", "office"),
-      svc("lpa", "Local Public Agency & Federal-Aid Programs", "street"),
-      svc("grants", "Grants & Funding", "crossing"),
+      svc("finance", "Finance & Budget", "office"),
+      svc("planning", "Statewide & Metropolitan Planning", "grid"),
+      svc("proj-delivery", "Project Delivery", "construction"),
+      { ...svc("preconstruction", "Preconstruction"), parent: "proj-delivery" },
+      { ...svc("construction", "Construction"), parent: "proj-delivery" },
+      svc("alt-delivery", "Alternative Delivery", "site"),
+      svc("procurement", "Consultant & Contractor Procurement", "office"),
+      svc("federal-aid", "Federal-Aid Programs", "street"),
+      svc("lpa", "Local Public Agency Programs", "street"),
+      svc("grants", "Grant Applications & Delivery", "crossing"),
+      svc("partnering", "Partnering", "site"),
       svc("owners-rep", "Owner's Representation", "site"),
     ],
   },
@@ -113,6 +122,9 @@ export type Subsector = { id: string; slug: string; name: string; line: string; 
 export type Industry = {
   id: string; slug: string; name: string; who: string; lead: string; scene: SceneKey;
   subsectors: Subsector[]; featured: string[]; featuredCase?: string; hidden?: boolean; projects: string[];
+  /* parent: the headline it sits under in the Who We Work With menu (Nicole, Nov 12): Transportation Sector under
+     Public Sector, Contractors under Private Sector. The headline keeps its own page. */
+  parent?: string;
 };
 
 const sub = (id: string, name: string, scene: SceneKey, line: string, thin = false): Subsector =>
@@ -120,18 +132,35 @@ const sub = (id: string, name: string, scene: SceneKey, line: string, thin = fal
 
 export const INDUSTRIES: Industry[] = [
   {
-    id: "transport", slug: "transportation", name: "Transportation Sector", scene: "interchange",
+    /* Nov 12 (Nicole): this is now the Public Sector headline in the menu, with Transportation Sector under it. It keeps
+       a page. "Other Government Services" and its four modes (Asset Management, Capital Project Delivery & Permitting,
+       Regional & Metropolitan Planning Support, Federal & Multi-State Programs) are off the site; the old addresses
+       redirect here (next.config.js). */
+    id: "gov", slug: "public-sector", name: "Public Sector", scene: "street",
+    who: "", // no line under the Public Sector headline (Nicole, Nov 12)
+    // cs-local-am (through a state infrastructure office) and cs-pooled are the two Rawlins projects here.
+    // Capital delivery and regional planning rest on experience from earlier roles; the lead says what that experience is.
+    // Nov 12: put together from the Who We Work With page's opening sentence and the two leads this page and the
+    // Transportation page already had. No new facts. Nicole to review.
+    lead: "Most of our work is with the public agencies that own and run infrastructure: more than 30 transportation agencies, local agencies, and a multi-state research program. Most of that work is with state departments of transportation. With cities, counties, and regional agencies, our work so far is asset management with local agencies, through a state infrastructure office. For capital project delivery and regional planning, we bring experience from city public works and the Federal Highway Administration.",
+    featured: ["asset-mgmt", "program-delivery", "planning", "lpa", "federal-aid", "grants", "research", "portals", "strategic-planning"],
+    featuredCase: "cs-local-am",
+    projects: ["cs-local-am", "cs-pooled"],
+    subsectors: [],
+  },
+  {
+    id: "transport", slug: "transportation", name: "Transportation Sector", scene: "interchange", parent: "gov",
     who: "Federal Government, State DOTs, & Local Governments", // Nicole's wording (preview edit, Nov 12, 4:24 PM); the Who we work with file's line for this field was skipped
     // 31 agencies: 19 directly or through a prime, 12 through the drone standards pooled fund (CONTENT FIXES v3, section 3).
     // Transit: one partnering project (2019). Harbors: one client. Named for what they are, with no count.
     lead: "Most of our work is with state departments of transportation, and we've served more than 30 transportation agencies so far. We help them organize the department, choose and deliver projects, maintain and operate what they own, and put drones and digital tools to work. Most of that work is on highways and bridges. We also support state aeronautics programs, and we've worked on a light rail line and with a state harbors program.",
-    featured: ["program-delivery", "preconstruction", "row", "construction", "operations", "traffic", "asset-mgmt", "portals", "drone-programs"],
+    featured: ["program-delivery", "preconstruction", "construction", "operations", "traffic", "asset-mgmt", "portals", "drone-programs"],
     featuredCase: "cs-major",
     projects: ["cs-transform", "cs-proficiency", "cs-aero"],
     subsectors: [
       sub("sub-highways", "Highways & Bridges", "rural", "Most of our work is on state highway systems: how projects are chosen, readied, built, and maintained."),
-      // "billion-dollar river crossings" was wrong: only one of them cost over a billion
-      sub("sub-bridges", "", "crossing", "Partnering on major river crossings, proficiency programs that cover bridge inspection, and a multi-state standard for drone data on structures."),
+      /* Bridges & Structures is off the site (Nicole emptied its name, Nov 12, 5:22 PM, and asked for it out of the menu):
+         Highways is now Highways & Bridges. Its old address redirects there (next.config.js). */
       sub("sub-aviation", "Aviation & Airports", "airport", "State aeronautics divisions, airports, and the drone and advanced air mobility programs growing around them. We help small aviation staffs run programs, plan for what's next, and compete for federal funding."),
       // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's line for this field was skipped
       sub("sub-rail", "Rail & Transit", "rail", "Our transit work includes partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation."),
@@ -141,23 +170,18 @@ export const INDUSTRIES: Industry[] = [
     ],
   },
   {
-    id: "gov", slug: "government-public-works", name: "Other Government Services", scene: "street",
-    who: "Non-Transportation Infrastructure Support", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
-    // cs-local-am (through a state infrastructure office) and cs-pooled are the two Rawlins projects here.
-    // Capital delivery and regional planning rest on experience from earlier roles; the lead says what that experience is.
-    lead: "Cities, counties, and regional agencies carry capital programs, permitting, and federal requirements with lean staffs. Our work here so far is asset management with local agencies, through a state infrastructure office, and a multi-state research program on drone data standards. For capital project delivery and regional planning, we bring experience from city public works and the Federal Highway Administration.",
-    featured: ["asset-mgmt", "program-delivery", "lpa", "grants", "research", "portals", "strategic-planning"], // adds "research": one of this industry's two projects is the pooled fund
-    featuredCase: "cs-local-am",
-    projects: ["cs-local-am", "cs-pooled"],
-    subsectors: [
-      sub("g-asset", "Asset Management", "street", "Local agencies start from different places with asset management. We start from where each one is: a self-assessment, a workshop, and an action plan."),
-      sub("g-capital", "Capital Project Delivery & Permitting", "construction", "Cities deliver capital projects and review land development permits with small staffs. Experience on our team includes directing public works for the City of Las Vegas.", true),
-      sub("g-mpo", "Regional & Metropolitan Planning Support", "grid", "Metropolitan planning organizations answer to federal performance and certification rules with lean staffs. People on our team worked with them at the Federal Highway Administration, including all eighteen in California.", true),
-      sub("g-federal", "Federal & Multi-State Programs", "crossing", "Some problems are bigger than one state. We facilitate a multi-state research program building a shared drone data standard and recommended practices agencies can adopt."),
-    ],
+    id: "private", slug: "private-sector", name: "Private Sector", scene: "office",
+    who: "Firms Who Have Outgrown Their Current Tools or Processes", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
+    // One Rawlins project on the page (cs-pv-pmo); the others are our automation team's work before Rawlins, and their cards say so
+    // (four when the Who we work with file was written; six with live-site Examples 06 and 07 back, Nov 11).
+    // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's new lead for this field was skipped.
+    lead: "Companies that have outgrown their spreadsheets or tools, but don't have a build team. We connect the systems you already pay for and automate the work around them.",
+    featured: ["automation", "ai", "dashboards", "data-governance", "portals"],
+    projects: ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service"],
+    subsectors: [],
   },
   {
-    id: "contractors", slug: "contractors-engineering-firms", name: "Contractors", scene: "site",
+    id: "contractors", slug: "contractors-engineering-firms", name: "Contractors", scene: "site", parent: "private",
     who: "Partnering & Contracting Methods", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
     // Partnering: cs-major, cs-db-partnering, cs-ia-partnering, cs-partnering (Fiscal > Contracts and Templates > Partnering).
     // Contracting model: cs-maint-model. Teaming: subcontracts under engineering and advisory firms (findings_cases.md, G).
@@ -170,17 +194,6 @@ export const INDUSTRIES: Industry[] = [
     // contractors, and no project here uses Digital Training & Video.
     featuredCase: "cs-major",
     projects: ["cs-major", "cs-db-partnering", "cs-ia-partnering", "cs-maint-model"],
-    subsectors: [],
-  },
-  {
-    id: "private", slug: "private-sector", name: "Private Sector", scene: "office",
-    who: "Firms Who Have Outgrown Their Current Tools or Processes", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
-    // One Rawlins project on the page (cs-pv-pmo); the others are our automation team's work before Rawlins, and their cards say so
-    // (four when the Who we work with file was written; six with live-site Examples 06 and 07 back, Nov 11).
-    // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's new lead for this field was skipped.
-    lead: "Companies that have outgrown their spreadsheets or tools, but don't have a build team. We connect the systems you already pay for and automate the work around them.",
-    featured: ["automation", "ai", "dashboards", "data-governance", "portals"],
-    projects: ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service"],
     subsectors: [],
   },
   /* Built but hidden and noindex unless approved. Never linked. */
@@ -240,7 +253,7 @@ export const PROBLEMS: { q: string; services: string[] }[] = [
   { q: "We want a drone program, or to plan for advanced air mobility", services: ["drone-programs", "drone-aam"] },
   { q: "There's grant money out there. Nobody has time to chase it", services: ["grants"] },
   /* so contractors and private firms see themselves (content updates v4, 7.8) */
-  { q: "We're starting our first design-build project with a public owner", services: ["alt-delivery", "owners-rep"] },
+  { q: "We're starting our first design-build project with a public owner", services: ["alt-delivery", "partnering", "owners-rep"] },
   { q: "We've outgrown our spreadsheets", services: ["automation", "dashboards"] },
 ];
 
@@ -335,7 +348,7 @@ const FOUNDER = " · Our founder's work before Rawlins";
 const TEAM = " · Our team's work before Rawlins";
 
 export const CASES: CaseIndex[] = [
-  cs("cs-proficiency", "tennessee-career-paths-and-proficiency", "Career paths and proficiency programs across a department", "Tennessee Department of Transportation", ["Tennessee"], "Ongoing", "transport", ["workforce", "org-design", "change-mgmt", "row", "traffic", "construction"]), // + right of way appraiser program, traffic design and construction proficiency (Nov 11)
+  cs("cs-proficiency", "tennessee-career-paths-and-proficiency", "Career paths and proficiency programs across a department", "Tennessee Department of Transportation", ["Tennessee"], "Ongoing", "transport", ["workforce", "org-design", "change-mgmt", "traffic", "construction"]), // + right of way appraiser program, traffic design and construction proficiency (Nov 11)
   cs("cs-tn-ipd", "tennessee-integrated-program-delivery", "Integrated program delivery", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["program-delivery", "preconstruction"]),
   cs("cs-pbmc", "tennessee-performance-based-maintenance-contracts", "Launching performance-based maintenance contracts on an interstate network", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["operations", "procurement"]),
   // Contract read Nov 10: no publicity limit. The state keeps publication rights to the documents we produce, so don't post its documents on this site.
@@ -370,17 +383,17 @@ export const CASES: CaseIndex[] = [
   cs("cs-ut-am", "utah-asset-management-review", "Asset management program review", `Utah Department of Transportation${FOUNDER}`, ["Utah"], "Before Rawlins", "transport", ["asset-mgmt"]),
   cs("cs-va-maint", "virginia-performance-based-maintenance-review", "Review of performance-based highway maintenance contracts", `Virginia Department of Transportation${FOUNDER}`, ["Virginia"], "Before Rawlins", "transport", ["operations", "procurement"]),
   cs("cs-maint-model", "six-state-maintenance-outsourcing-model", "A flexible maintenance contracting model for DOTs", "AMOTIA (Association for the Management and Operations of Transportation Infrastructure Assets)", [], "Completed", "contractors", ["operations", "procurement"]),
-  cs("cs-pa-budget", "pennsylvania-maintenance-budgeting", "Maintenance budgeting", `Pennsylvania Department of Transportation${FOUNDER}`, ["Pennsylvania"], "Before Rawlins", "transport", ["procurement", "operations"]),
+  cs("cs-pa-budget", "pennsylvania-maintenance-budgeting", "Maintenance budgeting", `Pennsylvania Department of Transportation${FOUNDER}`, ["Pennsylvania"], "Before Rawlins", "transport", ["finance", "operations"]),
   cs("cs-nyc-parks", "new-york-city-parks-asset-management", "Asset management for 29,000 acres of parkland", `New York City Parks and Recreation${FOUNDER}`, ["New York"], "Before Rawlins", "gov", ["asset-mgmt"]),
   /* no state tag: California isn't on the map */
   cs("cs-riverside", "riverside-county-fleet-and-facilities", "Facilities and fleet operations review", `Riverside County, California${FOUNDER}`, [], "Before Rawlins", "gov", ["operations", "asset-mgmt"]),
-  cs("cs-major", "major-river-crossings-and-transit", "Partnering on major river crossings and a light rail line", "Iowa, Illinois, Missouri, and Minnesota", ["Iowa", "Illinois", "Missouri", "Minnesota"], "Completed", "transport", ["program-delivery", "alt-delivery"]),
+  cs("cs-major", "major-river-crossings-and-transit", "Partnering on major river crossings and a light rail line", "Iowa, Illinois, Missouri, and Minnesota", ["Iowa", "Illinois", "Missouri", "Minnesota"], "Completed", "transport", ["program-delivery", "partnering"]),
   // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
-  cs("cs-partnering", "progressive-design-build-partnering", "Partnering facilitation for a progressive design-build bridge", "A state DOT and its contractor", [], "Ongoing", "transport", ["program-delivery", "procurement", "alt-delivery"]),
+  cs("cs-partnering", "progressive-design-build-partnering", "Partnering facilitation for a progressive design-build bridge", "A state DOT and its contractor", [], "Ongoing", "transport", ["program-delivery", "procurement", "partnering"]),
   // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
-  cs("cs-ia-partnering", "statewide-partnering-between-a-dot-and-its-construction-industry", "Statewide partnering between a DOT and its construction industry", "A state DOT and its construction industry", [], "Completed", "transport", ["alt-delivery", "construction", "program-delivery"]),
+  cs("cs-ia-partnering", "statewide-partnering-between-a-dot-and-its-construction-industry", "Statewide partnering between a DOT and its construction industry", "A state DOT and its construction industry", [], "Completed", "transport", ["partnering", "construction", "program-delivery"]),
   // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
-  cs("cs-db-partnering", "partnering-through-construction-on-design-build-bridges-and-interstates", "Partnering through construction on design-build bridges and interstates", "State DOTs and their contractors", [], "Completed", "contractors", ["alt-delivery", "program-delivery", "construction"]),
+  cs("cs-db-partnering", "partnering-through-construction-on-design-build-bridges-and-interstates", "Partnering through construction on design-build bridges and interstates", "State DOTs and their contractors", [], "Completed", "contractors", ["partnering", "program-delivery", "construction"]),
   cs("cs-pooled", "multi-state-drone-standards", "Multi-state drone standards and specifications", "A multi-state pooled fund study", [], "Ongoing", "gov", ["research", "drone-programs"]),
   // TODO(launch): needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.
   cs("cs-pdn", "project-delivery-website-and-change-system", "A project delivery website, tools, and change system staff use every day", STATE_DOT, [], "Ongoing", "transport", ["portals", "automation", "training-video", "program-delivery", "preconstruction"]),
@@ -464,6 +477,17 @@ LINE_STATUS["We connect the systems you already own so information moves on its 
 
 /* Preview-only notes for a whole page (content pass v7: Owner's Representation, 2.11; Ports & Harbors, Part 6) */
 export const PAGE_STATUS: Record<string, string> = {
+  /* Nov 12 (Nicole's list for the Program & Project Delivery menu). The new and split pages hold only lines the site
+     already had; each note says where they came from. Nicole to review. */
+  finance: "Content status: new page (Nov 12, from Nicole's list for this menu). Split from Finance, Budget & Procurement: the budgeting lines are here. The only project behind it is from before Rawlins. Nicole to review.",
+  procurement: "Content status: split from Finance, Budget & Procurement (Nov 12): the procurement lines stayed here. Nicole to review.",
+  planning: "Content status: new page (Nov 12, from Nicole's list for this menu). Its text is the Regional & Metropolitan Planning Support page’s, which describes what we offer. No Rawlins project yet, and nothing here is about statewide planning yet.",
+  "proj-delivery": "Content status: new page (Nov 12, from Nicole's list for this menu). Put together from lines on the Preconstruction and Construction pages and the area page. Nicole to review.",
+  "alt-delivery": "Content status: split from Alternative Delivery & Partnering (Nov 12): the partnering lines moved to Partnering. Nicole to review.",
+  partnering: "Content status: new page (Nov 12, from Nicole's list for this menu). Split from Alternative Delivery & Partnering, with lines from the Contractors page. Nicole to review.",
+  "federal-aid": "Content status: new page (Nov 12, from Nicole's list for this menu). Split from Local Public Agency & Federal-Aid Programs. Thin: it needs more from the team.",
+  lpa: "Content status: split from Local Public Agency & Federal-Aid Programs (Nov 12): the federal-aid lines moved to Federal-Aid Programs, and the planning organization line to Statewide & Metropolitan Planning. Nicole to review.",
+  grants: "Content status: renamed from Grants & Funding (Nov 12). Checked against the project records: federal grant applications are backed by three projects, and one of them covers the awarded projects. Not found in any project record: funding opportunity matching, issuing grants and solicitations for an agency, and turning awards into working programs. Those lines come from the internal aviation catalog. Nicole to say whether they stay.",
   // TODO(launch): Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.
   "owners-rep": "Content status: Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.",
   // TODO(launch): the only work behind this page is cs-hi's client. Same note as cs-hi.
