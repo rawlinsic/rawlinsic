@@ -35,6 +35,9 @@ const STATUS: Record<string, string> = { warn: "Proven, copy needed", gap: "Need
 const STEP_KIND: Record<string, DiagramKind> = { "asset-mgmt": "cycle", "strategic-planning": "loop", workforce: "track", "training-video": "track" };
 /* "Inside a project delivery network" moved from Program Delivery to Preconstruction (content pass v7, 2.3) */
 const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "preconstruction", "operations", "portals", "drone-aam", "drone-programs"];
+/* a page that shows another page's graphic after its own steps (Nicole, Nov 12: the Maintenance Programs graphic,
+   "Four kinds of maintenance work", goes on Asset Management, where three of its four parts now have their pages) */
+const FEATURE_FROM: Record<string, string> = { "asset-mgmt": "operations" };
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
 /* one card per quote: some entries hold two quotes in one string ("…” “…") */
@@ -91,6 +94,7 @@ export default function ServiceV8({ id }: { id: string }) {
   const sections: [string, string][] = [
     ["hear", hearTitle(s.hear)], ["deliver", deliverTitle],
     ...(steps ? [["how", steps.title] as [string, string]] : HAS_FEATURE.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
+    ...(FEATURE_FROM[id] ? [["feature", "What this covers"] as [string, string]] : []),
     ["walk", "What you walk away with"],
     ...(hasWork ? [["work", workTitle] as [string, string]] : []),
     ...(aviation ? [["aviation", "Our aviation team"] as [string, string]] : []),
@@ -164,6 +168,9 @@ export default function ServiceV8({ id }: { id: string }) {
       )}
       {!steps && HAS_FEATURE.includes(id) && (
         <section id="feature" className="sv-legacy"><ServiceFeature id={id} /></section>
+      )}
+      {FEATURE_FROM[id] && (
+        <section id="feature" className="sv-legacy"><ServiceFeature id={FEATURE_FROM[id]} /></section>
       )}
 
       <section id="walk" className="sv-sec svw">
