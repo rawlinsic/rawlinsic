@@ -8,6 +8,7 @@
      POST  { page, sel, rx, ry, snippet, text, name }  add one
      PATCH { id }  mark one done (closes the issue); { id, reopen: true } brings it back (Undo and Redo) */
 import { NextResponse } from "next/server";
+import { BACKUP_LOCKED, isBackupVersion } from "@/lib/preview-gh";
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "crypto";
 
 export const runtime = "nodejs";
@@ -62,6 +63,7 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
+  if (isBackupVersion()) return NextResponse.json({ error: BACKUP_LOCKED }, { status: 403 }); // a backup copy takes no comments
   const s = setup(); if ("error" in s) return s.error;
   const b = await req.json().catch(() => null) as Partial<Note> & { name?: string } | null;
   if (!b || !clip(b.text, 4000)) return NextResponse.json({ error: "Nothing to save" }, { status: 400 });
@@ -74,6 +76,7 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+  if (isBackupVersion()) return NextResponse.json({ error: BACKUP_LOCKED }, { status: 403 }); // a backup copy takes no comments
   const s = setup(); if ("error" in s) return s.error;
   const b = await req.json().catch(() => null) as { id?: number; reopen?: boolean } | null;
   if (!b?.id) return NextResponse.json({ error: "Which comment?" }, { status: 400 });
