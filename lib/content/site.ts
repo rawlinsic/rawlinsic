@@ -494,6 +494,7 @@ LINE_STATUS["We connect the systems you already own so information moves on its 
 /* services left out of the menu and their area page for now; their pages stay up (Nicole, Nov 13: Smart Mobility &
    Connected Systems, "for right now") */
 export const LISTS_OFF = ["smart-mobility"];
+export const isListed = (id: string) => !LISTS_OFF.includes(id);
 
 export const PAGE_STATUS: Record<string, string> = {
   /* Nov 12: the "To confirm" notes in Nicole's Operations & Maintenance file (v8), preview only */
@@ -551,7 +552,7 @@ export const MENU: MenuNode[] = [
           : { kind: "link" as const, title: "Applied solutions", text: "Featured projects for growing firms.", href: serviceHref("automation"), cta: "See the examples" },
         groups: [
           ...(i.subsectors.length ? [{ title: "Sub-sectors", items: i.subsectors.map((s) => leaf(s.id, s.name, subsectorHref(i, s), s.scene, s.thin)) }] : []),
-          { title: "Featured services", items: i.featured.map((id) => {
+          { title: "Featured services", items: i.featured.filter(isListed).map((id) => {
             const hit = serviceById(id)!;
             return leaf(`${i.id}-${id}`, hit.service.name, serviceHref(id), hit.service.scene ?? hit.area.scene);
           }) },
@@ -608,7 +609,7 @@ export const MENU: MenuNode[] = [
 export type SearchHit = { label: string; kind: string; href: string };
 export const SITE_INDEX: SearchHit[] = [
   ...AREAS.map((a) => ({ label: a.name, kind: "Service area", href: areaHref(a) })),
-  ...AREAS.flatMap((a) => a.services.map((s) => ({ label: s.name, kind: a.name, href: `/services/${a.slug}/${s.slug}` }))),
+  ...AREAS.flatMap((a) => a.services.filter((s) => isListed(s.id)).map((s) => ({ label: s.name, kind: a.name, href: `/services/${a.slug}/${s.slug}` }))),
   ...VISIBLE_INDUSTRIES.map((i) => ({ label: i.name, kind: "Industry", href: industryHref(i) })),
   ...VISIBLE_INDUSTRIES.flatMap((i) => i.subsectors.map((s) => ({ label: s.name, kind: i.name, href: subsectorHref(i, s) }))),
   { label: "News & Recognition", kind: "Insights", href: "/insights/news" },

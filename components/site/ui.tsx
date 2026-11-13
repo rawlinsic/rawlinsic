@@ -8,7 +8,7 @@ import PageScene from "@/components/site/page-scene";
 import Panels from "@/components/v8/panels";
 import Reveal from "@/components/v8/reveal";
 import { TEAM_MEMBERS } from "@/lib/team-data";
-import { AREAS, CASES, CASE_STATUS, LINE_STATUS, caseHref, caseTag, serviceById, serviceHref, type CaseIndex, type SceneKey } from "@/lib/content/site";
+import { AREAS, CASES, CASE_STATUS, LINE_STATUS, caseHref, caseTag, serviceById, serviceHref, type CaseIndex, type SceneKey, isListed } from "@/lib/content/site";
 import { SCENE_PHOTO } from "@/lib/content/media";
 import { casePhoto } from "@/lib/content/v8";
 import { formerlyFor } from "@/lib/content/people";
@@ -91,14 +91,14 @@ export function Chips({ items }: { items: { label: string; href: string }[] }) {
 }
 
 export function ServiceChips({ ids }: { ids: readonly string[] }) {
-  const items = ids.map((id) => serviceById(id)).filter(Boolean).map((h) => ({ label: h!.service.name, href: serviceHref(h!.service.id) }));
+  const items = ids.filter(isListed).map((id) => serviceById(id)).filter(Boolean).map((h) => ({ label: h!.service.name, href: serviceHref(h!.service.id) }));
   return <Chips items={items} />;
 }
 
 export function ServiceCards({ ids, blurb }: { ids: readonly string[]; blurb?: (id: string) => string }) {
   return (
     <ul className="pg-cards">
-      {ids.map((id) => {
+      {ids.filter(isListed).map((id) => {
         const hit = serviceById(id);
         if (!hit) return null;
         return (

@@ -14,7 +14,7 @@
 import ProjectCard from "@/components/v8/project-card";
 import Rail from "@/components/v8/rail";
 import type { CSSProperties } from "react";
-import { AREAS, CASES, PAGE_STATUS, areaHref, caseHref, caseTag, isOurs, serviceById, serviceHref } from "@/lib/content/site";
+import { AREAS, CASES, PAGE_STATUS, areaHref, caseHref, caseTag, isOurs, serviceById, serviceHref, isListed } from "@/lib/content/site";
 import { CASES as CASE_DATA, SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import { SERVICE_STEPS } from "@/lib/content/features";
@@ -74,7 +74,8 @@ export default function ServiceV8({ id }: { id: string }) {
   const area = hit.area;
   const T = THEME[area.id];
   const i = area.services.findIndex((x) => x.id === id);
-  const nextSvc = area.services[i + 1];
+  /* the next service in the list, skipping any that are off the lists for now (LISTS_OFF) */
+  const nextSvc = area.services.slice(i + 1).find((x) => isListed(x.id));
   const nextArea = AREAS[(AREAS.findIndex((a) => a.id === area.id) + 1) % AREAS.length];
   /* a set order when the service has one (Preconstruction, content pass v7, 2.4); otherwise our own work first,
      earlier work (tagged Before Rawlins) after it */
@@ -158,7 +159,7 @@ export default function ServiceV8({ id }: { id: string }) {
       </section>
 
       {/* the button names the area, so it's clear the page is one of that area's services (John's review comment, Nov 12) */}
-      <SectionNav items={sections} more={{ label: `${area.name} Services`, links: [{ name: area.name, href: areaHref(area), top: true }, ...area.services.map((x) => ({ name: x.name, href: `/services/${area.slug}/${x.slug}`, current: x.id === id }))] }} />
+      <SectionNav items={sections} more={{ label: `${area.name} Services`, links: [{ name: area.name, href: areaHref(area), top: true }, ...area.services.filter((x) => isListed(x.id) || x.id === id).map((x) => ({ name: x.name, href: `/services/${area.slug}/${x.slug}`, current: x.id === id }))] }} />
 
       <section id="hear" className="svq">
         <div className="v8-wrap svq-in">
@@ -266,12 +267,12 @@ export default function ServiceV8({ id }: { id: string }) {
               <a className="v8-btn v8-btn-ghost" href={areaHref(area)}>All of {area.name}</a>
             </div>
           </div>
-          {s.related.length > 0 && (
+          {s.related.filter(isListed).length > 0 && (
             <div className="svt-links">
               <div>
                 <h3 className="v8-eyebrow">Often paired with</h3>
                 <ul className="sv-chips">
-                  {s.related.map((r) => { const h = serviceById(r); return h ? <li key={r}><a href={serviceHref(r)} style={themeStyle(h.area.id)}><i aria-hidden="true" />{h.service.name}</a></li> : null; })}
+                  {s.related.filter(isListed).map((r) => { const h = serviceById(r); return h ? <li key={r}><a href={serviceHref(r)} style={themeStyle(h.area.id)}><i aria-hidden="true" />{h.service.name}</a></li> : null; })}
                 </ul>
               </div>
             </div>

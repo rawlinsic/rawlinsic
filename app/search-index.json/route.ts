@@ -2,7 +2,7 @@
    at deploy: each page's name plus the words around it (a service's opening and what it covers, a project's client,
    states, and services, people's titles), so a search for a state, a client, or a topic finds the pages about it.
    Loaded by the header's search the first time someone types (components/v8/header-client.tsx). */
-import { AREAS, CASES, INDUSTRIES, areaHref, caseHref, industryHref, serviceById, subsectorHref } from "@/lib/content/site";
+import { AREAS, CASES, INDUSTRIES, areaHref, caseHref, industryHref, serviceById, subsectorHref, isListed } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { THOUGHT_LEADERSHIP } from "@/components/thought-leadership-data";
@@ -16,7 +16,7 @@ const clean = (s = "") => s.replace(/\*\*/g, "").replace(/\s+/g, " ").trim().sli
 export function GET() {
   const hits: Hit[] = [
     ...AREAS.map((a) => ({ label: a.name, kind: "What we do", href: areaHref(a), text: clean(`${a.tag} ${AREA_DATA[a.id]?.lead ?? ""}`) })),
-    ...AREAS.flatMap((a) => a.services.map((s) => {
+    ...AREAS.flatMap((a) => a.services.filter((s) => isListed(s.id)).map((s) => {
       const d = SERVICES[s.id];
       return { label: s.name, kind: a.name, href: `/services/${a.slug}/${s.slug}`, text: clean(`${d?.intro ?? ""} ${(d?.deliver ?? []).join(" ")}`) };
     })),

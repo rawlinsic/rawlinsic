@@ -22,7 +22,7 @@ import { allPeople } from "@/components/site/more";
 import type { CSSProperties, ReactNode } from "react";
 import {
   AREAS, VISIBLE_INDUSTRIES, areaHref, caseHref, caseTag, industryHref, serviceById, serviceHref, subsectorHref,
-  type CaseIndex, type Industry, type Subsector, PAGE_STATUS, INTL,
+  type CaseIndex, type Industry, type Subsector, PAGE_STATUS, INTL, isListed,
 } from "@/lib/content/site";
 import { INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { INDUSTRY_PHOTO } from "@/lib/content/media";
@@ -315,7 +315,7 @@ function ServiceCards({ id, title, ids, tone }: { id: string; title: string; ids
 /* Services we provide (was "How we help"): only the services we use most for this industry (Nicole, Nov 10),
    in area order. Since Nov 11 they're the linked text cards the specialty pages use (ServiceCards), not photo
    cards: Nicole didn't want them to look like the Featured projects row that comes right after. */
-const helpIds = (ind: Industry) => AREAS.flatMap((a) => a.services.map((sv) => sv.id)).filter((x) => ind.featured.includes(x));
+const helpIds = (ind: Industry) => AREAS.flatMap((a) => a.services.map((sv) => sv.id)).filter((x) => ind.featured.includes(x) && isListed(x));
 
 function Talk({ title = TALK.title, text = TALK.text, linksTitle, links }: {
   title?: string; text?: string; linksTitle?: string; links?: { id: string; name: string; href: string; on?: boolean }[];

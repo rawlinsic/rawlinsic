@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { THOUGHT_LEADERSHIP } from "@/components/thought-leadership-data";
-import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseHref, industryHref, subsectorHref } from "@/lib/content/site";
+import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseHref, industryHref, subsectorHref, isListed } from "@/lib/content/site";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rawlinsic.com";
 
@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     u("/", 1, "weekly"),
     ...AREAS.map((a) => u(areaHref(a), 0.9)),
-    ...AREAS.flatMap((a) => a.services.map((s) => u(`/services/${a.slug}/${s.slug}`, 0.8))),
+    ...AREAS.flatMap((a) => a.services.filter((s) => isListed(s.id)).map((s) => u(`/services/${a.slug}/${s.slug}`, 0.8))),
     u("/industries", 0.9), ...INDUSTRIES.map((i) => u(industryHref(i), 0.8)),
     ...VISIBLE_INDUSTRIES.flatMap((i) => i.subsectors.map((s) => u(subsectorHref(i, s), 0.7))),
     u("/insights", 0.8, "weekly"), u("/insights/case-studies", 0.8), u("/insights/news", 0.7, "weekly"),

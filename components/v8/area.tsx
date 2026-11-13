@@ -13,7 +13,7 @@
 import ProjectCard from "@/components/v8/project-card";
 import Rail from "@/components/v8/rail";
 import type { ReactNode } from "react";
-import { AREAS, CASES, areaHref, caseHref, isOurs, type Area, LISTS_OFF } from "@/lib/content/site";
+import { AREAS, CASES, areaHref, caseHref, isOurs, type Area, isListed } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, themeStyle, casePhoto, hearTitle } from "@/lib/content/v8";
@@ -38,7 +38,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
   /* Featured projects: Rawlins work only (no Before Rawlins cases) */
   const cases = L.cases.map((id) => CASES.find((c) => c.id === id)).filter((c) => c && isOurs(c)) as typeof CASES;
   /* the area's services as listed on its page (LISTS_OFF: off the lists for now, Nov 13) */
-  const listed = area.services.filter((s) => !LISTS_OFF.includes(s.id));
+  const listed = area.services.filter((s) => isListed(s.id));
   const many = listed.length >= 5;
   const sections: [string, string][] = [
     ["services", "Services"], ["hear", hearTitle(L.hear)], ["fit", L.feature.title], ...(extra ? [["more", "From our work"] as [string, string]] : []),

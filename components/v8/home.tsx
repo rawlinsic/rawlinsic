@@ -10,7 +10,7 @@
 import ProjectCard from "@/components/v8/project-card";
 import FanCards from "@/components/v8/fan-cards";
 import type { CSSProperties } from "react";
-import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, INDUSTRIES, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, serviceHref, subsectorHref } from "@/lib/content/site";
+import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, INDUSTRIES, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, serviceHref, subsectorHref, isListed } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
 import { AREA_PHOTO, AREA_PHOTO_POS, INDUSTRY_PHOTO } from "@/lib/content/media";
 import { CaseNote, Dev } from "@/components/site/ui";
@@ -207,7 +207,7 @@ export default function Home() {
             /* the area's featured project, not the area photo the hero already shows */
             photo: fc ? casePhoto(fc) : AREA_PHOTO[a.id],
             project: fc ? { title: fc.title, href: caseHref(fc) } : undefined,
-            services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
+            services: a.services.filter((sv) => isListed(sv.id)).map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
           };
         })}
       />}

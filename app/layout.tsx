@@ -8,7 +8,7 @@ import "./v10.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 import localFont from "next/font/local";
-import { AREAS, areaHref } from "@/lib/content/site";
+import { AREAS, areaHref, isListed } from "@/lib/content/site";
 import AnalyticsWrapper from '@/components/analytics-wrapper';
 import CookieBanner from '@/components/cookie-banner';
 import ClarityLoader from '@/components/clarity-loader';
@@ -154,7 +154,7 @@ const LOCAL_BUSINESS_SCHEMA = {
     "https://www.facebook.com/rawlinsic",
     "https://maps.google.com/?cid=15053534270208893219",
   ],
-  knowsAbout: AREAS.flatMap((a) => [a.name, ...a.services.map((s) => s.name)]),
+  knowsAbout: AREAS.flatMap((a) => [a.name, ...a.services.filter((s) => isListed(s.id)).map((s) => s.name)]),
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Services",
@@ -163,7 +163,7 @@ const LOCAL_BUSINESS_SCHEMA = {
       name: area.name,
       url: `${SITE_URL}${areaHref(area)}`,
       description: area.tag,
-      itemListElement: area.services.map((svc) => ({
+      itemListElement: area.services.filter((svc) => isListed(svc.id)).map((svc) => ({
         "@type": "Offer",
         itemOffered: { "@type": "Service", name: svc.name, url: `${SITE_URL}/services/${area.slug}/${svc.slug}` },
       })),

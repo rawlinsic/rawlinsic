@@ -6,7 +6,7 @@ import { casePhoto, themeStyle } from "@/lib/content/v8";
 import ProjectCard from "@/components/v8/project-card";
 import Rail from "@/components/v8/rail";
 import { CASE_EXTRA } from "@/lib/content/case-extra";
-import { AREAS, CASES, VISIBLE_INDUSTRIES, areaHref, caseHref, caseTag, industryHref, serviceById, serviceHref, slugify, type CaseIndex, CASE_STATUS } from "@/lib/content/site";
+import { AREAS, CASES, VISIBLE_INDUSTRIES, areaHref, caseHref, caseTag, industryHref, serviceById, serviceHref, slugify, type CaseIndex, CASE_STATUS, isListed } from "@/lib/content/site";
 import { CASES as CASE_DATA, SERVICES as SVC_DATA, SUBSECTORS } from "@/lib/content/catalog";
 import CaseFilter, { type CaseRow } from "@/components/site/case-filter";
 import { Btn, Chips, Dev, Hero, Sec, Shell, Steps, Talk, CaseNote, LineNote } from "@/components/site/ui";
@@ -37,7 +37,7 @@ export function CaseIndexPage() {
           areas={AREAS.map((a) => ({ value: a.slug, label: a.name }))}
           industries={VISIBLE_INDUSTRIES.map((i) => ({ value: i.slug, label: i.name }))}
           states={states.map((s) => ({ value: slugify(s), label: s }))}
-          services={AREAS.flatMap((a) => a.services.map((s) => ({ value: s.slug, label: s.name })))} />
+          services={AREAS.flatMap((a) => a.services.filter((s) => isListed(s.id)).map((s) => ({ value: s.slug, label: s.name })))} />
       </Sec>
       <Talk />
     </Shell>
@@ -65,7 +65,7 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
   }).filter(Boolean) as { label: string; href: string }[];
   /* the services: the project's own curated list (the record's longer list includes disciplines the work
      covered, like right of way staff training, which aren't services we delivered on it) */
-  const svcIds = c.services.filter((id) => serviceById(id));
+  const svcIds = c.services.filter((id) => serviceById(id) && isListed(id));
   const areaIds = Array.from(new Set(svcIds.map(areaOfService).filter(Boolean) as string[]));
   const related = CASES.filter((x) => x.id !== c.id && x.status !== "Before Rawlins" && x.services.some((s) => c.services.includes(s))).slice(0, 3);
   /* earlier work: the client line already says whose work it was */

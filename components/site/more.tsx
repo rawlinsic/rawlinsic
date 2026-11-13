@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { PAGE_PHOTO } from "@/lib/content/media";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { THOUGHT_LEADERSHIP, type ThoughtLeadershipArticle } from "@/components/thought-leadership-data";
-import { AREAS, CASES, LEADERS, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, industryHref, subsectorHref } from "@/lib/content/site";
+import { AREAS, CASES, LEADERS, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, industryHref, subsectorHref, isListed } from "@/lib/content/site";
 import { STATES, STATES_ACTIVE, STATES_SERVED, STEPS } from "@/lib/content/catalog";
 import { FORMERLY, bareName as bare } from "@/lib/content/people";
 import { AWARDS, PUBLICATIONS, RESEARCH, TALKS } from "@/lib/content/research";
@@ -670,7 +670,7 @@ export function SiteMapPage() {
       <section className="pg-sec pg-body"><div className="pg-wrap pg-sitemap">
         <div>
           <h2 className="pg-h3"><a href="/#what">What we do</a></h2>
-          <ul>{AREAS.map((a) => <li key={a.id}><a href={areaHref(a)}>{a.name}</a><ul>{a.services.map((s) => <li key={s.id}><a href={`/services/${a.slug}/${s.slug}`}>{s.name}</a></li>)}</ul></li>)}</ul>
+          <ul>{AREAS.map((a) => <li key={a.id}><a href={areaHref(a)}>{a.name}</a><ul>{a.services.filter((s) => isListed(s.id)).map((s) => <li key={s.id}><a href={`/services/${a.slug}/${s.slug}`}>{s.name}</a></li>)}</ul></li>)}</ul>
         </div>
         <div>
           <h2 className="pg-h3"><a href="/industries">Who we work with</a></h2>

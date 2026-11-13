@@ -6,7 +6,7 @@ import { AREA_PHOTO, AREA_PHOTO_POS, PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/con
 import TilesTour from "@/components/v8/tiles-tour";
 import AutomationEcosystemBars from "@/components/automation-ecosystem-bars";
 import DeliverStack from "@/components/v8/deliver-stack";
-import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, subsectorHref, type Area } from "@/lib/content/site";
+import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, subsectorHref, type Area, isListed } from "@/lib/content/site";
 import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AAM_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
 import { SERVICE_STEPS } from "@/lib/content/features";
@@ -92,7 +92,7 @@ export function ServicesIndex() {
       </section>
       <TilesTour label="What we do" hideLabel areas={AREAS.map((a) => ({
         id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id]?.lead ?? "", href: areaHref(a), photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id],
-        services: a.services.map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
+        services: a.services.filter((sv) => isListed(sv.id)).map((sv) => ({ name: sv.name, href: `/services/${a.slug}/${sv.slug}` })),
       }))} />
       {/* the area-by-area service cards that repeated the tour are off (Nicole, Nov 11) */}
       <Talk />
