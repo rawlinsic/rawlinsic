@@ -52,6 +52,25 @@ const byWords = (snippet: string): HTMLElement | null => {
      - while the menu is closed, is counted in a number on the menu's name; a click on the number opens the menu */
 const menuOf = (sel: string) => /^#hx-m-(\w+)/.exec(sel)?.[1] ?? null;
 const menuButton = (m: string) => { const b = document.getElementById(`hx-b-${m}`); return b && b.getClientRects().length ? b : null; };
+/* Where a menu comment sits while its menu is open (Nov 12: the menus were rebuilt, so a saved path can now
+   point at a different item). In order: the saved path, if the item there still starts with the comment's
+   saved words; the item in that menu that does; neither (the item was renamed or removed): the menu panel
+   itself, and the pin is parked on the menu's edge, marked like any pin whose spot changed. */
+const menuSpot = (sel: string, snippet: string): { el: HTMLElement; lost: boolean } | null => {
+  const m = menuOf(sel), panel = m ? document.getElementById(`hx-m-${m}`) : null;
+  if (!panel || !panel.getClientRects().length) return null; // the menu is closed
+  const key = words(snippet).slice(0, 40);
+  const fits = (x: Element) => !key || sameStart(key, words(x.textContent || "").slice(0, 40)) >= Math.min(key.length, 12);
+  const el = byPath(sel);
+  if (el && el.getClientRects().length && fits(el)) return { el, lost: false };
+  let best: HTMLElement | null = null, size = Infinity;
+  if (key) panel.querySelectorAll<HTMLElement>("a, b, p, li, span, button").forEach((x) => {
+    if (!x.getClientRects().length) return;
+    const t = words(x.textContent || "");
+    if (t && fits(x) && t.length < size) { best = x; size = t.length; }
+  });
+  return best ? { el: best, lost: false } : { el: panel, lost: true };
+};
 const find = (sel: string, snippet = ""): HTMLElement | null => {
   const el = byPath(sel);
   if (el && el.getClientRects().length) {
@@ -89,8 +108,11 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
   /* where each comment sits, remembered so the page isn't searched on every scroll frame; a comment with no
      spot is looked for again every couple of seconds (pages finish drawing late, menus open, cards turn) */
   const seen = useRef(new Map<number, { el: HTMLElement | null; t: number }>());
+  /* a menu comment's spot is worked out once per draw (it is asked for several times) */
+  const menuMemo = new Map<number, { el: HTMLElement; lost: boolean } | null>();
+  const inOpenMenu = (c: C) => { if (!menuMemo.has(c.id)) menuMemo.set(c.id, menuSpot(c.sel, c.snippet)); return menuMemo.get(c.id) ?? null; };
   const locate = (c: C) => {
-    if (menuOf(c.sel)) { const el = byPath(c.sel); return el && el.getClientRects().length ? el : null; }
+    if (menuOf(c.sel)) return inOpenMenu(c)?.el ?? null;
     const hit = seen.current.get(c.id), now = Date.now();
     if (hit && (hit.el ? hit.el.isConnected && hit.el.getClientRects().length > 0 : now - hit.t < 2000)) return hit.el;
     const el = find(c.sel, c.snippet);
@@ -178,10 +200,17 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
   const done = async (id: number) => {
     try { const r = await fetch("/api/preview-comments", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id }) }); if (r.ok) { const was = list.find((c) => c.id === id); mine.current.set(id, { open: false, c: was, t: Date.now() }); keep(); setList((l) => l.filter((c) => c.id !== id)); setOpenId(null); onDone?.(id, was?.text || ""); } } catch {}
   };
+  /* menu comments whose item is gone, in the open menu: parked down its right edge, in order */
+  const gone = (c: C) => !!menuOf(c.sel) && !!inOpenMenu(c)?.lost;
   const spot = (c: C) => {
     const el = locate(c); if (!el) return null;
     const r = el.getBoundingClientRect();
     if (!r.width && !r.height) return null;
+    if (gone(c)) {
+      const k = list.filter((x) => menuOf(x.sel) === menuOf(c.sel) && gone(x)).findIndex((x) => x.id === c.id);
+      const per = Math.max(3, Math.floor((r.height - 40) / 42));
+      return { x: r.right - 34 - Math.floor(k / per) * 42, y: r.top + 34 + (k % per) * 42 };
+    }
     /* keep the pin inside the element even if it is now a different size */
     return { x: r.left + Math.min(1, Math.max(0, c.rx)) * r.width, y: r.top + Math.min(1, Math.max(0, c.ry)) * Math.min(r.height, 600) };
   };
@@ -207,7 +236,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
       {list.map((c, i) => {
         /* no spot on the page any more: the pin is parked down the right edge, so the comment is still there to read */
         if (tucked.has(c.id)) return null; // counted on its menu's name until the menu opens
-        const at = spot(c), parked = !at, k = lost.indexOf(c.id);
+        const at = spot(c), parked = !at || gone(c), k = lost.indexOf(c.id);
         /* an open menu covers part of the page: a page comment's pin under it would look like it is on a menu item */
         if (at && over && !menuOf(c.sel) && openId !== c.id && at.x >= over.left && at.x <= over.right && at.y >= over.top && at.y <= over.bottom) return null;
         const p = at ?? { x: vw - 30 - Math.floor(k / rows) * 42, y: 150 + (k % rows) * 42 };
