@@ -132,7 +132,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
       {/* desktop menus */}
       <div className="hx-panel" id="hx-m-what" hidden={open !== "what"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         {/* the two links sit at the top of the panel (Nicole, Nov 11); sentence case is her call */}
-        <p className="mx-foot mx-foot-top"><a href="/services">See all services</a><a href="/contact">Not sure where yours fits? Tell us what you&apos;re trying to fix</a></p>
+        <p className="mx-foot mx-foot-top"><a href="/services">See all services</a><a href="/contact">Not sure which category? Tell us what you are trying to fix</a></p>
         <div className="mx-what">
           {data.areas.map((a) => (
             <section key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink, ["--a-tint" as string]: a.tint } as CSSProperties}>
