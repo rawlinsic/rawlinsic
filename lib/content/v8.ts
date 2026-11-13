@@ -33,7 +33,9 @@ export const themeStyle = (areaId: string): CSSProperties => {
    work; unnamed-client cases never show a state. */
 const P = (f: string) => `/images/pages/${f}`;
 const CASE_PHOTO: Record<string, string> = {
-  "cs-aero": P("research-paul-wheeler-nashville-symposium-2025.webp"), // Paul Wheeler at the Tennessee Drone and AAM Symposium, Nashville, Nov 12, 2025 (AERO Media folder)
+  // Nov 12 (Nicole): a different photo from the symposium one, which the talk card beside this project now shows
+  // (was research-paul-wheeler-nashville-symposium-2025.webp). A drone over mountains, from the site's AAM photo set.
+  "cs-aero": P("aam-helicopter.webp"),
   // the same photos the live site uses for these projects (Nicole, Nov 11: "all project pictures need to be the same they
   // were"). Both files were on the v4 never-use list (majortrans: road signs that don't look U.S.; transportation: place
   // unknown); kept because the live site shows them. Flagged on the CHANGE-LIST.
