@@ -18,7 +18,9 @@ const NONE = -2; // nothing picked yet: the list shows on its own (Nicole, Nov 1
    (topic and message) instead of going to /contact */
 export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic: string | undefined, msg: string) => void }) {
   const [sel, setSel] = useState(NONE);
-  const pick = (k: number) => setSel((cur) => (cur === k ? NONE : k)); // tapping the open one again closes it
+  /* on phones, tapping the open one again closes it; on computers one choice is always open, so the lines and the
+     services always show on the right (Nicole, Nov 13: "not nothing to the right") */
+  const pick = (k: number) => setSel((cur) => (cur === k && window.innerWidth < 960 ? NONE : k));
   const [own, setOwn] = useState("");
   const [paths, setPaths] = useState<string[]>([]);
   /* phones (Nicole, Nov 12: it "doesn't make sense how it is"): the answer opens right under the choice you tap,
@@ -26,7 +28,8 @@ export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic
   const [narrow, setNarrow] = useState(false);
   useEffect(() => {
     const m = window.matchMedia("(max-width: 959px)");
-    const set = () => setNarrow(m.matches);
+    /* computers open with the first choice picked (Nicole, Nov 13); phones start with the list on its own */
+    const set = () => { setNarrow(m.matches); if (!m.matches) setSel((c) => (c === NONE ? 0 : c)); };
     set(); m.addEventListener?.("change", set);
     return () => m.removeEventListener?.("change", set);
   }, []);
