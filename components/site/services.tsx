@@ -6,7 +6,7 @@ import { AREA_PHOTO, AREA_PHOTO_POS, PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/con
 import TilesTour from "@/components/v8/tiles-tour";
 import AutomationEcosystemBars from "@/components/automation-ecosystem-bars";
 import DeliverStack from "@/components/v8/deliver-stack";
-import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, subsectorHref, type Area, isListed } from "@/lib/content/site";
+import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, serviceHref, subsectorHref, type Area, isListed } from "@/lib/content/site";
 import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AAM_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
 import { SERVICE_STEPS } from "@/lib/content/features";
@@ -254,25 +254,23 @@ export function ServiceFeature({ id }: { id: string }) {
         </div>
       );
     case "operations": {
-      const parts: [string, string, string[]][] = [
-        ["Performance-based maintenance", "Contracts that pay for results: specifications, deduction models, and administration", ["cs-txmaint", "cs-pbmc", "cs-maint-model"]],
-        ["Quality assurance and ratings", "Handbooks and rating programs decisions can rely on", ["cs-transform", "cs-txmaint"]],
-        // Backed by the cs-nv-om review and by cs-nv-fleet-program (Rawlins fleet analysis and implementation support, 2022 to 2023).
-        ["Fleet and facilities", "The right equipment, in the right shape, at the right cost", ["cs-nv-om", "cs-nv-fleet-program"]],
-        /* Nov 12 (Nicole): the graphic now shows on Asset Management, and she had this part taken off it (it is Maintenance
-           Programs work). Kept for the record:
-           ["Winter operations and emergency readiness", "Plans tested before they're needed, including drone response teams", ["cs-txmaint", "cs-drt"]] */
+      /* M&O file v10 (Nov 13): four parts, one for each service under Asset Management, in menu order; each title opens its page */
+      const parts: [string, string, string[], string][] = [
+        ["Maintenance quality assurance", "Condition standards, rating procedures, and a handbook staff and contractors work from.", ["cs-mqa-fleet", "cs-txmaint", "cs-pbmc"], "mqa"],
+        ["Maintenance outsourcing", "Which work to keep in-house, which to contract, and which to combine.", ["cs-maint-model", "cs-pbmc", "cs-nv-om"], "outsourcing"],
+        ["Performance-based maintenance contracting", "Contracts that pay for a defined condition: specifications, deduction methods, and administration.", ["cs-pbmc", "cs-txmaint", "cs-pbmc2"], "pbmc"],
+        ["Fleet and facilities", "How equipment is chosen, shared, maintained, and replaced, and what the buildings need.", ["cs-nv-fleet-program", "cs-tn-amdiv", "cs-mqa-fleet"], "fleet"],
       ];
       /* redesigned Nov 11 (Nicole: "make that more clear"): the kinds of work this service covers (three since Nov 12), each with
          what it means and the projects where we've done it */
       return (
         <div className="cov">
           <div className="v8-wrap">
-            <div className="cov-head"><p className="v8-eyebrow">What this covers</p><h2 className="v8-h2">Three kinds of maintenance work, and where we&apos;ve done each</h2></div>
+            <div className="cov-head"><p className="v8-eyebrow">What this covers</p><h2 className="v8-h2">Four services under asset management, and where we&apos;ve done each</h2></div>
             <ol className="cov-grid">
-              {parts.map(([t, d, ids], i) => (
+              {parts.map(([t, d, ids, sid], i) => (
                 <li key={t}>
-                  <div className="cov-top"><span className="cov-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><h3>{t}<LineNote text={t} /></h3><p>{d}</p></div>
+                  <div className="cov-top"><span className="cov-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><h3><a href={serviceHref(sid)}>{t}</a><LineNote text={t} /></h3><p>{d}</p></div>
                   <div className="cov-proj">
                     <span className="cov-k">Where we&apos;ve done it</span>
                     <ul>{ids.map((k) => caseById(k)).filter(Boolean).map((c) => (

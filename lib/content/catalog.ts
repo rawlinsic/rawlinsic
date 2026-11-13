@@ -13,7 +13,9 @@ export type SvcData = { id: string; name: string; area: string; st: string; intr
   /* doneTo: the project page each "Where we've done it" line opens, in line order (null: no project page). Projects file v4, Part 4, Nov 13 */
   doneTo?: (string | null)[];
   /* cards: the projects shown first under "Where we've done it", in this order; the page shows cards only (Where we've done it file v1, Nov 13) */
-  cards?: string[] };
+  cards?: string[];
+  /* cardLinks: phrases in a scope card's title that open another service page (Asset Management, M&O file v10) */
+  cardLinks?: Record<string, string> };
 export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; lead?: string; /* links: each stage lists its services as links (Program & Project Delivery, Nov 13) */ links?: boolean; steps: { t: string; d: string; services: string[]; areas?: string[] }[] }; keep: string; cases: string[];
   /* xp: "The experience behind it" on the area page (Program & Project Delivery area page file v1, Nov 13) */
   xp?: string[];
@@ -987,7 +989,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Systems and data integration:** enterprise asset management systems and asset data governance",
    "**Asset information and assessment technology:** defining what information is needed, and comparing ways to collect and assess it, including automated methods checked against field assessment",
    "**Local agencies:** self-assessments, workshops, and action plans that start from where each agency is",
-   "**Maintenance quality assurance, outsourcing, performance-based contracting, and fleet and facilities:** "
+   "**Maintenance quality assurance, outsourcing, performance-based contracting, and fleet and facilities:** how condition is checked, who does the work, how a contract pays for it, and how the equipment and buildings behind it are managed"
   ],
   "walk": [
    "A functional model with role and responsibility definitions",
@@ -1008,12 +1010,17 @@ export const SERVICES: Record<string, SvcData> = {
    "operations"
   ],
   "xp": [
-   "Our founder led Nevada DOT's statewide asset management plan",
+   "Our founder drove the development of Nevada DOT's Transportation Asset Management Plan",
    "Before founding Rawlins, our founder led asset management reviews for the Utah and North Carolina transportation departments and New York City Parks",
-   "One of our advisors has done life cycle cost analysis for highway assets on public and privately financed projects"
+   "One of our advisors has done life cycle cost analysis for highway assets on public and privately financed projects",
+   "A former City of Las Vegas Director of Public Works on our team led the city's asset management programs"
   ],
+  /* each name in the last card's title opens its page (M&O file v10, Nov 13) */
+  "cardLinks": {"Maintenance quality assurance": "mqa", "outsourcing": "outsourcing", "performance-based contracting": "pbmc", "fleet and facilities": "fleet"},
+  /* the project cards under "Where we've done it", in this order (M&O file v10, Part 3; Where we've done it file v1) */
+  "cards": ["cs-tn-amdiv", "cs-strategic", "cs-local-am", "cs-measures", "cs-txmaint"],
   "src": {
-   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+   "page": "Nicole's Maintenance & Operations file, v10 (Nov 13, 2026), Part 2"
   }
  },
  "mqa": {
@@ -1021,7 +1028,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Maintenance Quality Assurance",
   "area": "om",
   "st": "ok",
-  "intro": "A maintenance quality assurance program shows whether the features you maintain meet expectations, and which maintenance needs should get the next dollar. Some states call it a maintenance rating program.\n\nWe develop these programs so that the inventory, the condition standards, the way conditions are observed, and the way managers use the results all connect. The same program supports the agency's own management and, where maintenance is contracted, a performance-based contract.",
+  "intro": "A maintenance quality assurance program shows whether the features an agency maintains meet expectations, and which maintenance needs come first. Some states call it a maintenance rating program.\n\nWe develop these programs so that the inventory, the condition standards, the way conditions are observed, and the way managers use the results all connect. The same program supports the agency's own management and, where maintenance is contracted, a performance-based contract.",
   "hear": [
    "We need a maintenance rating program decisions can rely on.",
    "Each district rates conditions its own way.",
@@ -1052,13 +1059,19 @@ export const SERVICES: Record<string, SvcData> = {
    "transport",
    "gov"
   ],
-  "related": [],
+  "related": [
+   "pbmc",
+   "asset-mgmt",
+   "dashboards"
+  ],
   "xp": [
-   "Florida DOT's former Director of Maintenance, who led its statewide program, is on our team",
+   "Florida DOT's former Director of Maintenance, who sponsored the modernization of its Maintenance Rating Program, is on our team",
    "Our team includes the owner's view and the contractor's view of how condition standards are measured"
   ],
+  /* the project cards under "Where we've done it", in this order (M&O file v10, Part 3; Where we've done it file v1) */
+  "cards": ["cs-pbmc", "cs-mqa-fleet", "cs-txmaint"],
   "src": {
-   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+   "page": "Nicole's Maintenance & Operations file, v10 (Nov 13, 2026), Part 2"
   }
  },
  "outsourcing": {
@@ -1066,7 +1079,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Maintenance Outsourcing",
   "area": "om",
   "st": "ok",
-  "intro": "Maintenance responsibilities keep growing while staff capacity stays tight. We help agencies decide which work to keep, which to contract, and which to combine, and then get ready to run the model they choose.\n\nOur team includes people who have done this as owners and as contractors. That helps test whether the standards, the information, and the way risk is assigned will work in practice.",
+  "intro": "We help agencies decide which maintenance work to keep in-house, which to contract, and which to combine, and then get ready to run the model they choose. The decision rests on what the work requires, the staff and equipment the agency has, the service it expects, and what the contractor market can provide.\n\nOur team includes people who have done this as owners and as contractors. That helps test whether the standards, the information, and the way risk is assigned will work in practice.",
   "hear": [
    "Our maintenance responsibilities keep growing, and our staff doesn't.",
    "We can't hire or keep enough maintenance staff.",
@@ -1095,10 +1108,20 @@ export const SERVICES: Record<string, SvcData> = {
    "transport",
    "gov"
   ],
-  "related": [],
-  "xp": [],
+  "related": [
+   "pbmc",
+   "procurement",
+   "finance"
+  ],
+  "xp": [
+   "One of our advisors co-founded a performance-based asset maintenance firm that grew from two people to operations in 43 states",
+   "A former Florida DOT district maintenance engineer on our team led a three-phase move to a performance-based contract that covers the department's maintenance in one county",
+   "A former Michigan DOT division administrator on our team chaired the department's team in negotiating a five-year statewide contract with the County Road Association of Michigan"
+  ],
+  /* the project cards under "Where we've done it", in this order (M&O file v10, Part 3; Where we've done it file v1) */
+  "cards": ["cs-pbmc", "cs-maint-model", "cs-mqa-fleet", "cs-nv-om"],
   "src": {
-   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+   "page": "Nicole's Maintenance & Operations file, v10 (Nov 13, 2026), Part 2"
   }
  },
  "pbmc": {
@@ -1117,7 +1140,9 @@ export const SERVICES: Record<string, SvcData> = {
   "deliver": [
    "**Program design:** which corridors or areas, what work is included, and for how long",
    "**Performance standards and measurement:** what the contractor is held to and how it is checked, tied to the quality assurance program",
+   "**Baseline condition assessment:** the tools and training to score condition before the contract starts",
    "**Contract documents:** the scope, special specifications, and request for proposals",
+   "**Cost estimate and work plan:** the contract's quantities, unit prices, and staffing, built from the asset inventory",
    "**Payment and deductions:** how the contractor is paid, and what happens when a standard is missed, applied the same way in every district",
    "**Contractor's-side review:** reading the agency's draft documents the way a bidder will",
    "**Industry review:** forums, comment matrices, and recommended responses before the contract is final",
@@ -1137,15 +1162,22 @@ export const SERVICES: Record<string, SvcData> = {
    "transport",
    "gov"
   ],
-  "related": [],
+  "related": [
+   "mqa",
+   "owners-rep",
+   "procurement"
+  ],
   /* hidden until Scott confirms (content fixes v1, 8.5): "We've piloted performance-based maintenance in a Michigan DOT region" */
   "xp": [
    "One of our advisors co-founded a performance-based asset maintenance firm that grew from two people to operations in 43 states",
    "Members of our team built Michigan DOT's performance-based maintenance program, at the agency and as its consultant",
-   "Before founding Rawlins, our founder reviewed Virginia DOT's performance-based interstate maintenance contracts"
+   "Before founding Rawlins, our founder reviewed Virginia DOT's performance-based interstate maintenance contracts",
+   "A former Michigan DOT region leader on our team led her region's pilot of the department's performance-based maintenance program"
   ],
+  /* the project cards under "Where we've done it", in this order (M&O file v10, Part 3; Where we've done it file v1) */
+  "cards": ["cs-pbmc", "cs-txmaint", "cs-pbmc2", "cs-nc-ipd"],
   "src": {
-   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+   "page": "Nicole's Maintenance & Operations file, v10 (Nov 13, 2026), Part 2"
   }
  },
  "fleet": {
@@ -1153,7 +1185,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Fleet & Facilities",
   "area": "om",
   "st": "ok",
-  "intro": "Fleet and facilities sustain the transportation program, but replacement choices, condition information, and responsibilities often don't get the same discipline as roadway assets.\n\nWe help agencies manage them as assets: how equipment is chosen, shared, maintained, and replaced, what the buildings need, and who decides.",
+  "intro": "Fleet and facilities support every part of a transportation program. We help agencies manage them as assets: how equipment is chosen, shared, maintained, and replaced, what the buildings need, and who decides.\n\nThe work starts from the agency's own records: the inventory, how equipment is used, and how purchase, replacement, and facility decisions are made and documented today.",
   "hear": [
    "Every district chooses and replaces equipment its own way.",
    "Equipment sits unused in one district while another rents the same thing.",
@@ -1184,14 +1216,21 @@ export const SERVICES: Record<string, SvcData> = {
    "transport",
    "gov"
   ],
-  "related": [],
-  "xp": [
-   "Our founder led Nevada DOT's fleet program, with 2,700 pieces of equipment",
-   "A former Michigan DOT division administrator on our team led a division that included statewide fleet and facilities",
-   "Before founding Rawlins, our founder reviewed a county's fleet and facilities operations"
+  "related": [
+   "asset-mgmt",
+   "operations",
+   "finance"
   ],
+  "xp": [
+   "Our founder drove the development of Nevada DOT's fleet program, which covered 2,700 pieces of equipment",
+   "A former Michigan DOT division administrator on our team led a division that included statewide fleet and facilities",
+   "Before founding Rawlins, our founder reviewed a county's fleet and facilities operations",
+   "A former Florida DOT district maintenance engineer on our team led his district's move to a self-service motor pool"
+  ],
+  /* the project cards under "Where we've done it", in this order (M&O file v10, Part 3; Where we've done it file v1) */
+  "cards": ["cs-nv-fleet-program", "cs-tn-amdiv", "cs-mqa-fleet"],
   "src": {
-   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+   "page": "Nicole's Maintenance & Operations file, v10 (Nov 13, 2026), Part 2"
   }
  },
  "operations": {
@@ -1199,7 +1238,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Maintenance Programs",
   "area": "om",
   "st": "ok",
-  "intro": "We help maintenance programs run the same way in every district: a clear view of how the program is working, a budget tied to the condition you want, standards crews can follow, and staff trained to apply them.",
+  "intro": "We help agencies review how their maintenance program is organized and funded, tie the budget to a level of service, write the standards and procedures crews work from, and train the staff who apply them. We do the work with headquarters and district maintenance staff, so each district works from the same guidance.",
   "hear": [
    "Our field crews do it differently in every region.",
    "Maintenance costs keep climbing.",
@@ -1212,9 +1251,11 @@ export const SERVICES: Record<string, SvcData> = {
    "**Budgeting tied to performance:** level-of-service targets and what it costs to meet them",
    "**Pavement preservation:** selecting projects with data, and timing treatments",
    "**Operating standards and procedures:** written once and applied in every district, with field checklists",
-   "**Warranty programs:** administration guides for warranted work",
+   "**Warranty programs:** specifications and administration guides for warranted work",
    "**Training:** maintenance academies and courses for crews and supervisors",
-   "**Winter operations and emergency readiness:** plans, and tabletop exercises that test them before an emergency does",
+   "**Proficiency programs:** what maintenance workers at each level need to be able to do, with modules, task sheets, and a rollout academy",
+   "**Staffing and organization:** staffing analysis for maintenance facilities, and how headquarters and district maintenance are organized",
+   "**Winter operations and emergency readiness:** plans, training, and tabletop exercises that test the plans",
    "**Maintenance in project development:** constructability and maintenance reviews built into the delivery process"
   ],
   "walk": [
@@ -1235,11 +1276,13 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "xp": [
    "Florida DOT's former Director of Maintenance, who led its statewide program, is on our team",
-   "A former Michigan DOT division administrator on our team led its statewide maintenance operations alignment",
+   "A former Michigan DOT division administrator on our team chaired its Statewide Maintenance Operations Alignment Team",
    "Before founding Rawlins, our founder reviewed Pennsylvania DOT's maintenance budgeting"
   ],
+  /* the project cards under "Where we've done it", in this order (M&O file v10, Part 3; Where we've done it file v1) */
+  "cards": ["cs-nv-om", "cs-proficiency", "cs-tn-leading", "cs-mqa-fleet", "cs-txmaint", "cs-hi"],
   "src": {
-   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+   "page": "Nicole's Maintenance & Operations file, v10 (Nov 13, 2026), Part 2"
   }
  },
  "traffic": {
@@ -1287,10 +1330,15 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "xp": [
    "Former Michigan DOT leaders on our team ran its operations division, including traffic and safety, and ran a region's intelligent transportation systems",
-   "A former City of Las Vegas Director of Public Works on our team championed the city's Vision Zero initiative"
+   "A former City of Las Vegas Director of Public Works on our team championed the city's Vision Zero initiative",
+   "A former Michigan DOT Engineer of Operations and Maintenance on our team led the development of the department's operations and connected vehicle strategic plans",
+   "One of our advisors led benefit-cost analysis work at the Federal Highway Administration",
+   "We've calculated a benefit-cost ratio for a state DOT's interstate project with the federal operations benefit-cost tool, and trained its staff on a traffic operations system"
   ],
+  /* the project cards under "Where we've done it", in this order (M&O file v10, Part 3; Where we've done it file v1) */
+  "cards": ["cs-tn-leading", "cs-tn-reorg", "cs-nv-om"],
   "src": {
-   "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
+   "page": "Nicole's Maintenance & Operations file, v10 (Nov 13, 2026), Part 2"
   }
  },
  "portals": {
@@ -2067,7 +2115,7 @@ export const AREAS: Record<string, AreaData> = {
  "om": {
   "id": "om",
   "name": "Maintenance & Operations",
-  "tag": "Keeping what you own safe, working, & affordable",
+  "tag": "Asset management, maintenance, contracting, & traffic operations",
   "services": [
    "asset-mgmt",
    "mqa",
@@ -2077,73 +2125,94 @@ export const AREAS: Record<string, AreaData> = {
    "operations",
    "traffic"
   ],
-  "lead": "Keeping what you already own safe and working takes a big share of the budget. We help make every dollar of that count.\n\nWe help agencies understand the condition of what they own, direct resources to it, and organize maintenance around clear service expectations. Asset management connects that work to the agency's objectives and investment choices. Maintenance quality assurance shows how the system is performing. Sourcing and contract design decide how the work gets done.",
+  "lead": "We help agencies understand the condition of what they own, direct resources to it, and organize maintenance around clear service expectations. Asset management connects that work to the agency's objectives and investment choices. Maintenance quality assurance shows how the system is performing. Sourcing and contract design decide how the work gets done.\n\nThe same work reaches the equipment and buildings behind maintenance, the standards and training crews work from, and how traffic is operated day to day. We do it with headquarters and district staff, and the agency owns the result.",
   "hear": [
    "We fix whatever's worst first, and we're always reacting.",
    "We can't hire or keep enough maintenance staff.",
    "We outsource the work. We need the contractor held to it.",
-   "Our field crews do it differently in every region."
+   "Every district chooses and replaces equipment its own way.",
+   "Our field crews do it differently in every region.",
+   "Each district rates conditions its own way."
   ],
   "bring": [
-   "A clear picture of what you own, what shape it's in, and where the next dollar does the most good, with measures that keep those decisions consistent.",
-   "",
+   "An inventory and condition picture, life cycle strategies, and measures that connect investment choices to the condition the agency is aiming for.",
+   "A sourcing assessment that sets what the work requires against the staff, equipment, and contractor market available, and proficiency programs for the staff the agency has.",
    "Performance-based contract specifications, deduction models, quality assurance programs, and owner's representation.",
-   "Field assessments, operating standards, checklists, crew training, and tabletop exercises that test plans before an emergency does."
+   "A selection, replacement, and disposal process with criteria based on data, and a comparison with other states.",
+   "Operating standards, field checklists, crew training, and tabletop exercises that test emergency plans.",
+   "An observable standard for each feature, sampling and rating procedures, rater training, and one handbook that staff and contractors work from."
   ],
   "lines": {
-   "asset-mgmt": "Know what you own, and who decides.",
-   "mqa": "See how it is performing against a target.",
-   "outsourcing": "Decide who does the work.",
-   "pbmc": "Contract for condition.",
-   "fleet": "Manage the equipment and buildings behind the work.",
-   "operations": "Put the budget, standards, and training behind it.",
-   "traffic": "Run the system you have."
+   "asset-mgmt": "Organization, asset data, life cycle planning, & investment strategy",
+   "mqa": "Condition standards, sampling, rating, & reporting",
+   "outsourcing": "Sourcing assessment, operating models, & transition",
+   "pbmc": "Program design, contract documents, & contract administration",
+   "fleet": "Fleet analysis, replacement criteria, equipment sharing, & facilities",
+   "operations": "Program reviews, budgeting, standards, & training",
+   "traffic": "Program reviews, guidance, project prioritization, & organization"
   },
   "feature": {
    "title": "Across the asset life cycle",
+   "links": true,
+   "lead": "An agency inventories what it owns, plans and funds the work, maintains and operates the system, and measures the result. What it measures sets the next plan. Each of our services sits at one or more of those stages.",
    "steps": [
     {
      "t": "Know what you own",
-     "d": "Inventories and condition",
+     "d": "Inventories, condition, and who owns the data.",
      "services": [
-      "asset-mgmt"
+      "asset-mgmt",
+      "fleet"
      ]
     },
     {
      "t": "Plan and fund",
-     "d": "Life cycle, risk, and investment strategy",
+     "d": "Life cycle strategies, risk, investment priorities, and the choice between in-house crews and contracts.",
      "services": [
-      "asset-mgmt"
+      "asset-mgmt",
+      "outsourcing",
+      "operations"
      ]
     },
     {
      "t": "Maintain",
-     "d": "Performance-based contracts and crews",
+     "d": "Standards, training, equipment, and contracts that pay for a defined condition.",
      "services": [
-      "operations"
+      "operations",
+      "pbmc",
+      "fleet"
      ]
     },
     {
      "t": "Operate",
-     "d": "Traffic operations and safety",
+     "d": "Traffic operations, safety, winter operations, and emergency readiness.",
      "services": [
-      "traffic"
+      "traffic",
+      "operations"
      ]
     },
     {
      "t": "Measure",
-     "d": "Quality assurance and ratings",
+     "d": "Condition against target, and what the results mean for the next budget.",
      "services": [
-      "operations"
+      "mqa",
+      "pbmc"
      ]
     }
    ]
   },
   "keep": "",
+  "xp": [
+   "Our founder drove the development of Nevada DOT's Transportation Asset Management Plan",
+   "Florida DOT's former Director of Maintenance, who led its statewide program, is on our team",
+   "One of our advisors co-founded a performance-based asset maintenance firm that grew from two people to operations in 43 states",
+   "A former Michigan DOT division administrator on our team led a division that included statewide fleet and facilities",
+   "A former City of Las Vegas Director of Public Works on our team championed the city's Vision Zero initiative"
+  ],
+  /* Featured projects (M&O file v10, Nov 13) */
   "cases": [
-   "cs-txmaint",
    "cs-pbmc",
-   "cs-local-am"
+   "cs-mqa-fleet",
+   "cs-tn-amdiv"
   ]
  },
  "tech": {
@@ -2650,9 +2719,9 @@ export const CASES: Record<string, CaseData> = {
   "did": [
    "Built proficiency programs with agency experts in more than two dozen disciplines, from right of way and construction to bridge inspection and traffic design",
    "Researched appraiser classifications nationwide and drafted a salary structure",
-   "Designed a two-week advanced leadership program of about 40 sessions with the agency's human resources team, and delivered it twice in 2024.",
-   "Supported a statewide transportation worker proficiency rollout and a staffing utilization method",
-   "Built the maintenance worker proficiency program in three levels, with a manual, modules, task sheets, and a rollout academy",
+   "Designed a two-week advanced leadership program of about 40 sessions with the agency's human resources team, and delivered it twice in 2024",
+   "Built the transportation worker proficiency program for maintenance crews in three levels, with a manual, modules, task sheets, and a rollout academy",
+   "Supported its statewide rollout, and built a staffing utilization method",
    "Rolled out the construction technician program through academy workshops in the regions",
    "Wrote rotation curricula for graduate engineers in about a dozen disciplines",
    "Wrote the curriculum for the department's Management Academy"
@@ -2705,14 +2774,13 @@ export const CASES: Record<string, CaseData> = {
   "ch": "A region moved interstate maintenance to performance-based contracts. That meant a measurable quality baseline, procurement shaped with industry, and administering two new contracts while staff and contractors learned the model together.",
   "when": "2023 to 2025",
   "did": [
-   "Converted maintenance quality measures to pass or fail criteria and set the field assessment approach",
-   "Reviewed field data from 268 interstate sample sites",
-   "Supported an industry forum and drafted the scope, contract, and request for proposals",
-   "Supported contractor onboarding with weekly advisory calls",
-   "Calculated staffing, equipment, and cost offsets",
    "Wrote the report that recommended a performance-based maintenance contract for one region and a simpler maintenance quality assurance program",
+   "Converted maintenance quality measures to pass or fail criteria and set the field assessment approach",
+   "Monitored field data collection at 268 interstate sample sites, and analyzed the results",
+   "Supported an industry forum and drafted the scope, contract, and request for proposals",
    "Supported the advertisement of both contracts, with pre-bid support and answers during the question period",
    "Presented the statewide maintenance quality assessment to executive and regional leadership",
+   "Supported contractor onboarding with weekly advisory calls",
    "Reviewed contracts, fleet, fuel, and staffing for the financial analysis, and presented it to department leadership"
   ],
   "res": [
@@ -2824,12 +2892,12 @@ export const CASES: Record<string, CaseData> = {
    "Identified field staffing for 31 field offices and presented recommendations on the construction division to executives"
   ],
   "res": [
-   "New project management organization approved in June 2026, with three new roles.",
+   "New project management organization approved in June 2026, with three new roles",
    "Final measures compiled by the working group",
    "Change impact template and first manual sections finalized",
    "Five-year work plan, organization design, and performance measures complete",
    "Manual and training in progress",
-   "Position descriptions, measures, change management, and organization design marked complete in September 2026."
+   "Position descriptions, measures, change management, and organization design marked complete in September 2026"
   ],
   "services": [
    "org-design",
@@ -2849,11 +2917,14 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department wanted performance-based and flexible maintenance contracts that industry would bid on and districts could administer the same way, plus a maintenance rating program decisions could rely on.",
   "when": "2025 to 2026",
   "did": [
+   "Advised the department and its contractors on contract language and oversight, and ran a workshop with department leadership and the contracting industry",
+   "Built an engineer's estimate for one district's contract from its asset inventory and work plan",
+   "Built baseline condition assessment tools and trained district staff to use them",
    "Drafted special specifications for two districts' contracts",
    "Built a uniform deduction method and tracker",
    "Ran a structured industry review and recommended responses",
    "Facilitated the maintenance rating working group and built the rating matrix",
-   "Developed a winter operations tabletop exercise concept",
+   "Prepared a winter operations tabletop exercise for district emergency response staff: the scenario, the presentation, and the moderator's outline",
    "Wrote a white paper on flexible asset maintenance contracts, with a checklist so more districts can follow",
    "Built a cloud-based cost estimating tool with documented formulas",
    "Evaluated four data collection vendors with a scoring matrix and a recommendation report",
@@ -2897,7 +2968,7 @@ export const CASES: Record<string, CaseData> = {
   "res": [
    "Response team training held and evaluated",
    "When debris reports disagreed, the drone data proved correct",
-   "Drone program standard operating procedures final in May 2026."
+   "Drone program standard operating procedures final in May 2026"
   ],
   "services": [
    "drone-programs",
@@ -2922,8 +2993,8 @@ export const CASES: Record<string, CaseData> = {
    "Prepared one-page materials for elected officials"
   ],
   "res": [
-   "Workshops held and action plans built with seven local agencies: two county road commissions and five cities.",
-   "Summary of the first round presented to the office and the state infrastructure council in December 2024."
+   "Workshops held and action plans built with seven local agencies: two county road commissions and five cities",
+   "Summary of the first round presented to the office and the state infrastructure council in December 2024"
   ],
   "services": [
    "asset-mgmt",
@@ -2958,7 +3029,7 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department needed a clear picture of its vacancies, how divisions balance staffing supply and demand, and how peer agencies organize.",
   "when": "2024 to 2025",
   "did": [
-   "Analyzed vacancies by division, classification, staffing level, and tenure, and how peer agencies organize."
+   "Analyzed vacancies by division, classification, staffing level, and tenure, and how peer agencies organize"
   ],
   "res": [],
   "services": [
@@ -3026,11 +3097,10 @@ export const CASES: Record<string, CaseData> = {
    "Built a performance measures inventory and profile template",
    "Held eight staff focus groups, summits with planning partners and rural counties, and five district sessions with the Director",
    "Held 25 interviews with division heads and measure owners, and analyzed every performance measure the department uses",
-   "Piloted the action plan framework with three divisions before it was approved for all",
-   "Held action planning workshops with every division and district"
+   "Piloted the action plan framework with three divisions before it was approved for all"
   ],
   "res": [
-   "Strategic plan for 2025 to 2029 complete.",
+   "Strategic plan for 2025 to 2029 complete",
    "Year 1 action plan complete",
    "Action plan tracking tool with progress dashboards in use",
    "Division action plans reviewed, approved, and finalized with the Director's Office in August 2025",
@@ -3068,18 +3138,21 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-nv-om": {
   "id": "cs-nv-om",
-  "ch": "The department wanted a statewide look at how its operations, maintenance, fleet, and facilities were managed.",
+  "ch": "The department wanted a statewide look at how its maintenance, operations, fleet, and facilities were managed.",
+  "when": "2022 to 2023",
   "did": [
-   "Statewide assessment of maintenance and operations programs",
+   "Assessed the department's maintenance and operations programs statewide",
    "Reviewed asset management, performance management, fleet and facilities, district operations, organization, budgeting, and traffic operations",
    "Ran a Maintenance Academy in two events, with a final report",
    "Surveyed employees for the operations review, with more than 200 responses",
    "Delivered a data-driven process for choosing pavement projects, and supported the first year of the Pavement Improvement Program",
    "Wrote a chip seal warranty specification and a Warranty Administration Guide, with industry meetings",
-   "Presented occupational health and safety practices from other states"
+   "Presented occupational health and safety practices from other states",
+   "Reviewed the earlier studies for a northern Nevada traffic management center, met with the agencies involved on its direction, and organized visits to other traffic management centers",
+   "Helped organize and discuss outsourcing concepts with industry and one district"
   ],
   "res": [
-   "First two warranty pilot projects in summer 2023."
+   "The department started its first two warranty pilot projects in summer 2023"
   ],
   "services": [
    "operations",
@@ -3103,7 +3176,8 @@ export const CASES: Record<string, CaseData> = {
    "Drafted a report on current and future fleet processes"
   ],
   "res": [
-   "Department leadership approved the fleet analysis recommendations, and the work moved into implementation"
+   "Department leadership approved the fleet analysis recommendations, and the work moved into implementation",
+   "Fleet Implementation Report delivered and presented to executive leadership in early 2023"
   ],
   "services": [
    "operations",
@@ -3125,7 +3199,7 @@ export const CASES: Record<string, CaseData> = {
    "Compiled a 100-source literature review",
    "Facilitated a technical advisory panel",
    "Interviewing aviation stakeholders statewide",
-   "Scanned state aeronautics programs nationally and built a comparative matrix."
+   "Scanned state aeronautics programs nationally and built a comparative matrix"
   ],
   "res": [],
   "services": [
@@ -3145,12 +3219,12 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department's Division of Technology and Innovation Services, in Dover, needed a clear roadmap for innovation and technology investment, tied to agency goals.",
   "when": "2024 to 2025",
   "did": [
-   "Interviews with eight division leaders and four outside stakeholders, and a strengths and weaknesses analysis.",
+   "Interviews with eight division leaders and four outside stakeholders, and a strengths and weaknesses analysis",
    "A technology strategic plan aligned with agency goals and operating priorities",
    "A one-page visual summary for executive alignment"
   ],
   "res": [
-   "Technology strategic plan approved by the department's chief information officer in April 2025."
+   "Technology strategic plan approved by the department's chief information officer in April 2025"
   ],
   "services": [
    "tech-strategy",
@@ -3316,7 +3390,7 @@ export const CASES: Record<string, CaseData> = {
    "Facilitated subcommittee and consensus sessions",
    "Proposed a performance-based, sensor-neutral testing framework",
    "Compiled member states' existing standards",
-   "Brought together working groups from 19 member states.",
+   "Brought together working groups from 19 member states",
    "Ran a national baseline survey, with responses from 26 agencies",
    "Ran field calibration testing at bridges with two state DOTs",
    "Drafted bridge inspection guidance tied to the national bridge inspection manuals"
@@ -3360,7 +3434,7 @@ export const CASES: Record<string, CaseData> = {
    "## The change request system",
    "Built the change request system: a web form, a tracker, automatic routing to reviewers and the department, quality check, and close-out",
    "## Training and rollout",
-   "Built five self-paced courses for project teams, narrated and captioned. Video lessons are in storyboard.",
+   "Built five self-paced courses for project teams, narrated and captioned, with video lessons in storyboard",
    "Trained project managers on the network, and held orientation sessions for department leadership, project managers, and delivery staff",
    "Wrote a project manager's manual and online courses, including consultant management",
    "Developed risk management training",
@@ -3409,7 +3483,7 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [
    "More than ten standard operating procedures complete",
-   "Two-year technology work plan presented to the senior team in April 2026."
+   "Two-year technology work plan presented to the senior team in April 2026"
   ],
   "services": [
    "tech-strategy",
@@ -3426,7 +3500,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-hi": {
   "id": "cs-hi",
-  "ch": "The department needed one trusted home for hundreds of construction documents spread across an old wiki, and steady support across construction, project delivery, and the department's other divisions.",
+  "ch": "The department wanted an outside assessment of how it delivers projects, administers construction, and maintains its highways across its districts, and a roadmap for what to take on next.",
   "when": "Since 2026",
   "did": [
    "Planning the rollout of the department's construction management platform on live projects",
@@ -3832,7 +3906,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-mqa-fleet": {
   "id": "cs-mqa-fleet",
-  "ch": "The department wanted a consistent way to rate maintenance quality across its districts.",
+  "ch": "The department wanted a consistent way to rate maintenance quality across its districts, current training for the crews who operate its equipment, and a clearer picture of its fleet.",
   "when": "Since 2025",
   "did": [
    "Visited districts, interviewed staff, compared twelve peer states, and presented findings to headquarters",
@@ -3841,13 +3915,13 @@ export const CASES: Record<string, CaseData> = {
    "Trained inspectors in person, in three sessions",
    "Coordinated the content of a field data collection app",
    "Developed training for winter operations, load securement, diesel exhaust fluid, first echelon maintenance, and equipment safety, with 43 equipment demonstration checklists for the operator certification program",
-   "Analyzed the fleet's life cycle, idle time, fuel, and usage, ran asset-sharing workshops in five districts, and wrote requirements for a fleet management system",
-   "Reviewed all 13 responses to a maintenance outsourcing request for information, and presented them to leadership"
+   "Analyzed the fleet's life cycle, idle time, fuel, and usage, audited equipment records against system data, ran asset-sharing workshops in five districts, and wrote requirements for a fleet management system",
+   "Reviewed all 13 responses to a maintenance outsourcing request for information, presented them to leadership, and prepared an outsourcing estimate for the department's evaluation"
   ],
   "res": [
    "Inspection handbook published in January 2026, and version 1.1 in May 2026",
    "Inspector training delivered in early 2026",
-   "Winter operations training delivered"
+   "Winter operations training program developed and presented to the maintenance steering committee"
   ],
   "services": [
    "operations",
@@ -3894,6 +3968,7 @@ export const CASES: Record<string, CaseData> = {
   "did": [
    "Assessed divisions across engineering, planning, and administration, each with a proposed organization chart: right of way, utilities, program development, local programs, long range planning, multimodal transportation, freight and logistics, procurement, finance, aeronautics, civil rights, central services, and internal audit",
    "Designed organization structures for the engineering divisions and for district maintenance and construction, with transition plans",
+   "Finalized organization structures for traffic design and traffic operations, and reviewed roles and responsibilities across traffic operations, traffic design, and information technology",
    "Wrote position descriptions and section primers for every bureau",
    "Built staff transition tracking tools for all four regions, and ran a restructuring status tracker for the department",
    "Worked out the wage and benefit cost of the new structure, re-analyzed pay after state pay increases, and kept positions, salaries, and benefits inside the proposed budget",
@@ -4248,6 +4323,33 @@ export const CASES: Record<string, CaseData> = {
    "workforce",
    "org-design",
    "change-mgmt"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-tn-leading": {
+  "id": "cs-tn-leading",
+  "ch": "The department wanted to compare how it staffs and runs maintenance and traffic operations with leading practice in other states.",
+  "when": "2024",
+  "did": [
+   "Researched how other states staff and run traffic management centers and highway help truck programs, and reviewed the department's current practice",
+   "Reviewed national practice for winter maintenance staffing and level of service, with fleet management practices",
+   "Researched bridge inspection practice and wrote a white paper with recommendations",
+   "Surveyed all states on traffic design practice, and compiled the results with national research",
+   "Ran a peer survey on traffic modeling, and wrote a white paper on the business cases for operations management and intelligent transportation systems",
+   "Analyzed staffing and cost at county maintenance facilities against leading national practice"
+  ],
+  "res": [
+   "Findings and recommendations from each review presented to department leadership in 2024",
+   "Traffic design survey results delivered in July 2024",
+   "Summary presentation on staffing delivered to leadership in October 2024"
+  ],
+  "services": [
+   "traffic",
+   "operations"
   ],
   "subsectors": [
    "sub-highways"

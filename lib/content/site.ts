@@ -69,7 +69,7 @@ export const AREAS: Area[] = [
   },
   {
     id: "om", slug: "maintenance-operations", name: "Maintenance & Operations", // Nov 13 (Nicole): "everywhere it's operations and maintenance, it should be maintenance and operations"; the old address redirects
-    tag: "Keeping what you own safe, working, & affordable", scene: "dusk", featuredCase: "cs-pbmc",
+    tag: "Asset management, maintenance, contracting, & traffic operations", scene: "dusk", featuredCase: "cs-pbmc",
     services: [
       svc("asset-mgmt", "Asset Management", "crossing"),
       /* Nov 12 (Nicole's Operations & Maintenance file, v8): four services under Asset Management, the way Preconstruction
@@ -364,11 +364,13 @@ const FOUNDER = " · Our founder's work before Rawlins";
 const TEAM = " · Our team's work before Rawlins";
 
 export const CASES: CaseIndex[] = [
-  cs("cs-proficiency", "tennessee-career-paths-and-proficiency", "Career paths and proficiency programs across a department", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["workforce", "org-design", "change-mgmt", "traffic", "construction"]), // + right of way appraiser program, traffic design and construction proficiency (Nov 11)
+  cs("cs-proficiency", "tennessee-career-paths-and-proficiency", "Career paths and proficiency programs across a department", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["workforce", "org-design", "change-mgmt", "traffic", "construction", "operations"]), // + right of way appraiser program, traffic design and construction proficiency (Nov 11)
   /* Nov 13 (projects file v4, Part 3): page G, page H, page I, page P */
-  cs("cs-tn-reorg", "tennessee-department-reorganization", "A department reorganization: structures, positions, and the move to them", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["org-design", "change-mgmt", "exec-advisory", "finance", "program-delivery", "planning", "preconstruction", "lpa"]),
-  cs("cs-tn-amdiv", "tennessee-asset-management-division", "A new asset management division, from vision to hiring plan", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["asset-mgmt", "operations", "org-design"]),
+  cs("cs-tn-reorg", "tennessee-department-reorganization", "A department reorganization: structures, positions, and the move to them", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["org-design", "change-mgmt", "exec-advisory", "finance", "program-delivery", "planning", "preconstruction", "lpa", "traffic"]),
+  cs("cs-tn-amdiv", "tennessee-asset-management-division", "A new asset management division, from vision to hiring plan", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["asset-mgmt", "operations", "org-design", "fleet"]),
   cs("cs-tn-psm", "tennessee-professional-services-manuals", "Manuals and templates for buying consultant services", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["procurement", "alt-delivery"]),
+  /* Nov 13 (M&O file v10, Part 4): new page, separate work orders from the reorganization */
+  cs("cs-tn-leading", "tennessee-maintenance-and-traffic-leading-practices", "Leading practices reviews for maintenance and traffic operations", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["traffic", "operations"]),
   cs("cs-tn-it", "tennessee-it-strategic-plan-and-organization", "An IT strategic plan and a new IT organization", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["tech-strategy", "org-design"]),
   cs("cs-tn-ipd", "tennessee-integrated-program-delivery", "Integrated program delivery: transition projects, risk, and consultant onboarding", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["program-delivery", "preconstruction", "proj-delivery"]),
   cs("cs-pbmc", "tennessee-performance-based-maintenance-contracts", "Launching performance-based maintenance contracts on an interstate network", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["operations", "procurement", "pbmc", "mqa", "outsourcing", "owners-rep", "finance"]),
@@ -380,10 +382,10 @@ export const CASES: CaseIndex[] = [
   cs("cs-pd-manual", "program-development-manual-and-project-selection", "A program development manual and project selection tools", STATE_DOT, [], "Ongoing", "transport", ["program-delivery", "planning", "federal-aid", "grants"]),
   cs("cs-consult-flow", "consultant-contracting-in-one-workflow", "Consultant contracting rebuilt as one connected workflow", STATE_DOT, [], "Ongoing", "transport", ["procurement", "automation", "portals"]),
   cs("cs-lpa-manual", "local-public-agency-manual-and-training", "A local public agency manual, certification process, and training", STATE_DOT, [], "Ongoing", "transport", ["lpa", "federal-aid"]),
-  cs("cs-mqa-fleet", "maintenance-quality-assurance-training-and-fleet", "Maintenance quality assurance, operator training, and fleet", STATE_DOT, [], "Ongoing", "transport", ["operations", "asset-mgmt", "workforce"]),
+  cs("cs-mqa-fleet", "maintenance-quality-assurance-training-and-fleet", "Maintenance quality assurance, operator training, and fleet", STATE_DOT, [], "Ongoing", "transport", ["operations", "asset-mgmt", "workforce", "mqa", "fleet", "outsourcing"]),
   cs("cs-cam", "construction-administration-manual", "A construction administration manual matched to new specifications", STATE_DOT, [], "Ongoing", "transport", ["construction", "org-design"]),
   cs("cs-reorg", "department-reorganization-from-chart-to-rollout", "A department reorganization, from functional chart to rollout", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "exec-advisory", "workforce", "finance"]),
-  cs("cs-measures", "performance-measures-from-strategy-to-dashboards", "Performance measures, from strategy to dashboards", STATE_DOT, [], "Ongoing", "transport", ["strategic-planning", "dashboards", "exec-advisory"]),
+  cs("cs-measures", "performance-measures-from-strategy-to-dashboards", "Performance measures, from strategy to dashboards", STATE_DOT, [], "Ongoing", "transport", ["strategic-planning", "dashboards", "exec-advisory", "asset-mgmt"]),
   // TODO(launch): subcontract read Nov 10: the prime's information stays confidential and the prime agreement's terms apply. Keep it unnamed and high level.
   cs("cs-pmdiv", "standing-up-a-project-delivery-division", "Standing up a project delivery division", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "workforce", "program-delivery", "preconstruction", "proj-delivery", "construction", "exec-advisory", "dashboards"]),
   // Rawlins was prime on this client's purchase order. Jacob's portfolio asks whether this is a Rawlins client; it is.
@@ -393,7 +395,7 @@ export const CASES: CaseIndex[] = [
   cs("cs-drt", "statewide-drone-response-team", "Statewide drone response team and drone program governance", STATE_DOT, [], "Ongoing", "transport", ["drone-programs", "drone-emergency", "org-design"]),
   // TODO(launch): contract publicity terms not checked yet.
   cs("cs-local-am", "michigan-local-asset-management", "Asset management workshops and action plans for local agencies", "State of Michigan, Michigan Infrastructure Office", ["Michigan"], "Completed", "gov", ["asset-mgmt", "workforce"]),
-  cs("cs-mi-pbo", "michigan-performance-based-maintenance-operations", "Performance-based maintenance and operations", "Michigan Department of Transportation · Our team's work before Rawlins, completed 2014", ["Michigan"], "Before Rawlins", "transport", ["operations", "asset-mgmt"]),
+  cs("cs-mi-pbo", "michigan-performance-based-maintenance-operations", "Performance-based maintenance and operations", "Michigan Department of Transportation · Our team's work before Rawlins, completed 2014", ["Michigan"], "Before Rawlins", "transport", ["operations", "asset-mgmt", "pbmc", "mqa"]),
   // TODO(launch): the prime's subcontract (§12) keeps deliverables and client information confidential without the prime's written permission (findings_cases.md, Nov 6 sweep).
   cs("cs-workforce", "workforce-strategy-analysis", "Workforce strategy: vacancies, staffing, and peer benchmarks", STATE_DOT, [], "Completed", "transport", ["workforce", "org-design"]),
   cs("cs-nc-ipd", "north-carolina-integrated-program-delivery", "Integrated program delivery, from grant applications to maintenance contracts", "North Carolina Department of Transportation", ["North Carolina"], "Completed", "transport", ["program-delivery", "preconstruction", "grants", "operations", "alt-delivery", "pbmc", "proj-delivery"]),
@@ -401,8 +403,8 @@ export const CASES: CaseIndex[] = [
   cs("cs-strategic", "nevada-strategic-plan-and-action-plans", "A strategic plan, action plans, and performance management", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["strategic-planning", "org-design", "dashboards", "asset-mgmt"]),
   // on the live site as "Fleet Optimization & Asset Management" (Nevada page); our founder's career at the department, so before Rawlins.
   // Rawlins' own fleet work for the department is cs-nv-fleet-program.
-  cs("cs-nv-fleet", "nevada-fleet-optimization", "Fleet optimization and asset management", `Nevada Department of Transportation${FOUNDER}`, ["Nevada"], "Before Rawlins", "transport", ["operations", "asset-mgmt"]),
-  cs("cs-nv-om", "nevada-maintenance-operations-review", "Maintenance and operations program review, and the work that followed", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt", "program-delivery"]),
+  cs("cs-nv-fleet", "nevada-fleet-optimization", "Fleet optimization and asset management", `Nevada Department of Transportation${FOUNDER}`, ["Nevada"], "Before Rawlins", "transport", ["operations", "asset-mgmt", "fleet"]),
+  cs("cs-nv-om", "nevada-maintenance-operations-review", "Maintenance and operations program review, and the work that followed", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt", "program-delivery", "traffic", "outsourcing"]),
   // Rawlins work, 2022 to 2023, as a subconsultant on the same contract as cs-nv-om (work reports and scopes read Nov 11).
   // Scope only: no findings, figures, or survey results. See CASE_STATUS.
   cs("cs-nv-fleet-program", "nevada-fleet-analysis-and-implementation", "Fleet analysis and implementation support", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt", "fleet"]),
@@ -410,12 +412,12 @@ export const CASES: CaseIndex[] = [
   cs("cs-aerodiv", "nevada-aeronautics-division-research", "Research on how a state aviation role could be organized, governed, and funded", "Nevada Department of Transportation", ["Nevada"], "Ongoing", "transport", ["research", "aero-division", "exec-advisory", "org-design"]),
   cs("cs-de-tech", "delaware-technology-strategic-plan", "Technology strategic plan", "Delaware Department of Transportation", ["Delaware"], "Completed", "transport", ["tech-strategy", "strategic-planning"]),
   cs("cs-ut-am", "utah-asset-management-review", "Asset management program review", `Utah Department of Transportation${FOUNDER}`, ["Utah"], "Before Rawlins", "transport", ["asset-mgmt"]),
-  cs("cs-va-maint", "virginia-performance-based-maintenance-review", "Review of performance-based highway maintenance contracts", `Virginia Department of Transportation${FOUNDER}`, ["Virginia"], "Before Rawlins", "transport", ["operations", "procurement"]),
+  cs("cs-va-maint", "virginia-performance-based-maintenance-review", "Review of performance-based highway maintenance contracts", `Virginia Department of Transportation${FOUNDER}`, ["Virginia"], "Before Rawlins", "transport", ["operations", "procurement", "pbmc"]),
   cs("cs-maint-model", "six-state-maintenance-outsourcing-model", "A flexible maintenance contracting model for DOTs", "AMOTIA (Association for the Management and Operations of Transportation Infrastructure Assets)", [], "Completed", "contractors", ["operations", "procurement", "outsourcing"]),
   cs("cs-pa-budget", "pennsylvania-maintenance-budgeting", "Maintenance budgeting", `Pennsylvania Department of Transportation${FOUNDER}`, ["Pennsylvania"], "Before Rawlins", "transport", ["finance", "operations"]),
   cs("cs-nyc-parks", "new-york-city-parks-asset-management", "Asset management for 29,000 acres of parkland", `New York City Parks and Recreation${FOUNDER}`, ["New York"], "Before Rawlins", "gov", ["asset-mgmt"]),
   /* no state tag: California isn't on the map */
-  cs("cs-riverside", "riverside-county-fleet-and-facilities", "Facilities and fleet operations review", `Riverside County, California${FOUNDER}`, [], "Before Rawlins", "gov", ["operations", "asset-mgmt"]),
+  cs("cs-riverside", "riverside-county-fleet-and-facilities", "Facilities and fleet operations review", `Riverside County, California${FOUNDER}`, [], "Before Rawlins", "gov", ["operations", "asset-mgmt", "fleet"]),
   cs("cs-major", "major-river-crossings-and-transit", "Partnering on major river crossings and a light rail line", "Iowa, Illinois, Missouri, and Minnesota", ["Iowa", "Illinois", "Missouri", "Minnesota"], "Completed", "transport", ["program-delivery", "partnering", "owners-rep"]),
   // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
   cs("cs-partnering", "progressive-design-build-partnering", "Partnering facilitation for a progressive design-build bridge", "A state DOT and its contractor", [], "Ongoing", "transport", ["program-delivery", "procurement", "partnering", "alt-delivery", "construction"]),
@@ -431,7 +433,7 @@ export const CASES: CaseIndex[] = [
   cs("cs-tn-tech", "technology-modernization-and-ai-governance", "Technology modernization and AI governance", STATE_DOT, [], "Ongoing", "transport", ["tech-strategy", "data-governance", "ai", "exec-advisory", "change-mgmt"]),
   /* Nov 13 (projects file v4, Part 3): page J, page K, page R, page S */
   cs("cs-pd-prof", "position-descriptions-and-proficiency-programs", "Position descriptions and proficiency programs, bureau by bureau", STATE_DOT, [], "Ongoing", "transport", ["workforce", "org-design", "proj-delivery", "preconstruction", "construction", "planning", "federal-aid", "lpa", "procurement"]),
-  cs("cs-pbmc2", "a-second-performance-based-maintenance-contract", "A second maintenance contract, built on the first one's lessons", STATE_DOT, [], "Completed", "transport", ["operations", "procurement", "partnering"]),
+  cs("cs-pbmc2", "a-second-performance-based-maintenance-contract", "A second maintenance contract, built on the first one's lessons", STATE_DOT, [], "Completed", "transport", ["operations", "procurement", "partnering", "pbmc", "outsourcing"]),
   cs("cs-p3-division", "major-projects-p3-and-tolling-division", "A division for major projects, public-private partnerships, and tolling", STATE_DOT, [], "Ongoing", "transport", ["alt-delivery", "org-design"]),
   cs("cs-hr", "hr-procedures-orientation-and-onboarding", "HR procedures, orientation, and onboarding for a department", STATE_DOT, [], "Ongoing", "transport", ["workforce", "org-design", "change-mgmt"]),
   // TODO(launch): purchase order read Nov 10: no publicity terms. Reconfirm current status and client permission. Keep the client unnamed.
@@ -495,9 +497,6 @@ export const LINE_STATUS: Record<string, string> = {
   /* content pass v7, Part 4: the Maintenance Programs row that comes partly from cs-drt */
   "Winter operations and emergency readiness": CASE_STATUS["cs-drt"],
   /* content pass v7, 5.2: project lines */
-  // TODO(launch): Jacob's portfolio says sources describe this at different stages. Confirm it's final.
-  "Finalized a maintenance quality assurance handbook": "Content status: Jacob's portfolio says sources describe this at different stages. Confirm it's final.",
-  "Maintenance quality assurance handbook finalized": "Content status: Jacob's portfolio says sources describe this at different stages. Confirm it's final.",
   // TODO(launch): findings_cases.md (Nov 6) says the Tennessee version wasn't started and is an internal client matter.
   "Leadership transition support: briefings and handoff materials for incoming leaders": "Content status: our records say this wasn't started where it came up and is an internal client matter. Confirm before launch.",
   // TODO(launch): Jacob's portfolio says the completed tools need confirmation.
@@ -538,11 +537,9 @@ export const LISTS_OFF = ["smart-mobility"];
 export const isListed = (id: string) => !LISTS_OFF.includes(id);
 
 export const PAGE_STATUS: Record<string, string> = {
-  /* Nov 12: the "To confirm" notes in Nicole's Operations & Maintenance file (v8), preview only */
-  "asset-mgmt": "Content status: The Tennessee division line and the key performance indicator line rest on Jacob's interview with Janine. He says the details need the actual documents. Janine can confirm both in one line.",
-  mqa: "Content status: Jacob asks that the handbook's final status be confirmed. Our work report says version 1.1 was finalized.",
-  fleet: "Content status: Jacob's Nov 10 edition calls this a proposed service and says to get the actual fleet work products before advancing it. The Nevada work is that, and his documents don't have it. Worth telling him. Nevada: the department's master agreement limits publishing information from the work. This page says what we did and nothing about what we found. Scott to confirm with the prime.",
-  traffic: "Content status: Jacob's Nov 10 edition marks investment prioritization and reliability performance as proposed services, and says a full operations strategy has not been delivered. The page offers all three without claiming a project. The best-practice reviews rest on one of his interviews. He says to verify which were finalized.",
+  /* Nov 13: the "To confirm" notes in Nicole's Maintenance & Operations file (v10), preview only (Asset Management's and Maintenance Quality Assurance's came off: the work reports settle them) */
+  fleet: "Content status: Nevada: the department's master agreement limits publishing information from the work. This page says what we did and nothing about what we found. Scott to confirm with the prime.",
+  traffic: "Content status: Jacob's Nov 10 edition marks investment prioritization and reliability performance as proposed services, and says a full operations strategy has not been delivered. The page offers all three without claiming a project.",
   /* Nov 13: the "To confirm" notes in Nicole's Program & Project Delivery file (v6), preview only. Finance & Budget, Project
      Delivery, Alternative Delivery, Consultant & Contractor Procurement, Local Public Agency Programs, and Partnering have none. */
   "program-delivery": "Content status: Interim program leadership and program management office staffing are on the live site as services, so the line stays. No project in our records shows them delivered yet, and Jacob's portfolio asks leadership to define them before they are marketed as a standard service.",

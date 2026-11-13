@@ -61,7 +61,6 @@ const quotes = (hear: string[]) => hear.flatMap((h) => h.split(/["”]\s*["“]/
 /* the same "**Name:** line" as a card: the name on top, its line under it (Nicole, Nov 12: "each item shown as a name and a line").
    The line's first letter is capitalized in CSS only, so Edit text still finds the words as written. */
 /* a name written with a trailing comma ("**Handoffs from design through award into construction,** written as…") drops it on the card */
-const nameLine = (t: string) => { const m = t.match(/^\*\*(.+?)[:,]?\*\*\s*([\s\S]*)$/); return m ? <><b className="svd-name">{m[1]}</b><span className="svd-line">{m[2]}</span></> : t; };
 /* an intro paragraph with its links to other services (Asset Management names the four services under it) */
 const linked = (p: string, links?: Record<string, string>) => {
   const keys = Object.keys(links ?? {}).filter((k) => p.includes(k));
@@ -69,6 +68,8 @@ const linked = (p: string, links?: Record<string, string>) => {
   const re = new RegExp(`(${keys.map((k) => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`);
   return p.split(re).map((part, k) => (links[part] ? <a key={k} href={serviceHref(links[part])}>{part}</a> : part));
 };
+/* links: phrases in a card's name that open another service (Asset Management's last card, M&O file v10, Nov 13) */
+const nameLine = (t: string, links?: Record<string, string>) => { const m = t.match(/^\*\*(.+?)[:,]?\*\*\s*([\s\S]*)$/); return m ? <><b className="svd-name">{linked(m[1], links)}</b><span className="svd-line">{m[2]}</span></> : t; };
 
 export default function ServiceV8({ id }: { id: string }) {
   const hit = serviceById(id)!;
@@ -178,7 +179,7 @@ export default function ServiceV8({ id }: { id: string }) {
             <h2 className="v8-h2">{deliverTitle}</h2>
           </div>
           <ul className={`svd-cards${s.deliver.length > 6 ? " is-3 is-4" : s.deliver.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
-            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span><div className="svd-t">{nameLine(d)}<LineNote text={d} /></div></li>)}
+            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span><div className="svd-t">{nameLine(d, s.cardLinks)}<LineNote text={d} /></div></li>)}
           </ul>
           {/* the pages under this one (Project Delivery: Preconstruction and Construction; Nicole's file v6, Nov 13) */}
           {s.sub?.length ? (
