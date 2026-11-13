@@ -101,6 +101,19 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
   const onTool = (t: EventTarget | null) => t instanceof Element && !!t.closest(".pc-pin, .pc-pop");
   const cardOpen = () => !!document.querySelector(".pc-pop");
   const leave = (e: { relatedTarget: EventTarget | null }) => { if (onTool(e.relatedTarget) || cardOpen()) { window.clearTimeout(timer.current); return; } hoverClose(); };
+  /* A menu shows whole on any screen (Nicole, Nov 12: "the menu can't scroll so make sure it shows completely for
+     everyone"; What We Do got longer). When the open menu is taller than the room under the header it steps down
+     until it fits: shorter photos, no photos, tighter rows, smaller type (data-fit, app/v10.css). On a window too
+     small even for that, the menu scrolls with the wheel (data-lenis-prevent keeps the page from taking the scroll). */
+  useEffect(() => {
+    if (!open) return;
+    const p = document.getElementById(`hx-m-${open}`);
+    if (!p) return;
+    const fit = () => { let k = 0; p.dataset.fit = "0"; while (k < 4 && p.scrollHeight > p.clientHeight + 1) { k++; p.dataset.fit = String(k); } };
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, [open]);
   useEffect(() => {
     if (!open) return;
     const over = (e: MouseEvent) => {
@@ -148,7 +161,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
       </div>
 
       {/* desktop menus */}
-      <div className="hx-panel" id="hx-m-what" hidden={open !== "what"} onMouseEnter={() => window.clearTimeout(timer.current)}>
+      <div className="hx-panel" data-lenis-prevent id="hx-m-what" hidden={open !== "what"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         {/* the two links sit at the top of the panel (Nicole, Nov 11); sentence case is her call */}
         <p className="mx-foot mx-foot-top"><a href="/services">See all services</a><a href="/contact">Not sure which category? Tell us what you are trying to fix</a></p>
         <div className="mx-what">
@@ -167,7 +180,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
           ))}
         </div>
       </div>
-      <div className="hx-panel" id="hx-m-who" hidden={open !== "who"} onMouseEnter={() => window.clearTimeout(timer.current)}>
+      <div className="hx-panel" data-lenis-prevent id="hx-m-who" hidden={open !== "who"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         {/* at the top, like What We Do and Insights (Nicole, Nov 12) */}
         <p className="mx-foot mx-foot-top"><a href="/industries">All Industries</a></p>
         <div className="mx-who">
@@ -195,7 +208,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
           </div>
         </div>
       </div>
-      <div className="hx-panel" id="hx-m-work" hidden={open !== "work"} onMouseEnter={() => window.clearTimeout(timer.current)}>
+      <div className="hx-panel" data-lenis-prevent id="hx-m-work" hidden={open !== "work"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         <div className="mx-list mx-work">
           <div>
             <ul>{data.work.map((l) => <li key={l.href}><a href={l.href}><b>{l.label}</b><span>{l.note}</span></a></li>)}</ul>
@@ -215,7 +228,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
           </div>
         </div>
       </div>
-      <div className="hx-panel" id="hx-m-insights" hidden={open !== "insights"} onMouseEnter={() => window.clearTimeout(timer.current)}>
+      <div className="hx-panel" data-lenis-prevent id="hx-m-insights" hidden={open !== "insights"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         {/* the Insights page itself (Nicole, Nov 10: "where is the insights page in the menu?"); at the top since Nov 11 */}
         <p className="mx-foot mx-foot-top"><a href="/insights">All Insights</a></p>
         <ul className="mx-ins">{data.insights.map((l) => {
@@ -230,7 +243,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
           );
         })}</ul>
       </div>
-      {!aboutTopOnly && <div className="hx-panel" id="hx-m-about" hidden={open !== "about"} onMouseEnter={() => window.clearTimeout(timer.current)}>
+      {!aboutTopOnly && <div className="hx-panel" data-lenis-prevent id="hx-m-about" hidden={open !== "about"} onMouseEnter={() => window.clearTimeout(timer.current)}>
         {/* About (Nicole, Nov 10): Who we are as a photo card, then the other pages as plain links, the same
             style as the other menus (no icons, no faces panel) */}
         <div className="mx-list mx-about ma2">

@@ -291,10 +291,13 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
               ? <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
               : <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="6.5" y="5" width="3.6" height="14" rx="1" fill="currentColor" /><rect x="13.9" y="5" width="3.6" height="14" rx="1" fill="currentColor" /></svg>}
           </button>
-          {next && <a className="fh-next hs-next" href={next}>Scroll to explore <span aria-hidden="true">↓</span></a>}
+          {/* Nicole, Nov 12: this jumped past the whole story to the section after it. It now goes to the first side:
+              the picture in its frame with its words all in (data-go, read by go() below). On phones, where the
+              pieces are stacked, the link goes to that side's block. */}
+          {next && <a className="fh-next hs-next" href={N ? "#hs-side-1" : next} data-go={N ? (steps[0].items?.length ? starts[0] + pre[0] + 0.45 : starts[0] + 0.76 * STEP).toFixed(3) : undefined}>Scroll to explore <span aria-hidden="true">↓</span></a>}
         </div>
         {steps.map((st, i) => st.items?.length ? (
-          <div key={i} className={`hs-step hs-many ${i % 2 ? "is-right" : "is-left"}`}>
+          <div key={i} id={i === 0 ? "hs-side-1" : undefined} className={`hs-step hs-many ${i % 2 ? "is-right" : "is-left"}`}>
             {st.k && (st.intro ? <p className="hs-k" aria-hidden="true">{st.k}</p> : <h2 className="hs-k">{st.k}</h2>)}
             <div className="hs-items">
               {st.intro && (
@@ -329,7 +332,7 @@ export default function HeroStory({ video, hero, steps, whyLeft, whyRight, next 
             </div>
           </div>
         ) : (
-          <div key={i} className={`hs-step ${i % 2 ? "is-right" : "is-left"}`}>
+          <div key={i} id={i === 0 ? "hs-side-1" : undefined} className={`hs-step ${i % 2 ? "is-right" : "is-left"}`}>
             {st.k && <p className="hs-k">{st.k}</p>}
             {st.h && <h2 className="hs-hl">{st.h.split(" ").map((w, wi) => <span key={wi} className="hs-hw">{wi > 0 ? " " : ""}{w}</span>)}</h2>}
             {st.p && <p>{st.p}</p>}

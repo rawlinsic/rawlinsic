@@ -1189,3 +1189,21 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .mx-inds li.mx-intl { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
 .hx-acc li.mx-head > a { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding-bottom: 4px; }
 .hx-acc li.mx-child { padding-left: 14px; }
+
+
+/* ── Nov 12, 2026 (Nicole): a menu shows whole on any screen ───────────
+   The cap was 75% of the window, which cut off the bottom of What We Do once its list grew, and the wheel moved
+   the page instead of the menu. The menu may now use the room under the header (less a small margin), and steps
+   down when that is still not enough (data-fit, set in components/v8/header-client.tsx):
+   1 shorter photos · 2 no photos · 3 tighter rows · 4 smaller type. Past that it scrolls. */
+.hx-panel { max-height: calc(100vh - 68px - 20px); overscroll-behavior: contain; }
+.hx-panel[data-fit="1"] .mx-area-ph { aspect-ratio: 4.2 / 1; }
+.hx-panel:is([data-fit="2"], [data-fit="3"], [data-fit="4"]) .mx-area-phl { display: none; }
+.hx-panel:is([data-fit="2"], [data-fit="3"], [data-fit="4"]) .mx-what .mx-area { margin-top: 0; }
+.hx-panel:is([data-fit="3"], [data-fit="4"]) .mx-what section { padding-top: 14px; padding-bottom: 14px; }
+.hx-panel:is([data-fit="3"], [data-fit="4"]) .mx-what .mx-area { margin-bottom: 8px; }
+.hx-panel:is([data-fit="3"], [data-fit="4"]) .mx-what ul a { padding: 3px 0; }
+.hx-panel:is([data-fit="3"], [data-fit="4"]) .mx-what .mx-go { padding-top: 8px; }
+.hx-panel:is([data-fit="3"], [data-fit="4"]) .mx-foot { padding-top: 8px; padding-bottom: 8px; }
+.hx-panel[data-fit="4"] .mx-what ul a { padding: 2px 0; font-size: 0.85rem; line-height: 1.25; }
+.hx-panel[data-fit="4"] .mx-what .mx-area b { font-size: 1.02rem; }
