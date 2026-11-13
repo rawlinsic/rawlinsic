@@ -1975,7 +1975,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
  },
  "sub-bridges": {
   "id": "sub-bridges",
-  "name": "Bridges & Structures - remove",
+  "name": "",
   "st": "ok",
   // Rawlins doesn't design or inspect bridges (CONTENT FIXES v3; Jacob's portfolio, "Boundaries that matter in scopes").
   // Only one crossing cost over a billion dollars, so "billion-dollar river crossings" is gone.
