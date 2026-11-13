@@ -2418,7 +2418,7 @@ export const INDUSTRIES: Record<string, IndustryData> = {
   ],
   "bring": [
    // an offer, not past work: see g-capital
-   "An assessment of how projects and permits move, and a roadmap staff can follow.",
+   "A current-state look at workload and staffing, and a resource planning and prioritization framework.",
    // cs-local-am
    "Self-assessments, workshops, and action plans that start from where each agency is.",
    // cs-transform: local public agency manual chapters and responsible-charge training
@@ -2596,6 +2596,13 @@ export const INDUSTRIES: Record<string, IndustryData> = {
    "We want to use AI, and need rules for it first",
    "We're planning for drones and air mobility while the rules are still being written"
   ],
+  /* what we bring under each (Who We Work With read-as-built fixes v1, Nov 13): services, no claim of work outside the United States */
+  "bring": [
+   "Organization design, position descriptions, and proficiency programs, built with the agency's own staff.",
+   "Data governance: owners, definitions, inventories, and a steering committee to keep it going.",
+   "An AI policy and guardrails, use cases reviewed and ranked, and training for staff.",
+   "Drone program procedures and training, planning guidance for advanced air mobility, and standards research with other agencies."
+  ],
   "basis": "",
   "services": [],
   "people": []
@@ -2635,7 +2642,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   "walk": [
    "A delivery process staff can follow, with the manuals, templates, and training to keep using it",
    "Selection and prioritization methods leadership can explain",
-   "Maintenance contracts and quality measures every district administers the same way",
+   "Maintenance contracts and quality measures written for every district",
    "Trained staff, and documentation your team owns"
   ],
   "xp": [
@@ -2662,7 +2669,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   "name": "Aviation & Airports",
   "st": "ok",
   // Airports: Jacob's drone portfolio says advisory roles only, and no airport master planning.
-  "intro": "State aeronautics programs, and the drone and advanced air mobility programs growing around them. We help small aviation staffs run those programs, plan for what's next, and compete for federal funding. With airports, our role is advisory, focused on drones and advanced air mobility.",
+  "intro": "We work with state aeronautics programs and the drone and advanced air mobility programs growing around them. We help small aviation staffs run those programs, plan for what's next, and compete for federal funding. With airports, our role is advisory, focused on drones and advanced air mobility.",
   "ch": [
    "Drone use spread before policy did",
    "Training and equipment vary by division",
@@ -2751,7 +2758,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
   // Source: our final report to the client for its first purchase order (work through Aug 2026): four district port security
   // grant application packages; drones, uncrewed surface vessels, multibeam sonar, and green lidar evaluated for harbor and
   // infrastructure inspection; vendor and procurement options; a demonstration and training concept. Same client as cs-hi: keep it unnamed.
-  "intro": "Harbors run on security, funding, and new technology. Our work here so far is with one state harbors program: we supported its federal port security grant applications, and evaluated drones, uncrewed surface vessels, sonar, and lidar for inspecting harbor infrastructure.",
+  "intro": "Our work here so far is with one state harbors program. We prepared its federal port security grant application, compared equipment options for underwater inspection and survey, and ran a two-day demonstration of aerial drones, an uncrewed surface vessel, an underwater vehicle, and mobile lidar for inspecting harbor infrastructure.",
   "ch": [
    "Competitive federal security grants",
    "New technology to evaluate with a small staff",
@@ -2761,7 +2768,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    "Port security grant applications: investment justifications, budgets, and technical narratives",
    "Evaluation of drones, uncrewed surface vessels, sonar, and lidar for harbor and infrastructure inspection",
    "Equipment and vendor options, with the procurement paths for each",
-   "Demonstration and training plans for new inspection technology"
+   "Demonstrations of new inspection technology on the water, and training plans for the staff who will use it"
   ],
   "walk": [
    "Complete application packages, reusable for the next funding round",

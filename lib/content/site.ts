@@ -156,7 +156,8 @@ export const INDUSTRIES: Industry[] = [
     lead: "Most of our work is with the public agencies that own and run infrastructure: more than 30 transportation agencies, local agencies, and a multi-state research program. Most of that work is with state departments of transportation. With cities, counties, and regional agencies, our work so far is asset management with local agencies, through a state infrastructure office. For capital project delivery and regional planning, we bring experience from city public works and the Federal Highway Administration.",
     featured: ["asset-mgmt", "program-delivery", "planning", "lpa", "federal-aid", "grants", "research", "portals", "strategic-planning"],
     featuredCase: "cs-local-am",
-    projects: ["cs-local-am", "cs-pooled"],
+    /* one from each page under it (Who We Work With read-as-built fixes v1, Nov 13) */
+    projects: ["cs-proficiency", "cs-pooled", "cs-local-am"],
     subsectors: [],
   },
   {
@@ -167,7 +168,8 @@ export const INDUSTRIES: Industry[] = [
     lead: "Most of our work is with state departments of transportation, and we've served more than 30 transportation agencies so far. We help them organize the department, choose and deliver projects, maintain and operate what they own, and put drones and digital tools to work. Most of that work is on highways and bridges. We also support state aeronautics programs, and we've worked on a light rail line and with a state harbors program. With local governments, we've run asset management workshops and action plans with cities and county road commissions, through a state infrastructure office, and facilitated partnering on a light rail line. With the federal government, we facilitate a multi-state research program the Federal Highway Administration sits on, and we help states deliver federal-aid programs and compete for federal grants.", // the last two sentences: Nicole's wording, Nov 12
     featured: ["program-delivery", "preconstruction", "construction", "operations", "traffic", "asset-mgmt", "portals", "drone-programs"],
     featuredCase: "cs-major",
-    projects: ["cs-transform", "cs-proficiency", "cs-aero"],
+    /* Nov 13 (read-as-built fixes v1): the overview page is off this list; the network page and the interstate contracts are on */
+    projects: ["cs-pdn", "cs-proficiency", "cs-pbmc", "cs-aero"],
     /* Nicole, Nov 12: the multi-state research project and the local agency asset management project show on this page too.
        They stay on the Public Sector page; the menu doesn't change. */
     more: ["cs-pooled", "cs-local-am"],
@@ -180,7 +182,7 @@ export const INDUSTRIES: Industry[] = [
       sub("sub-rail", "Rail & Transit", "rail", "Our transit work includes partnering facilitation on a $2 billion light rail line. Our team also includes the California Department of Transportation's former Chief of Rail and Mass Transportation."),
       /* v12: back under Transportation. Only harbors work so far (port security
          grant applications; one drone and uncrewed-vessel technology evaluation). */
-      sub("sub-ports", "Ports & Harbors", "harbor", "Our work here so far is with one state harbors program: federal port security grant applications, and an evaluation of drones and uncrewed vessels for harbor inspection.", true),
+      sub("sub-ports", "Ports & Harbors", "harbor", "Our work here so far is with one state harbors program: a federal port security grant application, and a demonstration of drones, an uncrewed surface vessel, and an underwater vehicle for harbor inspection.", true),
     ],
   },
   {
@@ -272,7 +274,7 @@ export const INTL: { abroad: { title: string; items: { t: string; flag?: string 
     title: "How we work outside the U.S.",
     items: [
       // From the roster: Andy Palanisamy (Dubai); Samantha Lloyd, Kobus Pieters (Cape Town); Kiara Pienaar (Gauteng); Koussay Khelil (Ontario).
-      { t: "Members of our team are based in the United Arab Emirates, Europe, South Africa, and Canada, alongside our people across the United States." },
+      { t: "Members of our team are based in the United Arab Emirates, South Africa, and Canada, alongside our people across the United States." },
       // Andy Palanisamy's bio: Head of Practice for Smart Cities and Innovation at Parsons in Dubai, before Rawlins.
       { t: "Experience on our team includes leading the smart cities and innovation practice for a global engineering firm in Dubai, with smart city and mobility projects across the Middle East and Africa." },
       { t: "Our in-house team builds the manuals, training, dashboards, and AI tools from wherever they are based, with time on site where the work needs it." },
@@ -592,8 +594,8 @@ export const PAGE_STATUS: Record<string, string> = {
   grants: "Content status: Issuing grants and solicitations for an agency comes from our aviation team's interviews. No project in our records shows it yet. Applications are listed as prepared, and the one award is named.",
   // TODO(launch): Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.
   "owners-rep": "Content status: Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.",
-  // TODO(launch): the only work behind this page is cs-hi's client. Same note as cs-hi.
-  "sub-ports": `Content status: the only work behind this page is cs-hi's client. ${CASE_STATUS["cs-hi"].replace("Content status: the", "The")} As of our Nov 2026 records the grant applications were submitted and not awarded, and the records don't show whether the planned technology demonstration was held.`,
+  /* Nov 13 (Who We Work With read-as-built fixes v1): the To confirm text for Ports & Harbors */
+  "sub-ports": "Content status: The only work behind this page is one client's. The purchase order has no publicity terms. Jacob's portfolio says to reconfirm current status and client permission. Keep it unnamed. The grant application was submitted in July 2026 and was not awarded as of our Nov 2026 records. The demonstration was held in September 2026.",
 };
 
 export const caseHref = (c: CaseIndex) => `/insights/case-studies/${c.slug}`;
