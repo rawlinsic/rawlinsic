@@ -147,7 +147,7 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "workforce": {
   "id": "workforce",
-  "name": "Workforce & Leadership Development",
+  "name": "Leadership and Workforce Development",
   "area": "strategy",
   "st": "warn",
   "intro": "We help agencies grow people into the jobs they need filled: proficiency programs, career paths, training curricula, train-the-trainer models, and self-paced online courses, plus the HR structure behind them.",
@@ -196,7 +196,7 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "exec-advisory": {
   "id": "exec-advisory",
-  "name": "Executive Advisory",
+  "name": "Executive Advisory Services",
   "area": "strategy",
   "st": "ok",
   "intro": "We advise agency leaders on their biggest decisions: reorganizations, new programs, and how to run and deliver their programs. For administrative functions, we provide advisory, training design, facilitation, and executive coaching, with clear processes, controls, and reporting.",
@@ -1250,7 +1250,7 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "training-video": {
   "id": "training-video",
-  "name": "Digital Training & Video",
+  "name": "Videos",
   "area": "tech",
   "st": "warn",
   "intro": "Training people will actually use: short how-to videos and online courses, built with the experts who do the work.",
@@ -1524,7 +1524,7 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "aero-division": {
   "id": "aero-division",
-  "name": "Aeronautics Division & Program Setup",
+  "name": "Aeronautics Division & Program Establishment",
   "area": "aviation",
   "st": "warn",
   "intro": "As aviation changes, states are asking whether and how to organize, govern, and fund a broader aeronautics role. We help build that role, informed by a review of how peer states organize and fund theirs.",

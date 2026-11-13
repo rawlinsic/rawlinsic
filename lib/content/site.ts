@@ -34,11 +34,11 @@ export const AREAS: Area[] = [
     tag: "Direction, structure, & people", scene: "capitol", featuredCase: "cs-strategic",
     services: [
       /* v8: renamed and listed first (handoff v8, section 6, default) */
-      svc("exec-advisory", "Executive Advisory"),
+      svc("exec-advisory", "Executive Advisory Services"),
       svc("strategic-planning", "Strategic Planning & Performance Management", "grid"),
       svc("org-design", "Organizational Design & Process Improvement"),
       svc("change-mgmt", "Change Management", "people"),
-      svc("workforce", "Workforce & Leadership Development", "site"),
+      svc("workforce", "Leadership and Workforce Development", "site"),
     ],
   },
   {
@@ -83,7 +83,7 @@ export const AREAS: Area[] = [
       svc("drone-aam", "Advanced Air Mobility Strategy & Readiness", "sky"),
       svc("drone-emergency", "Emergency Response with Drones"),
       svc("research", "Research & Standards", "crossing"),
-      svc("aero-division", "Aeronautics Division & Program Setup", "airport"),
+      svc("aero-division", "Aeronautics Division & Program Establishment", "airport"),
     ],
   },
   {
@@ -95,7 +95,7 @@ export const AREAS: Area[] = [
       svc("data-governance", "Data Governance"),
       svc("ai", "AI", "sky"),
       svc("dashboards", "Dashboards & Reporting", "office"),
-      svc("training-video", "Digital Training & Video", "site"),
+      svc("training-video", "Videos", "site"),
       svc("tech-strategy", "Technology & AI Strategy", "grid"),
       svc("smart-mobility", "Smart Mobility & Connected Systems - remove", "dusk"), // v12 new
     ],
