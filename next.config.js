@@ -40,7 +40,20 @@ const nextConfig = {
       // Nov 11: Maintenance & Operations renamed Maintenance Programs
       { source: "/services/operations-maintenance/maintenance-operations", destination: "/services/operations-maintenance/maintenance-programs", permanent: true },
       // Content pass v7, Part 11 (Nov 11): Project Delivery services renamed and split
-      { source: "/services/project-delivery/program-project-delivery", destination: "/services/project-delivery/program-delivery", permanent: true },
+      { source: "/services/project-delivery/program-project-delivery", destination: "/services/project-delivery/program-development", permanent: true },
+      { source: "/services/project-delivery/program-delivery", destination: "/services/project-delivery/program-development", permanent: true },
+      // Nov 12 (Nicole): Program & Project Delivery menu rebuilt; pages split, renamed, or taken off
+      { source: "/services/project-delivery/alternative-delivery-partnering", destination: "/services/project-delivery/alternative-delivery", permanent: false },
+      { source: "/services/project-delivery/finance-budget-procurement", destination: "/services/project-delivery/consultant-contractor-procurement", permanent: false },
+      { source: "/services/project-delivery/local-public-agency-federal-aid-programs", destination: "/services/project-delivery/local-public-agency-programs", permanent: false },
+      { source: "/services/project-delivery/grants-funding", destination: "/services/project-delivery/grant-applications-delivery", permanent: false },
+      { source: "/services/project-delivery/right-of-way", destination: "/services/project-delivery/preconstruction", permanent: false },
+      // Nov 12 (Nicole): Who We Work With. Other Government Services became the Public Sector page, its modes and Bridges &
+      // Structures came off, and Highways & Roads became Highways & Bridges
+      { source: "/industries/government-public-works", destination: "/industries/public-sector", permanent: false },
+      { source: "/industries/government-public-works/:sub", destination: "/industries/public-sector", permanent: false },
+      { source: "/industries/transportation/bridges-structures", destination: "/industries/transportation/highways-bridges", permanent: false },
+      { source: "/industries/transportation/highways-roads", destination: "/industries/transportation/highways-bridges", permanent: false },
       { source: "/services/project-delivery/construction-pre-construction", destination: "/services/project-delivery/construction", permanent: true },
       // Redesign (handoff v7 section 7): old structure -> new, permanent
       { source: "/capabilities", destination: "/services", permanent: true },

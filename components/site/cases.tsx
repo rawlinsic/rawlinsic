@@ -21,7 +21,8 @@ export function CaseIndexPage() {
     id: c.id, href: caseHref(c), photo: casePhoto(c), title: c.title, who: c.who, status: c.status, tag: caseTag(c), note: process.env.VERCEL_ENV === "production" ? undefined : CASE_STATUS[c.id],
     areas: Array.from(new Set(c.services.map(areaOfService).filter(Boolean) as string[])).map((id) => AREAS.find((a) => a.id === id)!.slug),
     services: c.services.map((id) => serviceById(id)?.service.slug).filter(Boolean) as string[],
-    industries: [c.industry, CASE_DATA[c.id]?.industry2].filter(Boolean).map((id) => VISIBLE_INDUSTRIES.find((i) => i.id === id)?.slug).filter(Boolean) as string[],
+    /* a project also counts under its sector's headline: Transportation Sector under Public Sector, Contractors under Private Sector (Nov 12) */
+    industries: Array.from(new Set([c.industry, CASE_DATA[c.id]?.industry2].filter(Boolean).flatMap((id) => { const i = VISIBLE_INDUSTRIES.find((x) => x.id === id); const up = i && VISIBLE_INDUSTRIES.find((x) => x.id === i.parent); return [i?.slug, up?.slug]; }).filter(Boolean) as string[])),
     states: c.states.map(slugify),
   }));
   const states = Array.from(new Set(CASES.flatMap((c) => c.states))).sort();

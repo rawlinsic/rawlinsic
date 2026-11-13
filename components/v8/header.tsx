@@ -38,13 +38,17 @@ export default function Header() {
     areas: AREAS.map((a) => ({
       id: a.id, n: THEME[a.id].n, name: a.name, tag: a.tag, href: areaHref(a), color: THEME[a.id].color, ink: THEME[a.id].ink, tint: THEME[a.id].tint, photo: NAV_AREA_PHOTO[a.id] ?? AREA_PHOTO[a.id], pos: NAV_AREA_PHOTO[a.id] ? NAV_AREA_PHOTO_POS[a.id] : AREA_PHOTO_POS[a.id],
       /* the preview-only "?" beside Owner's Representation is off (Nicole, Nov 11) */
-      services: a.services.map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: undefined as string | undefined })),
+      /* child: sits under the service before it in the list (Preconstruction and Construction under Project Delivery; Nicole, Nov 12) */
+      services: a.services.map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: undefined as string | undefined, child: !!s.parent })),
       projects: `/insights/case-studies?area=${a.slug}`,
     })),
     industries: VISIBLE_INDUSTRIES.map((i) => {
       const feature = caseById(IND_CARD[i.id] ?? i.projects[0]);
+      /* Nov 12 (Nicole): Public Sector and Private Sector are headlines with no line under them; Transportation Sector
+         and Contractors sit under them. Each headline still opens its own page. */
+      const head = VISIBLE_INDUSTRIES.some((x) => x.parent === i.id);
       return {
-        name: i.name, href: industryHref(i), who: i.who,
+        name: i.name, href: industryHref(i), who: head ? "" : i.who, head, child: !!i.parent,
         subs: i.subsectors.map((s) => ({ name: s.name, href: subsectorHref(i, s) })),
         /* an industry with no specialties shows the challenges we hear there instead */
         challenges: i.subsectors.length ? [] : IND_DATA[i.id]?.ch ?? [],

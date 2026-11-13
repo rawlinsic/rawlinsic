@@ -11,8 +11,8 @@ type Hit = { label: string; kind: string; href: string };
 type Card = { title: string; who: string; href: string; photo: string; status: string; live: boolean; note?: string };
 type Line = { k?: string; t: string };
 export type NavData = {
-  areas: { id: string; n: string; name: string; tag: string; href: string; color: string; ink: string; tint: string; photo: string; pos?: string; services: { name: string; href: string; q?: string }[]; projects: string }[];
-  industries: { name: string; href: string; who: string; subs: { name: string; href: string }[]; challenges: string[]; feature?: Card; projects: { title: string; href: string }[]; all: { label: string; href: string } }[];
+  areas: { id: string; n: string; name: string; tag: string; href: string; color: string; ink: string; tint: string; photo: string; pos?: string; services: { name: string; href: string; q?: string; child?: boolean }[]; projects: string }[];
+  industries: { name: string; href: string; who: string; head?: boolean; child?: boolean; subs: { name: string; href: string }[]; challenges: string[]; feature?: Card; projects: { title: string; href: string }[]; all: { label: string; href: string } }[];
   intl?: { name: string; href: string; note: string };
   work: Link[]; inWorks: Card[];
   insights: (Link & { photo: string; line?: Line; next?: Line & { ends?: string } })[];
@@ -51,7 +51,8 @@ function ProjectCard({ c }: { c: Card }) {
 
 export default function HeaderClient({ data, aboutTopOnly = false }: { data: NavData; aboutTopOnly?: boolean }) {
   const [open, setOpen] = useState<Menu>(null);
-  const [ind, setInd] = useState(0);
+  /* opens on the first sector under a headline (Transportation Sector), as it did before the headlines (Nov 12) */
+  const [ind, setInd] = useState(() => Math.max(0, data.industries.findIndex((x) => x.child)));
   const [sheet, setSheet] = useState(false);
   const [find, setFind] = useState(false);
   const [q, setQ] = useState("");
@@ -142,7 +143,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
               </a>
               {/* no line under the name (Nicole, Nov 11) */}
               <a className="mx-area" href={a.href}><b>{a.name}</b></a>
-              <ul>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a>{s.q && <span className="mx-q" title={s.q} tabIndex={0} aria-label={s.q}>?</span>}</li>)}</ul>
+              <ul>{a.services.map((s) => <li key={s.href} className={s.child ? "is-child" : undefined}><a href={s.href}>{s.name}</a>{s.q && <span className="mx-q" title={s.q} tabIndex={0} aria-label={s.q}>?</span>}</li>)}</ul>
               <a className="mx-go" href={a.projects}>Projects in This Area</a>
             </section>
           ))}
@@ -154,7 +155,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
         <div className="mx-who">
           <ul className="mx-inds">
             {data.industries.map((x, i) => (
-              <li key={x.href}><a href={x.href} onMouseEnter={() => setInd(i)} onFocus={() => setInd(i)} aria-current={ind === i ? "true" : undefined}><b>{x.name}</b><span>{x.who}</span></a></li>
+              <li key={x.href} className={x.head ? "mx-head" : x.child ? "mx-child" : undefined}><a href={x.href} onMouseEnter={() => setInd(i)} onFocus={() => setInd(i)} aria-current={ind === i ? "true" : undefined}><b>{x.name}</b>{x.who && <span>{x.who}</span>}</a></li>
             ))}
             {data.intl && <li className="mx-intl"><a href={data.intl.href}><b>{data.intl.name}</b></a>{data.intl.note && <em className="v8-dev">{data.intl.note}</em>}</li>}
           </ul>
@@ -259,7 +260,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                 <ul className="hx-areas">{data.areas.map((a) => (
                   <li key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink } as CSSProperties}>
                     <details><summary>{a.name}</summary>
-                      <ul><li><a href={a.href}>{a.name} Overview</a></li>{a.services.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a>{s.q && <span className="mx-q" title={s.q} aria-label={s.q}>?</span>}</li>)}<li><a href={a.projects}>Projects in This Area</a></li></ul>
+                      <ul><li><a href={a.href}>{a.name} Overview</a></li>{a.services.map((s) => <li key={s.href} className={s.child ? "is-child" : undefined}><a href={s.href}>{s.name}</a>{s.q && <span className="mx-q" title={s.q} aria-label={s.q}>?</span>}</li>)}<li><a href={a.projects}>Projects in This Area</a></li></ul>
                     </details>
                   </li>
                 ))}</ul>
@@ -267,7 +268,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
               <details><summary>Who We Work With</summary><ul>{data.industries.map((x) => {
                 const projects = [...(x.feature ? [{ title: x.feature.title, href: x.feature.href, photo: x.feature.photo }] : []), ...x.projects];
                 return (
-                  <li key={x.href}>
+                  <li key={x.href} className={x.head ? "mx-head" : x.child ? "mx-child" : undefined}>
                     <a href={x.href}>{x.name}</a>
                     {x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}
                     {projects.length > 0 && <><p className="mx-k">Relevant Projects</p><ul className="mx-projs">{projects.map((p) => <li key={p.href}><a className={"photo" in p ? "mx-proj" : undefined} href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{"photo" in p && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}</span></a></li>)}</ul></>}

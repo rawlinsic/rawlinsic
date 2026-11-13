@@ -310,7 +310,9 @@ export const SERVICES: Record<string, SvcData> = {
    "Concept scoping and project evaluation",
    "Handoffs from design through award into construction, written as business rules the agency's systems can follow",
    "Project management functions: the unit, the manual, and staff capability",
-   "Estimating methods and tools"
+   "Estimating methods and tools",
+   // from the Right of Way page, which is off the site (Nicole, Nov 12: right of way is part of preconstruction)
+   "Right of way built into project delivery: activities, handoffs, and a right of way strategy meeting"
   ],
   "walk": [
    "An agency-owned interactive manual and process map",
@@ -322,12 +324,14 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   /* not set by the content pass: the neighboring Project Delivery services */
   "related": [
+   "proj-delivery",
    "program-delivery",
-   "construction",
-   "row"
+   "construction"
   ],
   "xp": [
-   "We've built project delivery frameworks for three state DOTs, and each one looks different"
+   "We've built project delivery frameworks for three state DOTs, and each one looks different",
+   // from the Right of Way page (Ron Crew bio)
+   "One of our right of way advisors spent 43 years in Florida DOT right of way, 33 as a supervisor or manager, and took part in more than 1,000 eminent domain mediations"
   ],
   /* Featured projects, in this order (content pass v7, 2.4). cs-pmdiv, cs-pdn, and cs-transform carry their notes. */
   "cases": [
@@ -394,31 +398,24 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "alt-delivery": {
   "id": "alt-delivery",
-  "name": "Alternative Delivery & Partnering",
+  "name": "Alternative Delivery",
   "area": "delivery",
   "st": "ok",
-  "intro": "Choosing an alternative delivery method also changes the owner's job. We help agencies prepare their organization, staff, procedures, and decision methods for that change, and we support method selection, procurement readiness, and partnering while the agency keeps its decisions.",
+  "intro": "Choosing an alternative delivery method also changes the owner's job. We help agencies prepare their organization, staff, procedures, and decision methods for that change, and we support method selection and procurement readiness while the agency keeps its decisions.",
   "hear": [
    "A first project under a new delivery method",
    "Risk that no one has allocated",
-   "No agreed way to raise and resolve issues under schedule pressure",
    "Choosing the right delivery method"
   ],
   "quote": false,
   "deliver": [
    "Alternative delivery program development: roles, manuals, procedures, and training for the agency's own team",
    "Delivery method selection across design-build, progressive design-build, construction manager at risk (also called construction manager/general contractor), and public-private partnerships",
-   "Procurement readiness: scoring criteria and document review",
-   // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
-   "Risk allocation and partnering facilitation: project charters, issue resolution ladders, joint risk workshops, and team evaluations",
-   "Owner and contractor coordination on major projects"
+   "Procurement readiness: scoring criteria and document review"
   ],
   "walk": [
    "A delivery method recommendation with selection criteria",
-   "Delivery method manuals, procedures, and training",
-   // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
-   "A signed partnering charter and an issue resolution ladder",
-   "Regular team evaluations through the project"
+   "Delivery method manuals, procedures, and training"
   ],
   "industries": [
    "transport",
@@ -428,11 +425,16 @@ export const SERVICES: Record<string, SvcData> = {
   "related": [
    "procurement",
    "program-delivery",
-   "owners-rep"
+   "partnering"
   ],
   "xp": [
    "Our founder led Nevada DOT's Pioneer Program for public-private partnerships, design-build, and construction manager/general contractor",
    "A former executive at three state transportation departments on our team delivered public-private partnerships, alternative delivery contracts, and a managed lanes program"
+  ],
+  /* related, not tagged: design-build and progressive design-build projects where our part was partnering (Nov 12 split) */
+  "cases": [
+   "cs-partnering",
+   "cs-db-partnering"
   ],
   "src": {
    "intro": "Written from our records",
@@ -442,22 +444,18 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "procurement": {
   "id": "procurement",
-  "name": "Finance, Budget & Procurement",
+  "name": "Consultant & Contractor Procurement",
   "area": "delivery",
   "st": "warn",
-  "intro": "We help organizations put resources where they count, stay compliant, and buy the services they need consistently, from budgeting through procurement and contract administration.",
+  "intro": "We help organizations stay compliant and buy the services they need consistently, from solicitation through contract administration and closeout.",
   "hear": [
    "Consultant fees vary for comparable work",
-   "Budgets aren't tied to what the program has to deliver",
-   "Our maintenance budget is hard to explain",
    "Contracts industry will bid on, administered the same way in every district"
   ],
   "quote": false,
   "deliver": [
    "Procurement advisory from solicitation to closeout",
    "Consultant contract administration",
-   "Financial and utilization analysis",
-   "Performance-based budgeting",
    "Cost and price analysis and negotiation"
   ],
   "walk": [
@@ -472,12 +470,11 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "related": [
    "program-delivery",
-   "automation",
-   "operations"
+   "alt-delivery",
+   "finance"
   ],
   "xp": [
-   "One of our procurement specialists brings 35 years of government procurement in transportation and engineering services",
-   "Florida DOT's former Interim Assistant Secretary of Finance and Administration is on our team"
+   "One of our procurement specialists brings 35 years of government procurement in transportation and engineering services"
   ],
   "src": {
    "intro": "live",
@@ -487,7 +484,9 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "row": {
   "id": "row",
-  "name": "Right of Way - remove part of precons. all tech specialty areas on PDN - these need to be mentioned on preconstruction",
+  // Off the site since Nov 12 (Nicole: remove; part of preconstruction). Kept for its text. Her note in the menu label also said:
+  // "all tech specialty areas on PDN - these need to be mentioned on preconstruction" (not done; on the change list).
+  "name": "Right of Way",
   "area": "delivery",
   "st": "warn",
   "intro": "Right of way readiness depends on timely information and coordinated work across the project team. We help agencies assess their right of way programs, improve procedures, define responsibilities and handoffs within project delivery, and develop the specialists the work depends on.",
@@ -560,8 +559,8 @@ export const SERVICES: Record<string, SvcData> = {
    "contractors"
   ],
   "related": [
-   "program-delivery",
-   "alt-delivery",
+   "proj-delivery",
+   "partnering",
    "drone-programs"
   ],
   "xp": [
@@ -576,26 +575,21 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "lpa": {
   "id": "lpa",
-  "name": "Local Public Agency & Federal-Aid Programs",
+  "name": "Local Public Agency Programs",
   "area": "delivery",
   "st": "warn",
-  "intro": "For a federal program to succeed, programmed funding must turn into projects that are ready to advance. We help states and local agencies get there.",
+  "intro": "Local agencies deliver federal-aid projects with lean teams. We help states and local agencies with the manuals, oversight, certification, and training that keep those projects moving.",
   "hear": [
-   "Programmed funds don't turn into projects ready to advance",
    "Local agencies need clear manuals and oversight",
-   "MPOs need help with performance reporting and certification",
    "Federal requirements land on lean teams"
   ],
   "quote": false,
   "deliver": [
    "Local public agency manuals, oversight, and certification",
-   "Federal-aid program development and compliance",
-   "Metropolitan planning organization support: performance reporting, transportation improvement programs, and work programs",
    "Training for local agencies"
   ],
   "walk": [
    "Local agency manuals and certification steps",
-   "A program that moves funded projects to construction",
    "Training for local agency staff"
   ],
   "industries": [
@@ -603,13 +597,13 @@ export const SERVICES: Record<string, SvcData> = {
    "gov"
   ],
   "related": [
+   "federal-aid",
    "grants",
-   "program-delivery",
-   "row"
+   "planning"
   ],
   "xp": [
    "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
-   "A former Federal Highway Administration executive on our team supported the leaders of 13 division offices"
+   "Our team includes the California Department of Transportation's former Chief of Planning and Local Assistance"
   ],
   "src": {
    "intro": "Based on Gulf South DOT LPA manual work; bios",
@@ -619,7 +613,7 @@ export const SERVICES: Record<string, SvcData> = {
  },
  "grants": {
   "id": "grants",
-  "name": "Grants & Funding",
+  "name": "Grant Applications & Delivery",
   "area": "delivery",
   "st": "ok",
   "intro": "A strong operational idea deserves a fundable application. We help agencies find the funding, write the application reviewers can score, and issue grants of their own, so programs that would otherwise stall get started. When an award comes through, we help put it to work.",
@@ -659,6 +653,219 @@ export const SERVICES: Record<string, SvcData> = {
    "intro": "aviation catalog (internal)",
    "hear": "Partner Field Guide v1",
    "walk": "aviation catalog (internal)"
+  }
+ },
+ "finance": {
+  "id": "finance",
+  "name": "Finance & Budget",
+  "area": "delivery",
+  "st": "warn",
+  // Nov 12 (Nicole): split from Finance, Budget & Procurement. Every line was on that page; the walk lines restate its What we hear lines.
+  "intro": "We help organizations put resources where they count, with budgets tied to what the program has to deliver.",
+  "hear": [
+   "Budgets aren't tied to what the program has to deliver",
+   "Our maintenance budget is hard to explain"
+  ],
+  "quote": false,
+  "deliver": [
+   "Financial and utilization analysis",
+   "Performance-based budgeting"
+  ],
+  "walk": [
+   "Budgets tied to what the program has to deliver",
+   "A budget that is easier to explain"
+  ],
+  "industries": [
+   "transport",
+   "gov"
+  ],
+  "related": [
+   "procurement",
+   "program-delivery",
+   "operations"
+  ],
+  "xp": [
+   "Florida DOT's former Interim Assistant Secretary of Finance and Administration is on our team"
+  ],
+  "src": {
+   "intro": "Split from Finance, Budget & Procurement (Nov 12 2026)",
+   "hear": "Written from our records",
+   "walk": "Restated from the What we hear lines; needs the team"
+  }
+ },
+ "planning": {
+  "id": "planning",
+  "name": "Statewide & Metropolitan Planning",
+  "area": "delivery",
+  "st": "gap",
+  // Nov 12 (Nicole): new in the menu. The text is the Regional & Metropolitan Planning Support page's (that mode is off the site). No Rawlins project; the deliver and walk lines describe what we offer. Nothing on statewide planning yet.
+  "intro": "Metropolitan planning organizations answer to federal performance and certification rules with lean staffs. People on our team worked with them from the federal and state side: at the Federal Highway Administration, where one worked with all eighteen in California and another trained planning organizations in performance-based planning, and as Chief of Planning and Local Assistance at the California Department of Transportation.",
+  "hear": [
+   "Federal performance-based planning and reporting requirements",
+   "Keeping the transportation improvement program and the work program current",
+   "Getting ready for a federal certification review",
+   "MPOs need help with performance reporting and certification"
+  ],
+  "quote": false,
+  "deliver": [
+   "Performance-based planning and reporting",
+   "Project selection and prioritization methods",
+   "Transportation improvement program and work program support",
+   "Performance measures and progress tracking",
+   "Getting ready for federal certification reviews"
+  ],
+  "walk": [
+   "Performance measures and a reporting routine built around the federal requirements",
+   "A project selection method the board can explain",
+   "A readiness review ahead of certification"
+  ],
+  "industries": [
+   "transport",
+   "gov"
+  ],
+  "related": [
+   "strategic-planning",
+   "lpa",
+   "dashboards"
+  ],
+  "xp": [
+   "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
+   "One of our advisors gave state departments and metropolitan planning organizations technical assistance and training in performance-based planning and project prioritization, at the Federal Highway Administration",
+   "A former Federal Highway Administration executive on our team worked with state departments, metropolitan planning organizations, and tribal and local governments on new federal grant programs",
+   "Our team includes the California Department of Transportation's former Chief of Planning and Local Assistance"
+  ],
+  "src": {
+   "intro": "Regional & Metropolitan Planning Support page (bios; no Rawlins project)",
+   "hear": "Same page, plus one line from Local Public Agency & Federal-Aid Programs",
+   "walk": "Same page"
+  }
+ },
+ "proj-delivery": {
+  "id": "proj-delivery",
+  "name": "Project Delivery",
+  "area": "delivery",
+  "st": "warn",
+  // Nov 12 (Nicole): new in the menu, with Preconstruction and Construction under it. Every line is from those two pages or the area page.
+  "intro": "From concept study to construction closeout, we help owners set up the processes, handoffs, and tools that make project delivery consistent, and we stay while staff put them to use.",
+  "hear": [
+   "Every manager runs projects their own way",
+   "Our procedures live in people's heads, or in five versions of the same binder",
+   "Each district administers contracts differently"
+  ],
+  "quote": false,
+  "deliver": [
+   "Project delivery frameworks from concept study to readiness for advertisement, with an interactive manual",
+   "Project delivery manuals, playbooks, risk and quality tools, and role-based training, built from what already exists",
+   "Construction and maintenance input at every step of project development"
+  ],
+  "walk": [
+   "An agency-owned interactive manual and process map",
+   "A transition plan that moves projects already underway onto the new process",
+   "A construction administration manual and inspection procedures"
+  ],
+  "industries": [
+   "transport"
+  ],
+  "related": [
+   "preconstruction",
+   "construction",
+   "program-delivery"
+  ],
+  "xp": [
+   "We've built project delivery frameworks for three state DOTs, and each one looks different"
+  ],
+  "cases": [
+   "cs-tn-ipd",
+   "cs-nc-ipd",
+   "cs-pmdiv",
+   "cs-pdn",
+   "cs-transform"
+  ],
+  "src": {
+   "intro": "Put together from the area page and the Preconstruction page (Nov 12 2026)",
+   "hear": "Area, Preconstruction and Construction pages",
+   "walk": "Preconstruction and Construction pages"
+  }
+ },
+ "federal-aid": {
+  "id": "federal-aid",
+  "name": "Federal-Aid Programs",
+  "area": "delivery",
+  "st": "warn",
+  // Nov 12 (Nicole): split from Local Public Agency & Federal-Aid Programs. Thin: one deliver line was on that page, the other is from the Other Government Services page.
+  "intro": "For a federal program to succeed, programmed funding must turn into projects that are ready to advance. We help states and local agencies get there.",
+  "hear": [
+   "Programmed funds don't turn into projects ready to advance",
+   "New federal programs come with new rules"
+  ],
+  "quote": false,
+  "deliver": [
+   "Federal-aid program development and compliance",
+   "Local public agency manuals and training for the staff in responsible charge of federal-aid projects"
+  ],
+  "walk": [
+   "A program that moves funded projects to construction"
+  ],
+  "industries": [
+   "transport",
+   "gov"
+  ],
+  "related": [
+   "lpa",
+   "grants",
+   "program-delivery"
+  ],
+  "xp": [
+   "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
+   "A former Federal Highway Administration executive on our team supported the leaders of 13 division offices"
+  ],
+  "src": {
+   "intro": "Local Public Agency & Federal-Aid Programs page (Gulf South DOT LPA manual work; bios)",
+   "hear": "Written from our records",
+   "walk": "Based on Tennessee and Louisiana records"
+  }
+ },
+ "partnering": {
+  "id": "partnering",
+  "name": "Partnering",
+  "area": "delivery",
+  "st": "warn",
+  // Nov 12 (Nicole): split from Alternative Delivery & Partnering. Lines are from that page and the Contractors page.
+  "intro": "We facilitate partnering between public owners and contractors on major projects. We set it up and run it: the charter, the risk register, the issue resolution ladder, and team evaluations through closeout.",
+  "hear": [
+   "No agreed way to raise and resolve issues under schedule pressure",
+   "Owner and contractor relationships strained by schedule and risk",
+   "A first progressive design-build or construction manager project with a public owner"
+  ],
+  "quote": false,
+  "deliver": [
+   // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
+   "Risk allocation and partnering facilitation: project charters, issue resolution ladders, joint risk workshops, and team evaluations",
+   "A kickoff that sets the charter, shared goals, communication protocols, and an issue resolution ladder before the pressure builds",
+   "Joint risk workshops, recurring partnering sessions, and anonymous team surveys reported to both sides",
+   "Owner and contractor coordination on major projects"
+  ],
+  "walk": [
+   "A signed partnering charter and an issue resolution ladder",
+   "Regular team evaluations through the project"
+  ],
+  "industries": [
+   "transport",
+   "gov",
+   "contractors"
+  ],
+  "related": [
+   "alt-delivery",
+   "construction",
+   "owners-rep"
+  ],
+  "xp": [
+   "We've facilitated partnering, with risk registers and issue resolution, on a $1.2 billion Mississippi River crossing and a $2 billion light rail line"
+  ],
+  "src": {
+   "intro": "Contractors page (partnering records)",
+   "hear": "Alternative Delivery & Partnering and Contractors pages",
+   "walk": "Based on partnering records, proposals, and the current site"
   }
  },
  "asset-mgmt": {
@@ -1460,17 +1667,21 @@ export const AREAS: Record<string, AreaData> = {
  },
  "delivery": {
   "id": "delivery",
-  "name": "Program &Project Delivery",
+  "name": "Program & Project Delivery",
   "tag": "Getting programs & projects built",
   "services": [
    "program-delivery",
+   "finance",
+   "planning",
+   "proj-delivery",
    "preconstruction",
    "construction",
    "alt-delivery",
-   "row",
    "procurement",
+   "federal-aid",
    "lpa",
    "grants",
+   "partnering",
    "owners-rep"
   ],
   "lead": "From the projects an agency chooses to how it administers construction, we help owners set up the processes, decisions, and tools that make delivery consistent, and we stay while staff put them to use.",
@@ -1492,7 +1703,10 @@ export const AREAS: Record<string, AreaData> = {
      "d": "Selection, prioritization, and funding",
      "services": [
       "program-delivery",
+      "finance",
+      "planning",
       "grants",
+      "federal-aid",
       "lpa"
      ]
     },
@@ -1505,10 +1719,11 @@ export const AREAS: Record<string, AreaData> = {
      ]
     },
     {
-     "t": "Right of way",
+     "t": "Preconstruction",
      "d": "Readiness, procedures, and coordination",
      "services": [
-      "row"
+      "proj-delivery",
+      "preconstruction"
      ]
     },
     {
@@ -1516,6 +1731,7 @@ export const AREAS: Record<string, AreaData> = {
      "d": "Construction administration and field consistency",
      "services": [
       "construction",
+      "partnering",
       "owners-rep"
      ]
     },
@@ -1755,7 +1971,7 @@ export const INDUSTRIES: Record<string, IndustryData> = {
   "basis": "Our People bios: former executives and engineers from Nevada, Florida, Michigan, Idaho, Arkansas, North Carolina, and California DOTs and FHWA. Approved claim: more than 30 former agency executives and engineers.",
   "services": [
    "program-delivery",
-   "row",
+   "preconstruction",
    "construction",
    "alt-delivery",
    "lpa",
@@ -1968,59 +2184,10 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    // Ron Crew bio
    "One of our right of way advisors spent 43 years in Florida DOT right of way, 33 as a supervisor or manager"
   ],
-  "services": ["program-delivery", "preconstruction", "row", "construction", "operations", "traffic", "asset-mgmt"],
+  "services": ["program-delivery", "preconstruction", "construction", "operations", "traffic", "asset-mgmt"],
   "industry": "transport",
   "people": [],
   "basis": "Highway case studies and Our People bios"
- },
- "sub-bridges": {
-  "id": "sub-bridges",
-  "name": "",
-  "st": "ok",
-  // Rawlins doesn't design or inspect bridges (CONTENT FIXES v3; Jacob's portfolio, "Boundaries that matter in scopes").
-  // Only one crossing cost over a billion dollars, so "billion-dollar river crossings" is gone.
-  "intro": "Our bridge work is on the programs around the structure: how the owner and the contractor work together while it's built, how inspectors are trained, and how inspection data is collected. We've facilitated partnering on major river crossings, including a $1.2 billion Mississippi River bridge. We've built proficiency programs that cover bridge inspection, and we facilitate a multi-state program developing a shared standard for drone data on structures.",
-  "ch": [
-   "Risk on major crossings that no one has allocated",
-   "A first design-build project with a new partner",
-   "Inspection data with no shared standard",
-   // cs-proficiency challenge
-   "Inspectors need a defined route to proficiency"
-  ],
-  "deliver": [
-   // cs-major
-   "Partnering on major crossings: project charters, risk registers, issue resolution ladders, and team evaluations",
-   // cs-db-partnering, cs-partnering
-   "Partnering for design-build and progressive design-build bridge projects, from kickoff through closeout",
-   // cs-proficiency
-   "Proficiency programs for bridge inspection staff",
-   // cs-pooled: structure inspection working group
-   "Multi-state standards for drone data on structures",
-   // John Zuleger's comment 11 on Jacob's drone portfolio (CONTENT FIXES v3, section 6)
-   "Reviews of which inspection and maintenance tasks drones can support",
-   // Field Guide recent work list; cs-transform
-   "Screening and scoring tools for highway and bridge programs"
-  ],
-  "walk": [
-   "A signed partnering charter and an issue resolution ladder",
-   "Team evaluations through the project, reported to both sides",
-   "A written route to proficiency for inspection staff",
-   "A shared data standard and recommended practices a department can adopt"
-  ],
-  "xp": [
-   // cs-major. Public construction costs.
-   "We've facilitated partnering on a $1.2 billion Mississippi River crossing and a $275 million river bridge in Missouri",
-   // cs-db-partnering
-   "We've carried partnering from kickoff through closeout on a design-build river bridge project, with team surveys reported to both sides",
-   // research.ts: NCHRP Research Report 1114 (2024), before they joined Rawlins
-   "Two people on our team were the principal investigator and a co-author of the 2024 national research report that proposed AASHTO guidelines for drones in bridge inspection, before they joined Rawlins",
-   // John Zuleger bio; the work was at his earlier firm
-   "One of our engineers performed and managed hundreds of complex and post-disaster bridge inspections with drones and rope access, before joining Rawlins"
-  ],
-  "services": ["alt-delivery", "workforce", "research", "drone-programs", "owners-rep"], // adds "workforce" for the proficiency programs
-  "industry": "transport",
-  "people": [],
-  "basis": "Major project, partnering, pooled fund, and bio records"
  },
  "sub-aviation": {
   "id": "sub-aviation",
@@ -2104,186 +2271,10 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    // Jen Pihl bio
    "One of our advisors supported economic analysis and the administration of major rail grant programs at the Federal Railroad Administration"
   ],
-  "services": ["alt-delivery", "owners-rep"],
+  "services": ["partnering", "owners-rep"], // the rail work was partnering (Nov 12 split)
   "industry": "transport",
   "people": [],
   "basis": "Minneapolis light rail project; bios (Caltrans rail and mass transportation leadership, Federal Railroad Administration)"
- },
- "g-asset": {
-  "id": "g-asset",
-  "name": "Asset Management",
-  "st": "ok",
-  // cs-local-am (Rawlins Case Study Drafts v1): kickoffs, steering committees, self-assessments, document reviews, workshops, action plans, one-pagers.
-  "intro": "Local agencies can use asset management to plan their programs and their funding, but each one starts from a different place. We start from the agency's own staff, plans, and inventories: a self-assessment, a workshop built around what it shows, and an action plan the agency can carry out.",
-  "ch": [
-   "No one owns asset management locally",
-   "Inventories and plans are incomplete",
-   "Elected officials need it explained simply",
-   // Janine Cooper's asset management answers (findings_jacob.md, 6)
-   "Decisions get made worst-first, one department at a time"
-  ],
-  "deliver": [
-   "An asset management steering committee named inside the agency",
-   "Self-assessment surveys, and a review of the agency's plans and inventories",
-   "In-person workshops built on the state's competency framework",
-   "Short, mid, and long-term action plans",
-   "One-page materials for senior managers and elected officials"
-  ],
-  "walk": [
-   "An action plan with short, mid, and long-term tasks",
-   "A steering committee that owns it",
-   "A clear view of strengths, gaps, and the resources needed",
-   "A one-page explanation elected officials can use"
-  ],
-  "xp": [
-   // FLAG (5.7). cs-local-am.
-   "We've held asset management workshops and built action plans with local agencies, for a state infrastructure office",
-   // Joey Paskey bio
-   "A former Director of Public Works for the City of Las Vegas on our team led the city's asset management programs",
-   // cs-nyc-parks and cs-riverside (Before Rawlins)
-   "Before founding Rawlins, our founder helped set an asset investment strategy for New York City's 29,000 acres of parkland, and reviewed a county's fleet and facilities operations"
-  ],
-  "services": ["asset-mgmt", "workforce"],
-  "industry": "gov",
-  "people": [],
-  "basis": "State infrastructure office record; bios"
- },
- "g-capital": {
-  "id": "g-capital",
-  "name": "Capital Project Delivery & Permitting",
-  "st": "gap",
-  // No completed city project. The deliver and walk lines describe what we offer; none claims past work.
-  // The assess-and-roadmap method is the one used in cs-nv-om and cs-hi.
-  "intro": "Cities deliver capital projects and review land development permits with small staffs, and each depends on the other. We assess how projects and permits move, from intake to acceptance, and turn the findings into a roadmap for project management, written procedures, and training. It's the assessment method we use with state transportation departments, and experience on our team includes directing public works for the City of Las Vegas.",
-  "ch": [
-   "Capital projects and permits stall between departments",
-   "Project management varies by manager",
-   "Procedures aren't written down",
-   "Experienced staff are leaving, and their knowledge goes with them"
-  ],
-  "deliver": [
-   "Capital project delivery assessment, from initiation through construction, acceptance, and closeout",
-   "Land development permitting review, from intake through approval",
-   "Current-state workflows that show the handoffs, decisions, and gaps between departments",
-   "A project management roadmap with near, mid, and longer-term actions",
-   "A prioritized set of standard operating procedures",
-   "A training and proficiency framework by role"
-  ],
-  "walk": [
-   "One assessment and roadmap that covers capital delivery and permitting together",
-   "Workflows that show who does what, and where work stalls",
-   "A short list of the procedures to write first",
-   "A training framework tied to the roadmap"
-  ],
-  "xp": [
-   // Joey Paskey bio
-   "A former Director of Public Works for the City of Las Vegas on our team oversaw planning, design, construction, and maintenance of the city's infrastructure",
-   // Amy Neidringhaus bio
-   "A former North Carolina DOT district engineer on our team was the first point of contact for utilities, developers, and eleven municipalities in a fast-growing county",
-   // Chris Petersen bio (private-sector roles)
-   "One of our project managers managed City of Las Vegas roadway projects, and later quality control on city and county improvement projects",
-   // cs-nv-om
-   "We've carried out the same kind of assessment for a state transportation department's operations and maintenance programs",
-   // FLAG (5.8). Sep and Oct 2026 work reports: best-practice research under way; the staffing assessment and the framework come next.
-   "We've begun work on a resource planning and prioritization framework for a city transportation department, on an engineering firm's team"
-  ],
-  "services": ["program-delivery", "org-design", "workforce"], // adds "workforce" for the training framework
-  "industry": "gov",
-  "people": [ // kept; not shown
-   ["Joey Paskey, P.E., PTOE", "Ran planning, design, construction, and maintenance as Director of Public Works, City of Las Vegas"],
-   ["Chris Petersen, CPM", "Coordinated Nevada DOT roadway projects with internal and outside entities"]
-  ],
-  "basis": "City scope of work (Sep 2026, not yet delivered); bios"
- },
- "g-mpo": {
-  "id": "g-mpo",
-  "name": "Regional & Metropolitan Planning Support",
-  "st": "gap",
-  // No Rawlins project. The deliver and walk lines describe what we offer; none claims past work.
-  "intro": "Metropolitan planning organizations answer to federal performance and certification rules with lean staffs. People on our team worked with them from the federal and state side: at the Federal Highway Administration, where one worked with all eighteen in California and another trained planning organizations in performance-based planning, and as Chief of Planning and Local Assistance at the California Department of Transportation.",
-  "ch": [
-   "Federal performance-based planning and reporting requirements",
-   "Keeping the transportation improvement program and the work program current",
-   "Getting ready for a federal certification review"
-  ],
-  "deliver": [
-   "Performance-based planning and reporting",
-   "Project selection and prioritization methods",
-   "Transportation improvement program and work program support",
-   "Performance measures and progress tracking",
-   "Getting ready for federal certification reviews"
-  ],
-  "walk": [
-   "Performance measures and a reporting routine built around the federal requirements",
-   "A project selection method the board can explain",
-   "A readiness review ahead of certification"
-  ],
-  "xp": [
-   // Paul Schneider bio (the same line as Local Public Agency & Federal-Aid Programs)
-   "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
-   // Jen Pihl bio
-   "One of our advisors gave state departments and metropolitan planning organizations technical assistance and training in performance-based planning and project prioritization, at the Federal Highway Administration",
-   // Mayela Sosa bio
-   "A former Federal Highway Administration executive on our team worked with state departments, metropolitan planning organizations, and tribal and local governments on new federal grant programs",
-   // Dara Wheeler bio
-   "Our team includes the California Department of Transportation's former Chief of Planning and Local Assistance"
-  ],
-  "services": ["strategic-planning", "lpa", "dashboards", "data-governance"], // adds Local Public Agency & Federal-Aid Programs and Dashboards & Reporting
-  "industry": "gov",
-  "people": [ // kept; not shown
-   ["Paul Schneider, P.E.", "Worked with 18 MPOs on California's federal-aid program"],
-   ["Mayela Sosa", "FHWA executive who worked with MPOs, tribal, and local governments"]
-  ],
-  "basis": "Bios (no Rawlins project)"
- },
- "g-federal": {
-  "id": "g-federal",
-  "name": "Federal & Multi-State Programs",
-  "st": "ok",
-  // cs-pooled: 18 member states (kickoff deck, Jul 2026). In progress: no results yet, and the copy claims none.
-  // Grants: cs-nc-ipd (BUILD and INFRA), cs-aero (application submitted).
-  "intro": "Some problems are bigger than one state. We facilitate a multi-state research program in which 18 member states are developing a shared drone data standard and recommended practices agencies can adopt. We also help agencies prepare applications for federal grant programs. Experience on our team includes rolling out and reviewing federal grant programs at the Federal Highway Administration and the Federal Railroad Administration.",
-  "ch": [
-   "States collect the same data with no shared standard",
-   "Research has to reach consensus across many members",
-   "Federal programs come with new rules",
-   "We're a small staff competing for federal funding"
-  ],
-  "deliver": [
-   // cs-pooled
-   "Pooled-fund facilitation: working groups, subcommittees, and consensus sessions",
-   "Standards research: compiling members' existing standards and proposing a testing framework",
-   "Recommended practices and guidebooks agencies can adopt",
-   // Sep 2026 progress report: a federal peer exchange for western states' drone programs
-   "Peer exchanges: agendas, facilitation, and follow-up materials",
-   // cs-aerodiv
-   "Research plans, literature reviews, and technical advisory panels",
-   // cs-aero, cs-nc-ipd. "National research proposals" is gone: those are proposals we write to win research work, not something a client receives.
-   "Federal grant applications, including multi-state ones: narrative, budget, forms, and commitment letters"
-  ],
-  "walk": [
-   "A record of what the members agreed, and what is still open",
-   "A testing framework members can run in their own states",
-   "A shared data standard and recommended practices members can adopt",
-   "A complete grant application, ready to submit"
-  ],
-  "xp": [
-   // cs-pooled
-   "We facilitate a pooled fund study on drone standards for 18 member states",
-   // FLAG (5.9). Sep 2026 progress report.
-   "We helped plan and facilitate a federal peer exchange on drone programs for western state transportation departments in September 2026",
-   "A former Federal Highway Administration executive on our team helped 13 division offices roll out new federal grant programs", // as on Grants & Funding
-   "Members of our team serve on national drone and advanced air mobility committees", // as on Research & Standards
-   // Jen Pihl bio
-   "One of our advisors served as a technical reviewer for federal discretionary grant programs"
-  ],
-  "services": ["research", "grants"],
-  "industry": "gov",
-  "people": [ // kept; not shown
-   ["Mayela Sosa", "Senior FHWA executive on new federal grant programs"],
-   ["Paul Wheeler", "National UAS and AAM committees"]
-  ],
-  "basis": "Pooled fund study record; bios"
  },
  "sub-ports": {
   "id": "sub-ports",
@@ -2343,7 +2334,6 @@ export const CASES: Record<string, CaseData> = {
    "workforce",
    "org-design",
    "change-mgmt",
-   "row",
    "construction",
    "traffic"
   ],
@@ -2581,9 +2571,7 @@ export const CASES: Record<string, CaseData> = {
    "asset-mgmt",
    "workforce"
   ],
-  "subsectors": [
-   "g-asset"
-  ],
+  "subsectors": [],
   "industry": "gov",
   "industry2": null
  },
@@ -2857,7 +2845,7 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [],
   "services": [
-   "procurement",
+   "finance",
    "operations"
   ],
   "subsectors": [],
@@ -2876,9 +2864,7 @@ export const CASES: Record<string, CaseData> = {
   "services": [
    "asset-mgmt"
   ],
-  "subsectors": [
-   "g-asset"
-  ],
+  "subsectors": [],
   "industry": "gov",
   "industry2": null
  },
@@ -2910,10 +2896,10 @@ export const CASES: Record<string, CaseData> = {
   "res": [],
   "services": [
    "program-delivery",
-   "alt-delivery"
+   "partnering"
   ],
   "subsectors": [
-   "sub-bridges",
+   "sub-highways",
    "sub-rail"
   ],
   "industry": "transport",
@@ -2934,10 +2920,10 @@ export const CASES: Record<string, CaseData> = {
   "services": [
    "program-delivery",
    "procurement",
-   "alt-delivery"
+   "partnering"
   ],
   "subsectors": [
-   "sub-bridges"
+   "sub-highways"
   ],
   "industry": "transport",
   "industry2": "contractors"
@@ -2958,8 +2944,7 @@ export const CASES: Record<string, CaseData> = {
    "drone-programs"
   ],
   "subsectors": [
-   "g-federal",
-   "sub-bridges",
+   "sub-highways",
    "sub-aviation"
   ],
   "industry": "gov",
@@ -3060,7 +3045,7 @@ export const CASES: Record<string, CaseData> = {
    "Final report with five action plans: contract administration across districts, contract time, plan quality and early constructability input, compliance paperwork and payment, and consultant inspector roles"
   ],
   "services": [
-   "alt-delivery",
+   "partnering",
    "construction",
    "program-delivery"
   ],
@@ -3103,12 +3088,12 @@ export const CASES: Record<string, CaseData> = {
    "Closeout survey and lessons learned delivered to both sides on the river bridge project"
   ],
   "services": [
-   "alt-delivery",
+   "partnering",
    "program-delivery",
    "construction"
   ],
   "subsectors": [
-   "sub-bridges"
+   "sub-highways"
   ],
   "industry": "contractors",
   "industry2": null,
