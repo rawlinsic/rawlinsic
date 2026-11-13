@@ -102,9 +102,11 @@ export const casePhoto = (c: CaseIndex) => CASE_PHOTO[c.id] ?? STATE_PHOTO[c.sta
    air taxi cabin from the live site's Drones page for drones and air mobility, and a data dashboard for data and AI */
 /* Nov 11 (Nicole): the indoor group photo is no longer shown large, so stage 1 is the outdoor group photo and
    stage 2 is our team leading a workshop (her photo), so the same photo isn't on two cards side by side */
-export const STORY_PHOTO = [P("team-group-outdoor.webp"), P("change-management-workshop.webp"), P("aam-services-portfolio.webp"), P("auto-data.webp")];
+/* Nov 12 (Nicole): 01 Foundation is the indoor group photo, and the outdoor group photo moves to 02 Advisory Capabilities
+   (the workshop photo, change-management-workshop.webp, stays on the Change Management page) */
+export const STORY_PHOTO = [P("team-group-indoor.webp"), P("team-group-outdoor.webp"), P("aam-services-portfolio.webp"), P("auto-data.webp")];
 /* where to center each one in its wide frame */
-export const STORY_PHOTO_POS = ["50% 62%", "50% 50%", "50% 26%", "50% 50%"];
+export const STORY_PHOTO_POS = ["50% 50%", "50% 62%", "50% 26%", "50% 50%"];
 
 /* Home: Featured projects, Rawlins work only (no Before Rawlins cases) */
 export const FEATURED_CASES = ["cs-transform", "cs-pdn", "cs-proficiency", "cs-strategic", "cs-pbmc", "cs-local-am", "cs-major", "cs-aero", "cs-nc-ipd", "cs-ia-partnering"];
