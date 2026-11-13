@@ -41,16 +41,16 @@ export const AREAS: Area[] = [
     ],
   },
   {
-    id: "delivery", slug: "project-delivery", name: "Project Delivery",
+    id: "delivery", slug: "project-delivery", name: "Program &Project Delivery",
     tag: "Getting programs & projects built", scene: "construction", featuredCase: "cs-transform",
     services: [
       /* content pass v7, 2.1 (Nov 11): Construction & Pre-Construction split in two; Program & Project Delivery renamed.
          The old addresses redirect (next.config.js). */
-      svc("program-delivery", "Program Delivery", "interchange"),
+      svc("program-delivery", "Program Development", "interchange"),
       svc("preconstruction", "Preconstruction"),
       svc("construction", "Construction"),
       svc("alt-delivery", "Alternative Delivery & Partnering", "site"),
-      svc("row", "Right of Way", "rural"),
+      svc("row", "Right of Way - remove part of precons. all tech specialty areas on PDN - these need to be mentioned on preconstruction", "rural"),
       svc("procurement", "Finance, Budget & Procurement", "office"),
       svc("lpa", "Local Public Agency & Federal-Aid Programs", "street"),
       svc("grants", "Grants & Funding", "crossing"),
@@ -88,7 +88,7 @@ export const AREAS: Area[] = [
       svc("dashboards", "Dashboards & Reporting", "office"),
       svc("training-video", "Digital Training & Video", "site"),
       svc("tech-strategy", "Technology & AI Strategy", "grid"),
-      svc("smart-mobility", "Smart Mobility & Connected Systems", "dusk"), // v12 new
+      svc("smart-mobility", "Smart Mobility & Connected Systems - remove", "dusk"), // v12 new
     ],
   },
 ];
