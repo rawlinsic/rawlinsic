@@ -27,6 +27,9 @@ const card = (c: CaseIndex) => ({ title: tc(c.title), who: c.who, href: caseHref
 const eventLine = (e: (typeof EVENTS)[number]) => [e.title, e.when.replace(/,\s*\d{4}$/, ""), e.where?.split(",")[0]].filter(Boolean).join(", ");
 const monthOf = (d?: string) => (d ? Date.parse(`1 ${d}`) || 0 : 0);
 
+/* services left out of the menu for now (their pages stay up) */
+const MENU_OFF = ["smart-mobility"];
+
 export default function Header() {
   const intl = INDUSTRIES.find((i) => i.id === "intl");
   /* News: the next event while it's upcoming (the browser checks the date again), then the newest post */
@@ -38,7 +41,8 @@ export default function Header() {
       id: a.id, n: THEME[a.id].n, name: a.name, tag: a.tag, href: areaHref(a), color: THEME[a.id].color, ink: THEME[a.id].ink, tint: THEME[a.id].tint, photo: NAV_AREA_PHOTO[a.id] ?? AREA_PHOTO[a.id], pos: NAV_AREA_PHOTO[a.id] ? NAV_AREA_PHOTO_POS[a.id] : AREA_PHOTO_POS[a.id],
       /* the preview-only "?" beside Owner's Representation is off (Nicole, Nov 11) */
       /* child: sits under the service before it in the list (Preconstruction and Construction under Project Delivery; Nicole, Nov 12) */
-      services: a.services.map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: undefined as string | undefined, child: !!s.parent })),
+      /* Smart Mobility & Connected Systems is out of the menu for now (Nicole, Nov 13); its page is still up */
+      services: a.services.filter((s) => !MENU_OFF.includes(s.id)).map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: undefined as string | undefined, child: !!s.parent })),
       projects: `/insights/case-studies?area=${a.slug}`,
     })),
     industries: VISIBLE_INDUSTRIES.map((i) => {
