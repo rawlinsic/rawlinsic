@@ -20,7 +20,8 @@ export default function Footer() {
   return (
     <footer className="fx fx2">
       <div className="fx2-line">
-        <p className="fx2-big">We find what&apos;s broken, fix it, and <span>stay until it runs.</span></p>
+        {/* "and stay until it runs" on its own line (Nicole, Nov 12) */}
+        <p className="fx2-big">We find what&apos;s broken, fix it,<br /> and <span>stay until it runs.</span></p>
       </div>
       <div className="v8-wrap fx2-grid">
         <div className="fx2-brand">

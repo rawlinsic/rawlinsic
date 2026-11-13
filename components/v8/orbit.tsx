@@ -9,7 +9,8 @@
    at a photo pauses the ring, lights the photo, and fills the blue line with
    its name (Airports, Cities, ...). One steady ellipse: no tile is ever
    pushed or clamped, so nothing jumps. Under 1100px wide (phones and tablets) there's no ring: two rows of
-   photos slide sideways as you scroll. Reduced motion: the ring stands still
+   photos slide sideways as you scroll. Nov 12 (Nicole: on phones it "doesn't work"): under 1100px every photo shows
+   whole, with its name, in a grid you can tap. Reduced motion: the ring stands still
    and the names show as a list. The ring pauses off screen and in a hidden
    tab. */
 import { useEffect, useRef, type ReactNode } from "react";
@@ -124,6 +125,8 @@ export default function Orbit({ tiles, children, cta }: { tiles: Tile[]; childre
             <a key={t.src + t.label} className="orb-t" href={t.href} tabIndex={-1} data-name={t.label}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={t.src} alt="" loading="lazy" />
+              {/* the name: shown on phones and tablets, and on the ring when you point at a photo */}
+              <span>{t.label}</span>
             </a>
           ))}
         </div>

@@ -19,6 +19,15 @@ export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic
   const [sel, setSel] = useState(0);
   const [own, setOwn] = useState("");
   const [paths, setPaths] = useState<string[]>([]);
+  /* phones (Nicole, Nov 12: it "doesn't make sense how it is"): the answer opens right under the choice you tap,
+     not below all twelve choices */
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const m = window.matchMedia("(max-width: 959px)");
+    const set = () => setNarrow(m.matches);
+    set(); m.addEventListener?.("change", set);
+    return () => m.removeEventListener?.("change", set);
+  }, []);
   const box = useRef<HTMLDivElement>(null);
   const draw = useCallback(() => {
     const b = box.current;
@@ -50,6 +59,26 @@ export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic
     ? `/contact?topic=${encodeURIComponent(f.topic)}&msg=${encodeURIComponent(f.q + ".")}`
     : `/contact${own.trim() ? `?msg=${encodeURIComponent(own.trim())}` : ""}`;
 
+  const answer = f ? (
+    <>
+      <p className="fp-k">Where we&apos;d start</p>
+      <ul className="fp-svcs">
+        {f.services.map((s) => (
+          <li key={s.href} style={s.style}>
+            <a className="fp-svc" href={s.href}><b>{s.name}</b><span>{s.area}</span></a>
+          </li>
+        ))}
+      </ul>
+      <a className="v8-btn fp-go" href={contact} onClick={go}>Talk to us about this</a>
+    </>
+  ) : (
+    <div className="fp-own">
+      <label className="fp-k" htmlFor="fp-own-box">In your own words</label>
+      <textarea id="fp-own-box" rows={5} value={own} onChange={(e) => setOwn(e.target.value)} placeholder="What's going on, and what would better look like?" />
+      <a className="v8-btn fp-go" href={contact} onClick={go}>Send it to our team</a>
+    </div>
+  );
+
   return (
     <div className="fp" ref={box}>
       <svg className="fp-lines" aria-hidden="true" key={sel}>
@@ -63,36 +92,18 @@ export default function FixPicker({ fixes, onGo }: { fixes: Fix[]; onGo?: (topic
               <button type="button" className="fp-q" aria-pressed={sel === i} onClick={() => setSel(i)}>
                 <span className="fp-dot" aria-hidden="true" />{x.q}
               </button>
+              {narrow && sel === i && <div className="fp-inline" aria-live="polite">{answer}</div>}
             </li>
           ))}
           <li>
             <button type="button" className="fp-q fp-q-own" aria-pressed={sel === OWN} onClick={() => setSel(OWN)}>
               <span className="fp-dot" aria-hidden="true" />Write your own
             </button>
+            {narrow && sel === OWN && <div className="fp-inline" aria-live="polite">{answer}</div>}
           </li>
         </ul>
       </div>
-      <div className="fp-right" aria-live="polite">
-        {f ? (
-          <>
-            <p className="fp-k">Where we&apos;d start</p>
-            <ul className="fp-svcs">
-              {f.services.map((s) => (
-                <li key={s.href} style={s.style}>
-                  <a className="fp-svc" href={s.href}><b>{s.name}</b><span>{s.area}</span></a>
-                </li>
-              ))}
-            </ul>
-            <a className="v8-btn fp-go" href={contact} onClick={go}>Talk to us about this</a>
-          </>
-        ) : (
-          <div className="fp-own">
-            <label className="fp-k" htmlFor="fp-own-box">In your own words</label>
-            <textarea id="fp-own-box" rows={5} value={own} onChange={(e) => setOwn(e.target.value)} placeholder="What's going on, and what would better look like?" />
-            <a className="v8-btn fp-go" href={contact} onClick={go}>Send it to our team</a>
-          </div>
-        )}
-      </div>
+      {!narrow && <div className="fp-right" aria-live="polite">{answer}</div>}
     </div>
   );
 }
