@@ -1318,3 +1318,6 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
   .av-picks button { padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(165, 243, 252, 0.35); background: rgba(8, 18, 34, 0.6); color: #e6edf5; font: 600 0.95rem var(--font-sans); cursor: pointer; }
   .av-picks button[aria-pressed="true"] { background: #22d3ee; border-color: #22d3ee; color: #04131f; box-shadow: 0 0 18px rgba(34, 211, 238, 0.5); }
 }
+/* Nov 13: in the phone menu International Markets is its own heading, like Public Sector and Private Sector */
+.hx-who > li.mx-intl { padding-left: 0 !important; margin-top: 6px; }
+.hx-who > li.mx-intl > a { padding-left: 0; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }

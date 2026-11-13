@@ -320,16 +320,14 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                   </li>
                 ))}</ul>
               </details>
-              <details><summary>Who We Work With</summary><ul>{data.industries.map((x) => {
-                const projects = [...(x.feature ? [{ title: x.feature.title, href: x.feature.href, photo: x.feature.photo }] : []), ...x.projects];
-                return (
-                  <li key={x.href} className={x.head ? "mx-head" : x.child ? "mx-child" : undefined}>
-                    <a href={x.href}>{x.name}</a>
-                    {x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}
-                    {projects.length > 0 && <><p className="mx-k">Relevant Projects</p><ul className="mx-projs">{projects.map((p) => <li key={p.href}><a className={"photo" in p ? "mx-proj" : undefined} href={p.href}>{/* eslint-disable-next-line @next/next/no-img-element */}{"photo" in p && <img src={p.photo} alt="" loading="lazy" />}<span>{p.title}</span></a></li>)}</ul></>}
-                  </li>
-                );
-              })}{data.intl && <li><a href={data.intl.href}>{data.intl.name}</a><em className="v8-dev">{data.intl.note}</em></li>}</ul></details>
+              {/* Nov 13 (Nicole, phone screenshots: "menus are messed up"): the same groups as the computer menu, without the
+                  project lists, which made it long and ran the headings together */}
+              <details><summary>Who We Work With</summary><ul className="hx-who">{data.industries.map((x) => (
+                <li key={x.href} className={x.head ? "mx-head" : x.child ? "mx-child" : undefined}>
+                  <a href={x.href}>{x.name}</a>
+                  {x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}
+                </li>
+              ))}{data.intl && <li className="mx-intl"><a href={data.intl.href}>{data.intl.name}</a>{data.intl.note && <em className="v8-dev">{data.intl.note}</em>}</li>}</ul></details>
               <details><summary>Our Work</summary><ul>{data.work.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>
               <details><summary>Insights</summary><ul>{data.insights.map((l) => <li key={l.href}><a className="hx-noted" href={l.href}>{l.label}<span>{l.note}</span></a></li>)}</ul></details>
               {aboutTopOnly ? <p className="hx-acc-top">About</p> : <details><summary>About</summary><ul>{data.about.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>}
