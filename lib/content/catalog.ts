@@ -11,7 +11,9 @@ export type SvcData = { id: string; name: string; area: string; st: string; intr
      doneLinks, a "Where we've done it" line (by its bold name) that opens a project page (by project id) */
   sub?: string[]; doneLinks?: Record<string, string>;
   /* doneTo: the project page each "Where we've done it" line opens, in line order (null: no project page). Projects file v4, Part 4, Nov 13 */
-  doneTo?: (string | null)[] };
+  doneTo?: (string | null)[];
+  /* cards: the projects shown first under "Where we've done it", in this order; the page shows cards only (Where we've done it file v1, Nov 13) */
+  cards?: string[] };
 export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; lead?: string; /* links: each stage lists its services as links (Program & Project Delivery, Nov 13) */ links?: boolean; steps: { t: string; d: string; services: string[]; areas?: string[] }[] }; keep: string; cases: string[];
   /* xp: "The experience behind it" on the area page (Program & Project Delivery area page file v1, Nov 13) */
   xp?: string[];
@@ -305,12 +307,8 @@ export const SERVICES: Record<string, SvcData> = {
    "One of our project managers managed a 13-mile, half-billion-dollar corridor project in Las Vegas",
    "Our founder drove the development of Nevada DOT's matrix-based project management program"
   ],
-  "done": [
-   "**A state DOT:** we wrote more than thirty State of Practice reports on its programs, then drafted its Program Development Manual, worked through project selection templates with 14 programs, built fillable score sheets, and built a bridge screening and prioritization tool, with tutorials for its program managers.",
-   "**Tennessee Department of Transportation:** we built a project utilization program, with staff effort by discipline for every region, that the department used to build its consultant acquisition plan. We also assessed its program development and administration division and proposed its organization.",
-   "**Nevada Department of Transportation:** as part of an operations review, we delivered a data-driven process for choosing pavement projects, and we supported the first year of its Pavement Improvement Program."
-  ],
-  "doneTo": ["cs-pd-manual", "cs-tn-reorg", "cs-nv-om"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-pd-manual", "cs-tn-reorg", "cs-nv-om"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -370,14 +368,8 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-pmdiv",
    "cs-pdn"
   ],
-  "done": [
-   "**A state DOT:** inside its project delivery network, we wrote the activities for every discipline with the department's own experts, and built the tools project teams use: a Master Scope of Work template and generator, a Cost Estimating Tool, a risk register and Risk Management Plan, a Project Commitment Document, study report templates, quality control checklists, and request forms for utilities, railroad, right of way, geotechnical, hydraulic, and bridge work.",
-   "**Tennessee Department of Transportation:** we assessed its right of way program and its utilities function, reviewed its environmental program, and worked with its regions on environmental reevaluations and clearance for maintenance activities. We surveyed other state DOTs on utility cost estimates and relocation reimbursement for a policy presentation to the Commissioner. We drafted right of way proficiencies with its statewide representatives, and a classification series for its right of way agents and appraisers.",
-   "**Another state DOT:** an interactive Project Delivery Manual with chapters on scope, schedule, cost and budget, risk, quality, change management, stakeholder coordination, and project controls.",
-   "**A state DOT:** we documented its project delivery workflows by discipline with its design staff, in a week on site.",
-   "**A state DOT:** proficiency programs for its utilities, hydraulics, geotechnical, roadway design, and environmental specialists, each reviewed with the department's own experts."
-  ],
-  "doneTo": ["cs-pdn", "cs-tn-reorg", "cs-pmdiv", "cs-hi", "cs-pd-prof"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-pdn", "cs-tn-reorg", "cs-pmdiv", "cs-hi", "cs-pd-prof"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -428,11 +420,8 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-txmaint",
    "cs-major"
   ],
-  "done": [
-   "**Tennessee Department of Transportation:** through the first year of two performance-based maintenance contracts: onboarding calls for mobilization and launch, weekly calls with each contractor and the department on contract administration, a monthly ride-along with both contractors and region leadership, calls with inspectors on deficiencies and remedies, and advice to the region when a performance score fell short.",
-   "**A state DOT:** guidance to the department and its contractors on contract language and oversight, and a workshop with department leadership and the contracting industry on what the contract language means."
-  ],
-  "doneTo": ["cs-pbmc", "cs-txmaint"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-pbmc", "cs-txmaint"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -477,20 +466,16 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "xp": [
    "Our founder led Nevada DOT's Pioneer Program for public-private partnerships, design-build, and construction manager/general contractor",
-   "A former executive at three state transportation departments on our team delivered public-private partnerships, alternative delivery contracts, and a managed lanes program"
+   "A former executive at three state transportation departments on our team delivered public-private partnerships, alternative delivery contracts, and a managed lanes program",
+   "We've researched progressive design-build nationally for a state DOT, written its peer review questions, and presented at its State of the Practice Workshop"
   ],
   /* related, not tagged: design-build and progressive design-build projects where our part was partnering (Nov 12 split) */
   "cases": [
    "cs-partnering",
    "cs-db-partnering"
   ],
-  "done": [
-   "**Tennessee Department of Transportation:** we wrote its Design-Build Procurement Manual and flowcharts for every delivery method, and drafted an adjusted-score design-build request for proposals. Our study of contracting methods for maintenance ended in a workshop and a final report recommending a design-build job order contract for its safety improvement program.",
-   "**A state DOT:** national research on progressive design-build, peer review questions, and a State of the Practice Workshop.",
-   "**A state DOT:** an alternative delivery and public-private partnership screening tool and selection matrix, built into its project delivery network. For its bridges: bundling options, a bundling list with maps by district, and procurement recommendations.",
-   "**A state DOT:** a new division for major projects, public-private partnerships, and tolling, defined from its organization structure to position descriptions for the whole division. Before that, for the same department: a primer for its public-private partnership division, position descriptions for its alternative delivery project managers, and alternative delivery proficiencies reviewed with its experts."
-  ],
-  "doneTo": ["cs-tn-psm", null, "cs-pdn", "cs-p3-division"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-tn-psm", "cs-pdn", "cs-p3-division"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -539,12 +524,8 @@ export const SERVICES: Record<string, SvcData> = {
   "xp": [
    "One of our procurement specialists brings 35 years of government procurement in transportation and engineering services"
   ],
-  "done": [
-   "**Tennessee Department of Transportation:** we assessed how the department buys consultant services, then wrote its Professional Services Policies and Procedures Manual, Design-Build Procurement Manual, and Negotiations Manual, all finalized in July 2023, with flowcharts for every delivery method. Later came a contract close-out process, scope templates by contract type and discipline, guidance on running a two-phase advertisement, an advertisement request form, and templates for negotiation memos and rate analysis.",
-   "**A state DOT:** a national best practices report on consultant contract administration, approved in October 2025; general engineering services scopes; and a man-hour estimating tool. Then we built its contracting workflow into a working system: intake forms, an advertisement request board, a proposal scoring engine, contract routing, letters generated from records, and invoice review. Two of the tools became standalone web applications in the department's own account.",
-   "**A state DOT:** proficiency programs for its procurement staff (solicitation and contracts, headquarters purchasing, quality and training) and for its professional services specialists."
-  ],
-  "doneTo": ["cs-tn-psm", "cs-consult-flow", "cs-pd-prof"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-tn-psm", "cs-consult-flow", "cs-pd-prof"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -638,14 +619,8 @@ export const SERVICES: Record<string, SvcData> = {
    "Our team includes a former Arkansas DOT Chief Engineer of Operations who started as a field construction engineer",
    "A former Michigan DOT Engineer of Operations and Maintenance on our team chaired its negotiations with industry, which refined specifications, standard plans, and construction practices"
   ],
-  "done": [
-   "**A state DOT:** we interviewed seven districts, surveyed peer states, and briefed construction leadership. Then we wrote a Construction Administration Manual matched to the department's 2026 standard specifications, with flow charts for calendar-day and working-day contracts and guidance on change orders.",
-   "**Tennessee Department of Transportation:** we built a construction technician proficiency program with task sheets for every level, rolled it out through academy workshops in the regions, and completed it in April 2025. The materials and tests program is complete, and the department now runs it itself. A bridge inspection program followed in spring 2025.",
-   "**Another state DOT:** we identified field staffing for 31 field offices and presented recommendations on its construction division to executives.",
-   "**A state DOT:** proficiency programs for its construction engineers and its materials and tests engineers, each reviewed with the department's own experts.",
-   "**A state DOT:** we assessed three of its platforms (design and construction documents, capital program management, and inspection) for overlap and integration, built a materials source inventory, and reviewed contractor claims with its districts."
-  ],
-  "doneTo": ["cs-cam", "cs-proficiency", "cs-pmdiv", "cs-pd-prof", "cs-hi"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-cam", "cs-proficiency", "cs-pmdiv", "cs-pd-prof", "cs-hi"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -688,12 +663,8 @@ export const SERVICES: Record<string, SvcData> = {
    "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
    "Our team includes the California Department of Transportation's former Chief of Planning and Local Assistance"
   ],
-  "done": [
-   "**A state DOT:** we analyzed seven states' manuals, interviewed five peer states, and proposed the program structure. Then we drafted an eleven-chapter Local Public Agency Manual, a certification process, and an oversight policy, and developed a five-module core training course and Responsible Charge training modules.",
-   "**Tennessee Department of Transportation:** we assessed its Local Programs division and proposed its organization.",
-   "**A state DOT:** proficiency programs for its local programs, state aid, and bridge grant specialists."
-  ],
-  "doneTo": ["cs-lpa-manual", "cs-tn-reorg", "cs-pd-prof"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-lpa-manual", "cs-tn-reorg", "cs-pd-prof"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -738,12 +709,8 @@ export const SERVICES: Record<string, SvcData> = {
    "A former Federal Highway Administration executive on our team helped 13 division offices roll out new federal grant programs",
    "Our proposal and grant team writes competitive federal applications"
   ],
-  "done": [
-   "**Tennessee Department of Transportation Aeronautics Division:** we kept a tracker of funding opportunities and prepared the department's applications. A State Transportation Innovation Council grant was awarded in September 2025, and we helped put it to work: training sites, equipment procurement, and progress reports. We also prepared federal applications for the department: a SMART grant (2024), a Rural and Tribal Assistance grant (2025), and a digital construction grant (2026). In 2025 we helped with a construction technology grant application as well.",
-   "**A state DOT:** a federal Port Security Grant application for drone port security.",
-   "**A state DOT:** bridge bundle packages prepared for a grant application."
-  ],
-  "doneTo": ["cs-aero", "cs-harbor", "cs-pd-manual"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-aero", "cs-harbor", "cs-pd-manual"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -787,11 +754,8 @@ export const SERVICES: Record<string, SvcData> = {
   "xp": [
    "Florida DOT's former Interim Assistant Secretary of Finance and Administration is on our team"
   ],
-  "done": [
-   "**Tennessee Department of Transportation:** we worked out what the department's new structure would cost in wages and benefits, re-analyzed its pay structure after state pay increases, and finalized the structure across all bureaus against the next fiscal year's budget. We also delivered a staffing and cost analysis of its county maintenance facilities, part of a financial analysis of performance-based maintenance contracting, and presented it to department leadership.",
-   "**Pennsylvania Department of Transportation · our founder's work before Rawlins:** maintenance budgeting."
-  ],
-  "doneTo": ["cs-tn-reorg", "cs-pa-budget"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-tn-reorg", "cs-pa-budget"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -842,12 +806,8 @@ export const SERVICES: Record<string, SvcData> = {
    "A former Federal Highway Administration executive on our team worked with state departments, metropolitan planning organizations, and tribal and local governments on new federal grant programs",
    "Our team includes the California Department of Transportation's former Chief of Planning and Local Assistance"
   ],
-  "done": [
-   "**Tennessee Department of Transportation:** we assessed its long range planning division, with input from the Federal Highway Administration and three metropolitan planning organizations, and its local programs, multimodal transportation, and freight and logistics divisions. We also documented the proposed reorganization of the whole planning bureau.",
-   "**A state DOT:** we wrote Statewide Transportation Improvement Program guidance into its Program Development Manual, and white papers on how that program works with the asset management plan and the state's priority program.",
-   "**A state DOT:** position descriptions for its statewide planning, metropolitan planning organization, and rural planning organization specialists, reviewed with the department's experts, and proficiency programs for its planning specialists, including statewide planning, finalized in 2025."
-  ],
-  "doneTo": ["cs-tn-reorg", "cs-pd-manual", "cs-pd-prof"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-tn-reorg", "cs-pd-manual", "cs-pd-prof"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -900,18 +860,12 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-pmdiv",
    "cs-pdn"
   ],
-  "done": [
-   "**A state DOT:** we built its project delivery network with the department's own experts: five steps from concept study to plans, specifications, and estimate, mapped for 17 disciplines, with more than 200 task sheets. The first version went to the department in December 2025. Since then: training for project managers, orientation sessions for leadership and delivery staff, pilot projects, a toolkit, computer-based training, its own website, and version 2.3 in October 2026.",
-   "**Another state DOT:** we designed its new project management organization, approved in June 2026, with three new roles and nine position descriptions. With it came an interactive Project Delivery Manual, eleven project manager courses, and executive measures with a dashboard.",
-   "**Tennessee Department of Transportation:** we worked the department's transition projects in two regions, with project schedules, master scopes of work, risk assessment meetings, and risk registers. An onboarding process we wrote for consultants was shared with all regions for statewide use.",
-   "**A state DOT:** position descriptions and proficiency programs for its project managers and senior project managers, finalized in 2025. At the department's request they cover project funding, value engineering, and Federal Highway Administration major projects.",
-   "**North Carolina Department of Transportation:** integrated program delivery."
-  ],
-  "doneTo": ["cs-pdn", "cs-pmdiv", "cs-tn-ipd", "cs-pd-prof", "cs-nc-ipd"],
   "sub": [
    "preconstruction",
    "construction"
   ],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-pdn", "cs-pmdiv", "cs-tn-ipd", "cs-pd-prof", "cs-nc-ipd"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -955,11 +909,8 @@ export const SERVICES: Record<string, SvcData> = {
    "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
    "A former Federal Highway Administration executive on our team supported the leaders of 13 division offices"
   ],
-  "done": [
-   "**A state DOT:** in a draft manual for its local agencies, chapters on federal-aid basics, environmental permitting, right of way and utilities, procurement, construction administration, and financial management, with Responsible Charge training modules. For its own programs: Statewide Transportation Improvement Program guidance, score sheets and countermeasure tables for its highway safety improvement program, and a benefit-cost ratio for an interstate project, calculated with the federal tool.",
-   "**Another state DOT:** a proficiency program for its federal-aid funding specialists, worked through with the department in a week on site and finalized, with position descriptions for the same roles."
-  ],
-  "doneTo": ["cs-lpa-manual", "cs-pd-prof"],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-lpa-manual", "cs-pd-prof"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -1001,14 +952,11 @@ export const SERVICES: Record<string, SvcData> = {
    "owners-rep"
   ],
   "xp": [
-   "We've facilitated partnering, with risk registers and issue resolution, on a $1.2 billion Mississippi River crossing and a $2 billion light rail line"
+   "We've facilitated partnering, with risk registers and issue resolution, on a $1.2 billion Mississippi River crossing and a $2 billion light rail line",
+   "We've prepared and moderated the first forum between a state DOT and its work zone industry association, with interviews on both sides beforehand"
   ],
-  "done": [
-   "**A state DOT and its contractor, a pilot design-build project:** interviews with both project managers, partnering workshops, progress surveys, summary reports, and a meeting with the department's leaders on what partnering brought to the pilot.",
-   "**A contractor on an interstate project:** quarterly partnering meetings and surveys.",
-   "**A state DOT and a work zone industry association:** the first forum between the department and the industry, prepared and moderated, with interviews on both sides beforehand."
-  ],
-  "doneTo": ["cs-db-partnering", "cs-db-partnering", null],
+  /* the project cards under "Where we've done it", in this order (the order its lines had; Where we've done it file v1, Nov 13) */
+  "cards": ["cs-db-partnering"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -1064,12 +1012,6 @@ export const SERVICES: Record<string, SvcData> = {
    "Before founding Rawlins, our founder led asset management reviews for the Utah and North Carolina transportation departments and New York City Parks",
    "One of our advisors has done life cycle cost analysis for highway assets on public and privately financed projects"
   ],
-  "done": [
-   "**Tennessee Department of Transportation:** we supported its Asset Management Division with section primers, position descriptions, onboarding, and sustained advice to the division's leadership.",
-   "**Nevada Department of Transportation:** asset management visioning workshops with executive leadership and a performance measures inventory, as part of the strategic plan.",
-   "**Michigan Infrastructure Office:** asset management workshops and action plans with local agencies.",
-   "**Nevada and one other state DOT:** key performance indicator work with our data team."
-  ],
   "src": {
    "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
   }
@@ -1115,11 +1057,6 @@ export const SERVICES: Record<string, SvcData> = {
    "Florida DOT's former Director of Maintenance, who led its statewide program, is on our team",
    "Our team includes the owner's view and the contractor's view of how condition standards are measured"
   ],
-  "done": [
-   "**Tennessee Department of Transportation:** we converted the quality measures to pass or fail criteria, finalized the field assessment approach, standards, and training, and reviewed sampling at 268 sites on one region's interstates.",
-   "**A state DOT:** we finalized its Maintenance Quality Assurance Handbook and supported the field data collection app that goes with it.",
-   "**A state DOT:** we facilitated its maintenance rating program working group and built the rating matrix: asset priorities, tolerances, and weighted scoring."
-  ],
   "src": {
    "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
   }
@@ -1160,10 +1097,6 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "related": [],
   "xp": [],
-  "done": [
-   "**Tennessee Department of Transportation:** we worked out the staffing, equipment, and material needs and the internal savings that could offset new maintenance contracts, and helped run an industry forum before the contracts were advertised.",
-   "**AMOTIA, the maintenance contractors' association:** we interviewed DOT leaders in six states about their maintenance needs and recommended four contracting methods a DOT can combine."
-  ],
   "src": {
    "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
   }
@@ -1211,11 +1144,6 @@ export const SERVICES: Record<string, SvcData> = {
    "Members of our team built Michigan DOT's performance-based maintenance program, at the agency and as its consultant",
    "Before founding Rawlins, our founder reviewed Virginia DOT's performance-based interstate maintenance contracts"
   ],
-  "done": [
-   "**Tennessee Department of Transportation:** we led the kickoff, helped run the industry forum, and drafted the scope, contract, and request for proposals. Two contracts were awarded on one region's interstates, and we supported both contractors and region leadership through administration.",
-   "**A state DOT:** we drafted special specifications for flexible asset maintenance contracts in two districts, wrote a uniform deduction method, and ran the industry review.",
-   "**North Carolina Department of Transportation:** we helped develop performance-based maintenance contracts for two districts."
-  ],
   "src": {
    "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
   }
@@ -1261,10 +1189,6 @@ export const SERVICES: Record<string, SvcData> = {
    "Our founder led Nevada DOT's fleet program, with 2,700 pieces of equipment",
    "A former Michigan DOT division administrator on our team led a division that included statewide fleet and facilities",
    "Before founding Rawlins, our founder reviewed a county's fleet and facilities operations"
-  ],
-  "done": [
-   "**Nevada Department of Transportation:** we analyzed the equipment fleet, surveyed employees statewide, compared the department's replacement and disposal process with other western states, interviewed district staff, and reviewed its fleet policies and performance measures. Department leadership approved the recommendations, and the work moved into implementation.",
-   "**Tennessee Department of Transportation:** fleet and facilities is one of the functions in the Asset Management Division we supported."
   ],
   "src": {
    "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
@@ -1313,11 +1237,6 @@ export const SERVICES: Record<string, SvcData> = {
    "Florida DOT's former Director of Maintenance, who led its statewide program, is on our team",
    "A former Michigan DOT division administrator on our team led its statewide maintenance operations alignment",
    "Before founding Rawlins, our founder reviewed Pennsylvania DOT's maintenance budgeting"
-  ],
-  "done": [
-   "**Nevada Department of Transportation:** a statewide review of its maintenance and operations programs, work on a maintenance academy, a draft warranty administration guide for chip seals, and reviews for its pavement program.",
-   "**A state DOT:** equipment safety demonstration checklists, and training on winter operations and load securement.",
-   "**A state DOT:** a winter operations tabletop exercise concept and a two-page winter weather response guide."
   ],
   "src": {
    "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"
@@ -1369,12 +1288,6 @@ export const SERVICES: Record<string, SvcData> = {
   "xp": [
    "Former Michigan DOT leaders on our team ran its operations division, including traffic and safety, and ran a region's intelligent transportation systems",
    "A former City of Las Vegas Director of Public Works on our team championed the city's Vision Zero initiative"
-  ],
-  "done": [
-   "**Nevada Department of Transportation:** we reviewed the study for a northern Nevada traffic management center, met with the agencies involved, and developed recommendations.",
-   "**Two state DOTs:** best-practice reviews comparing each department's operations documents with peer practice.",
-   "**A state DOT:** a benefit-cost analysis for an interstate operations project.",
-   "**Tennessee Department of Transportation:** proficiency programs for traffic design."
   ],
   "src": {
    "page": "Nicole's Operations & Maintenance file, v8 (Nov 12, 2026), Part 5"

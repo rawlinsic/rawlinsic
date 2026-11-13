@@ -62,7 +62,6 @@ const quotes = (hear: string[]) => hear.flatMap((h) => h.split(/["”]\s*["“]/
    The line's first letter is capitalized in CSS only, so Edit text still finds the words as written. */
 /* a name written with a trailing comma ("**Handoffs from design through award into construction,** written as…") drops it on the card */
 const nameLine = (t: string) => { const m = t.match(/^\*\*(.+?)[:,]?\*\*\s*([\s\S]*)$/); return m ? <><b className="svd-name">{m[1]}</b><span className="svd-line">{m[2]}</span></> : t; };
-const boldLead = (t: string) => { const m = t.match(/^\*\*(.+?)\*\*\s*([\s\S]*)$/); return m ? <><b>{m[1]}</b> {m[2]}</> : t; };
 /* an intro paragraph with its links to other services (Asset Management names the four services under it) */
 const linked = (p: string, links?: Record<string, string>) => {
   const keys = Object.keys(links ?? {}).filter((k) => p.includes(k));
@@ -82,7 +81,9 @@ export default function ServiceV8({ id }: { id: string }) {
   const nextArea = AREAS[(AREAS.findIndex((a) => a.id === area.id) + 1) % AREAS.length];
   /* a set order when the service has one (Preconstruction, content pass v7, 2.4); otherwise our own work first,
      earlier work (tagged Before Rawlins) after it */
-  const order = (c: (typeof CASES)[number]) => { const k = s.cases?.indexOf(c.id) ?? -1; return k < 0 ? 99 : k; };
+  /* Where we've done it shows cards only (Where we've done it file v1, Nov 13): the page's own order first (s.cards, the order its
+     lines had), then any other project tagged to it, then Before Rawlins projects last */
+  const order = (c: (typeof CASES)[number]) => { const k = (s.cards ?? s.cases ?? []).indexOf(c.id); return (isOurs(c) ? 0 : 1000) + (k < 0 ? 99 : k); };
   /* a service's own list (s.cases) can also bring in the nearest projects that aren't tagged with it (Executive
      Advisory, Owner's Representation; Nicole, Nov 11); then the section is "Related projects", not "Where we've done it" */
   /* Nov 11 (Nicole: "include any projects that are relevant for pages"): the projects tagged with this service
@@ -90,13 +91,11 @@ export default function ServiceV8({ id }: { id: string }) {
      this service. A page with nothing tagged leads with the related row. */
   const RELATED_SKIP: Record<string, string[]> = { "change-mgmt": ["cs-pdn"] }; // cs-pdn's "change system" is change requests, not change management
   const byId = (k: string) => CASES.find((c) => c.id === k);
-  const tagged = CASES.filter((c) => c.services.includes(id)).sort((a, b) => order(a) - order(b) || Number(!isOurs(a)) - Number(!isOurs(b)));
+  const tagged = CASES.filter((c) => c.services.includes(id)).sort((a, b) => order(a) - order(b));
   const relIds = [...(s.cases ?? []), ...Object.values(CASE_DATA).filter((d) => d.services.includes(id)).map((d) => d.id)];
   const related = relIds.filter((k, i) => relIds.indexOf(k) === i && !(RELATED_SKIP[id] ?? []).includes(k)).map(byId)
     .filter((c): c is (typeof CASES)[number] => !!c && !tagged.includes(c)).sort((a, b) => order(a) - order(b) || Number(!isOurs(a)) - Number(!isOurs(b)));
-  /* done: the page's own "Where we've done it" lines (Nov 12, Operations & Maintenance); its tagged projects follow them */
-  const done = s.done ?? [];
-  const own = tagged.length > 0 || done.length > 0;
+  const own = tagged.length > 0;
   const main = own ? tagged : related, rest = own ? related : [];
   const cases = main;
   const workTitle = own ? "Where we've done it" : "Related projects";
@@ -106,7 +105,7 @@ export default function ServiceV8({ id }: { id: string }) {
     const talk = TALKS.find((x) => x.title === t);
     return talk ? { kind: "Speaker", photo, title: talk.title, href: talk.href, meta: [talk.event, talk.when, names(talk.people)].filter(Boolean).join(" · ") } : null;
   }).filter((x): x is { kind: string; photo: string; title: string; href: string; meta: string } => !!x);
-  const hasWork = cases.length > 0 || done.length > 0 || reading.length > 0;
+  const hasWork = cases.length > 0 || reading.length > 0;
   const talk = talkFor(area.id);
   const steps = SERVICE_STEPS[id];
   const hear = quotes(s.hear);
@@ -226,12 +225,6 @@ export default function ServiceV8({ id }: { id: string }) {
         <section id="work" className="sv-sec">
           <div className="v8-wrap">
             <div className="h-row-head"><h2 className="v8-h2">{workTitle}</h2>{tagged.length > 3 && <a className="v8-link" href={`/insights/case-studies?service=${hit.service.slug}`}>All {tagged.length} projects</a>}</div>
-            {done.length > 0 && <ul className="sv-done">{done.map((d) => {
-              /* a line that opens its project page (Project Delivery's North Carolina line; Nicole's file v6, Nov 13) */
-              const to = s.doneTo?.[done.indexOf(d)] ?? Object.entries(s.doneLinks ?? {}).find(([k]) => d.startsWith(`**${k}`))?.[1];
-              const c = to ? byId(to) : undefined;
-              return <li key={d}>{c ? <a href={caseHref(c)}>{boldLead(d)}</a> : boldLead(d)}<LineNote text={d} /></li>;
-            })}</ul>}
             {(cases.length > 0 || reading.length > 0) && <Rail label={workTitle}>
               {/* every project tagged to the page, in a row with arrows above it (Nicole, Nov 13); 3 before that */}
               {(own ? cases : cases.slice(0, 3)).map((c) => <ProjectCard key={c.id} c={c} />)}
