@@ -34,7 +34,10 @@ export function IndustriesIndex() {
 }
 
 export function IndustryPage({ ind }: { ind: Industry }) {
-  if (ind.id === "private") return <PrivateSector ind={ind} />;
+  /* Nov 13 (Who We Work With file v1): Growing Companies takes the Private Sector page's own layout and content; Private Sector
+     is now the overview of its three pages. Those two and the three other new pages show exactly their own projects, in order. */
+  if (ind.id === "growth") return <PrivateSector ind={ind} />;
+  if (["private", "fed", "local", "eng"].includes(ind.id)) return <IndustryV8 ind={ind} cases={ind.projects.map((id) => caseById(id)).filter(Boolean) as CaseIndex[]} />;
   if (ind.id === "intl") return <IndustryV8 ind={ind} cases={[]} />; // the same layout as the other industries (INTERNATIONAL PAGE, Nov 11)
   /* Featured projects: Rawlins work only (no Before Rawlins cases). Contractors &
      Engineering Firms shows its own list, in this order (an engineering firm is
@@ -59,7 +62,7 @@ export function SubsectorPage({ ind, sub }: { ind: Industry; sub: Subsector }) {
 
 function PrivateSector({ ind }: { ind: Industry }) {
   const cases = PRIVATE_CASES.map((id) => caseById(id)).filter(Boolean) as CaseIndex[];
-  return <PrivateV8 ind={ind} cases={cases} services={["automation", "ai", "data-governance", "dashboards", "tech-strategy", "change-mgmt"]} />;
+  return <PrivateV8 ind={ind} cases={cases} services={ind.featured} />;
 }
 
 /* The International page before Nov 11 (not used: International Markets uses IndustryV8). */

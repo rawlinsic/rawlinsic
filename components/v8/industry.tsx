@@ -384,6 +384,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
     ...(d.ch.length ? [["hear", "Challenges we hear"] as Nav] : []),
     ...(d.ways?.length ? [["ways", "How firms work with us"] as Nav] : []),
     ["help", "How we can help"], // Nicole's wording (preview edit, Nov 11); was "Services we provide"
+    ...(ind.id === "private" ? [["dot", "Working with a DOT"] as Nav] : []),
     ...(intl ? [["abroad", INTL.abroad.title] as Nav, ["region", "Where you'll find us"] as Nav] : []),
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ...(work.length ? [["work", "Featured projects"] as Nav] : []),
@@ -395,7 +396,7 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
       subs={subs.map((s) => ({ id: s.id, name: s.name, line: s.line, href: subsectorHref(ind, s), photo: INDUSTRY_PHOTO[s.id] ?? INDUSTRY_PHOTO[ind.id], note: thinNote(s, "Placeholder: thin content") }))} />
   ) : (
     <FrameHero photo={INDUSTRY_PHOTO[ind.id]} crumbs={crumbs} tag="Who we work with" title={ind.name} lead={ind.lead} actions={actions}
- />
+      note={PAGE_STATUS[ind.id] ? <Dev block>{PAGE_STATUS[ind.id]}</Dev> : undefined} />
   );
   /* pages without specialty panels list the other industries in the section bar */
   const more: SnMore | undefined = subs.length ? undefined : { label: "Who We Work With", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) };
@@ -409,6 +410,12 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
         </Route>
       ) : null}
       <ServiceCards id="help" title="How we can help" ids={helpIds(ind)} tone="pale" />
+      {/* stays on Private Sector, now the overview (Who We Work With file v1, Nov 13) */}
+      {ind.id === "private" && (
+        <Route id="dot" title="When your project depends on a state DOT">
+          <RouteList check ordered={false} stops={PRIV.dot.map((d) => ({ d: <>{d}<LineNote text={d} /></> }))} />
+        </Route>
+      )}
       {intl && (
         <Route id="abroad" title={INTL.abroad.title}>
           <RouteList check ordered={false} stops={INTL.abroad.items.map((x) => ({ d: <>{x.t}{x.flag && <> <Dev>Content status: {x.flag}</Dev></>}</> }))} />
@@ -502,12 +509,11 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
     ["start", "Ways to start"],
     ["services", "Services"],
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
-    ["dot", "Working with a DOT"],
     ["talk", "Talk to us"],
   ];
   const hero = (
-    <FrameHero photo={INDUSTRY_PHOTO.private} crumbs={[["/industries", "Who We Work With"], [industryHref(ind), ind.name]]}
-      tag="for growing firms" title="Private Sector" lead={ind.lead}
+    <FrameHero photo={INDUSTRY_PHOTO[ind.id] ?? INDUSTRY_PHOTO.private} crumbs={[["/industries", "Who We Work With"], ...(ind.parent ? [[industryHref(VISIBLE_INDUSTRIES.find((i) => i.id === ind.parent)!), VISIBLE_INDUSTRIES.find((i) => i.id === ind.parent)!.name] as Crumb] : []), [industryHref(ind), ind.name]]}
+      tag="Who we work with" title={ind.name} lead={ind.lead}
       actions={<><a className="v8-btn v8-btn-area" href="/contact">Book a short call</a>{VISIBLE_INDUSTRIES.filter((i) => i.parent === ind.id).map((k) => <a key={k.id} className="v8-btn v8-btn-ghost" href={industryHref(k)}>{k.name}</a>)}</>} />
   );
   return (
@@ -522,10 +528,7 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
       </Route>
       <ServiceCards id="services" title="Services" ids={services} tone="pale" />
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
-      {/* high-level, unnamed lines for work we can't describe in detail (Who we work with addendum v2, 3.2) */}
-      <Route id="dot" title="When your project depends on a state DOT">
-        <RouteList check ordered={false} stops={PRIV.dot.map((d) => ({ d: <>{d}<LineNote text={d} /></> }))} />
-      </Route>
+      {/* "When your project depends on a state DOT" stays on Private Sector (Who We Work With file v1, Nov 13) */}
       <Talk title="Tell us where your workflows drag" text="A short call is enough to see whether we can help, and what a small first project would look like."
         linksTitle="Who we work with" links={industryLinks(ind.id)} />
       <Next k="Next industry" name={next.name} text={next.who} href={industryHref(next)} photo={INDUSTRY_PHOTO[next.id]} />

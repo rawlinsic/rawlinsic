@@ -2470,8 +2470,7 @@ export const INDUSTRIES: Record<string, IndustryData> = {
    { "t": "As the partnering facilitator", "d": "Contractors and public owners bring us in to set up and run partnering on a project: the charter, the risk register, the issue resolution ladder, and team evaluations through closeout." },
    // cs-maint-model
    { "t": "For an industry association", "d": "We research what owners need and recommend contracting models that work for DOTs and for industry." },
-   // FLAG (5.5). Subcontracts under engineering and advisory firms: findings_cases.md, G.
-   { "t": "As a teammate on public work", "d": "Engineering and advisory firms add us to their teams for state DOT programs: program delivery, organization and workforce, right of way, technology, and drone programs." },
+   // "As a teammate on public work" moved to Engineering & Consulting Firms (Who We Work With file v1, Nov 13)
    // FLAG. Two closed agreements, 2023 to 2024: advice on a contractor's approach to a state DOT project, and proposal support for a service firm.
    { "t": "As an advisor on a pursuit", "d": "Contractors and service firms bring us in while they shape their approach to state transportation work. We review plans and proposal materials and bring the view from the owner's side of the table." },
    // FLAG (5.6). cs-pv-pmo.
@@ -2496,11 +2495,7 @@ export const INDUSTRIES: Record<string, IndustryData> = {
  },
  "private": {
   "id": "private",
-  "ch": [
-   "The same data keyed into three systems",
-   "Reports built by hand every month",
-   "Leadership wants AI with no plan or policy"
-  ],
+  "ch": [],
   "basis": "Jacob, Data/AI catalog (target segment, use cases)",
   "services": [],
   "people": [
@@ -2517,6 +2512,81 @@ export const INDUSTRIES: Record<string, IndustryData> = {
     "AI & Automation Specialist"
    ]
   ]
+ },
+ "fed": {
+  "id": "fed",
+  "ch": [
+   "States collect the same data with no shared standard",
+   "Research that has to reach agreement across many member states",
+   "Federal requirements on lean teams",
+   "A small staff competing for federal funding"
+  ],
+  "bring": [
+   "Facilitation that brings member states to a standard they can test and adopt.",
+   "Working groups, subcommittees, and a record of what the members agreed and what is still open.",
+   "Local public agency manuals and training for the staff in responsible charge of federal-aid projects.",
+   "Grant applications from the narrative to the budget, forms, and commitment letters, ready to submit."
+  ],
+  "basis": "Who We Work With file v1 (Nov 13, 2026)",
+  "services": [],
+  "people": []
+ },
+ "local": {
+  "id": "local",
+  "ch": [
+   "Asset decisions made worst-first",
+   "No one owns asset management locally",
+   "Federal-aid projects delivered by a small local staff",
+   "Capital programs bigger than the staff behind them"
+  ],
+  "bring": [
+   "Self-assessments, workshops, and action plans that start from where each agency is.",
+   "A steering committee named inside the agency, and one-page materials for senior managers and elected officials.",
+   "A local public agency manual, a certification process, and training for the staff in responsible charge.",
+   "A current-state look at workload and staffing, and a resource planning and prioritization framework."
+  ],
+  "basis": "Who We Work With file v1 (Nov 13, 2026)",
+  "services": [],
+  "people": []
+ },
+ "eng": {
+  "id": "eng",
+  "ch": [
+   "A program that needs people who have run the owner's side of it",
+   "A client whose new technology needs an organization ready for it",
+   "No clear view of project margin or staff utilization",
+   "Won work keyed in again to set up the project"
+  ],
+  "bring": [
+   "Former agency leaders on the firm's team for program delivery, organization and workforce, right of way, technology, and drone programs.",
+   "Strategy, organization, written procedures, and data governance for the client, alongside the technology the firm is delivering.",
+   "Project profitability and utilization dashboards, built from the project data the firm already has.",
+   "A handoff from the sales system to the project system, and resource planning that looks ahead."
+  ],
+  "ways": [
+   {
+    "t": "As a teammate on public work",
+    "d": "Engineering and advisory firms add us to their teams for state DOT programs: program delivery, organization and workforce, right of way, technology, and drone programs."
+   },
+   {
+    "t": "When your client needs more than the technology",
+    "d": "Bring us in for the organization around a technology project: the plan, the structure, the procedures, and the data governance."
+   },
+   {
+    "t": "As the builder of your internal systems",
+    "d": "Our automation team connects a firm's project, time, and invoicing tools and builds the workflows around them."
+   }
+  ],
+  "basis": "Who We Work With file v1 (Nov 13, 2026)",
+  "services": [],
+  "people": []
+ },
+ "growth": {
+  "id": "growth",
+  "ch": [],
+  "basis": "The Private Sector page's content, moved (Who We Work With file v1, Nov 13, 2026)",
+  "services": [],
+  "people": []
  },
  "intl": {
   "id": "intl",
@@ -2809,7 +2879,6 @@ export const CASES: Record<string, CaseData> = {
    "Built visual observer and sensor operator courses and train-the-trainer materials",
    "Planned and ran a statewide drone and advanced air mobility symposium",
    "Developed an advanced air mobility strategy and planning guidance for local governments",
-   "Prepared a federal construction-technology grant application",
    "Coordinating the economic impact and market studies for advanced air mobility with the study team (in progress)",
    "Coordinated a land development study for advanced air mobility",
    "Built a tracking dashboard for advanced air mobility",
@@ -2821,7 +2890,7 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [
    "Symposium held",
-   "Federal grant application submitted",
+   "Federal grant applications submitted in 2024 and 2025",
    "Updated drone procedures finalized and distributed",
    "Land development study complete",
    "A State Transportation Innovation Council grant awarded in September 2025",

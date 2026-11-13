@@ -81,12 +81,12 @@ export default function Home() {
   const tiles: Tile[] = [
     { src: INDUSTRY_PHOTO.transport, label: "State DOTs", href: industryHref(ind("transport")) },
     { src: INDUSTRY_PHOTO.contractors, label: "Contractors", href: industryHref(ind("contractors")) },
-    { src: INDUSTRY_PHOTO["g-federal"], label: "Federal Government", href: industryHref(ind("transport")) },
+    { src: INDUSTRY_PHOTO["g-federal"], label: "Federal Government", href: industryHref(ind("fed")) }, // Nov 13: its own page
     { src: "/images/pages/aam-policy-planning.webp", label: "Aeronautics Organizations", href: subsectorHref(ind("transport"), subOf("transport", "sub-aviation")) },
     /* a photo already on the site (the Organizational Design page) and not on the ring */
-    { src: "/images/pages/auto-human.webp", label: "Engineering & Consulting Firms", href: industryHref(ind("contractors")) },
-    { src: INDUSTRY_PHOTO["g-asset"], label: "Local Governments", href: industryHref(ind("transport")) },
-    { src: INDUSTRY_PHOTO.private, label: "Growing Companies", href: industryHref(ind("private")) },
+    { src: "/images/pages/auto-human.webp", label: "Engineering & Consulting Firms", href: industryHref(ind("eng")) },
+    { src: INDUSTRY_PHOTO["g-asset"], label: "Local Governments", href: industryHref(ind("local")) },
+    { src: INDUSTRY_PHOTO.private, label: "Growing Companies", href: industryHref(ind("growth")) },
     { src: INDUSTRY_PHOTO.intl, label: "International Agencies", href: industryHref(ind("intl")) },
   ];
 

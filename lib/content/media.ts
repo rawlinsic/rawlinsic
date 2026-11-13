@@ -124,6 +124,11 @@ export const INDUSTRY_PHOTO: Record<string, string> = {
   "g-capital": P("cs-hero-4.webp"),
   "g-mpo": P("cs-hero-9.webp"),
   "g-federal": P("aam-aerial-view.webp"), // fits the drone standards work
+  /* Nov 13 (Who We Work With file v1): the four new pages use their home ring tiles' photos */
+  fed: P("aam-aerial-view.webp"),
+  local: P("michigan.webp"),
+  eng: P("auto-human.webp"),
+  growth: P("auto-dashboard.webp"),
 };
 
 /* Other pages */

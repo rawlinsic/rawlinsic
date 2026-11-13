@@ -56,7 +56,13 @@ const nextConfig = {
       // Nov 12 (Nicole): Who We Work With. Other Government Services became the Public Sector page, its modes and Bridges &
       // Structures came off, and Highways & Roads became Highways & Bridges
       { source: "/industries/government-public-works", destination: "/industries/public-sector", permanent: false },
+      // Nov 13 (Who We Work With file v1): three of those old modes have a page again
+      { source: "/industries/government-public-works/federal-multi-state-programs", destination: "/industries/federal-government", permanent: false },
+      { source: "/industries/government-public-works/asset-management-for-local-agencies", destination: "/industries/local-governments", permanent: false },
+      { source: "/industries/government-public-works/capital-project-delivery-permitting", destination: "/industries/local-governments", permanent: false },
       { source: "/industries/government-public-works/:sub", destination: "/industries/public-sector", permanent: false },
+      { source: "/industries/contractors-engineering-firms", destination: "/industries/contractors", permanent: true },
+      { source: "/industries/contractors-engineering-firms/:path*", destination: "/industries/contractors/:path*", permanent: true },
       { source: "/industries/transportation/bridges-structures", destination: "/industries/transportation/highways-bridges", permanent: false },
       { source: "/industries/transportation/highways-roads", destination: "/industries/transportation/highways-bridges", permanent: false },
       { source: "/services/project-delivery/construction-pre-construction", destination: "/services/program-project-delivery/construction", permanent: true },

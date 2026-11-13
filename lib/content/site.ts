@@ -184,30 +184,70 @@ export const INDUSTRIES: Industry[] = [
     ],
   },
   {
-    id: "private", slug: "private-sector", name: "Private Sector", scene: "office",
-    who: "Firms Who Have Outgrown Their Current Tools or Processes", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
-    // One Rawlins project on the page (cs-pv-pmo); the others are our automation team's work before Rawlins, and their cards say so
-    // (four when the Who we work with file was written; six with live-site Examples 06 and 07 back, Nov 11).
-    // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's new lead for this field was skipped.
-    lead: "Companies that have outgrown their spreadsheets or tools, but don't have a build team. We connect the systems you already pay for and automate the work around them.",
-    featured: ["automation", "ai", "dashboards", "data-governance", "portals"],
-    projects: ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service"],
+    /* Nov 13 (Who We Work With file v1): new page under Public Sector */
+    id: "fed", slug: "federal-government", name: "Federal Government", scene: "crossing", parent: "gov",
+    who: "Federal Programs, Multi-State Research, & Grants",
+    lead: "Our work with the federal government runs through programs the states take part in. We facilitate a multi-state research program on drone standards that the Federal Highway Administration sits on, and we helped plan and facilitate a federal peer exchange on drone programs for western state transportation departments. We also help states deliver federal-aid programs and compete for federal grants. Our team includes former Federal Highway Administration division leaders.",
+    featured: ["research", "grants", "federal-aid", "lpa", "drone-programs", "planning"],
+    featuredCase: "cs-pooled",
+    projects: ["cs-pooled", "cs-lpa-manual", "cs-aero", "cs-harbor", "cs-nc-ipd"],
     subsectors: [],
   },
   {
-    id: "contractors", slug: "contractors-engineering-firms", name: "Contractors", scene: "site", parent: "private",
+    /* Nov 13 (Who We Work With file v1): new page under Public Sector */
+    id: "local", slug: "local-governments", name: "Local Governments", scene: "street", parent: "gov",
+    who: "Cities, Counties, & Regional Agencies",
+    lead: "Most of our work with cities, counties, and regional agencies so far has come through state programs. We've run asset management workshops and action plans with cities and county road commissions through a state infrastructure office, drafted a manual and built training for the local agencies that deliver federal-aid projects, written planning guidance on advanced air mobility for local governments, and facilitated partnering on a light rail line. We've also begun work with a city transportation department on resource planning. Our team includes a former Director of Public Works for the City of Las Vegas.",
+    featured: ["asset-mgmt", "lpa", "federal-aid", "grants", "partnering", "drone-aam", "org-design"],
+    featuredCase: "cs-local-am",
+    projects: ["cs-local-am", "cs-lpa-manual", "cs-major", "cs-aero", "cs-nyc-parks", "cs-riverside"],
+    subsectors: [],
+  },
+  {
+    id: "private", slug: "private-sector", name: "Private Sector", scene: "office",
+    who: "", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
+    // One Rawlins project on the page (cs-pv-pmo); the others are our automation team's work before Rawlins, and their cards say so
+    // (four when the Who we work with file was written; six with live-site Examples 06 and 07 back, Nov 11).
+    // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's new lead for this field was skipped.
+    lead: "Private firms come to us for two reasons. Contractors and engineering firms that work for public agencies want what we know from the owner's side of the table: how a department of transportation plans, contracts, and delivers its work. Firms of every kind bring us in to connect the systems they already pay for and automate the work around them.",
+    featured: ["partnering", "alt-delivery", "automation", "dashboards", "ai"],
+    projects: ["cs-major", "cs-pv-pmo", "cs-pv-capacity"],
+    subsectors: [],
+  },
+  {
+    id: "contractors", slug: "contractors", name: "Contractors", scene: "site", parent: "private",
     who: "Partnering & Contracting Methods", // Nicole's wording (preview edit, Nov 11); the Who we work with file's line for this field was skipped
     // Partnering: cs-major, cs-db-partnering, cs-ia-partnering, cs-partnering (Fiscal > Contracts and Templates > Partnering).
     // Contracting model: cs-maint-model. Teaming: subcontracts under engineering and advisory firms (findings_cases.md, G).
     // "aviation" dropped from the teaming list: our aviation contracts on record are direct, and the drone program work is the one through a prime.
     // "right of way" added: right of way support on an engineering firm's district contract (2026 progress reports).
-    lead: "Contractors and engineering firms come to us for what we know about the owner's side of the table. We facilitate partnering between contractors and public owners on major projects, and we've helped the maintenance contracting industry shape a contracting model state DOTs can tailor. Engineering and advisory firms also bring us onto their teams for state DOT work: program delivery, organization and workforce, right of way, technology, and drone programs.",
-    featured: ["alt-delivery", "construction", "operations", "automation", "dashboards"],
+    lead: "Contractors come to us for what we know about the owner's side of the table. We facilitate partnering between contractors and public owners on major projects, and we've helped the maintenance contracting industry shape a contracting model state DOTs can tailor.",
+    featured: ["partnering", "alt-delivery", "construction", "outsourcing", "pbmc", "automation"],
     // was ["alt-delivery", "owners-rep", "automation", "training-video"]. Construction and Maintenance Programs are where this page's projects sit
     // (cs-ia-partnering, cs-db-partnering, cs-maint-model); Dashboards goes with cs-pv-pmo. Owner's Representation is a service for owners, not
     // contractors, and no project here uses Digital Training & Video.
     featuredCase: "cs-major",
     projects: ["cs-major", "cs-db-partnering", "cs-ia-partnering", "cs-maint-model", "cs-partnering", "cs-db-pursuit"],
+    subsectors: [],
+  },
+  {
+    /* Nov 13 (Who We Work With file v1): new page under Private Sector */
+    id: "eng", slug: "engineering-consulting-firms", name: "Engineering & Consulting Firms", scene: "office", parent: "private",
+    who: "Teaming on Public Programs & Project Systems",
+    lead: "Engineering and consulting firms add us to their teams on state DOT programs, for what our people know from running those programs inside an agency. Our automation team also builds the systems a firm runs its own projects on: project tracking, time, invoicing, and reporting.",
+    featured: ["program-delivery", "org-design", "workforce", "drone-programs", "automation", "dashboards"],
+    featuredCase: "cs-pv-pmo",
+    projects: ["cs-pv-pmo", "cs-pv-reporting", "cs-pv-sales"],
+    subsectors: [],
+  },
+  {
+    /* Nov 13 (Who We Work With file v1): new page under Private Sector */
+    id: "growth", slug: "growing-companies", name: "Growing Companies", scene: "office", parent: "private",
+    who: "Firms Who Have Outgrown Their Current Tools or Processes",
+    lead: "Companies that have outgrown their spreadsheets or tools, but don't have a build team. We connect the systems you already pay for and automate the work around them.",
+    featured: ["automation", "ai", "dashboards", "data-governance", "portals"],
+    featuredCase: "cs-pv-pmo",
+    projects: ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service", "cs-pv-field", "cs-pv-single", "cs-pv-sales"],
     subsectors: [],
   },
   {
@@ -537,6 +577,10 @@ export const LISTS_OFF = ["smart-mobility"];
 export const isListed = (id: string) => !LISTS_OFF.includes(id);
 
 export const PAGE_STATUS: Record<string, string> = {
+  /* Nov 13: the "To confirm" notes in the Who We Work With file (v1), preview only */
+  fed: "Content status: The peer exchange was delivered under a prime on a federal contract. Publicity terms not checked yet. No federal agency is a direct client in our records, so the page says the work runs through programs the states take part in.",
+  local: "Content status: The city work started in September 2026 under a prime. Subcontract publicity terms not checked yet. Keep it unnamed.",
+  eng: "Content status: The prime firms' subcontracts keep their information confidential. No firm is named, and no project on the site is marked as done through another firm. \"When your client needs more than the technology\" follows Jacob's Partner Field Guide, which is a draft for internal review. Jacob or Scott to confirm the offer can go on the site.",
   /* Nov 13: the "To confirm" notes in Nicole's Maintenance & Operations file (v10), preview only (Asset Management's and Maintenance Quality Assurance's came off: the work reports settle them) */
   fleet: "Content status: Nevada: the department's master agreement limits publishing information from the work. This page says what we did and nothing about what we found. Scott to confirm with the prime.",
   traffic: "Content status: Jacob's Nov 10 edition marks investment prioritization and reliability performance as proposed services, and says a full operations strategy has not been delivered. The page offers all three without claiming a project.",

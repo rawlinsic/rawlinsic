@@ -23,7 +23,8 @@ export function CaseIndexPage() {
     areas: Array.from(new Set(c.services.map(areaOfService).filter(Boolean) as string[])).map((id) => AREAS.find((a) => a.id === id)!.slug),
     services: c.services.map((id) => serviceById(id)?.service.slug).filter(Boolean) as string[],
     /* a project also counts under its sector's headline: Transportation Sector under Public Sector, Contractors under Private Sector (Nov 12) */
-    industries: Array.from(new Set([c.industry, CASE_DATA[c.id]?.industry2].filter(Boolean).flatMap((id) => { const i = VISIBLE_INDUSTRIES.find((x) => x.id === id); const up = i && VISIBLE_INDUSTRIES.find((x) => x.id === i.parent); return [i?.slug, up?.slug]; }).filter(Boolean) as string[])),
+    /* Nov 13: a project also counts under each Who We Work With page that lists it (the four new pages) */
+    industries: Array.from(new Set([c.industry, CASE_DATA[c.id]?.industry2, ...VISIBLE_INDUSTRIES.filter((x) => x.projects.includes(c.id)).map((x) => x.id)].filter(Boolean).flatMap((id) => { const i = VISIBLE_INDUSTRIES.find((x) => x.id === id); const up = i && VISIBLE_INDUSTRIES.find((x) => x.id === i.parent); return [i?.slug, up?.slug]; }).filter(Boolean) as string[])),
     states: c.states.map(slugify),
   }));
   const states = Array.from(new Set(CASES.flatMap((c) => c.states))).sort();
