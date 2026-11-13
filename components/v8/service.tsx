@@ -41,7 +41,12 @@ const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "preconstruct
 const FEATURE_FROM: Record<string, string> = { "asset-mgmt": "operations" };
 /* papers and talks from our team shown under a page's projects, by title from lib/content/research.ts (John's review
    comment, Nov 12: Advanced Air Mobility Strategy & Readiness needs more than one example) */
-const READING: Record<string, string[]> = { "drone-aam": ["Lessons learned while planning for advanced air mobility", "The Evolving Landscape of Advanced Air Mobility"] };
+/* each with a picture (Nicole, Nov 12: "they're too plain"): the airport from the air is from the live site's AAM page;
+   the talk's photo is Paul presenting at that symposium (the Research page's photo) */
+const READING: Record<string, { t: string; photo: string }[]> = { "drone-aam": [
+  { t: "Lessons learned while planning for advanced air mobility", photo: "/images/pages/aam-phase3.webp" },
+  { t: "The Evolving Landscape of Advanced Air Mobility", photo: "/images/pages/research-paul-wheeler-nashville-symposium-2025.webp" },
+] };
 const names = (p: string[]) => (p.length > 1 ? `${p.slice(0, -1).join(", ")} and ${p[p.length - 1]}` : p[0] ?? "");
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
@@ -88,12 +93,12 @@ export default function ServiceV8({ id }: { id: string }) {
   const main = own ? tagged : related, rest = own ? related : [];
   const cases = main;
   const workTitle = own ? "Where we've done it" : "Related projects";
-  const reading = (READING[id] ?? []).map((t) => {
+  const reading = (READING[id] ?? []).map(({ t, photo }) => {
     const pub = PUBLICATIONS.find((x) => x.title === t);
-    if (pub) return { title: pub.title, href: pub.href, meta: [pub.series.split(",")[0], pub.year, names(pub.people), pub.before ? "Before Rawlins" : ""].filter(Boolean).join(" · ") };
+    if (pub) return { kind: "Paper", photo, title: pub.title, href: pub.href, meta: [pub.series.split(",")[0], pub.year, names(pub.people), pub.before ? "Before Rawlins" : ""].filter(Boolean).join(" · ") };
     const talk = TALKS.find((x) => x.title === t);
-    return talk ? { title: talk.title, href: talk.href, meta: [talk.event, talk.when, names(talk.people)].filter(Boolean).join(" · ") } : null;
-  }).filter((x): x is { title: string; href: string; meta: string } => !!x);
+    return talk ? { kind: "Talk", photo, title: talk.title, href: talk.href, meta: [talk.event, talk.when, names(talk.people)].filter(Boolean).join(" · ") } : null;
+  }).filter((x): x is { kind: string; photo: string; title: string; href: string; meta: string } => !!x);
   const hasWork = cases.length > 0 || done.length > 0 || reading.length > 0;
   const talk = talkFor(area.id);
   const steps = SERVICE_STEPS[id];
@@ -211,7 +216,13 @@ export default function ServiceV8({ id }: { id: string }) {
             {reading.length > 0 && (
               <>
                 <h3 className="sv-rel-h">Papers and talks</h3>
-                <ul className="sv-read">{reading.map((r) => <li key={r.href}><a href={r.href} target="_blank" rel="noopener noreferrer"><b>{r.title}</b><span>{r.meta}</span></a></li>)}</ul>
+                <ul className="sv-read">{reading.map((r) => (
+                  <li key={r.href}><a href={r.href} target="_blank" rel="noopener noreferrer">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={r.photo} alt="" loading="lazy" />
+                    <span className="sv-read-txt"><em>{r.kind}</em><b>{r.title}</b><span>{r.meta}</span><i>{r.kind === "Paper" ? "Read the paper" : "See the talk"}</i></span>
+                  </a></li>
+                ))}</ul>
               </>
             )}
             {rest.length > 0 && (
