@@ -907,7 +907,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Systems and data integration:** enterprise asset management systems and asset data governance",
    "**Asset information and assessment technology:** defining what information is needed, and comparing ways to collect and assess it, including automated methods checked against field assessment",
    "**Local agencies:** self-assessments, workshops, and action plans that start from where each agency is",
-   "**Maintenance quality assurance, outsourcing, performance-based contracting, and fleet and facilities:** see their own pages"
+   "**Maintenance quality assurance, outsourcing, performance-based contracting, and fleet and facilities:** "
   ],
   "walk": [
    "A functional model with role and responsibility definitions",
