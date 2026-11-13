@@ -1225,3 +1225,6 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .fit-lead { margin: 12px 0 0; max-width: 62ch; color: #cfdbea; font-size: clamp(1.05rem, 1.3vw, 1.22rem); line-height: 1.5; }
 /* Nov 12 (Nicole): the service pages' section bar starts further left, so it all fits beside the area's button */
 .sn-more { margin-left: clamp(16px, 2.2vw, 40px); }
+/* Nov 12 (Nicole): the area's own page at the top of a service page's dropdown, set off from its services */
+.sn-more > ul > li.is-top { margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid #dbe5f1; }
+.sn-more > ul > li.is-top a { color: #0e5a6b !important; font-weight: 700; }

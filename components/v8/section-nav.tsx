@@ -4,7 +4,8 @@
 import { useEffect, useRef, useState } from "react";
 import { tc } from "@/lib/title-case";
 
-export type SnMore = { label: string; links: { name: string; href: string; current?: boolean }[] };
+/* top: the area's own page, listed first above its services (Nicole, Nov 12) */
+export type SnMore = { label: string; links: { name: string; href: string; current?: boolean; top?: boolean }[] };
 import { docTop } from "@/components/v8/panels";
 
 export default function SectionNav({ items, more }: { items: [string, string][]; more?: SnMore }) {
@@ -38,7 +39,7 @@ export default function SectionNav({ items, more }: { items: [string, string][];
       {more && (
         <details className="sn-more" ref={box}>
           <summary>{tc(more.label)}</summary>
-          <ul>{more.links.map((l) => <li key={l.href}><a href={l.href} aria-current={l.current ? "page" : undefined}>{l.name}</a></li>)}</ul>
+          <ul>{more.links.map((l) => <li key={l.href} className={l.top ? "is-top" : undefined}><a href={l.href} aria-current={l.current ? "page" : undefined}>{l.name}</a></li>)}</ul>
         </details>
       )}
       <ul>

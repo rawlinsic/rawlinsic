@@ -155,7 +155,7 @@ export default function ServiceV8({ id }: { id: string }) {
       </section>
 
       {/* the button names the area, so it's clear the page is one of that area's services (John's review comment, Nov 12) */}
-      <SectionNav items={sections} more={{ label: `${area.name} Services`, links: area.services.map((x) => ({ name: x.name, href: `/services/${area.slug}/${x.slug}`, current: x.id === id })) }} />
+      <SectionNav items={sections} more={{ label: `${area.name} Services`, links: [{ name: area.name, href: areaHref(area), top: true }, ...area.services.map((x) => ({ name: x.name, href: `/services/${area.slug}/${x.slug}`, current: x.id === id }))] }} />
 
       <section id="hear" className="svq">
         <div className="v8-wrap svq-in">
