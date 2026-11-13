@@ -242,7 +242,7 @@ export default function RootLayout({
         <ClarityLoader />
         <CookieBanner />
         {/* preview builds only: click-and-type text editor (never on the live site) */}
-        {process.env.VERCEL_ENV === "preview" && <PreviewEdit canDelete={canDeleteSections()} review={isReviewVersion()} />}
+        {process.env.VERCEL_ENV === "preview" && <PreviewEdit canDelete={canDeleteSections()} review={isReviewVersion()} built={process.env.VERCEL_GIT_COMMIT_SHA || ""} />}
         <Smooth />
       </body>
     </html>

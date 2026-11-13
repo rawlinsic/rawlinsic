@@ -67,7 +67,7 @@ const sectionOf = (t: Element) => t.closest<HTMLElement>("main section") || t.cl
 
 /* review: the review version (the branch other people comment on). The tools start open, Comment comes first,
    and the bar shows whose name goes on the comments. */
-export default function PreviewEdit({ canDelete = false, review = false }: { canDelete?: boolean; review?: boolean }) {
+export default function PreviewEdit({ canDelete = false, review = false, built = "" }: { canDelete?: boolean; review?: boolean; built?: string }) {
   const [me, setMe] = useState("");
   useEffect(() => { setMe(savedName()); }, []);
   const [history, setHistory] = useState<Done[]>([]);
@@ -161,9 +161,11 @@ export default function PreviewEdit({ canDelete = false, review = false }: { can
     const name = askName(); if (!name) return;
     setBusy(true); setMsg("Saving…");
     try {
-      const r = await fetch("/api/preview-edit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ page: location.pathname, name, changes }) });
+      const r = await fetch("/api/preview-edit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ page: location.pathname, name, built, changes }) }); // built: the commit this page came from, so an edit made on a page older than the last save still lands
       const j = await r.json().catch(() => ({}));
       if (!r.ok) { setMsg(j.error || "Couldn't save. Nothing was changed."); return; }
+      // what was just saved is now the starting point, so editing the same words again (or back) saves too
+      if (!j.pending) edited.current.forEach((el) => snaps.current.set(el, { full: textOf(el), nodes: textNodes(el), context: contextOf(el) }));
       edited.current.clear(); setChanges([]);
       if (j.commit) remember({ sha: j.commit, label: `${j.applied} text change${j.applied === 1 ? "" : "s"}` });
       /* already: wording that's already in the site, so nothing changed (Nov 11) */
