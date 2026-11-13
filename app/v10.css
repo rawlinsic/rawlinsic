@@ -1380,3 +1380,9 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .ab-ways p::first-letter { text-transform: uppercase; }
 .ab-ways-foot { max-width: 70ch; margin: clamp(20px, 2.4vw, 30px) 0 0; color: #0a1220; font-size: clamp(1.05rem, 1.25vw, 1.15rem); font-weight: 600; line-height: 1.5; }
 @media (max-width: 860px) { .ab-ways { grid-template-columns: 1fr; } }
+
+/* Nov 13 (projects file v4): What we did in groups (page A), and lines that open another project page */
+.pj-did-group + .pj-did-group { margin-top: clamp(22px, 2.6vw, 34px); }
+.pj-did-h { margin: 0 0 12px; color: #0b8aa6; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.pj-did-list a { color: inherit; text-decoration: underline; text-decoration-color: #22d3ee; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.pj-did-list a:hover { text-decoration-color: currentColor; }

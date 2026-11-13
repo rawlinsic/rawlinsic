@@ -54,6 +54,18 @@ const Check = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="m7.5 12.5 3 3 6-6.5" /></svg>
 );
 
+/* What we did in groups: a line starting "## " opens a group with that heading; numbering runs on across groups */
+function didGroups(items: { t: string; review: boolean }[]) {
+  const out: { h: string; start: number; items: { t: string; review: boolean }[] }[] = [];
+  let n = 0;
+  for (const it of items) {
+    if (it.t.startsWith("## ")) { out.push({ h: it.t.slice(3), start: n, items: [] }); continue; }
+    if (!out.length) out.push({ h: "", start: n, items: [] });
+    out[out.length - 1].items.push(it); n++;
+  }
+  return out;
+}
+
 export function CaseDetail({ c }: { c: CaseIndex }) {
   const d = CASE_DATA[c.id];
   const ind = VISIBLE_INDUSTRIES.find((i) => i.id === c.industry);
@@ -76,14 +88,16 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
   const x = CASE_EXTRA[c.id] ?? {};
   const xDid = (x.did ?? []).map((t) => t.trim()).filter(Boolean);
   const xRes = (x.res ?? []).map((t) => t.trim()).filter(Boolean);
-  const anyExtra = !!(x.when?.trim() || xDid.length || xRes.length);
+  /* the project's dates from the projects file (Nov 13) win over the review-only ones from our records */
+  const when = d?.when?.trim();
+  const anyExtra = !!((!when && x.when?.trim()) || xDid.length || xRes.length);
   /* the automation examples (our automation team's work before Rawlins, live-site Examples 02 to 07) carry no
      preview notes anywhere (Nicole, Nov 11: we're using them), so their pages skip the "Our records have more" note */
   const isExample = c.industry === "private" && c.status === "Before Rawlins";
   const facts = [
     { k: "Client", v: client },
     { k: "Status", v: caseTag(c) + (whoNote.length ? ` · ${whoNote.join(" · ").replace(/^Our (team|founder)'s work before Rawlins,?\s*/i, "").replace(/^./, (x) => x.toUpperCase())}` : "") },
-    ...(x.when?.trim() ? [{ k: "When", v: x.when.trim(), review: true }] : []),
+    ...(when ? [{ k: "When", v: when }] : x.when?.trim() ? [{ k: "When", v: x.when.trim(), review: true }] : []),
     ...(c.states.length ? [{ k: c.states.length > 1 ? "States" : "State", v: c.states.join(", ") }] : []),
     ...(ind ? [{ k: "Industry", v: ind.name }] : []),
   ].map((f) => ({ ...f, v: f.v.replace(/ · $/, "") })) as { k: string; v: string; review?: boolean }[];
@@ -118,11 +132,25 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
         <section data-nofill className="pj-sec pj-did">
           <div className="pg-wrap">
             <h2 className="pj-h">What we did</h2>
-            <ol className="pj-did-list">
-              {[...(d?.did ?? []).map((t) => ({ t, review: false })), ...xDid.map((t) => ({ t, review: true }))].map((it, i) => (
-                <li key={it.t}><span className="pj-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><p>{it.t}<LineNote text={it.t} /></p>{it.review && <Dev>For review</Dev>}</li>
-              ))}
-            </ol>
+            {/* Nov 13 (projects file v4): a "## " line is a small heading over the lines under it (page A's five groups), and a
+                line in didLinks opens the project page it names (the overview's eight projects) */}
+            {didGroups([...(d?.did ?? []).map((t) => ({ t, review: false })), ...xDid.map((t) => ({ t, review: true }))]).map((g, gi) => (
+              <div key={gi} className={g.h ? "pj-did-group" : undefined}>
+                {g.h && <h3 className="pj-did-h">{g.h}</h3>}
+                <ol className="pj-did-list" start={g.start + 1}>
+                  {g.items.map((it, i) => {
+                    const to = d?.didLinks?.[it.t];
+                    const ids = to ? (Array.isArray(to) ? to : [to]) : [];
+                    const links = ids.map((id) => CASES.find((x) => x.id === id)).filter((x): x is CaseIndex => !!x);
+                    return (
+                      <li key={it.t}><span className="pj-n" aria-hidden="true">{String(g.start + i + 1).padStart(2, "0")}</span>
+                        <p>{links.length === 1 ? <a href={caseHref(links[0])}>{it.t}</a> : it.t}{links.length > 1 && <>: {links.map((l, k) => <span key={l.id}>{k ? "; " : ""}<a href={caseHref(l)}>{l.title}</a></span>)}</>}<LineNote text={it.t} /></p>
+                        {it.review && <Dev>For review</Dev>}</li>
+                    );
+                  })}
+                </ol>
+              </div>
+            ))}
             {d?.tools?.length ? <div className="pj-tools"><span>Tools</span><ul>{d.tools.map((t) => <li key={t}>{t}</li>)}</ul></div> : null}
           </div>
         </section>

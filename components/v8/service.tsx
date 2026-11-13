@@ -228,7 +228,7 @@ export default function ServiceV8({ id }: { id: string }) {
             <div className="h-row-head"><h2 className="v8-h2">{workTitle}</h2>{tagged.length > 3 && <a className="v8-link" href={`/insights/case-studies?service=${hit.service.slug}`}>All {tagged.length} projects</a>}</div>
             {done.length > 0 && <ul className="sv-done">{done.map((d) => {
               /* a line that opens its project page (Project Delivery's North Carolina line; Nicole's file v6, Nov 13) */
-              const to = Object.entries(s.doneLinks ?? {}).find(([k]) => d.startsWith(`**${k}`))?.[1];
+              const to = s.doneTo?.[done.indexOf(d)] ?? Object.entries(s.doneLinks ?? {}).find(([k]) => d.startsWith(`**${k}`))?.[1];
               const c = to ? byId(to) : undefined;
               return <li key={d}>{c ? <a href={caseHref(c)}>{boldLead(d)}</a> : boldLead(d)}<LineNote text={d} /></li>;
             })}</ul>}

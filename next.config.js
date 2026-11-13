@@ -61,6 +61,9 @@ const nextConfig = {
       { source: "/industries/transportation/highways-roads", destination: "/industries/transportation/highways-bridges", permanent: false },
       { source: "/services/project-delivery/construction-pre-construction", destination: "/services/program-project-delivery/construction", permanent: true },
       { source: "/services/project-delivery/:svc", destination: "/services/program-project-delivery/:svc", permanent: false },
+      // Nov 13 (projects file v4): project 31 is now page A (the project delivery network), and the Nevada strategic plan's address
+      { source: "/insights/case-studies/project-delivery-website-and-change-system", destination: "/insights/case-studies/a-project-delivery-network", permanent: false },
+      { source: "/insights/case-studies/nevada-six-year-strategic-plan", destination: "/insights/case-studies/nevada-strategic-plan-and-action-plans", permanent: false },
       // Redesign (handoff v7 section 7): old structure -> new, permanent
       { source: "/capabilities", destination: "/services", permanent: true },
       { source: "/services/strategy-organization/executive-administrative-advisory", destination: "/services/strategy-organization/executive-advisory-services", permanent: true },

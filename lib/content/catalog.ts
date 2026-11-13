@@ -9,7 +9,9 @@ export type SvcData = { id: string; name: string; area: string; st: string; intr
   deliverTitle?: string;
   /* Nov 13 (Program & Project Delivery file, v6): sub, the pages under this one, linked under What this service covers;
      doneLinks, a "Where we've done it" line (by its bold name) that opens a project page (by project id) */
-  sub?: string[]; doneLinks?: Record<string, string> };
+  sub?: string[]; doneLinks?: Record<string, string>;
+  /* doneTo: the project page each "Where we've done it" line opens, in line order (null: no project page). Projects file v4, Part 4, Nov 13 */
+  doneTo?: (string | null)[] };
 export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; lead?: string; /* links: each stage lists its services as links (Program & Project Delivery, Nov 13) */ links?: boolean; steps: { t: string; d: string; services: string[]; areas?: string[] }[] }; keep: string; cases: string[];
   /* xp: "The experience behind it" on the area page (Program & Project Delivery area page file v1, Nov 13) */
   xp?: string[];
@@ -17,7 +19,9 @@ export type AreaData = { id: string; name: string; tag: string; services: string
   lines?: Record<string, string> };
 export type IndustryData = { id: string; ch: string[]; bring?: string[]; ways?: { t: string; d: string }[]; basis: string; services: string[]; people: string[][] };
 export type SubsectorData = { id: string; name: string; st: string; deliver: string[]; walk?: string[]; xp?: string[]; services: string[]; intro: string; industry: string; ch: string[]; people: string[][]; basis: string; thin?: boolean };
-export type CaseData = { id: string; ch: string; did: string[]; res: string[]; services: string[]; subsectors: string[]; industry: string; industry2?: string | null; tools?: string[]; figure?: { title: string; intro?: string; steps: { t: string; d: string }[] } };
+/* Nov 13 (projects file v4): when, the project's dates; didLinks, a What we did line that opens another project page (one
+   id, or several when the line names several); a What we did line starting "## " is a small heading over a group */
+export type CaseData = { id: string; ch: string; when?: string; didLinks?: Record<string, string | string[]>; did: string[]; res: string[]; services: string[]; subsectors: string[]; industry: string; industry2?: string | null; tools?: string[]; figure?: { title: string; intro?: string; steps: { t: string; d: string }[] } };
 export const SERVICES: Record<string, SvcData> = {
  "strategic-planning": {
   "id": "strategic-planning",
@@ -306,6 +310,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Tennessee Department of Transportation:** we built a project utilization program, with staff effort by discipline for every region, that the department used to build its consultant acquisition plan. We also assessed its program development and administration division and proposed its organization.",
    "**Nevada Department of Transportation:** as part of an operations review, we delivered a data-driven process for choosing pavement projects, and we supported the first year of its Pavement Improvement Program."
   ],
+  "doneTo": ["cs-pd-manual", "cs-tn-reorg", "cs-nv-om"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -363,8 +368,7 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-tn-ipd",
    "cs-nc-ipd",
    "cs-pmdiv",
-   "cs-pdn",
-   "cs-transform"
+   "cs-pdn"
   ],
   "done": [
    "**A state DOT:** inside its project delivery network, we wrote the activities for every discipline with the department's own experts, and built the tools project teams use: a Master Scope of Work template and generator, a Cost Estimating Tool, a risk register and Risk Management Plan, a Project Commitment Document, study report templates, quality control checklists, and request forms for utilities, railroad, right of way, geotechnical, hydraulic, and bridge work.",
@@ -373,6 +377,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**A state DOT:** we documented its project delivery workflows by discipline with its design staff, in a week on site.",
    "**A state DOT:** proficiency programs for its utilities, hydraulics, geotechnical, roadway design, and environmental specialists, each reviewed with the department's own experts."
   ],
+  "doneTo": ["cs-pdn", "cs-tn-reorg", "cs-pmdiv", "cs-hi", "cs-pd-prof"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -427,6 +432,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Tennessee Department of Transportation:** through the first year of two performance-based maintenance contracts: onboarding calls for mobilization and launch, weekly calls with each contractor and the department on contract administration, a monthly ride-along with both contractors and region leadership, calls with inspectors on deficiencies and remedies, and advice to the region when a performance score fell short.",
    "**A state DOT:** guidance to the department and its contractors on contract language and oversight, and a workshop with department leadership and the contracting industry on what the contract language means."
   ],
+  "doneTo": ["cs-pbmc", "cs-txmaint"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -484,6 +490,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**A state DOT:** an alternative delivery and public-private partnership screening tool and selection matrix, built into its project delivery network. For its bridges: bundling options, a bundling list with maps by district, and procurement recommendations.",
    "**A state DOT:** a new division for major projects, public-private partnerships, and tolling, defined from its organization structure to position descriptions for the whole division. Before that, for the same department: a primer for its public-private partnership division, position descriptions for its alternative delivery project managers, and alternative delivery proficiencies reviewed with its experts."
   ],
+  "doneTo": ["cs-tn-psm", null, "cs-pdn", "cs-p3-division"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -537,6 +544,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**A state DOT:** a national best practices report on consultant contract administration, approved in October 2025; general engineering services scopes; and a man-hour estimating tool. Then we built its contracting workflow into a working system: intake forms, an advertisement request board, a proposal scoring engine, contract routing, letters generated from records, and invoice review. Two of the tools became standalone web applications in the department's own account.",
    "**A state DOT:** proficiency programs for its procurement staff (solicitation and contracts, headquarters purchasing, quality and training) and for its professional services specialists."
   ],
+  "doneTo": ["cs-tn-psm", "cs-consult-flow", "cs-pd-prof"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -637,6 +645,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**A state DOT:** proficiency programs for its construction engineers and its materials and tests engineers, each reviewed with the department's own experts.",
    "**A state DOT:** we assessed three of its platforms (design and construction documents, capital program management, and inspection) for overlap and integration, built a materials source inventory, and reviewed contractor claims with its districts."
   ],
+  "doneTo": ["cs-cam", "cs-proficiency", "cs-pmdiv", "cs-pd-prof", "cs-hi"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -685,6 +694,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Tennessee Department of Transportation:** we assessed its Local Programs division and proposed its organization.",
    "**A state DOT:** proficiency programs for its local programs, state aid, and bridge grant specialists."
   ],
+  "doneTo": ["cs-lpa-manual", "cs-tn-reorg", "cs-pd-prof"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -734,6 +744,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**A state DOT:** a federal Port Security Grant application for drone port security.",
    "**A state DOT:** bridge bundle packages prepared for a grant application."
   ],
+  "doneTo": ["cs-aero", "cs-harbor", "cs-pd-manual"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -781,6 +792,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**Tennessee Department of Transportation:** we worked out what the department's new structure would cost in wages and benefits, re-analyzed its pay structure after state pay increases, and finalized the structure across all bureaus against the next fiscal year's budget. We also delivered a staffing and cost analysis of its county maintenance facilities, part of a financial analysis of performance-based maintenance contracting, and presented it to department leadership.",
    "**Pennsylvania Department of Transportation · our founder's work before Rawlins:** maintenance budgeting."
   ],
+  "doneTo": ["cs-tn-reorg", "cs-pa-budget"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -836,6 +848,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**A state DOT:** we wrote Statewide Transportation Improvement Program guidance into its Program Development Manual, and white papers on how that program works with the asset management plan and the state's priority program.",
    "**A state DOT:** position descriptions for its statewide planning, metropolitan planning organization, and rural planning organization specialists, reviewed with the department's experts, and proficiency programs for its planning specialists, including statewide planning, finalized in 2025."
   ],
+  "doneTo": ["cs-tn-reorg", "cs-pd-manual", "cs-pd-prof"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -886,8 +899,7 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-tn-ipd",
    "cs-nc-ipd",
    "cs-pmdiv",
-   "cs-pdn",
-   "cs-transform"
+   "cs-pdn"
   ],
   "done": [
    "**A state DOT:** we built its project delivery network with the department's own experts: five steps from concept study to plans, specifications, and estimate, mapped for 17 disciplines, with more than 200 task sheets. The first version went to the department in December 2025. Since then: training for project managers, orientation sessions for leadership and delivery staff, pilot projects, a toolkit, computer-based training, its own website, and version 2.3 in October 2026.",
@@ -896,13 +908,11 @@ export const SERVICES: Record<string, SvcData> = {
    "**A state DOT:** position descriptions and proficiency programs for its project managers and senior project managers, finalized in 2025. At the department's request they cover project funding, value engineering, and Federal Highway Administration major projects.",
    "**North Carolina Department of Transportation:** integrated program delivery."
   ],
+  "doneTo": ["cs-pdn", "cs-pmdiv", "cs-tn-ipd", "cs-pd-prof", "cs-nc-ipd"],
   "sub": [
    "preconstruction",
    "construction"
   ],
-  "doneLinks": {
-   "North Carolina Department of Transportation": "cs-nc-ipd"
-  },
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -950,6 +960,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**A state DOT:** in a draft manual for its local agencies, chapters on federal-aid basics, environmental permitting, right of way and utilities, procurement, construction administration, and financial management, with Responsible Charge training modules. For its own programs: Statewide Transportation Improvement Program guidance, score sheets and countermeasure tables for its highway safety improvement program, and a benefit-cost ratio for an interstate project, calculated with the federal tool.",
    "**Another state DOT:** a proficiency program for its federal-aid funding specialists, worked through with the department in a week on site and finalized, with position descriptions for the same roles."
   ],
+  "doneTo": ["cs-lpa-manual", "cs-pd-prof"],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -998,6 +1009,7 @@ export const SERVICES: Record<string, SvcData> = {
    "**A contractor on an interstate project:** quarterly partnering meetings and surveys.",
    "**A state DOT and a work zone industry association:** the first forum between the department and the industry, prepared and moderated, with interviews on both sides beforehand."
   ],
+  "doneTo": ["cs-db-partnering", "cs-db-partnering", null],
   "src": {
    "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
@@ -2722,18 +2734,24 @@ export const CASES: Record<string, CaseData> = {
  "cs-proficiency": {
   "id": "cs-proficiency",
   "ch": "EPIC (Empowering People Influencing Culture), a department-wide restructuring, set out to cut layers of supervision, update classifications and performance measures, and give staff a clear path to advance. Each new classification needed a defined route to proficiency, written with experts in dozens of disciplines. The goals were multiple career paths, pay set to industry benchmarks, and stronger checks and balances.",
+  "when": "2023 to 2025",
   "did": [
    "Built proficiency programs with agency experts in more than two dozen disciplines, from right of way and construction to bridge inspection and traffic design",
-   "Drafted position descriptions and section primers for three bureaus",
    "Researched appraiser classifications nationwide and drafted a salary structure",
-   "Designed and delivered a two-week advanced leadership program with the agency's human resources team",
+   "Designed a two-week advanced leadership program of about 40 sessions with the agency's human resources team, and delivered it twice in 2024.",
    "Supported a statewide transportation worker proficiency rollout and a staffing utilization method",
-   "Built an appraisal tracker for the right of way appraiser program"
+   "Built the maintenance worker proficiency program in three levels, with a manual, modules, task sheets, and a rollout academy",
+   "Rolled out the construction technician program through academy workshops in the regions",
+   "Wrote rotation curricula for graduate engineers in about a dozen disciplines",
+   "Wrote the curriculum for the department's Management Academy"
   ],
   "res": [
    "Utilization process complete and in use",
    "Transportation worker proficiency program handed to the statewide coordinator",
-   "Appraiser classification, certification, and salary structure delivered"
+   "Appraiser classification, certification, and salary structure delivered",
+   "Construction technician program complete in April 2025",
+   "Materials and tests program rolled out, and now run by the department itself",
+   "Proficiency programs delivered at closeout for engineering specialists, graduate engineers, project managers, right of way, transportation workers, construction technicians, geodetic technicians, materials and testing technicians, bridge inspection technicians, and environmental specialists"
   ],
   "services": [
    "workforce",
@@ -2753,9 +2771,14 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department wanted a consistent project management life cycle, from planning through maintenance, with risk managed the same way on every project.",
   "did": [
    "Reworked the project management life cycle from planning to maintenance",
-   "Introduced risk management practices to control scope, schedule, and budget"
+   "Introduced risk management practices to control scope, schedule, and budget",
+   "Worked the department's transition projects in two regions: project schedules, master scopes of work, risk workshops, and risk registers",
+   "Wrote an onboarding process for consultants"
   ],
-  "res": [],
+  "res": [
+   "The baseline schedule from the transition projects became the department's template",
+   "The consultant onboarding process was shared with all regions for statewide use"
+  ],
   "services": [
    "program-delivery"
   ],
@@ -2768,12 +2791,17 @@ export const CASES: Record<string, CaseData> = {
  "cs-pbmc": {
   "id": "cs-pbmc",
   "ch": "A region moved interstate maintenance to performance-based contracts. That meant a measurable quality baseline, procurement shaped with industry, and administering two new contracts while staff and contractors learned the model together.",
+  "when": "2023 to 2025",
   "did": [
    "Converted maintenance quality measures to pass or fail criteria and set the field assessment approach",
    "Reviewed field data from 268 interstate sample sites",
    "Supported an industry forum and drafted the scope, contract, and request for proposals",
    "Supported contractor onboarding with weekly advisory calls",
-   "Calculated staffing, equipment, and cost offsets"
+   "Calculated staffing, equipment, and cost offsets",
+   "Wrote the report that recommended a performance-based maintenance contract for one region and a simpler maintenance quality assurance program",
+   "Supported the advertisement of both contracts, with pre-bid support and answers during the question period",
+   "Presented the statewide maintenance quality assessment to executive and regional leadership",
+   "Reviewed contracts, fleet, fuel, and staffing for the financial analysis, and presented it to department leadership"
   ],
   "res": [
    "Two contracts awarded; Rawlins supported their administration",
@@ -2795,6 +2823,7 @@ export const CASES: Record<string, CaseData> = {
  "cs-aero": {
   "id": "cs-aero",
   "ch": "A small aeronautics staff needed to grow a statewide drone program, prepare the state and local governments for advanced air mobility, and compete for federal funding to pay for both.",
+  "when": "Since 2024",
   "did": [
    "Wrote and finalized statewide drone operating procedures",
    "Built visual observer and sensor operator courses and train-the-trainer materials",
@@ -2804,13 +2833,21 @@ export const CASES: Record<string, CaseData> = {
    "Coordinating the economic impact and market studies for advanced air mobility with the study team (in progress)",
    "Coordinated a land development study for advanced air mobility",
    "Built a tracking dashboard for advanced air mobility",
-   "Supported train-the-trainer work for the remote pilot program"
+   "Supported train-the-trainer work for the remote pilot program",
+   "Built a four-phase remote pilot training program: online modules, hands-on phases at training sites, and a final phase with mentors and evaluation rubrics",
+   "Ran an Air Mobility Working Group and Task Force, with final reports",
+   "Planned and ran a second statewide symposium in 2025",
+   "Prepared federal applications for the department: a SMART grant, a Rural and Tribal Assistance grant, and a digital construction grant"
   ],
   "res": [
    "Symposium held",
    "Federal grant application submitted",
    "Updated drone procedures finalized and distributed",
-   "Land development study complete"
+   "Land development study complete",
+   "A State Transportation Innovation Council grant awarded in September 2025",
+   "First remote pilot candidate class held in June 2026",
+   "Statewide Advanced Air Mobility Evaluation delivered in November 2024",
+   "Planning guidance for local governments final in September 2026"
   ],
   "services": [
    "drone-programs",
@@ -2827,53 +2864,29 @@ export const CASES: Record<string, CaseData> = {
  "cs-transform": {
   "id": "cs-transform",
   "ch": "The department needed a more reliable way to select, prioritize, and deliver projects within scope, schedule, and budget, under public and legislative scrutiny, with decisions siloed by funding program.",
+  "when": "Since 2024",
   "did": [
-   "Built and supported a project delivery network: tools, templates, workflows, a website, and online training",
-   "Drafted a program development manual and project selection score sheets for more than a dozen programs",
-   "Drafted local public agency manual chapters and training",
-   "Finalized a maintenance quality assurance handbook",
-   "Mapped consultant contracting steps and built working intake and review apps on the agency's existing platform",
-   "Rebuilt the first six steps of consultant contracting as one connected workflow, starting from a single intake form",
-   "Built current and future-state organization charts for more than 15 divisions, with position descriptions",
-   "Construction workflows, a construction administration manual, and a training outline",
-   "Benefit-cost analysis for interstate operations and safety program coordination",
-   "Strategic communications support for the department's improvement program",
-   "Human resources documentation for the restructuring",
-   "Leadership and technical training and competency-based staff development",
-   "Built a prioritization tool now used to triage the highway project pipeline",
-   "Starting a step-zero pilot for pavement preservation projects",
-   "Updated step zero checklists, decision trees, and guidance for safety program projects",
-   "A project manager manual and online courses, including consultant management",
-   "Man-hour and cost estimating packages",
-   // TODO: two local public agency lines say the same thing; Nicole to pick one.
-   "Local public agency manual and responsible-charge training",
-   "Maintenance training (load securement, winter operations, first echelon maintenance, and equipment safety) with equipment demonstration checklists",
-   "An interactive organization chart linking each function to its description",
-   "Supported the move to the department's construction management platform as the primary project system"
+   "A project delivery network, with its tools, website, and training",
+   "A program development manual and project selection tools",
+   "Consultant contracting rebuilt as one connected workflow",
+   "A local public agency manual, certification process, and training",
+   "Maintenance quality assurance, operator training, and fleet",
+   "A construction administration manual matched to new specifications",
+   "A department reorganization, from functional chart to rollout",
+   "Performance measures, from strategy to dashboards"
   ],
-  "res": [
-   "Delivery training modules published for agency use",
-   "Comment system and instructions deployed",
-   "Maintenance quality assurance handbook finalized",
-   "The construction management platform is now the primary system on active projects",
-   "Winter operations training delivered",
-   "More than 20 staff across three divisions walked through the new contracting workflow"
-  ],
-  "services": [
-   "program-delivery",
-   "org-design",
-   "change-mgmt",
-   "strategic-planning",
-   "automation",
-   "data-governance",
-   "operations",
-   "workforce",
-   "asset-mgmt",
-   "construction",
-   "traffic",
-   "lpa",
-   "mqa"
-  ],
+  "didLinks": {
+   "A project delivery network, with its tools, website, and training": "cs-pdn",
+   "A program development manual and project selection tools": "cs-pd-manual",
+   "Consultant contracting rebuilt as one connected workflow": "cs-consult-flow",
+   "A local public agency manual, certification process, and training": "cs-lpa-manual",
+   "Maintenance quality assurance, operator training, and fleet": "cs-mqa-fleet",
+   "A construction administration manual matched to new specifications": "cs-cam",
+   "A department reorganization, from functional chart to rollout": "cs-reorg",
+   "Performance measures, from strategy to dashboards": "cs-measures"
+  },
+  "res": [],
+  "services": [],
   "subsectors": [
    "sub-highways"
   ],
@@ -2883,6 +2896,7 @@ export const CASES: Record<string, CaseData> = {
  "cs-pmdiv": {
   "id": "cs-pmdiv",
   "ch": "The department set out to make project management its own division, with the roles, measures, processes, and training to manage scope, schedule, cost, and risk consistently, and to bring staff through the change.",
+  "when": "Since 2025",
   "did": [
    "Recommended the division structure and initial build-out",
    "Drafted class specifications for new roles",
@@ -2890,14 +2904,20 @@ export const CASES: Record<string, CaseData> = {
    "Built change management tools: process maps, responsibility charts, and a change impact template",
    "Drafted a web-based project delivery manual and a set of project management courses",
    "Built a five-year work plan for the division",
-   "Next: a pilot using AI for cash-flow modeling"
+   "Next: a pilot using AI for cash-flow modeling",
+   "Interviewed staff on site for two days on how projects are managed today, and analyzed the department's five-year work program",
+   "Mapped the current and future process, with responsibility charts and on-site workshops",
+   "Wrote position descriptions and classification specifications for nine positions",
+   "Built eleven project manager courses, now being converted to computer-based training",
+   "Identified field staffing for 31 field offices and presented recommendations on the construction division to executives"
   ],
   "res": [
-   "Organization chart for the initial division approved",
+   "New project management organization approved in June 2026, with three new roles.",
    "Final measures compiled by the working group",
    "Change impact template and first manual sections finalized",
    "Five-year work plan, organization design, and performance measures complete",
-   "Manual and training in progress"
+   "Manual and training in progress",
+   "Position descriptions, measures, change management, and organization design marked complete in September 2026."
   ],
   "services": [
    "org-design",
@@ -2915,15 +2935,22 @@ export const CASES: Record<string, CaseData> = {
  "cs-txmaint": {
   "id": "cs-txmaint",
   "ch": "The department wanted performance-based and flexible maintenance contracts that industry would bid on and districts could administer the same way, plus a maintenance rating program decisions could rely on.",
+  "when": "2025 to 2026",
   "did": [
    "Drafted special specifications for two districts' contracts",
    "Built a uniform deduction method and tracker",
    "Ran a structured industry review and recommended responses",
    "Facilitated the maintenance rating working group and built the rating matrix",
-   "Developed a winter operations tabletop exercise concept"
+   "Developed a winter operations tabletop exercise concept",
+   "Wrote a white paper on flexible asset maintenance contracts, with a checklist so more districts can follow",
+   "Built a cloud-based cost estimating tool with documented formulas",
+   "Evaluated four data collection vendors with a scoring matrix and a recommendation report",
+   "Organized two peer exchanges with other state DOTs"
   ],
   "res": [
-   "Final draft specifications provided for district review and procurement"
+   "Final draft specifications provided for district review and procurement",
+   "The first district's special specification taken to advertisement, pre-bid, and letting in 2026",
+   "Tolerance criteria finalized for drainage, vegetation, aesthetics, litter and debris, pavement cracking, and paved shoulders"
   ],
   "services": [
    "operations",
@@ -2942,17 +2969,23 @@ export const CASES: Record<string, CaseData> = {
  "cs-drt": {
   "id": "cs-drt",
   "ch": "Drone use had grown district by district, with different practices and training. The department also needed its drone response team ready for emergencies, with live video into the emergency operations center.",
+  "when": "Since 2025",
   "did": [
    "Supported emergency drone response training and analyzed the results",
    "Coordinated live streaming into the emergency operations center",
    "Drafted waiver content and an updated concept of operations",
    "Revised statewide drone procedures and drafted a program handbook",
    "Briefed senior leadership on a centralized governance model",
-   "Helped the drone response team check debris removal quantities with drone volume calculations"
+   "Helped the drone response team check debris removal quantities with drone volume calculations",
+   "Delivered the 2026 response team training: agenda, three flight areas, lessons learned, and a participant survey",
+   "Supported live storm response in 2026: pre-staging, emergency flight authorizations, coordination with an airport, a military airfield, and air traffic control, and livestream workflows",
+   "Built a public aircraft operations framework, with compliance and detect-and-avoid checklists",
+   "Evaluated three fleet management platforms and rolled the chosen one out to the districts"
   ],
   "res": [
    "Response team training held and evaluated",
-   "When debris reports disagreed, the drone data proved correct"
+   "When debris reports disagreed, the drone data proved correct",
+   "Drone program standard operating procedures final in May 2026."
   ],
   "services": [
    "drone-programs",
@@ -2968,6 +3001,7 @@ export const CASES: Record<string, CaseData> = {
  "cs-local-am": {
   "id": "cs-local-am",
   "ch": "The state wanted local agencies to use asset management to plan their programs and their funding. Each community started from a different place.",
+  "when": "2024 to 2025",
   "did": [
    "Helped each agency name an asset management steering committee",
    "Ran self-assessment surveys and reviewed each agency's plans and inventories",
@@ -2976,7 +3010,8 @@ export const CASES: Record<string, CaseData> = {
    "Prepared one-page materials for elected officials"
   ],
   "res": [
-   "Workshops held and action plans built with local agencies"
+   "Workshops held and action plans built with seven local agencies: two county road commissions and five cities.",
+   "Summary of the first round presented to the office and the state infrastructure council in December 2024."
   ],
   "services": [
    "asset-mgmt",
@@ -3009,8 +3044,9 @@ export const CASES: Record<string, CaseData> = {
  "cs-workforce": {
   "id": "cs-workforce",
   "ch": "The department needed a clear picture of its vacancies, how divisions balance staffing supply and demand, and how peer agencies organize.",
+  "when": "2024 to 2025",
   "did": [
-   "Analyzed vacancies, staffing by division, and how peer agencies organize"
+   "Analyzed vacancies by division, classification, staffing level, and tenure, and how peer agencies organize."
   ],
   "res": [],
   "services": [
@@ -3069,17 +3105,24 @@ export const CASES: Record<string, CaseData> = {
  "cs-strategic": {
   "id": "cs-strategic",
   "ch": "The department needed a strategic plan that staff at every level helped shape, turned into yearly actions with measures leadership could track.",
+  "when": "Since 2022",
   "did": [
    "Ran engagement with executive leadership, a working group, all-staff workshops and surveys, and partners",
    "Facilitated vision, mission, values, goals, and measures",
    "Built the action plan and monitoring frameworks",
    "Facilitated division and district workshops for the first-year action plan",
-   "Built a performance measures inventory and profile template"
+   "Built a performance measures inventory and profile template",
+   "Held eight staff focus groups, summits with planning partners and rural counties, and five district sessions with the Director",
+   "Held 25 interviews with division heads and measure owners, and analyzed every performance measure the department uses",
+   "Piloted the action plan framework with three divisions before it was approved for all",
+   "Held action planning workshops with every division and district"
   ],
   "res": [
-   "Strategic plan for 2024 to 2029 complete",
+   "Strategic plan for 2025 to 2029 complete.",
    "Year 1 action plan complete",
-   "Action plan tracking tool with progress dashboards in use"
+   "Action plan tracking tool with progress dashboards in use",
+   "Division action plans reviewed, approved, and finalized with the Director's Office in August 2025",
+   "Monitoring guidelines and a monitoring policy delivered in September 2025"
   ],
   "services": [
    "strategic-planning",
@@ -3116,9 +3159,16 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department wanted a statewide look at how its operations, maintenance, fleet, and facilities were managed.",
   "did": [
    "Statewide assessment of operations and maintenance programs",
-   "Reviewed asset management, performance management, fleet and facilities, district operations, organization, budgeting, and traffic operations"
+   "Reviewed asset management, performance management, fleet and facilities, district operations, organization, budgeting, and traffic operations",
+   "Ran a Maintenance Academy in two events, with a final report",
+   "Surveyed employees for the operations review, with more than 200 responses",
+   "Delivered a data-driven process for choosing pavement projects, and supported the first year of the Pavement Improvement Program",
+   "Wrote a chip seal warranty specification and a Warranty Administration Guide, with industry meetings",
+   "Presented occupational health and safety practices from other states"
   ],
-  "res": [],
+  "res": [
+   "First two warranty pilot projects in summer 2023."
+  ],
   "services": [
    "operations",
    "asset-mgmt"
@@ -3157,11 +3207,13 @@ export const CASES: Record<string, CaseData> = {
  "cs-aerodiv": {
   "id": "cs-aerodiv",
   "ch": "Aviation demands are changing: rural airports, drones, and advanced air mobility. The study asks how a broader aviation role could be organized, governed, and funded.",
+  "when": "Since 2026",
   "did": [
    "Built a nine-task research plan with three implementation models",
    "Compiled a 100-source literature review",
    "Facilitated a technical advisory panel",
-   "Interviewing aviation stakeholders statewide"
+   "Interviewing aviation stakeholders statewide",
+   "Scanned state aeronautics programs nationally and built a comparative matrix."
   ],
   "res": [],
   "services": [
@@ -3179,13 +3231,14 @@ export const CASES: Record<string, CaseData> = {
  "cs-de-tech": {
   "id": "cs-de-tech",
   "ch": "The department's Division of Technology and Innovation Services, in Dover, needed a clear roadmap for innovation and technology investment, tied to agency goals.",
+  "when": "2024 to 2025",
   "did": [
-   "Leadership interviews, stakeholder engagement, and a strengths and weaknesses analysis",
+   "Interviews with eight division leaders and four outside stakeholders, and a strengths and weaknesses analysis.",
    "A technology strategic plan aligned with agency goals and operating priorities",
    "A one-page visual summary for executive alignment"
   ],
   "res": [
-   "Technology strategic plan delivered"
+   "Technology strategic plan approved by the department's chief information officer in April 2025."
   ],
   "services": [
    "tech-strategy",
@@ -3345,12 +3398,16 @@ export const CASES: Record<string, CaseData> = {
  "cs-pooled": {
   "id": "cs-pooled",
   "ch": "Transportation departments collect drone data for surveying, construction, and inspection with no shared, tested standard. They need standards they can write into specifications.",
+  "when": "Since 2026",
   "did": [
    "Organized working groups across six standard areas",
    "Facilitated subcommittee and consensus sessions",
    "Proposed a performance-based, sensor-neutral testing framework",
    "Compiled member states' existing standards",
-   "Brought together working groups from 18 member states"
+   "Brought together working groups from 19 member states.",
+   "Ran a national baseline survey, with responses from 26 agencies",
+   "Ran field calibration testing at bridges with two state DOTs",
+   "Drafted bridge inspection guidance tied to the national bridge inspection manuals"
   ],
   "res": [],
   "services": [
@@ -3366,24 +3423,55 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-pdn": {
   "id": "cs-pdn",
-  "ch": "Project managers across the department needed one place to find the delivery network's tools, templates, manuals, and training, and a reliable way to request and approve changes to them.",
+  "ch": "The department set out to map its project delivery process step by step, so every discipline's activities, deliverables, and responsible parties are written down in one place. Its project managers also needed one place to find the network's tools, templates, manuals, and training, and a reliable way to request and approve changes to them.",
+  "when": "Since 2025",
   "did": [
-   "Built the delivery website and resource library: tools, scheduling, the project manager's manual, and training",
-   "Linked it to the systems staff already use, including the department's scheduling system and its project reporting portal",
-   "Built the change request system: a web form, a tracker, automatic routing to reviewers and the department, quality check, and close-out",
+   "## The process",
+   "Mapped the process in five steps, from concept study to plans, specifications, and estimate, in weekly workshops with the department's experts",
+   "Wrote the activities, deliverables, tasks, and responsible parties for 17 disciplines, in more than 200 task sheets",
+   "Built quality checks and cost estimate checks into the steps",
+   "Worked an alternative delivery screening tool and selection matrix into the network",
+   "Updated the concept study checklists, decision trees, and guidance for safety program projects",
+   "Starting a concept study pilot for pavement preservation projects",
+   "## The tools",
+   "Built the toolkit project teams use: a Master Scope of Work template and generator, a Cost Estimating Tool, a risk register and Risk Management Plan, a Project Commitment Document, a Project Status Report, concept study report templates and checklists, quality control checklists, and request forms for utilities, railroad, right of way, geotechnical, hydraulic, and bridge work",
+   "Tied the Project Manager's Manual and a staff-hour estimating tool to the network's tasks",
+   "Built staff-hour and cost estimating packages",
    "Posting and checking updates to the scope of work generator, cost estimating tool, and other templates before release",
-   "Built online courses for project managers, including video"
+   "Published clean copies of every tool and template, with tracked changes and reviewer comments removed",
+   "## The website",
+   "Built the network's website around its five steps, with the activity diagrams, the full manual, a resource library, and a training page",
+   "Organized the resource library by discipline, with search, a download per discipline, and an updated date on every file",
+   "Linked it to the systems staff already use, including the department's scheduling system and its project reporting portal",
+   "Built a full preview copy of the site so reviewers could approve changes before go-live",
+   "Checked every link in the manual, with none broken at release",
+   "## The change request system",
+   "Built the change request system: a web form, a tracker, automatic routing to reviewers and the department, quality check, and close-out",
+   "## Training and rollout",
+   "Built five self-paced courses for project teams, narrated and captioned. Video lessons are in storyboard.",
+   "Trained project managers on the network, and held orientation sessions for department leadership, project managers, and delivery staff",
+   "Wrote a project manager's manual and online courses, including consultant management",
+   "Developed risk management training",
+   "Supported pilot projects, and held implementation meetings with headquarters sections and all districts"
   ],
   "res": [
+   "First version of the network delivered to the department in December 2025",
+   "Version 2.0 in spring 2026, with training for project managers",
+   "Site launched, and its next version went live after review with no downtime",
+   "Version 2.3 of the network published on the site in October 2026",
+   "Five courses published on the site, from a 20-minute orientation to building a project's scope of work and baseline schedule",
    "Change requests tracked from submission to close-out, with every decision recorded",
-   "Training published on the site for project managers"
+   "Change requests move through every step without anyone typing a status"
   ],
   "services": [
    "portals",
    "automation",
    "training-video",
    "program-delivery",
-   "change-mgmt"
+   "change-mgmt",
+   "proj-delivery",
+   "preconstruction",
+   "alt-delivery"
   ],
   "subsectors": [
    "sub-highways"
@@ -3394,15 +3482,22 @@ export const CASES: Record<string, CaseData> = {
  "cs-tn-tech": {
   "id": "cs-tn-tech",
   "ch": "The department set out to modernize how it manages technology and data, and to govern new tools like AI, with executive leadership in the lead.",
+  "when": "Since 2025",
   "did": [
    "Facilitated a technology and data governance steering committee for executive leadership",
    "Wrote more than ten standard operating procedures",
    "Ran a seven-month communications campaign for the modernization",
    "Prepared an advisory committee",
-   "Providing executive-level strategic advisory, including AI governance"
+   "Providing executive-level strategic advisory, including AI governance",
+   "Wrote a technology project delivery method, with an intake form and a tier worksheet",
+   "Wrote a data policy and data governance roles, decision rights, and workflows",
+   "Supported the department's AI strategy: a kickoff, a roadmap workshop, governance documents, and user onboarding",
+   "Reviewed requirements for a new enterprise resource planning system",
+   "Built a project management curriculum for the technology division"
   ],
   "res": [
-   "More than ten standard operating procedures complete"
+   "More than ten standard operating procedures complete",
+   "Two-year technology work plan presented to the senior team in April 2026."
   ],
   "services": [
    "tech-strategy",
@@ -3420,15 +3515,24 @@ export const CASES: Record<string, CaseData> = {
  "cs-hi": {
   "id": "cs-hi",
   "ch": "The department needed one trusted home for hundreds of construction documents spread across an old wiki, and steady support across construction, project delivery, and the department's other divisions.",
+  "when": "Since 2026",
   "did": [
-   "Reviewed hundreds of wiki documents and gave each one a disposition: keep, update, combine, move, or retire",
-   "Backed up and preserved the original site before migration",
    "Planning the rollout of the department's construction management platform on live projects",
-   "Supported remote pilot training for about 20 candidates",
-   "Supported federal port security grant applications for the department's harbors",
-   "Evaluated drones, uncrewed surface vessels, sonar, and lidar for harbor inspection"
+   "Spent a kickoff week on site with materials, harbors, airports, administration, and construction staff at each district",
+   "Documented project delivery workflows by discipline with design staff, and assessed maintenance and emergency operations at four district offices",
+   "Assessed three of the department's platforms for overlap and integration, and checked a design-build request for proposals against platform setup",
+   "Built a materials source inventory, and reviewed contractor claims with districts",
+   "The construction knowledge site and the harbor technology demonstration are their own projects"
   ],
-  "res": [],
+  "didLinks": {
+   "The construction knowledge site and the harbor technology demonstration are their own projects": [
+    "cs-knowledge",
+    "cs-harbor"
+   ]
+  },
+  "res": [
+   "Final report delivered to senior leadership in August 2026, with a strategic initiative roadmap"
+  ],
   "services": [
    "construction",
    "portals",
@@ -3541,9 +3645,14 @@ export const CASES: Record<string, CaseData> = {
  "cs-pv-pmo": {
   "id": "cs-pv-pmo",
   "ch": "The firm runs phased engineering projects across several tools, and its current setup doesn't fit how its phases, reviews, time, and invoicing actually work.",
+  "when": "Since 2026",
   "did": [
    "Supporting the firm's current project tools while the new system is built",
-   "Building a project management system around phased projects, time, and invoicing"
+   "Building a project management system around phased projects, time, and invoicing",
+   "Moved the firm's time-tracking system by script, with a full audit trail",
+   "Built measure dashboards and team targets",
+   "Built project tracking boards, automations, and timesheet integrations",
+   "Built estimate, schedule, and template workflows"
   ],
   "res": [],
   "services": [
@@ -3722,7 +3831,519 @@ export const CASES: Record<string, CaseData> = {
    "SharePoint",
    "Teams"
   ]
+ },
+ "cs-pd-manual": {
+  "id": "cs-pd-manual",
+  "ch": "The department wanted a consistent, written way to select and prioritize projects across its funding programs.",
+  "when": "Since 2025",
+  "did": [
+   "Interviewed program managers and wrote more than thirty State of Practice reports on the department's programs",
+   "Reviewed twelve other states' prioritization processes",
+   "Wrote white papers on the Statewide Transportation Improvement Program and how it works with the asset management plan and the state's priority program",
+   "Worked through project selection templates with 14 programs, and built fillable score sheets",
+   "Built a bridge screening and prioritization tool, with tutorials for program managers and bridge staff",
+   "Built statewide asset mapping tools and a screening toolkit for concept studies",
+   "Built a prioritization tool now used to triage the highway project pipeline",
+   "Analyzed bridge inspection and condition data, and prepared bridge bundling options, maps by district, and procurement recommendations",
+   "Calculated a benefit-cost ratio for an interstate project, and coordinated with the safety program",
+   "Prepared a Call for Projects package",
+   "Drafted the Program Development Manual"
+  ],
+  "res": [
+   "Bridge screening process finalized",
+   "Program Development Manual draft sent to the department in October 2026"
+  ],
+  "services": [
+   "program-delivery",
+   "planning",
+   "federal-aid"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-consult-flow": {
+  "id": "cs-consult-flow",
+  "ch": "The department wanted its consultant contracting steps connected in one workflow, on a platform it already used.",
+  "when": "Since 2025",
+  "did": [
+   "Researched practice in other states: utilization in 9 states, expense and overhead in 11, and one requirement across all 50",
+   "Wrote a national best practices report on consultant contract administration",
+   "Mapped the contracting steps and who owns each form",
+   "Rebuilt the first six steps of consultant contracting as one connected workflow, starting from a single intake form",
+   "Built the workflow on the department's work management platform: intake forms with conditional logic, an advertisement request board, a proposal scoring engine with weighted criteria and firm ranking, contract execution routing, letters generated from records, task order and purchase order tracking, invoice review gates, and audit holds",
+   "Turned the agreement request form and the consensus scoring tool into standalone web applications",
+   "Wrote general engineering services scopes, and a staff-hour estimating tool tied to the delivery network's tasks"
+  ],
+  "res": [
+   "National best practices report approved in October 2025",
+   "The two web applications moved into the department's own account in September 2026",
+   "More than 20 staff across three divisions walked through the new contracting workflow"
+  ],
+  "services": [
+   "procurement",
+   "automation",
+   "portals"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-lpa-manual": {
+  "id": "cs-lpa-manual",
+  "ch": "The department wanted one manual for the local agencies that deliver federal-aid projects, with clear roles for headquarters, districts, and the agencies themselves.",
+  "when": "Since 2025",
+  "did": [
+   "Analyzed seven states' manuals and interviewed five peer states",
+   "Proposed the program structure, and set up the manual's charter, schedule, chapter authors, and steering committee",
+   "Drafted an eleven-chapter manual, from federal-aid basics, environmental, and right of way through procurement, construction administration, financial management, closeout, and agencies that let their own contracts",
+   "Drafted a certification process and an oversight policy",
+   "Developed a five-module core training course and Responsible Charge training"
+  ],
+  "res": [
+   "Manual, certification process, and oversight policy in draft",
+   "Five core training modules built by October 2026"
+  ],
+  "services": [
+   "lpa",
+   "federal-aid"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-mqa-fleet": {
+  "id": "cs-mqa-fleet",
+  "ch": "The department wanted a consistent way to rate maintenance quality across its districts.",
+  "when": "Since 2025",
+  "did": [
+   "Visited districts, interviewed staff, compared twelve peer states, and presented findings to headquarters",
+   "Facilitated a Maintenance Quality Assurance Steering Committee, and set threshold criteria",
+   "Wrote the field manual, with a mapping component, and the inspection handbook",
+   "Trained inspectors in person, in three sessions",
+   "Coordinated the content of a field data collection app",
+   "Developed training for winter operations, load securement, diesel exhaust fluid, first echelon maintenance, and equipment safety, with 43 equipment demonstration checklists for the operator certification program",
+   "Analyzed the fleet's life cycle, idle time, fuel, and usage, ran asset-sharing workshops in five districts, and wrote requirements for a fleet management system",
+   "Reviewed all 13 responses to a maintenance outsourcing request for information, and presented them to leadership"
+  ],
+  "res": [
+   "Inspection handbook published in January 2026, and version 1.1 in May 2026",
+   "Inspector training delivered in early 2026",
+   "Winter operations training delivered"
+  ],
+  "services": [
+   "operations",
+   "asset-mgmt",
+   "workforce"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-cam": {
+  "id": "cs-cam",
+  "ch": "The department was moving to new standard specifications and wanted its construction administration guidance to match.",
+  "when": "Since 2025",
+  "did": [
+   "Interviewed seven districts, surveyed peer states, and briefed construction leadership",
+   "Drafted the Construction Administration Manual and cross-referenced it to the new standard specifications",
+   "Updated it to the 2026 specifications, with flow charts for calendar-day and working-day contracts and guidance on change orders",
+   "Interviewed inspectors and technicians across districts, and presented the findings to construction leadership",
+   "Documented construction workflows, and outlined construction training",
+   "Prepared reorganization packets for district construction and maintenance in eight districts",
+   "Supported the rollouts of construction inspection and preconstruction software"
+  ],
+  "res": [
+   "Manual updated to the 2026 standard specifications",
+   "The construction management platform is now the primary system on active projects"
+  ],
+  "services": [
+   "construction",
+   "org-design"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-tn-reorg": {
+  "id": "cs-tn-reorg",
+  "ch": "A department-wide restructuring set out to cut layers of supervision and update how every bureau is organized, classified, and staffed.",
+  "when": "2022 to 2025",
+  "did": [
+   "Assessed divisions across engineering, planning, and administration, each with a proposed organization chart: right of way, utilities, program development, local programs, long range planning, multimodal transportation, freight and logistics, procurement, finance, aeronautics, civil rights, central services, and internal audit",
+   "Designed organization structures for the engineering divisions and for district maintenance and construction, with transition plans",
+   "Wrote position descriptions and section primers for every bureau",
+   "Built staff transition tracking tools for all four regions, and ran a restructuring status tracker for the department",
+   "Worked out the wage and benefit cost of the new structure, re-analyzed pay after state pay increases, and kept positions, salaries, and benefits inside the proposed budget",
+   "Ran rollout workshops for directors, wrote 100-day plans for new directors, and sat on interview panels for leadership hires",
+   "Designed and ran on-site business meetings on utilization planning, the pavement program, plans and estimates, asset management, and traffic roles",
+   "Met with regions and divisions on how the reorganization was going, and reported to human resources",
+   "Built a project utilization program: staff effort by discipline for every region, with training and an online tool",
+   "Assessed the human resources office, mapped its processes with responsibility charts, and finalized its organization chart"
+  ],
+  "res": [
+   "493 position descriptions and 91 primers delivered",
+   "Organization structures finalized for all bureaus against the next fiscal year's budget",
+   "Eight assessment reports delivered at closeout",
+   "The utilization program was used to build the department's consultant acquisition plan"
+  ],
+  "services": [
+   "org-design",
+   "change-mgmt",
+   "exec-advisory",
+   "finance",
+   "program-delivery",
+   "planning",
+   "preconstruction",
+   "lpa"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-tn-amdiv": {
+  "id": "cs-tn-amdiv",
+  "ch": "The department created an Asset Management Division and needed it defined and staffed, starting with a new director.",
+  "when": "2024 to 2025",
+  "did": [
+   "Wrote the vision for asset management at the department, and a 100-day plan, with the new director",
+   "Built the organization chart and a prioritized hiring plan",
+   "Wrote position descriptions for the director and every manager: fleet and facilities, bridge, pavement, ancillary infrastructure, transportation data systems, quality management, and performance management",
+   "Wrote primers for all seven sections",
+   "Wrote a fleet and facilities asset management strategy, and built fleet policies from fleet data",
+   "Reviewed snow routes and dump trucks at county facilities, analyzed vehicle and equipment usage, and proposed a phased fleet surplus process",
+   "Researched pavement treatments, deterioration curves, levels of service, and target setting"
+  ],
+  "res": [
+   "Division stood up with its organization chart, hiring plan, position descriptions, and primers",
+   "Fleet and facilities strategy presented to executive leadership"
+  ],
+  "services": [
+   "asset-mgmt",
+   "operations",
+   "org-design"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-tn-psm": {
+  "id": "cs-tn-psm",
+  "ch": "The department wanted its process for buying consultant services written down, from advertisement through negotiation and close-out.",
+  "when": "2022 to 2024",
+  "did": [
+   "Assessed how the department buys consultant services",
+   "Wrote a Professional Services Policies and Procedures Manual, a Design-Build Procurement Manual, and a Negotiations Manual",
+   "Drew flowcharts for every delivery method",
+   "Wrote a contract close-out process, and scope templates by contract type and discipline",
+   "Drafted an adjusted-score design-build request for proposals and design-build procurement language",
+   "Surveyed six states on two-phase and single-phase advertisement, and wrote guidance on running a two-phase process",
+   "Built negotiation memo templates, rate analysis tools, and an active contract list to watch contract expirations",
+   "Reviewed best practice on evaluating consultant performance"
+  ],
+  "res": [
+   "All three manuals finalized in July 2023",
+   "Advertisement request form finalized"
+  ],
+  "services": [
+   "procurement",
+   "alt-delivery"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-pd-prof": {
+  "id": "cs-pd-prof",
+  "ch": "After a reorganization, the department needed every position described and a proficiency program for each specialty, bureau by bureau.",
+  "when": "Since 2025",
+  "did": [
+   "Wrote position descriptions and primers for the engineering, planning, and administration bureaus, each reviewed with the department's experts",
+   "Built a dashboard that tracked every position description",
+   "Built proficiency programs as task sheets and demonstration sheets, many in week-long in-person sessions: engineering specialists at two levels in about 30 disciplines, and specialists in environmental work, geodetics, traffic design, professional services, project management, asset management, aeronautics, rail, planning, local programs, finance, and procurement",
+   "Built proficiency programs for four right of way specialties",
+   "Built an appraisal tracker for the right of way appraiser program"
+  ],
+  "res": [
+   "Final lists of position descriptions and proficiency programs delivered at the end of 2025",
+   "Right of way property management and excess lands program delivered final in October 2026"
+  ],
+  "services": [
+   "workforce",
+   "org-design",
+   "proj-delivery",
+   "preconstruction",
+   "construction",
+   "planning",
+   "federal-aid",
+   "lpa",
+   "procurement"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-pbmc2": {
+  "id": "cs-pbmc2",
+  "ch": "After two performance-based maintenance contracts in one region, the department set out to write the next one for a second region.",
+  "when": "2025 to 2026",
+  "did": [
+   "Gathered lessons learned from the first region's contracts",
+   "Drafted the scope of services with the region and the state maintenance office",
+   "Checked baseline performance scores against the contract's criteria",
+   "Wrote a snow and ice white paper and contract support recommendations",
+   "Built the contract cost estimate and work plan from the asset inventory: work quantities, unit prices, a backlog maintenance plan, a staffing plan, and equipment and crew costs",
+   "Organized a peer exchange between two state DOTs on performance-based maintenance contracts and maintenance rating"
+  ],
+  "res": [
+   "Cost estimate and work plan finalized in late 2025",
+   "The contract, now called a Flexible Asset Maintenance contract, kicked off with a partnering session in March 2026"
+  ],
+  "services": [
+   "operations",
+   "procurement",
+   "partnering"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-harbor": {
+  "id": "cs-harbor",
+  "ch": "The department wanted to see what uncrewed systems could do for its harbors: inspection above and below the water, and port security.",
+  "when": "2026",
+  "did": [
+   "Ran a two-day harbor technology demonstration with aerial drones, an uncrewed surface vessel, a remotely operated underwater vehicle, and mobile lidar",
+   "Wrote a structural summary report within days, after underwater footage showed concerns at a highway bridge",
+   "Prepared a federal Port Security Grant application for drone port security",
+   "Prepared drone and advanced air mobility use-case briefings and a drone roadmap",
+   "Prepared a two-day remote pilot preparation course",
+   "Supported remote pilot training for about 20 candidates"
+  ],
+  "res": [
+   "Port Security Grant application submitted in July 2026",
+   "Demonstration held in September 2026"
+  ],
+  "services": [
+   "drone-programs",
+   "grants"
+  ],
+  "subsectors": [
+   "sub-ports",
+   "sub-aviation"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-db-pursuit": {
+  "id": "cs-db-pursuit",
+  "ch": "A contractor pursuing a design-build interchange project brought us in to advise through the pursuit.",
+  "when": "2023 to 2024",
+  "did": [
+   "Advised on the contractor's approach to the pursuit",
+   "Reviewed the owner's draft request for proposals and technical provisions",
+   "Reviewed the contractor's alternative designs",
+   "Stayed with the team through the best-and-final-offer meeting"
+  ],
+  "res": [],
+  "services": [],
+  "subsectors": [],
+  "industry": "contractors",
+  "industry2": null
+ },
+ "cs-reorg": {
+  "id": "cs-reorg",
+  "ch": "The department set out to reorganize, and needed the structure, the positions, and the rollout worked through with its executive team.",
+  "when": "Since 2025",
+  "did": [
+   "Compared salaries and pay compression with other DOTs and the market",
+   "Drafted a proposed functional organization chart and design rules, and vetted the options with senior leadership",
+   "Took the functional and position-based charts through executive decisions",
+   "Wrote position descriptions for executives and directors, and primers for twelve offices",
+   "Built a classification framework and prepared civil service forms",
+   "Prepared the rollout communications: questions and answers, talking points, and a transition support roadmap",
+   "Wrote a reorganization timeline and an analysis of the hurdles for department leadership",
+   "Ran a 45-day organization structure analysis: current and future-state charts for sixteen sections, with a financial impact analysis",
+   "Built a change management toolkit: a process map, a triage form, a change champion network guide, leadership alignment, an impact assessment, a benefits scorecard, and a decision authority matrix",
+   "Wrote case-for-change papers on appointing authority, career paths, and rotational programs, and a continuous performance management framework",
+   "Wrote a 12-month communication plan",
+   "Built an interactive organization chart that links each function to its description",
+   "Gave strategic communications support for the department's improvement program",
+   "Wrote human resources documentation for the restructuring",
+   "Developed leadership and technical training and competency-based staff development",
+   "Prepared reorganization packets for district construction and maintenance in eight districts"
+  ],
+  "res": [
+   "Functional organization chart finalized for the executive team in November 2025",
+   "Rollout communications delivered for the July 2026 announcement"
+  ],
+  "services": [
+   "org-design",
+   "change-mgmt",
+   "exec-advisory",
+   "workforce",
+   "finance"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-measures": {
+  "id": "cs-measures",
+  "ch": "The department wanted performance measures its executive team, its sections, and its districts could manage by.",
+  "when": "Since 2025",
+  "did": [
+   "Wrote a performance measures strategy",
+   "Facilitated a department-level workshop, then workshops for more than a dozen sections and for the districts",
+   "Built a master library of measures tied to legislative mandates",
+   "Drafted dashboards and tested them with users",
+   "Set governance and rollout milestones for the measures",
+   "Finalized the measures and governance for an executive dashboard",
+   "Trained staff on the system that manages the measures"
+  ],
+  "res": [
+   "Strategy approved by the executive team in March 2025",
+   "Executive dashboard measures and governance finalized"
+  ],
+  "services": [
+   "strategic-planning",
+   "dashboards",
+   "exec-advisory"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-tn-it": {
+  "id": "cs-tn-it",
+  "ch": "As part of a department-wide restructuring, the department's IT division needed a strategic plan and an organization to carry it out.",
+  "when": "2023 to 2024",
+  "did": [
+   "Wrote the IT Strategic Plan with the IT leadership team, with a one-page version",
+   "Facilitated meetings between IT, traffic operations, and traffic design, with a summary report, a roles and responsibilities matrix, and recommendations",
+   "Finalized the IT organization chart, with a transition plan and an implementation roadmap",
+   "Prepared town hall materials, and set up quarterly exchanges with another state DOT's IT group"
+  ],
+  "res": [
+   "IT Strategic Plan approved in September 2023",
+   "IT organization chart finalized, with its transition plan"
+  ],
+  "services": [
+   "tech-strategy",
+   "org-design"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-knowledge": {
+  "id": "cs-knowledge",
+  "ch": "The department needed one trusted home for hundreds of construction documents spread across an old wiki.",
+  "when": "Since 2026",
+  "did": [
+   "Cataloged the construction knowledge site and gave each of 1,677 links a decision: keep, update, combine, move, or delete",
+   "Backed up and preserved the original site before migration: 1,256 files and 23 training videos",
+   "Logged each document's disposition in one tracking system",
+   "Moved a maintenance contracts dashboard into the department's own system",
+   "Inventoried the division's datasets, with owners and quality notes",
+   "Reviewed and prioritized AI use cases"
+  ],
+  "res": [
+   "Review of the wiki documents substantially complete",
+   "Knowledge site transferred to department ownership"
+  ],
+  "services": [
+   "portals",
+   "data-governance",
+   "dashboards",
+   "construction"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-p3-division": {
+  "id": "cs-p3-division",
+  "ch": "The department was building its capacity for major projects, public-private partnerships, and tolling, and needed the division and its positions defined.",
+  "when": "Since 2025",
+  "did": [
+   "Wrote a primer for the department's public-private partnership division",
+   "Wrote position descriptions for its alternative delivery project managers and a statewide public-private partnership project manager",
+   "Rewrote the alternative delivery proficiencies for engineering specialists, reviewed with the department's experts",
+   "Defined the new division's organization framework",
+   "Wrote its position descriptions, from directors to technical specialists"
+  ],
+  "res": [
+   "Public-private partnership division primer finalized in June 2025",
+   "Organization framework for the new division finalized in June 2026"
+  ],
+  "services": [
+   "alt-delivery",
+   "org-design"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
+ },
+ "cs-hr": {
+  "id": "cs-hr",
+  "ch": "The department's human resources office wanted its personnel transactions, onboarding, and orientation written down and run the same way.",
+  "when": "Since 2025",
+  "did": [
+   "Mapped technical onboarding in on-site sessions, with a process map and a responsibility chart",
+   "Built an orientation curriculum framework and scripts for new employee orientation videos",
+   "Wrote standard operating procedures for each personnel transaction, with how-to guides and a decision guide",
+   "Built a quality assurance framework for HR transactions",
+   "Built new employee and new leader orientation",
+   "Ran a two-day HR leadership retreat, and a two-day onboarding workshop with a process map and a report",
+   "Wrote a performance management toolkit: a framework, an individual performance plan template, guides, and supervisor training",
+   "Presented a salary compression analysis"
+  ],
+  "res": [
+   "Orientation package delivered in February 2026"
+  ],
+  "services": [
+   "workforce",
+   "org-design",
+   "change-mgmt"
+  ],
+  "subsectors": [
+   "sub-highways"
+  ],
+  "industry": "transport",
+  "industry2": null
  }
+
 };
 export const APPLIED: string[][] = [
  [

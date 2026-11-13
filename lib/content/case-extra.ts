@@ -7,6 +7,8 @@
    pdn-acc  = 19-Pilot PDN Project/ACCOMPLISHMENTS.md */
 export type CaseExtra = { when?: string; did?: string[]; res?: string[] };
 export const CASE_EXTRA: Record<string, CaseExtra> = {
+  /* Nov 13 (projects file v4): cs-transform, cs-pdn, and cs-hi are off this list; their lines are on the project pages now (the
+     overview's eight projects, page A, and pages Q and L) */
   "cs-proficiency": {
     when: "2023 to 2026", // source: drafts:13
     did: [
@@ -46,19 +48,6 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
     res: [
       "Earlier statewide advanced air mobility tasks completed and delivered", // source: drafts:245
       "Final local planning guidance routed for the department's internal review", // source: drafts:244
-    ],
-  },
-  "cs-transform": {
-    when: "Since 2024", // source: drafts:132
-    did: [
-      "Developed risk management training and a risk register tool", // source: drafts:142
-      "Updated the bridge prioritization screening app", // source: drafts:145, findings:98
-      "Drafted screening criteria for choosing alternative delivery methods", // source: drafts:156
-      "Researched consultant official-domicile rules in all 50 states", // source: drafts:151
-    ],
-    res: [
-      "Contracting apps moved onto the department's own platform, with connections checked", // source: drafts:162
-      "Program development manual draft sent to the department for comment", // source: findings:66, findings:98
     ],
   },
   "cs-pmdiv": {
@@ -165,27 +154,6 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
     ],
     res: [
       "Working group backed the proposed direction at its consensus session", // source: drafts:456
-    ],
-  },
-  "cs-pdn": {
-    when: "Since 2026", // source: pdn-acc:5, pdn-acc:9
-    did: [
-      "Organized the resource library by discipline, with search, a download per discipline, and an updated date on every file", // source: pdn-acc:11
-      "Published clean copies of every tool and template, with tracked changes and reviewer comments removed", // source: pdn-acc:10
-      "Built a full preview copy of the site so reviewers could approve changes before go-live", // source: pdn-acc:20, pdn-acc:27
-      "Checked every link in the manual, with none broken at release", // source: pdn-acc:41
-    ],
-    res: [
-      "Site launched, and its next version went live after review with no downtime", // source: pdn-acc:9, pdn-acc:12, pdn-acc:27
-      "Change requests move through every step without anyone typing a status", // source: pdn-acc:33
-    ],
-  },
-  "cs-hi": {
-    did: [
-      "Logged each document's disposition in one tracking system", // source: findings:63
-    ],
-    res: [
-      "Review of the wiki documents substantially complete", // source: findings:86
     ],
   },
 };
