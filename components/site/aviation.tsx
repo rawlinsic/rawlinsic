@@ -94,6 +94,11 @@ export function NextLayer() {
             ))}
           </div>
           <div className="av-map-side">
+            {/* phones (Nicole, Nov 13: the names overlapped on the small map): only the picked place's name shows on the
+                map, and the six names are buttons here */}
+            <ul className="av-picks" aria-label="Places on the map">
+              {NODES.map((n) => <li key={n.id}><button type="button" aria-pressed={sel === n.id} onClick={() => setSel(n.id)}>{n.label}</button></li>)}
+            </ul>
             <div className="av-map-card" aria-live="polite">
               <h3>{node.label}</h3>
               <p>{node.desc}</p>

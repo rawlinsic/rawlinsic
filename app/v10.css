@@ -1308,3 +1308,13 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 }
 /* Write your own now leads the list (Nov 13): the small gap goes under it instead of above */
 .fp-list > li:first-child > .fp-q-own { margin-top: 0; margin-bottom: 6px; }
+/* Nov 13 (Nicole, phone screenshot of the Drones & AAM page): the map's names overlapped on a phone. There, only the
+   picked place's name shows on the map, and the six names are buttons under it */
+.av-picks { display: none; }
+@media (max-width: 700px) {
+  .av-place-label:not(.is-on) { display: none; }
+  .av-place-label.is-on { font-size: 0.85rem; padding: 3px 10px; }
+  .av-picks { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 18px 0 16px; padding: 0; }
+  .av-picks button { padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(165, 243, 252, 0.35); background: rgba(8, 18, 34, 0.6); color: #e6edf5; font: 600 0.95rem var(--font-sans); cursor: pointer; }
+  .av-picks button[aria-pressed="true"] { background: #22d3ee; border-color: #22d3ee; color: #04131f; box-shadow: 0 0 18px rgba(34, 211, 238, 0.5); }
+}
