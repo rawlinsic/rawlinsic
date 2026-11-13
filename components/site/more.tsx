@@ -279,12 +279,13 @@ export function OurPeople() {
 /* ── Careers (live content kept) ── */
 export type Position = { title: string; href: string; summary: string };
 /* What it's like here (for people who might join us, not the client-facing WHY points) */
+/* What it's like here: Nicole's five cards (Nov 13), in her words */
 const CAREERS_WHY: [string, string][] = [
-  ["Learn from people who've done the job", "More than 25 of our people came from public agencies. You'll work next to people who ran the programs."],
-  ["Strategy and build, side by side", "Advisors and our in-house build team work on the same projects."],
-  ["Work from where you are", "Our people work across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates."],
-  /* not "senior people do the work" (Nicole, Nov 9-10) */
-  ["Small firm, real work", "We're a small firm, so you work directly with the people leading the work, on work that matters to the agencies we serve."],
+  ["Put team success first", "We support one another, remain open to different approaches, and let go of individual preferences when another direction better serves the team’s goal to serve the client."],
+  ["Communicate early and clearly", "We share relevant information and context, set and clarify expectations, confirm understanding, and communicate promptly when priorities, timelines, or commitments change."],
+  ["Seek the right perspectives", "We involve people based on their expertise and availability, invite different viewpoints, and build on one another’s strengths and ideas."],
+  ["Treat others with respect", "We communicate constructively, show appreciation and give credit for others’ contributions, and address behaviors that undermine a respectful and productive workplace."],
+  ["Own the outcome", "We clarify roles, honor commitments, address recurring issues, and take responsibility for keeping work moving as a team."],
 ];
 export const OPEN_POSITIONS: Position[] = [];
 export function Careers() {
