@@ -7,7 +7,7 @@ export type SvcData = { id: string; name: string; area: string; st: string; intr
   links?: Record<string, string>; done?: string[];
   /* the What we deliver section's title where the page has its own (Operations & Maintenance: "What this service covers") */
   deliverTitle?: string };
-export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; steps: { t: string; d: string; services: string[] }[] }; keep: string; cases: string[];
+export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; lead?: string; steps: { t: string; d: string; services: string[] }[] }; keep: string; cases: string[];
   /* lines: a short line per service on the area page's service panels, where the area has one (Nov 12, Operations & Maintenance) */
   lines?: Record<string, string> };
 export type IndustryData = { id: string; ch: string[]; bring?: string[]; ways?: { t: string; d: string }[]; basis: string; services: string[]; people: string[][] };
@@ -2163,6 +2163,7 @@ export const AREAS: Record<string, AreaData> = {
   ],
   "feature": {
    "title": "Crawl, walk, run",
+   "lead": "We take a practical, phased approach that meets DOTs and other organizations where they are.",
    "steps": [
     {
      "t": "Set up the program",

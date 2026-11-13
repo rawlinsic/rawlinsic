@@ -81,7 +81,9 @@ export const SERVICE_PHOTO: Record<string, string> = {
   "asset-mgmt": P("tnbig.webp"),
   /* Nov 12: the four pages under Asset Management use the photo of a project shown on each */
   mqa: P("project-txmaint.webp"), // the maintenance rating program project
-  outsourcing: P("transportation.webp"), // the contractors' association model
+  // Scott on the general session panel at the maintenance contractors' association (AMOTIA), by Janine Cooper; the
+  // association model project's own photo (transportation.webp) is on the never-use list above
+  outsourcing: P("news-amotia-2026-general-session.webp"),
   pbmc: P("project-pbmc.webp"), // Tennessee performance-based maintenance contracts
   fleet: P("project-nv-fleet-program.webp"), // Nevada fleet analysis and implementation
   operations: P("cs-hero-1.webp"),
@@ -96,7 +98,9 @@ export const SERVICE_PHOTO: Record<string, string> = {
   "smart-mobility": P("cs-hero-5.webp"),
   "drone-programs": P("engineersoperatingdrones.webp"),
   "drone-aam": P("aam-aerial-view.webp"), // a real drone in flight
-  "drone-emergency": P("aam-enable.webp"), // a field crew with a drone, from the live site's Advanced Air Mobility page (Nicole, Nov 11: drone photos only from the live site; aam-enable-quadrocopter isn't on it)
+  // Nov 12 (John's review comment): the same photo with the company patch on the jacket softened so it can't be read;
+  // the original aam-enable.webp is kept
+  "drone-emergency": P("aam-enable-no-patch.webp"), // a field crew with a drone, from the live site's Advanced Air Mobility page (Nicole, Nov 11: drone photos only from the live site; aam-enable-quadrocopter isn't on it)
   research: P("aam-define.webp"), // airport line drawing (also the Research page)
   "aero-division": P("aam-phase3.webp"),
 };

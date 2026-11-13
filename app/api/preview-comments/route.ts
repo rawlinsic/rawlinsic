@@ -9,6 +9,7 @@
      PATCH { id }  mark one done (closes the issue); { id, reopen: true } brings it back (Undo and Redo) */
 import { NextResponse } from "next/server";
 import { BACKUP_LOCKED, isBackupVersion } from "@/lib/preview-gh";
+import { movedPath } from "@/lib/moved-pages";
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "crypto";
 
 export const runtime = "nodejs";
@@ -55,7 +56,7 @@ export async function GET(req: Request) {
     const out: (Note & { id: number })[] = [];
     for (let p = 1; p <= 5; p++) {
       const list = await s.gh(`/issues?labels=preview-note,${encodeURIComponent(s.label)}&state=open&per_page=100&page=${p}`);
-      for (const it of list || []) { const m = MARK.exec(it.body || ""); const n = m && open(s.key, m[1]); if (n && (!page || n.page === page)) out.push({ id: it.number, ...n }); }
+      for (const it of list || []) { const m = MARK.exec(it.body || ""); const n = m && open(s.key, m[1]); if (n && (!page || movedPath(n.page) === page)) out.push({ id: it.number, ...n }); }
       if (!list || list.length < 100) break;
     }
     return NextResponse.json({ comments: out.sort((a, b) => a.at.localeCompare(b.at)) });

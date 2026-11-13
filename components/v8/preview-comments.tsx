@@ -6,6 +6,7 @@
    the page. Stored encrypted by /api/preview-comments; Claude Code reads them
    from there and marks them done when they're handled. */
 import { useCallback, useEffect, useRef, useState } from "react";
+import { movedPath } from "@/lib/moved-pages"; // a comment saved on a page's old address shows on its new one (Nov 12)
 
 type C = { id: number; page: string; sel: string; rx: number; ry: number; snippet: string; text: string; who: string; at: string };
 type Draft = { x: number; y: number; sel: string; rx: number; ry: number; snippet: string };
@@ -133,13 +134,13 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
     mine.current.forEach((v, id) => {
       if (now - v.t > 90000) { mine.current.delete(id); return; }
       if (!v.open) out = out.filter((c) => c.id !== id);
-      else if (v.c && (v.c.page === page || menuOf(v.c.sel)) && !out.some((c) => c.id === id)) out = [...out, v.c];
+      else if (v.c && (movedPath(v.c.page) === page || menuOf(v.c.sel)) && !out.some((c) => c.id === id)) out = [...out, v.c];
     });
     return [...out].sort((a, b) => a.at.localeCompare(b.at));
   }, [page]);
   const load = useCallback(async () => {
     /* every open comment, then this page's plus the ones on menu items (those belong to every page) */
-    try { const r = await fetch("/api/preview-comments"); const j = await r.json(); if (r.ok) setList(settle(((j.comments || []) as C[]).filter((c) => c.page === page || menuOf(c.sel)))); else setMsg(j.error || ""); } catch {}
+    try { const r = await fetch("/api/preview-comments"); const j = await r.json(); if (r.ok) setList(settle(((j.comments || []) as C[]).filter((c) => movedPath(c.page) === page || menuOf(c.sel)))); else setMsg(j.error || ""); } catch {}
   }, [page, settle]);
   useEffect(() => { load(); }, [load]);
   /* Undo or Redo of a comment from the bar: show the result at once */

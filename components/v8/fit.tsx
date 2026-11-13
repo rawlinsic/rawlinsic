@@ -28,7 +28,7 @@ const through = (pts: [number, number][]) =>
 /* the "and round again" label under loop and cycle diagrams is off (Nicole, Nov 11) */
 const AGAIN: Partial<Record<DiagramKind, string>> = {};
 
-export default function Fit({ kind, eyebrow, title, steps, base = "The systems you already own" }: { kind: DiagramKind; eyebrow?: string; title: string; steps: readonly Step[]; base?: string }) {
+export default function Fit({ kind, eyebrow, title, lead, steps, base = "The systems you already own" }: { kind: DiagramKind; eyebrow?: string; title: string; lead?: string; steps: readonly Step[]; base?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [art, setArt] = useState<Art | null>(null);
   const mk = useId().replace(/:/g, "");
@@ -72,6 +72,8 @@ export default function Fit({ kind, eyebrow, title, steps, base = "The systems y
       <div className="fit-head">
         {eyebrow && <p className="v8-eyebrow">{eyebrow}</p>}
         <h2 className="v8-h2">{title}</h2>
+        {/* a line under the title (John's review comment, Nov 12: meet the client where they are) */}
+        {lead && <p className="fit-lead">{lead}</p>}
       </div>
       <div className="fit-body">
         {art && (

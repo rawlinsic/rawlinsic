@@ -16,6 +16,12 @@ import { NextResponse } from "next/server";
 import { place, writeAll, writeSpecial, writeWithBreaks, type Change } from "@/lib/preview-edit-match";
 import { inText, onlyTextChanged, textSpans } from "@/lib/preview-edit-safe";
 import { BACKUP_LOCKED, isBackupVersion } from "@/lib/preview-gh";
+import { AREAS, INDUSTRIES, slugify } from "@/lib/content/site";
+import { addMove, type MovedList } from "@/lib/moved-pages";
+
+/* names that make a page's address (services and sub-sectors): renaming one moves the page, so the save also
+   records the move in lib/moved-pages.json, which redirects the old address and keeps its comments showing (Nov 12) */
+const ADDRESS_NAMES = new Set([...AREAS.flatMap((a) => a.services), ...INDUSTRIES.flatMap((i) => i.subsectors)].filter((x) => x.slug === slugify(x.name)).map((x) => x.name));
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -83,6 +89,7 @@ export async function POST(req: Request) {
 
     const changed = new Map<string, string>();
     const pending: { c: Change; why: string }[] = [];
+    const moves: [string, string][] = []; // pages this save renames (old address segment, new one)
     let applied = 0, already = 0;
     // page text in each file as it is now (worked out once per version of a file)
     const spanCache = new Map<string, { src: string; spans: [number, number][] }>();
@@ -124,9 +131,18 @@ export async function POST(req: Request) {
       if (writes.some(([path, out]) => !onlyTextChanged(path, now.get(path)!, out!))) { pending.push({ c, why: "saving it there would have changed code, not just page text" }); continue; }
       for (const [path, out] of writes) changed.set(path, out!);
       applied++;
+      if (ADDRESS_NAMES.has(c.old.trim()) && slugify(got.next)) moves.push([slugify(c.old.trim()), slugify(got.next)]);
     }
 
     const items: { path: string; mode: string; type: string; content: string }[] = Array.from(changed).map(([path, content]) => ({ path, mode: "100644", type: "blob", content }));
+    if (moves.length) {
+      try {
+        const f = await gh(`/contents/lib/moved-pages.json?ref=${encodeURIComponent(branch)}`);
+        const data = JSON.parse(Buffer.from(f.content, "base64").toString("utf8")) as { slugs: MovedList };
+        for (const [from, to] of moves) data.slugs = addMove(data.slugs || {}, from, to);
+        items.push({ path: "lib/moved-pages.json", mode: "100644", type: "blob", content: JSON.stringify(data, null, 2) + "\n" });
+      } catch { /* the list couldn't be read: the rename still saves; Claude Code adds the move by hand */ }
+    }
     if (pending.length) {
       let list = "# Edits from the preview editor that need Claude Code\n\nEach line: page, old wording, new wording, and why it couldn't be placed automatically.\n\n";
       try { const f = await gh(`/contents/EDITS-PENDING.md?ref=${encodeURIComponent(branch)}`); list = Buffer.from(f.content, "base64").toString("utf8"); } catch {}

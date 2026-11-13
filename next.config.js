@@ -33,8 +33,8 @@ const nextConfig = {
       // Old WordPress/Joomla URLs still in Google's index (Search Console
       // 404 report, 2026-10-14) -> permanent redirects to the matching page.
       { source: "/Home", destination: "/", permanent: true },
-      // Nov 12: Smart Mobility & Connected Systems was briefly renamed "... - remove" with Edit text; its address followed
-      { source: "/services/digital-solutions/smart-mobility-connected-systems-remove", destination: "/services/digital-solutions/smart-mobility-connected-systems", permanent: false },
+      /* pages renamed since (lib/moved-pages.json; Nov 12): the old address goes to the page's new one */
+      ...Object.entries(require("./lib/moved-pages.json").slugs).map(([from, to]) => ({ source: `/:path*/${from}`, destination: `/:path*/${to}`, permanent: false })),
       { source: "/about-us", destination: "/about/our-people", permanent: true },
       { source: "/our-team", destination: "/about/our-people", permanent: true },
       { source: "/team", destination: "/about/our-people", permanent: true },
@@ -59,7 +59,7 @@ const nextConfig = {
       { source: "/services/project-delivery/construction-pre-construction", destination: "/services/project-delivery/construction", permanent: true },
       // Redesign (handoff v7 section 7): old structure -> new, permanent
       { source: "/capabilities", destination: "/services", permanent: true },
-      { source: "/services/strategy-organization/executive-administrative-advisory", destination: "/services/strategy-organization/executive-advisory", permanent: true },
+      { source: "/services/strategy-organization/executive-administrative-advisory", destination: "/services/strategy-organization/executive-advisory-services", permanent: true },
       { source: "/capabilities/technology/advanced-air-mobility", destination: "/services/drones-advanced-air-mobility", permanent: true },
       { source: "/capabilities/technology/automation-integration", destination: "/services/digital-solutions/integration-automation", permanent: true },
       { source: "/capabilities/:path*", destination: "/services", permanent: true },

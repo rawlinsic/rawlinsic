@@ -29,6 +29,7 @@ import { AVIATION_PAGES, ServiceFeature, aviationCards } from "@/components/site
 import { AviationTeam } from "@/components/site/aviation";
 import { AVIATION_ROLES } from "@/lib/content/people";
 import { CaseNote, Dev, LineNote, talkFor } from "@/components/site/ui";
+import { PUBLICATIONS, TALKS } from "@/lib/content/research";
 
 const PROD = process.env.VERCEL_ENV === "production";
 const STATUS: Record<string, string> = { warn: "Proven, copy needed", gap: "Needs expert content" };
@@ -38,6 +39,10 @@ const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "preconstruct
 /* a page that shows another page's graphic after its own steps (Nicole, Nov 12: the Maintenance Programs graphic goes on
    Asset Management, where its parts now have their own pages; its winter operations part came off) */
 const FEATURE_FROM: Record<string, string> = { "asset-mgmt": "operations" };
+/* papers and talks from our team shown under a page's projects, by title from lib/content/research.ts (John's review
+   comment, Nov 12: Advanced Air Mobility Strategy & Readiness needs more than one example) */
+const READING: Record<string, string[]> = { "drone-aam": ["Lessons learned while planning for advanced air mobility", "The Evolving Landscape of Advanced Air Mobility"] };
+const names = (p: string[]) => (p.length > 1 ? `${p.slice(0, -1).join(", ")} and ${p[p.length - 1]}` : p[0] ?? "");
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
 /* one card per quote: some entries hold two quotes in one string ("…” “…") */
@@ -83,7 +88,13 @@ export default function ServiceV8({ id }: { id: string }) {
   const main = own ? tagged : related, rest = own ? related : [];
   const cases = main;
   const workTitle = own ? "Where we've done it" : "Related projects";
-  const hasWork = cases.length > 0 || done.length > 0;
+  const reading = (READING[id] ?? []).map((t) => {
+    const pub = PUBLICATIONS.find((x) => x.title === t);
+    if (pub) return { title: pub.title, href: pub.href, meta: [pub.series.split(",")[0], pub.year, names(pub.people), pub.before ? "Before Rawlins" : ""].filter(Boolean).join(" · ") };
+    const talk = TALKS.find((x) => x.title === t);
+    return talk ? { title: talk.title, href: talk.href, meta: [talk.event, talk.when, names(talk.people)].filter(Boolean).join(" · ") } : null;
+  }).filter((x): x is { title: string; href: string; meta: string } => !!x);
+  const hasWork = cases.length > 0 || done.length > 0 || reading.length > 0;
   const talk = talkFor(area.id);
   const steps = SERVICE_STEPS[id];
   const hear = quotes(s.hear);
@@ -138,7 +149,8 @@ export default function ServiceV8({ id }: { id: string }) {
         </div>
       </section>
 
-      <SectionNav items={sections} more={{ label: "Services", links: area.services.map((x) => ({ name: x.name, href: `/services/${area.slug}/${x.slug}`, current: x.id === id })) }} />
+      {/* the button names the area, so it's clear the page is one of that area's services (John's review comment, Nov 12) */}
+      <SectionNav items={sections} more={{ label: `${area.name} Services`, links: area.services.map((x) => ({ name: x.name, href: `/services/${area.slug}/${x.slug}`, current: x.id === id })) }} />
 
       <section id="hear" className="svq">
         <div className="v8-wrap svq-in">
@@ -196,6 +208,12 @@ export default function ServiceV8({ id }: { id: string }) {
             {cases.length > 0 && <ul className="sv-cases">
               {cases.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}
             </ul>}
+            {reading.length > 0 && (
+              <>
+                <h3 className="sv-rel-h">Papers and talks</h3>
+                <ul className="sv-read">{reading.map((r) => <li key={r.href}><a href={r.href} target="_blank" rel="noopener noreferrer"><b>{r.title}</b><span>{r.meta}</span></a></li>)}</ul>
+              </>
+            )}
             {rest.length > 0 && (
               <>
                 <h3 className="sv-rel-h">Related projects</h3>
