@@ -41,11 +41,11 @@ const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "preconstruct
 const FEATURE_FROM: Record<string, string> = { "asset-mgmt": "operations" };
 /* papers and talks from our team shown under a page's projects, by title from lib/content/research.ts (John's review
    comment, Nov 12: Advanced Air Mobility Strategy & Readiness needs more than one example) */
-/* each with a picture (Nicole, Nov 12: "they're too plain"): the airport from the air is from the live site's AAM page;
-   the talk's photo is Paul presenting at that symposium (the Research page's photo) */
+/* each with a picture (Nicole, Nov 12: "they're too plain"), both from the live site's AAM page. The talk doesn't use the
+   photo of Paul at that symposium: the Tennessee project beside it in the same row already shows it */
 const READING: Record<string, { t: string; photo: string }[]> = { "drone-aam": [
   { t: "Lessons learned while planning for advanced air mobility", photo: "/images/pages/aam-phase3.webp" },
-  { t: "The Evolving Landscape of Advanced Air Mobility", photo: "/images/pages/research-paul-wheeler-nashville-symposium-2025.webp" },
+  { t: "The Evolving Landscape of Advanced Air Mobility", photo: "/images/pages/skylimit.webp" },
 ] };
 const names = (p: string[]) => (p.length > 1 ? `${p.slice(0, -1).join(", ")} and ${p[p.length - 1]}` : p[0] ?? "");
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
@@ -210,21 +210,24 @@ export default function ServiceV8({ id }: { id: string }) {
           <div className="v8-wrap">
             <div className="h-row-head"><h2 className="v8-h2">{workTitle}</h2>{tagged.length > 3 && <a className="v8-link" href={`/insights/case-studies?service=${hit.service.slug}`}>All {tagged.length} projects</a>}</div>
             {done.length > 0 && <ul className="sv-done">{done.map((d) => <li key={d}>{boldLead(d)}<LineNote text={d} /></li>)}</ul>}
-            {cases.length > 0 && <ul className="sv-cases">
+            {(cases.length > 0 || reading.length > 0) && <ul className="sv-cases">
               {cases.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}
-            </ul>}
-            {reading.length > 0 && (
-              <>
-                <h3 className="sv-rel-h">Papers and talks</h3>
-                <ul className="sv-read">{reading.map((r) => (
-                  <li key={r.href}><a href={r.href} target="_blank" rel="noopener noreferrer">
+              {/* papers and talks in the same row as the projects, as the same cards (Nicole, Nov 12) */}
+              {reading.map((r) => (
+                <li key={r.href} className="pc pcx" data-reveal>
+                  <a href={r.href} target="_blank" rel="noopener noreferrer">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={r.photo} alt="" loading="lazy" />
-                    <span className="sv-read-txt"><em>{r.kind}</em><b>{r.title}</b><span>{r.meta}</span><i>{r.kind === "Paper" ? "Read the paper" : "See the talk"}</i></span>
-                  </a></li>
-                ))}</ul>
-              </>
-            )}
+                    <span className="pcx-ph"><img src={r.photo} alt="" loading="lazy" /></span>
+                    <span className="pcx-body">
+                      <span className="pcx-status">{r.kind}</span>
+                      <b>{r.title}</b>
+                      <span className="pcx-who">{r.meta}</span>
+                      <span className="pcx-more">{r.kind === "Paper" ? "Read the paper" : "See the talk"}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>}
             {rest.length > 0 && (
               <>
                 <h3 className="sv-rel-h">Related projects</h3>

@@ -28,7 +28,7 @@ const through = (pts: [number, number][]) =>
 /* the "and round again" label under loop and cycle diagrams is off (Nicole, Nov 11) */
 const AGAIN: Partial<Record<DiagramKind, string>> = {};
 
-export default function Fit({ kind, eyebrow, title, lead, entry, steps, base = "The systems you already own" }: { kind: DiagramKind; eyebrow?: string; title: string; lead?: string; entry?: string; steps: readonly Step[]; base?: string }) {
+export default function Fit({ kind, eyebrow, title, lead, steps, base = "The systems you already own" }: { kind: DiagramKind; eyebrow?: string; title: string; lead?: string; steps: readonly Step[]; base?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [art, setArt] = useState<Art | null>(null);
   const mk = useId().replace(/:/g, "");
@@ -68,7 +68,7 @@ export default function Fit({ kind, eyebrow, title, lead, entry, steps, base = "
   }, [kind, n]);
 
   return (
-    <div ref={ref} className={`fit fit-${kind}${n >= 5 ? " is-wide" : ""}${entry ? " has-entry" : ""}`} data-step={0} style={{ ["--n" as string]: n } as CSSProperties}>
+    <div ref={ref} className={`fit fit-${kind}${n >= 5 ? " is-wide" : ""}`} data-step={0} style={{ ["--n" as string]: n } as CSSProperties}>
       <div className="fit-head">
         {eyebrow && <p className="v8-eyebrow">{eyebrow}</p>}
         <h2 className="v8-h2">{title}</h2>
@@ -94,9 +94,6 @@ export default function Fit({ kind, eyebrow, title, lead, entry, steps, base = "
         <ol className="fit-steps">
           {steps.map((s, i) => (
             <li key={`${i}-${s.t}`} style={{ ["--i" as string]: i } as CSSProperties}>
-              {/* entry: the same "Start here" over every step, with a dashed way in, so any step can be the first one
-                  (John's review comment, Nov 12: meeting the client where they are, not one path) */}
-              {entry && <span className="fit-entry">{entry}</span>}
               <span className="fit-node" aria-hidden="true"><i>{String(i + 1).padStart(2, "0")}</i></span>
               {/* a step with no title is one sentence of text (the Operations & Maintenance "How we do it", Nov 12) */}
               <div className={`fit-card${s.t ? "" : " is-text"}`}>
