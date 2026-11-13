@@ -245,7 +245,7 @@ export const INDUSTRIES: Industry[] = [
     id: "growth", slug: "growing-companies", name: "Growing Companies", scene: "office", parent: "private",
     who: "Firms Who Have Outgrown Their Current Tools or Processes",
     lead: "Companies that have outgrown their spreadsheets or tools, but don't have a build team. We connect the systems you already pay for and automate the work around them.",
-    featured: ["automation", "ai", "dashboards", "data-governance", "portals"],
+    featured: ["automation", "ai", "data-governance", "dashboards", "tech-strategy", "change-mgmt"], // the six the old Private Sector page showed (project pages fixes file v1, Part 3)
     featuredCase: "cs-pv-pmo",
     projects: ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service", "cs-pv-field", "cs-pv-single", "cs-pv-sales"],
     subsectors: [],

@@ -2820,6 +2820,7 @@ export const CASES: Record<string, CaseData> = {
  "cs-tn-ipd": {
   "id": "cs-tn-ipd",
   "ch": "The department wanted a consistent project management life cycle, from planning through maintenance, with risk managed the same way on every project.",
+  "when": "2019 to 2023",
   "did": [
    "Reworked the project management life cycle from planning to maintenance",
    "Introduced risk management practices to control scope, schedule, and budget",
@@ -2947,16 +2948,14 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department set out to make project management its own division, with the roles, measures, processes, and training to manage scope, schedule, cost, and risk consistently, and to bring staff through the change.",
   "when": "Since 2025",
   "did": [
-   "Recommended the division structure and initial build-out",
-   "Drafted class specifications for new roles",
-   "Developed delivery performance measures with targets",
-   "Built change management tools: process maps, responsibility charts, and a change impact template",
-   "Drafted a web-based project delivery manual and a set of project management courses",
-   "Built a five-year work plan for the division",
-   "Next: a pilot using AI for cash-flow modeling",
    "Interviewed staff on site for two days on how projects are managed today, and analyzed the department's five-year work program",
+   "Recommended the division structure and initial build-out",
    "Mapped the current and future process, with responsibility charts and on-site workshops",
    "Wrote position descriptions and classification specifications for nine positions",
+   "Developed delivery performance measures with targets",
+   "Built change management tools: process maps, responsibility charts, and a change impact template",
+   "Built a five-year work plan for the division",
+   "Drafted a web-based project delivery manual",
    "Built eleven project manager courses, now being converted to computer-based training",
    "Identified field staffing for 31 field offices and presented recommendations on the construction division to executives"
   ],
@@ -2964,9 +2963,8 @@ export const CASES: Record<string, CaseData> = {
    "New project management organization approved in June 2026, with three new roles",
    "Final measures compiled by the working group",
    "Change impact template and first manual sections finalized",
-   "Five-year work plan, organization design, and performance measures complete",
-   "Manual and training in progress",
-   "Position descriptions, measures, change management, and organization design marked complete in September 2026"
+   "Five-year work plan, position descriptions, measures, change management, and organization design complete by September 2026",
+   "Manual and training in progress"
   ],
   "services": [
    "org-design",
@@ -3036,7 +3034,6 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [
    "Response team training held and evaluated",
-   "When debris reports disagreed, the drone data proved correct",
    "Drone program standard operating procedures final in May 2026"
   ],
   "services": [
@@ -3078,9 +3075,9 @@ export const CASES: Record<string, CaseData> = {
   "ch": "Michigan moved toward a maintenance model based on performance outcomes and needed the tools to run it.",
   "did": [
    "Helped design and implement a performance-based program for statewide highway maintenance",
-   "Field measurement of current levels of service, and outcome-based performance measures",
-   "Benchmarking and a cost model for maintenance activities",
-   "Requirements and procurement support for an enterprise asset management system"
+   "Measured current levels of service in the field, and set outcome-based performance measures",
+   "Benchmarked maintenance activities, and built a cost model for them",
+   "Wrote requirements and supported procurement for an enterprise asset management system"
   ],
   "res": [],
   "services": [
@@ -3192,7 +3189,7 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department needed its fleet, about 2,700 pieces of equipment, to stay available, reliable, and affordable.",
   "did": [
    "Led a fleet optimization program for the department's fleet of about 2,700 pieces of equipment",
-   "Predictive maintenance planning to reduce vehicle downtime and extend asset life"
+   "Planned predictive maintenance to reduce vehicle downtime and extend asset life"
   ],
   "res": [],
   "services": [
@@ -3288,9 +3285,9 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department's Division of Technology and Innovation Services, in Dover, needed a clear roadmap for innovation and technology investment, tied to agency goals.",
   "when": "2024 to 2025",
   "did": [
-   "Interviews with eight division leaders and four outside stakeholders, and a strengths and weaknesses analysis",
-   "A technology strategic plan aligned with agency goals and operating priorities",
-   "A one-page visual summary for executive alignment"
+   "Interviewed eight division leaders and four outside stakeholders, and analyzed strengths and weaknesses",
+   "Wrote a technology strategic plan aligned with agency goals and operating priorities",
+   "Made a one-page visual summary for executive alignment"
   ],
   "res": [
    "Technology strategic plan approved by the department's chief information officer in April 2025"
@@ -3324,8 +3321,8 @@ export const CASES: Record<string, CaseData> = {
   "id": "cs-va-maint",
   "ch": "The department wanted to know how its statewide performance-based maintenance contracts were working and how to improve them.",
   "did": [
-   "Statewide review of Turnkey Asset Maintenance Services (TAMS), the department's performance-based highway maintenance contracts",
-   "An action plan, procurement recommendations, and performance measures and levels of service for interstate maintenance"
+   "Reviewed Turnkey Asset Maintenance Services (TAMS), the department's performance-based highway maintenance contracts, statewide",
+   "Delivered an action plan, procurement recommendations, and performance measures and levels of service for interstate maintenance"
   ],
   "res": [
    "Process improvements that increase contractor accountability and let VDOT spend less time monitoring contractors' work"
@@ -3379,8 +3376,8 @@ export const CASES: Record<string, CaseData> = {
   "ch": "A city parks system needed a consistent way to track assets and plan capital projects.",
   "did": [
    "Helped set an asset investment strategy for 29,000 acres of parkland",
-   "A standard asset inspection protocol to inform capital planning, with a phased rollout",
-   "A framework and tool to prioritize capital needs across asset types"
+   "Developed a standard asset inspection protocol to inform capital planning, with a phased rollout",
+   "Built a framework and tool to prioritize capital needs across asset types"
   ],
   "res": [],
   "services": [
@@ -3394,7 +3391,7 @@ export const CASES: Record<string, CaseData> = {
   "id": "cs-riverside",
   "ch": "The county wanted to find savings and efficiency in how it manages fleet and facilities.",
   "did": [
-   "Operational review of fleet and facility management"
+   "Reviewed the county's fleet and facility management operations"
   ],
   "res": [],
   "services": [
@@ -3408,12 +3405,10 @@ export const CASES: Record<string, CaseData> = {
  "cs-major": {
   "id": "cs-major",
   "ch": "Three major projects: a $1.2 billion Mississippi River crossing, a $275 million river bridge, and a $2 billion light rail line.",
+  "when": "2018 to 2021",
   "did": [
-   "Partnering facilitation between the owner and contractor: project charter, risk register, issue resolution process, and team evaluations",
-   "I-74 Mississippi River Crossing, Iowa and Illinois ($1.2 billion)",
-   "I-70 Rocheport River Bridge, Missouri ($275 million)",
-   "Southwest Light Rail Transit, Minneapolis, Minnesota ($2.0 billion)",
-   "Project coordination, risk management, budget control, and multi-agency coordination across the three projects"
+   "Facilitated partnering between the owner and contractor on the I-74 Mississippi River Crossing (Iowa and Illinois), the I-70 Rocheport River Bridge (Missouri), and Southwest Light Rail Transit (Minneapolis, Minnesota): a project charter, a risk register, an issue resolution process, and team evaluations",
+   "Supported project coordination, risk management, budget control, and multi-agency coordination across the three projects"
   ],
   "res": [],
   "services": [
@@ -3653,9 +3648,9 @@ export const CASES: Record<string, CaseData> = {
   "id": "cs-db-partnering",
   "ch": "Three large projects, each with years of work between the owner and its contractor. Both sides needed a way to settle issues fast and keep working as one team through construction.",
   "did": [
-   "A design-build river bridge project: kickoff, a team mission statement with seven shared goals, an issue resolution ladder, a joint risk register, workshops through construction, and team surveys through closeout",
-   "An urban interstate design-build project: kickoff, recurring partnering workshops, and team surveys reported to both sides",
-   "A Mississippi River bridge replacement: partnering charter, workshops, and team surveys"
+   "Facilitated partnering on a design-build river bridge project: kickoff, a team mission statement with seven shared goals, an issue resolution ladder, a joint risk register, workshops through construction, and team surveys through closeout",
+   "Facilitated partnering on an urban interstate design-build project: kickoff, recurring partnering workshops, and team surveys reported to both sides",
+   "Facilitated partnering on a Mississippi River bridge replacement: a partnering charter, workshops, and team surveys"
   ],
   "res": [
    "Closeout survey and lessons learned delivered to both sides on the river bridge project"
@@ -4014,11 +4009,10 @@ export const CASES: Record<string, CaseData> = {
    "Interviewed inspectors and technicians across districts, and presented the findings to construction leadership",
    "Documented construction workflows, and outlined construction training",
    "Prepared reorganization packets for district construction and maintenance in eight districts",
-   "Supported the rollouts of construction inspection and preconstruction software"
+   "Supported the rollouts of construction inspection and preconstruction software: workflows, cutover and contract activation guidance, and user setup"
   ],
   "res": [
-   "Manual updated to the 2026 standard specifications",
-   "The construction management platform is now the primary system on active projects"
+   "Manual updated to the 2026 standard specifications"
   ],
   "services": [
    "construction",
@@ -4377,10 +4371,9 @@ export const CASES: Record<string, CaseData> = {
   "when": "Since 2025",
   "did": [
    "Mapped technical onboarding in on-site sessions, with a process map and a responsibility chart",
-   "Built an orientation curriculum framework and scripts for new employee orientation videos",
+   "Built new employee and new leader orientation: a curriculum framework, and scripts for the orientation videos",
    "Wrote standard operating procedures for each personnel transaction, with how-to guides and a decision guide",
    "Built a quality assurance framework for HR transactions",
-   "Built new employee and new leader orientation",
    "Ran a two-day HR leadership retreat, and a two-day onboarding workshop with a process map and a report",
    "Wrote a performance management toolkit: a framework, an individual performance plan template, guides, and supervisor training",
    "Presented a salary compression analysis"
