@@ -10,7 +10,9 @@ export type SvcData = { id: string; name: string; area: string; st: string; intr
   /* Nov 13 (Program & Project Delivery file, v6): sub, the pages under this one, linked under What this service covers;
      doneLinks, a "Where we've done it" line (by its bold name) that opens a project page (by project id) */
   sub?: string[]; doneLinks?: Record<string, string> };
-export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; lead?: string; steps: { t: string; d: string; services: string[] }[] }; keep: string; cases: string[];
+export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; lead?: string; /* links: each stage lists its services as links (Program & Project Delivery, Nov 13) */ links?: boolean; steps: { t: string; d: string; services: string[]; areas?: string[] }[] }; keep: string; cases: string[];
+  /* xp: "The experience behind it" on the area page (Program & Project Delivery area page file v1, Nov 13) */
+  xp?: string[];
   /* lines: a short line per service on the area page's service panels, where the area has one (Nov 12, Operations & Maintenance) */
   lines?: Record<string, string> };
 export type IndustryData = { id: string; ch: string[]; bring?: string[]; ways?: { t: string; d: string }[]; basis: string; services: string[]; people: string[][] };
@@ -2036,16 +2038,20 @@ export const AREAS: Record<string, AreaData> = {
   ],
   "lead": "From the projects an agency chooses to how it administers construction, we help owners set up the processes, decisions, and tools that make delivery consistent, and we stay while staff put them to use. We do the work with agency staff, and the agency owns the result.",
   "hear": [
-   "Every manager runs projects their own way.",
    "Projects keep missing the year they were promised.",
+   "There's grant money out there. Nobody has time to chase it.",
+   "Every manager runs projects their own way.",
    "Our procedures live in people's heads, or in five versions of the same binder.",
-   "There's grant money out there. Nobody has time to chase it."
+   "How do we choose the right delivery method",
+   "Each district administers contracts differently."
   ],
   "bring": [
-   "Project delivery manuals, playbooks, risk and quality tools, and role-based training, built from what already exists.",
    "Commitments defined precisely, readiness requirements for each project, and milestones with named owners, so leaders can act when conditions change.",
+   "Funding strategy, grant narratives, budgets, and complete application packages, ready to submit.",
+   "Project delivery manuals, playbooks, risk and quality tools, and role-based training, built from what already exists.",
    "A gap analysis of what exists, consolidated standard operating procedures and policies, and a clear inventory of what is missing, outdated, or duplicated.",
-   "Funding strategy, grant narratives, budgets, and complete application packages, ready to submit."
+   "A screening method, a criteria guide, and a decision record, so the reasons for choosing a method are on file.",
+   "A construction administration manual matched to current specifications, with approvals and decision paths written down."
   ],
   "lines": {
    "program-delivery": "Project selection, work programs, & commitment tracking",
@@ -2064,38 +2070,41 @@ export const AREAS: Record<string, AreaData> = {
   },
   "feature": {
    "title": "Across the project life cycle",
+   "links": true,
+   "lead": "A project starts in a program, moves through development and procurement, and ends with construction and close-out. Each of our services sits at one or more of those stages.",
    "steps": [
     {
      "t": "Plan",
-     "d": "Selection, prioritization, and funding",
+     "d": "Selecting projects, setting the program by year, and funding it.",
      "services": [
       "program-delivery",
-      "finance",
       "planning",
-      "grants",
+      "finance",
       "federal-aid",
-      "lpa"
+      "lpa",
+      "grants"
+     ]
+    },
+    {
+     "t": "Develop",
+     "d": "Scope, design, right of way, utilities, and environmental clearance.",
+     "services": [
+      "proj-delivery",
+      "preconstruction",
+      "alt-delivery"
      ]
     },
     {
      "t": "Procure",
-     "d": "Delivery method and procurement readiness",
+     "d": "Consultants before design, contractors before construction, and alternative delivery teams.",
      "services": [
-      "alt-delivery",
-      "procurement"
-     ]
-    },
-    {
-     "t": "Preconstruction",
-     "d": "Readiness, procedures, and coordination",
-     "services": [
-      "proj-delivery",
-      "preconstruction"
+      "procurement",
+      "alt-delivery"
      ]
     },
     {
      "t": "Build",
-     "d": "Construction administration and field consistency",
+     "d": "Construction administration, partnering, and contract oversight.",
      "services": [
       "construction",
       "partnering",
@@ -2104,18 +2113,31 @@ export const AREAS: Record<string, AreaData> = {
     },
     {
      "t": "Close out",
-     "d": "Lessons learned and the handoff to maintenance",
+     "d": "Contract close-out, lessons learned, and the handoff to maintenance.",
      "services": [
-      "program-delivery"
+      "construction",
+      "procurement"
+     ],
+     "areas": [
+      "om"
      ]
     }
    ]
   },
   "keep": "",
+  "xp": [
+   "Members of our team led major projects at Florida DOT and the North Carolina Turnpike Authority, including design-build",
+   "One of our project managers managed a 13-mile, half-billion-dollar corridor project in Las Vegas",
+   "Our founder drove the development of Nevada DOT's matrix-based project management program",
+   "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
+   "One of our right of way advisors spent 43 years in Florida DOT right of way, 33 as a supervisor or manager, and took part in more than 1,000 eminent domain mediations"
+  ],
+  /* Featured projects (area page file v1, Nov 13): the project delivery network project first; until the projects file
+     is built that is cs-pdn */
   "cases": [
-   "cs-transform",
-   "cs-major",
-   "cs-pmdiv"
+   "cs-pdn",
+   "cs-pmdiv",
+   "cs-major"
   ]
  },
  "om": {

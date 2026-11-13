@@ -12,7 +12,7 @@
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import type { DiagramKind } from "@/lib/content/v8";
 
-type Step = { t: string; d?: string };
+type Step = { t: string; d?: string; links?: { name: string; href: string }[] };
 type Art = { w: number; h: number; main: string; back?: string };
 
 /* a line through the points: straight when level (or stacked), an S-curve when it climbs */
@@ -99,6 +99,8 @@ export default function Fit({ kind, eyebrow, title, lead, steps, base = "The sys
               <div className={`fit-card${s.t ? "" : " is-text"}`}>
                 {s.t && <h3>{s.t}</h3>}
                 {s.d && <p>{s.d}</p>}
+                {/* the services at this stage (Program & Project Delivery area page, Nov 13) */}
+                {s.links?.length ? <ul className="fit-links">{s.links.map((l) => <li key={l.href}><a href={l.href}>{l.name}</a></li>)}</ul> : null}
               </div>
             </li>
           ))}

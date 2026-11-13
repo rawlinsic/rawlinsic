@@ -13,7 +13,7 @@
 import ProjectCard from "@/components/v8/project-card";
 import Rail from "@/components/v8/rail";
 import type { ReactNode } from "react";
-import { AREAS, CASES, areaHref, caseHref, isOurs, type Area, isListed } from "@/lib/content/site";
+import { AREAS, CASES, areaHref, caseHref, isOurs, serviceById, serviceHref, type Area, isListed } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, themeStyle, casePhoto, hearTitle } from "@/lib/content/v8";
@@ -23,7 +23,7 @@ import LitText from "@/components/v8/lit-text";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
-import { CaseNote, Dev, talkFor } from "@/components/site/ui";
+import { CaseNote, Dev, LineNote, talkFor } from "@/components/site/ui";
 
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
@@ -40,8 +40,16 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
   /* the area's services as listed on its page (LISTS_OFF: off the lists for now, Nov 13) */
   const listed = area.services.filter((s) => isListed(s.id));
   const many = listed.length >= 5;
+  /* each life cycle stage with its services as links, where the area asks for them (Program & Project Delivery, Nov 13) */
+  const fitSteps = L.feature.steps.map((st) => !L.feature.links ? st : {
+    ...st,
+    links: [
+      ...st.services.filter(isListed).map((id) => serviceById(id)).filter((h): h is NonNullable<typeof h> => !!h).map((h) => ({ name: h.service.name, href: serviceHref(h.service.id) })),
+      ...(st.areas ?? []).map((id) => AREAS.find((a) => a.id === id)).filter((a): a is Area => !!a).map((a) => ({ name: a.name, href: areaHref(a) })),
+    ],
+  });
   const sections: [string, string][] = [
-    ["services", "Services"], ["hear", hearTitle(L.hear)], ["fit", L.feature.title], ...(extra ? [["more", "From our work"] as [string, string]] : []),
+    ["services", "Services"], ["hear", hearTitle(L.hear)], ["fit", L.feature.title], ...(L.xp?.length ? [["experience", "The experience behind it"] as [string, string]] : []), ...(extra ? [["more", "From our work"] as [string, string]] : []),
     ...(cases.length ? [["work", "Featured projects"] as [string, string]] : []), ["talk", "Talk to us"],
   ];
 
@@ -105,9 +113,21 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
 
       <Scene steps={1} per={100} id="fit" className="sv-scene fit-scene" label={L.feature.title}>
         <div className="v8-wrap fit-in">
-          <Fit kind={T.diagram} eyebrow="How the pieces fit" title={L.feature.title} lead={L.feature.lead} steps={L.feature.steps} />
+          <Fit kind={T.diagram} eyebrow="How the pieces fit" title={L.feature.title} lead={L.feature.lead} steps={fitSteps} />
         </div>
       </Scene>
+
+      {/* The experience behind it, in the service pages' style (Program & Project Delivery area page file v1, Nov 13) */}
+      {L.xp?.length ? (
+        <section id="experience" className="sv-sec ar-xp">
+          <div className="v8-wrap">
+            <aside className="svw-xp" aria-labelledby="ar-xp-h">
+              <h2 id="ar-xp-h" className="v8-eyebrow">The experience behind it</h2>
+              <ul>{L.xp.map((x) => <li key={x}>{x}<LineNote text={x} /></li>)}</ul>
+            </aside>
+          </div>
+        </section>
+      ) : null}
 
       {/* the carried-over features: each of their sections is its own panel */}
       {extra && <span id="more" className="ar-anchor" data-nopanel aria-hidden="true" />}

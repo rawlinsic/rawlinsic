@@ -1362,3 +1362,11 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 /* Nov 13 (Program & Project Delivery file v7): the network block has six pieces now (three rows); the dashed line joins
    the middles of the first and last rows */
 .nwk-grid:has(> li:nth-child(5))::before { top: 16.7%; bottom: 16.7%; }
+
+/* Nov 13 (Program & Project Delivery area page file v1): each life cycle stage lists its services; the experience lines
+   get their own section on the area page, in the service pages' style */
+.fit-links { list-style: none; margin: 12px 0 0; padding: 12px 0 0; display: grid; gap: 6px; border-top: 1px solid rgba(165, 243, 252, 0.25); }
+.fit-links a { color: #a5f3fc; font-size: 0.95rem; font-weight: 600; line-height: 1.35; text-decoration: none; }
+.fit-links a:hover, .fit-links a:focus-visible { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.ar-xp { background: #fff; }
+.ar-xp .svw-xp { max-width: 900px; }
