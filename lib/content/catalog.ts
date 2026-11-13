@@ -1284,7 +1284,7 @@ export const SERVICES: Record<string, SvcData> = {
   "quote": true,
   "deliverTitle": "What this service covers",
   "deliver": [
-   "**Program reviews:** a statewide look at operations and maintenance: organization, budgeting, district operations, and performance management",
+   "**Program reviews:** a statewide look at maintenance and operations: organization, budgeting, district operations, and performance management",
    "**Budgeting tied to performance:** level-of-service targets and what it costs to meet them",
    "**Pavement preservation:** selecting projects with data, and timing treatments",
    "**Operating standards and procedures:** written once and applied in every district, with field checklists",
@@ -1315,7 +1315,7 @@ export const SERVICES: Record<string, SvcData> = {
    "Before founding Rawlins, our founder reviewed Pennsylvania DOT's maintenance budgeting"
   ],
   "done": [
-   "**Nevada Department of Transportation:** a statewide review of its operations and maintenance programs, work on a maintenance academy, a draft warranty administration guide for chip seals, and reviews for its pavement program.",
+   "**Nevada Department of Transportation:** a statewide review of its maintenance and operations programs, work on a maintenance academy, a draft warranty administration guide for chip seals, and reviews for its pavement program.",
    "**A state DOT:** equipment safety demonstration checklists, and training on winter operations and load securement.",
    "**A state DOT:** a winter operations tabletop exercise concept and a two-page winter weather response guide."
   ],
@@ -2153,7 +2153,7 @@ export const AREAS: Record<string, AreaData> = {
  },
  "om": {
   "id": "om",
-  "name": "Operations & Maintenance",
+  "name": "Maintenance & Operations",
   "tag": "Keeping what you own safe, working, & affordable",
   "services": [
    "asset-mgmt",
@@ -2590,7 +2590,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    // cs-nc-ipd and cs-transform
    "We've helped state transportation departments build project delivery networks: the steps, tools, and training that carry a project from concept toward construction",
    // cs-nv-om, and the 2022 and 2023 work reports for the same client (fleet, pavement program, traffic management center)
-   "We've reviewed a state transportation department's operations and maintenance programs, with follow-on work on its fleet, its pavement program, and a traffic management center",
+   "We've reviewed a state transportation department's maintenance and operations programs, with follow-on work on its fleet, its pavement program, and a traffic management center",
    // Scott Rawlins bio
    "Our founder was Deputy Director and Chief Engineer of the Nevada Department of Transportation, responsible for its daily operations",
    // bios; the same list as the Transportation basis line
@@ -3157,7 +3157,7 @@ export const CASES: Record<string, CaseData> = {
   "id": "cs-nv-om",
   "ch": "The department wanted a statewide look at how its operations, maintenance, fleet, and facilities were managed.",
   "did": [
-   "Statewide assessment of operations and maintenance programs",
+   "Statewide assessment of maintenance and operations programs",
    "Reviewed asset management, performance management, fleet and facilities, district operations, organization, budgeting, and traffic operations",
    "Ran a Maintenance Academy in two events, with a final report",
    "Surveyed employees for the operations review, with more than 200 responses",

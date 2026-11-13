@@ -40,7 +40,7 @@ const nextConfig = {
       { source: "/team", destination: "/about/our-people", permanent: true },
       { source: "/pxl-template/:slug*", destination: "/about/our-people", permanent: true },
       // Nov 11: Maintenance & Operations renamed Maintenance Programs
-      { source: "/services/operations-maintenance/maintenance-operations", destination: "/services/operations-maintenance/maintenance-programs", permanent: true },
+      { source: "/services/operations-maintenance/maintenance-operations", destination: "/services/maintenance-operations/maintenance-programs", permanent: true },
       // Content pass v7, Part 11 (Nov 11): Project Delivery services renamed and split
       { source: "/services/project-delivery/program-project-delivery", destination: "/services/program-project-delivery/program-development", permanent: true },
       { source: "/services/project-delivery/program-delivery", destination: "/services/program-project-delivery/program-development", permanent: true },
@@ -64,6 +64,10 @@ const nextConfig = {
       // Nov 13 (projects file v4): project 31 is now page A (the project delivery network), and the Nevada strategic plan's address
       { source: "/insights/case-studies/project-delivery-website-and-change-system", destination: "/insights/case-studies/a-project-delivery-network", permanent: false },
       { source: "/insights/case-studies/nevada-six-year-strategic-plan", destination: "/insights/case-studies/nevada-strategic-plan-and-action-plans", permanent: false },
+      // Nov 13 (Nicole: "everywhere it's operations and maintenance, it should be maintenance and operations"): the area's address
+      { source: "/services/operations-maintenance", destination: "/services/maintenance-operations", permanent: false },
+      { source: "/services/operations-maintenance/:svc", destination: "/services/maintenance-operations/:svc", permanent: false },
+      { source: "/insights/case-studies/nevada-operations-maintenance-review", destination: "/insights/case-studies/nevada-maintenance-operations-review", permanent: false },
       // Redesign (handoff v7 section 7): old structure -> new, permanent
       { source: "/capabilities", destination: "/services", permanent: true },
       { source: "/services/strategy-organization/executive-administrative-advisory", destination: "/services/strategy-organization/executive-advisory-services", permanent: true },

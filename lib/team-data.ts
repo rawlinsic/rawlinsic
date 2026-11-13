@@ -38,7 +38,7 @@ He had responsibility for the daily operations of the Department, as the Deputy 
 - Project Management Program based on matrix management.
 - Integrated Transportation Reliability Program focused on the proactive operation of the transportation system.
 
-From planning, design, construction, operations and maintenance, Scott maneuvered the department through federal, state, and local regulations and politics.`,
+From planning, design, construction, maintenance and operations, Scott maneuvered the department through federal, state, and local regulations and politics.`,
     categories: ['strategy'],
   },
   {
@@ -655,7 +655,7 @@ At the Federal level, Jen led national efforts in economic development and benef
     id: 30,
     name: `Ken M. McEntire, PE`,
     photo: `/images/team/kenm.webp`,
-    role: `Advisory Services: Highway Operations & Maintenance`,
+    role: `Advisory Services: Highway Maintenance & Operations`,
     location: `North Carolina`,
     phone: `+1 919-247-7707`,
     email: `kenm@rawlinsic.com`,

@@ -68,7 +68,7 @@ export const AREAS: Area[] = [
     ],
   },
   {
-    id: "om", slug: "operations-maintenance", name: "Operations & Maintenance",
+    id: "om", slug: "maintenance-operations", name: "Maintenance & Operations", // Nov 13 (Nicole): "everywhere it's operations and maintenance, it should be maintenance and operations"; the old address redirects
     tag: "Keeping what you own safe, working, & affordable", scene: "dusk", featuredCase: "cs-pbmc",
     services: [
       svc("asset-mgmt", "Asset Management", "crossing"),
@@ -305,7 +305,7 @@ export const NUMBERS: { value: string; count?: number; suffix?: string; label: s
 /* Why Rawlins (full site pass, Part 5, 1.3): five reasons, in display order.
    Home shows them as tabs, each with its own proof; Who we are numbers them. */
 export const WHY: [string, string][] = [
-  ["We've done the job", "Our people ran the programs our clients run: chief engineers, operations and maintenance leaders, technology and data chiefs, a right of way manager, a city public works director, and federal highway executives to name a few. They know how budgets, decisions, and projects move inside an agency, so what we recommend fits how your agency works."],
+  ["We've done the job", "Our people ran the programs our clients run: chief engineers, maintenance and operations leaders, technology and data chiefs, a right of way manager, a city public works director, and federal highway executives to name a few. They know how budgets, decisions, and projects move inside an agency, so what we recommend fits how your agency works."],
   ["Small enough to move fast", "We're a small and agile firm, and that works in your favor. There's no lengthy chain of approvals between you and the people doing the work. We get started quickly, adjust when things change, and get the job done."],
   ["Strategy and build under one roof", "Former agency leaders work alongside our in-house digital solutions team, so the plan and tools your project calls for come from one firm. Websites, workflows, dashboards, training, and more."],
   ["We build on systems you already own", "We use the systems and licenses you already own, and connect them. We can also build a custom solution if that's the right fit. Every build is documented and handed over, and you own the end result. We're also around to upkeep afterwards if desired."],
@@ -402,7 +402,7 @@ export const CASES: CaseIndex[] = [
   // on the live site as "Fleet Optimization & Asset Management" (Nevada page); our founder's career at the department, so before Rawlins.
   // Rawlins' own fleet work for the department is cs-nv-fleet-program.
   cs("cs-nv-fleet", "nevada-fleet-optimization", "Fleet optimization and asset management", `Nevada Department of Transportation${FOUNDER}`, ["Nevada"], "Before Rawlins", "transport", ["operations", "asset-mgmt"]),
-  cs("cs-nv-om", "nevada-operations-maintenance-review", "Operations and maintenance program review, and the work that followed", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt", "program-delivery"]),
+  cs("cs-nv-om", "nevada-maintenance-operations-review", "Maintenance and operations program review, and the work that followed", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt", "program-delivery"]),
   // Rawlins work, 2022 to 2023, as a subconsultant on the same contract as cs-nv-om (work reports and scopes read Nov 11).
   // Scope only: no findings, figures, or survey results. See CASE_STATUS.
   cs("cs-nv-fleet-program", "nevada-fleet-analysis-and-implementation", "Fleet analysis and implementation support", "Nevada Department of Transportation", ["Nevada"], "Completed", "transport", ["operations", "asset-mgmt", "fleet"]),

@@ -33,7 +33,7 @@ const REDIRECTS: Record<string, string> = {
   capabilities: "/services",
   services: "/services",
   strategy: "/services/strategy-organization",
-  operations: "/services/operations-maintenance",
+  operations: "/services/maintenance-operations",
   technology: "/services/digital-solutions",
   aam: "/services/drones-advanced-air-mobility",
   uas: "/services/drones-advanced-air-mobility",

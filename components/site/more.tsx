@@ -214,7 +214,7 @@ function personFromRoster(m: (typeof TEAM_MEMBERS)[number]): Person {
   const group: Person["group"] = ADVISORS_BY_NAME.test(m.name) ? "Advisors" : BUSINESS.test(m.role) ? "Business Operations" : SPECIALIST.test(m.role) ? "Specialists" : "Advisors";
   const areas = new Set<string>();
   if (m.categories.includes("strategy")) areas.add("strategy-organization");
-  if (m.categories.includes("operations") && group !== "Business Operations") { areas.add("program-project-delivery"); areas.add("operations-maintenance"); }
+  if (m.categories.includes("operations") && group !== "Business Operations") { areas.add("program-project-delivery"); areas.add("maintenance-operations"); }
   if (m.categories.includes("technology") || m.categories.includes("communication-brand-design")) areas.add("digital-solutions");
   if (/Aerial|Jordan Stacy|John Zuleger/.test(`${m.role} ${m.name}`)) { areas.add("drones-advanced-air-mobility"); if (!/Infrastructure Technologies|Jordan/.test(`${m.role} ${m.name}`)) areas.delete("digital-solutions"); }
   /* Nicole works across Strategy & Organization, Project Delivery, and Digital Solutions (her call, Nov 10;
