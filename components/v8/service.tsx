@@ -98,7 +98,7 @@ export default function ServiceV8({ id }: { id: string }) {
     const pub = PUBLICATIONS.find((x) => x.title === t);
     if (pub) return { kind: "Paper", photo, title: pub.title, href: pub.href, meta: [pub.series.split(",")[0], pub.year, names(pub.people), pub.before ? "Before Rawlins" : ""].filter(Boolean).join(" · ") };
     const talk = TALKS.find((x) => x.title === t);
-    return talk ? { kind: "Talk", photo, title: talk.title, href: talk.href, meta: [talk.event, talk.when, names(talk.people)].filter(Boolean).join(" · ") } : null;
+    return talk ? { kind: "Speaker", photo, title: talk.title, href: talk.href, meta: [talk.event, talk.when, names(talk.people)].filter(Boolean).join(" · ") } : null;
   }).filter((x): x is { kind: string; photo: string; title: string; href: string; meta: string } => !!x);
   const hasWork = cases.length > 0 || done.length > 0 || reading.length > 0;
   const talk = talkFor(area.id);
@@ -223,7 +223,7 @@ export default function ServiceV8({ id }: { id: string }) {
                       <span className="pcx-status">{r.kind}</span>
                       <b>{r.title}</b>
                       <span className="pcx-who">{r.meta}</span>
-                      <span className="pcx-more">{r.kind === "Paper" ? "Read the paper" : "See the talk"}</span>
+                      <span className="pcx-more">{r.kind === "Paper" ? "Read the paper" : "View event"}</span>
                     </span>
                   </a>
                 </li>
