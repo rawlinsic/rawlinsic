@@ -110,7 +110,9 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
     document.documentElement.classList.add("pe-on");
     const click = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      if (t.closest(".pe-bar")) return;
+      /* the review tools' own text is never page text: the bar, the comments list, a comment card, a pin. (Nov 12: a
+         click in the comments list while editing made that line "editable", and its text went to EDITS-PENDING.md.) */
+      if (t.closest(".pe-bar, .pc-list, .pc-pop, .pc-pin")) return;
       e.preventDefault();
       e.stopPropagation();
       const el = t.closest<HTMLElement>(LEAF);
