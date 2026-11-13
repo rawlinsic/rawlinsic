@@ -1350,3 +1350,11 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .hx-acc a.hx-thumb small { display: inline-block; margin-top: 3px; }
 .hx-acc .hx-areas > li > a.hx-top.hx-thumb b { font-size: 1.08rem; }
 .hx-acc .hx-areas > li > a.hx-top.hx-thumb { display: flex; }
+
+/* Nov 13 (Nicole: "on any pages that have projects, put a thing above with arrows on all devices"): every row of
+   projects (home, area, service, sector and mode, and project pages) slides sideways, with the arrows above it on
+   every screen; an arrow greys out when there is nothing more that way */
+.rl-btns { position: static; display: flex; justify-content: flex-end; gap: 10px; margin: 0 0 14px; }
+.rl-btns button:disabled { opacity: 0.35; cursor: default; background: #fff; color: var(--ink); }
+.h-work .h-row-head { padding-right: 0; }
+.rl-track { padding-bottom: 18px; }

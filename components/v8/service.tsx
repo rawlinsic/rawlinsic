@@ -12,6 +12,7 @@
    service pages also show Our aviation team: the six roles, then the people
    (full site pass, Parts 2 and 4). */
 import ProjectCard from "@/components/v8/project-card";
+import Rail from "@/components/v8/rail";
 import type { CSSProperties } from "react";
 import { AREAS, CASES, PAGE_STATUS, areaHref, caseHref, caseTag, isOurs, serviceById, serviceHref } from "@/lib/content/site";
 import { CASES as CASE_DATA, SERVICES } from "@/lib/content/catalog";
@@ -223,8 +224,9 @@ export default function ServiceV8({ id }: { id: string }) {
               const c = to ? byId(to) : undefined;
               return <li key={d}>{c ? <a href={caseHref(c)}>{boldLead(d)}</a> : boldLead(d)}<LineNote text={d} /></li>;
             })}</ul>}
-            {(cases.length > 0 || reading.length > 0) && <ul className="sv-cases">
-              {cases.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}
+            {(cases.length > 0 || reading.length > 0) && <Rail label={workTitle}>
+              {/* every project tagged to the page, in a row with arrows above it (Nicole, Nov 13); 3 before that */}
+              {(own ? cases : cases.slice(0, 3)).map((c) => <ProjectCard key={c.id} c={c} />)}
               {/* papers and talks in the same row as the projects, as the same cards (Nicole, Nov 12) */}
               {reading.map((r) => (
                 <li key={r.href} className="pc pcx" data-reveal>
@@ -240,11 +242,11 @@ export default function ServiceV8({ id }: { id: string }) {
                   </a>
                 </li>
               ))}
-            </ul>}
+            </Rail>}
             {rest.length > 0 && (
               <>
                 <h3 className="sv-rel-h">Related projects</h3>
-                <ul className="sv-cases sv-rel">{rest.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}</ul>
+                <Rail label="Related projects">{rest.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}</Rail>
               </>
             )}
           </div>

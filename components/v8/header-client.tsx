@@ -324,7 +324,7 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
           <label className="hx-q"><span className="sr-only">Search</span><input type="search" placeholder="Search" value={q} onChange={(e) => setQ(e.target.value)} /></label>
           {q.trim().length >= 2 ? results : (
             <div className="hx-acc">
-              <details open onToggle={solo}>
+              <details onToggle={solo}>
                 <summary>What We Do</summary>
                 <ul className="hx-areas">{data.areas.map((a) => (
                   <li key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink } as CSSProperties}>

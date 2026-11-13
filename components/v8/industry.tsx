@@ -17,6 +17,7 @@
    callers in components/site/industries.tsx. Styles: app/industry.css on top
    of app/v8.css. */
 import ProjectCard from "@/components/v8/project-card";
+import Rail from "@/components/v8/rail";
 import { allPeople } from "@/components/site/more";
 import type { CSSProperties, ReactNode } from "react";
 import {
@@ -278,9 +279,9 @@ function Work({ title, cases, all, tone }: { title: string; cases: CaseIndex[]; 
     <section id="work" className={`sv-sec ipg-work${tone ? ` is-${tone}` : ""}`}>
       <div className="v8-wrap">
         <div className="h-row-head"><h2 className="v8-h2">{title}</h2>{all && <a className="v8-link" href={all.href}>{all.label}</a>}</div>
-        <ul className="sv-cases">
+        <Rail label={title}>
           {cases.map((c) => <ProjectCard key={c.id} c={c} />)}
-        </ul>
+        </Rail>
       </div>
     </section>
   );

@@ -4,6 +4,7 @@
 import { PAGE_PHOTO } from "@/lib/content/media";
 import { casePhoto, themeStyle } from "@/lib/content/v8";
 import ProjectCard from "@/components/v8/project-card";
+import Rail from "@/components/v8/rail";
 import { CASE_EXTRA } from "@/lib/content/case-extra";
 import { AREAS, CASES, VISIBLE_INDUSTRIES, areaHref, caseHref, caseTag, industryHref, serviceById, serviceHref, slugify, type CaseIndex, CASE_STATUS } from "@/lib/content/site";
 import { CASES as CASE_DATA, SERVICES as SVC_DATA, SUBSECTORS } from "@/lib/content/catalog";
@@ -166,7 +167,7 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
         <section data-nofill className="pj-sec pj-rel">
           <div className="pg-wrap">
             <div className="h-row-head"><h2 className="pj-h">Related projects</h2><a className="v8-link" href="/insights/case-studies">All projects</a></div>
-            <ul className="sv-cases">{related.map((r) => <ProjectCard key={r.id} c={r} />)}</ul>
+            <Rail label="Related projects">{related.map((r) => <ProjectCard key={r.id} c={r} />)}</Rail>
           </div>
         </section>
       )}

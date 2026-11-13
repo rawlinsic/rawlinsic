@@ -11,6 +11,7 @@
    The Digital and Drones areas keep their carried-over features (applied
    solutions, the AAM landscape and partners). */
 import ProjectCard from "@/components/v8/project-card";
+import Rail from "@/components/v8/rail";
 import type { ReactNode } from "react";
 import { AREAS, CASES, areaHref, caseHref, isOurs, type Area } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
@@ -114,9 +115,9 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
         <section id="work" className="sv-sec ar-work">
           <div className="v8-wrap">
             <div className="h-row-head"><h2 className="v8-h2">Featured projects</h2><a className="v8-link" href={`/insights/case-studies?area=${area.slug}`}>All {area.name} projects</a></div>
-            <ul className="sv-cases">
+            <Rail label="Featured projects">
               {cases.map((c) => <ProjectCard key={c.id} c={c} />)}
-            </ul>
+            </Rail>
           </div>
         </section>
       )}
