@@ -1321,3 +1321,32 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 /* Nov 13: in the phone menu International Markets is its own heading, like Public Sector and Private Sector */
 .hx-who > li.mx-intl { padding-left: 0 !important; margin-top: 6px; }
 .hx-who > li.mx-intl > a { padding-left: 0; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* Nov 13 (Nicole's Program & Project Delivery file, v6): Project Delivery links to the two pages under it, under its
+   What this service covers cards; a "Where we've done it" line that opens its project page */
+.svd-sub { margin-top: clamp(20px, 2.4vw, 32px); }
+.svd-sub a { color: var(--head); font-weight: 600; }
+.svd-sub a i { width: 8px; height: 8px; border-radius: 50%; background: var(--a, var(--aqua)); }
+.sv-done a { color: inherit; text-decoration: underline; text-decoration-color: var(--a, var(--aqua)); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.sv-done a:hover { text-decoration-color: currentColor; }
+
+/* Nov 13 (Nicole, phone menu): every first row in each menu looks like What We Do's areas (size, weight, the line at the
+   left); Who We Work With opens level by level with its lines under the names and the modes under Transportation;
+   Our Work's featured projects open as an item; Insights keeps its pictures */
+.hx-acc .hx-areas > li > a.hx-top { display: block; padding: 12px 0 12px 14px; font-size: 1.08rem; font-weight: 600; color: inherit; box-shadow: inset 3px 0 0 var(--aqua); }
+.hx-acc .hx-areas > li > details > summary, .hx-acc .hx-areas > li > a.hx-top { margin-bottom: 4px; }
+.hx-acc .hx-d { display: block; margin-top: 3px; font-size: 0.88rem; font-weight: 400; line-height: 1.4; color: var(--muted); }
+.hx-acc .hx-areas li li > details > summary { padding: 9px 30px 9px 0; font-size: 1.02rem; font-weight: 600; color: inherit; border-bottom: 0; box-shadow: none; }
+.hx-acc .hx-areas li li > details > summary::after { position: absolute; top: 9px; right: 0; float: none; }
+.hx-acc .hx-areas li li > details > summary { position: relative; }
+.hx-acc .hx-areas li li > a.hx-kid { font-weight: 600; color: inherit; }
+.hx-acc .hx-modes > .mx-k { margin: 10px 0 0; }
+.hx-acc .hx-modes > ul { padding: 0 0 4px 12px; }
+.hx-acc .hx-thumbs { gap: 4px; }
+.hx-acc a.hx-thumb { display: flex; align-items: center; gap: 12px; }
+.hx-acc a.hx-thumb img { flex: 0 0 auto; width: 64px; height: 48px; object-fit: cover; border-radius: 8px; }
+.hx-acc a.hx-thumb > span { min-width: 0; }
+.hx-acc a.hx-thumb b { display: block; font-weight: 600; color: inherit; line-height: 1.3; }
+.hx-acc a.hx-thumb small { display: inline-block; margin-top: 3px; }
+.hx-acc .hx-areas > li > a.hx-top.hx-thumb b { font-size: 1.08rem; }
+.hx-acc .hx-areas > li > a.hx-top.hx-thumb { display: flex; }

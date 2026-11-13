@@ -4,7 +4,7 @@
    search at the top. Every area carries its own color. The menus show real
    content with pictures that mean something: area photos, projects, the
    latest items, and our people (full site pass, Part 1, 1; Part 4, 3). */
-import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type SyntheticEvent } from "react";
 
 type Link = { label: string; href: string; note?: string };
 type Hit = { label: string; kind: string; href: string };
@@ -89,6 +89,20 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
     if (!ends || today === null) return true;
     const [y, m, d] = ends.split("-").map(Number);
     return today < Date.UTC(y, m - 1, d + 1, 8);
+  };
+  /* phone menu: Who We Work With in its groups (Public Sector with Transportation Sector under it; Private Sector with Contractors) */
+  const whoGroups = useMemo(() => {
+    const g: { top: NavData["industries"][number]; kids: NavData["industries"][number][] }[] = [];
+    data.industries.forEach((x) => { if (x.child && g.length) g[g.length - 1].kids.push(x); else g.push({ top: x, kids: [] }); });
+    return g;
+  }, [data.industries]);
+  /* phone menu: opening one menu closes the others at the same level (Nicole, Nov 13: "if we expand one menu on the main
+     menu, please collapse the other one") */
+  const solo = (e: SyntheticEvent<HTMLDetailsElement>) => {
+    const d = e.currentTarget;
+    if (!d.open) return;
+    const box = d.parentElement?.tagName === "LI" ? d.parentElement.parentElement : d.parentElement;
+    box?.querySelectorAll<HTMLDetailsElement>(":scope > details, :scope > li > details").forEach((x) => { if (x !== d) x.open = false; });
   };
   const lineOf = (l: NavData["insights"][number]) => (l.next && upcoming(l.next.ends) ? l.next : l.line);
 
@@ -310,27 +324,64 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
           <label className="hx-q"><span className="sr-only">Search</span><input type="search" placeholder="Search" value={q} onChange={(e) => setQ(e.target.value)} /></label>
           {q.trim().length >= 2 ? results : (
             <div className="hx-acc">
-              <details open>
+              <details open onToggle={solo}>
                 <summary>What We Do</summary>
                 <ul className="hx-areas">{data.areas.map((a) => (
                   <li key={a.id} style={{ ["--a" as string]: a.color, ["--a-ink" as string]: a.ink } as CSSProperties}>
-                    <details><summary>{a.name}</summary>
+                    <details onToggle={solo}><summary>{a.name}</summary>
                       <ul><li><a href={a.href}>{a.name} Overview</a></li>{a.services.map((s) => <li key={s.href} className={s.child ? "is-child" : undefined}><a href={s.href}>{s.name}</a>{s.q && <span className="mx-q" title={s.q} aria-label={s.q}>?</span>}</li>)}<li><a href={a.projects}>Projects in This Area</a></li></ul>
                     </details>
                   </li>
                 ))}</ul>
               </details>
-              {/* Nov 13 (Nicole, phone screenshots: "menus are messed up"): the same groups as the computer menu, without the
-                  project lists, which made it long and ran the headings together */}
-              <details><summary>Who We Work With</summary><ul className="hx-who">{data.industries.map((x) => (
-                <li key={x.href} className={x.head ? "mx-head" : x.child ? "mx-child" : undefined}>
-                  <a href={x.href}>{x.name}</a>
-                  {x.subs.length > 0 && <ul>{x.subs.map((s) => <li key={s.href}><a href={s.href}>{s.name}</a></li>)}</ul>}
+              {/* Nov 13 (Nicole): opens level by level like What We Do: Public Sector and Private Sector, then Transportation
+                  Sector and Contractors with their lines under them, then the modes */}
+              <details onToggle={solo}><summary>Who We Work With</summary><ul className="hx-areas hx-who">{whoGroups.map(({ top, kids }) => (
+                <li key={top.href}>
+                  {kids.length > 0 || top.subs.length > 0 ? (
+                    <details onToggle={solo}><summary>{top.name}{top.who && <span className="hx-d">{top.who}</span>}</summary>
+                      <ul>
+                        <li><a href={top.href}>{top.name} Overview</a></li>
+                        {top.subs.length > 0 && <li className="hx-modes"><p className="mx-k">Modes</p><ul>{top.subs.map((m) => <li key={m.href}><a href={m.href}>{m.name}</a></li>)}</ul></li>}
+                        {kids.map((k) => (
+                          <li key={k.href}>
+                            {k.subs.length > 0 ? (
+                              <details onToggle={solo}><summary>{k.name}{k.who && <span className="hx-d">{k.who}</span>}</summary>
+                                <ul>
+                                  <li><a href={k.href}>{k.name} Overview</a></li>
+                                  <li className="hx-modes"><p className="mx-k">Modes</p><ul>{k.subs.map((m) => <li key={m.href}><a href={m.href}>{m.name}</a></li>)}</ul></li>
+                                </ul>
+                              </details>
+                            ) : <a className="hx-kid" href={k.href}>{k.name}{k.who && <span className="hx-d">{k.who}</span>}</a>}
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  ) : <a className="hx-top" href={top.href}>{top.name}{top.who && <span className="hx-d">{top.who}</span>}</a>}
                 </li>
-              ))}{data.intl && <li className="mx-intl"><a href={data.intl.href}>{data.intl.name}</a>{data.intl.note && <em className="v8-dev">{data.intl.note}</em>}</li>}</ul></details>
-              <details><summary>Our Work</summary><ul>{data.work.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>
-              <details><summary>Insights</summary><ul>{data.insights.map((l) => <li key={l.href}><a className="hx-noted" href={l.href}>{l.label}<span>{l.note}</span></a></li>)}</ul></details>
-              {aboutTopOnly ? <p className="hx-acc-top">About</p> : <details><summary>About</summary><ul>{data.about.map((l) => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></details>}
+              ))}{data.intl && <li><a className="hx-top" href={data.intl.href}>{data.intl.name}</a>{data.intl.note && <em className="v8-dev">{data.intl.note}</em>}</li>}</ul></details>
+              {/* Nov 13 (Nicole): the featured projects on phones too, as an item that opens */}
+              <details onToggle={solo}><summary>Our Work</summary><ul className="hx-areas">
+                {data.work.map((l) => <li key={l.href}><a className="hx-top" href={l.href}>{l.label}</a></li>)}
+                {data.inWorks.length > 0 && <li><details onToggle={solo}><summary>Featured Projects</summary>
+                  <ul className="hx-thumbs">{data.inWorks.map((c) => (
+                    <li key={c.href}><a className="hx-thumb" href={c.href}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={c.photo} alt="" loading="lazy" />
+                      <span><b>{c.title}</b><span className="hx-d">{c.who}</span><small className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</small>{c.note && <em className="pg-dev">{c.note}</em>}</span>
+                    </a></li>
+                  ))}</ul>
+                </details></li>}
+              </ul></details>
+              {/* Nov 13 (Nicole): Insights keeps its pictures on phones */}
+              <details onToggle={solo}><summary>Insights</summary><ul className="hx-areas hx-thumbs">{data.insights.map((l) => (
+                <li key={l.href}><a className="hx-top hx-thumb" href={l.href}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={l.photo} alt="" loading="lazy" />
+                  <span><b>{l.label}</b>{l.note && <span className="hx-d">{l.note}</span>}</span>
+                </a></li>
+              ))}</ul></details>
+              {aboutTopOnly ? <p className="hx-acc-top">About</p> : <details onToggle={solo}><summary>About</summary><ul className="hx-areas">{data.about.map((l) => <li key={l.href}><a className="hx-top" href={l.href}>{l.label}</a></li>)}</ul></details>}
             </div>
           )}
           <a href="/contact" className="hx-cta hx-cta-big">Get In Touch</a>

@@ -59,6 +59,85 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
     { t: "", d: "Write the recommendations, guidance, or method." },
     { t: "", d: "Connect it to project delivery, training, and investment decisions." },
   ] },
+  /* Nov 13 (Nicole's Program & Project Delivery file, v6): How we do it on the 13 pages */
+  "program-delivery": { title: "How we do it", steps: [
+    { t: "", d: "Establish the objectives, funding categories, commitments, and decisions the program has to support." },
+    { t: "", d: "Pull together what the agency already knows about each project, and agree what to do where information is missing." },
+    { t: "", d: "Build the criteria, the sequence, and the milestones with the people who own them, and test them on real candidate projects." },
+    { t: "", d: "Set the reporting and change-control routine, so leadership sees a problem while there is still time to act." },
+  ] },
+  finance: { title: "How we do it", steps: [
+    { t: "", d: "Agree the decision the numbers have to support." },
+    { t: "", d: "Pull the agency's own data: positions, pay, contracts, fleet, fuel, and work records." },
+    { t: "", d: "Build the analysis with finance and HR staff, and test it against the budget." },
+    { t: "", d: "Present options leadership can act on, with the assumptions on record." },
+  ] },
+  planning: { title: "How we do it", steps: [
+    { t: "", d: "Read the plans and programs the agency already has, and talk with the people who build them." },
+    { t: "", d: "Find where the long-range plan, the improvement program, and the asset plan disagree, and why." },
+    { t: "", d: "Write the guidance, the selection method, or the organization that closes the gap, with the planning staff." },
+    { t: "", d: "Hand it over with an owner and a routine for keeping it current." },
+  ] },
+  "proj-delivery": { title: "How we do it", steps: [
+    { t: "", d: "Find out how projects move today: interviews, sample projects, current manuals, and what each discipline needs. Note where the written process and actual practice differ." },
+    { t: "", d: "Define the steps, each discipline's activities, who is accountable, what each activity needs and hands over, and where reviews and escalations sit. Test the handoffs between disciplines." },
+    { t: "", d: "Build the activity pages, process diagrams, templates, and resource library. Set who owns the content and how staff ask for a revision." },
+    { t: "", d: "Pilot it on real projects, close the gaps, prepare staff, and agree how projects already under way move onto the new process." },
+  ] },
+  preconstruction: { title: "How we do it", steps: [
+    { t: "", d: "Agree where preconstruction starts and ends for this agency, and which decisions each step has to support." },
+    { t: "", d: "Map what each discipline receives, produces, approves, and hands over, and where information goes missing." },
+    { t: "", d: "Build the scoping method, the estimate checks, the handoff rules, and the project manager's resources with the staff who will use them. Test them on real projects, including the hard ones." },
+    { t: "", d: "Put them to use: prepare staff, name owners, and place projects already under way at the right point." },
+  ] },
+  construction: { title: "How we do it", steps: [
+    { t: "", d: "Map the administrative process, the governing documents, the approval thresholds, and the escalation paths. Find the real cause of the delay." },
+    { t: "", d: "Reconcile the manuals, the directives, and day-to-day practice with the people who own each one." },
+    { t: "", d: "Redesign the workflow across units, and write down the information, approvals, exceptions, and records it needs." },
+    { t: "", d: "Pilot the change, help staff take it up, and name an owner for updates." },
+  ] },
+  "alt-delivery": { title: "How we do it", steps: [
+    { t: "", d: "Assess the agency's authority, goals, staff experience, likely projects, and market." },
+    { t: "", d: "Define the internal function: who decides what, what stays with the agency, and what it needs from its technical advisors." },
+    { t: "", d: "Build the selection method, procedures, and role descriptions with the people who will own them, and test them on different kinds of projects." },
+    { t: "", d: "Use the first project to adjust the procedures." },
+  ] },
+  procurement: { title: "How we do it", steps: [
+    { t: "", d: "Map how services are acquired and managed today: the units, the demand that is coming, and the constraints." },
+    { t: "", d: "Define what a scope has to contain, how effort is estimated, and who reviews what." },
+    { t: "", d: "Write the procedures for evaluation, negotiation, management, and performance feedback with procurement staff and counsel." },
+    { t: "", d: "Line the pipeline up with the work program, and report where it backs up." },
+  ] },
+  "federal-aid": { title: "How we do it", steps: [
+    { t: "", d: "Compare what is programmed with what is ready." },
+    { t: "", d: "Find where readiness breaks: environmental work, right of way, utilities, design, or procurement." },
+    { t: "", d: "Write the guidance and the oversight steps with the people who run the program." },
+    { t: "", d: "Train the staff in responsible charge." },
+  ] },
+  lpa: { title: "How we do it", steps: [
+    { t: "", d: "Read other states' manuals and talk with peer programs." },
+    { t: "", d: "Set the program structure with a steering committee: charter, chapter authors, and schedule." },
+    { t: "", d: "Write the manual chapter by chapter with the department's own authors." },
+    { t: "", d: "Build the certification process and the training, and launch them." },
+  ] },
+  grants: { title: "How we do it", steps: [
+    { t: "", d: "Track the opportunities, and match them to what the agency is ready to do." },
+    { t: "", d: "Build the task structure, the budget, and the partners." },
+    { t: "", d: "Write the narrative to the scoring criteria, in the applicant's voice." },
+    { t: "", d: "When the award comes, help with procurement, reporting, and the work itself." },
+  ] },
+  partnering: { title: "How we do it", steps: [
+    { t: "", d: "Interview both sides' project managers, and agree who takes part and what the facilitator's role is." },
+    { t: "", d: "Hold the kickoff: charter, shared goals, risk owners, decision dates, and the issue resolution ladder." },
+    { t: "", d: "Run recurring sessions and progress surveys, and report the results to both sides." },
+    { t: "", d: "Write up each session, and carry what worked back to the department's leaders." },
+  ] },
+  "owners-rep": { title: "How we do it", steps: [
+    { t: "", d: "Agree the role in writing: what we review, who decides, and what the owner can rely on." },
+    { t: "", d: "Set the rhythm: weekly calls, monthly field reviews, and reports to leadership." },
+    { t: "", d: "Track commitments, deficiencies, and risks, and raise issues early." },
+    { t: "", d: "Build the owner's own staff into the role." },
+  ] },
 };
 
 /* Asset Management's steps before Nov 12 ("The asset life cycle"), kept for the record: the page now shows How we do it. */

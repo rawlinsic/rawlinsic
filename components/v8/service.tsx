@@ -56,7 +56,8 @@ const quotes = (hear: string[]) => hear.flatMap((h) => h.split(/["”]\s*["“]/
 /* Nov 12 (Nicole's Operations & Maintenance file): "**Label:** text" shows the label in bold */
 /* the same "**Name:** line" as a card: the name on top, its line under it (Nicole, Nov 12: "each item shown as a name and a line").
    The line's first letter is capitalized in CSS only, so Edit text still finds the words as written. */
-const nameLine = (t: string) => { const m = t.match(/^\*\*(.+?):?\*\*\s*([\s\S]*)$/); return m ? <><b className="svd-name">{m[1]}</b><span className="svd-line">{m[2]}</span></> : t; };
+/* a name written with a trailing comma ("**Handoffs from design through award into construction,** written as…") drops it on the card */
+const nameLine = (t: string) => { const m = t.match(/^\*\*(.+?)[:,]?\*\*\s*([\s\S]*)$/); return m ? <><b className="svd-name">{m[1]}</b><span className="svd-line">{m[2]}</span></> : t; };
 const boldLead = (t: string) => { const m = t.match(/^\*\*(.+?)\*\*\s*([\s\S]*)$/); return m ? <><b>{m[1]}</b> {m[2]}</> : t; };
 /* an intro paragraph with its links to other services (Asset Management names the four services under it) */
 const linked = (p: string, links?: Record<string, string>) => {
@@ -174,6 +175,12 @@ export default function ServiceV8({ id }: { id: string }) {
           <ul className={`svd-cards${s.deliver.length > 6 ? " is-3 is-4" : s.deliver.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
             {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span><div className="svd-t">{nameLine(d)}<LineNote text={d} /></div></li>)}
           </ul>
+          {/* the pages under this one (Project Delivery: Preconstruction and Construction; Nicole's file v6, Nov 13) */}
+          {s.sub?.length ? (
+            <ul className="sv-chips svd-sub">
+              {s.sub.map((r) => { const h = serviceById(r); return h ? <li key={r}><a href={serviceHref(r)}><i aria-hidden="true" />{h.service.name}</a></li> : null; })}
+            </ul>
+          ) : null}
         </div>
       </Scene>
 
@@ -210,7 +217,12 @@ export default function ServiceV8({ id }: { id: string }) {
         <section id="work" className="sv-sec">
           <div className="v8-wrap">
             <div className="h-row-head"><h2 className="v8-h2">{workTitle}</h2>{tagged.length > 3 && <a className="v8-link" href={`/insights/case-studies?service=${hit.service.slug}`}>All {tagged.length} projects</a>}</div>
-            {done.length > 0 && <ul className="sv-done">{done.map((d) => <li key={d}>{boldLead(d)}<LineNote text={d} /></li>)}</ul>}
+            {done.length > 0 && <ul className="sv-done">{done.map((d) => {
+              /* a line that opens its project page (Project Delivery's North Carolina line; Nicole's file v6, Nov 13) */
+              const to = Object.entries(s.doneLinks ?? {}).find(([k]) => d.startsWith(`**${k}`))?.[1];
+              const c = to ? byId(to) : undefined;
+              return <li key={d}>{c ? <a href={caseHref(c)}>{boldLead(d)}</a> : boldLead(d)}<LineNote text={d} /></li>;
+            })}</ul>}
             {(cases.length > 0 || reading.length > 0) && <ul className="sv-cases">
               {cases.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}
               {/* papers and talks in the same row as the projects, as the same cards (Nicole, Nov 12) */}

@@ -6,7 +6,10 @@ export type SvcData = { id: string; name: string; area: string; st: string; intr
      another service; done: the "Where we've done it" lines ("**Label:** text" sets the bold lead-in) */
   links?: Record<string, string>; done?: string[];
   /* the What we deliver section's title where the page has its own (Operations & Maintenance: "What this service covers") */
-  deliverTitle?: string };
+  deliverTitle?: string;
+  /* Nov 13 (Program & Project Delivery file, v6): sub, the pages under this one, linked under What this service covers;
+     doneLinks, a "Where we've done it" line (by its bold name) that opens a project page (by project id) */
+  sub?: string[]; doneLinks?: Record<string, string> };
 export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; lead?: string; steps: { t: string; d: string; services: string[] }[] }; keep: string; cases: string[];
   /* lines: a short line per service on the area page's service panels, where the area has one (Nov 12, Operations & Maintenance) */
   lines?: Record<string, string> };
@@ -254,29 +257,32 @@ export const SERVICES: Record<string, SvcData> = {
   "id": "program-delivery",
   "name": "Program Development",
   "area": "delivery",
-  "st": "warn",
-  "intro": "A credible work program connects investment priorities with the projects the agency can actually advance. We help agencies clarify selection methods, readiness requirements, milestones, and responsibilities, so leadership has a clearer basis for its commitments and can act when conditions change.",
+  "st": "ok",
+  "intro": "A credible work program connects investment priorities with the projects the agency can actually advance. We help agencies clarify selection methods, readiness requirements, milestones, and responsibilities, so leadership has a clearer basis for its commitments and can act when conditions change.\n\nAn agency's commitments to its legislature and the public come down to events: a project let, started, substantially completed, or open to traffic. We help define those commitments precisely and manage the milestones behind them.",
   "hear": [
-   "Projects keep missing the year they were promised",
-   "It's hard to explain why one project was chosen over another",
-   "Our multi-year highway and bridge program is over-programmed",
-   "Program decisions are siloed by funding program"
+   "Projects keep missing the year they were promised.",
+   "It's hard to explain why one project was chosen over another.",
+   "Our multi-year highway and bridge program is over-programmed.",
+   "Program decisions are siloed by funding program."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Investment priorities and program alignment: a selection method the department can explain",
-   "Work program development: five-year programs built around what each project needs",
-   "Program controls, milestones, and performance reporting",
-   "Program assessments that become an implementation roadmap, early wins first",
-   "Consultant and professional services management: fee methods, selection, and prequalification",
-   "Program quality assurance",
-   "Program and project leadership for complex, multi-agency work",
-   "Interim program leadership and program management offices"
+   "**Investment priorities:** agency objectives turned into selection criteria and an investment process the department can explain",
+   "**Project selection by program:** selection criteria, score sheets, and screening tools for each funding program",
+   "**Work program development:** which projects go in which year, based on what is ready, what is funded, and who is available to deliver them",
+   "**Program controls and reporting:** milestones, owners, exception rules, and the reporting leaders use to act",
+   "**Program assessments and roadmaps:** why the system is missing its commitments, and a sequence of improvements with owners",
+   "**Program development manuals:** selection, programming, and the call for projects, written down for the people who run them",
+   "**Workload and capacity planning:** staff effort by discipline matched to the program, and a plan for what goes to consultants",
+   "**Program quality assurance**",
+   "**Program and project leadership** for complex, multi-agency work, including interim program leadership and program management offices"
   ],
   "walk": [
-   "A selection method the department can defend",
-   "Interim milestones and status reporting leadership can act on",
-   "A roadmap that puts early wins first"
+   "A written project selection method, with its criteria and data definitions",
+   "A sequenced program, with its assumptions and decisions on record",
+   "Milestones for each project, and reporting that shows leaders which ones are slipping",
+   "A roadmap that names the decisions and resources each improvement needs"
   ],
   "industries": [
    "transport",
@@ -293,10 +299,13 @@ export const SERVICES: Record<string, SvcData> = {
    "One of our project managers managed a 13-mile, half-billion-dollar corridor project in Las Vegas",
    "Our founder drove the development of Nevada DOT's matrix-based project management program"
   ],
+  "done": [
+   "**A state DOT:** we wrote more than thirty State of Practice reports on its programs, then drafted its Program Development Manual, worked through project selection templates with 14 programs, built fillable score sheets, and built a bridge screening and prioritization tool, with tutorials for its program managers.",
+   "**Tennessee Department of Transportation:** we built a project utilization program, with staff effort by discipline for every region, that the department used to build its consultant acquisition plan. We also assessed its program development and administration division and proposed its organization.",
+   "**Nevada Department of Transportation:** as part of an operations review, we delivered a data-driven process for choosing pavement projects, and we supported the first year of its Pavement Improvement Program."
+  ],
   "src": {
-   "intro": "Current rawlinsic.com copy",
-   "hear": "Partner Field Guide v1",
-   "walk": "Partner Field Guide v1"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "preconstruction": {
@@ -304,32 +313,38 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Preconstruction",
   "area": "delivery",
   "st": "ok",
-  "intro": "A project advances more reliably when every discipline knows what it must provide and when the next team needs it. We help agencies set up delivery frameworks, scoping methods, project management resources, and clearer handoffs, so staff share one process and the agency keeps its own technical judgment and decisions.",
+  "intro": "A project advances more reliably when every discipline knows what it must provide and when the next team needs it. We help agencies set up delivery frameworks, scoping methods, project management resources, and clearer handoffs, so staff share one process and the agency keeps its own technical judgment and decisions.\n\nPreconstruction is where a project gets defined: its scope, its estimate, its right of way, its utilities, its environmental clearance, and who manages it. We help make each of those a process staff can repeat, with responsibilities and dependencies written down.",
   "hear": [
-   "Projects are scoped differently every time",
-   "Construction and maintenance see the design too late",
-   "New project managers don't know where to start",
-   "Every manager runs projects their own way"
+   "Projects are scoped differently every time.",
+   "Construction and maintenance see the design too late.",
+   "New project managers don't know where to start.",
+   "Right of way and utilities reach the project team too late.",
+   "The estimate depends on who prepared it."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Project delivery frameworks from concept study to readiness for advertisement, with an interactive manual",
-   "Concept scoping and project evaluation",
-   "Handoffs from design through award into construction, written as business rules the agency's systems can follow",
-   "Project management functions: the unit, the manual, and staff capability",
-   "Estimating methods and tools",
-   // from the Right of Way page, which is off the site (Nicole, Nov 12: right of way is part of preconstruction)
-   "Right of way built into project delivery: activities, handoffs, and a right of way strategy meeting"
+   "**Project delivery frameworks** from concept study to readiness for advertisement, with an interactive manual",
+   "**Concept scoping and project evaluation**",
+   "**Handoffs from design through award into construction,** written as business rules the agency's systems can follow",
+   "**Project management functions:** the unit, the manual, and staff capability",
+   "**Estimating methods and tools**",
+   "**Right of way built into project delivery:** activities, handoffs, and a right of way strategy meeting",
+   "**Right of way programs:** assessments, procedures, appraiser career paths, and proficiency programs for right of way staff",
+   "**Utilities:** coordination, relocation practice, and what other states do",
+   "**Environmental process reviews:** program reviews, reevaluations, and clearances"
   ],
   "walk": [
    "An agency-owned interactive manual and process map",
    "Scoring forms staff apply themselves",
-   "A transition plan that moves projects already underway onto the new process"
+   "A transition plan that moves projects already underway onto the new process",
+   "A handoff map and business rules for design through award",
+   "An estimating procedure and a review checklist",
+   "Right of way activities, and a strategy meeting, built into the project schedule"
   ],
   "industries": [
    "transport"
   ],
-  /* not set by the content pass: the neighboring Project Delivery services */
   "related": [
    "proj-delivery",
    "program-delivery",
@@ -337,7 +352,6 @@ export const SERVICES: Record<string, SvcData> = {
   ],
   "xp": [
    "We've built project delivery frameworks for three state DOTs, and each one looks different",
-   // from the Right of Way page (Ron Crew bio)
    "One of our right of way advisors spent 43 years in Florida DOT right of way, 33 as a supervisor or manager, and took part in more than 1,000 eminent domain mediations"
   ],
   /* Featured projects, in this order (content pass v7, 2.4). cs-pmdiv, cs-pdn, and cs-transform carry their notes. */
@@ -348,18 +362,23 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-pdn",
    "cs-transform"
   ],
+  "done": [
+   "**A state DOT:** inside its project delivery framework, we built the tools project teams use: a Master Scope of Work template and generator, a Cost Estimating Tool, a risk register and Risk Management Plan, a Project Commitment Document, study report templates, quality control checklists, and request forms for utilities, railroad, right of way, geotechnical, hydraulic, and bridge work.",
+   "**Tennessee Department of Transportation:** we assessed its right of way program and its utilities function, reviewed its environmental program, and worked with its regions on environmental reevaluations and clearance for maintenance activities. We surveyed other state DOTs on utility cost estimates and relocation reimbursement for a policy presentation to the Commissioner. We drafted right of way proficiencies with its statewide representatives, and a classification series for its right of way agents and appraisers.",
+   "**Another state DOT:** an interactive Project Delivery Manual with chapters on scope, schedule, cost and budget, risk, quality, change management, stakeholder coordination, and project controls.",
+   "**A state DOT:** we documented its project delivery workflows by discipline with its design staff, in a week on site.",
+   "**A state DOT:** proficiency programs for its utilities, hydraulics, geotechnical, roadway design, and environmental specialists, each reviewed with the department's own experts."
+  ],
   "src": {
-   "intro": "Site content pass v7 (Nov 11 2026)",
-   "hear": "Site content pass v7 (Nov 11 2026)",
-   "walk": "Site content pass v7 (Nov 11 2026)"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "owners-rep": {
   "id": "owners-rep",
   "name": "Owner's Representation",
   "area": "delivery",
-  "st": "warn",
-  "intro": "We represent the owner: protecting your interests, coordinating contractors, and checking that scope, quality, schedule, and standards are met.",
+  "st": "ok",
+  "intro": "We represent the owner: protecting your interests, coordinating contractors, and checking that scope, quality, schedule, and standards are met.\n\nWhen an agency contracts work out, someone on its side has to read the contract against what is happening in the field. We do that alongside the agency's staff: regular calls with the contractor, field reviews, a close look at deficiencies and remedies, and advice when performance falls short. The agency keeps its decisions.",
   "hear": [
    "We outsource the work. We need the contractor held to it.",
    "Our projects are late or over budget.",
@@ -367,11 +386,14 @@ export const SERVICES: Record<string, SvcData> = {
    "Budget and risk have to hold up under public scrutiny."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Representation of the owner's interests",
-   "Contractor and consultant coordination",
-   "Scope, quality, schedule, and standards oversight",
-   "Commitment and risk tracking"
+   "**Representation of the owner's interests**",
+   "**Contractor and consultant coordination**",
+   "**Scope, quality, schedule, and standards oversight**",
+   "**Commitment and risk tracking**",
+   "**Contract start-up:** onboarding the contractor, mobilization, and launch",
+   "**Performance reviews:** field reviews, deficiency and remedy calls, and scoring against the contract"
   ],
   "walk": [
    "A single point of accountability on the owner's side",
@@ -397,10 +419,12 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-txmaint",
    "cs-major"
   ],
+  "done": [
+   "**Tennessee Department of Transportation:** through the first year of two performance-based maintenance contracts: onboarding calls for mobilization and launch, weekly calls with each contractor and the department on contract administration, a monthly ride-along with both contractors and region leadership, calls with inspectors on deficiencies and remedies, and advice to the region when a performance score fell short.",
+   "**A state DOT:** guidance to the department and its contractors on contract language and oversight, and a workshop with department leadership and the contracting industry on what the contract language means."
+  ],
   "src": {
-   "intro": "live",
-   "hear": "Partner Field Guide v1",
-   "walk": "Written from our records"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "alt-delivery": {
@@ -408,21 +432,28 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Alternative Delivery",
   "area": "delivery",
   "st": "ok",
-  "intro": "Choosing an alternative delivery method also changes the owner's job. We help agencies prepare their organization, staff, procedures, and decision methods for that change, and we support method selection and procurement readiness while the agency keeps its decisions.",
+  "intro": "Choosing an alternative delivery method also changes the owner's job. We help agencies prepare their organization, staff, procedures, and decision methods for that change, and we support method selection and procurement readiness while the agency keeps its decisions.\n\nFaster delivery and lower cost are reasons to try a new method. Whether they follow depends on the project, the market, how risk is shared, and how ready the agency is to be that kind of owner.",
   "hear": [
-   "A first project under a new delivery method",
-   "Risk that no one has allocated",
-   "Choosing the right delivery method"
+   "This is our first project under a new delivery method.",
+   "There is risk on this project that no one has allocated.",
+   "How do we choose the right delivery method?",
+   "We want to use alternative delivery, and no one inside owns it."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Alternative delivery program development: roles, manuals, procedures, and training for the agency's own team",
-   "Delivery method selection across design-build, progressive design-build, construction manager at risk (also called construction manager/general contractor), and public-private partnerships",
-   "Procurement readiness: scoring criteria and document review"
+   "**Alternative delivery program development:** roles, manuals, procedures, and training for the agency's own team",
+   "**Delivery method selection** across design-build, progressive design-build, construction manager at risk (also called construction manager/general contractor), and public-private partnerships",
+   "**Procurement readiness:** scoring criteria and document review",
+   "**The alternative delivery organization:** the division, its roles, and position descriptions",
+   "**Design-build procurement manuals and documents**",
+   "**Bridge bundling:** which bridges to bundle, and how to procure the bundles"
   ],
   "walk": [
    "A delivery method recommendation with selection criteria",
-   "Delivery method manuals, procedures, and training"
+   "Delivery method manuals, procedures, and training",
+   "A program design with roles and decision rights",
+   "A decision record that gives the reasons, not only a ranking"
   ],
   "industries": [
    "transport",
@@ -443,33 +474,47 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-partnering",
    "cs-db-partnering"
   ],
+  "done": [
+   "**Tennessee Department of Transportation:** we wrote its Design-Build Procurement Manual and flowcharts for every delivery method, and drafted an adjusted-score design-build request for proposals. Our study of contracting methods for maintenance ended in a workshop and a final report recommending a design-build job order contract for its safety improvement program.",
+   "**A state DOT:** national research on progressive design-build, peer review questions, and a State of the Practice Workshop.",
+   "**A state DOT:** an alternative delivery and public-private partnership screening tool and selection matrix, built into its project delivery framework. For its bridges: bundling options, a bundling list with maps by district, and procurement recommendations.",
+   "**A state DOT:** a new division for major projects, public-private partnerships, and tolling, defined from its organization structure to position descriptions for the whole division. Before that, for the same department: a primer for its public-private partnership division, position descriptions for its alternative delivery project managers, and alternative delivery proficiencies reviewed with its experts."
+  ],
   "src": {
-   "intro": "Written from our records",
-   "hear": "Written from our records",
-   "walk": "Based on partnering records, proposals, and the current site"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "procurement": {
   "id": "procurement",
   "name": "Consultant & Contractor Procurement",
   "area": "delivery",
-  "st": "warn",
-  "intro": "We help organizations stay compliant and buy the services they need consistently, from solicitation through contract administration and closeout.",
+  "st": "ok",
+  "intro": "We help organizations stay compliant and buy the services they need consistently, from solicitation through contract administration and closeout.\n\nConsultant work is often acquired through steps that don't connect: the scope, the effort estimate, the evaluation, the negotiation, and what the manager expects afterward. We map that process with the units that run it and write the procedures and templates. Where it helps, we build the workflow into a system staff use every day.",
   "hear": [
-   "Consultant fees vary for comparable work",
-   "Contracts industry will bid on, administered the same way in every district"
+   "Consultant fees vary for comparable work.",
+   "We need contracts industry will bid on, administered the same way in every district.",
+   "Every advertisement gets assembled from scratch."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Procurement advisory from solicitation to closeout",
-   "Consultant contract administration",
-   "Cost and price analysis and negotiation"
+   "**Procurement advisory** from solicitation to closeout",
+   "**Consultant contract administration**",
+   "**Cost and price analysis and negotiation**",
+   "**Consultant and professional services management:** fee methods, selection, and prequalification",
+   "**Policies and procedures manuals** for professional services",
+   "**Scope templates** by contract type and discipline",
+   "**Advertisement and selection:** one-phase and two-phase processes, evaluation criteria, and scoring",
+   "**Effort estimating and negotiation tools**",
+   "**Consultant acquisition planning:** what goes to consultants, and when",
+   "**Contract tracking and close-out**",
+   "**Contracting workflow systems:** intake, routing, scoring, generated letters, and invoice review"
   ],
   "walk": [
-   "Scope and solicitation development",
-   "Proposal evaluation and source selection",
-   "Cost and price analysis and negotiation",
-   "Contract administration, compliance, and closeout"
+   "A procurement process that connects scope, effort, evaluation, negotiation, and contract management",
+   "Manuals, templates, and flowcharts staff use",
+   "Procedures for contract administration, compliance, and closeout",
+   "A working system, when the agency wants one"
   ],
   "industries": [
    "transport",
@@ -483,10 +528,13 @@ export const SERVICES: Record<string, SvcData> = {
   "xp": [
    "One of our procurement specialists brings 35 years of government procurement in transportation and engineering services"
   ],
+  "done": [
+   "**Tennessee Department of Transportation:** we assessed how the department buys consultant services, then wrote its Professional Services Policies and Procedures Manual, Design-Build Procurement Manual, and Negotiations Manual, all finalized in July 2023, with flowcharts for every delivery method. Later came a contract close-out process, scope templates by contract type and discipline, guidance on running a two-phase advertisement, an advertisement request form, and templates for negotiation memos and rate analysis.",
+   "**A state DOT:** a national best practices report on consultant contract administration, approved in October 2025; general engineering services scopes; and a man-hour estimating tool. Then we built its contracting workflow into a working system: intake forms, an advertisement request board, a proposal scoring engine, contract routing, letters generated from records, and invoice review. Two of the tools became standalone web applications in the department's own account.",
+   "**A state DOT:** proficiency programs for its procurement staff (solicitation and contracts, headquarters purchasing, quality and training) and for its professional services specialists."
+  ],
   "src": {
-   "intro": "live",
-   "hear": "Written from our records",
-   "walk": "Past proposal language"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "row": {
@@ -538,27 +586,31 @@ export const SERVICES: Record<string, SvcData> = {
   "id": "construction",
   "name": "Construction",
   "area": "delivery",
-  "st": "warn",
-  "intro": "Consistent construction administration depends on current guidance, clear decisions, and workable coordination among field staff, finance, contracts, suppliers, and contractors. We help agencies find the gaps in those processes, close them, and put more usable procedures in place.",
+  "st": "ok",
+  "intro": "Consistent construction administration depends on current guidance, clear decisions, and workable coordination among field staff, finance, contracts, suppliers, and contractors. We help agencies find the gaps in those processes, close them, and put more usable procedures in place.\n\nThe work reaches past the construction office. Payments involve finance and contractors. Materials information involves suppliers and laboratories. A manual may depend on a directive issued somewhere else. We bring those units together and write down what they agree.",
   "hear": [
-   "Each district administers contracts differently",
-   "New construction software is in place, but the workflows still live on paper",
-   "Inspectors and technicians need a clear path to proficiency",
-   "Contract time, compliance paperwork, and payment cause the most friction with contractors"
+   "Each district administers contracts differently.",
+   "New construction software is in place, but the workflows still live on paper.",
+   "Inspectors and technicians need a clear path to proficiency.",
+   "Contract time, compliance paperwork, and payment cause the most friction with contractors.",
+   "Our manuals and our directives don't say the same thing."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Construction administration and policy: change orders, claims review, approval thresholds, and contractor payments",
-   // TODO: Rawlins drafts standard specifications for a client that isn't cleared. Add specifications back only when cleared.
-   "Construction manuals, policies, and inspection procedures",
-   "Construction software workflows",
-   "Construction and maintenance input at every step of project development",
-   "Construction, materials testing, and bridge inspection proficiency programs"
+   "**Construction administration and policy:** change orders, claims review, approval thresholds, and contractor payments",
+   "**Construction manuals, policies, and inspection procedures**",
+   "**Construction software workflows**",
+   "**Construction and maintenance input** at every step of project development",
+   "**Construction, materials testing, and bridge inspection proficiency programs**",
+   "**Field office staffing and organization**",
+   "**Claims and issue support:** the record organized, the issues laid out, and the discussion facilitated"
   ],
   "walk": [
    "A construction administration manual and inspection procedures",
    "Software workflows staff actually use",
-   "Proficiency programs for inspectors and technicians"
+   "Proficiency programs for inspectors and technicians",
+   "Reconciled guidance, with an owner for updates"
   ],
   "industries": [
    "transport",
@@ -574,30 +626,42 @@ export const SERVICES: Record<string, SvcData> = {
    "Our team includes a former Arkansas DOT Chief Engineer of Operations who started as a field construction engineer",
    "A former Michigan DOT Engineer of Operations and Maintenance on our team chaired its negotiations with industry, which refined specifications, standard plans, and construction practices"
   ],
+  "done": [
+   "**A state DOT:** we interviewed seven districts, surveyed peer states, and briefed construction leadership. Then we wrote a Construction Administration Manual matched to the department's 2026 standard specifications, with flow charts for calendar-day and working-day contracts and guidance on change orders.",
+   "**Tennessee Department of Transportation:** we built a construction technician proficiency program with task sheets for every level, rolled it out through academy workshops in the regions, and completed it in April 2025. The materials and tests program is complete, and the department now runs it itself. A bridge inspection program followed, with its kickoff set for April 2025.",
+   "**Another state DOT:** we identified field staffing for 31 field offices and presented recommendations on its construction division to executives.",
+   "**A state DOT:** proficiency programs for its construction engineers and its materials and tests engineers, each reviewed with the department's own experts.",
+   "**A state DOT:** we assessed three of its platforms (design and construction documents, capital program management, and inspection) for overlap and integration, built a materials source inventory, and reviewed contractor claims with its districts."
+  ],
   "src": {
-   "intro": "Based on Gulf South DOT Task 8 records; Southeastern DOT proficiency work orders; bios",
-   "hear": "Written from our records",
-   "walk": "Based on Tennessee and Louisiana records"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "lpa": {
   "id": "lpa",
   "name": "Local Public Agency Programs",
   "area": "delivery",
-  "st": "warn",
-  "intro": "Local agencies deliver federal-aid projects with lean teams. We help states and local agencies with the manuals, oversight, certification, and training that keep those projects moving.",
+  "st": "ok",
+  "intro": "Local agencies deliver federal-aid projects with lean teams. We help states and local agencies with the manuals, oversight, certification, and training that keep those projects moving.\n\nA state answers for the federal-aid projects its local agencies deliver. We help the state set up the program: who does what at headquarters, in the districts, and at the local agency; a manual that covers a project from start to closeout; a certification process; and training built on the manual.",
   "hear": [
-   "Local agencies need clear manuals and oversight",
-   "Federal requirements land on lean teams"
+   "Local agencies need clear manuals and oversight.",
+   "Federal requirements land on lean teams.",
+   "Each district oversees local projects its own way."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Local public agency manuals, oversight, and certification",
-   "Training for local agencies"
+   "**Local public agency manuals, oversight, and certification**",
+   "**Training for local agencies**",
+   "**Program structure:** roles for headquarters, districts, and local agencies",
+   "**Manual chapters** from federal-aid basics through financial management, including agencies that let their own contracts",
+   "**Core training and Responsible Charge training**",
+   "**The local programs office:** assessment and organization"
   ],
   "walk": [
    "Local agency manuals and certification steps",
-   "Training for local agency staff"
+   "Training for local agency staff",
+   "An oversight policy"
   ],
   "industries": [
    "transport",
@@ -612,10 +676,13 @@ export const SERVICES: Record<string, SvcData> = {
    "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
    "Our team includes the California Department of Transportation's former Chief of Planning and Local Assistance"
   ],
+  "done": [
+   "**A state DOT:** we analyzed seven states' manuals, interviewed five peer states, and proposed the program structure. Then we drafted an eleven-chapter Local Public Agency Manual, a certification process, and an oversight policy, and developed a five-module core training course and Responsible Charge training modules.",
+   "**Tennessee Department of Transportation:** we assessed its Local Programs division and proposed its organization.",
+   "**A state DOT:** proficiency programs for its local programs, state aid, and bridge grant specialists."
+  ],
   "src": {
-   "intro": "Based on Gulf South DOT LPA manual work; bios",
-   "hear": "Written from our records",
-   "walk": "Based on Tennessee and Louisiana records"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "grants": {
@@ -631,11 +698,13 @@ export const SERVICES: Record<string, SvcData> = {
    "We're issuing grants of our own, and the solicitation has to draw the right responses."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Funding opportunity matching",
-   "Federal grant applications: task structure, budget, narrative",
-   "Issuing grants and solicitations on an agency's behalf",
-   "Turning awards into working programs"
+   "**Funding opportunity matching**",
+   "**Federal grant applications:** task structure, budget, narrative",
+   "**Partners and support:** letters of support and coordination with the partners an application names",
+   "**Issuing grants and solicitations on an agency's behalf**",
+   "**Turning awards into working programs**"
   ],
   "walk": [
    "A complete competitive application with task structure, budget, and measurement plan",
@@ -656,31 +725,41 @@ export const SERVICES: Record<string, SvcData> = {
    "A former Federal Highway Administration executive on our team helped 13 division offices roll out new federal grant programs",
    "Our proposal and grant team writes competitive federal applications"
   ],
+  "done": [
+   "**Tennessee Department of Transportation Aeronautics Division:** we kept a tracker of funding opportunities and prepared the department's applications. A State Transportation Innovation Council grant was awarded in September 2025, and we helped put it to work: training sites, equipment procurement, and progress reports. We also prepared federal applications for the department: a SMART grant (2024), a Rural and Tribal Assistance grant (2025), and a digital construction grant (2026). In 2025 we helped with a construction technology grant application as well.",
+   "**A state DOT:** a federal Port Security Grant application for drone port security.",
+   "**A state DOT:** bridge bundle packages prepared for a grant application."
+  ],
   "src": {
-   "intro": "aviation catalog (internal)",
-   "hear": "Partner Field Guide v1",
-   "walk": "aviation catalog (internal)"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "finance": {
   "id": "finance",
   "name": "Finance & Budget",
   "area": "delivery",
-  "st": "warn",
-  // Nov 12 (Nicole): split from Finance, Budget & Procurement. Every line was on that page; the walk lines restate its What we hear lines.
-  "intro": "We help organizations put resources where they count, with budgets tied to what the program has to deliver.",
+  "st": "ok",
+  "intro": "We help organizations put resources where they count, with budgets tied to what the program has to deliver.\n\nMany of the budget questions agencies bring us are about a decision: what a reorganization will cost, whether to contract work out, how many people a function needs, what a pay change does to next year's request. We build the analysis from the agency's own numbers, with its finance and HR staff, so the answer holds up when it is presented.",
   "hear": [
-   "Budgets aren't tied to what the program has to deliver",
-   "Our maintenance budget is hard to explain"
+   "Budgets aren't tied to what the program has to deliver.",
+   "Our maintenance budget is hard to explain.",
+   "We want to reorganize, and we have to stay inside the budget."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Financial and utilization analysis",
-   "Performance-based budgeting"
+   "**The cost of organizational change:** what a new structure costs in wages and benefits, position by position",
+   "**Pay structure analysis:** salary surveys, compression analysis, and the budget effect of pay changes",
+   "**Staffing and cost analysis:** what a function costs to run today, set against leading practice",
+   "**Contract financial analysis:** the financial effect of contracting work out, built from the agency's contracts, fleet, fuel, and staffing records",
+   "**Performance-based budgeting:** budgets tied to condition and service targets",
+   "**Program funds management:** budget partitions, target allocations, and how estimate changes are handled",
+   "**Financial and utilization analysis**"
   ],
   "walk": [
    "Budgets tied to what the program has to deliver",
-   "A budget that is easier to explain"
+   "A budget that is easier to explain",
+   "An analysis the agency can rerun when the numbers change"
   ],
   "industries": [
    "transport",
@@ -694,34 +773,41 @@ export const SERVICES: Record<string, SvcData> = {
   "xp": [
    "Florida DOT's former Interim Assistant Secretary of Finance and Administration is on our team"
   ],
+  "done": [
+   "**Tennessee Department of Transportation:** we worked out what the department's new structure would cost in wages and benefits, re-analyzed its pay structure after state pay increases, and finalized the structure across all bureaus against the next fiscal year's budget. We also delivered a staffing and cost analysis of its county maintenance facilities, part of a financial analysis of performance-based maintenance contracting, and presented it to department leadership.",
+   "**Pennsylvania Department of Transportation · our founder's work before Rawlins:** maintenance budgeting."
+  ],
   "src": {
-   "intro": "Split from Finance, Budget & Procurement (Nov 12 2026)",
-   "hear": "Written from our records",
-   "walk": "Restated from the What we hear lines; needs the team"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "planning": {
   "id": "planning",
   "name": "Statewide & Metropolitan Planning",
   "area": "delivery",
-  "st": "gap",
-  // Nov 12 (Nicole): new in the menu. The text is the Regional & Metropolitan Planning Support page's (that mode is off the site). No Rawlins project; the deliver and walk lines describe what we offer. Nothing on statewide planning yet.
-  "intro": "Metropolitan planning organizations answer to federal performance and certification rules with lean staffs. People on our team worked with them from the federal and state side: at the Federal Highway Administration, where one worked with all eighteen in California and another trained planning organizations in performance-based planning, and as Chief of Planning and Local Assistance at the California Department of Transportation.",
+  "st": "ok",
+  "intro": "A long-range plan, an improvement program, and a work program each make a promise. We help agencies keep the three connected, so what the plan calls a priority is what gets programmed, and what gets programmed can be delivered.\n\nFor a state department, that is the planning function itself: how it is organized, how the Statewide Transportation Improvement Program is built and kept current, and how it lines up with the asset management plan. For a metropolitan planning organization, it is meeting federal performance and certification rules with a lean staff.",
   "hear": [
-   "Federal performance-based planning and reporting requirements",
-   "Keeping the transportation improvement program and the work program current",
-   "Getting ready for a federal certification review",
-   "MPOs need help with performance reporting and certification"
+   "The statewide program and the asset management plan don't agree.",
+   "Keeping the transportation improvement program and the work program current takes everything we have.",
+   "A federal certification review is coming.",
+   "The federal performance-based planning and reporting requirements keep growing."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Performance-based planning and reporting",
-   "Project selection and prioritization methods",
-   "Transportation improvement program and work program support",
-   "Performance measures and progress tracking",
-   "Getting ready for federal certification reviews"
+   "**The planning organization:** how long-range planning, short-range planning, multimodal, freight, and local programs are organized and staffed",
+   "**Statewide Transportation Improvement Program guidance:** grouped projects, fiscal constraint, and how the program lines up with the asset management plan",
+   "**Performance-based planning and reporting**",
+   "**Project selection and prioritization methods**",
+   "**Transportation improvement program and work program support**",
+   "**Performance measures and progress tracking**",
+   "**Getting ready for federal certification reviews**",
+   "**Planning staff development:** proficiency programs for forecasting, modeling, data visualization, and statewide planning"
   ],
   "walk": [
+   "A planning organization with clear roles",
+   "Written guidance for the statewide program",
    "Performance measures and a reporting routine built around the federal requirements",
    "A project selection method the board can explain",
    "A readiness review ahead of certification"
@@ -741,33 +827,44 @@ export const SERVICES: Record<string, SvcData> = {
    "A former Federal Highway Administration executive on our team worked with state departments, metropolitan planning organizations, and tribal and local governments on new federal grant programs",
    "Our team includes the California Department of Transportation's former Chief of Planning and Local Assistance"
   ],
+  "done": [
+   "**Tennessee Department of Transportation:** we assessed its long range planning division, with input from the Federal Highway Administration and three metropolitan planning organizations, and its local programs, multimodal transportation, and freight and logistics divisions. We also documented the proposed reorganization of the whole planning bureau.",
+   "**A state DOT:** we wrote Statewide Transportation Improvement Program guidance into its Program Development Manual, and white papers on how that program works with the asset management plan and the state's priority program.",
+   "**A state DOT:** position descriptions for its statewide planning, metropolitan planning organization, and rural planning organization specialists, reviewed with the department's experts, and proficiency programs for its planning specialists, including statewide planning, finalized in 2025."
+  ],
   "src": {
-   "intro": "Regional & Metropolitan Planning Support page (bios; no Rawlins project)",
-   "hear": "Same page, plus one line from Local Public Agency & Federal-Aid Programs",
-   "walk": "Same page"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "proj-delivery": {
   "id": "proj-delivery",
   "name": "Project Delivery",
   "area": "delivery",
-  "st": "warn",
-  // Nov 12 (Nicole): new in the menu, with Preconstruction and Construction under it. Every line is from those two pages or the area page.
-  "intro": "From concept study to construction closeout, we help owners set up the processes, handoffs, and tools that make project delivery consistent, and we stay while staff put them to use.",
+  "st": "ok",
+  "intro": "From concept study to construction closeout, we help owners set up the processes, handoffs, and tools that make project delivery consistent, and we stay while staff put them to use.\n\nA project delivery framework sets out the steps, what each discipline does in each one, who is accountable, and what has to be complete before a project moves on. We build it with the agency's own experts, from what they already have.",
   "hear": [
-   "Every manager runs projects their own way",
-   "Our procedures live in people's heads, or in five versions of the same binder",
-   "Each district administers contracts differently"
+   "Every manager runs projects their own way.",
+   "Our procedures live in people's heads, or in five versions of the same binder.",
+   "Each district administers contracts differently.",
+   "We find out what's missing when the next group is ready to start."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Project delivery frameworks from concept study to readiness for advertisement, with an interactive manual",
-   "Project delivery manuals, playbooks, risk and quality tools, and role-based training, built from what already exists",
-   "Construction and maintenance input at every step of project development"
+   "**Project delivery frameworks** from concept study to readiness for advertisement, with an interactive manual",
+   "**Project delivery manuals, playbooks, risk and quality tools, and role-based training,** built from what already exists",
+   "**Construction and maintenance input** at every step of project development",
+   "**The project management organization:** the unit, its roles, position descriptions, and measures",
+   "**Project manager's manuals and training**",
+   "**Toolkits:** scope of work, cost estimating, risk, commitment and status reports, and request forms",
+   "**Rollout:** orientation, pilot projects, and a plan for projects already under way",
+   "**A home for it:** a website with a searchable library, computer-based training, and a way for staff to ask for changes"
   ],
   "walk": [
    "An agency-owned interactive manual and process map",
    "A transition plan that moves projects already underway onto the new process",
+   "A toolkit and training staff can reach when they need them",
+   "A way to keep it current: owners, versions, and a comment process",
    "A construction administration manual and inspection procedures"
   ],
   "industries": [
@@ -788,30 +885,49 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-pdn",
    "cs-transform"
   ],
+  "done": [
+   "**A state DOT:** we built its project delivery framework with the department's own experts: the process mapped step by step for every discipline, with more than 200 task sheets. The first version went to the department in December 2025. Since then: training for project managers, orientation sessions for leadership and delivery staff, pilot projects, a toolkit, computer-based training, its own website, and version 2.3 in October 2026.",
+   "**Another state DOT:** we designed its new project management organization, approved in June 2026, with three new roles and nine position descriptions. With it came an interactive Project Delivery Manual, eleven project manager courses, and executive measures with a dashboard.",
+   "**Tennessee Department of Transportation:** we worked the department's transition projects in two regions, with project schedules, master scopes of work, risk assessment meetings, and risk registers. An onboarding process we wrote for consultants was shared with all regions for statewide use.",
+   "**A state DOT:** position descriptions and proficiency programs for its project managers and senior project managers, finalized in 2025. At the department's request they cover project funding, value engineering, and Federal Highway Administration major projects.",
+   "**North Carolina Department of Transportation:** integrated program delivery."
+  ],
+  "sub": [
+   "preconstruction",
+   "construction"
+  ],
+  "doneLinks": {
+   "North Carolina Department of Transportation": "cs-nc-ipd"
+  },
   "src": {
-   "intro": "Put together from the area page and the Preconstruction page (Nov 12 2026)",
-   "hear": "Area, Preconstruction and Construction pages",
-   "walk": "Preconstruction and Construction pages"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "federal-aid": {
   "id": "federal-aid",
   "name": "Federal-Aid Programs",
   "area": "delivery",
-  "st": "warn",
-  // Nov 12 (Nicole): split from Local Public Agency & Federal-Aid Programs. Thin: one deliver line was on that page, the other is from the Other Government Services page.
-  "intro": "For a federal program to succeed, programmed funding must turn into projects that are ready to advance. We help states and local agencies get there.",
+  "st": "ok",
+  "intro": "For a federal program to succeed, programmed funding must turn into projects that are ready to advance. We help states and local agencies get there.\n\nReadiness is the hard part: environmental work, right of way, utilities, design, and procurement each carry schedule and funding risk. So does oversight, when a local agency delivers the project and the state answers for it. We help agencies write the guidance, set the oversight, and prepare the staff who carry both.",
   "hear": [
-   "Programmed funds don't turn into projects ready to advance",
-   "New federal programs come with new rules"
+   "Programmed funds don't turn into projects ready to advance.",
+   "New federal programs come with new rules.",
+   "Our local agencies are in responsible charge, and they need to know what that means."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Federal-aid program development and compliance",
-   "Local public agency manuals and training for the staff in responsible charge of federal-aid projects"
+   "**Federal-aid program development and compliance**",
+   "**Local public agency manuals and training** for the staff in responsible charge of federal-aid projects",
+   "**Statewide Transportation Improvement Program guidance:** grouped projects and fiscal constraint",
+   "**Program guidance for federal funding programs:** selection score sheets, eligibility, and the federal correspondence that goes with them",
+   "**Oversight of local projects,** sized to the risk",
+   "**Benefit-cost analysis** with the federal tools"
   ],
   "walk": [
-   "A program that moves funded projects to construction"
+   "A program that moves funded projects to construction",
+   "Written guidance for the federal programs staff run",
+   "Oversight steps sized to the risk"
   ],
   "industries": [
    "transport",
@@ -826,35 +942,39 @@ export const SERVICES: Record<string, SvcData> = {
    "A former Federal Highway Administration California Division leader on our team helped deliver the state's federal-aid program with Caltrans, 18 metropolitan planning organizations, and hundreds of local governments",
    "A former Federal Highway Administration executive on our team supported the leaders of 13 division offices"
   ],
+  "done": [
+   "**A state DOT:** in a draft manual for its local agencies, chapters on federal-aid basics, environmental permitting, right of way and utilities, procurement, construction administration, and financial management, with Responsible Charge training modules. For its own programs: Statewide Transportation Improvement Program guidance, score sheets and countermeasure tables for its highway safety improvement program, and a benefit-cost ratio for an interstate project, calculated with the federal tool.",
+   "**Another state DOT:** a proficiency program for its federal-aid funding specialists, worked through with the department in a week on site and finalized, with position descriptions for the same roles."
+  ],
   "src": {
-   "intro": "Local Public Agency & Federal-Aid Programs page (Gulf South DOT LPA manual work; bios)",
-   "hear": "Written from our records",
-   "walk": "Based on Tennessee and Louisiana records"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "partnering": {
   "id": "partnering",
   "name": "Partnering",
   "area": "delivery",
-  "st": "warn",
-  // Nov 12 (Nicole): split from Alternative Delivery & Partnering. Lines are from that page and the Contractors page.
-  "intro": "We facilitate partnering between public owners and contractors on major projects. We set it up and run it: the charter, the risk register, the issue resolution ladder, and team evaluations through closeout.",
+  "st": "ok",
+  "intro": "We facilitate partnering between public owners and contractors on major projects. We set it up and run it: the charter, the risk register, the issue resolution ladder, and team evaluations through closeout.\n\nPartnering works best when it is set up before the pressure builds: who is at the table, who owns each risk, what gets decided by when, and where an issue goes when the people closest to it can't settle it.",
   "hear": [
-   "No agreed way to raise and resolve issues under schedule pressure",
-   "Owner and contractor relationships strained by schedule and risk",
-   "A first progressive design-build or construction manager project with a public owner"
+   "We have no agreed way to raise and resolve issues under schedule pressure.",
+   "Schedule and risk have strained the relationship between owner and contractor.",
+   "This is our first progressive design-build or construction manager project with a public owner."
   ],
-  "quote": false,
+  "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   // Backed by Rawlins partnering contracts in Fiscal > Contracts and Templates > Partnering. Jacob's portfolio describes partnering as limited because it doesn't include these records.
-   "Risk allocation and partnering facilitation: project charters, issue resolution ladders, joint risk workshops, and team evaluations",
-   "A kickoff that sets the charter, shared goals, communication protocols, and an issue resolution ladder before the pressure builds",
-   "Joint risk workshops, recurring partnering sessions, and anonymous team surveys reported to both sides",
-   "Owner and contractor coordination on major projects"
+   "**Risk allocation and partnering facilitation:** project charters, issue resolution ladders, joint risk workshops, and team evaluations",
+   "**A kickoff** that sets the charter, shared goals, communication protocols, and an issue resolution ladder before the pressure builds",
+   "**Joint risk workshops, recurring partnering sessions, and anonymous team surveys** reported to both sides",
+   "**Owner and contractor coordination** on major projects",
+   "**Statewide partnering programs** between a department and its construction industry",
+   "**Industry forums** between a department and its contractors"
   ],
   "walk": [
    "A signed partnering charter and an issue resolution ladder",
-   "Regular team evaluations through the project"
+   "Regular team evaluations through the project",
+   "A summary report after each session"
   ],
   "industries": [
    "transport",
@@ -869,10 +989,13 @@ export const SERVICES: Record<string, SvcData> = {
   "xp": [
    "We've facilitated partnering, with risk registers and issue resolution, on a $1.2 billion Mississippi River crossing and a $2 billion light rail line"
   ],
+  "done": [
+   "**A state DOT and its contractor, a pilot design-build project:** interviews with both project managers, partnering workshops, progress surveys, summary reports, and a meeting with the department's leaders on what partnering brought to the pilot.",
+   "**A contractor on an interstate project:** quarterly partnering meetings and surveys.",
+   "**A state DOT and a work zone industry association:** the first forum between the department and the industry, prepared and moderated, with interviews on both sides beforehand."
+  ],
   "src": {
-   "intro": "Contractors page (partnering records)",
-   "hear": "Alternative Delivery & Partnering and Contractors pages",
-   "walk": "Based on partnering records, proposals, and the current site"
+   "page": "Nicole's Program & Project Delivery file, v6 (Nov 13, 2026), Part 2"
   }
  },
  "asset-mgmt": {
@@ -1893,7 +2016,7 @@ export const AREAS: Record<string, AreaData> = {
  "delivery": {
   "id": "delivery",
   "name": "Program & Project Delivery",
-  "tag": "Getting programs & projects built",
+  "tag": "Programs, projects, procurement, & funding",
   "services": [
    "program-delivery",
    "finance",
@@ -1909,17 +2032,34 @@ export const AREAS: Record<string, AreaData> = {
    "partnering",
    "owners-rep"
   ],
-  "lead": "From the projects an agency chooses to how it administers construction, we help owners set up the processes, decisions, and tools that make delivery consistent, and we stay while staff put them to use.",
+  "lead": "From the projects an agency chooses to how it administers construction, we help owners set up the processes, decisions, and tools that make delivery consistent, and we stay while staff put them to use. We do the work with agency staff, and the agency owns the result.",
   "hear": [
    "Every manager runs projects their own way.",
+   "Projects keep missing the year they were promised.",
    "Our procedures live in people's heads, or in five versions of the same binder.",
    "There's grant money out there. Nobody has time to chase it."
   ],
   "bring": [
    "Project delivery manuals, playbooks, risk and quality tools, and role-based training, built from what already exists.",
+   "Commitments defined precisely, readiness requirements for each project, and milestones with named owners, so leaders can act when conditions change.",
    "A gap analysis of what exists, consolidated standard operating procedures and policies, and a clear inventory of what is missing, outdated, or duplicated.",
    "Funding strategy, grant narratives, budgets, and complete application packages, ready to submit."
   ],
+  "lines": {
+   "program-delivery": "Project selection, work programs, & commitment tracking",
+   "finance": "Cost, staffing, & budget analysis for agency decisions",
+   "planning": "Planning organization, program guidance, & federal requirements",
+   "proj-delivery": "Delivery frameworks, manuals, & project management",
+   "preconstruction": "Scoping, estimating, right of way, utilities, & handoffs",
+   "construction": "Construction administration, manuals, & proficiency programs",
+   "alt-delivery": "Program setup, method selection, & procurement readiness",
+   "procurement": "Procurement manuals, scopes, selection, & contract administration",
+   "federal-aid": "Program guidance, oversight, & project readiness",
+   "lpa": "Manuals, certification, oversight, & training",
+   "grants": "Funding strategy, federal applications, & putting awards to work",
+   "partnering": "Charters, risk workshops, & issue resolution",
+   "owners-rep": "Contract oversight on the owner's side"
+  },
   "feature": {
    "title": "Across the project life cycle",
    "steps": [

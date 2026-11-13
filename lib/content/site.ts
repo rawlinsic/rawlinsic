@@ -43,7 +43,7 @@ export const AREAS: Area[] = [
   },
   {
     id: "delivery", slug: "project-delivery", name: "Program & Project Delivery",
-    tag: "Getting programs & projects built", scene: "construction", featuredCase: "cs-transform",
+    tag: "Programs, projects, procurement, & funding", scene: "construction", featuredCase: "cs-transform",
     services: [
       /* content pass v7, 2.1 (Nov 11): Construction & Pre-Construction split in two; Program & Project Delivery renamed.
          Nov 12 (Nicole's list for this menu, in her order): Finance, Budget & Procurement split into Finance & Budget and
@@ -496,17 +496,12 @@ export const PAGE_STATUS: Record<string, string> = {
   mqa: "Content status: Jacob asks that the handbook's final status be confirmed. Our work report says version 1.1 was finalized.",
   fleet: "Content status: Jacob's Nov 10 edition calls this a proposed service and says to get the actual fleet work products before advancing it. The Nevada work is that, and his documents don't have it. Worth telling him. Nevada: the department's master agreement limits publishing information from the work. This page says what we did and nothing about what we found. Scott to confirm with the prime.",
   traffic: "Content status: Jacob's Nov 10 edition marks investment prioritization and reliability performance as proposed services, and says a full operations strategy has not been delivered. The page offers all three without claiming a project. The best-practice reviews rest on one of his interviews. He says to verify which were finalized.",
-  /* Nov 12 (Nicole's list for the Program & Project Delivery menu). The new and split pages hold only lines the site
-     already had; each note says where they came from. Nicole to review. */
-  finance: "Content status: new page (Nov 12, from Nicole's list for this menu). Split from Finance, Budget & Procurement: the budgeting lines are here. The only project behind it is from before Rawlins. Nicole to review.",
-  procurement: "Content status: split from Finance, Budget & Procurement (Nov 12): the procurement lines stayed here. Nicole to review.",
-  planning: "Content status: new page (Nov 12, from Nicole's list for this menu). Its text is the Regional & Metropolitan Planning Support page’s, which describes what we offer. No Rawlins project yet, and nothing here is about statewide planning yet.",
-  "proj-delivery": "Content status: new page (Nov 12, from Nicole's list for this menu). Put together from lines on the Preconstruction and Construction pages and the area page. Nicole to review.",
-  "alt-delivery": "Content status: split from Alternative Delivery & Partnering (Nov 12): the partnering lines moved to Partnering. Nicole to review.",
-  partnering: "Content status: new page (Nov 12, from Nicole's list for this menu). Split from Alternative Delivery & Partnering, with lines from the Contractors page. Nicole to review.",
-  "federal-aid": "Content status: new page (Nov 12, from Nicole's list for this menu). Split from Local Public Agency & Federal-Aid Programs. Thin: it needs more from the team.",
-  lpa: "Content status: split from Local Public Agency & Federal-Aid Programs (Nov 12): the federal-aid lines moved to Federal-Aid Programs, and the planning organization line to Statewide & Metropolitan Planning. Nicole to review.",
-  grants: "Content status: renamed from Grants & Funding (Nov 12). Checked against the project records: federal grant applications are backed by three projects, and one of them covers the awarded projects. Not found in any project record: funding opportunity matching, issuing grants and solicitations for an agency, and turning awards into working programs. Those lines come from the internal aviation catalog. Nicole to say whether they stay.",
+  /* Nov 13: the "To confirm" notes in Nicole's Program & Project Delivery file (v6), preview only. Finance & Budget, Project
+     Delivery, Alternative Delivery, Consultant & Contractor Procurement, Local Public Agency Programs, and Partnering have none. */
+  "program-delivery": "Content status: Interim program leadership and program management office staffing are on the live site as services, so the line stays. No project in our records shows them delivered yet, and Jacob's portfolio asks leadership to define them before they are marketed as a standard service.",
+  planning: "Content status: No metropolitan planning organization has been a Rawlins client yet. The metropolitan lines describe what we offer and what our people did in earlier roles. The statewide lines are Rawlins work.",
+  "federal-aid": "Content status: Two states' work is behind this page so far, and most of it is local agency work.",
+  grants: "Content status: Issuing grants and solicitations for an agency comes from our aviation team's interviews. No project in our records shows it yet. Applications are listed as prepared, and the one award is named.",
   // TODO(launch): Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.
   "owners-rep": "Content status: Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.",
   // TODO(launch): the only work behind this page is cs-hi's client. Same note as cs-hi.
