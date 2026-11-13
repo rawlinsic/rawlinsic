@@ -25,6 +25,7 @@ import {
   type CaseIndex, type Industry, type Subsector, PAGE_STATUS, INTL, isListed,
 } from "@/lib/content/site";
 import { INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
+import WhoRing from "@/components/v8/who-ring";
 import { INDUSTRY_PHOTO } from "@/lib/content/media";
 import { casePhoto } from "@/lib/content/v8";
 import { EVENTS, NEWS, eventsByTime } from "@/lib/content/news";
@@ -384,7 +385,6 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
     ...(d.ch.length ? [["hear", "Challenges we hear"] as Nav] : []),
     ...(d.ways?.length ? [["ways", "How firms work with us"] as Nav] : []),
     ["help", "How we can help"], // Nicole's wording (preview edit, Nov 11); was "Services we provide"
-    ...(ind.id === "private" ? [["dot", "Working with a DOT"] as Nav] : []),
     ...(intl ? [["abroad", INTL.abroad.title] as Nav, ["region", "Where you'll find us"] as Nav] : []),
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ...(work.length ? [["work", "Featured projects"] as Nav] : []),
@@ -402,6 +402,8 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
   const more: SnMore | undefined = subs.length ? undefined : { label: "Who We Work With", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) };
   return (
     <Page sections={sections} hero={hero} more={more}>
+      {/* the home page's Who we work with ring (Nicole, Nov 13) */}
+      {ind.id === "transport" && <WhoRing />}
       {d.ch.length > 0 && <Hear title="Challenges we hear" items={d.ch} bring={d.bring} />}
       {/* Contractors & Engineering Firms only (Who we work with, Nov 11, 1.2) */}
       {d.ways?.length ? (
@@ -410,12 +412,8 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
         </Route>
       ) : null}
       <ServiceCards id="help" title="How we can help" ids={helpIds(ind)} tone="pale" />
-      {/* stays on Private Sector, now the overview (Who We Work With file v1, Nov 13) */}
-      {ind.id === "private" && (
-        <Route id="dot" title="When your project depends on a state DOT">
-          <RouteList check ordered={false} stops={PRIV.dot.map((d) => ({ d: <>{d}<LineNote text={d} /></> }))} />
-        </Route>
-      )}
+      {/* "When your project depends on a state DOT" is off Private Sector (Nicole, Nov 13: "delete"); its two lines stay in
+          lib/content/catalog.ts PRIV.dot */}
       {intl && (
         <Route id="abroad" title={INTL.abroad.title}>
           <RouteList check ordered={false} stops={INTL.abroad.items.map((x) => ({ d: <>{x.t}{x.flag && <> <Dev>Content status: {x.flag}</Dev></>}</> }))} />

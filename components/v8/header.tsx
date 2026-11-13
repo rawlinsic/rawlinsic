@@ -42,7 +42,8 @@ export default function Header() {
       services: a.services.filter((s) => isListed(s.id)).map((s) => ({ name: s.name, href: `/services/${a.slug}/${s.slug}`, q: undefined as string | undefined, child: !!s.parent })),
       projects: `/insights/case-studies?area=${a.slug}`,
     })),
-    industries: VISIBLE_INDUSTRIES.map((i) => {
+    /* Federal Government and Local Governments are off the menu for now (Nicole, Nov 13); their pages stay up */
+    industries: VISIBLE_INDUSTRIES.filter((i) => !["fed", "local"].includes(i.id)).map((i) => {
       const feature = caseById(IND_CARD[i.id] ?? i.projects[0]);
       /* Nov 12 (Nicole): Public Sector and Private Sector are headlines with no line under them; Transportation Sector
          and Contractors sit under them. Each headline still opens its own page. */

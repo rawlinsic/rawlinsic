@@ -1386,3 +1386,7 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .pj-did-h { margin: 0 0 12px; color: #0b8aa6; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
 .pj-did-list a { color: inherit; text-decoration: underline; text-decoration-color: #22d3ee; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .pj-did-list a:hover { text-decoration-color: currentColor; }
+
+/* Nov 13 (Nicole): Who we are, "What sets us apart" in big letters, centered, on the row's own blue, above the row */
+.wr-title { position: relative; z-index: 2; padding: clamp(64px, 8vw, 110px) 0 clamp(8px, 1.5vw, 20px); background: var(--navy-grad); text-align: center; }
+.wr-title h2 { margin: 0; color: #22d3ee; font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; text-shadow: 0 0 22px rgba(34, 211, 238, 0.5); }

@@ -92,6 +92,8 @@ export function AboutIndex() {
   );
 }
 
+const SHOW_STORY = false;
+
 export function WhoWeAre() {
   /* Scott's card: the same details every other card shows (title, location), not his former role, and it opens
      his bio on this page (Nicole, Nov 11). His quote, from the live site's Our People page, sits with his photo. */
@@ -116,21 +118,26 @@ export function WhoWeAre() {
         )} />
       {/* a gallery of team photos in place of the one big photo (Nicole, Nov 11) */}
       <PhotoGallery photos={TEAM_GALLERY} />
-      <EdSplit k="Our story" title="From one agency to many">
-        {/* About: How we work and Our story file v1 (Nov 13) */}
-        <div className="ab-story">
-          <p className="ab-story-lead">Scott Rawlins spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer. He then led an infrastructure asset management practice at a global consulting firm. In 2017 he started Rawlins, so that people who have run agency programs could work alongside the people running them today.</p>
-          <p>Advising agency leaders on how to organize and deliver their programs is where the firm started, and it is still a large part of our work. Since 2017 we have added drone and advanced air mobility work, and an in-house team that builds websites, integrations, automation, dashboards, training, and AI tools.</p>
-          <p>Most of our work is with state departments of transportation. We also work with local governments, contractors, engineering firms, and private companies.</p>
-          <p>More than 25 of our people came from public agencies. Our team works across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>
-          <p>Some projects on this site come from Scott&apos;s earlier work, or from work our people did before they joined us. Each of those is marked Before Rawlins.</p>
-        </div>
-      </EdSplit>
+      {/* Our story is off this page for now (Nicole, Nov 13: "delete this section on about for now"); SHOW_STORY brings it back */}
+      {SHOW_STORY && (
+        <EdSplit k="Our story" title="From one agency to many">
+          {/* About: How we work and Our story file v1 (Nov 13) */}
+          <div className="ab-story">
+            <p className="ab-story-lead">Scott Rawlins spent 17 years at the Nevada Department of Transportation, including as Deputy Director and Chief Engineer. He then led an infrastructure asset management practice at a global consulting firm. In 2017 he started Rawlins, so that people who have run agency programs could work alongside the people running them today.</p>
+            <p>Advising agency leaders on how to organize and deliver their programs is where the firm started, and it is still a large part of our work. Since 2017 we have added drone and advanced air mobility work, and an in-house team that builds websites, integrations, automation, dashboards, training, and AI tools.</p>
+            <p>Most of our work is with state departments of transportation. We also work with local governments, contractors, engineering firms, and private companies.</p>
+            <p>More than 25 of our people came from public agencies. Our team works across the United States, and members of our team are based in Canada, South Africa, and the United Arab Emirates.</p>
+            <p>Some projects on this site come from Scott&apos;s earlier work, or from work our people did before they joined us. Each of those is marked Before Rawlins.</p>
+          </div>
+        </EdSplit>
+      )}
       <Grown eyebrow="how we've grown" title="Evolving impact" />
       {/* the same row as the home page's "What sets us apart" (Nicole, Nov 11). "Where our people have been" was
           removed: each person's former role now leads their bio, under "Before Rawlins". "Meet the team" was
           removed too. */}
-      <WhyRow items={whyItems(tvPeople(stripPeople()), !PROD)} />
+      {/* "What sets us apart" in big letters, centered, above the row (Nicole, Nov 13); the row's own small label is off here */}
+      <section className="wr-title" data-nofill aria-labelledby="wr-title-h"><div className="v8-wrap"><h2 id="wr-title-h">What sets us apart</h2></div></section>
+      <WhyRow k="" items={whyItems(tvPeople(stripPeople()), !PROD)} />
       <Talk />
     </Shell>
   );

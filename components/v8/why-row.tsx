@@ -61,7 +61,7 @@ export default function WhyRow({ k = "What sets us apart", items }: { k?: string
   };
 
   return (
-    <section ref={ref} className="wr" data-nofill data-static={live ? undefined : ""} aria-label={k} style={{ ["--wr-len" as string]: `calc(100vh + ${Math.round(n * PER * 100)}vh)` } as CSSProperties}>
+    <section ref={ref} className="wr" data-nofill data-static={live ? undefined : ""} aria-label={k || "What sets us apart"} style={{ ["--wr-len" as string]: `calc(100vh + ${Math.round(n * PER * 100)}vh)` } as CSSProperties}>
       <div className="wr-stage">
         <div className="wr-in">
           <div className="wr-frame" ref={frame} aria-hidden={live ? undefined : "true"}>
@@ -75,7 +75,7 @@ export default function WhyRow({ k = "What sets us apart", items }: { k?: string
             <i className="wr-glass" aria-hidden="true" />
           </div>
           <div className="wr-copy">
-            <p className="hs-k">{k}</p>
+            {k && <p className="hs-k">{k}</p>}
             <div className="wr-items">
               {items.map((it, j) => (
                 <div key={j} className={`wr-item${j === cur ? " is-on" : ""}`} aria-hidden={live && j !== cur ? "true" : undefined}>
