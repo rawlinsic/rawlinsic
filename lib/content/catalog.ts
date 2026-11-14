@@ -3725,7 +3725,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-tn-tech": {
   "id": "cs-tn-tech",
-  "ch": "The department set out to modernize how it manages technology and data, and to govern new tools like AI, with executive leadership in the lead.",
+  "ch": "The department recognized the need to modernize its approach to technology and data management, establish governance for emerging technologies such as artificial intelligence (AI), and ensure executive leadership provides strategic direction and oversight.",
   "when": "Since 2025",
   "did": [
    "Facilitated a technology and data governance steering committee for executive leadership",
