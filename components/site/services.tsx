@@ -216,12 +216,8 @@ export function ServiceFeature({ id }: { id: string }) {
     case "data-governance":
       return <section className="pg-sec pg-sec-navy pg-legacy"><AutomationEcosystemBars /></section>;
     case "ai":
-      return (
-        <>
-          <section className="pg-sec pg-sec-navy pg-legacy"><AutomationEcosystemBars /></section>
-          <Sec title="Applied solutions"><List items={APPLIED.map((a) => `${a[0]}: ${a[1]}`)} cols /></Sec>
-        </>
-      );
+      /* the "Applied solutions" list came off this page only (Digital Solutions file v5, Nov 13): none of the seven lists AI */
+      return <section className="pg-sec pg-sec-navy pg-legacy"><AutomationEcosystemBars /></section>;
     case "workforce":
     case "asset-mgmt":
     case "strategic-planning": {

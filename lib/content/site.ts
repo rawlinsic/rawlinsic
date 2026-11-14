@@ -417,11 +417,11 @@ export const CASES: CaseIndex[] = [
   cs("cs-tn-ipd", "tennessee-integrated-program-delivery", "Integrated program delivery: transition projects, risk, and consultant onboarding", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["program-delivery", "preconstruction", "proj-delivery"]),
   cs("cs-pbmc", "tennessee-performance-based-maintenance-contracts", "Launching performance-based maintenance contracts on an interstate network", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["operations", "procurement", "pbmc", "mqa", "outsourcing", "owners-rep", "finance"]),
   // Contract read Nov 10: no publicity limit. The state keeps publication rights to the documents we produce, so don't post its documents on this site.
-  cs("cs-aero", "tennessee-aviation-program", "Statewide aviation program support: drones, advanced air mobility, and federal funding", "Tennessee Department of Transportation, Aeronautics Division", ["Tennessee"], "Ongoing", "transport", ["drone-programs", "grants", "research", "drone-aam"]),
+  cs("cs-aero", "tennessee-aviation-program", "Statewide aviation program support: drones, advanced air mobility, and federal funding", "Tennessee Department of Transportation, Aeronautics Division", ["Tennessee"], "Ongoing", "transport", ["drone-programs", "grants", "research", "drone-aam", "training-video"]),
   // TODO(launch): needs the client's written OK before launch. The contract bars public material about the client's projects without written approval.
   cs("cs-transform", "statewide-project-delivery-and-organization", "Statewide project delivery, prioritization, and organization", STATE_DOT, [], "Ongoing", "transport", []), // + LPA manual chapters, operations and safety benefit-cost analysis, construction manual and workflows, staff development, maintenance QA handbook (Nov 11)
   /* Nov 13 (projects file v4, Part 3): page B, page C, page D, page E, page F, page N, page O */
-  cs("cs-pd-manual", "program-development-manual-and-project-selection", "A program development manual and project selection tools", STATE_DOT, [], "Ongoing", "transport", ["program-delivery", "planning", "federal-aid", "grants"]),
+  cs("cs-pd-manual", "program-development-manual-and-project-selection", "A program development manual and project selection tools", STATE_DOT, [], "Ongoing", "transport", ["program-delivery", "planning", "federal-aid", "grants", "portals", "dashboards"]),
   cs("cs-consult-flow", "consultant-contracting-in-one-workflow", "Consultant contracting rebuilt as one connected workflow", STATE_DOT, [], "Ongoing", "transport", ["procurement", "automation", "portals"]),
   cs("cs-lpa-manual", "local-public-agency-manual-and-training", "A local public agency manual, certification process, and training", STATE_DOT, [], "Ongoing", "transport", ["lpa", "federal-aid"]),
   cs("cs-mqa-fleet", "maintenance-quality-assurance-training-and-fleet", "Maintenance quality assurance, operator training, and fleet", STATE_DOT, [], "Ongoing", "transport", ["operations", "asset-mgmt", "workforce", "mqa", "fleet", "outsourcing"]),
@@ -429,7 +429,7 @@ export const CASES: CaseIndex[] = [
   cs("cs-reorg", "department-reorganization-from-chart-to-rollout", "A department reorganization, from functional chart to rollout", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "exec-advisory", "workforce", "finance"]),
   cs("cs-measures", "performance-measures-from-strategy-to-dashboards", "Performance measures, from strategy to dashboards", STATE_DOT, [], "Ongoing", "transport", ["strategic-planning", "dashboards", "exec-advisory", "asset-mgmt"]),
   // TODO(launch): subcontract read Nov 10: the prime's information stays confidential and the prime agreement's terms apply. Keep it unnamed and high level.
-  cs("cs-pmdiv", "standing-up-a-project-delivery-division", "Standing up a project delivery division", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "workforce", "program-delivery", "preconstruction", "proj-delivery", "construction", "exec-advisory", "dashboards", "strategic-planning"]),
+  cs("cs-pmdiv", "standing-up-a-project-delivery-division", "Standing up a project delivery division", STATE_DOT, [], "Ongoing", "transport", ["org-design", "change-mgmt", "workforce", "program-delivery", "preconstruction", "proj-delivery", "construction", "exec-advisory", "dashboards", "strategic-planning", "training-video"]),
   // Rawlins was prime on this client's purchase order. Jacob's portfolio asks whether this is a Rawlins client; it is.
   // TODO(launch): contract publicity terms not checked yet.
   cs("cs-txmaint", "performance-based-maintenance-and-rating-program", "Performance-based maintenance contracts and a maintenance rating program", STATE_DOT, [], "Completed", "transport", ["operations", "procurement", "asset-mgmt", "pbmc", "mqa", "owners-rep", "dashboards"]),
@@ -477,12 +477,12 @@ export const CASES: CaseIndex[] = [
   cs("cs-pd-prof", "position-descriptions-and-proficiency-programs", "Position descriptions and proficiency programs, bureau by bureau", STATE_DOT, [], "Ongoing", "transport", ["workforce", "org-design", "proj-delivery", "preconstruction", "construction", "planning", "federal-aid", "lpa", "procurement"]),
   cs("cs-pbmc2", "a-second-performance-based-maintenance-contract", "A second maintenance contract, built on the first one's lessons", STATE_DOT, [], "Completed", "transport", ["operations", "procurement", "partnering", "pbmc", "outsourcing"]),
   cs("cs-p3-division", "major-projects-p3-and-tolling-division", "A division for major projects, public-private partnerships, and tolling", STATE_DOT, [], "Ongoing", "transport", ["alt-delivery", "org-design"]),
-  cs("cs-hr", "hr-procedures-orientation-and-onboarding", "HR procedures, orientation, and onboarding for a department", STATE_DOT, [], "Ongoing", "transport", ["workforce", "org-design", "change-mgmt"]),
+  cs("cs-hr", "hr-procedures-orientation-and-onboarding", "HR procedures, orientation, and onboarding for a department", STATE_DOT, [], "Ongoing", "transport", ["workforce", "org-design", "change-mgmt", "training-video"]),
   // TODO(launch): purchase order read Nov 10: no publicity terms. Reconfirm current status and client permission. Keep the client unnamed.
-  cs("cs-hi", "construction-standards-and-statewide-support", "A statewide assessment and a strategic roadmap", STATE_DOT, [], "Ongoing", "transport", ["construction", "portals", "program-delivery", "training-video", "drone-programs", "proj-delivery", "preconstruction", "operations", "exec-advisory"]),
+  cs("cs-hi", "construction-standards-and-statewide-support", "A statewide assessment and a strategic roadmap", STATE_DOT, [], "Ongoing", "transport", ["construction", "portals", "program-delivery", "training-video", "drone-programs", "proj-delivery", "preconstruction", "operations", "exec-advisory", "tech-strategy"]),
   /* Nov 13 (projects file v4, Part 3): page L, page Q */
   cs("cs-harbor", "harbor-technology-demonstration", "A harbor technology demonstration, above and below the water", STATE_DOT, [], "Completed", "transport", ["drone-programs", "grants"]),
-  cs("cs-knowledge", "construction-knowledge-site", "A construction knowledge site, cataloged and handed over", STATE_DOT, [], "Ongoing", "transport", ["portals", "data-governance", "dashboards", "construction"]),
+  cs("cs-knowledge", "construction-knowledge-site", "A construction knowledge site, cataloged and handed over", STATE_DOT, [], "Ongoing", "transport", ["portals", "data-governance", "dashboards", "construction", "ai"]),
   /* Private sector: our own project, then our automation team's work before Rawlins */
   // TODO(launch): our invoice cites a work order dated Aug 1, 2026. The agreement itself wasn't found, so its confidentiality terms aren't checked. Confirm before launch.
   cs("cs-pv-pmo", "project-management-system-for-an-engineering-firm", "A project management system for an engineering firm", "An engineering firm", [], "Ongoing", "private", ["automation", "dashboards", "data-governance"]),
@@ -568,9 +568,6 @@ export const LINE_STATUS: Record<string, string> = {
   "We've advised a construction materials supplier on working with a state DOT, including product approval.": "Content status: from a 2025 retainer, read from the draft agreement because the signed copy is a scan. It keeps non-public information confidential. Unnamed and general. Scott to confirm.",
 };
 
-/* Integration & Automation intro (content pass v7, Part 4) */
-// TODO(launch): Headlight is named as a general example. Jacob's portfolio says vendor relationships need a leadership decision before public use.
-LINE_STATUS["We connect the systems you already own so information moves on its own: construction platforms like Headlight linked to the rest of an agency's systems, repeated fields filled in once from trusted sources, and small custom apps where an integration platform doesn't fit. We document every workflow so your team can run it."] = "Content status: Named as a general example. Jacob's portfolio says vendor relationships need a leadership decision before public use.";
 
 /* Preview-only notes for a whole page (content pass v7: Owner's Representation, 2.11; Ports & Harbors, Part 6) */
 /* services left out of the menu and their area page for now; their pages stay up (Nicole, Nov 13: Smart Mobility &
@@ -597,6 +594,11 @@ export const PAGE_STATUS: Record<string, string> = {
   // TODO(launch): Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.
   "owners-rep": "Content status: Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.",
   /* Nov 13 (Who We Work With read-as-built fixes v1): the To confirm text for Ports & Harbors */
+  /* Nov 13: the "To confirm" notes in Nicole's Digital Solutions file (v5), preview only */
+  "data-governance": "Content status: The reports through October 2026 show a governance steering committee chartered and facilitated weekly, a data policy, roles and decision rights, and a dataset inventory with owners and quality notes. They do not show a delivered data catalog or dictionary yet. Jacob to confirm.",
+  ai: "Content status: The reports through October 2026 show AI strategy support, policy and governance documents, a commercial AI tool rolled out for one department, and use cases reviewed and ranked for a second. A first AI pilot, on cash-flow modeling, was starting in November 2026. Kobus or Jacob to confirm where it stands.",
+  "training-video": "Content status: Overview videos for leadership, conferences, and legislators: no project in the reports through October 2026 shows one. Nicole to confirm.",
+  "tech-strategy": "Content status: Pilot and proof-of-concept management: the reports through October 2026 show one technology pilot recommended to a department. Jacob to confirm what has run since.",
   "sub-ports": "Content status: The only work behind this page is one client's. The purchase order has no publicity terms. Jacob's portfolio says to reconfirm current status and client permission. Keep it unnamed. The grant application was submitted in July 2026 and was not awarded as of our Nov 2026 records. The demonstration was held in September 2026.",
 };
 

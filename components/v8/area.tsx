@@ -50,8 +50,20 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
       ...(st.areas ?? []).map((id) => AREAS.find((a) => a.id === id)).filter((a): a is Area => !!a).map((a) => ({ name: a.name, href: areaHref(a) })),
     ],
   });
+  /* The experience behind it, in the service pages' style (Program & Project Delivery area page file v1, Nov 13). Redesigned Nov 13
+     (Nicole: "needs a redesign of something better"): the heading held on the left, each line a card on a glowing route on the
+     right. Digital Solutions shows it after its own blocks, right before the featured projects (file v5, Nov 13). */
+  const xpSec = L.xp?.length ? (
+    <section id="experience" className="sv-sec ar-xp2">
+      <div className="v8-wrap ar-xp2-in">
+        <div className="ar-xp2-h"><h2 className="v8-h2">The experience behind it</h2></div>
+        <RouteList check ordered={false} stops={L.xp.map((x) => ({ d: <>{x}<LineNote text={x} /></> }))} />
+      </div>
+    </section>
+  ) : null;
   const sections: [string, string][] = [
-    ["services", "Services"], ["hear", hearTitle(L.hear)], ["fit", L.feature.title], ...(L.xp?.length ? [["experience", "The experience behind it"] as [string, string]] : []), ...(extra ? [["more", "From our work"] as [string, string]] : []),
+    ["services", "Services"], ["hear", hearTitle(L.hear)], ["fit", L.feature.title], ...(L.xp?.length && !L.xpAfter ? [["experience", "The experience behind it"] as [string, string]] : []), ...(extra ? [["more", "From our work"] as [string, string]] : []),
+    ...(L.xp?.length && L.xpAfter ? [["experience", "The experience behind it"] as [string, string]] : []),
     ...(cases.length ? [["work", "Featured projects"] as [string, string]] : []), ["talk", "Talk to us"],
   ];
 
@@ -124,18 +136,12 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
       {/* The experience behind it, in the service pages' style (Program & Project Delivery area page file v1, Nov 13) */}
       {/* redesigned Nov 13 (Nicole: "needs a redesign of something better"): the heading held on the left, each line a card
           on a glowing route on the right, the same as the list sections on the Who We Work With pages */}
-      {L.xp?.length ? (
-        <section id="experience" className="sv-sec ar-xp2">
-          <div className="v8-wrap ar-xp2-in">
-            <div className="ar-xp2-h"><h2 className="v8-h2">The experience behind it</h2></div>
-            <RouteList check ordered={false} stops={L.xp.map((x) => ({ d: <>{x}<LineNote text={x} /></> }))} />
-          </div>
-        </section>
-      ) : null}
+      {!L.xpAfter && xpSec}
 
       {/* the carried-over features: each of their sections is its own panel */}
       {extra && <span id="more" className="ar-anchor" data-nopanel aria-hidden="true" />}
       {extra}
+      {L.xpAfter && xpSec}
 
       {cases.length > 0 && (
         <section id="work" className="sv-sec ar-work">

@@ -19,6 +19,8 @@ export type SvcData = { id: string; name: string; area: string; st: string; intr
 export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; lead?: string; /* links: each stage lists its services as links (Program & Project Delivery, Nov 13) */ links?: boolean; steps: { t: string; d: string; services: string[]; areas?: string[] }[] }; keep: string; cases: string[];
   /* xp: "The experience behind it" on the area page (Program & Project Delivery area page file v1, Nov 13) */
   xp?: string[];
+  /* xpAfter: the experience section sits after the area's own blocks, right before the featured projects (Digital Solutions file v5, Nov 13) */
+  xpAfter?: boolean;
   /* lines: a short line per service on the area page's service panels, where the area has one (Nov 12, Operations & Maintenance) */
   lines?: Record<string, string> };
 export type IndustryData = { id: string; ch: string[]; bring?: string[]; ways?: { t: string; d: string }[]; basis: string; services: string[]; people: string[][] };
@@ -1368,7 +1370,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Websites, Portals & Digital Tools",
   "area": "tech",
   "st": "ok",
-  "intro": "We build the digital front door for a program: one place where staff find the tools, manuals, and training they need, and where changes are requested, decided, and tracked.",
+  "intro": "We build a program's website: one place where staff find the tools, manuals, and training they need, and where changes are requested, decided, and tracked.\n\nWe link the site to the systems staff already use, publish manuals and guidance as pages people can search, and review a full preview copy with the people who will use it before anything goes live.",
   "hear": [
    "Tools, manuals, and training spread across drives and intranet pages",
    "Five versions of the same form",
@@ -1376,13 +1378,15 @@ export const SERVICES: Record<string, SvcData> = {
    "Hundreds of documents sit on a separate, outdated site"
   ],
   "quote": false,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Program websites and resource libraries staff actually use, linked to the systems they already use",
-   "Tools and generators: scope of work, cost estimating, and templates",
-   "Forms turned into web apps on shared, trusted data",
-   "Manuals and guidance published and kept current online",
-   "Change request systems: submit, route, decide, update, and close out",
-   "Website migrations, with every item reviewed: keep, update, combine, move, or retire"
+   "**Program websites and resource libraries:** the program's tools, manuals, and training in one place, with search, linked to the systems staff already use",
+   "**Tools and generators:** scope of work, cost estimating, and templates tied to how the program works",
+   "**Forms turned into web applications:** request forms and scoring tools rebuilt as web applications, in the organization's own account",
+   "**Manuals and guidance online:** published as web pages and kept current",
+   "**Change request systems:** submit, route, decide, update, and close out, with every decision recorded",
+   "**Website migrations:** every item reviewed and given a decision: keep, update, combine, move, or retire",
+   "**Mapping and screening tools:** asset maps and project screening tools for program staff"
   ],
   "walk": [
    "A live site with one source of truth",
@@ -1400,6 +1404,13 @@ export const SERVICES: Record<string, SvcData> = {
    "program-delivery"
   ],
   "xp": [],
+  "cards": [
+   "cs-pdn",
+   "cs-consult-flow",
+   "cs-knowledge",
+   "cs-pd-manual",
+   "cs-hi"
+  ],
   "src": {
    "intro": "Louisiana delivery website records",
    "hear": "Louisiana delivery website records",
@@ -1411,7 +1422,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Integration & Automation",
   "area": "tech",
   "st": "ok",
-  "intro": "We connect the systems you already own so information moves on its own: construction platforms like Headlight linked to the rest of an agency's systems, repeated fields filled in once from trusted sources, and small custom apps where an integration platform doesn't fit. We document every workflow so your team can run it.",
+  "intro": "We connect the systems an organization already owns so information is entered once and moves on its own: construction management platforms linked to the rest of an agency's systems, repeated fields filled in once from trusted sources, and small custom apps where an integration platform does not fit. We document every workflow so the client's own team can run it.\n\nWe start from what a client already has, and build something new only when the existing systems cannot meet the need. Steps that follow a rule are automated. Steps that need judgment stay with a person or go to AI.",
   "hear": [
    "We key the same information into three systems.",
    "Our systems don't talk to each other.",
@@ -1419,22 +1430,23 @@ export const SERVICES: Record<string, SvcData> = {
    "Handoffs run on email, spreadsheets, and scanned paper."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Workflow discovery with the staff who do the work",
-   "Integrations and automation on platforms you already own (Make, Power Automate, Zapier, n8n, monday.com)",
-   "Custom software and add-ins, such as an accessibility compliance add-in for Word",
-   "Exception handling and access control",
-   "Documentation and handoff, so your team owns and runs it",
-   "Connecting field and construction platforms to the rest of the agency's systems, so what the inspector records reaches the people who need it",
-   "Small custom apps where an integration platform doesn't fit",
-   "Repeated project fields filled in once, from trusted agency sources",
-   "Environment and constraints assessment (network, servers, and access)"
+   "**Workflow discovery:** with the staff who do the work",
+   "**Integrations and automation:** on platforms the organization already owns (Make, Power Automate, Zapier, n8n, monday.com)",
+   "**Small custom apps:** where an integration platform does not fit",
+   "**Custom software and add-ins:** such as an accessibility compliance add-in for Word",
+   "**Field and construction platforms:** connected to the rest of the agency's systems, so what the inspector records reaches the people who need it",
+   "**Repeated project fields:** filled in once, from trusted agency sources",
+   "**Exception handling and access control:** what happens when a step fails, and who can see and change what",
+   "**Environment and constraints assessment:** network, servers, and access",
+   "**Documentation and handoff:** written documentation and recorded walkthroughs, so the client's team owns and runs it"
   ],
   "walk": [
    "Prioritized opportunity list",
    "Working integration or automation",
    "Exception-handling rules",
-   "Documentation, training materials, and owned artifacts"
+   "Documentation, training materials, and files the client owns"
   ],
   "industries": [
    "transport",
@@ -1449,6 +1461,11 @@ export const SERVICES: Record<string, SvcData> = {
   "xp": [
    "Our automation team built Rawlins' own internal workflows, and builds the same kinds of workflows for clients"
   ],
+  "cards": [
+   "cs-consult-flow",
+   "cs-pdn",
+   "cs-pv-pmo"
+  ],
   "src": {
    "intro": "Handoff v7 section 4.4 (systems connect thread)",
    "hear": "Partner Field Guide v1",
@@ -1460,7 +1477,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Data Governance",
   "area": "tech",
   "st": "ok",
-  "intro": "We turn uncertain, fragmented, or person-dependent data into governed information people can find, understand, and use. Most agencies have already done some governance work on paper. We build owners, definitions, inventories, and storage rules into work already underway.",
+  "intro": "We turn uncertain, fragmented, or person-dependent data into governed information people can find, understand, and use. Where an agency has governance on paper, we start from it, and build owners, definitions, inventories, and storage rules into work already underway.",
   "hear": [
    "Nobody can tell me which number is the right one.",
    "We don't know what data we have, who owns it, or whether to trust it.",
@@ -1468,19 +1485,20 @@ export const SERVICES: Record<string, SvcData> = {
    "We've done governance on paper. It isn't built into the work."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Governance at the right level: project, program, or enterprise",
-   "Data ownership and stewardship",
-   "Policies, standards, and procedures",
-   "Data inventory, glossary, and metadata",
-   "Governance built into modernization projects",
-   "Data readiness for AI and automation",
-   "Executive data governance steering committees",
-   "Records and document structures for programs"
+   "**Governance at the right level:** a project, a program, or the whole enterprise",
+   "**Data ownership and stewardship:** who owns each dataset, who keeps it, and who decides",
+   "**Policies, standards, and procedures:** a data policy, and the roles, decision rights, and workflows behind it",
+   "**Data inventory, glossary, and metadata:** what data exists, who owns it, what each term means, and how good it is",
+   "**Governance built into modernization projects:** set up while a system is being replaced or a process is being rebuilt",
+   "**Data readiness for AI and automation:** what has to be true of the data before a tool depends on it",
+   "**Executive data governance steering committees:** a charter, an agenda, and regular facilitation",
+   "**Records and document structures for programs:** how a program's files are named, organized, and tracked"
   ],
   "walk": [
    "Operating model and roadmap",
-   "Stewardship model and RACI",
+   "Stewardship model and responsibility chart",
    "Policies and procedures",
    "Data catalog and dictionary",
    "Data readiness assessment for AI and automation"
@@ -1499,6 +1517,11 @@ export const SERVICES: Record<string, SvcData> = {
   "xp": [
    "Florida DOT's former Chief Information Officer, who led its data governance, is on our team, and our founder led Nevada DOT's strategic data plan"
   ],
+  "cards": [
+   "cs-tn-tech",
+   "cs-knowledge",
+   "cs-pv-pmo"
+  ],
   "src": {
    "intro": "Data/AI catalog (internal)",
    "hear": "Partner Field Guide v1",
@@ -1510,7 +1533,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "AI",
   "area": "tech",
   "st": "ok",
-  "intro": "We put AI to work where judgment is needed, trustworthy context exists, and the result can be governed and used. When a problem needs a rule, a process, or a decision instead of a model, we say so.",
+  "intro": "We put AI to work where judgment is needed, trustworthy context exists, and the result can be governed and used. When a problem needs a rule, a process, or a decision instead of a model, we say so.\n\nWe start with governance: who decides where AI is used, who is accountable, and which tools and data are approved. With that set, a tool is rolled out to staff with training and a policy they can follow.",
   "hear": [
    "Our staff already use AI, and we have no policy for it.",
    "We're not sure which problems actually need AI.",
@@ -1518,16 +1541,17 @@ export const SERVICES: Record<string, SvcData> = {
    "We don't know if our data is ready for AI."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "AI policy, governance, and responsible-use guardrails",
-   "Use-case and readiness assessments",
-   "Custom connectors and retrieval workflows on your own information",
-   "Setting up and administering commercial AI tools",
-   "AI added to existing automated workflows",
-   "Security review and guardrails for AI use",
-   "Staff enablement and adoption",
-   "Innovation pilot-to-production operating model",
-   "Pilots on a single use case, such as cash-flow forecasting"
+   "**AI policy, governance, and responsible-use guardrails:** who decides, who is accountable, and which tools and data are approved",
+   "**Use-case and readiness assessments:** candidate uses reviewed and ranked, including the ones that do not need AI",
+   "**Setting up and administering commercial AI tools:** licensing, user onboarding, training, and rollout",
+   "**Staff enablement and adoption:** training, communications, and support after rollout",
+   "**Security review:** what data a tool can reach, and what leaves the organization",
+   "**Custom connectors and retrieval workflows:** AI working from the organization's own information",
+   "**AI added to existing automated workflows:** a model at the one step where judgment is needed",
+   "**Pilot-to-production operating model:** how a pilot becomes a supported tool, or is stopped",
+   "**Pilots on a single use case:** such as cash-flow forecasting"
   ],
   "walk": [
    "A ranked list of AI use cases, and the ones that don't need AI",
@@ -1546,7 +1570,13 @@ export const SERVICES: Record<string, SvcData> = {
    "org-design",
    "data-governance"
   ],
-  "xp": [],
+  "xp": [
+   "The nation's first Chief Data and AI Officer at a state department of transportation is on our team"
+  ],
+  "cards": [
+   "cs-tn-tech",
+   "cs-knowledge"
+  ],
   "src": {
    "intro": "Data/AI catalog (internal)",
    "hear": "Partner Field Guide v1",
@@ -1557,8 +1587,8 @@ export const SERVICES: Record<string, SvcData> = {
   "id": "dashboards",
   "name": "Dashboards & Reporting",
   "area": "tech",
-  "st": "warn",
-  "intro": "Dashboards and scoring tools that put the organization's own data in front of the people making decisions, built on platforms it already owns.",
+  "st": "ok",
+  "intro": "We build dashboards and scoring tools that put an organization's own data in front of the people making decisions, on platforms it already owns.\n\nWe start with the measures: what leadership wants to see, who owns each number, and where it comes from. Each dashboard is documented so the organization's own staff can keep it current.",
   "hear": [
    "Reports are built by hand every month, and no one is sure which number is right.",
    "We've outgrown our spreadsheets.",
@@ -1566,16 +1596,18 @@ export const SERVICES: Record<string, SvcData> = {
    "We can't see where equipment is, how long it's booked, or when it's down."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Power BI dashboards",
-   "Project screening and scoring tools for capital programming",
-   "Position and workforce tracking dashboards",
-   "Program status dashboards and decision tools",
-   "Maps and web platforms for program information"
+   "**Power BI dashboards:** built in the organization's own environment, on its own data",
+   "**Project screening and scoring tools for capital programming:** criteria, weights, score sheets, and a ranked list",
+   "**Position and workforce tracking dashboards:** positions, vacancies, and personnel transactions in one view",
+   "**Program status dashboards and decision tools:** measures for executives, with the detail behind each",
+   "**Maps and web platforms for program information:** asset and project maps for program staff"
   ],
   "walk": [
    "Project screening and scoring tools with dashboards for capital programming",
-   "Dashboards on platforms you already own, documented so your team can update them"
+   "Dashboards on platforms the organization already owns, documented so its staff can update them",
+   "A definition and an owner for each measure"
   ],
   "industries": [
    "transport",
@@ -1588,6 +1620,15 @@ export const SERVICES: Record<string, SvcData> = {
    "asset-mgmt"
   ],
   "xp": [],
+  "cards": [
+   "cs-measures",
+   "cs-strategic",
+   "cs-pmdiv",
+   "cs-pd-manual",
+   "cs-knowledge",
+   "cs-pv-pmo",
+   "cs-txmaint"
+  ],
   "src": {
    "intro": "Based on Power BI and position-tracking dashboards, project scoring tools, and action plan tracking records",
    "hear": "Written from our records",
@@ -1598,8 +1639,8 @@ export const SERVICES: Record<string, SvcData> = {
   "id": "training-video",
   "name": "Videos",
   "area": "tech",
-  "st": "warn",
-  "intro": "Training people will actually use: short how-to videos and online courses, built with the experts who do the work.",
+  "st": "ok",
+  "intro": "We build short how-to videos and online courses with the experts who do the work, and publish them where staff already look.\n\nA video or course covers one task or tool. Courses are narrated and captioned, and they are published on the program's own site, next to the tool they teach.",
   "hear": [
    "Training depends on who your mentor was",
    "Manuals nobody reads",
@@ -1607,12 +1648,13 @@ export const SERVICES: Record<string, SvcData> = {
    "Our people are retiring, and no one is ready"
   ],
   "quote": false,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Computer-based training modules",
-   "Short how-to videos for specific tasks",
-   "Overview videos for leadership, conferences, and legislators",
-   "Storyboards and scripts written with subject matter experts",
-   "Training published where staff already look"
+   "**Computer-based training modules:** self-paced courses, narrated and captioned",
+   "**Short how-to videos:** one task or tool at a time",
+   "**Overview videos:** for leadership, conferences, and legislators",
+   "**Storyboards and scripts:** written with subject matter experts",
+   "**Publishing:** on the program's site, next to the tool the training covers"
   ],
   "walk": [
    "Online courses and how-to videos",
@@ -1630,6 +1672,13 @@ export const SERVICES: Record<string, SvcData> = {
    "change-mgmt"
   ],
   "xp": [],
+  "cards": [
+   "cs-pdn",
+   "cs-aero",
+   "cs-pmdiv",
+   "cs-hr",
+   "cs-hi"
+  ],
   "src": {
    "intro": "Louisiana delivery website records",
    "hear": "Written from our records",
@@ -1641,7 +1690,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Technology & AI Strategy",
   "area": "tech",
   "st": "ok",
-  "intro": "Start here when there's a broad mandate, competing priorities, or not enough evidence to choose what to build. We assess the technology before the purchase, then help with setup, training, and change management so the tool becomes how work gets done.",
+  "intro": "This is where to start when there is a broad mandate, competing priorities, or not enough evidence to choose what to build. We assess what is in place, rank the options with leadership, and write the plan: what to build, what to buy, and in what order.\n\nAfter the decision, we help with setup, training, and change management for the staff who will use the tool.",
   "hear": [
    "We bought the software, and nobody uses it.",
    "Leadership wants AI, and no one is sure where it fits, whether we're ready, or who owns it.",
@@ -1649,17 +1698,19 @@ export const SERVICES: Record<string, SvcData> = {
    "We have a broad mandate, competing priorities, and not enough evidence to choose what to build."
   ],
   "quote": true,
+  "deliverTitle": "What this service covers",
   "deliver": [
-   "Data, workflow, and AI readiness assessments",
-   "Use-case discovery and ranking",
-   "Information technology and innovation strategic plans",
-   "Technology assessments before purchase",
-   "Pilot and proof-of-concept management"
+   "**Information technology and innovation strategic plans:** goals, initiatives, measures, and a work plan by year",
+   "**Technology governance:** a steering committee, a project intake form, and a method for sizing and approving technology projects",
+   "**Technology assessments before purchase:** requirements, overlap with systems already owned, and a review of the request for proposals",
+   "**Data, workflow, and AI readiness assessments:** what is in place today, and what has to be true before a tool depends on it",
+   "**Use-case discovery and ranking:** candidate projects ranked by value, readiness, and risk",
+   "**Pilot and proof-of-concept management:** a defined test, success measures, and a go or no-go decision"
   ],
   "walk": [
    "Ranked use cases, prerequisites, guardrails, success measures, and go or no-go decisions",
    "A roadmap that assigns each initiative to the right work and sequence",
-   "Setup, training, and change management so a new tool becomes how work gets done"
+   "Setup, training, and change management for the staff who will use a new tool"
   ],
   "industries": [
    "transport",
@@ -1676,6 +1727,12 @@ export const SERVICES: Record<string, SvcData> = {
   "xp": [
    "Florida DOT's former Chief Information Officer and Chief Technology Officer is on our team",
    "So is the nation's first Chief Data and AI Officer at a state department of transportation"
+  ],
+  "cards": [
+   "cs-de-tech",
+   "cs-tn-it",
+   "cs-tn-tech",
+   "cs-hi"
   ],
   "src": {
    "intro": "Data/AI catalog (internal)",
@@ -2284,22 +2341,35 @@ export const AREAS: Record<string, AreaData> = {
    "tech-strategy",
    "smart-mobility"
   ],
-  "lead": "Many problems start the same way: systems that don't talk to each other, the same information keyed in three times, and data nobody trusts. We make the systems you already own work together, automate the busywork, and put AI to work where it helps.",
+  "lead": "We help organizations get more from the systems they already own. We connect those systems so information is entered once, put owners and definitions behind the data, build the websites, tools, and dashboards a program runs on, and add AI where it fits. A client can start with any one of these. We document what we build and hand it over, and the client owns the result.",
   "hear": [
+   "We bought the software, and nobody uses it.",
    "We key the same information into three systems.",
    "Nobody can tell me which number is the right one.",
    "Our staff already use AI, and we have no policy for it.",
-   "We bought the software, and nobody uses it."
+   "Our tools, manuals, and training are spread across drives and intranet pages.",
+   "Reports are built by hand every month."
   ],
   "bring": [
-   "Automated workflows and integrations on tools you already own, documented and handed over so you own the result.",
+   "Technology assessments before the purchase, then setup, training, and change management for the staff who will use it.",
+   "Automated workflows and integrations on tools the organization already owns, documented and handed over.",
    "Practical data governance: owners, definitions, inventories, and storage rules, built into work already underway.",
-   "AI policy and guardrails, use-case ranking, licensing and governance advice, and a straight answer on where AI fits.",
-   "Technology assessments before the purchase, then setup, training, and change management so the tool becomes how work gets done."
+   "AI policy and guardrails, use-case ranking, licensing and governance advice, and a clear answer on where AI fits.",
+   "A program website with the tools, a resource library, and training in one place, and a tracked way to request changes.",
+   "Dashboards on platforms the organization already owns, documented so its own staff can keep them current."
   ],
   "feature": {
    "title": "What we build",
+   "links": true,
+   "lead": "A client can start with any of these.",
    "steps": [
+    {
+     "t": "Strategy and roadmap",
+     "d": "What to build, what to buy, and in what order",
+     "services": [
+      "tech-strategy"
+     ]
+    },
     {
      "t": "Websites and tools",
      "d": "One front door for a program",
@@ -2347,8 +2417,23 @@ export const AREAS: Record<string, AreaData> = {
   "keep": "autopage",
   "cases": [
    "cs-pdn",
-   "cs-transform",
+   "cs-consult-flow",
    "cs-de-tech"
+  ],
+  "xpAfter": true,
+  "lines": {
+   "portals": "Program websites, resource libraries, tools, & change requests",
+   "automation": "Connected systems, automated workflows, & custom apps",
+   "data-governance": "Owners, definitions, inventories, & policies",
+   "ai": "Policy, use cases, tools, & adoption",
+   "dashboards": "Dashboards, scoring tools, & maps",
+   "training-video": "Online courses, how-to videos, & scripts",
+   "tech-strategy": "Assessments, strategic plans, roadmaps, & governance"
+  },
+  "xp": [
+   "Florida DOT's former Chief Information Officer and Chief Technology Officer is on our team",
+   "The nation's first Chief Data and AI Officer at a state department of transportation is on our team",
+   "Our automation team built Rawlins' own internal workflows, and builds the same kinds of workflows for clients"
   ]
  },
  "aviation": {
@@ -3017,6 +3102,7 @@ export const CASES: Record<string, CaseData> = {
    "Developed delivery performance measures with targets",
    "Built change management tools: process maps, responsibility charts, and a change impact template",
    "Built a five-year work plan for the division",
+   "Next: a pilot using AI for cash-flow modeling",
    "Drafted a web-based project delivery manual",
    "Built eleven project manager courses, now being converted to computer-based training",
    "Identified field staffing for 31 field offices and presented recommendations on the construction division to executives"
@@ -3096,6 +3182,7 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [
    "Response team training held and evaluated",
+   "When debris reports disagreed, the drone data proved correct",
    "Drone program standard operating procedures final in May 2026"
   ],
   "services": [
@@ -4074,7 +4161,8 @@ export const CASES: Record<string, CaseData> = {
    "Supported the rollouts of construction inspection and preconstruction software: workflows, cutover and contract activation guidance, and user setup"
   ],
   "res": [
-   "Manual updated to the 2026 standard specifications"
+   "Manual updated to the 2026 standard specifications",
+   "The construction management platform is now the primary system on active projects"
   ],
   "services": [
    "construction",

@@ -38,7 +38,7 @@ const STEP_KIND: Record<string, DiagramKind> = { "asset-mgmt": "cycle", "strateg
 /* "Inside a project delivery network" moved from Program Delivery to Preconstruction (content pass v7, 2.3) */
 /* pages that show their "From our work" block and their How we do it steps, the block first (Preconstruction's "Inside a
    project delivery network", put back by Nicole's Program & Project Delivery file v7, Nov 13) */
-const FEATURE_AND_STEPS = ["preconstruction"];
+const FEATURE_AND_STEPS = ["preconstruction", "portals", "automation", "data-governance", "ai"]; // + four Digital Solutions pages (file v5, Nov 13)
 const HAS_FEATURE = ["automation", "data-governance", "ai", "row", "preconstruction", "operations", "portals", "drone-aam", "drone-programs"];
 /* a page that shows another page's graphic after its own steps (Nicole, Nov 12: the Maintenance Programs graphic goes on
    Asset Management, where its parts now have their own pages; its winter operations part came off) */

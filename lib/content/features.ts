@@ -157,6 +157,44 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
     { t: "", d: "Bring the research, the options, and the experience of people who have held the job." },
     { t: "", d: "Leave the documents behind: charters, plans, and briefing materials the office keeps using." },
   ] },
+  /* Nov 13 (Nicole's Digital Solutions file, v5): "How we do it" on six of the seven pages; Videos keeps "How a training video
+     comes together" above. Each step is one sentence, with no title. */
+  portals: { title: "How we do it", steps: [
+    { t: "", d: "Agree who the site is for and what they come to do." },
+    { t: "", d: "Inventory what exists: the tools, manuals, forms, and training, and who owns each." },
+    { t: "", d: "Build the site and its tools, and review a full preview copy with the people who will use it." },
+    { t: "", d: "Launch, train the owners, and set how changes are requested and published." },
+  ] },
+  automation: { title: "How we do it", steps: [
+    { t: "", d: "Agree the problem, who decides, and what a working result looks like." },
+    { t: "", d: "Map the workflow as it runs today with the staff who do the work, and separate the symptoms from the causes." },
+    { t: "", d: "Design and build on the platforms already in place, and test with real records." },
+    { t: "", d: "Document it, train the owners, and hand it over." },
+  ] },
+  "data-governance": { title: "How we do it", steps: [
+    { t: "", d: "Agree the decision the data has to support, and who has authority over it." },
+    { t: "", d: "Inventory the data in scope: sources, owners, definitions, and quality." },
+    { t: "", d: "Write the policy, the roles, and the workflows with the people who will hold them." },
+    { t: "", d: "Set up the steering committee or working group that keeps it going." },
+  ] },
+  ai: { title: "How we do it", steps: [
+    { t: "", d: "Agree what the organization wants AI for, and who governs it." },
+    { t: "", d: "Review the candidate uses, the data behind each, and the risks, and rank them." },
+    { t: "", d: "Set the policy, choose the tools, and run the first use with a small group." },
+    { t: "", d: "Roll it out with training, and decide what is supported from then on." },
+  ] },
+  dashboards: { title: "How we do it", steps: [
+    { t: "", d: "Agree the measures and the decisions they serve." },
+    { t: "", d: "Find the data behind each measure, its owner, and its gaps." },
+    { t: "", d: "Build the dashboard on a platform the organization already owns, and test it with the people who will use it." },
+    { t: "", d: "Document it, and train the staff who will keep it current." },
+  ] },
+  "tech-strategy": { title: "How we do it", steps: [
+    { t: "", d: "Agree the decision this work has to produce, and who makes it." },
+    { t: "", d: "Interview leaders and staff, and review the systems, plans, and data already in place." },
+    { t: "", d: "Rank the options with leadership, and write the plan or roadmap." },
+    { t: "", d: "Set the governance that keeps the plan current: who reviews it, and how new requests come in." },
+  ] },
 };
 
 /* Asset Management's steps before Nov 12 ("The asset life cycle"), kept for the record: the page now shows How we do it. */
