@@ -334,7 +334,8 @@ export function InsightsIndex() {
   const proj = (id: string) => CASES.find((c) => c.id === id);
   const p1 = proj("cs-proficiency"), p2 = proj("cs-strategic");
   const cards: FanCard[] = [
-    ...(art ? [{ href: `/insights/thought-leadership/${art.slug}`, tag: "Thought leadership", title: art.title, photo: "/images/pages/auto-data.webp" }] : []),
+    /* the article's own picture, the one its page shows (Nicole, Nov 13: "for april's article image, use this background/image") */
+    ...(art ? [{ href: `/insights/thought-leadership/${art.slug}`, tag: "Thought leadership", title: art.title, photo: art.heroImage || art.image }] : []),
     { href: "/insights/research", tag: "Research", title: PUBLICATIONS[0]?.title ?? "Research & Publications", photo: PAGE_PHOTO.research /* aam-policy-planning is on the never-use list (addendum A) */ },
     ...(next ? [{ href: "/insights/news", tag: "Where we'll be", title: `${next.title}, ${next.where ?? ""} · ${next.when}`.replace(", ·", " ·"), photo: next.tall ?? "/images/pages/insights-hawaii-summit-2026-team.webp" /* the event's own image when it has one (AASHTO); otherwise the Rawlins team at the first Hawaii Transportation Summit, Sept 2026 (LinkedIn; other sponsors' logos blurred) */ }] : []),
     ...(p1 ? [{ href: caseHref(p1), tag: "Project", title: p1.title, photo: casePhoto(p1) }] : []),
@@ -379,34 +380,94 @@ function NewsList({ items }: { items: typeof NEWS }) {
   );
 }
 
+/* Nov 13 (Nicole): the news, the awards, and the research, each with pictures and clearly told apart. */
+const extLink = (h?: string) => (h && /^http/.test(h) ? { target: "_blank", rel: "noopener noreferrer" } : {});
+/* people on our team named in a line of text, with their photos */
+const peopleIn = (t: string) => allPeople().filter((p) => p.photo && t.includes(p.name));
+const facesOf = (names: string[]) => names.map((n) => allPeople().find((x) => x.name.startsWith(n))).filter((p): p is Person => !!p && !!p.photo);
+function Faces({ people, big = false }: { people: Person[]; big?: boolean }) {
+  if (!people.length) return null;
+  return (
+    <span className={`nw4-faces${big ? " is-big" : ""}`} aria-hidden="true">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {people.map((p) => <img key={p.slug} src={p.photo} alt="" loading="lazy" />)}
+    </span>
+  );
+}
+/* an award: the people it went to, big, on a navy band; then the award */
+function AwardCard({ title, from, tag, people, href, text }: { title: string; from?: string; tag: string; people: string[]; href?: string; text?: string }) {
+  return (
+    <li className="nw4-award" data-reveal>
+      <div className="nw4-award-band"><Faces people={facesOf(people)} big /><span className="nw4-chip">{tag}</span></div>
+      <div className="nw4-award-body">
+        <b>{title}</b>
+        {from && <p>{from}</p>}
+        {text && <p>{text}</p>}
+        <ByLine names={people} />
+        {href && <a className="ed-more" href={href} target="_blank" rel="noopener noreferrer">The announcement</a>}
+      </div>
+    </li>
+  );
+}
+/* a report, drawn like its cover: the series and year on navy, with the faces of our people who wrote it */
+function PubCard({ x, by = true }: { x: (typeof PUBLICATIONS)[number]; by?: boolean }) {
+  return (
+    <li className="nw4-pub" data-reveal data-kind={/NCHRP/.test(x.series) ? "trb" : /FHWA/.test(x.series) ? "fhwa" : /Journal|magazine/i.test(x.series) ? "journal" : "state"}>
+      <a href={x.href} target="_blank" rel="noopener noreferrer">
+        <span className="nw4-cover">
+          <span className="nw4-series">{x.series}</span>
+          <span className="nw4-year">{x.year}</span>
+          <Faces people={facesOf(x.people)} />
+        </span>
+        <span className="nw4-pub-body">
+          <b>{x.title}</b>
+          {x.line && <span className="nw4-line">{x.line}</span>}
+          <span className="rs-pub">{x.publisher}{x.before ? " · Before Rawlins" : ""}</span>
+          <span className="pj-more">Read it</span>
+        </span>
+      </a>
+      {by && <ByLine names={x.people} />}
+    </li>
+  );
+}
+
 export function NewsPage() {
   /* Redesigned Nov 11 (Nicole: "the whole news page needs to be redesigned better", and past events in their own
      section "so we can showcase them but it's clear"). In order: where we'll be next, where we've been (past
      events, with photos), news from our team, awards, research. Events move from the first list to the second on
      their own the day after they end. */
+  /* Nov 13 (Nicole): the top on a light background; every event with a picture, the past ones three at a time with arrows;
+     the news as tiles of different sizes with pictures; the new team member post off; award and recognition posts shown
+     once, under Awards and recognition */
   const items = NEWS.filter((n) => !n.placeholder || !PROD);
-  const real = items.filter((n) => !n.placeholder && n.tag !== "Project"), ph = items.filter((n) => n.placeholder && n.tag !== "Project");
+  const isRecog = (n: (typeof NEWS)[number]) => n.tag === "Award" || n.tag === "Recognition";
+  const real = items.filter((n) => !n.placeholder && n.tag !== "Project" && !isRecog(n));
+  const ph = items.filter((n) => n.placeholder && n.tag !== "Project" && n.tag !== "New team member");
+  /* a recognition post that isn't already one of the awards below */
+  const recog = items.filter((n) => !n.placeholder && isRecog(n) && !AWARDS.some((a) => a.href === n.href || n.title.includes(a.title)));
   const { upcoming, past } = eventsByTime(EVENTS.filter((e) => !e.placeholder || !PROD));
-  const [top, ...rest] = real;
-  /* the featured story's picture: the article's own photo when it's our article */
-  const art = THOUGHT_LEADERSHIP.find((a) => top?.href?.endsWith(a.slug));
-  const ext = (h?: string) => (h && /^http/.test(h) ? { target: "_blank", rel: "noopener noreferrer" } : {});
+  /* each post's picture: our article's own picture (the one its page shows), the post's photo, or the person it's about */
+  const tiles = real.map((n) => {
+    const art = THOUGHT_LEADERSHIP.find((a) => n.href?.endsWith(a.slug));
+    const img = art ? art.heroImage || art.image : n.photo;
+    return { n, img, people: img ? [] : peopleIn(`${n.title} ${n.text ?? ""}`) };
+  });
   return (
     <Shell>
-      <EdHero dark crumbs={[["/insights", "Insights"], ["/insights/news", "News & Recognition"]]} kicker="Insights" title={<>News &amp; <em>Recognition</em></>}
+      <EdHero crumbs={[["/insights", "Insights"], ["/insights/news", "News & Recognition"]]} kicker="Insights" title={<>News &amp; <em>Recognition</em></>}
         lead={<p>Where we&apos;ll be, what our team is publishing, and the recognition our people have earned.</p>}>
         <nav className="ed-wrap nw3-jump" aria-label="On this page">
           {upcoming.length > 0 && <a href="#next"><b>{upcoming.length}</b>Coming up</a>}
           {past.length > 0 && <a href="#been"><b>{past.length}</b>Past events</a>}
           <a href="#news"><b>{real.length}</b>News</a>
-          <a href="#recognition"><b>{AWARDS.length}</b>Awards</a>
+          <a href="#recognition"><b>{AWARDS.length + recog.length}</b>Awards</a>
           <a href="#research"><b>{PUBLICATIONS.length}</b>Publications</a>
         </nav>
       </EdHero>
       {upcoming.length > 0 && (
         <section id="next" className="ed-sec is-navy nw3-sec" data-nofill>
           <div className="ed-wrap">
-            <div className="ed-sec-head"><div><p className="ed-k">Coming up</p><h2 className="ed-h2">Where we&apos;ll be next</h2></div></div>
+            <div className="ed-sec-head" data-reveal><div><p className="ed-k">Coming up</p><h2 className="ed-h2">Where we&apos;ll be next</h2></div></div>
             <UpcomingEvents events={upcoming} />
           </div>
         </section>
@@ -415,52 +476,52 @@ export function NewsPage() {
         <section id="been" className="ed-sec nw3-sec nw3-been" data-nofill>
           <div className="ed-wrap">
             <div className="ed-sec-head"><div><p className="ed-k">Past events</p><h2 className="ed-h2">Where we&apos;ve been</h2></div></div>
-            <PastEvents events={past} />
+            <PastEvents events={past} rail />
           </div>
         </section>
       )}
       <section id="news" className="ed-sec is-panel nw3-sec" data-nofill>
         <div className="ed-wrap">
           <div className="ed-sec-head"><div><p className="ed-k">News</p><h2 className="ed-h2">The latest from our team</h2></div></div>
-          <div className="nw2-latest">
-            {top && (
-              <a className="nw2-feature" href={top.href} {...ext(top.href)}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={art?.image ?? PAGE_PHOTO.news} alt="" loading="lazy" />
-                <span className="nw2-body"><span className="nw2-tag">{top.tag}{top.date ? ` · ${top.date}` : ""}</span><b>{top.title}</b>{top.text && <p>{top.text}</p>}<span className="ed-more">Read it</span></span>
-              </a>
-            )}
-            <ul className="nw2-list">
-              {rest.map((n) => (
-                /* no link, no "Read more" for a post without one (content pass v7, 12.2) */
-                <li key={n.title}>{n.href
-                  ? <a href={n.href} {...ext(n.href)}><span className="nw2-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span><b>{n.title}</b>{n.text && <p>{n.text}</p>}<span className="ed-more">{/linkedin/.test(n.href) ? "Read it on LinkedIn" : "Read more"}</span></a>
-                  : <div><span className="nw2-tag">{n.tag}{n.date ? ` · ${n.date}` : ""}</span><b>{n.title}</b>{n.text && <p>{n.text}</p>}</div>}</li>
-              ))}
-              {ph.map((n) => <li key={n.title} className="is-dev"><div><span className="nw2-tag">{n.tag}</span><b>{n.title}</b><Dev>Placeholder: {n.placeholder}</Dev></div></li>)}
-            </ul>
-          </div>
+          <ul className={`nw4-bento is-${Math.min(tiles.length, 5)}`}>
+            {tiles.map(({ n, img, people }, k) => {
+              const inner = (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  {img && <img className="nw4-ph" src={img} alt="" loading="lazy" />}
+                  {!img && <Faces people={people} big />}
+                  <span className="nw4-tile-body">
+                    <span className="nw4-chip">{n.tag}{n.date ? ` · ${n.date}` : ""}</span>
+                    <b>{n.title}</b>
+                    {n.text && <span className="nw4-text">{n.text}</span>}
+                    {n.href && <span className="ed-more">{k === 0 ? "Read it" : /linkedin/.test(n.href) ? "Read it on LinkedIn" : "Read more"}</span>}
+                  </span>
+                </>
+              );
+              return (
+                <li key={n.title} className={`nw4-tile ${img ? "is-photo" : "is-person"}${k === 0 ? " is-big" : ""}`} data-reveal>
+                  {/* no link for a post without one (content pass v7, 12.2) */}
+                  {n.href ? <a href={n.href} {...extLink(n.href)}>{inner}</a> : <div>{inner}</div>}
+                </li>
+              );
+            })}
+          </ul>
+          {ph.length > 0 && <ul className="nw2-list nw4-ph-list">{ph.map((n) => <li key={n.title} className="is-dev"><div><span className="nw2-tag">{n.tag}</span><b>{n.title}</b><Dev>Placeholder: {n.placeholder}</Dev></div></li>)}</ul>}
         </div>
       </section>
       <section id="recognition" className="ed-sec nw3-sec" data-nofill>
         <div className="ed-wrap">
           <div className="ed-sec-head"><div><p className="ed-k">Recognition</p><h2 className="ed-h2">Awards and recognition</h2></div></div>
-          <ul className="nw2-awards">{AWARDS.map((a) => (
-            <li key={a.href}>
-              <span className="nw2-tag">{a.year}{a.before ? " · Before Rawlins" : ""}</span>
-              <b>{a.title}</b><p>{a.from}</p>
-              <ByLine names={a.people} />
-              <a className="ed-more" href={a.href} target="_blank" rel="noopener noreferrer">The announcement</a>
-            </li>
-          ))}</ul>
+          <ul className="nw4-awards">
+            {AWARDS.map((a) => <AwardCard key={a.href} title={a.title} from={a.from} tag={`${a.year}${a.before ? " · Before Rawlins" : ""}`} people={a.people} href={a.href} />)}
+            {recog.map((n) => <AwardCard key={n.title} title={n.title} text={n.text} tag={`${n.tag}${n.date ? ` · ${n.date}` : ""}`} people={peopleIn(n.title).map((p) => p.name)} href={n.href} />)}
+          </ul>
         </div>
       </section>
       <section id="research" className="ed-sec is-panel nw3-sec" data-nofill>
         <div className="ed-wrap">
           <div className="ed-sec-head"><div><p className="ed-k">Research</p><h2 className="ed-h2">National research by our people</h2></div><a className="ed-more" href="/insights/research">All research and publications</a></div>
-          <ul className="nw2-pubs">{PUBLICATIONS.slice(0, 3).map((x) => (
-            <li key={x.href}><a href={x.href} target="_blank" rel="noopener noreferrer"><span className="nw2-tag">{x.series} · {x.year}</span><b>{x.title}</b><span className="nw2-who">{x.people.join(", ")}</span></a></li>
-          ))}</ul>
+          <ul className="nw4-pubs is-three">{PUBLICATIONS.slice(0, 3).map((x) => <PubCard key={x.href} x={x} by={false} />)}</ul>
         </div>
       </section>
       <Talk />
@@ -490,38 +551,37 @@ function ByLine({ names }: { names: string[] }) {
 export function ResearchPage() {
   /* the list lives in lib/content/research.ts (the Insights menu reads it too); the guide is listed with the reports */
   /* the April Q&A is an article, not current research; it stays in RESEARCH for the menu (content pass v7, 12.1) */
+  /* Nov 13 (Nicole): the top like News & Recognition's (light, the gray line, blue where it should be) with Paul's photo on
+     the right; the reports drawn like covers, the work now with its projects' photos, the talk and the awards as cards */
   const now = RESEARCH.filter((r) => r.k !== "Guidance" && r.k !== "Thought leadership");
+  const nowCase = (href?: string) => CASES.find((c) => href && caseHref(c) === href);
   return (
-    <Shell scene="crossing" photo={PAGE_PHOTO.research}>
-      <Hero crumbs={[["/insights", "Insights"], ["/insights/research", "Research & Publications"]]} kicker="Insights" title="Research & Publications"
-        lead={<p>Research reports and articles by people on our team, what we&apos;re working on now, and where our people have spoken.</p>} />
+    <Shell>
+      <EdHero crumbs={[["/insights", "Insights"], ["/insights/research", "Research & Publications"]]} kicker="Insights" title={<>Research &amp; <em>Publications</em></>}
+        lead={<p>Research reports and articles by people on our team, what we&apos;re working on now, and where our people have spoken.</p>}
+        /* Paul Wheeler presenting at the Nashville symposium, Nov 2025 (the photo that was behind this page's top) */
+        aside={<figure className="rs2-ph">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={PAGE_PHOTO.research} alt="" /></figure>} />
       <section data-nofill className="pj-sec rs-pubs" id="publications">
         <div className="pg-wrap">
           <h2 className="pj-h">Published research</h2>
           <p className="rs-intro">Reports and articles our people wrote for the Transportation Research Board, the Federal Highway Administration, state DOT research programs, and professional journals, most before they joined Rawlins.</p>
-          <ul className="rs-list">
-            {PUBLICATIONS.map((x) => (
-              <li key={x.href}>
-                <a className="rs-card" href={x.href} target="_blank" rel="noopener noreferrer">
-                  <span className="rs-top"><span className="rs-series">{x.series}</span><span className="rs-year">{x.year}</span></span>
-                  <b>{x.title}</b>
-                  {x.line && <p>{x.line}</p>}
-                  <span className="rs-pub">{x.publisher}{x.before ? " · Before Rawlins" : ""}</span>
-                  <span className="pj-more">Read it</span>
-                </a>
-                <ByLine names={x.people} />
-              </li>
-            ))}
-          </ul>
+          <ul className="nw4-pubs">{PUBLICATIONS.map((x) => <PubCard key={x.href} x={x} />)}</ul>
         </div>
       </section>
-      <section data-nofill className="pj-sec pj-did rs-now">
+      <section data-nofill className="pj-sec rs2-now">
         <div className="pg-wrap">
           <h2 className="pj-h">What we&apos;re working on now</h2>
-          <ul className="pj-did-list">
-            {now.map((r) => (
-              <li key={r.t}><span className="rs-k">{r.k}</span><b className="rs-now-t">{r.t}</b><p>{r.link && <a href={r.link.href}>{r.link.label}</a>}{r.text}</p></li>
-            ))}
+          <ul className="rs2-now-list">
+            {now.map((r) => {
+              const c = nowCase(r.link?.href);
+              return (
+                <li key={r.t} data-reveal>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  {c && <a className="rs2-now-ph" href={caseHref(c)} tabIndex={-1} aria-hidden="true"><img src={casePhoto(c)} alt="" loading="lazy" /></a>}
+                  <div className="rs2-now-body"><span className="nw4-chip">{r.k}</span><b>{r.t}</b><p>{r.link && <a href={r.link.href}>{r.link.label}</a>}{r.text}</p></div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
@@ -529,18 +589,19 @@ export function ResearchPage() {
         <div className="pg-wrap rs-two">
           <div>
             <h2 className="pj-h">Talks</h2>
-            <ul className="rs-rows">
+            <ul className="rs2-talks">
               {TALKS.map((t) => (
-                <li key={t.href}><span className="rs-series">{t.when}</span><b>{t.title}</b><span className="rs-pub">{t.event}</span><ByLine names={t.people} /><a className="pj-more" href={t.href} target="_blank" rel="noopener noreferrer">Speaker page</a></li>
+                <li key={t.href} data-reveal>
+                  <div className="nw4-award-band is-talk"><Faces people={facesOf(t.people)} big /><span className="nw4-chip">{t.when}</span></div>
+                  <div className="nw4-award-body"><b>{t.title}</b><p>{t.event}</p><ByLine names={t.people} /><a className="ed-more" href={t.href} target="_blank" rel="noopener noreferrer">Speaker page</a></div>
+                </li>
               ))}
             </ul>
           </div>
           <div>
             <h2 className="pj-h">Awards and recognition</h2>
-            <ul className="rs-rows">
-              {AWARDS.map((a) => (
-                <li key={a.href}><span className="rs-series">{a.year}{a.before ? " · Before Rawlins" : ""}</span><b>{a.title}</b><span className="rs-pub">{a.from}</span><ByLine names={a.people} /><a className="pj-more" href={a.href} target="_blank" rel="noopener noreferrer">The announcement</a></li>
-              ))}
+            <ul className="nw4-awards is-col">
+              {AWARDS.map((a) => <AwardCard key={a.href} title={a.title} from={a.from} tag={`${a.year}${a.before ? " · Before Rawlins" : ""}`} people={a.people} href={a.href} />)}
             </ul>
             <Dev block>Placeholder: awards and recognition for Rawlins and our people go here as they come in.</Dev>
           </div>
@@ -564,7 +625,8 @@ export function ThoughtIndex() {
             <li key={a.slug}>
               <a href={`/insights/thought-leadership/${a.slug}`} className="pg-card pg-card-link pg-article-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={a.image} alt="" width={a.imageWidth ?? 1600} height={a.imageHeight ?? 650} loading="lazy" />
+                {/* the article's own picture, the one its page shows (Nicole, Nov 13) */}
+                <img src={a.heroImage || a.image} alt="" width={a.imageWidth ?? 1600} height={a.imageHeight ?? 650} loading="lazy" />
                 <span className="pg-case-k">{a.category} · {a.dateLabel}</span>
                 <b>{a.title}</b>
                 <span>{a.excerpt}</span>

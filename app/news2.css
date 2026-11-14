@@ -1,0 +1,119 @@
+/* News & Recognition and Research & Publications, Nov 13 (Nicole): light tops with blue where it should be; every event,
+   post, award, and report with a picture, and each kind clearly told apart. Components: components/site/more.tsx
+   (NewsPage, ResearchPage) and components/site/events.tsx. */
+
+/* ── the light tops ───────────────────────────────────────────────── */
+.ed-hero:has(.nw3-jump) .ed-h1 em, .ed-hero:has(.rs2-ph) .ed-h1 em { filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.4)); }
+.ed-hero:not(.is-dark) .nw3-jump a { border-color: #c4d8f2; background: #fff; color: #0a1220 !important; box-shadow: 0 12px 26px -20px rgba(10, 18, 32, 0.4); }
+.ed-hero:not(.is-dark) .nw3-jump a:hover, .ed-hero:not(.is-dark) .nw3-jump a:focus-visible { background: #fff; box-shadow: 0 0 0 2px #22d3ee, 0 0 22px rgba(34, 211, 238, 0.35); }
+.ed-hero:not(.is-dark) .nw3-jump b { box-shadow: 0 0 12px rgba(34, 211, 238, 0.55); }
+/* Research & Publications: Paul Wheeler's photo on the right */
+.rs2-ph { margin: 0; justify-self: end; width: min(100%, 540px); overflow: hidden; border-radius: 26px; box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.5), 0 0 36px rgba(34, 211, 238, 0.28), 0 30px 60px -30px rgba(10, 18, 32, 0.5); }
+.rs2-ph img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 30%; }
+@media (max-width: 900px) { .rs2-ph { justify-self: stretch; width: 100%; } }
+
+/* ── chips and faces, shared ─────────────────────────────────────── */
+.nw4-chip { justify-self: start; align-self: flex-start; display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 999px; background: rgba(34, 211, 238, 0.16); color: #a5f3fc; box-shadow: inset 0 0 0 1px rgba(165, 243, 252, 0.45), 0 0 14px rgba(34, 211, 238, 0.22); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.08em; line-height: 1.2; text-transform: uppercase; }
+.nw4-faces { display: flex; }
+.nw4-faces img { width: 52px; height: 52px; border-radius: 50%; border: 3px solid #fff; object-fit: cover; object-position: 50% 20%; background: #e6eef8; }
+.nw4-faces img + img { margin-left: -12px; }
+.nw4-faces.is-big img { width: 84px; height: 84px; border-color: #0a1220; box-shadow: 0 0 0 2px #22d3ee, 0 0 24px rgba(34, 211, 238, 0.45); }
+
+/* ── Where we'll be next: a picture with every event, no date block ── */
+.evx2 > li { grid-template-columns: minmax(240px, 0.85fr) minmax(0, 1.15fr) !important; gap: 0 !important; padding: 0 !important; overflow: hidden; align-items: stretch !important; }
+.evx2 > li { min-height: 300px; }
+/* the picture fills its side of the card without setting the card's height */
+.evx2 > li > .evx-ph { display: block; width: 100% !important; height: 0; min-height: 100%; aspect-ratio: auto !important; border-radius: 0 !important; object-fit: cover; object-position: 50% 50%; box-shadow: none !important; }
+.evx2 .evx-when { color: #a5f3fc; }
+.evx2 .evx-body { padding: clamp(22px, 2.6vw, 36px); }
+@media (max-width: 860px) {
+  .evx2 > li { grid-template-columns: 1fr !important; }
+  .evx2 > li { min-height: 0; }
+  .evx2 > li > .evx-ph { height: auto; min-height: 0; aspect-ratio: 16 / 9 !important; }
+}
+/* a person's photo when the event has none of its own */
+.evx .evx-face { display: grid; place-items: center; background: radial-gradient(120% 140% at 80% 0%, #1d3759 0%, #0a1220 70%); }
+.evx .evx-face img { width: 44%; max-width: 170px; aspect-ratio: 1; border-radius: 50%; object-fit: cover; object-position: 50% 20%; box-shadow: 0 0 0 3px #22d3ee, 0 0 30px rgba(34, 211, 238, 0.45); }
+.evx-past .evx-face { aspect-ratio: 16 / 9; border-bottom: 4px solid #22d3ee; }
+.evx-phl { display: block; }
+.evx-past h3 a { color: inherit; text-decoration: none; }
+.evx-past h3 a:hover { text-decoration: underline; text-decoration-color: #22d3ee; text-underline-offset: 4px; }
+
+/* ── Where we've been: three at a time, with arrows ─────────────── */
+.evx.evx-rail { display: block; }
+.evx-rail .rl-track { grid-auto-columns: calc((100% - 32px) / 3); gap: 16px; }
+.evx-rail .rl-track > li { display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; border: 1px solid #c4d8f2; background: #fff; box-shadow: 0 18px 40px -28px rgba(10, 18, 32, 0.45); scroll-snap-align: start; transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; }
+.evx-rail .rl-track > li:hover { transform: translateY(-3px); border-color: #22d3ee; }
+.evx-rail .evx-ph { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 4px solid #22d3ee; }
+.evx-rail .evx-body { display: flex; flex-direction: column; flex: 1; padding: 22px 24px 24px; }
+@media (max-width: 1100px) { .evx-rail .rl-track { grid-auto-columns: calc((100% - 16px) / 2); } }
+@media (max-width: 700px) { .evx-rail .rl-track { grid-auto-columns: 86%; } }
+
+/* ── The latest from our team: tiles of different sizes, each with a picture ── */
+.nw4-bento { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: minmax(260px, auto); gap: 18px; }
+.nw4-tile.is-big { grid-column: span 2; grid-row: span 2; }
+.nw4-bento.is-1 .nw4-tile.is-big { grid-column: 1 / -1; grid-row: auto; }
+.nw4-tile > a, .nw4-tile > div { position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; min-height: 260px; overflow: hidden; border-radius: 24px; color: #fff; text-decoration: none; box-shadow: 0 22px 44px -30px rgba(10, 18, 32, 0.55); transition: transform 0.25s, box-shadow 0.25s; }
+.nw4-tile > a:hover { transform: translateY(-3px); box-shadow: 0 0 0 2px #22d3ee, 0 0 28px rgba(34, 211, 238, 0.35); }
+.nw4-tile-body { display: grid; gap: 10px; padding: clamp(20px, 2.4vw, 32px); }
+.nw4-tile b { font-size: clamp(1.2rem, 1.5vw, 1.45rem); font-weight: 600; line-height: 1.22; letter-spacing: -0.01em; }
+.nw4-tile.is-big b { font-size: clamp(1.7rem, 2.6vw, 2.5rem); line-height: 1.12; }
+.nw4-text { color: #dce6f2; font-size: 1rem; line-height: 1.5; }
+.nw4-tile:not(.is-big) .nw4-text { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.nw4-tile.is-big .nw4-text { max-width: 60ch; font-size: 1.1rem; }
+.nw4-tile .ed-more, .nw4-tile .ed-more::after { color: #a5f3fc !important; }
+/* a post with a photo: the photo fills the tile, the words over a dark fade */
+.nw4-tile.is-photo .nw4-ph { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+.nw4-tile.is-photo > a::after, .nw4-tile.is-photo > div::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 18, 32, 0.3) 0%, rgba(10, 18, 32, 0.55) 45%, rgba(10, 18, 32, 0.92) 100%); }
+.nw4-tile.is-photo > a:hover .nw4-ph { transform: scale(1.04); }
+/* a post about one of our people: their photo on navy */
+.nw4-tile.is-person > a, .nw4-tile.is-person > div { justify-content: space-between; background: radial-gradient(120% 120% at 100% 0%, rgba(34, 211, 238, 0.24), transparent 55%), linear-gradient(160deg, #1d3759, #0a1220); }
+.nw4-tile.is-person .nw4-faces { padding: clamp(20px, 2.4vw, 32px) clamp(20px, 2.4vw, 32px) 0; }
+.nw4-ph-list { margin-top: 18px; }
+@media (max-width: 900px) {
+  .nw4-bento { grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .nw4-tile.is-big { grid-column: auto; grid-row: auto; }
+  .nw4-tile > a, .nw4-tile > div { min-height: 300px; }
+}
+
+/* ── Awards (and talks): the people, big, on a navy band ─────────── */
+.nw4-awards, .rs2-talks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 18px; }
+.nw4-awards.is-col, .rs2-talks { grid-template-columns: 1fr; }
+.nw4-award, .rs2-talks > li { display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; border: 1px solid #dbe5f1; background: #fff; box-shadow: 0 18px 40px -28px rgba(10, 18, 32, 0.45); }
+.nw4-award-band { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding: 22px 24px; background: radial-gradient(120% 140% at 100% 0%, rgba(34, 211, 238, 0.26), transparent 55%), linear-gradient(160deg, #1d3759, #0a1220); }
+.nw4-award-body { display: flex; flex-direction: column; flex: 1; gap: 8px; padding: 20px 24px 24px; }
+.nw4-award-body b { color: #0a1220; font-size: 1.3rem; font-weight: 600; line-height: 1.25; }
+.nw4-award-body p { margin: 0; color: #2e3c50; font-size: 1.02rem; line-height: 1.5; }
+.nw4-award-body .rs-by { padding: 6px 0; border: 0; background: none; }
+.nw4-award-body .ed-more { margin-top: auto; }
+
+/* ── Reports, drawn like their covers ─────────────────────────────── */
+.nw4-pubs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 18px; }
+.nw4-pubs.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.nw4-pub { display: flex; flex-direction: column; overflow: hidden; border-radius: 22px; border: 1px solid #dbe5f1; background: #fff; box-shadow: 0 18px 40px -28px rgba(10, 18, 32, 0.4); }
+.nw4-pub > a { display: flex; flex: 1; flex-direction: column; color: inherit; text-decoration: none; }
+.nw4-cover { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 6px 14px; min-height: 176px; padding: 26px 22px 18px; overflow: hidden; background: radial-gradient(120% 140% at 100% 0%, rgba(34, 211, 238, 0.22), transparent 55%), linear-gradient(160deg, #1d3759, #0a1220); }
+.nw4-cover::before { content: ""; position: absolute; left: 22px; top: 0; width: 56px; height: 5px; border-radius: 0 0 4px 4px; background: #22d3ee; box-shadow: 0 0 14px #22d3ee; }
+.nw4-pub[data-kind="fhwa"] .nw4-cover { background: radial-gradient(120% 140% at 100% 0%, rgba(34, 211, 238, 0.3), transparent 55%), linear-gradient(160deg, #0d4a5c, #082a36); }
+.nw4-pub[data-kind="journal"] .nw4-cover { background: radial-gradient(120% 140% at 100% 0%, rgba(165, 243, 252, 0.22), transparent 55%), linear-gradient(160deg, #34557f, #1a2f4d); }
+.nw4-pub[data-kind="state"] .nw4-cover { background: radial-gradient(120% 140% at 100% 0%, rgba(34, 211, 238, 0.2), transparent 55%), linear-gradient(160deg, #26466e, #0f1f38); }
+.nw4-series { color: #a5f3fc; font-size: 0.88rem; font-weight: 800; letter-spacing: 0.08em; line-height: 1.35; text-transform: uppercase; }
+.nw4-year { color: #fff; font-size: 1.6rem; font-weight: 700; line-height: 1; }
+.nw4-cover .nw4-faces { grid-column: 1 / -1; align-self: end; margin-top: 18px; }
+.nw4-cover .nw4-faces img { border-color: #0a1220; box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.75); }
+.nw4-pub-body { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 20px 22px 22px; }
+.nw4-pub-body b { color: #0a1220; font-size: 1.2rem; font-weight: 600; line-height: 1.3; }
+.nw4-line { color: #334155; font-size: 1rem; line-height: 1.5; }
+.nw4-pub-body .pj-more { margin-top: auto; }
+.nw4-pub > a:hover b { text-decoration: underline; text-decoration-color: #22d3ee; text-underline-offset: 4px; }
+@media (max-width: 900px) { .nw4-pubs.is-three { grid-template-columns: 1fr; } }
+
+/* ── Research & Publications: what we're working on now, with each project's photo ── */
+.rs2-now { background: #f2f6fb; }
+.rs2-now-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 18px; }
+.rs2-now-list > li { display: flex; flex-direction: column; overflow: hidden; border-radius: 22px; border: 1px solid #dbe5f1; background: #fff; box-shadow: 0 18px 40px -28px rgba(10, 18, 32, 0.4); }
+.rs2-now-ph img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 4px solid #22d3ee; }
+.rs2-now-body { display: grid; gap: 10px; padding: 20px 22px 24px; }
+.rs2-now-body .nw4-chip { background: #e6f7fb; color: #0b6f86; box-shadow: inset 0 0 0 1px #a5e3ef; }
+.rs2-now-body b { color: #0a1220; font-size: 1.25rem; font-weight: 600; line-height: 1.3; }
+.rs2-now-body p { margin: 0; color: #2e3c50; font-size: 1.02rem; line-height: 1.5; }

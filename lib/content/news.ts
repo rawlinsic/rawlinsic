@@ -11,7 +11,9 @@ export type EventItem = { when: string; title: string; where?: string; note?: st
      events stay on the site and it's clear they're over. intl: outside the U.S. (also listed on the International page).
      role: what we did there (Speaking, Sponsor, ...). past: what to say once it's over. pos: where to center the photo.
      ends is also what orders past events; where only the month or year is known it's set to that month's end. */
-  intl?: boolean; role?: string; past?: string; pos?: string };
+  intl?: boolean; role?: string; past?: string; pos?: string;
+  /* card: a picture for the event's card on News & Recognition when the event has no photo of its own (Nov 13) */
+  card?: string };
 
 export const NEWS: NewsItem[] = [
   {
@@ -65,7 +67,10 @@ export const EVENTS: EventItem[] = [
   /* content pass v7, 12.2: after AASHTO, which stays first until it ends on Nov 18 */
   { when: "Dec 6–10, 2026", title: "IHEEP 2026", where: "Austin, Texas", note: "", ends: "2026-12-10", role: "Attending",
     href: "https://web.cvent.com/event/2b28935f-a05f-4812-b141-d649c7d831d1/summary",
-    line: "Our drone team will be at IHEEP 2026 in Austin, Dec 6–10." },
+    line: "Our drone team will be at IHEEP 2026 in Austin, Dec 6–10.",
+    /* no photo of the event on file: a drone field crew, from the live site's Advanced Air Mobility page (the drone photo
+       rule: drone photos only from that page); the same photo, company patch softened, as Emergency Response with Drones */
+    card: "/images/pages/aam-enable-no-patch.webp" },
   /* Everything below was a News post until Nov 11. Each was checked then against Rawlins' or the person's own LinkedIn
      post, the event's sponsor board, or the publisher's page (content pass v7 addendum, Part B). They sit after the
      two above so the home page and the menu keep showing AASHTO first. */
@@ -81,7 +86,7 @@ export const EVENTS: EventItem[] = [
     line: "Andy Palanisamy is moderating sessions on smart cities and mobility integration across the Middle East and Africa, and on total lifecycle management from procurement to end of life, and speaking on enabling innovation in a regulated world.",
     past: "Andy Palanisamy moderated sessions on smart cities and mobility integration across the Middle East and Africa, and on total lifecycle management from procurement to end of life, and spoke on enabling innovation in a regulated world." },
   // Andy's LinkedIn posts
-  { when: "Nov 9–10, 2026", title: "ConTech / MENA Construction Summit 2026", where: "Madinat Jumeirah, Dubai", ends: "2026-11-10", intl: true, role: "Attending",
+  { when: "Nov 9–10, 2026", title: "ConTech / MENA Construction Summit 2026", where: "Madinat Jumeirah, Dubai", ends: "2026-11-10", intl: true, role: "Attending", who: "Andy Palanisamy",
     past: "Andy Palanisamy represented Rawlins at the ConTech / MENA Construction Summit." },
   // AMOTIA: the event's sponsor board ("Host State Night Event Sponsor") and Rawlins' LinkedIn post. Photo: Scott on the general session panel, by Janine Cooper.
   { when: "Nov 4–6, 2026", title: "AMOTIA 17th Annual Conference", where: "Fort Lauderdale, Florida", ends: "2026-11-06", role: "Sponsor and speaking",
@@ -98,6 +103,9 @@ export const EVENTS: EventItem[] = [
   // Bridge Challenge: Dara Wheeler's LinkedIn post and the AASHTO Journal article (Apr 17, 2026)
   { when: "Apr 13, 2026", title: "AASHTO 2026 STEM Bridge Challenge", where: "Savannah, Georgia", ends: "2026-04-13", role: "Leading",
     href: "https://aashtojournal.transportation.org/winners-named-in-aashto-2026-bridge-challenge/",
+    /* the article's own photo, Alicia McConnell at the model bridge with a student team (Nicole, Nov 13: "use the image
+       that's of that article of alicia... it's approved"); AASHTO Journal, Apr 17, 2026, photo by AASHTO */
+    photo: "/images/pages/news-aashto-2026-stem-bridge-challenge.jpg", pos: "50% 30%",
     past: "Alicia McConnell helped lead the challenge, where middle and high school teams design, build, and test model bridges, at AASHTO's Spring Meeting." },
 ];
 

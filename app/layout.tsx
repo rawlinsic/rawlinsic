@@ -4,6 +4,7 @@ import "./menu.css";
 import "./pages.css";
 import "./v8.css";
 import "./v10.css";
+import "./news2.css";
 
 import type { Metadata } from "next";
 import Script from "next/script";
