@@ -19,7 +19,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
     ],
     res: [
       "Leadership, project management and technical career paths in place.", // source: drafts:32
-      "Three branch leadership, project management, and technical career track in place.", // source: drafts:32
+      "Existing employee turnover rate reduced to 14%.", // source: drafts:32
     ],
   },
   "cs-tn-ipd": {
