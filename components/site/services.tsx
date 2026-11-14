@@ -138,7 +138,7 @@ export function DigitalShowcase() {
         {/* Nicole, Nov 11: this eyebrow, title, and line, shown without an expand arrow. The seven examples carry no
             preview notes anywhere (Nicole, Nov 11: we're using them). */}
         <AutomationIntegrationInteractive embedded openIntro eyebrow="Smarter systems, streamlined workflows" title="Applied solutions"
-          intro={<p className="section-text">The graphic below showcases Rawlins&rsquo; applied solutions in practice. Tap an icon to see the challenge, what we built, and the result.</p>} />
+          intro={<p className="section-text">The graphic below showcases applied solutions in practice. Tap an icon to see the challenge, what we built, and the result.</p>} />
       </section>
       <section className="pg-sec pg-sec-navy pg-legacy"><AutomationEcosystemBars /></section>
       <DeliverStack />
