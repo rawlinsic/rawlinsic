@@ -18,7 +18,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
       "Visited all four of the department's regions to support the worker proficiency rollout", // source: drafts:26
     ],
     res: [
-      "Department-wide organizational structure reconfiguration aligns with critical program and project delivery areas", // source: drafts:32
+      "Leadership, project management and technical career paths in place.", // source: drafts:32
       "Three branch leadership, project management, and technical career track in place.", // source: drafts:32
     ],
   },
