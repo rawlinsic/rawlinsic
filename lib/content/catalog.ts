@@ -326,7 +326,8 @@ export const SERVICES: Record<string, SvcData> = {
   "related": [
    "procurement",
    "workforce",
-   "dashboards"
+   "dashboards",
+   "portals"
   ],
   "xp": [
    "Members of our team led major projects at Florida DOT and the North Carolina Turnpike Authority, including design-build",
@@ -381,7 +382,8 @@ export const SERVICES: Record<string, SvcData> = {
   "related": [
    "proj-delivery",
    "program-delivery",
-   "construction"
+   "construction",
+   "portals"
   ],
   "xp": [
    "We've built project delivery frameworks for three state DOTs, and each one looks different",
@@ -545,7 +547,8 @@ export const SERVICES: Record<string, SvcData> = {
   "related": [
    "program-delivery",
    "alt-delivery",
-   "finance"
+   "finance",
+   "portals"
   ],
   "xp": [
    "One of our procurement specialists brings 35 years of government procurement in transportation and engineering services"
@@ -639,7 +642,8 @@ export const SERVICES: Record<string, SvcData> = {
   "related": [
    "proj-delivery",
    "partnering",
-   "drone-programs"
+   "drone-programs",
+   "portals"
   ],
   "xp": [
    "Our team includes a former Arkansas DOT Chief Engineer of Operations who started as a field construction engineer",
@@ -875,7 +879,8 @@ export const SERVICES: Record<string, SvcData> = {
   "related": [
    "preconstruction",
    "construction",
-   "program-delivery"
+   "program-delivery",
+   "portals"
   ],
   "xp": [
    "We've built project delivery frameworks for three state DOTs, and each one looks different"
@@ -2799,7 +2804,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    // Ron Crew bio
    "One of our right of way advisors spent 43 years in Florida DOT right of way, 33 as a supervisor or manager"
   ],
-  "services": ["program-delivery", "preconstruction", "construction", "operations", "traffic", "asset-mgmt"],
+  "services": ["program-delivery", "preconstruction", "construction", "operations", "traffic", "asset-mgmt", "portals"],
   "industry": "transport",
   "people": [],
   "basis": "Highway case studies and Our People bios"
@@ -2848,7 +2853,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    // Aaron Organ and Jordan Stacy bios
    "Experience on our team includes airport operations, airfield safety, and airport training programs"
   ],
-  "services": ["drone-programs", "drone-aam", "drone-emergency", "research", "aero-division", "grants"], // adds Emergency Response and Research & Standards
+  "services": ["drone-programs", "drone-aam", "drone-emergency", "research", "aero-division", "grants", "portals"], // adds Emergency Response and Research & Standards
   "industry": "transport",
   "people": [],
   "basis": "Aeronautics records and the aviation team's bios"
@@ -2886,7 +2891,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    // Jen Pihl bio
    "One of our advisors supported economic analysis and the administration of major rail grant programs at the Federal Railroad Administration"
   ],
-  "services": ["partnering", "owners-rep"], // the rail work was partnering (Nov 12 split)
+  "services": ["partnering", "owners-rep", "portals"], // the rail work was partnering (Nov 12 split)
   "industry": "transport",
   "people": [],
   "basis": "Minneapolis light rail project; bios (Caltrans rail and mass transportation leadership, Federal Railroad Administration)"
@@ -2921,7 +2926,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
    // cs-nc-ipd (BUILD and INFRA), cs-aero (construction technology), and this page's port security applications
    "Our grant team has prepared federal applications for highway, drone, and port security programs"
   ],
-  "services": ["grants", "drone-programs"],
+  "services": ["grants", "drone-programs", "portals"],
   "industry": "transport",
   "people": [],
   "basis": "Harbors records: final report on the client's first purchase order (work through Aug 2026)",

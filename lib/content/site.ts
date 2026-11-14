@@ -190,7 +190,7 @@ export const INDUSTRIES: Industry[] = [
     id: "fed", slug: "federal-government", name: "Federal Government", scene: "crossing", parent: "gov",
     who: "Federal Programs, Multi-State Research, & Grants",
     lead: "Our work with the federal government runs through programs the states take part in. We facilitate a multi-state research program on drone standards that the Federal Highway Administration sits on, and we helped plan and facilitate a federal peer exchange on drone programs for western state transportation departments. We also help states deliver federal-aid programs and compete for federal grants. Our team includes former Federal Highway Administration division leaders.",
-    featured: ["research", "grants", "federal-aid", "lpa", "drone-programs", "planning"],
+    featured: ["research", "grants", "federal-aid", "lpa", "drone-programs", "planning", "portals"],
     featuredCase: "cs-pooled",
     projects: ["cs-pooled", "cs-lpa-manual", "cs-aero", "cs-harbor", "cs-nc-ipd"],
     subsectors: [],
@@ -200,7 +200,7 @@ export const INDUSTRIES: Industry[] = [
     id: "local", slug: "local-governments", name: "Local Governments", scene: "street", parent: "gov",
     who: "Cities, Counties, & Regional Agencies",
     lead: "Most of our work with cities, counties, and regional agencies so far has come through state programs. We've run asset management workshops and action plans with cities and county road commissions through a state infrastructure office, drafted a manual and built training for the local agencies that deliver federal-aid projects, written planning guidance on advanced air mobility for local governments, and facilitated partnering on a light rail line. We've also begun work with a city transportation department on resource planning. Our team includes a former Director of Public Works for the City of Las Vegas.",
-    featured: ["asset-mgmt", "lpa", "federal-aid", "grants", "partnering", "drone-aam", "org-design"],
+    featured: ["asset-mgmt", "lpa", "federal-aid", "grants", "partnering", "drone-aam", "org-design", "portals"],
     featuredCase: "cs-local-am",
     projects: ["cs-local-am", "cs-lpa-manual", "cs-major", "cs-aero", "cs-nyc-parks", "cs-riverside"],
     subsectors: [],
@@ -212,7 +212,7 @@ export const INDUSTRIES: Industry[] = [
     // (four when the Who we work with file was written; six with live-site Examples 06 and 07 back, Nov 11).
     // Nicole's wording (preview edit, Nov 11, 11:5x PM); the Who we work with file's new lead for this field was skipped.
     lead: "Private firms come to us for two reasons. Contractors and engineering firms that work for public agencies want what we know from the owner's side of the table: how a department of transportation plans, contracts, and delivers its work. Firms of every kind bring us in to connect the systems they already pay for and automate the work around them.",
-    featured: ["partnering", "alt-delivery", "automation", "dashboards", "ai"],
+    featured: ["partnering", "alt-delivery", "automation", "dashboards", "ai", "portals"],
     projects: ["cs-major", "cs-pv-pmo", "cs-pv-capacity"],
     subsectors: [],
   },
@@ -224,7 +224,7 @@ export const INDUSTRIES: Industry[] = [
     // "aviation" dropped from the teaming list: our aviation contracts on record are direct, and the drone program work is the one through a prime.
     // "right of way" added: right of way support on an engineering firm's district contract (2026 progress reports).
     lead: "Contractors come to us for what we know about the owner's side of the table. We facilitate partnering between contractors and public owners on major projects, and we've helped the maintenance contracting industry shape a contracting model state DOTs can tailor.",
-    featured: ["partnering", "alt-delivery", "construction", "outsourcing", "pbmc", "automation"],
+    featured: ["partnering", "alt-delivery", "construction", "outsourcing", "pbmc", "automation", "portals"],
     // was ["alt-delivery", "owners-rep", "automation", "training-video"]. Construction and Maintenance Programs are where this page's projects sit
     // (cs-ia-partnering, cs-db-partnering, cs-maint-model); Dashboards goes with cs-pv-pmo. Owner's Representation is a service for owners, not
     // contractors, and no project here uses Digital Training & Video.
@@ -237,7 +237,7 @@ export const INDUSTRIES: Industry[] = [
     id: "eng", slug: "engineering-consulting-firms", name: "Engineering & Consulting Firms", scene: "office", parent: "private",
     who: "Teaming on Public Programs & Project Systems",
     lead: "Engineering and consulting firms add us to their teams on state DOT programs, for what our people know from running those programs inside an agency. Our automation team also builds the systems a firm runs its own projects on: project tracking, time, invoicing, and reporting.",
-    featured: ["program-delivery", "org-design", "workforce", "drone-programs", "automation", "dashboards"],
+    featured: ["program-delivery", "org-design", "workforce", "drone-programs", "automation", "dashboards", "portals"],
     featuredCase: "cs-pv-pmo",
     projects: ["cs-pv-pmo", "cs-pv-reporting", "cs-pv-sales"],
     subsectors: [],
@@ -259,7 +259,7 @@ export const INDUSTRIES: Industry[] = [
     who: "Ministries of transport, national roads and aviation authorities, and city agencies outside the United States",
     // U.S. only to date: every Rawlins client is in the U.S., including territories (Jacob's AERO portfolio, Nov 2026). Don't add an international project or client.
     lead: "While our project work to date has been in the United States, our experience helping public agencies plan, deliver, and run transportation systems is highly transferable. The core operational and infrastructure challenges we solve in the US closely mirror those faced by ministries of transport and national authorities around the world.", // Nicole's wording, Nov 11
-    featured: ["strategic-planning", "org-design", "program-delivery", "asset-mgmt", "data-governance", "tech-strategy", "drone-aam", "smart-mobility"], subsectors: [], projects: [],
+    featured: ["strategic-planning", "org-design", "program-delivery", "asset-mgmt", "data-governance", "tech-strategy", "drone-aam", "smart-mobility", "portals"], subsectors: [], projects: [],
   },
 ];
 
@@ -298,6 +298,8 @@ export const INTL: { abroad: { title: string; items: { t: string; flag?: string 
 export const industryHref = (i: Industry) => `/industries/${i.slug}`;
 export const subsectorHref = (i: Industry, s: Subsector) => `/industries/${i.slug}/${s.slug}`;
 
+/* Nov 13 (Nicole): "websites should be included on all of the pages for who we work with as a service" — Websites, Portals &
+   Digital Tools is in every Who We Work With page's services (the industry lists above and the four modes' lists in catalog.ts) */
 /* ── "What are you trying to fix?" ───────────────────────────── */
 export const PROBLEMS: { q: string; services: string[] }[] = [
   { q: "Our projects are late or over budget", services: ["program-delivery", "preconstruction", "alt-delivery", "owners-rep"] },
