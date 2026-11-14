@@ -67,7 +67,7 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
     { t: "", d: "Set the reporting and change-control routine, so leadership sees a problem while there is still time to act." },
   ] },
   finance: { title: "How we do it", steps: [
-    { t: "", d: "Agree the decision the numbers have to support." },
+    { t: "", d: "Identify the decision the numbers have to support." },
     { t: "", d: "Pull the agency's own data: positions, pay, contracts, fleet, fuel, and work records." },
     { t: "", d: "Build the analysis with finance and HR staff, and test it against the budget." },
     { t: "", d: "Present options leadership can act on, with the assumptions on record." },
@@ -133,7 +133,7 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
     { t: "", d: "Write up each session, and carry what worked back to the department's leaders." },
   ] },
   "owners-rep": { title: "How we do it", steps: [
-    { t: "", d: "Agree the role in writing: what we review, who decides, and what the owner can rely on." },
+    { t: "", d: "Put the role in writing: what we review, who decides, and what the owner can rely on." },
     { t: "", d: "Set the rhythm: weekly calls, monthly field reviews, and reports to leadership." },
     { t: "", d: "Track commitments, deficiencies, and risks, and raise issues early." },
     { t: "", d: "Build the owner's own staff into the role." },
@@ -147,7 +147,7 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
   ] },
   "change-mgmt": { title: "How we do it", steps: [
     { t: "", d: "Define the change: what is different, who is affected, and when." },
-    { t: "", d: "Assess the impact by role, and agree the message with leadership." },
+    { t: "", d: "Assess the impact by role, and agree on the message with leadership." },
     { t: "", d: "Build the communications plan and the network of change champions." },
     { t: "", d: "Support the rollout with workshops and training, and check how it is going with the people affected." },
   ] },
@@ -172,25 +172,25 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
     { t: "", d: "Document it, train the owners, and hand it over." },
   ] },
   "data-governance": { title: "How we do it", steps: [
-    { t: "", d: "Decide what the organization wants AI for, and who governs it." },
+    { t: "", d: "Identify the decisions the data has to support, and who is responsible for the data." },
     { t: "", d: "Inventory the data in scope: sources, owners, definitions, and quality." },
     { t: "", d: "Write the policy, the roles, and the workflows with the people who will hold them." },
     { t: "", d: "Set up the steering committee or working group that keeps it going." },
   ] },
   ai: { title: "How we do it", steps: [
-    { t: "", d: "Agree what the organization wants AI for, and who governs it." },
+    { t: "", d: "Decide what the organization wants AI for, and who governs it." },
     { t: "", d: "Review the candidate uses, the data behind each, and the risks, and rank them." },
     { t: "", d: "Set the policy, choose the tools, and run the first use with a small group." },
     { t: "", d: "Roll it out with training, and decide what is supported from then on." },
   ] },
   dashboards: { title: "How we do it", steps: [
-    { t: "", d: "Agree the measures and the decisions they serve." },
+    { t: "", d: "Choose the measures, and name the decision each one supports." },
     { t: "", d: "Find the data behind each measure, its owner, and its gaps." },
     { t: "", d: "Build the dashboard on a platform the organization already owns, and test it with the people who will use it." },
     { t: "", d: "Document it, and train the staff who will keep it current." },
   ] },
   "tech-strategy": { title: "How we do it", steps: [
-    { t: "", d: "Agree the decision this work has to produce, and who makes it." },
+    { t: "", d: "Identify the decision this work has to lead to, and who makes it." },
     { t: "", d: "Interview leaders and staff, and review the systems, plans, and data already in place." },
     { t: "", d: "Rank the options with leadership, and write the plan or roadmap." },
     { t: "", d: "Set the governance that keeps the plan current: who reviews it, and how new requests come in." },

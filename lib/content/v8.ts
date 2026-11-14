@@ -80,6 +80,11 @@ const CASE_PHOTO: Record<string, string> = {
   "cs-reorg": P("auto-human.webp"),
   "cs-measures": P("strategy-bg.webp"),
   "cs-p3-division": P("aam-team-meeting.webp"),
+  /* Nov 13 (Nicole): no project for an unnamed client shows a picture of a place; these four had one */
+  "cs-mqa-fleet": P("project-transform.webp"),
+  "cs-pbmc2": P("project-partnering.webp"),
+  "cs-db-pursuit": P("project-db-partnering.webp"),
+  "cs-lpa-manual": P("project-ia-partnering.webp"),
   "cs-transform": P("project-transform.webp"), // divided highway through farmland at sunrise, no signs; Pexels, Tom Fisk: pexels.com/photo/9708012
   "cs-nv-fleet": P("project-nv-fleet.webp"), // snow clearing on a mountain highway, no markings; Unsplash, Tom Shamberger: unsplash.com/photos/7CffibpcnuI
   // the live site gave these three the same "Other states" photo as cs-maint-model; Nicole asked to split them (Nov 11)
@@ -100,7 +105,17 @@ const STATE_PHOTO: Record<string, string> = {
   Tennessee: P("tnbig.webp"), Louisiana: P("louisiana.webp"), Nevada: P("nv.webp"), Michigan: P("michigan.webp"),
   "North Carolina": P("nc.webp"), Utah: P("utah.webp"), Virginia: P("virginia.webp"), Delaware: P("delaware.webp"),
 };
-export const casePhoto = (c: CaseIndex) => CASE_PHOTO[c.id] ?? STATE_PHOTO[c.states[0]] ?? SERVICE_PHOTO[c.services[0]] ?? PAGE_PHOTO.cases;
+/* Pictures that show a recognizable place (a city, a state, a named site). Nov 13 (Nicole): a project with no state listed
+   (an unnamed client) never shows one of these; it gets the aerial highway picture instead. __tests__/lib checks it. */
+export const PLACE_PHOTOS = ["tnbig", "cs-hero-1", "cs-hero-2", "cs-hero-3", "cs-hero-4", "cs-hero-5", "cs-hero-6", "cs-hero-9", "cs-hero-10",
+  "michigan", "nc", "nv", "utah", "virginia", "delaware", "louisiana", "majortrans", "project-nyc-parks", "project-riverside",
+  "project-pa-budget", "project-local-am", "project-pbmc", "project-strategic", "contact-nevada-road", "industry-rail-transit",
+  "industry-ports-harbors"];
+export const isPlacePhoto = (src: string) => PLACE_PHOTOS.includes((src.split("/").pop() ?? "").replace(/\.[a-z0-9]+$/i, ""));
+export const casePhoto = (c: CaseIndex) => {
+  const src = CASE_PHOTO[c.id] ?? STATE_PHOTO[c.states[0]] ?? SERVICE_PHOTO[c.services[0]] ?? PAGE_PHOTO.cases;
+  return c.states.length === 0 && isPlacePhoto(src) ? P("transportation-aerial.webp") : src;
+};
 
 /* How we've grown: live-site photos matched to each stage (first: Reno, where Rawlins started) */
 /* 03: Aaron Organ, from our team, speaking at a 2026 symposium; 04: people working together at their computers */
