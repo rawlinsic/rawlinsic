@@ -15,7 +15,10 @@ import HeaderClient, { type NavData } from "@/components/v8/header-client";
 
 
 /* Who we work with: the project shown as a photo card for each industry (Part 4, 3) */
-const IND_CARD: Record<string, string> = { transport: "cs-proficiency", gov: "cs-local-am", contractors: "cs-major", private: "cs-pv-pmo" };
+/* growth: a Digital Solutions project for a company, not the engineering firm one Engineering & Consulting Firms shows
+   (Nicole, Nov 14); it's our automation team's work before Rawlins, so it shows that tag */
+const IND_CARD: Record<string, string> = { transport: "cs-proficiency", gov: "cs-local-am", contractors: "cs-major", private: "cs-pv-pmo", growth: "cs-pv-reporting" };
+const CARD_BEFORE_OK = ["growth"]; // menus whose card may be Before Rawlins work
 /* Our work menu, "featured projects" (Nicole renamed it from "In the Works", Nov 12, and asked for the best
    featured projects): the first three finished projects on the home page's Featured projects list
    (lib/content/v8.ts FEATURED_CASES), so the menu shows completed work for named clients. */
@@ -54,7 +57,7 @@ export default function Header() {
         /* an industry with no specialties shows the challenges we hear there instead */
         /* Growing Companies: its "Sound familiar?" quotes are its challenges (Nicole, Nov 13) */
         challenges: i.subsectors.length ? [] : i.id === "growth" ? PRIV.hear.map((h) => h.replace(/^[“"]|[”"]$/g, "")) : IND_DATA[i.id]?.ch ?? [],
-        feature: feature && isOurs(feature) ? card(feature) : undefined,
+        feature: feature && (isOurs(feature) || CARD_BEFORE_OK.includes(i.id)) ? card(feature) : undefined,
         /* the industry's other featured projects: Rawlins work only (Part 1, 0.4) */
         projects: i.projects.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c && isOurs(c) && c.id !== feature?.id).map((c) => ({ title: tc(c.title), href: caseHref(c) })),
         all: { label: `All ${i.name} Projects`, href: `/insights/case-studies?industry=${i.slug}` },
