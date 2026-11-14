@@ -243,7 +243,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Executive Advisory Services",
   "area": "strategy",
   "st": "ok",
-  "intro": "We advise agency leaders on their biggest decisions: reorganizations, new programs, and how to run and deliver their programs. For administrative functions, we provide advisory, training design, facilitation, and executive coaching, with clear processes, controls, and reporting.",
+  "intro": "We advise agency leaders on their biggest decisions: reorganizations, improvements in program and project delivery, the establishment of new programs, and program monitoring. We develop leadership training, facilitate leadership forums, perform executive coaching, and establish structured leadership organizational frameworks.",
   "hear": [
    "Leadership is stretched, and the decisions in front of it are big: a reorganization, a new program, a key seat left open.",
    "Every big decision we make is under public and legislative scrutiny.",
