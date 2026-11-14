@@ -4263,7 +4263,7 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department created an Asset Management Division and needed it defined and staffed, starting with a new director.",
   "when": "2024 to 2025",
   "did": [
-   "Worked with the new Director to establish a vision for asset management at the department, and a 100-day plan",
+   "Worked with the new Director to establish a vision for asset management at the department and created a 100-day plan",
    "Built the organization chart and a prioritized hiring plan",
    "Wrote position descriptions for the director and every manager: fleet and facilities, bridge, pavement, ancillary infrastructure, transportation data systems, quality management, and performance management",
    "Wrote primers for all seven sections",
