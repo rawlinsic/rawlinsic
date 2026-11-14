@@ -4269,7 +4269,7 @@ export const CASES: Record<string, CaseData> = {
    "Wrote primers for all seven sections that included detailed descriptions of all the functions to be performed by each section",
    "Wrote a fleet and facilities asset management strategy, and built fleet policies from fleet data",
    "Reviewed snow routes and dump trucks at county facilities, analyzed vehicle and equipment usage, and proposed a phased fleet surplus process",
-   "Researched pavement treatments, deterioration curves, levels of service, and target setting"
+   "Researched and provided recommendations for improving pavement treatments, deterioration curves, levels of service, and target setting"
   ],
   "res": [
    "Division stood up with its organization chart, hiring plan, position descriptions, and primers",
