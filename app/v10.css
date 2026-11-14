@@ -1478,11 +1478,13 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .tt-head.is-top .fan-h { margin-top: 12px; }
 /* the closing band: the title on one line on the left with the buttons under it, the links box beside them, the two
    centered on each other (Nicole, Nov 13: "aligned together and not off") */
+/* Nov 13, 9 PM (Nicole: "make the box bigger horizontally and lessen the gap between the two so it's not such a big section") */
+.svt { padding: clamp(48px, 6vw, 84px) 0; }
 @media (min-width: 900px) {
-  .svt-in { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: center; }
-  .svt-talk > .v8-h2 { margin: 0 0 22px; max-width: none; font-size: clamp(1.8rem, 2.6vw, 2.5rem); }
+  .svt-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); column-gap: clamp(24px, 3vw, 40px); align-items: center; }
+  .svt-talk > .v8-h2 { margin: 0 0 22px; max-width: none; font-size: clamp(1.7rem, 2.3vw, 2.25rem); }
 }
-@media (min-width: 1100px) { .svt-talk > .v8-h2 { white-space: nowrap; } }
+@media (min-width: 1280px) { .svt-talk > .v8-h2 { white-space: nowrap; } }
 /* Challenges we hear, as a picker: on white, not navy; it steps through the challenges as you scroll */
 .svq.is-picker { background: radial-gradient(45% 60% at 6% 30%, rgba(34, 211, 238, 0.1), transparent 70%), #fff; color: #0a1220; }
 .svq.is-picker .v8-h2 { color: #0a1220; }
@@ -1541,3 +1543,43 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .pf2-area button::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: #22d3ee; box-shadow: 0 0 6px rgba(34, 211, 238, 0.8); vertical-align: middle; }
 @media (max-width: 760px) { .pf2-row { grid-template-columns: 1fr; gap: 6px; } .pf2-row .pg-filter-label { margin-top: 0; } }
 .mx-inds li.mx-intl > a::before { top: 50%; bottom: auto; height: 24px; margin-top: -12px; }
+
+/* ── Nov 13, 9 PM (Nicole) ────────────────────────────────────────── */
+/* Challenges we hear on phones: held, one challenge at a time as you scroll, with dots; no line down the side */
+@media (max-width: 959px) and (prefers-reduced-motion: no-preference) {
+  .scn[data-phone]:not([data-static]) { height: calc(var(--steps) * var(--per) + 100vh); }
+  .scn[data-phone]:not([data-static]) > .scn-stage { position: sticky; top: var(--scn-top, 64px); height: calc(100vh - var(--scn-top, 64px)); height: calc(100svh - var(--scn-top, 64px)); overflow: hidden; display: flex; align-items: center; }
+  .svq.is-picker[data-phone]:not([data-static]) .svq-in { padding-top: 12px; padding-bottom: 12px; }
+}
+.hp.is-steps .fp-list > li:not(.is-on) { display: none; }
+.hp-dots { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+.hp-dots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 50%; background: #c9d9ea; cursor: pointer; }
+.hp-dots button[aria-current="true"] { background: #22d3ee; box-shadow: 0 0 10px rgba(34, 211, 238, 0.9); }
+@media (max-width: 959px) { .hp .fp-inline { margin-left: 0; padding-left: 0; } .hp .fp-inline::before { display: none; } }
+/* arrows above the services and modes photo panels, where they scroll sideways (phones) */
+.rl-btns.ways-btns { display: none; }
+@media (max-width: 760px) {
+  .rl-btns.ways-btns { display: flex; justify-content: flex-start; margin: 0 0 12px; padding: 0 18px; }
+  .rl-btns.ways-btns.is-fits { display: none; }
+  /* project rows: the heading, its link, and the arrows on the left (Nicole: "all against the right and should be the left") */
+  .h-row-head, .pj-rel .h-row-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .rl-btns { justify-content: flex-start !important; }
+}
+/* phone menu: the Overview links in Who We Work With are bold like the sectors under them; featured projects sit under All Projects */
+.hx-acc .hx-ov { font-weight: 700; color: inherit; }
+.hx-acc .hx-feat { margin-top: 4px; }
+/* International: the recognition card alone where the LEAP photo was */
+.ipg-region-more.is-solo { grid-template-columns: minmax(0, 1fr); }
+/* What We Do tour: the Explore buttons glowing blue with black words, the area lines glowing blue, room under the paragraph */
+.tt-tag { color: #0bb4d3; text-shadow: 0 0 14px rgba(34, 211, 238, 0.45); }
+.tt-lead { margin-bottom: 26px; }
+.tt-svcs { margin-bottom: 28px; }
+.tt-text .v8-btn { background: #22d3ee !important; border-color: #22d3ee !important; color: #0a1220 !important; box-shadow: 0 0 22px rgba(34, 211, 238, 0.55); }
+.tt-text .v8-btn:hover { box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.35), 0 0 30px rgba(34, 211, 238, 0.7); }
+/* the life cycle and How we do it steps: a wider section so the words are bigger and wrap less */
+.fit-scene .v8-wrap.fit-in { max-width: 1560px; }
+.fit-links a { font-size: 1rem; }
+@media (max-width: 760px) {
+  .pf2-seg { display: flex; width: 100%; flex-wrap: nowrap; }
+  .pf2-seg button { flex: 1 1 0; min-height: 44px; padding: 0 8px; font-size: 0.85rem; line-height: 1.1; white-space: normal; }
+}

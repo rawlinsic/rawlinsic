@@ -58,8 +58,9 @@ export function ServicesIndex() {
     <Shell>
       {/* Nov 13 (Nicole): the photo top is off. The What we do heading is the top now, styled like the Insights page: the blue
           eyebrow above, the headline with its last words glowing, and the line from the old top in gray under it. Then the five
-          areas pop out one by one as you scroll (moved here from home, Nov 10). The same words as home's What we do. */}
-      <section className="tt-head is-top" data-nofill aria-labelledby="tt-head-h">
+          areas pop out one by one as you scroll (moved here from home, Nov 10). The same words as home's What we do. Both are
+          plain white, not stacked cards (Nicole, Nov 13: "that card thing should not ... be showing as separate"). */}
+      <section className="tt-head is-top" data-nofill data-nopanel aria-labelledby="tt-head-h">
         <div className="ed-wrap fan-head">
           <nav className="pg-crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">What We Do</span></li></ol></nav>
           <p className="v8-eyebrow">What we do</p>

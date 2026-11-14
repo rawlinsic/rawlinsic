@@ -107,7 +107,7 @@ export default function TilesTour({ label, areas, id, hideLabel }: { label: stri
   }, [n, areas]);
 
   return (
-    <section ref={ref} id={id} className="tt" data-nofill aria-label={label} style={{ ["--tt-len" as string]: `calc(100vh + ${Math.round(n * PER * 100)}vh)` } as CSSProperties}>
+    <section ref={ref} id={id} className="tt" data-nofill data-nopanel aria-label={label} style={{ ["--tt-len" as string]: `calc(100vh + ${Math.round(n * PER * 100)}vh)` } as CSSProperties}>
       <div className="tt-stage">
         {!hideLabel && <p className="tt-k">{label}</p>}
         {areas.map((a, i) => (

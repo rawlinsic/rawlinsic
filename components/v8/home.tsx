@@ -8,6 +8,7 @@
    quotes); What we do pairs what clients say with what we bring, beside each
    area's featured project; Why Rawlins keeps its card and five tabs. */
 import ProjectCard from "@/components/v8/project-card";
+import WaysArrows from "@/components/v8/ways-arrows";
 import FanCards from "@/components/v8/fan-cards";
 import type { CSSProperties } from "react";
 import { AREAS, CASES, HOME, HOME_STORY, NUMBERS, PROBLEMS, STEPS, INDUSTRIES, VISIBLE_INDUSTRIES, WHY, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, serviceById, serviceHref, subsectorHref, isListed } from "@/lib/content/site";
@@ -148,6 +149,7 @@ export default function Home() {
             <h2 id="h-ways-h" className="v8-h2">Many engagements draw on <span className="hl-glow">more than one area.</span></h2>
             <p className="tt-lead">We help organizations plan and deliver their programs, run and modernize what they own and the systems behind it, and strengthen the teams that do the work.</p>
           </div>
+          <WaysArrows label="Our services" />
           <ul className="ways" aria-label="Our services">
             {AREAS.map((a) => (
               <li key={a.id} className="way" style={themeStyle(a.id)}>

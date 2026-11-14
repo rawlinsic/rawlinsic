@@ -28,6 +28,7 @@ import { INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/conten
 import WhoRing from "@/components/v8/who-ring";
 import Scene from "@/components/v8/scene";
 import HearPicker from "@/components/v8/hear-picker";
+import WaysArrows from "@/components/v8/ways-arrows";
 import { INDUSTRY_PHOTO } from "@/lib/content/media";
 import { casePhoto } from "@/lib/content/v8";
 import { EVENTS, NEWS, eventsByTime } from "@/lib/content/news";
@@ -146,6 +147,7 @@ function PanelHero({ photo, crumbs, tag, title, lead, actions, label, subs }: {
       </div>
       <div id="specialties" className="v8-wrap arh-svcs">
         <h2 className="arh-svcs-h">{label}</h2>
+        <WaysArrows label={label} />
         <ul className={`ways ways-svc ipg-ways${many ? " is-many" : ""}`}>
           {subs.map((s) => (
             <li key={s.id} className="way">
@@ -206,7 +208,7 @@ function Hear({ title, items, bring }: { title: string; items: readonly string[]
   /* with what we bring: a picker with a glowing line, like the help picker (Nicole, Nov 13); on white, stepping through the
      challenges as you scroll (Nicole, Nov 13) */
   if (bring?.length) return (
-    <Scene steps={q.length} per={38} id="hear" className="svq is-picker" label={title}>
+    <Scene steps={q.length} per={38} phone id="hear" className="svq is-picker" label={title}>
       <div className="v8-wrap svq-in">
         <h2 className="v8-h2">{title}</h2>
         <HearPicker scroll items={q.map((x, i) => ({ q: x, b: bring[i] }))} />
@@ -257,12 +259,8 @@ function Region() {
         </div>
         {upcoming.length > 0 && <UpcomingEvents events={upcoming} />}
         {past.length > 0 && <PastEvents events={past} />}
-        <div className="ipg-region-more">
-          <figure className="ipg-region-ph">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/pages/news-leap-2026-orbital.webp" alt="The smart cities stage at LEAP 2026 in Riyadh" loading="lazy" />
-            <figcaption>LEAP 2026, Riyadh</figcaption>
-          </figure>
+        <div className="ipg-region-more is-solo">
+          {/* the LEAP 2026 photo that opened nothing is off (Nicole, Nov 13) */}
           {g100 && (
             <div className="ipg-region-rec">
               <p className="ipg-region-tag">{g100.tag}{g100.date ? ` · ${g100.date}` : ""}</p>

@@ -341,14 +341,14 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                   {kids.length > 0 || top.subs.length > 0 ? (
                     <details onToggle={solo}><summary>{top.name}{top.who && <span className="hx-d">{top.who}</span>}</summary>
                       <ul>
-                        <li><a href={top.href}>{top.name} Overview</a></li>
+                        <li><a className="hx-ov" href={top.href}>{top.name} Overview</a></li>
                         {top.subs.length > 0 && <li className="hx-modes"><p className="mx-k">Modes</p><ul>{top.subs.map((m) => <li key={m.href}><a href={m.href}>{m.name}</a></li>)}</ul></li>}
                         {kids.map((k) => (
                           <li key={k.href}>
                             {k.subs.length > 0 ? (
                               <details onToggle={solo}><summary>{k.name}{k.who && <span className="hx-d">{k.who}</span>}</summary>
                                 <ul>
-                                  <li><a href={k.href}>{k.name} Overview</a></li>
+                                  <li><a className="hx-ov" href={k.href}>{k.name} Overview</a></li>
                                   <li className="hx-modes"><p className="mx-k">Modes</p><ul>{k.subs.map((m) => <li key={m.href}><a href={m.href}>{m.name}</a></li>)}</ul></li>
                                 </ul>
                               </details>
@@ -360,18 +360,16 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
                   ) : <a className="hx-top" href={top.href}>{top.name}{top.who && <span className="hx-d">{top.who}</span>}</a>}
                 </li>
               ))}{data.intl && <li><a className="hx-top" href={data.intl.href}>{data.intl.name}</a>{data.intl.note && <em className="v8-dev">{data.intl.note}</em>}</li>}</ul></details>
-              {/* Nov 13 (Nicole): the featured projects on phones too, as an item that opens */}
+              {/* Nov 13 (Nicole): the featured projects sit right under All Projects when Our Work opens, not as their own item */}
               <details onToggle={solo}><summary>Our Work</summary><ul className="hx-areas">
                 {data.work.map((l) => <li key={l.href}><a className="hx-top" href={l.href}>{l.label}</a></li>)}
-                {data.inWorks.length > 0 && <li><details onToggle={solo}><summary>Featured Projects</summary>
-                  <ul className="hx-thumbs">{data.inWorks.map((c) => (
-                    <li key={c.href}><a className="hx-thumb" href={c.href}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={c.photo} alt="" loading="lazy" />
-                      <span><b>{c.title}</b><span className="hx-d">{c.who}</span><small className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</small>{c.note && <em className="pg-dev">{c.note}</em>}</span>
-                    </a></li>
-                  ))}</ul>
-                </details></li>}
+                {data.inWorks.length > 0 && <li><ul className="hx-thumbs hx-feat">{data.inWorks.map((c) => (
+                  <li key={c.href}><a className="hx-thumb" href={c.href}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={c.photo} alt="" loading="lazy" />
+                    <span><b>{c.title}</b><span className="hx-d">{c.who}</span><small className={`mx-dot${c.live ? " is-live" : ""}`}>{c.status}</small>{c.note && <em className="pg-dev">{c.note}</em>}</span>
+                  </a></li>
+                ))}</ul></li>}
               </ul></details>
               {/* Nov 13 (Nicole): Insights keeps its pictures on phones */}
               <details onToggle={solo}><summary>Insights</summary><ul className="hx-areas hx-thumbs">{data.insights.map((l) => (

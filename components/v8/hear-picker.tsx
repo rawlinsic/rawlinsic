@@ -12,6 +12,9 @@ export default function HearPicker({ items, label = "What we bring", scroll = fa
   const [sel, setSel] = useState(0);
   const [narrow, setNarrow] = useState(false);
   const [path, setPath] = useState("");
+  /* phones with `scroll`: one challenge at a time while the section is held (Nicole, Nov 13: on mobile "it also doesn't scroll
+     one by one"); with the section not held (reduced motion), the tap list as before */
+  const [steps, setSteps] = useState(false);
   const box = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const m = window.matchMedia("(max-width: 959px)");
@@ -39,7 +42,9 @@ export default function HearPicker({ items, label = "What we bring", scroll = fa
     let raf = 0;
     const tick = () => {
       raf = 0;
-      if (sec.dataset.static !== undefined) return;
+      const held = sec.dataset.static === undefined;
+      setSteps(held && window.innerWidth < 960);
+      if (!held) return;
       const r = sec.getBoundingClientRect();
       const total = sec.offsetHeight - window.innerHeight;
       const p = Math.max(0, Math.min(1, -r.top / Math.max(1, total)));
@@ -48,8 +53,10 @@ export default function HearPicker({ items, label = "What we bring", scroll = fa
     };
     const on = () => { if (!raf) raf = requestAnimationFrame(tick); };
     tick();
+    const t = window.setTimeout(tick, 300); // the scene decides held or not after this mounts
     window.addEventListener("scroll", on, { passive: true });
-    return () => { window.removeEventListener("scroll", on); cancelAnimationFrame(raf); };
+    window.addEventListener("resize", on);
+    return () => { window.removeEventListener("scroll", on); window.removeEventListener("resize", on); window.clearTimeout(t); cancelAnimationFrame(raf); };
   }, [scroll, items.length]);
   useEffect(() => {
     const b = box.current;
@@ -67,14 +74,14 @@ export default function HearPicker({ items, label = "What we bring", scroll = fa
     </div>
   ) : null;
   return (
-    <div className="fp hp" ref={box}>
+    <div className={`fp hp${steps ? " is-steps" : ""}`} ref={box}>
       <svg className="fp-lines" aria-hidden="true" key={`l${sel}`}>
         {path && <path d={path} pathLength={1} style={{ ["--i" as string]: 0 } as CSSProperties} />}
       </svg>
       <div className="fp-left">
         <ul className="fp-list">
           {items.map((it, i) => (
-            <li key={it.q}>
+            <li key={it.q} className={sel === i ? "is-on" : undefined}>
               <button type="button" className="fp-q hp-q" aria-pressed={sel === i} data-goto={scroll ? i : undefined} onClick={() => setSel(i)}>
                 <span className="fp-dot" aria-hidden="true" />
                 <span>&ldquo;{it.q.replace(/[.”"]+$/, "")}.&rdquo;</span>
@@ -85,6 +92,11 @@ export default function HearPicker({ items, label = "What we bring", scroll = fa
         </ul>
       </div>
       {!narrow && <div className="fp-right" aria-live="polite">{card}</div>}
+      {steps && (
+        <div className="hp-dots" role="group" aria-label="Challenges">
+          {items.map((it, i) => <button key={it.q} type="button" data-goto={i} aria-current={sel === i ? "true" : undefined} aria-label={it.q} onClick={() => setSel(i)} />)}
+        </div>
+      )}
     </div>
   );
 }

@@ -19,6 +19,7 @@ import { AREA_PHOTO, SERVICE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, themeStyle, casePhoto, hearTitle } from "@/lib/content/v8";
 import Fit from "@/components/v8/fit";
 import HearPicker from "@/components/v8/hear-picker";
+import WaysArrows from "@/components/v8/ways-arrows";
 import RouteList from "@/components/v8/route-list";
 import AreaMark from "@/components/v8/area-mark";
 import LitText from "@/components/v8/lit-text";
@@ -96,6 +97,7 @@ export default function AreaV8({ area, extra, before }: { area: Area; extra?: Re
         </div>
         <div id="services" className="v8-wrap arh-svcs">
           <h2 className="arh-svcs-h">Our services</h2>
+          <WaysArrows label={`${area.name} services`} />
           <ul className={`ways ways-svc${many ? " is-many" : ""}`}>
             {listed.map((s) => (
               <li key={s.id} className="way">
@@ -121,7 +123,7 @@ export default function AreaV8({ area, extra, before }: { area: Area; extra?: Re
       {/* each quote with Jacob's "What we bring" line: as a picker with a glowing line, like the help picker (Nicole, Nov 13);
           on white, and it steps through the challenges as you scroll (Nicole, Nov 13) */}
       {L.bring?.length ? (
-        <Scene steps={quotes(L.hear).length} per={38} id="hear" className="svq is-picker" label={hearTitle(L.hear)}>
+        <Scene steps={quotes(L.hear).length} per={38} phone id="hear" className="svq is-picker" label={hearTitle(L.hear)}>
           <div className="v8-wrap svq-in">
             <h2 className="v8-h2">{hearTitle(L.hear)}</h2>
             <HearPicker scroll items={quotes(L.hear).map((q, i) => ({ q, b: L.bring?.[i] }))} />
