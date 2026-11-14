@@ -39,8 +39,11 @@ export default function Fit({ kind, eyebrow, title, lead, steps, base = "The sys
     if (!el) return;
     const body = el.querySelector<HTMLElement>(".fit-body")!;
     const draw = () => {
-      const b = body.getBoundingClientRect();
-      const at = (e: Element) => { const r = e.getBoundingClientRect(); return [r.left + r.width / 2 - b.left, r.top + r.height / 2 - b.top] as [number, number]; };
+      const b0 = body.getBoundingClientRect();
+      /* the scene may scale the section to fit the screen: measure in the row's own size */
+      const z = b0.width / Math.max(1, body.offsetWidth) || 1;
+      const b = { left: b0.left, top: b0.top, width: body.offsetWidth, height: body.offsetHeight };
+      const at = (e: Element) => { const r = e.getBoundingClientRect(); return [(r.left + r.width / 2 - b.left) / z, (r.top + r.height / 2 - b.top) / z] as [number, number]; };
       const nodes = Array.from(body.querySelectorAll(".fit-node")).map(at);
       if (!nodes.length) return;
       const stacked = nodes.length > 1 && Math.abs(nodes[1][0] - nodes[0][0]) < 2;
@@ -54,8 +57,8 @@ export default function Fit({ kind, eyebrow, title, lead, steps, base = "The sys
       const again = body.querySelector(".fit-again span");
       if (!stacked && again) {
         const lis = body.querySelectorAll(".fit-steps > li");
-        const R = lis[lis.length - 1].getBoundingClientRect().right - b.left + 22;
-        const L = lis[0].getBoundingClientRect().left - b.left - 22;
+        const R = (lis[lis.length - 1].getBoundingClientRect().right - b.left) / z + 22;
+        const L = (lis[0].getBoundingClientRect().left - b.left) / z - 22;
         const y = at(again)[1], r = 18;
         back = `M ${lx} ${ly} H ${R - r} Q ${R} ${ly} ${R} ${ly + r} V ${y - r} Q ${R} ${y} ${R - r} ${y} H ${L + r} Q ${L} ${y} ${L} ${y - r} V ${fy + r} Q ${L} ${fy} ${L + r} ${fy} H ${fx - 30}`;
       }

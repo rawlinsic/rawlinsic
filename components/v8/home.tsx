@@ -144,7 +144,9 @@ export default function Home() {
       <section id="what-we-do" className="h-ways" data-nofill aria-labelledby="h-ways-h">
           <div className="v8-wrap h-ways-head" data-reveal>
             <p className="v8-eyebrow">What we do</p>
-            <h2 id="h-ways-h" className="v8-h2">Many engagements draw on more than one area.</h2>
+            {/* Nov 13 (Nicole): the What We Do page's heading, some words in the glowing blue, and its line under it */}
+            <h2 id="h-ways-h" className="v8-h2">Many engagements draw on <span className="hl-glow">more than one area.</span></h2>
+            <p className="tt-lead">We help organizations plan and deliver their programs, run and modernize what they own and the systems behind it, and strengthen the teams that do the work.</p>
           </div>
           <ul className="ways" aria-label="Our services">
             {AREAS.map((a) => (
@@ -167,7 +169,9 @@ export default function Home() {
         <section id="what-we-do" className="h-ways h-fan" data-nofill aria-labelledby="h-ways-h">
           <div className="v8-wrap h-ways-head" data-reveal>
             <p className="v8-eyebrow">What we do</p>
-            <h2 id="h-ways-h" className="v8-h2">Many engagements draw on more than one area.</h2>
+            {/* Nov 13 (Nicole): the What We Do page's heading, some words in the glowing blue, and its line under it */}
+            <h2 id="h-ways-h" className="v8-h2">Many engagements draw on <span className="hl-glow">more than one area.</span></h2>
+            <p className="tt-lead">We help organizations plan and deliver their programs, run and modernize what they own and the systems behind it, and strengthen the teams that do the work.</p>
           </div>
           <FanCards label="What we do" start={2} tags={false} hoverFront
             cards={AREAS.map((a) => ({ href: areaHref(a), tag: a.tag, title: a.name, photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id], text: a.tag, more: "Explore" }))} /* a brief description of the area, then Explore (Nicole, Nov 11) */ />
@@ -274,7 +278,7 @@ export default function Home() {
       {/* 8 · start a conversation: pick your problem, see where we'd start (Nicole, Nov 10) */}
       <section className="h-start h-fix" aria-labelledby="h-start">
         <div className="v8-wrap h-start-in" data-reveal>
-          <h2 id="h-start" className="v8-h2">Tell us what you'd like help with.</h2>
+          <h2 id="h-start" className="v8-h2">Tell us what you'd like <span className="hl-glow">help with.</span></h2>
           <p className="v8-lead">Pick the one that sounds most like you, and we&apos;ll show you where we&apos;d start. Or write your own.</p>
           <FixPicker fixes={PROBLEMS.map((p) => ({
             q: p.q, topic: areaOf(p.services[0])?.name ?? "Not sure",

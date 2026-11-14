@@ -2,10 +2,13 @@
 /* "Challenges we hear" with "What we bring" as a picker, like the help picker on the home and Contact pages (Nicole,
    Nov 13: "more like the thing on the contact page with the lines ... so the text isn't all so reading heavy. don't
    change copy"). The challenges are on the left; the one picked draws a glowing line to what we bring, on the right.
-   One is always open on computers (the first to start). Phones get the answer under the challenge tapped, no lines. */
+   One is always open on computers (the first to start). Phones get the answer under the challenge tapped, no lines.
+   Nov 13 (Nicole: "when you scroll, make it go through each of the challenges and not have to click each one"): with
+   `scroll`, the section holds (components/v8/scene.tsx) and each stretch of scrolling opens the next challenge; a click
+   glides to that challenge's stretch. */
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 
-export default function HearPicker({ items, label = "What we bring" }: { items: { q: string; b?: string }[]; label?: string }) {
+export default function HearPicker({ items, label = "What we bring", scroll = false }: { items: { q: string; b?: string }[]; label?: string; scroll?: boolean }) {
   const [sel, setSel] = useState(0);
   const [narrow, setNarrow] = useState(false);
   const [path, setPath] = useState("");
@@ -28,6 +31,26 @@ export default function HearPicker({ items, label = "What we bring" }: { items: 
     setPath(`M${x1.toFixed(1)} ${y1.toFixed(1)} C${(x1 + dx).toFixed(1)} ${y1.toFixed(1)}, ${(x2 - dx).toFixed(1)} ${y2.toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`);
   }, []);
   useLayoutEffect(() => { draw(); }, [sel, narrow, draw]);
+  /* the challenge open follows the scroll through the held section (the same progress the scene uses) */
+  useEffect(() => {
+    if (!scroll) return;
+    const sec = box.current?.closest<HTMLElement>(".scn");
+    if (!sec) return;
+    let raf = 0;
+    const tick = () => {
+      raf = 0;
+      if (sec.dataset.static !== undefined) return;
+      const r = sec.getBoundingClientRect();
+      const total = sec.offsetHeight - window.innerHeight;
+      const p = Math.max(0, Math.min(1, -r.top / Math.max(1, total)));
+      const k = Math.min(items.length - 1, Math.floor(p * items.length));
+      setSel((s) => (s === k ? s : k));
+    };
+    const on = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    tick();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => { window.removeEventListener("scroll", on); cancelAnimationFrame(raf); };
+  }, [scroll, items.length]);
   useEffect(() => {
     const b = box.current;
     if (!b) return;
@@ -52,7 +75,7 @@ export default function HearPicker({ items, label = "What we bring" }: { items: 
         <ul className="fp-list">
           {items.map((it, i) => (
             <li key={it.q}>
-              <button type="button" className="fp-q hp-q" aria-pressed={sel === i} onClick={() => setSel(i)}>
+              <button type="button" className="fp-q hp-q" aria-pressed={sel === i} data-goto={scroll ? i : undefined} onClick={() => setSel(i)}>
                 <span className="fp-dot" aria-hidden="true" />
                 <span>&ldquo;{it.q.replace(/[.”"]+$/, "")}.&rdquo;</span>
               </button>

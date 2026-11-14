@@ -29,7 +29,7 @@ import RouteList from "@/components/v8/route-list";
 import { AVIATION_PAGES, ServiceFeature, aviationCards } from "@/components/site/services";
 import { AviationTeam } from "@/components/site/aviation";
 import { AVIATION_ROLES } from "@/lib/content/people";
-import { CaseNote, Dev, LineNote, talkFor } from "@/components/site/ui";
+import { CaseNote, Dev, LineNote, TalkTitle, talkFor } from "@/components/site/ui";
 import { PUBLICATIONS, TALKS } from "@/lib/content/research";
 
 const PROD = process.env.VERCEL_ENV === "production";
@@ -260,7 +260,7 @@ export default function ServiceV8({ id }: { id: string }) {
       <section id="talk" className="svt" data-nofill>
         <div className="v8-wrap svt-in">
           <div className="svt-talk">
-            <h2 className="v8-h2">{talk.title}</h2>
+            <h2 className="v8-h2"><TalkTitle title={talk.title} /></h2>
             {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
             {talk.text ? <p className="v8-lead">{talk.text}</p> : null}
             <div className="v8-actions">

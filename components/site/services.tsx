@@ -84,14 +84,17 @@ const NETWORK: [string, ReturnType<typeof ic>][] = [
 /* ── Overview ── */
 export function ServicesIndex() {
   return (
-    <Shell scene="grid" photo={PAGE_PHOTO.services}>
-      <Hero crumbs={[["/services", "Services"]]} kicker="What we do" title="Many engagements draw on more than one area."
-        lead={<p>We help organizations plan and deliver their programs, run and modernize what they own and the systems behind it, and strengthen the teams that do the work.</p>}
-        actions={<><Btn href="/contact" primary>Get in touch</Btn><Btn href="/insights/case-studies">See our work</Btn></>} />
-      {/* the five areas pop out one by one as you scroll (moved here from home, Nicole, Nov 10); the same eyebrow
-          and title as home's What we do (Nicole, Nov 11) */}
-      <section className="tt-head" data-nofill aria-labelledby="tt-head-h">
-        <div className="v8-wrap"><p className="v8-eyebrow">What we do</p><h2 id="tt-head-h" className="v8-h2">Many engagements draw on more than one area.</h2></div>
+    <Shell>
+      {/* Nov 13 (Nicole): the photo top is off. The What we do heading is the top now, styled like the Insights page: the blue
+          eyebrow above, the headline with its last words glowing, and the line from the old top in gray under it. Then the five
+          areas pop out one by one as you scroll (moved here from home, Nov 10). The same words as home's What we do. */}
+      <section className="tt-head is-top" data-nofill aria-labelledby="tt-head-h">
+        <div className="ed-wrap fan-head">
+          <nav className="pg-crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">What We Do</span></li></ol></nav>
+          <p className="v8-eyebrow">What we do</p>
+          <h1 id="tt-head-h" className="fan-h is-wide">Many engagements draw on <span className="hl-glow">more than one area.</span></h1>
+          <p className="tt-lead">We help organizations plan and deliver their programs, run and modernize what they own and the systems behind it, and strengthen the teams that do the work.</p>
+        </div>
       </section>
       <TilesTour label="What we do" hideLabel areas={AREAS.map((a) => ({
         id: a.id, name: a.name, tag: a.tag, lead: AREA_DATA[a.id]?.lead ?? "", href: areaHref(a), photo: AREA_PHOTO[a.id], pos: AREA_PHOTO_POS[a.id],

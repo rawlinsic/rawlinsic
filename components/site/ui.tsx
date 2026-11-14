@@ -203,6 +203,11 @@ export function People({ people }: { people: readonly (readonly string[])[] }) {
 /* The closing ask on every page (line: full site pass, Part 2, 0.3). */
 /* TODO(Nicole): closing line to come from Nicole (the "tell you plainly" / "connect you with the person who has done it" line was removed, Nov 9) */
 export const TALK = { title: "Tell us what you’d like help with", text: "" }; // Nicole, Nov 13: was "Tell us what you’re working on"
+/* Nov 13 (Nicole): the closing title runs across the band, with the words that matter in the glowing blue */
+export function TalkTitle({ title }: { title: string }) {
+  const k = title.lastIndexOf("help with");
+  return k < 0 ? <>{title}</> : <>{title.slice(0, k)}<span className="hl-glow">{title.slice(k)}</span></>;
+}
 /* every area's pages close with the standard band; Program & Project Delivery's own ("Tell us the number you're not
    hitting.") came off with Scrub 1 (Nov 13) */
 export const talkFor = (_areaId: string) => TALK;
@@ -213,7 +218,7 @@ export function Talk({ title = TALK.title, text = TALK.text, id }: { title?: str
       <div className="pg-wrap">
         <div className="tk2-card">
           <div>
-            {title && <h2 className="tk2-h">{title}</h2>}
+            {title && <h2 className="tk2-h"><TalkTitle title={title} /></h2>}
             {text && <p>{text}</p>}
           </div>
           <div className="tk2-btns">

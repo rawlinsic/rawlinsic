@@ -1463,3 +1463,42 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .pcx-areas i { background: #34557f !important; color: #fff !important; box-shadow: none !important; }
 .pcx-more { color: #0bb4d3; text-shadow: 0 0 14px rgba(34, 211, 238, 0.55); }
 .pcx-more::after { color: #0bb4d3; }
+
+/* ── Nov 13 evening (Nicole) ──────────────────────────────────────── */
+/* headline words in the glowing blue: What We Do top, home's What we do, the closing band */
+.hl-glow { color: #0bb4d3; text-shadow: 0 0 18px rgba(34, 211, 238, 0.5); }
+.svt .hl-glow, .tk2 .hl-glow, .h-start .hl-glow { color: #22d3ee; text-shadow: 0 0 22px rgba(34, 211, 238, 0.7); }
+/* the gray line under the What we do headline (What We Do page and home) */
+.tt-lead { max-width: 62ch; margin: 18px auto 0; color: #5b6b80; font-size: clamp(1.05rem, 1.35vw, 1.25rem); font-weight: 400; line-height: 1.55; }
+.h-ways-head .tt-lead { margin-left: 0; }
+.h-fan .h-ways-head .tt-lead { margin-left: auto; }
+/* What We Do: the heading is the top of the page now, styled like Insights */
+.tt-head.is-top { padding: clamp(40px, 5vw, 72px) 0 12px; }
+.tt-head.is-top .v8-eyebrow { margin: 22px auto 0; }
+.tt-head.is-top .fan-h { margin-top: 12px; }
+/* the closing band: the title runs across the whole band on the left; the button under it, the links beside the button */
+@media (min-width: 900px) {
+  .svt-in { align-items: start; row-gap: clamp(18px, 2vw, 26px); }
+  .svt-talk { display: contents; }
+  .svt-talk > .v8-h2 { grid-column: 1 / -1; margin: 0; max-width: none; }
+  .svt-talk > .v8-lead, .svt-talk > .v8-actions { grid-column: 1; }
+  .svt-links { grid-column: 2; grid-row: 2 / span 2; }
+}
+/* Challenges we hear, as a picker: on white, not navy; it steps through the challenges as you scroll */
+.svq.is-picker { background: radial-gradient(45% 60% at 6% 30%, rgba(34, 211, 238, 0.1), transparent 70%), #fff; color: #0a1220; }
+.svq.is-picker .v8-h2 { color: #0a1220; }
+.svq.is-picker .svq-in { padding-top: clamp(28px, 4vh, 56px); padding-bottom: clamp(28px, 4vh, 56px); }
+.svq.is-picker .fp-q { border-color: #d6e3f2; background: #f5f9fd; color: #0a1220; }
+.svq.is-picker .fp-q:hover { background: #eaf3fb; border-color: rgba(11, 147, 176, 0.45); }
+.svq.is-picker .fp-dot { border-color: #0b93b0; }
+.svq.is-picker .fp-q[aria-pressed="true"] { background: #fff; border-color: #fff; color: #0a1220; box-shadow: 0 0 0 2px var(--aqua), 0 0 26px rgba(34, 211, 238, 0.4); }
+.svq.is-picker .hp-card { background: linear-gradient(160deg, #f5f9fd, #e9f0f8); }
+@media (min-width: 960px) {
+  .svq.is-picker .fp { margin-top: clamp(16px, 2.4vh, 32px); }
+  .svq.is-picker .fp-list { gap: 6px; }
+  .svq.is-picker .fp-q { padding: 11px 16px; }
+  .svq.is-picker .fp-right { position: relative; top: auto; }
+}
+/* the life cycle's service links, a little tighter so the section fits the screen and steps through as you scroll */
+.fit-links { margin-top: 10px; padding-top: 10px; gap: 4px; }
+.fit-links a { font-size: 0.9rem; }

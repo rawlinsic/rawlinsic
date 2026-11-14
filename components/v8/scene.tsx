@@ -56,11 +56,17 @@ export default function Scene({ steps, per = 100, id, className, label, children
       live = window.innerWidth >= 960 && !reduce.matches;
       if (live) {
         delete el.dataset.static;
-        // if what's inside is taller than the screen it can't be held without cutting it off: show it plainly
+        // if what's inside is a little taller than the screen, scale it to fit (up to 22% smaller) so it still holds and steps;
+        // much taller can't be held without cutting it off: show it plainly
         const inner = stage.firstElementChild as HTMLElement | null;
-        if (inner && inner.offsetHeight > stage.clientHeight + 2) { live = false; setStatic(); return; }
+        if (inner) {
+          const k = stage.clientHeight / Math.max(1, inner.offsetHeight);
+          if (k < 0.78) { inner.style.removeProperty("transform"); live = false; setStatic(); return; }
+          if (k < 1) { inner.style.transform = `scale(${(k - 0.01).toFixed(3)})`; inner.style.transformOrigin = "50% 50%"; }
+          else inner.style.removeProperty("transform");
+        }
         tick();
-      } else setStatic();
+      } else { (stage.firstElementChild as HTMLElement | null)?.style.removeProperty("transform"); setStatic(); }
     };
     const go = (e: Event) => {
       const b = (e.target as HTMLElement).closest<HTMLElement>("[data-goto]");
@@ -72,8 +78,9 @@ export default function Scene({ steps, per = 100, id, className, label, children
     };
     mode();
     const inner0 = stage.firstElementChild as HTMLElement | null;
-    const grow = inner0 ? new ResizeObserver(() => { if (live && inner0.offsetHeight > stage.clientHeight + 2) mode(); }) : null;
+    const grow = inner0 ? new ResizeObserver(() => { if (live) mode(); }) : null;
     if (inner0) grow?.observe(inner0);
+    grow?.observe(stage); // the stage gets shorter once the section bar under the header measures itself
     window.addEventListener("scroll", on, { passive: true });
     window.addEventListener("resize", mode);
     reduce.addEventListener?.("change", mode);

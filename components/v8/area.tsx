@@ -25,7 +25,7 @@ import LitText from "@/components/v8/lit-text";
 import SectionNav from "@/components/v8/section-nav";
 import Scene from "@/components/v8/scene";
 import Panels from "@/components/v8/panels";
-import { CaseNote, Dev, LineNote, talkFor } from "@/components/site/ui";
+import { CaseNote, Dev, LineNote, TalkTitle, talkFor } from "@/components/site/ui";
 
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
@@ -117,15 +117,23 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
 
       <SectionNav items={sections} />
 
-      <section id="hear" className={`svq${L.bring?.length ? " is-picker" : ""}`}>
-        <div className="v8-wrap svq-in">
-          <h2 className="v8-h2">{hearTitle(L.hear)}</h2>
-          {/* each quote with Jacob's "What we bring" line: as a picker with a glowing line, like the help picker (Nicole, Nov 13) */}
-          {L.bring?.length
-            ? <HearPicker items={quotes(L.hear).map((q, i) => ({ q, b: L.bring?.[i] }))} />
-            : <LitText lines={quotes(L.hear)} className={`svq-q is-${Math.min(quotes(L.hear).length, 4)}`} />}
-        </div>
-      </section>
+      {/* each quote with Jacob's "What we bring" line: as a picker with a glowing line, like the help picker (Nicole, Nov 13);
+          on white, and it steps through the challenges as you scroll (Nicole, Nov 13) */}
+      {L.bring?.length ? (
+        <Scene steps={quotes(L.hear).length} per={38} id="hear" className="svq is-picker" label={hearTitle(L.hear)}>
+          <div className="v8-wrap svq-in">
+            <h2 className="v8-h2">{hearTitle(L.hear)}</h2>
+            <HearPicker scroll items={quotes(L.hear).map((q, i) => ({ q, b: L.bring?.[i] }))} />
+          </div>
+        </Scene>
+      ) : (
+        <section id="hear" className="svq">
+          <div className="v8-wrap svq-in">
+            <h2 className="v8-h2">{hearTitle(L.hear)}</h2>
+            <LitText lines={quotes(L.hear)} className={`svq-q is-${Math.min(quotes(L.hear).length, 4)}`} />
+          </div>
+        </section>
+      )}
 
       <Scene steps={1} per={100} id="fit" className="sv-scene fit-scene" label={L.feature.title}>
         <div className="v8-wrap fit-in">
@@ -157,7 +165,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
       <section id="talk" className="svt" data-nofill>
         <div className="v8-wrap svt-in">
           <div className="svt-talk">
-            <h2 className="v8-h2">{talkFor(area.id).title}</h2>
+            <h2 className="v8-h2"><TalkTitle title={talkFor(area.id).title} /></h2>
             {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
             {talkFor(area.id).text ? <p className="v8-lead">{talkFor(area.id).text}</p> : null}
             <div className="v8-actions"><a className="v8-btn v8-btn-area" href={`/contact?topic=${encodeURIComponent(area.name)}`}>Get in touch</a></div>

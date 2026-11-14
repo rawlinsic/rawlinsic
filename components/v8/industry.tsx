@@ -26,6 +26,7 @@ import {
 } from "@/lib/content/site";
 import { INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import WhoRing from "@/components/v8/who-ring";
+import Scene from "@/components/v8/scene";
 import HearPicker from "@/components/v8/hear-picker";
 import { INDUSTRY_PHOTO } from "@/lib/content/media";
 import { casePhoto } from "@/lib/content/v8";
@@ -42,7 +43,7 @@ import RouteList from "@/components/v8/route-list";
 import { AviationTeam, type TeamCard } from "@/components/site/aviation";
 import { aviationCards } from "@/components/site/services";
 import { AVIATION_ROLES, formerlyFor } from "@/lib/content/people";
-import { CaseNote, Dev, LineNote, TALK, rawlinsTitle, rosterFor } from "@/components/site/ui";
+import { CaseNote, Dev, LineNote, TALK, TalkTitle, rawlinsTitle, rosterFor } from "@/components/site/ui";
 import "@/app/industry.css";
 
 type Crumb = [href: string, label: string];
@@ -195,14 +196,21 @@ function FrameHero({ photo, crumbs, tag, title, lead, actions, note }: {
    the cards look as they did. */
 function Hear({ title, items, bring }: { title: string; items: readonly string[]; bring?: string[] }) {
   const q = quotes(items);
-  return (
-    <section id="hear" className={`svq${bring?.length ? " is-picker" : ""}`}>
+  /* with what we bring: a picker with a glowing line, like the help picker (Nicole, Nov 13); on white, stepping through the
+     challenges as you scroll (Nicole, Nov 13) */
+  if (bring?.length) return (
+    <Scene steps={q.length} per={38} id="hear" className="svq is-picker" label={title}>
       <div className="v8-wrap svq-in">
         <h2 className="v8-h2">{title}</h2>
-        {/* with what we bring: a picker with a glowing line, like the help picker (Nicole, Nov 13) */}
-        {bring?.length
-          ? <HearPicker items={q.map((x, i) => ({ q: x, b: bring[i] }))} />
-          : <LitText lines={q} className={`svq-q is-${Math.min(q.length, 4)}`} />}
+        <HearPicker scroll items={q.map((x, i) => ({ q: x, b: bring[i] }))} />
+      </div>
+    </Scene>
+  );
+  return (
+    <section id="hear" className="svq">
+      <div className="v8-wrap svq-in">
+        <h2 className="v8-h2">{title}</h2>
+        <LitText lines={q} className={`svq-q is-${Math.min(q.length, 4)}`} />
       </div>
     </section>
   );
@@ -329,7 +337,7 @@ function Talk({ title = TALK.title, text = TALK.text, linksTitle, links }: {
     <section id="talk" className="svt" data-nofill>
       <div className="v8-wrap svt-in">
         <div className="svt-talk">
-          <h2 className="v8-h2">{title}</h2>
+          <h2 className="v8-h2"><TalkTitle title={title} /></h2>
           {/* TODO(Nicole): closing line to come from Nicole (removed Nov 9) */}
           {text ? <p className="v8-lead">{text}</p> : null}
           <div className="v8-actions">
@@ -568,10 +576,10 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
   const next = nextIndustry(ind.id);
   const sections: Nav[] = [
     ["hear", "Sound familiar?"],
+    ["services", "Services"], // right after Sound familiar? (Nicole, Nov 13)
     ["build", "What we build"],
     ...(cases.length ? [["work", "Featured projects"] as Nav] : []),
     ["start", "Ways to start"],
-    ["services", "Services"],
     ...(people.length ? [["people", "Experience on our team"] as Nav] : []),
     ["talk", "Talk to us"],
   ];
@@ -583,6 +591,8 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
   return (
     <Page sections={sections} hero={hero} more={{ label: "Who We Work With", links: VISIBLE_INDUSTRIES.map((i) => ({ name: i.name, href: industryHref(i), current: i.id === ind.id })) }}>
       <Hear title="Sound familiar?" items={PRIV.hear} />
+      {/* the services right after Sound familiar? (Nicole, Nov 13: "services ... should go in the section after sound familiar") */}
+      <ServiceCards id="services" title="Services" ids={services} tone="pale" />
       <Route id="build" title="What we build">
         <RouteList check ordered={false} stops={PRIV.build.map((d) => ({ d }))} />
       </Route>
@@ -590,7 +600,6 @@ export function PrivateV8({ ind, cases, services }: { ind: Industry; cases: Case
       <Route id="start" title="Ways to start" note={<Dev block>Ways to start: confirm wording with Ben. Hours and pricing stay internal.</Dev>}>
         <RouteList stops={PRIV.start.map((s) => ({ t: s }))} />
       </Route>
-      <ServiceCards id="services" title="Services" ids={services} tone="pale" />
       {people.length > 0 && <Team id="people" title="Experience on our team" people={people} />}
       {/* "When your project depends on a state DOT" stays on Private Sector (Who We Work With file v1, Nov 13) */}
       <Talk title="Tell us where your workflows drag" text="A short call is enough to see whether we can help, and what a small first project would look like."
