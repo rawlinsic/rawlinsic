@@ -1984,11 +1984,11 @@ export const AREAS: Record<string, AreaData> = {
    "A senior advisor who has held the job, standing support to executives, and 100-day plans for new directors."
   ],
   "lines": {
-   "strategic-planning": "Strategic plans, action plans, measures, & prioritization",
-   "org-design": "Organization design, position descriptions, & procedures",
-   "change-mgmt": "Change plans, champions, communications, & adoption",
+   "strategic-planning": "Strategic plans, action plans, measures,\n& prioritization",
+   "org-design": "Organization design, position descriptions,\n& procedures",
+   "change-mgmt": "Change plans, champions, communications,\n& adoption",
    "workforce": "Proficiency programs, career paths, training, & HR",
-   "exec-advisory": "Advice to executives, interim support, & leadership transitions"
+   "exec-advisory": "Advice to executives, interim support,\n& leadership transitions"
   },
   "feature": {
    "title": "From plan to practice",
