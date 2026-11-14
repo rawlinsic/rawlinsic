@@ -4273,7 +4273,7 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [
    "Division stood up with its organization chart, hiring plan, position descriptions, and primers",
-   "Fleet and facilities strategy presented to executive leadership"
+   "Comprehensive fleet and facilities strategies established to effectively operate and maintain those assets"
   ],
   "services": [
    "asset-mgmt",
