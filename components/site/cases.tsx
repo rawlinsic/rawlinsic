@@ -33,7 +33,7 @@ export function CaseIndexPage() {
     <Shell>
       {/* Nov 13 (Nicole): the photo top is off; styled like the Who we are top. Nothing on the right yet (her call) */}
       <EdHero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Projects"]]} kicker="Our work" title="Projects"
-        lead={<p>Every project, by service and industry. Work underway is marked “In the works,” and our team’s earlier work is marked “Before Rawlins.”</p>}
+        lead={<p>Our projects, by service and industry. Work underway is marked “In the works,” and our team’s earlier work is marked “Before Rawlins.”</p>}
         actions={<EdBtn href="/contact">Get in touch</EdBtn>} />
       <Sec title="Browse the work">
         <CaseFilter rows={rows}
