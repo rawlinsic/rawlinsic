@@ -76,9 +76,10 @@ export const EVENTS: EventItem[] = [
      two above so the home page and the menu keep showing AASHTO first. */
   // Andy's LinkedIn posts, and his event graphic (three sessions, Nov 11 and 12)
   { when: "Nov 10–12, 2026", title: "Automechanika Dubai 2026", where: "Dubai Exhibition Centre, Expo City Dubai", ends: "2026-11-12", intl: true, role: "Speaking",
-    /* Nov 13 (Nicole): the event's own page and a photo from it (2026 show photos, automechanika-dubai.ae.messefrankfurt.com) */
+    /* Nov 13 (Nicole: "the logo or something ... of the events ... not of other people there"): the event's own page, and its
+       show logo from that site on a dark ground */
     href: "https://automechanika-dubai.ae.messefrankfurt.com/dubai/en.html",
-    photo: "/images/pages/news-automechanika-dubai-2026.jpg", pos: "50% 40%",
+    photo: "/images/pages/news-automechanika-dubai-2026-logo.jpg",
     // the three sessions, as written on Andy's event graphic (Nicole's "int'l" folder, Nov 11)
     who: "Andy Palanisamy",
     sessions: [
@@ -90,9 +91,10 @@ export const EVENTS: EventItem[] = [
     past: "Andy Palanisamy moderated sessions on smart cities and mobility integration across the Middle East and Africa, and on total lifecycle management from procurement to end of life, and spoke on enabling innovation in a regulated world." },
   // Andy's LinkedIn posts
   { when: "Nov 9–10, 2026", title: "ConTech / MENA Construction Summit 2026", where: "Madinat Jumeirah, Dubai", ends: "2026-11-10", intl: true, role: "Attending",
-    /* Nov 13 (Nicole): the summit's own page (MEED events) and a photo from the summit's 2026 brochure on that site */
+    /* Nov 13 (Nicole: the event's logo, not other people there): the summit's own page (MEED events), and its 2026 logo from
+       that page on white */
     href: "https://events.meed.com/event/menaconstructionsummit/",
-    photo: "/images/pages/news-mena-construction-summit.jpg", pos: "50% 35%",
+    photo: "/images/pages/news-mena-construction-summit-2026-logo.jpg",
     past: "Andy Palanisamy represented Rawlins at the ConTech / MENA Construction Summit." },
   // AMOTIA: the event's sponsor board ("Host State Night Event Sponsor") and Rawlins' LinkedIn post. Photo: Scott on the general session panel, by Janine Cooper.
   { when: "Nov 4–6, 2026", title: "AMOTIA 17th Annual Conference", where: "Fort Lauderdale, Florida", ends: "2026-11-06", role: "Sponsor and speaking",
