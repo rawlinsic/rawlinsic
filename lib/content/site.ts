@@ -236,7 +236,7 @@ export const INDUSTRIES: Industry[] = [
     /* Nov 13 (Who We Work With file v1): new page under Private Sector */
     id: "eng", slug: "engineering-consulting-firms", name: "Engineering & Consulting Firms", scene: "office", parent: "private",
     who: "Public Programs & Project Systems",
-    lead: "Engineering and consulting firms add us to their teams on state DOT programs, for what our people know from running those programs inside an agency. Our automation team also builds the systems a firm runs its own projects on: project tracking, time, invoicing, and reporting.",
+    lead: "We partner with engineering and other types of consulting firms to improve DOTs program and project delivery, leveraging our staff’s firsthand experience managing these programs from within transportation agencies. Our automation team also develops customized business systems that help firms manage their internal operations, including project tracking, timekeeping, invoicing, and reporting.",
     featured: ["program-delivery", "org-design", "workforce", "drone-programs", "automation", "dashboards", "portals"],
     featuredCase: "cs-pv-pmo",
     projects: ["cs-pv-pmo", "cs-pv-reporting", "cs-pv-sales"],
