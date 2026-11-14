@@ -194,7 +194,7 @@ export default function ServiceV8({ id }: { id: string }) {
         <section id="feature" className="sv-legacy"><ServiceFeature id={id} /></section>
       )}
       {steps && (
-        <Scene steps={1} per={100} id="how" className="sv-scene fit-scene" label={steps.title}>
+        <Scene steps={1} per={100} id="how" className="sv-scene fit-scene" label={steps.title} fit>
           <div className="v8-wrap fit-in">
             <Fit kind={STEP_KIND[id] ?? T.diagram} eyebrow={steps.kicker} title={steps.title} steps={steps.steps} />
           </div>

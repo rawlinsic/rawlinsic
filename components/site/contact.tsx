@@ -2,7 +2,6 @@
    message with the form. The picker's button fills in the form. Live contact details kept; the form has the
    service-area field. */
 import { AREAS, PROBLEMS, serviceById } from "@/lib/content/site";
-import { PAGE_PHOTO } from "@/lib/content/media";
 import { themeStyle } from "@/lib/content/v8";
 import ContactWays from "@/components/site/contact-ways";
 import { Shell } from "@/components/site/ui";
@@ -19,8 +18,9 @@ export function ContactPageNew() {
     <Shell>
       {/* Nov 13 (Nicole: the top "needs a redesign ... not the whole page navy ... pick something cool"): a light top with the
           title on the left and the Nevada photo in a glowing, layered frame on the right; the navy section below stays */}
-      <EdHero crumbs={[["/contact", "Contact"]]} kicker="Contact Rawlins" title={<>Tell us what you&apos;d like <em>help with.</em></>}
-        aside={<div className="ct-ph"><span className="ct-ph-back" aria-hidden="true" /><span className="ct-ph-mid" aria-hidden="true" />{/* eslint-disable-next-line @next/next/no-img-element */}<img src={PAGE_PHOTO.contact} alt="" /></div>} />
+      {/* the photo frame beside the title is off for now (Nicole, Nov 13: "just remove anything over there on the contact page
+          for now"); the title alone */}
+      <EdHero crumbs={[["/contact", "Contact"]]} kicker="Contact Rawlins" title={<>Tell us what you&apos;d like <em>help with.</em></>} />
       <ContactWays fixes={fixes} topics={[...AREAS.map((a) => a.name), "Not sure"]}
         details={
           <>

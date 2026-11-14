@@ -13,7 +13,7 @@ import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { glideTo } from "@/components/v8/smooth";
 import { docTop } from "@/components/v8/panels";
 
-export default function Scene({ steps, per = 100, id, className, label, children }: { steps: number; per?: number; id?: string; className?: string; label?: string; children: ReactNode }) {
+export default function Scene({ steps, per = 100, id, className, label, fit = false, children }: { steps: number; per?: number; id?: string; className?: string; label?: string; fit?: boolean; children: ReactNode }) {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -56,12 +56,13 @@ export default function Scene({ steps, per = 100, id, className, label, children
       live = window.innerWidth >= 960 && !reduce.matches;
       if (live) {
         delete el.dataset.static;
-        // if what's inside is a little taller than the screen, scale it to fit (up to 22% smaller) so it still holds and steps;
-        // much taller can't be held without cutting it off: show it plainly
+        // if what's inside is taller than the screen it can't be held without cutting it off: show it plainly. With `fit` (the
+        // life cycle steps, Nov 13), a little taller is scaled to fit (up to 22% smaller) so it still holds and steps; other
+        // sections never shrink (Nicole, Nov 13: the service cards came out "all squished")
         const inner = stage.firstElementChild as HTMLElement | null;
         if (inner) {
           const k = stage.clientHeight / Math.max(1, inner.offsetHeight);
-          if (k < 0.78) { inner.style.removeProperty("transform"); live = false; setStatic(); return; }
+          if (k < (fit ? 0.78 : 0.998)) { inner.style.removeProperty("transform"); live = false; setStatic(); return; }
           if (k < 1) { inner.style.transform = `scale(${(k - 0.01).toFixed(3)})`; inner.style.transformOrigin = "50% 50%"; }
           else inner.style.removeProperty("transform");
         }
@@ -93,7 +94,7 @@ export default function Scene({ steps, per = 100, id, className, label, children
       grow?.disconnect();
       cancelAnimationFrame(raf);
     };
-  }, [steps]);
+  }, [steps, fit]);
   return (
     <section ref={ref} id={id} className={`scn${className ? ` ${className}` : ""}`} aria-label={label} style={{ ["--steps" as string]: steps, ["--per" as string]: `${per}vh` } as CSSProperties}>
       <div className="scn-stage">{children}</div>

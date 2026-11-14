@@ -7,7 +7,7 @@ import TilesTour from "@/components/v8/tiles-tour";
 import AutomationEcosystemBars from "@/components/automation-ecosystem-bars";
 import DeliverStack from "@/components/v8/deliver-stack";
 import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, serviceHref, subsectorHref, type Area, isListed } from "@/lib/content/site";
-import { APPLIED, AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
+import { AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AAM_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
 import { SERVICE_STEPS } from "@/lib/content/features";
 import { Btn, CaseCards, Chips, Dev, Hero, List, People, Sec, ServiceCards, ServiceChips, Shell, Steps, Talk, rawlinsTitle, rosterFor, CaseNote, LineNote } from "@/components/site/ui";
@@ -208,13 +208,12 @@ export function ServicePage({ id }: { id: string }) {
 export function ServiceFeature({ id }: { id: string }) {
   switch (id) {
     case "automation":
+      /* the "Applied solutions" list under the graphic came off (Nicole, Nov 13: "remove the applied solutions duplicated
+         section"); the graphic's seven examples say the same */
       return (
-        <>
-          <section className="pg-sec pg-sec-navy pg-legacy">
-            <AutomationIntegrationInteractive embedded eyebrow="Applied solutions" title="From our team's work" intro="Seven examples, including how we rebuilt consultant contracting at a state DOT, step by step. The first is Rawlins work. The others are from our automation team's work before Rawlins." />
-          </section>
-          <Sec title="Applied solutions" intro={<p>Where these came from:</p>}><List items={APPLIED.map((a) => `${a[0]}: ${a[1]}`)} cols /></Sec>
-        </>
+        <section className="pg-sec pg-sec-navy pg-legacy">
+          <AutomationIntegrationInteractive embedded eyebrow="Applied solutions" title="From our team's work" intro="Seven examples, including how we rebuilt consultant contracting at a state DOT, step by step. The first is Rawlins work. The others are from our automation team's work before Rawlins." />
+        </section>
       );
     case "data-governance":
       return <section className="pg-sec pg-sec-navy pg-legacy"><AutomationEcosystemBars /></section>;

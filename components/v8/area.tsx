@@ -135,7 +135,7 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
         </section>
       )}
 
-      <Scene steps={1} per={100} id="fit" className="sv-scene fit-scene" label={L.feature.title}>
+      <Scene steps={1} per={100} id="fit" className="sv-scene fit-scene" label={L.feature.title} fit>
         <div className="v8-wrap fit-in">
           <Fit kind={T.diagram} eyebrow="How the pieces fit" title={L.feature.title} lead={L.feature.lead} steps={fitSteps} />
         </div>
