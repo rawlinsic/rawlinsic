@@ -18,7 +18,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
       "Visited all four of the department's regions to support the worker proficiency rollout", // source: drafts:26
     ],
     res: [
-      "New employee retention rate after 2 years is 96%", // source: drafts:32
+      "Department-wide organizational structure reconfiguration aligns with critical program and project delivery areas", // source: drafts:32
       "Existing employee turnover rate reduced to 14%.", // source: drafts:32
     ],
   },
