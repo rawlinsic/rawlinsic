@@ -172,7 +172,7 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
     { t: "", d: "Document it, train the owners, and hand it over." },
   ] },
   "data-governance": { title: "How we do it", steps: [
-    { t: "", d: "Agree the decision the data has to support, and who has authority over it." },
+    { t: "", d: "Decide what the organization wants AI for, and who governs it." },
     { t: "", d: "Inventory the data in scope: sources, owners, definitions, and quality." },
     { t: "", d: "Write the policy, the roles, and the workflows with the people who will hold them." },
     { t: "", d: "Set up the steering committee or working group that keeps it going." },
