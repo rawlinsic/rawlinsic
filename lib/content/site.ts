@@ -607,7 +607,7 @@ export const PAGE_STATUS: Record<string, string> = {
   "owners-rep": "Content status: Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.",
   /* Nov 13 (Who We Work With read-as-built fixes v1): the To confirm text for Ports & Harbors */
   /* Nov 13: the "To confirm" note on the Challenges we hear lines in the Websites, Portals & Digital Tools file (v2), preview only */
-  portals: "Content status: The last four lines are worded by the Branding chat from common website problems, not from a client record.",
+  portals: "",
   /* Nov 13: the "To confirm" notes in Nicole's Digital Solutions file (v5), preview only */
   "data-governance": "Content status: The reports through October 2026 show a governance steering committee chartered and facilitated weekly, a data policy, roles and decision rights, and a dataset inventory with owners and quality notes. They do not show a delivered data catalog or dictionary yet. Jacob to confirm.",
   ai: "Content status: The reports through October 2026 show AI strategy support, policy and governance documents, a commercial AI tool rolled out for one department, and use cases reviewed and ranked for a second. A first AI pilot, on cash-flow modeling, was starting in November 2026. Kobus or Jacob to confirm where it stands.",
