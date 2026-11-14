@@ -33,3 +33,4 @@ Each line: page, old wording, new wording, and why it couldn't be placed automat
   (done Nov 13 by Claude Code: the area page's first quote reads "Projects keep missing deadlines." The same quote on Program Development is unchanged)
 - [x] 11/13/2026, 3:04:31 AM · Nicole · /services/program-project-delivery · "Projects keep missing the year they were promised.Projects keep missing deadlines the year they were promised." → "Projects keep missing the year they were promised.Projects keep missing deadlines." (not found in the files, even as a template)
   (done Nov 13 by Claude Code: the area page's first quote reads "Projects keep missing deadlines." The same quote on Program Development is unchanged)
+- [ ] 11/13/2026, 8:10:28 PM · Nicole · /about/where-we-work · "Global Reach, Local Impact" → "Local Impact, Global Reach" (not found in the files, even as a template)
