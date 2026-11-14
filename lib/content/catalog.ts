@@ -3740,7 +3740,7 @@ export const CASES: Record<string, CaseData> = {
    "Built a project management curriculum for the technology division"
   ],
   "res": [
-   "Standard Operating Procedures being applied",
+   "Standard Operating Procedures being applied successfully",
    "Two-year technology work plan completed"
   ],
   "services": [
