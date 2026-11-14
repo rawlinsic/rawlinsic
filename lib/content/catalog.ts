@@ -38,7 +38,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Strategic Planning & Performance Management",
   "area": "strategy",
   "st": "ok",
-  "intro": "We help leadership turn its direction into goals, measures, and yearly action plans, with dashboards that show whether the plan is working and a leadership rhythm to review them.\n\nWe build the plan with the people who will carry it out: executives, staff, and outside partners, through interviews, surveys, focus groups, and workshops. We stay through the first action plans and the monitoring that follows.",
+  "intro": "We work with leadership to develop actionable Strategic Plans. We assist them in translating their vision for the future and necessary organizational improvements into goals, strategies, measures, and action plans, with dashboards that show whether the plan is working and a leadership rhythm to review them.\n\nWe build the action plans with the people who will carry them out: the staff identify the actions and connect them to the goals and strategies. We stay through the development of the first action plan and the monitoring process that follows.",
   "hear": [
    "We have a strategic plan. We can't show it's working.",
    "We need a defensible way to decide what gets funded.",
