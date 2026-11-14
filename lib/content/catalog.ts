@@ -4094,7 +4094,7 @@ export const CASES: Record<string, CaseData> = {
    "Developed a comprehensive Program Development Manual that documents the process for establishing the 5-year work program, from establishing the budget for programs to issuing the call for projects and documenting them."
   ],
   "res": [
-   "Bridge triafinalized",
+   "Program development process completely overhauled and documented in new Program Development Manual.",
    "Bridge triage and prioritization tools finalized"
   ],
   "services": [
