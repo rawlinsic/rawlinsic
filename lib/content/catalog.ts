@@ -4087,7 +4087,7 @@ export const CASES: Record<string, CaseData> = {
    "Developed project selection criteria and templates for the new funding categories",
    "Built a bridge screening and prioritization tool, with tutorials for program managers and bridge staff",
    "Developed the detailed concept for the statewide asset mapping tool",
-   "Built a prioritization tool now used to triage the highway project pipeline",
+   "Built a bridge triage tool to reduce the number of bridges considered in the biannual calls for projects",
    "Analyzed bridge inspection and condition data, and prepared bridge bundling options, maps by district, and procurement recommendations",
    "Calculated a benefit-cost ratio for an interstate project, and coordinated with the safety program",
    "Prepared a Call for Projects package",
