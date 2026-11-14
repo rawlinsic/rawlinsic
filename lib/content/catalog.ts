@@ -4291,7 +4291,7 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department wanted its process for procuring consultant services improved and documented, from advertisement through negotiation and close-out.",
   "when": "2022 to 2024",
   "did": [
-   "Assessed how the department buys consultant services",
+   "Assessed how the department procures consultant services",
    "Wrote a Professional Services Policies and Procedures Manual, a Design-Build Procurement Manual, and a Negotiations Manual",
    "Developed flowcharts for every delivery method",
    "Crafted a contract close-out process, including creating scope templates by contract type and discipline",
