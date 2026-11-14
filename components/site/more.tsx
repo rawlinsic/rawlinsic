@@ -207,7 +207,7 @@ export function WhereWeWork() {
         <>
           <Crumbs items={[["/about", "About"], ["/about/where-we-work", "Where we work"]]} />
           <p className="ed-k">Where we work</p>
-          <h1 className="ed-h1">Global Reach,<br />Local Impact</h1>
+          <h1 className="ed-h1">Local Impact,<br />Global Reach</h1>
           <div className="ed-lead"><p>Our project work to date has been in the United States, and our team can work anywhere. Members of our team are based in the United States, Europe, Canada, South Africa, and the United Arab Emirates.</p></div>
         </>
       } />

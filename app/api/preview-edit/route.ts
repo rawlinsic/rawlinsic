@@ -30,6 +30,15 @@ const GH = "https://api.github.com";
 const SEARCH = /^(lib\/.*\.ts|components\/.*\.tsx?|app\/.*\.tsx?)$/;
 const SKIP = /^(components\/home\/|components\/menu\/|app\/api\/|lib\/content\/removed-sections\.ts|lib\/preview-)/; // old code nothing uses, and this file
 
+/* Nov 14 (Paul's saves stopped at 2:31 PM with "GitHub won't let the editor save yet"): each save read every source file
+   with its own request (about 190 per save), so a busy hour ran out GitHub's 5,000-an-hour limit and every save after was
+   refused with a message that blamed the token. Now the files come in a few GraphQL requests, a limit says so with the time
+   it resets, and a save that crosses another save at the same moment is tried again. */
+class GhError extends Error { constructor(msg: string, public status: number) { super(msg); } }
+const pacific = (secs: number) => new Date(secs * 1000).toLocaleTimeString("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", minute: "2-digit" });
+const limitMsg = (reset: number) => `GitHub's hourly limit for the editor was reached${reset ? `; saves work again after ${pacific(reset)} Pacific` : "; saves work again within the hour"}`;
+const cleanWs = (s: string) => s.replace(/\s+/g, " ").trim();
+
 export async function POST(req: Request) {
   if (process.env.VERCEL_ENV !== "preview") return NextResponse.json({ error: "Not available" }, { status: 404 });
   const token = process.env.EDIT_GITHUB_TOKEN;
@@ -47,26 +56,50 @@ export async function POST(req: Request) {
     .slice(0, 50);
   if (!changes.length) return NextResponse.json({ applied: 0, pending: 0 });
 
+  /* a node change the page worked out must sit inside the whole change it sent (Nov 14: a page-side off-by-one turned
+     "training rotational program" into "training protational rogram"); one that doesn't is dropped and the whole wording is used */
+  for (const c of changes) if (c.nodeOld && c.nodeNew !== undefined && (!cleanWs(c.old).includes(cleanWs(c.nodeOld)) || !cleanWs(c.next).includes(cleanWs(c.nodeNew)))) { c.nodeOld = undefined; c.nodeNew = undefined; }
+
   const gh = async (path: string, init?: RequestInit) => {
     const r = await fetch(`${GH}/repos/${repo}${path}`, { ...init, headers: { authorization: `Bearer ${token}`, accept: "application/vnd.github+json", "x-github-api-version": "2022-11-28", ...(init?.headers || {}) }, cache: "no-store" });
-    if (!r.ok) throw new Error(r.status === 403 || r.status === 404 ? "GitHub won't let the editor save yet (the token needs write access to the rawlinsic repo)" : `GitHub ${r.status} on ${path}`);
+    if (!r.ok) {
+      const txt = await r.text().catch(() => "");
+      if ((r.status === 403 || r.status === 429) && (r.headers.get("x-ratelimit-remaining") === "0" || /rate limit/i.test(txt))) throw new GhError(limitMsg(Number(r.headers.get("x-ratelimit-reset") || 0)), 429);
+      if (r.status === 401 || r.status === 403) throw new GhError("GitHub won't let the editor save (the token needs write access to the rawlinsic repo)", r.status);
+      throw new GhError(`GitHub ${r.status} on ${path}`, r.status);
+    }
     return r.json();
   };
+  /* every source file's text in a few requests (GraphQL, its own hourly allowance), by blob id; a file it can't give is read
+     on its own */
+  const readAll = async (files: { path: string; sha: string }[], text: Map<string, string>) => {
+    for (let i = 0; i < files.length; i += 80) {
+      const batch = files.slice(i, i + 80);
+      let got: Record<string, { text?: string | null; isTruncated?: boolean } | null> | null = null;
+      try {
+        const q = `query { repository(owner: ${JSON.stringify(repo.split("/")[0])}, name: ${JSON.stringify(repo.split("/")[1])}) { ${batch.map((f, k) => `f${k}: object(oid: ${JSON.stringify(f.sha)}) { ... on Blob { text isTruncated } }`).join(" ")} } }`;
+        const r = await fetch(`${GH}/graphql`, { method: "POST", headers: { authorization: `Bearer ${token}`, "content-type": "application/json" }, body: JSON.stringify({ query: q }), cache: "no-store" });
+        const j = r.ok ? await r.json() : null;
+        got = j && !j.errors ? j.data?.repository ?? null : null;
+      } catch { got = null; }
+      await Promise.all(batch.map(async (f, k) => {
+        const o = got?.[`f${k}`];
+        if (o && typeof o.text === "string" && !o.isTruncated) { text.set(f.path, o.text); return; }
+        const b = await gh(`/git/blobs/${f.sha}`);
+        text.set(f.path, Buffer.from(b.content, b.encoding === "base64" ? "base64" : "utf8").toString("utf8"));
+      }));
+    }
+  };
 
-  try {
+  for (let attempt = 0; ; attempt++) try {
     const ref = await gh(`/git/ref/heads/${encodeURIComponent(branch)}`);
     const head: string = ref.object.sha;
     const commit = await gh(`/git/commits/${head}`);
     const tree = await gh(`/git/trees/${commit.tree.sha}?recursive=1`);
     const files: { path: string; sha: string }[] = tree.tree.filter((t: { type: string; path: string }) => t.type === "blob" && SEARCH.test(t.path) && !SKIP.test(t.path));
-    // read every source file once (in batches)
+    // read every source file once
     const text = new Map<string, string>();
-    for (let i = 0; i < files.length; i += 25) {
-      await Promise.all(files.slice(i, i + 25).map(async (f) => {
-        const b = await gh(`/git/blobs/${f.sha}`);
-        text.set(f.path, Buffer.from(b.content, b.encoding === "base64" ? "base64" : "utf8").toString("utf8"));
-      }));
-    }
+    await readAll(files, text);
 
     // saves made after this page was built, oldest first: [old wording, new wording]
     const built = typeof body.built === "string" && /^[0-9a-f]{40}$/.test(body.built) ? body.built : "";
@@ -158,6 +191,9 @@ export async function POST(req: Request) {
     await gh(`/git/refs/heads/${encodeURIComponent(branch)}`, { method: "PATCH", body: JSON.stringify({ sha: made.sha, force: false }) });
     return NextResponse.json({ applied, pending: pending.length, already, commit: made.sha });
   } catch (e) {
-    return NextResponse.json({ error: `Couldn't save: ${(e as Error).message}. Nothing was changed. Try again in a minute.` }, { status: 500 });
+    // someone else's save landed between reading and writing: read again and redo this one (twice at most)
+    if (e instanceof GhError && (e.status === 422 || e.status === 409) && attempt < 2) continue;
+    const limit = e instanceof GhError && e.status === 429;
+    return NextResponse.json({ error: `Couldn't save: ${(e as Error).message}. Nothing was changed${limit ? ". Your edits are still on this page: keep it open and press Save again then." : ". Try again in a minute."}` }, { status: limit ? 429 : 500 });
   }
 }

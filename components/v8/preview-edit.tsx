@@ -10,10 +10,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import PreviewComments, { askName, changeName, cssPath, savedName } from "@/components/v8/preview-comments";
 
-type Change = { old: string; next: string; nodeOld?: string; nodeNew?: string; context?: string[]; breaks?: string };
-type Snap = { full: string; nodes: string[]; context: string[] };
 const LEAF = "h1,h2,h3,h4,h5,p,li,blockquote,dt,dd,figcaption,b,strong,em,small,span,a,button,label,td,th";
-const clean = (s: string) => s.replace(/\s+/g, " ").trim();
+import { clean, diff, type Change, type Snap } from "@/lib/preview-edit-diff";
 /* the words as written (textContent), not as styled: labels shown in capitals
    are written normally in the code */
 const textOf = (el: Node): string => {
@@ -37,20 +35,6 @@ const contextOf = (el: HTMLElement) => {
   const sec = el.closest("section, header, footer, nav, li");
   add(sec?.querySelector("h1, h2, h3"));
   return out.filter((t) => t !== clean(textOf(el))).slice(0, 6);
-};
-/* what changed: the one text node it happened in, when the edit stays inside one */
-const diff = (snap: Snap, now: string): Change => {
-  const a = snap.full, b = now;
-  let p = 0; while (p < a.length && p < b.length && a[p] === b[p]) p++;
-  let s = 0; while (s < a.length - p && s < b.length - p && a[a.length - 1 - s] === b[b.length - 1 - s]) s++;
-  const change: Change = { old: clean(a), next: clean(b), context: snap.context, breaks: b.includes("\n") ? b.trim() : undefined };
-  let at = 0;
-  for (const t of snap.nodes) {
-    const end = at + t.length;
-    if (p >= at && a.length - s <= end) { change.nodeOld = clean(t); change.nodeNew = clean(t.slice(0, p - at) + b.slice(p, b.length - s) + t.slice(a.length - s - at)); break; }
-    at = end;
-  }
-  return change;
 };
 
 /* every saved change made from this browser, newest last, so Undo can take it back */

@@ -2985,7 +2985,7 @@ export const CASES: Record<string, CaseData> = {
    "Built the transportation worker proficiency programs for maintenance crews and construction technicians with a manual, modules, task sheets, and a rollout academy",
    "Developed a statewide rollout and communication change management strategy to implement the EPIC changes",
    "Established leadership, project management, and technical career paths, enabling staff to advance to higher levels based on their individual strengths, expertise, and professional interests",
-   "Developed curricula for a graduate engineers training protational rogram in about a dozen disciplines",
+   "Developed curricula for a graduate engineers training rotational program in about a dozen disciplines",
    "Prepared the curriculum for the department's Management Academy"
   ],
   "res": [
@@ -4088,7 +4088,7 @@ export const CASES: Record<string, CaseData> = {
    "Built a bridge prioritization tool, with tutorials for program managers and bridge staff, to accurately update the delivery timeframes for currently programmed projects",
    "Developed the detailed concept for the statewide asset mapping tool to assist in the prioritization process",
    "Built a bridge triage tool to reduce the number of bridges considered in the biannual calls for projects",
-   "Revised and reduced the number of funding programs to improve the project selection process",
+   "Revised and reduced the number of funding programs to improve project selection and delivery processes",
    "Developed a pre-programming Conceptual Study process to improve projects' programmed scope, schedule, and budget to increase program stability",
    "Established a 5-year work program to increase the reliability of delivering projects within the committed timeframes",
    "Developed a comprehensive Program Development Manual that documents the process for establishing the 5-year work program, from establishing the budget for programs to issuing the call for projects and documenting them."
