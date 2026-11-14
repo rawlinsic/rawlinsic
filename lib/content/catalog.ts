@@ -2991,7 +2991,7 @@ export const CASES: Record<string, CaseData> = {
   "res": [
    "Department-wide organizational structure reconfiguration aligns with critical program and project delivery areas",
    "Department-wide proficiency program established.",
-   "Classification, certification, and salary structure implemented",
+   "Classification, certification, and new salary structure implemented",
    "Graduate Engineer Training rotational program in place",
    "Department-wide organizational structure reconfiguration aligns with critical program and project delivery areas",
    ""
