@@ -166,7 +166,7 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
     { t: "", d: "Launch, train the owners, and set how changes are requested and published." },
   ] },
   automation: { title: "How we do it", steps: [
-    { t: "", d: "Agree the problem, who decides, and what a working result looks like." },
+    { t: "", d: "Identify the problem, and what a working result looks like." },
     { t: "", d: "Map the workflow as it runs today with the staff who do the work, and separate the symptoms from the causes." },
     { t: "", d: "Design and build on the platforms already in place, and test with real records." },
     { t: "", d: "Document it, train the owners, and hand it over." },
