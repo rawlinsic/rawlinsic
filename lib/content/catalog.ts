@@ -4083,7 +4083,7 @@ export const CASES: Record<string, CaseData> = {
   "did": [
    "Interviewed program managers and documented more than thirty State of the Practice reports on the department's programs' project selection processes",
    "Reviewed twelve other states' prioritization processes",
-   "Wrote white papers on the Statewide Transportation Improvement Program and how it works with the asset management plan and the state's priority program",
+   "Coordinated with FHWA and the State DOT in streamlining and improving STIP and TIP processes.",
    "Worked through project selection templates with 14 programs, and built fillable score sheets",
    "Built a bridge screening and prioritization tool, with tutorials for program managers and bridge staff",
    "Developed the detailed concept for the statewide asset mapping tool",
