@@ -1437,3 +1437,16 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .svd-t .svd-name { margin-bottom: 8px; color: #0a1220; font-size: clamp(1.2rem, 1.5vw, 1.4rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
 .svd-t .svd-line { color: #2e3c50; font-size: 1rem; line-height: 1.5; }
 .svd-cards.is-4 li { padding: 24px 22px 22px; }
+
+/* Nov 13 (site sweep, phones): bars without the services dropdown (area, Who We Work With, About pages) wrapped to two or
+   three lines and stayed stuck at the top. On phones they show the section you're in and the three-line button. */
+.sn-cur { display: none; }
+@media (max-width: 900px) {
+  .sn:not(.has-more) { display: flex; align-items: center; flex-wrap: nowrap; max-width: none; }
+  .sn:not(.has-more) .sn-cur { display: block; flex: 1; min-width: 0; margin: 10px 0 10px 16px; overflow: hidden; color: #0a1220; font-size: 1rem; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; }
+  .sn:not(.has-more) > ul { display: none !important; }
+  .sn:not(.has-more).is-open .sn-burger { background: #1d3759; border-color: #1d3759; color: #fff; }
+  .sn:not(.has-more).is-open > ul { display: grid !important; position: absolute; left: 0; right: 0; top: 100%; z-index: 30; gap: 2px; margin: 0; padding: 8px 16px 14px !important; background: #fff; border-bottom: 1px solid #dbe5f1; box-shadow: 0 18px 30px -18px rgba(10, 18, 32, 0.35); justify-content: stretch !important; justify-items: stretch; grid-template-columns: 1fr; max-width: none; }
+  .sn:not(.has-more).is-open > ul a { padding: 11px 14px !important; font-size: 1rem !important; border-radius: 12px; color: #0a1220; }
+  .sn:not(.has-more).is-open > ul a[aria-current="true"] { background: #e6f9fc; box-shadow: inset 3px 0 0 #22d3ee; }
+}

@@ -48,7 +48,10 @@ export default function SectionNav({ items, more }: { items: [string, string][];
           <ul>{more.links.map((l) => <li key={l.href} className={l.top ? "is-top" : undefined}><a href={l.href} aria-current={l.current ? "page" : undefined}>{l.name}</a></li>)}</ul>
         </details>
       )}
-      {more && (
+      {/* phones: a bar without the services dropdown shows the section you're in, and the same three-line button opens the
+          list (Nov 13: the sweep found these bars wrapping to two or three lines and staying stuck at the top) */}
+      {!more && <span className="sn-cur" aria-hidden="true">{tc(items.find(([id]) => id === on)?.[1] ?? items[0]?.[1] ?? "")}</span>}
+      {(
         <button type="button" className="sn-burger" aria-label="Sections on this page" aria-expanded={list} aria-controls="sn-list"
           onClick={() => { setList((v) => !v); if (box.current) box.current.open = false; }}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
