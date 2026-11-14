@@ -4297,7 +4297,7 @@ export const CASES: Record<string, CaseData> = {
    "Crafted a contract close-out process, including creating scope templates by contract type and discipline",
    "Drafted language for adjusted-score design-build request for proposals and design-build procurement",
    "Surveyed six states on two-phase and single-phase advertisement, and wrote guidance ofor administerng a two-phase process",
-   "Built negotiation memo templates, rate analysis tools, and an active contract list to wmonitorcontract expirations",
+   "Built negotiation memo templates, rate analysis tools, and an active contract list to monitor contract milestones",
    "Reviewed peer state best practices for evaluating consultant performance"
   ],
   "res": [
