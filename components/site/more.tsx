@@ -94,28 +94,36 @@ export function AboutIndex() {
 
 const SHOW_STORY = false;
 
+/* Scott's quote card (from the live site's Our People page). On Who we are it sits in the navy hero; on Our People
+   it is white with dark words so it doesn't match the navy behind it (Nicole, Nov 13). Opens his bio. */
+function FounderQuote({ light = false }: { light?: boolean }) {
+  const scott = allPeople().find((p) => /^Scott Rawlins/.test(p.name));
+  if (!scott) return null;
+  return (
+    <figure className={`ab-quote${light ? " is-light" : ""}`}>
+      {/* the live site's quote; its dash is a comma here (the site uses no long dashes) */}
+      <blockquote><p>We&rsquo;ve built this firm on trust, working in close partnership with our clients to understand their reality and bring the right mix of perspectives, delivering outcomes that truly fit their needs.</p></blockquote>
+      <figcaption>
+        <AuthorPop person={scott} className="ab-quote-by">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <span className="ab-quote-ph"><img src={scott.photo} alt="" width={120} height={120} /></span>
+          <span className="ab-quote-who"><b>{scott.name}</b><em>{scott.role}</em>{scott.location && <small><Pin />{scott.location}</small>}<i>Read bio</i></span>
+        </AuthorPop>
+      </figcaption>
+    </figure>
+  );
+}
+
 export function WhoWeAre() {
   /* Scott's card: the same details every other card shows (title, location), not his former role, and it opens
-     his bio on this page (Nicole, Nov 11). His quote, from the live site's Our People page, sits with his photo. */
-  const scott = allPeople().find((p) => /^Scott Rawlins/.test(p.name));
+     his bio on this page (Nicole, Nov 11). His quote, from the live site's Our People page, sits with his photo
+     (FounderQuote, above). */
   return (
     <Shell>
       <EdHero crumbs={[["/about", "About"], ["/about/who-we-are", "Who we are"]]} kicker="Who we are" title={<>Founded on <em>agency experience</em></>}
         lead={<p>Rawlins was founded in 2017 by Scott Rawlins, former Deputy Director and Chief Engineer of the Nevada Department of Transportation. Today former agency leaders work alongside an in-house digital team that builds the tools.</p>}
         actions={<><EdBtn href="/about/our-people">Meet our people</EdBtn><EdBtn href="/contact" kind="ghost">Get in touch</EdBtn></>}
-        aside={scott && (
-          <figure className="ab-quote">
-            {/* the live site's quote; its dash is a comma here (the site uses no long dashes) */}
-            <blockquote><p>We&rsquo;ve built this firm on trust, working in close partnership with our clients to understand their reality and bring the right mix of perspectives, delivering outcomes that truly fit their needs.</p></blockquote>
-            <figcaption>
-              <AuthorPop person={scott} className="ab-quote-by">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <span className="ab-quote-ph"><img src={scott.photo} alt="" width={120} height={120} /></span>
-                <span className="ab-quote-who"><b>{scott.name}</b><em>{scott.role}</em>{scott.location && <small><Pin />{scott.location}</small>}<i>Read bio</i></span>
-              </AuthorPop>
-            </figcaption>
-          </figure>
-        )} />
+        aside={<FounderQuote />} />
       {/* a gallery of team photos in place of the one big photo (Nicole, Nov 11) */}
       <PhotoGallery photos={TEAM_GALLERY} />
       {/* Our story is off this page for now (Nicole, Nov 13: "delete this section on about for now"); SHOW_STORY brings it back */}
@@ -263,7 +271,7 @@ export function OurPeople() {
   if (founder > 0) people.unshift(people.splice(founder, 1)[0]);
   return (
     <Shell>
-      <EdHero dark crumbs={[["/about", "About"], ["/about/our-people", "our people"]]} kicker="our people" title={<>The <em>Rawlins Team</em></>} /* Nicole's wording (preview edit, Nov 12); was "The people behind the work" */
+      <EdHero dark aside={<FounderQuote light />} crumbs={[["/about", "About"], ["/about/our-people", "our people"]]} kicker="our people" title={<>The <em>Rawlins Team</em></>} /* Nicole's wording (preview edit, Nov 12); was "The people behind the work" */
         lead={<p>More than 25 of our people came from public agencies. Our team brings together expertise in strategy, operations, and technology to deliver practical, forward-thinking solutions to complex challenges. While rooted in transportation, we continue to expand our experience across sectors. Collaboration is central to how we work.</p>}>
         {/* the sliding faces and the four counts under them were removed (Nicole, Nov 11) */}
       </EdHero>
