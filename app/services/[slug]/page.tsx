@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { AREAS } from "@/lib/content/site";
 import { AREAS as AREA_DATA } from "@/lib/content/catalog";
 import { DigitalShowcase, AviationShowcase } from "@/components/site/services";
+import DeliverStack from "@/components/v8/deliver-stack";
 import Header from "@/components/v8/header";
 import Footer from "@/components/v8/footer";
 import AreaV8 from "@/components/v8/area";
@@ -25,7 +26,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     <>
       <Header />
       <main id="main-content" className="v8">
-        <AreaV8 area={a} extra={extra} />
+        {/* Digital Solutions: What we deliver sits above What we build (Nicole, Nov 13) */}
+        <AreaV8 area={a} extra={extra} before={a.id === "tech" ? <DeliverStack /> : undefined} />
       </main>
       <Footer />
       <Reveal />

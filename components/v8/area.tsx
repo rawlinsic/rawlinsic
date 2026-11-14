@@ -32,7 +32,7 @@ const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks
 /* one card per quote: some entries hold two quotes in one string ("…” “…") */
 const quotes = (hear: string[]) => hear.flatMap((h) => h.split(/["”]\s*["“]/)).map((h) => bare(h.replace(/^["“]/, "")));
 
-export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode }) {
+export default function AreaV8({ area, extra, before }: { area: Area; extra?: ReactNode; before?: ReactNode }) {
   const L = AREA_DATA[area.id];
   const T = THEME[area.id];
   const k = AREAS.findIndex((a) => a.id === area.id);
@@ -62,7 +62,8 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
     </section>
   ) : null;
   const sections: [string, string][] = [
-    ["services", "Services"], ["hear", hearTitle(L.hear)], ["fit", L.feature.title], ...(L.xp?.length && !L.xpAfter ? [["experience", "The experience behind it"] as [string, string]] : []), ...(extra ? [["more", "From our work"] as [string, string]] : []),
+    /* before: a block shown above the area's diagram (Digital Solutions: What we deliver, Nicole, Nov 13) */
+    ["services", "Services"], ["hear", hearTitle(L.hear)], ...(before ? [["deliver", "What we deliver"] as [string, string]] : []), ["fit", L.feature.title], ...(L.xp?.length && !L.xpAfter ? [["experience", "The experience behind it"] as [string, string]] : []), ...(extra ? [["more", "From our work"] as [string, string]] : []),
     ...(L.xp?.length && L.xpAfter ? [["experience", "The experience behind it"] as [string, string]] : []),
     ...(cases.length ? [["work", "Featured projects"] as [string, string]] : []), ["talk", "Talk to us"],
   ];
@@ -134,6 +135,8 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
           </div>
         </section>
       )}
+
+      {before}
 
       <Scene steps={1} per={100} id="fit" className="sv-scene fit-scene" label={L.feature.title} fit>
         <div className="v8-wrap fit-in">

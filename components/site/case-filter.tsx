@@ -3,9 +3,10 @@
    before Rawlins. Starts from the URL (?area= ?industry= ?state=
    ?status=ongoing ?status=before-rawlins ?service=). */
 import { useEffect, useMemo, useState } from "react";
+import type React from "react";
 
 export type CaseRow = { id: string; href: string; photo: string; title: string; who: string; status: string; tag: string; note?: string; areas: string[]; services: string[]; industries: string[]; states: string[] };
-type Opt = { value: string; label: string };
+type Opt = { value: string; label: string; color?: string };
 
 export default function CaseFilter({ rows, areas, industries, states, services }: { rows: CaseRow[]; areas: Opt[]; industries: Opt[]; states: Opt[]; services: Opt[] }) {
   const [f, setF] = useState<{ k: string; v: string }>({ k: "all", v: "" });
@@ -33,17 +34,27 @@ export default function CaseFilter({ rows, areas, industries, states, services }
   const svcLabel = f.k === "service" ? services.find((s) => s.value === f.v)?.label : null;
   return (
     <div>
-      <div className="pg-filter" role="group" aria-label="Filter projects">
-        {btn("all", "", "All")}
-        {btn("status", "ongoing", "In the works")}
-        {btn("status", "before-rawlins", "Before Rawlins")}
-        <p className="pg-filter-label">By service area</p>
-        {areas.map((a) => btn("area", a.value, a.label))}
-        <p className="pg-filter-label">By industry</p>
-        {industries.map((a) => btn("industry", a.value, a.label))}
+      {/* redesigned Nov 13 (Nicole: "needs a better design"): one panel; the status switch with the count beside it, then a
+          row for each way to browse. The words are unchanged. */}
+      <div className="pg-filter pf2" role="group" aria-label="Filter projects">
+        <div className="pf2-top">
+          <div className="pf2-seg">
+            {btn("all", "", "All")}
+            {btn("status", "ongoing", "In the works")}
+            {btn("status", "before-rawlins", "Before Rawlins")}
+          </div>
+          <p className="pg-count pf2-count" aria-live="polite">{svcLabel ? `${svcLabel}: ` : ""}<b>{list.length}</b> {list.length === 1 ? "project" : "projects"}</p>
+        </div>
+        <div className="pf2-row">
+          <p className="pg-filter-label">By service area</p>
+          <div className="pf2-chips">{areas.map((a) => <span key={a.value} className="pf2-area" style={a.color ? ({ ["--dot" as string]: a.color } as React.CSSProperties) : undefined}>{btn("area", a.value, a.label)}</span>)}</div>
+        </div>
+        <div className="pf2-row">
+          <p className="pg-filter-label">By industry</p>
+          <div className="pf2-chips">{industries.map((a) => btn("industry", a.value, a.label))}</div>
+        </div>
         {/* By state is off (Nicole, Nov 10); ?state= links still filter */}
       </div>
-      <p className="pg-count" aria-live="polite">{svcLabel ? `${svcLabel}: ` : ""}{list.length} {list.length === 1 ? "project" : "projects"}</p>
       <ul className="pg-cases">
         {list.map((c) => (
           <li key={c.id}>

@@ -5,7 +5,6 @@ import AutomationIntegrationInteractive from "@/components/automation-integratio
 import { AREA_PHOTO, AREA_PHOTO_POS, PAGE_PHOTO, SERVICE_PHOTO } from "@/lib/content/media";
 import TilesTour from "@/components/v8/tiles-tour";
 import AutomationEcosystemBars from "@/components/automation-ecosystem-bars";
-import DeliverStack from "@/components/v8/deliver-stack";
 import { AREAS, CASES, INDUSTRIES, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, industryHref, serviceById, serviceHref, subsectorHref, type Area, isListed } from "@/lib/content/site";
 import { AREAS as AREA_DATA, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import { AAM_SERVICES, LIFECYCLE } from "@/components/site/aam-data";
@@ -41,34 +40,6 @@ const AAM_ICON = [
   "M4 7h16v12H4zM4 7l8 6 8-6", // solicitations and grants
   "M3 12h4l3-7 4 14 3-7h4", // manufacturer and market tracking
 ];
-/* icons for the examples below, in the same order */
-const PROOF_ICON = [
-  "M6 6h4v4H6zM14 14h4v4h-4zM10 8h3a2 2 0 0 1 2 2v4M8 10v3a2 2 0 0 0 2 2h4", // connected workflows
-  "M3 5h18v14H3zM3 9h18M7 7h.01M10 7h.01", // a website
-  "M5 4h14v16H5zM8 8h8M8 12h8M8 16h5", // a form filled in once
-  "M4 6h7v5H4zM13 13h7v5h-7zM11 8.5h4.5v4.5M15.5 13l-2-2", // a site migration
-  "M4 20V10M10 20V4M16 20v-7M22 20H2", // dashboards
-  "M3 17l5-5 4 3 7-8M15 7h4v4", // a tracking dashboard
-  "M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M5 5l4.5 4.5M19 5l-4.5 4.5M5 19l4.5-4.5M19 19l-4.5-4.5M3 5h4M17 5h4M3 19h4M17 19h4", // drone data
-  "M12 4m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0M5 8h14M12 8v12M8 20l4-6 4 6", // accessibility
-  "M8 8h8v8H8zM10 8V5M14 8V5M10 19v-3M14 19v-3M8 10H5M8 14H5M19 10h-3M19 14h-3", // AI
-];
-
-/* Broad digital proof (handoff 4.12); invoicing example not cleared, left out */
-const DIGITAL_PROOF = [
-  /* seven examples, as on the live site (06 and 07 back Nov 11); six of the seven are from before Rawlins */
-  "Seven examples of connected workflows: consultant contracting at a state DOT, and six from our automation team's work before Rawlins",
-  "A statewide project delivery website, change request system, consultant contracting workflow, estimating tools, and training videos",
-  "Repeated project fields filled in once from trusted agency data, and paper forms turned into web apps",
-  "A website migration with every item reviewed: keep, update, combine, move, or retire", // "and wiki" off, as on the Websites page (Nicole, Nov 11)
-  "Website modernization, procedures, and Power BI dashboards for a state DOT",
-  "A tracking dashboard for an advanced air mobility program",
-  // TODO(launch): needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent. (comes from cs-drt)
-  "Drone data that checked debris removal quantities, and proved correct when reports disagreed",
-  "An accessibility (508) compliance add-in for Microsoft Word",
-  "A planned AI pilot for cash-flow modeling",
-];
-
 /* Inside a project delivery network (Preconstruction): each piece with a simple line icon */
 const ic = (d: string) => <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
 const NETWORK: [string, ReturnType<typeof ic>][] = [
@@ -127,16 +98,10 @@ export function AreaPage({ area }: { area: Area }) {
 }
 
 export function DigitalShowcase() {
+  /* Nov 13 (Nicole): "Making systems connect" is off the page, and What we deliver moved above What we build
+     (app/services/[slug]/page.tsx); the applied solutions graphic and the four panels stay here */
   return (
     <>
-      <Sec title="Making systems connect" kicker="What we build" className="mk"
-        intro={<p>Most of our digital work starts with systems that don&apos;t talk to each other. We connect the platforms, data, and tools an organization already pays for, then automate the busywork and add AI where it helps, with people in the loop.</p>}>
-        <ul className="mk-grid">
-          {DIGITAL_PROOF.map((t, i) => (
-            <li key={t}><span className="mk-ic">{svgI(PROOF_ICON[i] ?? PROOF_ICON[0])}</span><p>{t}<LineNote text={t} /></p></li>
-          ))}
-        </ul>
-      </Sec>
       <section className="pg-sec pg-sec-navy pg-legacy">
         {/* Nicole, Nov 11: this eyebrow, title, and line, shown without an expand arrow. The seven examples carry no
             preview notes anywhere (Nicole, Nov 11: we're using them). */}
@@ -144,7 +109,6 @@ export function DigitalShowcase() {
           intro={<p className="section-text">The graphic below showcases applied solutions in practice. Tap an icon to see the challenge, what we built, and the result.</p>} />
       </section>
       <section className="pg-sec pg-sec-navy pg-legacy"><AutomationEcosystemBars /></section>
-      <DeliverStack />
     </>
   );
 }

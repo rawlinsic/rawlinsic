@@ -1476,14 +1476,13 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .tt-head.is-top { padding: clamp(40px, 5vw, 72px) 0 12px; }
 .tt-head.is-top .v8-eyebrow { margin: 22px auto 0; }
 .tt-head.is-top .fan-h { margin-top: 12px; }
-/* the closing band: the title runs across the whole band on the left; the button under it, the links beside the button */
+/* the closing band: the title on one line on the left with the buttons under it, the links box beside them, the two
+   centered on each other (Nicole, Nov 13: "aligned together and not off") */
 @media (min-width: 900px) {
-  .svt-in { align-items: start; row-gap: clamp(18px, 2vw, 26px); }
-  .svt-talk { display: contents; }
-  .svt-talk > .v8-h2 { grid-column: 1 / -1; margin: 0; max-width: none; }
-  .svt-talk > .v8-lead, .svt-talk > .v8-actions { grid-column: 1; }
-  .svt-links { grid-column: 2; grid-row: 2 / span 2; }
+  .svt-in { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: center; }
+  .svt-talk > .v8-h2 { margin: 0 0 22px; max-width: none; font-size: clamp(1.8rem, 2.6vw, 2.5rem); }
 }
+@media (min-width: 1100px) { .svt-talk > .v8-h2 { white-space: nowrap; } }
 /* Challenges we hear, as a picker: on white, not navy; it steps through the challenges as you scroll */
 .svq.is-picker { background: radial-gradient(45% 60% at 6% 30%, rgba(34, 211, 238, 0.1), transparent 70%), #fff; color: #0a1220; }
 .svq.is-picker .v8-h2 { color: #0a1220; }
@@ -1502,3 +1501,43 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 /* the life cycle's service links, a little tighter so the section fits the screen and steps through as you scroll */
 .fit-links { margin-top: 10px; padding-top: 10px; gap: 4px; }
 .fit-links a { font-size: 0.9rem; }
+
+/* ── Nov 13, 8:30 PM (Nicole) ─────────────────────────────────────── */
+/* Challenges we hear: the challenges on the left in navy boxes, white words, glowing blue; the right side unchanged */
+.svq.is-picker .fp-q { background: linear-gradient(180deg, #1f3a63, #182f52); border-color: rgba(165, 243, 252, 0.25); color: #fff; }
+.svq.is-picker .fp-q:hover { background: linear-gradient(180deg, #24436f, #1b355b); border-color: rgba(165, 243, 252, 0.6); }
+.svq.is-picker .fp-dot { border-color: rgba(165, 243, 252, 0.85); }
+.svq.is-picker .fp-q[aria-pressed="true"] { background: linear-gradient(180deg, #1f3a63, #182f52); border-color: #22d3ee; color: #fff; box-shadow: 0 0 0 2px #22d3ee, 0 0 26px rgba(34, 211, 238, 0.5); }
+.svq.is-picker .fp-q[aria-pressed="true"] .fp-dot { background: #22d3ee; border-color: #22d3ee; box-shadow: 0 0 10px #22d3ee; }
+/* seven or more steps (Digital Solutions' What we build) in two rows on computers, so the cards have room */
+@media (min-width: 1181px) {
+  .fit.is-many .fit-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: clamp(26px, 3.5vh, 40px); }
+  .fit-hub.is-many .fit-steps > li:nth-child(-n + 4)::after { display: none; }
+}
+/* What We Do menu: a glowing blue line under each photo instead of the navy bar */
+.mx-what .mx-area { position: relative; border-top: 0 !important; padding-top: 14px; }
+.mx-what .mx-area::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; border-radius: 3px; background: #22d3ee; box-shadow: 0 0 10px rgba(34, 211, 238, 0.85), 0 0 22px rgba(34, 211, 238, 0.4); }
+/* a glowing blue line to the left of the menu items: About, Who We Work With, and All Projects in Our Work (not What We Do or
+   Insights) */
+.ma2 > ul a, .mx-inds li:not(.mx-head) > a, .mx-work > div:first-child > ul:first-child a { position: relative; padding-left: 30px !important; }
+.ma2 > ul a::before, .mx-inds li:not(.mx-head) > a::before, .mx-work > div:first-child > ul:first-child a::before { content: ""; position: absolute; left: 13px; top: 12px; bottom: 12px; width: 3px; border-radius: 3px; background: #22d3ee; box-shadow: 0 0 8px rgba(34, 211, 238, 0.85), 0 0 18px rgba(34, 211, 238, 0.4); }
+/* project pages: Services on this project, styled like the "What this service covers" cards */
+.pj-svcs.is-cards a { gap: 6px; padding: 26px 26px 24px; border: 1px solid #d6e3f2; border-radius: 22px; background: #fff; box-shadow: 0 18px 44px -30px rgba(13, 27, 46, 0.35); }
+.pj-svcs.is-cards a::before { content: ""; width: 42px; height: 3px; margin-bottom: 8px; border-radius: 3px; background: var(--aqua); box-shadow: 0 0 10px var(--aqua); }
+.pj-svc-n { color: #0e7490; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; }
+.pj-svcs.is-cards b { font-size: 1.3rem; line-height: 1.25; }
+.pj-svcs.is-cards .pj-svc-area { color: #5b6b80; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; }
+/* All Projects: Browse the work in one panel */
+.pg-filter.pf2 { display: grid; gap: 18px; margin: 0 0 28px; padding: clamp(20px, 2.4vw, 32px); border-radius: 24px; background: linear-gradient(160deg, #f5f9fd, #e9f0f8); border: 1px solid #d6e3f2; }
+.pf2-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid #d6e3f2; }
+.pf2-seg { display: inline-flex; flex-wrap: wrap; padding: 5px; gap: 4px; border-radius: 999px; background: #fff; border: 1px solid #d6e3f2; }
+.pf2-seg button { border-color: transparent !important; min-height: 40px; padding: 0 18px; }
+.pf2 button[aria-pressed="true"] { background: #15294a; border-color: #15294a !important; color: #fff; box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.9), 0 0 18px rgba(34, 211, 238, 0.45); }
+.pf2-count { margin: 0; color: #5b6b80; font-size: 1rem; }
+.pf2-count b { margin-right: 4px; color: #0a1220; font-size: 1.5rem; font-weight: 700; }
+.pf2-row { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 14px; align-items: start; }
+.pf2-row .pg-filter-label { width: auto; margin: 11px 0 0; color: #0e7490; }
+.pf2-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.pf2-area button::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: #22d3ee; box-shadow: 0 0 6px rgba(34, 211, 238, 0.8); vertical-align: middle; }
+@media (max-width: 760px) { .pf2-row { grid-template-columns: 1fr; gap: 6px; } .pf2-row .pg-filter-label { margin-top: 0; } }
+.mx-inds li.mx-intl > a::before { top: 50%; bottom: auto; height: 24px; margin-top: -12px; }

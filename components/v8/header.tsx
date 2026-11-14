@@ -5,7 +5,7 @@
 import { AREAS, CASES, INDUSTRIES, LEADERS, SITE_INDEX, VISIBLE_INDUSTRIES, areaHref, caseById, caseHref, caseTag, industryHref, isOurs, subsectorHref, type CaseIndex, CASE_STATUS, isListed } from "@/lib/content/site";
 import { isJacobVersion } from "@/lib/preview-gh";
 import { tc } from "@/lib/title-case";
-import { INDUSTRIES as IND_DATA } from "@/lib/content/catalog";
+import { INDUSTRIES as IND_DATA, PRIV } from "@/lib/content/catalog";
 import { AREA_PHOTO, PAGE_PHOTO, AREA_PHOTO_POS, NAV_AREA_PHOTO, NAV_AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, casePhoto, FEATURED_CASES } from "@/lib/content/v8";
 import { EVENTS, NEWS, isUpcoming } from "@/lib/content/news";
@@ -52,7 +52,8 @@ export default function Header() {
         name: i.name, href: industryHref(i), who: head ? "" : i.who, head, child: !!i.parent,
         subs: i.subsectors.map((s) => ({ name: s.name, href: subsectorHref(i, s) })),
         /* an industry with no specialties shows the challenges we hear there instead */
-        challenges: i.subsectors.length ? [] : IND_DATA[i.id]?.ch ?? [],
+        /* Growing Companies: its "Sound familiar?" quotes are its challenges (Nicole, Nov 13) */
+        challenges: i.subsectors.length ? [] : i.id === "growth" ? PRIV.hear.map((h) => h.replace(/^[“"]|[”"]$/g, "")) : IND_DATA[i.id]?.ch ?? [],
         feature: feature && isOurs(feature) ? card(feature) : undefined,
         /* the industry's other featured projects: Rawlins work only (Part 1, 0.4) */
         projects: i.projects.map((id) => caseById(id)).filter((c): c is CaseIndex => !!c && isOurs(c) && c.id !== feature?.id).map((c) => ({ title: tc(c.title), href: caseHref(c) })),

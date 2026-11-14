@@ -48,6 +48,10 @@ export default function Fit({ kind, eyebrow, title, lead, steps, base = "The sys
       if (!nodes.length) return;
       const stacked = nodes.length > 1 && Math.abs(nodes[1][0] - nodes[0][0]) < 2;
       const [fx, fy] = nodes[0], [lx, ly] = nodes[nodes.length - 1];
+      /* seven or more steps wrap to two rows (Nicole, Nov 13: "all squished, make it fit"): one line along each row */
+      const rows: [number, number][][] = [];
+      for (const pt of nodes) { const row = rows.find((r) => Math.abs(r[0][1] - pt[1]) < 6); if (row) row.push(pt); else rows.push([pt]); }
+      if (!stacked && rows.length > 1) { setArt({ w: b.width, h: b.height, main: rows.map((r) => through(r)).join(" ") }); return; }
       let pts = nodes;
       if (!stacked && kind === "track") pts = [[0, fy], ...nodes, [b.width, ly]];
       /* ascent: one straight line through the steps, carried on to both edges (Nicole, Nov 10) */
@@ -71,7 +75,7 @@ export default function Fit({ kind, eyebrow, title, lead, steps, base = "The sys
   }, [kind, n]);
 
   return (
-    <div ref={ref} className={`fit fit-${kind}${n >= 5 ? " is-wide" : ""}`} data-step={0} style={{ ["--n" as string]: n } as CSSProperties}>
+    <div ref={ref} className={`fit fit-${kind}${n >= 5 ? " is-wide" : ""}${n >= 7 ? " is-many" : ""}`} data-step={0} style={{ ["--n" as string]: n } as CSSProperties}>
       <div className="fit-head">
         {eyebrow && <p className="v8-eyebrow">{eyebrow}</p>}
         <h2 className="v8-h2">{title}</h2>

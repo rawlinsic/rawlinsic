@@ -72,7 +72,14 @@ const THIN_NOTE: Record<string, string> = {
 };
 /* the note a specialty carries on previews: its own, or the plain "thin" mark when it has none */
 const thinNote = (s: Subsector, fallback: string) => (THIN_NOTE[s.id] ? <Dev>{THIN_NOTE[s.id]}</Dev> : s.thin ? <Dev>{fallback}</Dev> : undefined);
-const nextIndustry = (id: string) => VISIBLE_INDUSTRIES[(VISIBLE_INDUSTRIES.findIndex((i) => i.id === id) + 1) % VISIBLE_INDUSTRIES.length];
+/* the Next link skips the pages off the menu for now (Federal Government, Local Governments): Transportation Sector goes on to
+   Private Sector (Nicole, Nov 13) */
+const NEXT_SKIP = ["fed", "local"];
+const nextIndustry = (id: string) => {
+  const k = VISIBLE_INDUSTRIES.findIndex((i) => i.id === id);
+  for (let j = 1; j <= VISIBLE_INDUSTRIES.length; j++) { const x = VISIBLE_INDUSTRIES[(k + j) % VISIBLE_INDUSTRIES.length]; if (!NEXT_SKIP.includes(x.id)) return x; }
+  return VISIBLE_INDUSTRIES[(k + 1) % VISIBLE_INDUSTRIES.length];
+};
 
 /* ── shared pieces ─────────────────────────────────────────────── */
 

@@ -40,9 +40,8 @@ export default function DeliverStack() {
         <div className="dls-art" aria-hidden="true">
           <div className="dls-iso">
             {LAYERS.map((l, i) => (
-              <div key={l.n} className="dls-plate" data-step={i} style={{ ["--i" as string]: i } as CSSProperties}>
-                <b>{l.n}</b>
-              </div>
+              /* no numbers on the plates (Nicole, Nov 13) */
+              <div key={l.n} className="dls-plate" data-step={i} style={{ ["--i" as string]: i } as CSSProperties} />
             ))}
           </div>
         </div>

@@ -2,8 +2,9 @@
    and detail pages. The old state pages from the current site now redirect
    (next.config.js), so they no longer have their own pages here. */
 import { PAGE_PHOTO } from "@/lib/content/media";
-import { casePhoto, themeStyle } from "@/lib/content/v8";
+import { THEME, casePhoto, themeStyle } from "@/lib/content/v8";
 import ProjectCard from "@/components/v8/project-card";
+import { EdBtn, EdHero } from "@/components/site/editorial";
 import Rail from "@/components/v8/rail";
 import { CASE_EXTRA } from "@/lib/content/case-extra";
 import { AREAS, CASES, VISIBLE_INDUSTRIES, areaHref, caseAreaIds, caseHref, caseTag, industryHref, serviceById, serviceHref, slugify, type CaseIndex, CASE_STATUS, isListed } from "@/lib/content/site";
@@ -29,13 +30,14 @@ export function CaseIndexPage() {
   }));
   const states = Array.from(new Set(CASES.flatMap((c) => c.states))).sort();
   return (
-    <Shell scene="map" photo={PAGE_PHOTO.cases}>
-      <Hero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Projects"]]} kicker="Our work" title="Projects"
+    <Shell>
+      {/* Nov 13 (Nicole): the photo top is off; styled like the Who we are top. Nothing on the right yet (her call) */}
+      <EdHero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Projects"]]} kicker="Our work" title="Projects"
         lead={<p>Every project, by service and industry. Work underway is marked “In the works,” and our team’s earlier work is marked “Before Rawlins.”</p>}
-        actions={<Btn href="/contact" primary>Get in touch</Btn>} />
+        actions={<EdBtn href="/contact">Get in touch</EdBtn>} />
       <Sec title="Browse the work">
         <CaseFilter rows={rows}
-          areas={AREAS.map((a) => ({ value: a.slug, label: a.name }))}
+          areas={AREAS.map((a) => ({ value: a.slug, label: a.name, color: THEME[a.id]?.color }))}
           industries={VISIBLE_INDUSTRIES.map((i) => ({ value: i.slug, label: i.name }))}
           states={states.map((s) => ({ value: slugify(s), label: s }))}
           services={AREAS.flatMap((a) => a.services.filter((s) => isListed(s.id)).map((s) => ({ value: s.slug, label: s.name })))} />
@@ -176,13 +178,15 @@ export function CaseDetail({ c }: { c: CaseIndex }) {
         <section data-nofill className="pj-sec pj-svcs-sec">
           <div className="pg-wrap">
             <h2 className="pj-h">Services on this project</h2>
-            <ul className="pj-svcs">
-              {svcIds.map((id) => {
+            {/* styled like the service pages' "What this service covers" cards (Nicole, Nov 13): a glowing bar, the number, the
+                name, its line */}
+            <ul className="pj-svcs is-cards">
+              {svcIds.map((id, k) => {
                 const h = serviceById(id)!;
                 const blurb = firstSentence(SVC_DATA[id]?.intro);
                 return (
                   <li key={id} style={themeStyle(h.area.id)}>
-                    <a href={serviceHref(id)}><span className="pj-svc-area">{h.area.name}</span><b>{h.service.name}</b>{blurb && <p>{blurb}</p>}<span className="pj-more">See the service</span></a>
+                    <a href={serviceHref(id)}><span className="pj-svc-n">{String(k + 1).padStart(2, "0")}</span><b>{h.service.name}</b><span className="pj-svc-area">{h.area.name}</span>{blurb && <p>{blurb}</p>}<span className="pj-more">See the service</span></a>
                   </li>
                 );
               })}
