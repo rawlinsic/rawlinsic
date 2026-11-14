@@ -4293,8 +4293,8 @@ export const CASES: Record<string, CaseData> = {
   "did": [
    "Assessed how the department buys consultant services",
    "Wrote a Professional Services Policies and Procedures Manual, a Design-Build Procurement Manual, and a Negotiations Manual",
-   "Drew flowcharts for every delivery method",
-   "Wrote a contract close-out process, and scope templates by contract type and discipline",
+   "Developed flowcharts for every delivery method",
+   "WCrafted a contract close-out process, including creatingscope templates by contract type and discipline",
    "Drafted an adjusted-score design-build request for proposals and design-build procurement language",
    "Surveyed six states on two-phase and single-phase advertisement, and wrote guidance on running a two-phase process",
    "Built negotiation memo templates, rate analysis tools, and an active contract list to watch contract expirations",
