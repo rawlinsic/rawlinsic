@@ -4078,7 +4078,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-pd-manual": {
   "id": "cs-pd-manual",
-  "ch": "The department wanted a consistent, written way to select and prioritize projects across its funding programs.",
+  "ch": "The department wanted to overhaul its project prioritization and selection process to ensure the right projects are selected for all funding categories and delivered within the timeframe established in its multi-year work program.",
   "when": "Since 2025",
   "did": [
    "Interviewed program managers and wrote more than thirty State of Practice reports on the department's programs",
