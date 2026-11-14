@@ -4149,8 +4149,8 @@ export const CASES: Record<string, CaseData> = {
    "Developed a five-module core training course including Responsible Charge training"
   ],
   "res": [
-   "Manual, certification process, and oversight policy in draft",
-   "Five core training modules built by October 2026"
+   "LPA Manual, certification processes, and oversight policy completed",
+   "Five core training modules built"
   ],
   "services": [
    "lpa",
