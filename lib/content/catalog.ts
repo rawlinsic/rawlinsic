@@ -2982,11 +2982,11 @@ export const CASES: Record<string, CaseData> = {
    "Built proficiency programs with agency experts in more than two dozen disciplines, from right of way and construction to bridge inspection and traffic design",
    "Researched pay rates in the region and developed a new salary structure",
    "Designed a two-week advanced leadership program of about 40 sessions with the agency's human resources team, and delivered it twice in 2024",
-   "Built the transportation worker proficiency program for maintenance crews in three levels, with a manual, modules, task sheets, and a rollout academy",
-   "Developed a statewide rollout and communication change management strategy, to implement the EPIC changes",
-   "Rolled out the construction technician program through academy workshops in the regions",
+   "Built the transportation worker proficiency programs for maintenance crews and construction technicians with a manual, modules, task sheets, and a rollout academy",
+   "Developed a statewide rollout and communication change management strategy to implement the EPIC changes",
+   "Established leadership, project management, and technical career paths, enabling staff to advance to higher levels based on their individual strengths, expertise, and professional interests.",
    "Developed curricula for a graduate engineers training program in about a dozen disciplines",
-   "Wrote the curriculum for the department's Management Academy"
+   "Prepared the curriculum for the department's Management Academy"
   ],
   "res": [
    "Utilization process complete and in use",
