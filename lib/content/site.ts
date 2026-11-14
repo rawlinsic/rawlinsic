@@ -302,18 +302,20 @@ export const subsectorHref = (i: Industry, s: Subsector) => `/industries/${i.slu
    Digital Tools is in every Who We Work With page's services (the industry lists above and the four modes' lists in catalog.ts) */
 /* ── "What are you trying to fix?" ───────────────────────────── */
 export const PROBLEMS: { q: string; services: string[] }[] = [
-  { q: "Our projects are late or over budget", services: ["program-delivery", "preconstruction", "alt-delivery", "owners-rep"] },
-  { q: "We're reorganizing or standing up something new", services: ["org-design", "change-mgmt"] },
-  { q: "Our people are retiring and no one is ready", services: ["workforce", "training-video"] },
-  { q: "We don't know what we own or what shape it's in", services: ["asset-mgmt", "data-governance"] },
-  { q: "Maintenance costs keep climbing", services: ["operations", "asset-mgmt"] },
-  { q: "Our systems don't talk to each other", services: ["automation", "portals"] },
-  { q: "We want to use AI responsibly", services: ["ai", "tech-strategy"] },
+  /* Nov 13 (Nicole: "we want the most accurate services and areas for these to show"; "videos should not be under people are
+     retiring"): each choice opens the services whose own pages name that challenge in their "What we hear" */
+  { q: "Our projects are late or over budget", services: ["program-delivery", "proj-delivery", "preconstruction", "owners-rep"] },
+  { q: "We're reorganizing or standing up something new", services: ["org-design", "change-mgmt", "exec-advisory", "finance"] },
+  { q: "Our people are retiring and no one is ready", services: ["workforce", "operations"] },
+  { q: "We don't know what we own or what shape it's in", services: ["asset-mgmt", "mqa"] },
+  { q: "Maintenance costs keep climbing", services: ["operations", "asset-mgmt", "outsourcing"] },
+  { q: "Our systems don't talk to each other", services: ["automation", "data-governance"] },
+  { q: "We want to use AI responsibly", services: ["ai", "tech-strategy", "data-governance"] },
   { q: "We want a drone program, or to plan for advanced air mobility", services: ["drone-programs", "drone-aam"] },
   { q: "There's grant money out there. Nobody has time to chase it", services: ["grants"] },
   /* so contractors and private firms see themselves (content updates v4, 7.8) */
-  { q: "We're starting our first design-build project with a public owner", services: ["alt-delivery", "partnering", "owners-rep"] },
-  { q: "We've outgrown our spreadsheets", services: ["automation", "dashboards"] },
+  { q: "We're starting our first design-build project with a public owner", services: ["partnering", "alt-delivery"] },
+  { q: "We've outgrown our spreadsheets", services: ["dashboards", "automation", "portals"] },
 ];
 
 /* ── Home copy ───────────────────────────────────────────────── */
