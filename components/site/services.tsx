@@ -247,25 +247,69 @@ export function ServiceFeature({ id }: { id: string }) {
         </div>
       );
     }
-    case "portals":
-      /* Inside a delivery website (redesigned Nov 11): the five parts drawn as the site itself, in a browser window */
+    case "portals": {
+      /* Inside a delivery website. Redesigned Nov 13 (Nicole: "needs to be better"): the five parts as a numbered list, and the
+         site itself drawn in a browser window with each part marked by its number; pointing at a line lights up its part. The
+         drawing has no words of its own beyond the labels the block already had. */
+      const parts: [string, string][] = [
+        ["land", "A landing page with the program's tools, resource library, manuals, and training one click away"],
+        ["links", "Links to the systems staff already use: scheduling, status reporting, and dashboards"],
+        ["form", "A change request form tied to a tracker, with automatic routing to reviewers and decision makers"],
+        ["mail", "Email at each step, from submission through quality check and close-out"],
+        ["video", "How-to videos and online courses published next to the tools they teach"],
+      ];
+      const n = (k: number) => <b className="dw2-n" aria-hidden="true">{String(k).padStart(2, "0")}</b>;
       return (
-        <div className="dw">
-          <div className="v8-wrap dw-in">
-            <div className="dw-head"><p className="v8-eyebrow">From our work</p><h2 className="v8-h2">Inside a delivery website</h2></div>
-            <div className="dw-win" role="list">
-              <div className="dw-bar" aria-hidden="true"><i /><i /><i /><span>Project delivery website</span></div>
-              <div className="dw-grid">
-                <div className="dw-part dw-land" role="listitem"><b>01</b><p>A landing page with the program&apos;s tools, resource library, manuals, and training one click away</p></div>
-                <div className="dw-part dw-links" role="listitem"><b>02</b><p>Links to the systems staff already use: scheduling, status reporting, and dashboards</p><span className="dw-chips" aria-hidden="true"><i>Scheduling</i><i>Status</i><i>Dashboards</i></span></div>
-                <div className="dw-part dw-form" role="listitem"><b>03</b><p>A change request form tied to a tracker, with automatic routing to reviewers and decision makers</p><span className="dw-flow" aria-hidden="true"><i>Form</i><em /><i>Review</i><em /><i>Decision</i></span></div>
-                <div className="dw-part dw-mail" role="listitem"><b>04</b><p>Email at each step, from submission through quality check and close-out</p></div>
-                <div className="dw-part dw-video" role="listitem"><b>05</b><p>How-to videos and online courses published next to the tools they teach</p><span className="dw-play" aria-hidden="true" /></div>
+        <div className="dw dw2">
+          <div className="v8-wrap dw2-in">
+            <div className="dw2-copy">
+              <div className="dw-head"><p className="v8-eyebrow">From our work</p><h2 className="v8-h2">Inside a delivery website</h2></div>
+              <ol className="dw2-list">
+                {parts.map(([k, t], i) => <li key={k} className={`dw2-li is-${k}`}>{n(i + 1)}<p>{t}</p></li>)}
+              </ol>
+            </div>
+            <div className="dw2-win" aria-hidden="true">
+              <div className="dw-bar"><i /><i /><i /><span>Project delivery website</span></div>
+              <div className="dw2-site">
+                <div className="dw2-top"><span className="dw2-logo" /><span className="dw2-nav"><i /><i /><i /><i /></span><span className="dw2-search" /></div>
+                <div className="dw2-zone is-land">
+                  {n(1)}
+                  <span className="dw2-hl"><i /><i /></span>
+                  <span className="dw2-tiles">
+                    <i><svg viewBox="0 0 24 24"><path d="M14 3l7 7-4 4-7-7zM10 7l-7 7 4 4 7-7" /></svg></i>
+                    <i><svg viewBox="0 0 24 24"><path d="M4 4h5v16H4zM10 4h4v16h-4zM15 5l4-1 3 15-4 1z" /></svg></i>
+                    <i><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5zM8 10h8M8 14h8M8 18h5" /></svg></i>
+                    <i><svg viewBox="0 0 24 24"><path d="M3 6l9-3 9 3-9 3zM7 8v5c3 2 7 2 10 0V8M21 6v6" /></svg></i>
+                  </span>
+                </div>
+                <div className="dw2-row">
+                  <div className="dw2-zone is-links">
+                    {n(2)}
+                    <span className="dw-chips"><i>Scheduling</i><i>Status</i><i>Dashboards</i></span>
+                    <span className="dw2-bars"><i style={{ height: "40%" }} /><i style={{ height: "70%" }} /><i style={{ height: "55%" }} /><i style={{ height: "90%" }} /><i style={{ height: "65%" }} /></span>
+                  </div>
+                  <div className="dw2-zone is-form">
+                    {n(3)}
+                    <span className="dw2-field" /><span className="dw2-field is-short" /><span className="dw2-field is-tall" />
+                    <span className="dw-flow"><i>Form</i><em /><i>Review</i><em /><i>Decision</i></span>
+                  </div>
+                </div>
+                <div className="dw2-row">
+                  <div className="dw2-zone is-mail">
+                    {n(4)}
+                    <span className="dw2-mails">{[0, 1, 2].map((k) => <i key={k}><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 6l9 7 9-7" /></svg><em><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10" /></svg></em></i>)}</span>
+                  </div>
+                  <div className="dw2-zone is-video">
+                    {n(5)}
+                    <span className="dw2-player"><span className="dw-play" /><span className="dw2-prog"><i /></span></span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       );
+    }
     case "training-video": {
       const f = SERVICE_STEPS[id];
       return <Sec title={f.title} kicker={f.kicker}><Steps steps={f.steps} /></Sec>;

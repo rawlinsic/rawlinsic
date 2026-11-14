@@ -1440,10 +1440,7 @@ export const SERVICES: Record<string, SvcData> = {
    "training-video",
    "program-delivery"
   ],
-  "xp": [
-   "Florida DOT's former Chief Information Officer, who led its data governance, is on our team",
-   "So is the nation's first Chief Data and AI Officer at a state department of transportation"
-  ],
+  "xp": [],
   "cards": [
    "cs-pdn",
    "cs-consult-flow",
@@ -1451,7 +1448,6 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-pd-manual",
    "cs-hi"
   ],
-  "xpAfterWork": true,
   "connect": [
    { "id": "automation", "line": "connects the site to the systems behind it, and automates the steps between them" },
    { "id": "data-governance", "line": "sets who owns the site's content and data, the definitions, and how both are kept current" },

@@ -196,7 +196,9 @@ export default function ServiceV8({ id }: { id: string }) {
             return (
               <div key={g.label || "all"} className={g.label ? "svd-group" : undefined}>
                 {g.label && <p className="v8-eyebrow svd-k">{g.label}</p>}
-                <ul className={`svd-cards${cards.length > 6 ? " is-3 is-4" : cards.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: g.items.length } as CSSProperties}>
+                {/* --n is the whole list: each card's --i counts across the groups, so a group's own size hid the later groups' cards
+                    (Nicole, Nov 13: the page "doesnt have data and connections or keeping it running") */}
+                <ul className={`svd-cards${cards.length > 6 ? " is-3 is-4" : cards.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: cards.length } as CSSProperties}>
                   {g.items.map((d, k) => <li key={d} style={{ ["--i" as string]: start + k } as CSSProperties}><span>{String(start + k + 1).padStart(2, "0")}</span><div className="svd-t">{nameLine(d, s.cardLinks)}<LineNote text={d} /></div></li>)}
                 </ul>
               </div>
