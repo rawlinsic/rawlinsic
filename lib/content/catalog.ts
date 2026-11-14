@@ -3741,7 +3741,7 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [
    "Standard Operating Procedures being applied successfully",
-   "Two-year technology work plan completed"
+   "Two-year technology work plan implemented"
   ],
   "services": [
    "tech-strategy",
