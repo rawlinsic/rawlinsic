@@ -4301,7 +4301,7 @@ export const CASES: Record<string, CaseData> = {
    "Reviewed peer state best practices for evaluating consultant performance"
   ],
   "res": [
-   "All three manuals finalized in July 2023",
+   "Professional Services Policies and Procedures Manual, Design-Build Procurement Manual, and Negotiations Manual finalized in July 2023",
    "Advertisement request form finalized"
   ],
   "services": [
