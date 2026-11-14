@@ -2989,11 +2989,11 @@ export const CASES: Record<string, CaseData> = {
    "Prepared the curriculum for the department's Management Academy"
   ],
   "res": [
-   "New employee retention rate after 2 years is 96%",
+   "Department-wide organizational structure reconfiguration aligns with critical program and project delivery areas",
    "Department-wide proficiency program established.",
    "Classification, certification, and new salary structure implemented",
    "Graduate Engineer Training rotational program in place",
-   "New employee retention rate after 2 years is 96%",
+   "Department-wide organizational structure reconfiguration aligns with critical program and project delivery areas",
    ""
   ],
   "services": [
