@@ -2346,7 +2346,7 @@ export const AREAS: Record<string, AreaData> = {
    "tech-strategy",
    "smart-mobility"
   ],
-  "lead": "We help organizations get more from the systems they already own. We connect those systems so information is entered once, put owners and definitions behind the data, build the websites, tools, and dashboards a program runs on, and add AI where it fits. A client can start with any one of these. We document what we build and hand it over, and the client owns the result.",
+  "lead": "We help organizations get more from the systems they already own—and build custom solutions from the ground up when existing tools fall short. We connect your systems so information is entered once, put clear owners and definitions behind the data, create the websites, tools, and dashboards a program runs on, and add AI where it fits. A client can start with any one of these. Everything we build is fully documented and handed over, so you own the final result.",
   "hear": [
    "We bought the software, and nobody uses it.",
    "We key the same information into three systems.",
