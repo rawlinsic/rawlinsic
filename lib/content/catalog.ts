@@ -2990,7 +2990,7 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [
    "Utilization tool complete and in use",
-   "Department-wide proficiency program in place.",
+   "Department-wide proficiency program established.",
    "Classification, certification, and salary structure implemented",
    "Construction technician program complete in April 2025",
    "Materials and tests program rolled out, and now run by the department itself",
