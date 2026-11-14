@@ -1450,3 +1450,16 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
   .sn:not(.has-more).is-open > ul a { padding: 11px 14px !important; font-size: 1rem !important; border-radius: 12px; color: #0a1220; }
   .sn:not(.has-more).is-open > ul a[aria-current="true"] { background: #e6f9fc; box-shadow: inset 3px 0 0 #22d3ee; }
 }
+
+/* Nov 13 (Nicole): the Contact page top, light, with the photo in a glowing layered frame (two tilted glass layers behind) */
+.ct-ph { position: relative; aspect-ratio: 5 / 4; margin: 18px 18px 18px 0; }
+.ct-ph img { position: relative; z-index: 2; width: 100%; height: 100%; object-fit: cover; border-radius: 26px; box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.45), 0 0 34px rgba(34, 211, 238, 0.3), 0 30px 70px -34px rgba(10, 18, 32, 0.6); }
+.ct-ph-back, .ct-ph-mid { position: absolute; inset: 0; border-radius: 26px; }
+.ct-ph-back { z-index: 0; transform: translate(26px, 22px) rotate(4deg); background: linear-gradient(160deg, #10233f, #1d3759); box-shadow: 0 0 30px rgba(34, 211, 238, 0.25); }
+.ct-ph-mid { z-index: 1; transform: translate(13px, 11px) rotate(2deg); background: rgba(34, 211, 238, 0.18); border: 1px solid rgba(34, 211, 238, 0.55); backdrop-filter: blur(2px); }
+@media (max-width: 900px) { .ct-ph { margin: 6px 22px 22px 0; } }
+
+/* Nov 13 (Nicole): on project cards only, the area tags are light navy with white words, and "See the project" glows blue */
+.pcx-areas i { background: #34557f !important; color: #fff !important; box-shadow: none !important; }
+.pcx-more { color: #0bb4d3; text-shadow: 0 0 14px rgba(34, 211, 238, 0.55); }
+.pcx-more::after { color: #0bb4d3; }

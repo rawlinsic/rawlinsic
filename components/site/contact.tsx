@@ -5,7 +5,8 @@ import { AREAS, PROBLEMS, serviceById } from "@/lib/content/site";
 import { PAGE_PHOTO } from "@/lib/content/media";
 import { themeStyle } from "@/lib/content/v8";
 import ContactWays from "@/components/site/contact-ways";
-import { Hero, Shell } from "@/components/site/ui";
+import { Shell } from "@/components/site/ui";
+import { EdHero } from "@/components/site/editorial";
 
 export function ContactPageNew() {
   const areaOf = (serviceId: string) => serviceById(serviceId)?.area;
@@ -15,10 +16,11 @@ export function ContactPageNew() {
     services: p.services.map((id) => serviceById(id)).filter(Boolean).map((h) => ({ name: h!.service.name, area: h!.area.name, href: `/services/${h!.area.slug}/${h!.service.slug}`, style: themeStyle(h!.area.id) })),
   }));
   return (
-    <Shell scene="hero" photo={PAGE_PHOTO.contact}>
-      <Hero crumbs={[["/contact", "Contact"]]} kicker="Contact Rawlins" title="Tell us what you'd like help with."
-        /* TODO(Nicole): lead line to come from Nicole (the "connect you with the person who has done the work" line was removed, Nov 9) */
-        lead={null} />
+    <Shell>
+      {/* Nov 13 (Nicole: the top "needs a redesign ... not the whole page navy ... pick something cool"): a light top with the
+          title on the left and the Nevada photo in a glowing, layered frame on the right; the navy section below stays */}
+      <EdHero crumbs={[["/contact", "Contact"]]} kicker="Contact Rawlins" title={<>Tell us what you&apos;d like <em>help with.</em></>}
+        aside={<div className="ct-ph"><span className="ct-ph-back" aria-hidden="true" /><span className="ct-ph-mid" aria-hidden="true" />{/* eslint-disable-next-line @next/next/no-img-element */}<img src={PAGE_PHOTO.contact} alt="" /></div>} />
       <ContactWays fixes={fixes} topics={[...AREAS.map((a) => a.name), "Not sure"]}
         details={
           <>
