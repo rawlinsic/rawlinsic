@@ -6,7 +6,7 @@ import { casePhoto, themeStyle } from "@/lib/content/v8";
 import ProjectCard from "@/components/v8/project-card";
 import Rail from "@/components/v8/rail";
 import { CASE_EXTRA } from "@/lib/content/case-extra";
-import { AREAS, CASES, VISIBLE_INDUSTRIES, areaHref, caseHref, caseTag, industryHref, serviceById, serviceHref, slugify, type CaseIndex, CASE_STATUS, isListed } from "@/lib/content/site";
+import { AREAS, CASES, VISIBLE_INDUSTRIES, areaHref, caseAreaIds, caseHref, caseTag, industryHref, serviceById, serviceHref, slugify, type CaseIndex, CASE_STATUS, isListed } from "@/lib/content/site";
 import { CASES as CASE_DATA, SERVICES as SVC_DATA, SUBSECTORS } from "@/lib/content/catalog";
 import CaseFilter, { type CaseRow } from "@/components/site/case-filter";
 import { Btn, Chips, Dev, Hero, Sec, Shell, Steps, Talk, CaseNote, LineNote } from "@/components/site/ui";
@@ -20,7 +20,7 @@ const sceneFor = (c: CaseIndex) => {
 export function CaseIndexPage() {
   const rows: CaseRow[] = CASES.map((c) => ({
     id: c.id, href: caseHref(c), photo: casePhoto(c), title: c.title, who: c.who, status: c.status, tag: caseTag(c), note: process.env.VERCEL_ENV === "production" ? undefined : CASE_STATUS[c.id],
-    areas: Array.from(new Set(c.services.map(areaOfService).filter(Boolean) as string[])).map((id) => AREAS.find((a) => a.id === id)!.slug),
+    areas: caseAreaIds(c).map((id) => AREAS.find((a) => a.id === id)!.slug),
     services: c.services.map((id) => serviceById(id)?.service.slug).filter(Boolean) as string[],
     /* a project also counts under its sector's headline: Transportation Sector under Public Sector, Contractors under Private Sector (Nov 12) */
     /* Nov 13: a project also counts under each Who We Work With page that lists it (the four new pages) */

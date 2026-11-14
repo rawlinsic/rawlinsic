@@ -4,12 +4,12 @@
    challenge is on the project's own page, not the card. Used for Featured projects
    on home, area, service, and industry pages. */
 import type { CSSProperties } from "react";
-import { AREAS, caseHref, caseTag, serviceById, type CaseIndex } from "@/lib/content/site";
+import { AREAS, caseAreaIds, caseHref, caseTag, type CaseIndex } from "@/lib/content/site";
 import { casePhoto, themeStyle } from "@/lib/content/v8";
 import { CaseNote } from "@/components/site/ui";
 
 export default function ProjectCard({ c, style }: { c: CaseIndex; style?: CSSProperties }) {
-  const areas = Array.from(new Set(c.services.map((s) => serviceById(s)?.area.id).filter(Boolean) as string[]));
+  const areas = caseAreaIds(c);
   const live = c.status === "Ongoing";
   return (
     <li className="pc pcx" style={style} data-reveal>

@@ -74,6 +74,12 @@ const CASE_PHOTO: Record<string, string> = {
   "cs-hi": P("project-hi.webp"), // hard hat on construction plan sheets; Pexels, Thirdman: pexels.com/photo/5583255
   "cs-pv-pmo": P("project-pv-pmo.webp"), // engineer and manager reviewing project charts; Pexels, ANTONI SHKRABA production: pexels.com/photo/8278915
   "cs-local-am": P("project-local-am.webp"), // local road through fall color, Michigan (Boyne Falls); Pexels, Aaron Burden: pexels.com/photo/9559194
+  /* Nov 13: these four took their first service's photo. The six service photos Nicole picked that evening are for the
+     service pages, so these keep the photos they showed before */
+  "cs-cam": P("transportation-aerial.webp"),
+  "cs-reorg": P("auto-human.webp"),
+  "cs-measures": P("strategy-bg.webp"),
+  "cs-p3-division": P("aam-team-meeting.webp"),
   "cs-transform": P("project-transform.webp"), // divided highway through farmland at sunrise, no signs; Pexels, Tom Fisk: pexels.com/photo/9708012
   "cs-nv-fleet": P("project-nv-fleet.webp"), // snow clearing on a mountain highway, no markings; Unsplash, Tom Shamberger: unsplash.com/photos/7CffibpcnuI
   // the live site gave these three the same "Other states" photo as cs-maint-model; Nicole asked to split them (Nov 11)

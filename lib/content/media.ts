@@ -60,17 +60,23 @@ export const NAV_AREA_PHOTO_POS: Record<string, string> = { strategy: "50% 50%" 
 
 /* Service pages (shot list 6B) */
 export const SERVICE_PHOTO: Record<string, string> = {
-  "strategic-planning": P("strategy-bg.webp"),
-  "org-design": P("auto-human.webp"),
+  /* Nov 13 (Nicole): her six picks for these pages, matched to the order she gave ("2nd pick for strategic planning and perfm
+     mgmt 3rd one for org design 4th for project delivery 5th for preconstruction. 6th for construction. 7th for alternative
+     devliery"). Were strategy-bg.webp, auto-human.webp, transportation-aerial.webp (Construction) and aam-team-meeting.webp
+     (Alternative Delivery); Project Delivery and Preconstruction had none of their own. */
+  "strategic-planning": P("svc-strategic-planning.jpg"), // a full room at a training session
+  "org-design": P("svc-org-design.webp"), // a man in front of a process chart drawn on a wall
+  "proj-delivery": P("svc-project-delivery.webp"), // project management sticky notes on glass
+  preconstruction: P("svc-preconstruction.webp"), // charts and sticky notes on a desk
   "change-mgmt": P("change-management-workshop.webp"), // Nicole's photo, Nov 11: a culture workshop led by our team
   workforce: P("operations-bg.webp"), // the live site's Operations photo, a group talking in a circle (Nicole, Nov 13)
   "exec-advisory": P("exec-advisory-panel.jpg"), // a panel discussion on stage, Nicole's photo (Nov 13)
   "program-delivery": P("transportation-aerial.webp"),
   "owners-rep": P("transportation-aerial.webp"),
-  "alt-delivery": P("aam-team-meeting.webp"),
+  "alt-delivery": P("svc-alt-delivery.webp"), // a team over plans, from above
   procurement: P("auto-optimize.webp"),
   row: P("nv.webp"),
-  construction: P("transportation-aerial.webp"),
+  construction: P("svc-construction.webp"), // a crew in hard hats reading plans on site
   lpa: P("michigan.webp"),
   grants: P("tnbig.webp"),
   /* Nov 12: pages split off or added to Program & Project Delivery reuse the photo of the page their text came from */

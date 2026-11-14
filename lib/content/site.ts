@@ -601,6 +601,29 @@ export const PAGE_STATUS: Record<string, string> = {
 };
 
 export const caseHref = (c: CaseIndex) => `/insights/case-studies/${c.slug}`;
+
+/* A project's categories (the areas shown on its card): the areas of the services it is tagged to. Nov 13 (Nicole): "you
+   need to make sure every project has a category." Two projects are tagged to no service on purpose (projects file v4 takes
+   the overview off the service pages, and the design-build pursuit has no service page), so theirs come from here. */
+const CASE_AREAS_FROM: Record<string, { cases?: string[]; areas?: string[] }> = {
+  // the overview: the areas of the eight projects it links to, the most used first
+  "cs-transform": { cases: ["cs-pdn", "cs-pd-manual", "cs-consult-flow", "cs-lpa-manual", "cs-mqa-fleet", "cs-cam", "cs-reorg", "cs-measures"] },
+  // design-build is Alternative Delivery, a Program & Project Delivery service
+  "cs-db-pursuit": { areas: ["delivery"] },
+};
+const ownAreas = (c: CaseIndex) => Array.from(new Set(c.services.map((s) => serviceById(s)?.area.id).filter(Boolean) as string[]));
+export const caseAreaIds = (c: CaseIndex): string[] => {
+  const own = ownAreas(c);
+  if (own.length) return own;
+  const from = CASE_AREAS_FROM[c.id];
+  if (from?.areas) return from.areas;
+  if (from?.cases) {
+    const n = new Map<string, number>();
+    for (const id of from.cases) { const x = CASES.find((k) => k.id === id); if (x) for (const a of ownAreas(x)) n.set(a, (n.get(a) ?? 0) + 1); }
+    return Array.from(n.entries()).sort((p, q) => q[1] - p[1]).map(([a]) => a);
+  }
+  return [];
+};
 export const caseById = (id: string) => CASES.find((c) => c.id === id);
 /* Rawlins' own work (not "Before Rawlins") */
 export const isOurs = (c: CaseIndex) => c.status !== "Before Rawlins";
