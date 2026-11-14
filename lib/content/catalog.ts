@@ -4288,7 +4288,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-tn-psm": {
   "id": "cs-tn-psm",
-  "ch": "The department wanted its process for buying consultant services written down, from advertisement through negotiation and close-out.",
+  "ch": "The department wanted its process for procuring consultant services improved and documented, from advertisement through negotiation and close-out.",
   "when": "2022 to 2024",
   "did": [
    "Assessed how the department buys consultant services",
