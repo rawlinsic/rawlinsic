@@ -12,7 +12,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
   "cs-proficiency": {
     when: "2023 to 2026", // source: drafts:13
     did: [
-      "Wrote core and elective proficiencies, task sheets, and demonstration scoring sheets for each program", // source: drafts:21
+      "Wrote core and elective proficiencies, task sheets, and demonstration scoring sheets for each technical discipline", // source: drafts:21
       "Analyzed appraiser certification requirements and updated the functional organization chart", // source: drafts:23
       "Built a technical training request process: process map, instructions, and a recorded walkthrough", // source: drafts:24
       "Visited all four of the department's regions to support the worker proficiency rollout", // source: drafts:26

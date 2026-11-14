@@ -2980,12 +2980,12 @@ export const CASES: Record<string, CaseData> = {
   "when": "2023 to 2025",
   "did": [
    "Built proficiency programs with agency experts in more than two dozen disciplines, from right of way and construction to bridge inspection and traffic design",
-   "Researched appraiser classifications nationwide and drafted a salary structure",
+   "Researched pay rates in the region and developed a new salary structure",
    "Designed a two-week advanced leadership program of about 40 sessions with the agency's human resources team, and delivered it twice in 2024",
    "Built the transportation worker proficiency program for maintenance crews in three levels, with a manual, modules, task sheets, and a rollout academy",
-   "Supported its statewide rollout, and built a staffing utilization method",
+   "Developed a statewide rollout and communication change management strategy, to implement the EPIC changes",
    "Rolled out the construction technician program through academy workshops in the regions",
-   "Wrote rotation curricula for graduate engineers in about a dozen disciplines",
+   "Developed curricula for a graduate engineers training program in about a dozen disciplines",
    "Wrote the curriculum for the department's Management Academy"
   ],
   "res": [
@@ -3217,7 +3217,7 @@ export const CASES: Record<string, CaseData> = {
    "Supported emergency drone response training and analyzed the results",
    "Coordinated live streaming into the emergency operations center",
    "Drafted waiver content and an updated concept of operations",
-   "Revised statewide drone procedures and drafted a program handbook",
+   "Revised statewide drone procedures and developed a new program handbook",
    "Briefed senior leadership on a centralized governance model",
    "Helped the drone response team check debris removal quantities with drone volume calculations",
    "Delivered the 2026 response team training: agenda, three flight areas, lessons learned, and a participant survey",
