@@ -1624,7 +1624,9 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 }
 /* LinkedIn in the header, right after the search button (Nicole, Nov 13) */
 .hx-icon.hx-in { margin-left: 0; color: var(--navy); } /* the Rawlins navy, like the menu words (Nicole, Nov 14) */
-.hx-icon.hx-in:hover { color: var(--navy); background: rgba(16, 24, 40, 0.06); }
+/* hover: a glowing blue circle behind the letters, like the Get In Touch button (Nicole, Nov 14) */
+.hx-icon.hx-in { transition: background 0.2s, box-shadow 0.2s; }
+.hx-icon.hx-in:hover, .hx-icon.hx-in:focus-visible { color: #0a1220; background: #22d3ee; box-shadow: 0 0 0 2px rgba(165, 243, 252, 0.9), 0 0 18px rgba(34, 211, 238, 0.65); }
 
 /* ── Inside a delivery website, redesigned Nov 13 (Nicole: "needs to be better") ─────────── */
 .dw2 { padding: clamp(56px, 7vw, 96px) 0; background: radial-gradient(50% 60% at 90% 10%, rgba(34, 211, 238, 0.12), transparent 70%), #f3f7fc; }
