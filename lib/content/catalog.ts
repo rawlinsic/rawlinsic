@@ -4145,7 +4145,7 @@ export const CASES: Record<string, CaseData> = {
    "Analyzed seven states' manuals and interviewed five peer states",
    "Proposed the program structure, and set up the manual's charter, schedule, chapter authors, and steering committee",
    "Drafted an eleven-chapter manual, from federal-aid basics, environmental, and right of way through procurement, construction administration, financial management, closeout, and agencies that let their own contracts",
-   "Drafted a certification process and an oversight policy",
+   "Develop LPA certification processes for project development and construction project letting.",
    "Developed a five-module core training course and Responsible Charge training"
   ],
   "res": [

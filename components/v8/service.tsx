@@ -52,7 +52,7 @@ const READING: Record<string, { t: string; photo: string }[]> = { "drone-aam": [
   { t: "Lessons learned while planning for advanced air mobility", photo: "/images/pages/aam-phase3.webp" },
   { t: "The Evolving Landscape of Advanced Air Mobility", photo: "/images/pages/research-paul-wheeler-nashville-symposium-2025.webp" },
 ] };
-const names = (p: string[]) => (p.length > 1 ? `${p.slice(0, -1).join(", ")} and ${p[p.length - 1]}` : p[0] ?? "");
+const names = (p: string[]) => (p.length > 1 ? `${p.slice(0, -1).join(", ")} including ${p[p.length - 1]}` : p[0] ?? "");
 const firstSentence = (s: string) => (s.match(/^.*?[.!?](\s|$)/)?.[0] ?? s).trim();
 const bare = (s: string) => `${s.replace(/[.”"]+$/, "")}.`; // the quote marks are drawn on the card
 /* one card per quote: some entries hold two quotes in one string ("…” “…") */
