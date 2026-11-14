@@ -4081,7 +4081,7 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department wanted to overhaul its project prioritization and selection process to ensure the right projects are selected for all funding categories and delivered within the timeframe established in its multi-year work program.",
   "when": "Since 2025",
   "did": [
-   "Interviewed program managers and wrote more than thirty State of Practice reports on the department's programs",
+   "Interviewed program managers and documented more than thirty State of Practice reports on the department's programs project selection processes",
    "Reviewed twelve other states' prioritization processes",
    "Wrote white papers on the Statewide Transportation Improvement Program and how it works with the asset management plan and the state's priority program",
    "Worked through project selection templates with 14 programs, and built fillable score sheets",
