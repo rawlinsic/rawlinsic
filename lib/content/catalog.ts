@@ -4139,7 +4139,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-lpa-manual": {
   "id": "cs-lpa-manual",
-  "ch": "The department wanted one manual for the local agencies that deliver federal-aid projects, with clear roles for headquarters, districts, and the agencies themselves.",
+  "ch": "The department wanted improved processes for local public agency program and project delivery of federal-aid projects, with clear roles for both the department and the local agencies.",
   "when": "Since 2025",
   "did": [
    "Analyzed seven states' manuals and interviewed five peer states",
