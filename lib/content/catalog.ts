@@ -3243,7 +3243,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-local-am": {
   "id": "cs-local-am",
-  "ch": "The state wanted local agencies to use asset management to plan their programs and their funding. Each community started from a different place.",
+  "ch": "The state wanted local agencies to use asset management to plan their work and program their funding. Each community started from a different place.",
   "when": "2024 to 2025",
   "did": [
    "Helped each agency name an asset management steering committee",
