@@ -3254,7 +3254,7 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [
    "Workshops held and action plans built with seven local agencies: two county road commissions and five cities",
-   "Summary of the first round presented to the office and the state infrastructure council in December 2024"
+   "Summary of the first round presented to the department and the state infrastructure council in December 2024"
   ],
   "services": [
    "asset-mgmt",
