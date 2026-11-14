@@ -2994,7 +2994,7 @@ export const CASES: Record<string, CaseData> = {
    "Classification, certification, and salary structure implemented",
    "Graduate Engineer Training rotational program in place",
    "Department-wide organizational structure reconfiguration aligns with critical program and project delivery areas",
-   "Proficiency programs for engineering specialists, project managers, right of way, maintenance workers, construction technicians, geodetic technicians, materials and testing technicians, bridge inspection technicians, and environmental specialists"
+   ""
   ],
   "services": [
    "workforce",
