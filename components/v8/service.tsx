@@ -130,7 +130,7 @@ export default function ServiceV8({ id }: { id: string }) {
     ...(steps && FEATURE_AND_STEPS.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
     ...(steps ? [["how", steps.title] as [string, string]] : HAS_FEATURE.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
     ...(FEATURE_FROM[id] ? [["feature", "What this covers"] as [string, string]] : []),
-    ...(connect.length ? [["connect", "Services that connect to this one"] as [string, string]] : []),
+    ...(connect.length ? [["connect", "Related services"] as [string, string]] : []),
     ["walk", "What you walk away with"],
     ...(hasWork ? [["work", workTitle] as [string, string]] : []),
     ...(xpOwn ? [["experience", "The experience behind it"] as [string, string]] : []),
@@ -233,7 +233,7 @@ export default function ServiceV8({ id }: { id: string }) {
       {connect.length > 0 && (
         <section id="connect" className="sv-sec svx-conn">
           <div className="v8-wrap">
-            <h2 className="v8-h2">Services that connect to this one</h2>
+            <h2 className="v8-h2">Related services</h2>
             <ul className={`svx-cards is-${connect.length}`}>
               {connect.map(({ id: cid, line, hit: h }) => (
                 <li key={cid} data-reveal>
