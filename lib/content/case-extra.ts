@@ -18,7 +18,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
       "Visited all four of the department's regions to support the worker proficiency rollout", // source: drafts:26
     ],
     res: [
-      "Proficiency alignment process for engineering submitted to the department's human resources team", // source: drafts:32
+      "New employee retention rate after 2 years is 96%", // source: drafts:32
       "Organizational financial analysis for the restructuring submitted", // source: drafts:32
     ],
   },
