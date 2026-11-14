@@ -1623,8 +1623,8 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
   .tt-svcs a { font-size: 0.96rem; padding: 7px 13px; }
 }
 /* LinkedIn in the header, right after the search button (Nicole, Nov 13) */
-.hx-icon.hx-in { margin-left: 0; color: #0a66c2; }
-.hx-icon.hx-in:hover { color: #0a1220; }
+.hx-icon.hx-in { margin-left: 0; color: var(--navy); } /* the Rawlins navy, like the menu words (Nicole, Nov 14) */
+.hx-icon.hx-in:hover { color: var(--navy); background: rgba(16, 24, 40, 0.06); }
 
 /* ── Inside a delivery website, redesigned Nov 13 (Nicole: "needs to be better") ─────────── */
 .dw2 { padding: clamp(56px, 7vw, 96px) 0; background: radial-gradient(50% 60% at 90% 10%, rgba(34, 211, 238, 0.12), transparent 70%), #f3f7fc; }
