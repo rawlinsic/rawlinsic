@@ -3,57 +3,55 @@
    before Rawlins. Starts from the URL (?area= ?industry= ?state=
    ?status=ongoing ?status=before-rawlins ?service=). */
 import { useEffect, useMemo, useState } from "react";
-import type React from "react";
 
 export type CaseRow = { id: string; href: string; photo: string; title: string; who: string; status: string; tag: string; note?: string; areas: string[]; services: string[]; industries: string[]; states: string[] };
 type Opt = { value: string; label: string; color?: string };
 
 export default function CaseFilter({ rows, areas, industries, states, services }: { rows: CaseRow[]; areas: Opt[]; industries: Opt[]; states: Opt[]; services: Opt[] }) {
-  const [f, setF] = useState<{ k: string; v: string }>({ k: "all", v: "" });
+  /* Nov 13 (Nicole: "can we just have nice looking drop downs? this takes up too much space"): three dropdowns that work
+     together (status, service area, industry), the count beside them. ?area= ?industry= ?status= ?service= ?state= links
+     still filter. */
+  const [f, setF] = useState<{ status: string; area: string; industry: string; service: string; state: string }>({ status: "", area: "", industry: "", service: "", state: "" });
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
-    for (const k of ["area", "industry", "state", "status", "service"]) { const v = q.get(k); if (v) { setF({ k, v }); break; } }
+    setF({ status: q.get("status") ?? "", area: q.get("area") ?? "", industry: q.get("industry") ?? "", service: q.get("service") ?? "", state: q.get("state") ?? "" });
   }, []);
-  const set = (k: string, v: string) => {
-    setF({ k, v });
+  const set = (k: keyof typeof f, v: string) => {
+    const next = { ...f, [k]: v };
+    setF(next);
     const url = new URL(window.location.href);
-    url.search = k === "all" ? "" : `?${k}=${v}`;
+    const q = new URLSearchParams();
+    (Object.keys(next) as (keyof typeof f)[]).forEach((key) => { if (next[key]) q.set(key, next[key]); });
+    url.search = q.toString() ? `?${q}` : "";
     window.history.replaceState(null, "", url);
   };
-  const list = useMemo(() => rows.filter((r) => {
-    if (f.k === "area") return r.areas.includes(f.v);
-    if (f.k === "industry") return r.industries.includes(f.v);
-    if (f.k === "state") return r.states.includes(f.v);
-    if (f.k === "status") return f.v === "before-rawlins" ? r.status === "Before Rawlins" : r.status === "Ongoing";
-    if (f.k === "service") return r.services.includes(f.v);
-    return true;
-  }), [rows, f]);
-  const btn = (k: string, v: string, label: string) => (
-    <button key={k + v} type="button" aria-pressed={f.k === k && f.v === v} onClick={() => set(k, v)}>{label}</button>
+  const list = useMemo(() => rows.filter((r) =>
+    (!f.status || (f.status === "before-rawlins" ? r.status === "Before Rawlins" : r.status === "Ongoing"))
+    && (!f.area || r.areas.includes(f.area))
+    && (!f.industry || r.industries.includes(f.industry))
+    && (!f.service || r.services.includes(f.service))
+    && (!f.state || r.states.includes(f.state))), [rows, f]);
+  const svcLabel = f.service ? services.find((s) => s.value === f.service)?.label : null;
+  const stLabel = f.state ? states.find((s) => s.value === f.state)?.label : null;
+  const sel = (k: "status" | "area" | "industry", label: string, opts: Opt[]) => (
+    <label className={`pf3-sel${f[k] ? " is-on" : ""}`}>
+      <span className="sr-only">{label}</span>
+      <select value={f[k]} onChange={(e) => set(k, e.target.value)}>
+        <option value="">{label}</option>
+        {opts.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+      </select>
+    </label>
   );
-  const svcLabel = f.k === "service" ? services.find((s) => s.value === f.v)?.label : null;
   return (
     <div>
-      {/* redesigned Nov 13 (Nicole: "needs a better design"): one panel; the status switch with the count beside it, then a
-          row for each way to browse. The words are unchanged. */}
-      <div className="pg-filter pf2" role="group" aria-label="Filter projects">
-        <div className="pf2-top">
-          <div className="pf2-seg">
-            {btn("all", "", "All")}
-            {btn("status", "ongoing", "In the works")}
-            {btn("status", "before-rawlins", "Before Rawlins")}
-          </div>
-          <p className="pg-count pf2-count" aria-live="polite">{svcLabel ? `${svcLabel}: ` : ""}<b>{list.length}</b> {list.length === 1 ? "project" : "projects"}</p>
-        </div>
-        <div className="pf2-row">
-          <p className="pg-filter-label">By service area</p>
-          <div className="pf2-chips">{areas.map((a) => <span key={a.value} className="pf2-area" style={a.color ? ({ ["--dot" as string]: a.color } as React.CSSProperties) : undefined}>{btn("area", a.value, a.label)}</span>)}</div>
-        </div>
-        <div className="pf2-row">
-          <p className="pg-filter-label">By industry</p>
-          <div className="pf2-chips">{industries.map((a) => btn("industry", a.value, a.label))}</div>
-        </div>
-        {/* By state is off (Nicole, Nov 10); ?state= links still filter */}
+      <div className="pf3" role="group" aria-label="Filter projects">
+        {sel("status", "All", [{ value: "ongoing", label: "In the works" }, { value: "before-rawlins", label: "Before Rawlins" }])}
+        {sel("area", "By service area", areas)}
+        {sel("industry", "By industry", industries)}
+        {(svcLabel || stLabel) && (
+          <button type="button" className="pf3-clear" onClick={() => { set("service", ""); setF((x) => ({ ...x, service: "", state: "" })); }}>{svcLabel ?? stLabel} ×</button>
+        )}
+        <p className="pg-count pf3-count" aria-live="polite"><b>{list.length}</b> {list.length === 1 ? "project" : "projects"}</p>
       </div>
       <ul className="pg-cases">
         {list.map((c) => (

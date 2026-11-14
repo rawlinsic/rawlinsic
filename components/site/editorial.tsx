@@ -5,11 +5,13 @@ import type { CSSProperties, ReactNode } from "react";
 import { Crumbs, type Crumb } from "@/components/site/ui";
 
 /* A page's opening: crumbs, kicker, a big headline, the lead, buttons; on the right a photo, faces, or anything. */
-export function EdHero({ crumbs, kicker, title, lead, actions, aside, dark, children }: {
-  crumbs?: Crumb[]; kicker?: string; title: ReactNode; lead?: ReactNode; actions?: ReactNode; aside?: ReactNode; dark?: boolean; children?: ReactNode;
+export function EdHero({ crumbs, kicker, title, lead, actions, aside, dark, reverse, children }: {
+  crumbs?: Crumb[]; kicker?: string; title: ReactNode; lead?: ReactNode; actions?: ReactNode; aside?: ReactNode; dark?: boolean;
+  /* reverse: the aside on the left, the words on the right (All Projects, Nicole, Nov 13) */
+  reverse?: boolean; children?: ReactNode;
 }) {
   return (
-    <header className={`ed-hero${dark ? " is-dark" : ""}${aside ? " has-aside" : ""}`} data-nofill>
+    <header className={`ed-hero${dark ? " is-dark" : ""}${aside ? " has-aside" : ""}${reverse ? " is-rev" : ""}`} data-nofill>
       <div className="ed-wrap ed-hero-in">
         <div className="ed-hero-copy">
           {crumbs && <Crumbs items={crumbs} />}

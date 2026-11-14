@@ -381,7 +381,6 @@ function NewsList({ items }: { items: typeof NEWS }) {
 }
 
 /* Nov 13 (Nicole): the news, the awards, and the research, each with pictures and clearly told apart. */
-const extLink = (h?: string) => (h && /^http/.test(h) ? { target: "_blank", rel: "noopener noreferrer" } : {});
 /* people on our team named in a line of text, with their photos */
 const peopleIn = (t: string) => allPeople().filter((p) => p.photo && t.includes(p.name));
 const facesOf = (names: string[]) => names.map((n) => allPeople().find((x) => x.name.startsWith(n))).filter((p): p is Person => !!p && !!p.photo);
@@ -441,17 +440,9 @@ export function NewsPage() {
      once, under Awards and recognition */
   const items = NEWS.filter((n) => !n.placeholder || !PROD);
   const isRecog = (n: (typeof NEWS)[number]) => n.tag === "Award" || n.tag === "Recognition";
-  const real = items.filter((n) => !n.placeholder && n.tag !== "Project" && !isRecog(n));
-  const ph = items.filter((n) => n.placeholder && n.tag !== "Project" && n.tag !== "New team member");
   /* a recognition post that isn't already one of the awards below */
   const recog = items.filter((n) => !n.placeholder && isRecog(n) && !AWARDS.some((a) => a.href === n.href || n.title.includes(a.title)));
   const { upcoming, past } = eventsByTime(EVENTS.filter((e) => !e.placeholder || !PROD));
-  /* each post's picture: our article's own picture (the one its page shows), the post's photo, or the person it's about */
-  const tiles = real.map((n) => {
-    const art = THOUGHT_LEADERSHIP.find((a) => n.href?.endsWith(a.slug));
-    const img = art ? art.heroImage || art.image : n.photo;
-    return { n, img, people: img ? [] : peopleIn(`${n.title} ${n.text ?? ""}`) };
-  });
   return (
     <Shell>
       <EdHero crumbs={[["/insights", "Insights"], ["/insights/news", "News & Recognition"]]} kicker="Insights" title={<>News &amp; <em>Recognition</em></>}
@@ -459,7 +450,6 @@ export function NewsPage() {
         <nav className="ed-wrap nw3-jump" aria-label="On this page">
           {upcoming.length > 0 && <a href="#next"><b>{upcoming.length}</b>Coming up</a>}
           {past.length > 0 && <a href="#been"><b>{past.length}</b>Past events</a>}
-          <a href="#news"><b>{real.length}</b>News</a>
           <a href="#recognition"><b>{AWARDS.length + recog.length}</b>Awards</a>
           <a href="#research"><b>{PUBLICATIONS.length}</b>Publications</a>
         </nav>
@@ -480,35 +470,8 @@ export function NewsPage() {
           </div>
         </section>
       )}
-      <section id="news" className="ed-sec is-panel nw3-sec" data-nofill>
-        <div className="ed-wrap">
-          <div className="ed-sec-head"><div><p className="ed-k">News</p><h2 className="ed-h2">The latest from our team</h2></div></div>
-          <ul className={`nw4-bento is-${Math.min(tiles.length, 5)}`}>
-            {tiles.map(({ n, img, people }, k) => {
-              const inner = (
-                <>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  {img && <img className="nw4-ph" src={img} alt="" loading="lazy" />}
-                  {!img && <Faces people={people} big />}
-                  <span className="nw4-tile-body">
-                    <span className="nw4-chip">{n.tag}{n.date ? ` · ${n.date}` : ""}</span>
-                    <b>{n.title}</b>
-                    {n.text && <span className="nw4-text">{n.text}</span>}
-                    {n.href && <span className="ed-more">{k === 0 ? "Read it" : /linkedin/.test(n.href) ? "Read it on LinkedIn" : "Read more"}</span>}
-                  </span>
-                </>
-              );
-              return (
-                <li key={n.title} className={`nw4-tile ${img ? "is-photo" : "is-person"}${k === 0 ? " is-big" : ""}`} data-reveal>
-                  {/* no link for a post without one (content pass v7, 12.2) */}
-                  {n.href ? <a href={n.href} {...extLink(n.href)}>{inner}</a> : <div>{inner}</div>}
-                </li>
-              );
-            })}
-          </ul>
-          {ph.length > 0 && <ul className="nw2-list nw4-ph-list">{ph.map((n) => <li key={n.title} className="is-dev"><div><span className="nw2-tag">{n.tag}</span><b>{n.title}</b><Dev>Placeholder: {n.placeholder}</Dev></div></li>)}</ul>}
-        </div>
-      </section>
+      {/* "The latest from our team" is off (Nicole, Nov 13: "i dont like the latest from our people let's just get rid of
+          that section"). Its posts: April's article is on Insights and Thought Leadership; the others are in the records. */}
       <section id="recognition" className="ed-sec nw3-sec" data-nofill>
         <div className="ed-wrap">
           <div className="ed-sec-head"><div><p className="ed-k">Recognition</p><h2 className="ed-h2">Awards and recognition</h2></div></div>

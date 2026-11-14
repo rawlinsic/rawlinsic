@@ -6,7 +6,6 @@
    date and then list that again"; "the other where we've been need images too"), the cards come up as you scroll like
    the other sections, and on News & Recognition the past events show three at a time in a row with arrows. */
 import type { EventItem } from "@/lib/content/news";
-import { TEAM_MEMBERS } from "@/lib/team-data";
 import { Pin } from "@/components/site/people";
 import Rail from "@/components/v8/rail";
 
@@ -31,21 +30,13 @@ function Sessions({ e }: { e: EventItem }) {
 }
 
 /* The card's picture: the event's own photo; for an event whose photo is its header banner (words in the picture), the
-   tall version made for cards; then `card` (a picture for this card only); with no photo on file, the person who was
-   there for us (their team photo); the date only as a last resort. */
-const faceOf = (name?: string) => (name ? TEAM_MEMBERS.find((m) => m.name === name)?.photo : undefined);
+   tall version made for cards; then `card` (a picture for this card only); the date only as a last resort. No faces
+   (Nicole, Nov 13): every past event now has a picture of the event. */
 function EventPic({ e }: { e: EventItem }) {
   const src = e.photo && !e.banner ? e.photo : e.banner ? e.tall ?? e.photo : e.card;
   /* eslint-disable-next-line @next/next/no-img-element */
   /* the tall card version has the event's banner a little above its middle */
   if (src) return <img className="evx-ph" src={src} alt="" loading="lazy" style={e.banner ? { objectPosition: "50% 30%" } : e.pos ? { objectPosition: e.pos } : undefined} />;
-  const face = faceOf(e.who);
-  if (face) return (
-    <span className="evx-ph evx-face" aria-hidden="true">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={face} alt="" loading="lazy" />
-    </span>
-  );
   return <span className="evx-ph evx-noph" aria-hidden="true"><DateBlock when={e.when} /></span>;
 }
 
@@ -86,7 +77,7 @@ function PastCard({ e, reveal }: { e: EventItem; reveal?: boolean }) {
   );
 }
 
-/* rail: three at a time in a row with arrows above it (News & Recognition, Nicole, Nov 13) */
+/* rail: four at a time in a row with arrows above it (News & Recognition, Nicole, Nov 13: "4 ... not three") */
 export function PastEvents({ events, rail = false }: { events: EventItem[]; rail?: boolean }) {
   if (rail) return <div className="evx evx-past evx-rail"><Rail label="Where we've been">{events.map((e) => <PastCard key={e.title} e={e} />)}</Rail></div>;
   return <ul className="evx evx-past">{events.map((e) => <PastCard key={e.title} e={e} reveal />)}</ul>;

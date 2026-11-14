@@ -134,7 +134,8 @@ function PanelHero({ photo, crumbs, tag, title, lead, actions, label, subs }: {
   return (
     <section className="sv-hero svh arh ipg-hero" data-scrub="page">
       <Bg photo={photo} />
-      <div className="v8-wrap arh-top">
+      {/* the title at the top left, not the bottom (Transportation Sector, the only page with this top; Nicole, Nov 13) */}
+      <div className="v8-wrap arh-top is-top-left">
         <div>
           <Crumbs items={crumbs} />
           <p className="sv-area">{tag}</p>

@@ -2,7 +2,7 @@
    and detail pages. The old state pages from the current site now redirect
    (next.config.js), so they no longer have their own pages here. */
 import { PAGE_PHOTO } from "@/lib/content/media";
-import { THEME, casePhoto, themeStyle } from "@/lib/content/v8";
+import { FEATURED_CASES, THEME, casePhoto, themeStyle } from "@/lib/content/v8";
 import ProjectCard from "@/components/v8/project-card";
 import { EdBtn, EdHero } from "@/components/site/editorial";
 import Rail from "@/components/v8/rail";
@@ -18,6 +18,10 @@ const sceneFor = (c: CaseIndex) => {
   return first?.service.scene ?? first?.area.scene ?? "interchange";
 };
 
+/* the three pictures at the top: the first three finished projects on the home page's featured list (the same three the
+   Our Work menu shows) */
+const TOP_TRIO = FEATURED_CASES.map((id) => CASES.find((c) => c.id === id)).filter((c): c is CaseIndex => !!c && c.status === "Completed").slice(0, 3);
+
 export function CaseIndexPage() {
   const rows: CaseRow[] = CASES.map((c) => ({
     id: c.id, href: caseHref(c), photo: casePhoto(c), title: c.title, who: c.who, status: c.status, tag: caseTag(c), note: process.env.VERCEL_ENV === "production" ? undefined : CASE_STATUS[c.id],
@@ -31,11 +35,24 @@ export function CaseIndexPage() {
   const states = Array.from(new Set(CASES.flatMap((c) => c.states))).sort();
   return (
     <Shell>
-      {/* Nov 13 (Nicole): the photo top is off; styled like the Who we are top. Nothing on the right yet (her call) */}
-      <EdHero crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Projects"]]} kicker="Our work" title="Projects"
+      {/* Nov 13 (Nicole): the photo top is off; styled like the Research top, reversed: three of our projects' pictures on the
+          left, each opening its project; the words on the right with the title in the glowing blue */}
+      <EdHero reverse crumbs={[["/insights", "Insights"], ["/insights/case-studies", "Projects"]]} kicker="Our work" title={<em>Projects</em>}
         lead={<p>Our projects, by service and industry. Work underway is marked “In the works,” and our team’s earlier work is marked “Before Rawlins.”</p>}
-        actions={<EdBtn href="/contact">Get in touch</EdBtn>} />
-      <Sec title="Browse the work">
+        actions={<EdBtn href="/contact">Get in touch</EdBtn>}
+        aside={
+          <div className="pjx-trio">
+            {TOP_TRIO.map((c, k) => (
+              <a key={c.id} className={`pjx-ph is-${k + 1}`} href={caseHref(c)} aria-label={c.title}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={casePhoto(c)} alt="" />
+                <span>{c.title}</span>
+              </a>
+            ))}
+          </div>
+        } />
+      {/* "Browse the work" heading off; the filters are dropdowns (Nicole, Nov 13: "this takes up too much space") */}
+      <Sec>
         <CaseFilter rows={rows}
           areas={AREAS.map((a) => ({ value: a.slug, label: a.name, color: THEME[a.id]?.color }))}
           industries={VISIBLE_INDUSTRIES.map((i) => ({ value: i.slug, label: i.name }))}

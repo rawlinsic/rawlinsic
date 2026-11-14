@@ -68,14 +68,17 @@ export const EVENTS: EventItem[] = [
   { when: "Dec 6–10, 2026", title: "IHEEP 2026", where: "Austin, Texas", note: "", ends: "2026-12-10", role: "Attending",
     href: "https://web.cvent.com/event/2b28935f-a05f-4812-b141-d649c7d831d1/summary",
     line: "Our drone team will be at IHEEP 2026 in Austin, Dec 6–10.",
-    /* no photo of the event on file: a drone field crew, from the live site's Advanced Air Mobility page (the drone photo
-       rule: drone photos only from that page); the same photo, company patch softened, as Emergency Response with Drones */
-    card: "/images/pages/aam-enable-no-patch.webp" },
+    /* Nov 13 (Nicole: "a picture of the actual event from the site"): the event page's own header (Austin skyline), blurred,
+       with the event's 2026 Austin badge, both from the IHEEP 2026 page at web.cvent.com */
+    photo: "/images/pages/news-iheep-2026-card.jpg" },
   /* Everything below was a News post until Nov 11. Each was checked then against Rawlins' or the person's own LinkedIn
      post, the event's sponsor board, or the publisher's page (content pass v7 addendum, Part B). They sit after the
      two above so the home page and the menu keep showing AASHTO first. */
   // Andy's LinkedIn posts, and his event graphic (three sessions, Nov 11 and 12)
   { when: "Nov 10–12, 2026", title: "Automechanika Dubai 2026", where: "Dubai Exhibition Centre, Expo City Dubai", ends: "2026-11-12", intl: true, role: "Speaking",
+    /* Nov 13 (Nicole): the event's own page and a photo from it (2026 show photos, automechanika-dubai.ae.messefrankfurt.com) */
+    href: "https://automechanika-dubai.ae.messefrankfurt.com/dubai/en.html",
+    photo: "/images/pages/news-automechanika-dubai-2026.jpg", pos: "50% 40%",
     // the three sessions, as written on Andy's event graphic (Nicole's "int'l" folder, Nov 11)
     who: "Andy Palanisamy",
     sessions: [
@@ -86,18 +89,24 @@ export const EVENTS: EventItem[] = [
     line: "Andy Palanisamy is moderating sessions on smart cities and mobility integration across the Middle East and Africa, and on total lifecycle management from procurement to end of life, and speaking on enabling innovation in a regulated world.",
     past: "Andy Palanisamy moderated sessions on smart cities and mobility integration across the Middle East and Africa, and on total lifecycle management from procurement to end of life, and spoke on enabling innovation in a regulated world." },
   // Andy's LinkedIn posts
-  { when: "Nov 9–10, 2026", title: "ConTech / MENA Construction Summit 2026", where: "Madinat Jumeirah, Dubai", ends: "2026-11-10", intl: true, role: "Attending", who: "Andy Palanisamy",
+  { when: "Nov 9–10, 2026", title: "ConTech / MENA Construction Summit 2026", where: "Madinat Jumeirah, Dubai", ends: "2026-11-10", intl: true, role: "Attending",
+    /* Nov 13 (Nicole): the summit's own page (MEED events) and a photo from the summit's 2026 brochure on that site */
+    href: "https://events.meed.com/event/menaconstructionsummit/",
+    photo: "/images/pages/news-mena-construction-summit.jpg", pos: "50% 35%",
     past: "Andy Palanisamy represented Rawlins at the ConTech / MENA Construction Summit." },
   // AMOTIA: the event's sponsor board ("Host State Night Event Sponsor") and Rawlins' LinkedIn post. Photo: Scott on the general session panel, by Janine Cooper.
   { when: "Nov 4–6, 2026", title: "AMOTIA 17th Annual Conference", where: "Fort Lauderdale, Florida", ends: "2026-11-06", role: "Sponsor and speaking",
+    href: "https://amotia.org/annual-conference/", // the conference's page on AMOTIA's site (Nov 13)
     photo: "/images/pages/news-amotia-2026-general-session.webp", pos: "50% 30%",
     past: "Rawlins was the Host State Night event sponsor. Scott Rawlins joined a general session panel on how asset maintenance supports asset management." },
   // Hawaii: Ozzy Bravo's LinkedIn post ("Exclusive Sponsor for Lanyards and an Educational Session") and the sponsor board. The month is known, not the days.
   { when: "September 2026", title: "The first Hawaii Transportation Summit", where: "Hawaii", ends: "2026-09-30", role: "Sponsor and speaking",
+    href: "https://www.hitransportationsummit.com/hts26", // the summit's own site (Nov 13)
     photo: "/images/pages/insights-hawaii-summit-2026-team.webp", pos: "50% 35%",
     past: "Rawlins was an exclusive sponsor, sponsoring the lanyards and an educational session on leadership and AI. Scott Rawlins and Alicia McConnell moderated and took part in sessions." },
   // Andy's LinkedIn posts (photos posted early Sep 2026; Nicole's "int'l" folder). Only the year is on record, so it's ordered by when the photos were posted.
   { when: "2026", title: "LEAP 2026", where: "Riyadh, Saudi Arabia", ends: "2026-09-03", intl: true, role: "Speaking",
+    href: "https://onegiantleap.com/", // LEAP's own site (Nov 13)
     photo: "/images/pages/news-leap-2026-speaking.webp", pos: "60% 30%",
     past: "Andy Palanisamy spoke on the future of urban identity." },
   // Bridge Challenge: Dara Wheeler's LinkedIn post and the AASHTO Journal article (Apr 17, 2026)
