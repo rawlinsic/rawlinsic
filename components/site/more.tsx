@@ -421,7 +421,7 @@ export function NewsPage() {
       )}
       <section id="news" className="ed-sec is-panel nw3-sec" data-nofill>
         <div className="ed-wrap">
-          <div className="ed-sec-head"><div><p className="ed-k">News</p><h2 className="ed-h2">From our team</h2></div></div>
+          <div className="ed-sec-head"><div><p className="ed-k">News</p><h2 className="ed-h2">The latest from our team</h2></div></div>
           <div className="nw2-latest">
             {top && (
               <a className="nw2-feature" href={top.href} {...ext(top.href)}>
