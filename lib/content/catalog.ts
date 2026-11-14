@@ -3044,7 +3044,7 @@ export const CASES: Record<string, CaseData> = {
    "Supported the advertisement of both contracts, with pre-bid Q&A support",
    "Presented the statewide maintenance quality assessment to executive and regional leadership",
    "Supported contractor onboarding with weekly advisory calls",
-   "Reviewed contracts, fleet, fuel, and staffing for the financial analysis, and presented it to department leadership"
+   "Reviewed contracts, fleet, fuel, and staffing for the financial analysis"
   ],
   "res": [
    "Two contracts awarded; Rawlins supported their administration",
