@@ -4091,7 +4091,7 @@ export const CASES: Record<string, CaseData> = {
    "Analyzed bridge inspection and condition data, and prepared bridge bundling options, maps by district, and procurement recommendations",
    "Calculated a benefit-cost ratio for an interstate project, and coordinated with the safety program",
    "Prepared a Call for Projects package",
-   "Drafted the Program Development Manual"
+   "Developed a comprehensive Program Development Manual that documents the process for establishing the 5-year work program, from establishing the budget for programs to finalizing conceptual studies and programming the projects"
   ],
   "res": [
    "Bridge screening process finalized",
