@@ -4272,7 +4272,7 @@ export const CASES: Record<string, CaseData> = {
    "Researched and provided recommendations for improving pavement treatments, deterioration curves, levels of service, and target setting"
   ],
   "res": [
-   "Division stood up with its organization chart, hiring plan, position descriptions, and primers",
+   "Division successfully stood up with its organization chart, hiring plan, position descriptions, and primers",
    "Comprehensive fleet and facilities strategies established to effectively operate and maintain those assets"
   ],
   "services": [
