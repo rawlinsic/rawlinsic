@@ -1622,3 +1622,6 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
   .tt-svcs { margin-bottom: 22px; }
   .tt-svcs a { font-size: 0.96rem; padding: 7px 13px; }
 }
+/* LinkedIn in the header, right after the search button (Nicole, Nov 13) */
+.hx-icon.hx-in { margin-left: 0; color: #0a66c2; }
+.hx-icon.hx-in:hover { color: #0a1220; }

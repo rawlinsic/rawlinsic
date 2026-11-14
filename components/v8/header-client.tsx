@@ -191,6 +191,10 @@ export default function HeaderClient({ data, aboutTopOnly = false }: { data: Nav
         <button type="button" className="hx-icon" aria-label="Search" onClick={() => { setOpen(null); setFind(true); }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg>
         </button>
+        {/* LinkedIn in the header (Nicole, Nov 13); the same icon and page as the footer */}
+        <a className="hx-icon hx-in" href="https://www.linkedin.com/company/107078508/" target="_blank" rel="noopener noreferrer" aria-label="Rawlins on LinkedIn">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.6 8.65 21 11.2 21 14.4V21h-4v-5.8c0-1.38-.03-3.16-1.93-3.16-1.93 0-2.22 1.5-2.22 3.06V21H9z" /></svg>
+        </a>
         <a href="/contact" className="hx-cta">Get In Touch</a>
         {/* three lines, not the word "Menu" (Nicole, Nov 12) */}
         <button type="button" className="hx-burger" aria-label="Menu" aria-expanded={sheet} aria-controls="hx-sheet" onClick={() => setSheet(true)}>
