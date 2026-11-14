@@ -3037,7 +3037,7 @@ export const CASES: Record<string, CaseData> = {
   "ch": "A Region Office moved interstate maintenance to performance-based contracts. That meant a measurable quality baseline, a procurement process shaped with industry, and administering two new contracts with staff and contractors learning the model together.",
   "when": "2023 to 2025",
   "did": [
-   "Developed report that recommended a performance-based maintenance contract for one region and a simpler maintenance quality assurance program",
+   "Developed assessment report that recommended a performance-based maintenance contract for one region and a simpler maintenance quality assurance program",
    "Converted maintenance quality measures to pass or fail criteria and set the field assessment approach",
    "Monitored field data collection at 268 interstate sample sites, and analyzed the results",
    "Supported an industry forum and drafted the scope, contract, and request for proposals",
