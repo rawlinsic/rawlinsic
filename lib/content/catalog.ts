@@ -4302,7 +4302,7 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [
    "Professional Services Policies and Procedures Manual, Design-Build Procurement Manual, and Negotiations Manual finalized in July 2023",
-   "Advertisement request form finalized"
+   "Alternative Delivery procurement forms finalized"
   ],
   "services": [
    "procurement",
