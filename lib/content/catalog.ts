@@ -4086,7 +4086,7 @@ export const CASES: Record<string, CaseData> = {
    "Wrote white papers on the Statewide Transportation Improvement Program and how it works with the asset management plan and the state's priority program",
    "Worked through project selection templates with 14 programs, and built fillable score sheets",
    "Built a bridge screening and prioritization tool, with tutorials for program managers and bridge staff",
-   "Built statewide asset mapping tools and a screening toolkit for concept studies",
+   "Developed the detailed concept for the statewide asset mapping tool",
    "Built a prioritization tool now used to triage the highway project pipeline",
    "Analyzed bridge inspection and condition data, and prepared bridge bundling options, maps by district, and procurement recommendations",
    "Calculated a benefit-cost ratio for an interstate project, and coordinated with the safety program",
