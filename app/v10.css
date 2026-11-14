@@ -1674,3 +1674,12 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .dw2-in:has(.dw2-li.is-video:hover) .dw2-zone.is-video { border-color: #22d3ee; box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.45); transform: translateY(-2px); }
 @media (max-width: 960px) { .dw2-in { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .dw2-row { grid-template-columns: 1fr; } .dw2-search { width: 60px; } .dw2-nav i { width: 24px; } }
+
+/* Review tools: unsaved changes kept from before (Nov 14) */
+.pe-kept { flex-basis: 100%; display: grid; gap: 8px; padding: 4px 6px; color: #e6eef8; }
+.pe-kept-h { margin: 0; font-weight: 700; color: #22d3ee; }
+.pe-kept ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 0.88rem; line-height: 1.35; }
+.pe-kept s { color: #9fb2c8; }
+.pe-kept-more { margin: 0; font-size: 0.85rem; color: #9fb2c8; }
+.pe-kept-btns { display: flex; gap: 8px; }
+@media (max-width: 760px) { .pe-bar:has(.pe-kept) { flex-wrap: wrap; width: auto; overflow: visible; } }

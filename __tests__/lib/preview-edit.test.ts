@@ -76,4 +76,18 @@ describe("preview Edit text never changes code", () => {
     const g = new Map<string, string>([["lib/content/site.ts", `export const A = { tag: "Replanning matters" };`]]);
     expect("why" in place(g, { old: "planning matters", next: "x" })).toBe(true);
   });
+
+  it("saves a heading written over two lines with <br />, keeping the break after the same word (Nov 14)", () => {
+    const f = new Map(files());
+    f.set("components/site/where.tsx", `export function Where() { return <h1 className="ed-h1">Global Reach,<br />Local Impact</h1>; }`);
+    const r = save(f, { old: "Global Reach, Local Impact", next: "Local Impact, Global Reach" });
+    expect("out" in r).toBe(true);
+    expect((r as { out: Map<string, string> }).out.get("components/site/where.tsx")).toContain(`<h1 className="ed-h1">Local Impact,<br />Global Reach</h1>`);
+  });
+
+  it("never matches a <br /> that sits in code, not page text", () => {
+    const f = new Map([["components/site/x.tsx", `export const X = () => <p>{"Global Reach,"}<br className="sm" />{cut}</p>;`]]);
+    const r = save(f, { old: "Global Reach, Local Impact", next: "Zqx" });
+    expect("out" in r).toBe(false);
+  });
 });

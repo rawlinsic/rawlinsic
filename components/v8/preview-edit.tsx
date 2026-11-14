@@ -87,6 +87,29 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
   const [busy, setBusy] = useState(false);
   const snaps = useRef(new WeakMap<HTMLElement, Snap>());
   const edited = useRef(new Set<HTMLElement>());
+  /* Nov 14 (Nicole: make edits easier, no lost work): unsaved changes are kept in this browser for this page as they're typed,
+     so a reload, a closed tab, or a refused save never loses them. On the next visit the bar offers to save them or drop them. */
+  const ukey = () => `pe-unsaved:${location.pathname}`;
+  type Unsaved = { at: number; built: string; changes: Change[] };
+  const [restore, setRestore] = useState<Unsaved | null>(null);
+  useEffect(() => {
+    try {
+      const u = JSON.parse(localStorage.getItem(ukey()) || "null") as Unsaved | null;
+      if (u && Array.isArray(u.changes) && u.changes.length && Date.now() - u.at < 14 * 864e5) { setRestore(u); setMin(false); }
+      else localStorage.removeItem(ukey());
+    } catch {}
+  }, []);
+  useEffect(() => {
+    if (!on) return;
+    try { if (changes.length) localStorage.setItem(ukey(), JSON.stringify({ at: Date.now(), built, changes })); else localStorage.removeItem(ukey()); } catch {}
+  }, [changes, on, built]);
+  // the browser asks before leaving with changes not saved yet
+  useEffect(() => {
+    if (!on || !changes.length) return;
+    const warn = (e: BeforeUnloadEvent) => { e.preventDefault(); e.returnValue = ""; };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [on, changes.length]);
 
   // in edit mode: clicks pick words to edit instead of following links
   useEffect(() => {
@@ -106,14 +129,17 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
       el.classList.add("pe-edit");
       el.focus();
     };
-    const blur = (e: FocusEvent) => {
-      const el = e.target as HTMLElement;
-      if (!el.classList?.contains("pe-edit")) return;
+    const blur = (e: Event) => {
+      const el = (e.target as HTMLElement)?.closest?.(".pe-edit") as HTMLElement | null;
+      if (!el) return;
       const snap = snaps.current.get(el);
       const now = textOf(el);
       if (snap && (clean(now) !== clean(snap.full) || now.includes("\n"))) edited.current.add(el); else edited.current.delete(el);
       setChanges(Array.from(edited.current).map((x) => diff(snaps.current.get(x)!, textOf(x))).filter((c) => c.old !== c.next || c.breaks));
     };
+    // also as you type, so the changes are kept even before you click away
+    let t = 0;
+    const input = (e: Event) => { window.clearTimeout(t); t = window.setTimeout(() => blur(e), 400); };
     // Enter adds a new line, Esc (or clicking away) finishes; pasting brings in plain words only
     const key = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement;
@@ -132,7 +158,10 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
     document.addEventListener("click", click, true);
     document.addEventListener("focusout", blur, true);
     document.addEventListener("keydown", key, true);
+    document.addEventListener("input", input, true);
     return () => {
+      window.clearTimeout(t);
+      document.removeEventListener("input", input, true);
       document.documentElement.classList.remove("pe-on");
       document.removeEventListener("click", click, true);
       document.removeEventListener("focusout", blur, true);
@@ -141,7 +170,32 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
     };
   }, [on]);
 
-  const stop = () => { if (changes.length && !confirm("Leave edit mode and drop your unsaved changes?")) return; window.location.reload(); };
+  const stop = () => {
+    if (changes.length && !confirm("Leave edit mode and drop your unsaved changes?")) return;
+    try { localStorage.removeItem(ukey()); } catch {}
+    window.location.reload();
+  };
+  /* the changes kept from before: save them as they were, or drop them */
+  const saveKept = async () => {
+    if (!restore) return;
+    const name = askName(); if (!name) return;
+    setBusy(true); setMsg("Saving…");
+    try {
+      const r = await fetch("/api/preview-edit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ page: location.pathname, name, built: restore.built, changes: restore.changes }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) { setMsg(j.error || "Couldn't save. Nothing was changed. They're still kept here."); return; }
+      try { localStorage.removeItem(ukey()); } catch {}
+      setRestore(null);
+      if (j.commit) remember({ sha: j.commit, label: `${j.applied} text change${j.applied === 1 ? "" : "s"}` });
+      setMsg(!j.applied && !j.pending && j.already ? "Already saved: those wordings are in the site. Nothing changed." : `Saved ${j.applied} change${j.applied === 1 ? "" : "s"}${j.already ? `, ${j.already} already saved` : ""}${j.pending ? `, ${j.pending} on the list for Claude Code` : ""}. The preview updates in about 2 minutes.`);
+    } catch { setMsg("Couldn't reach the server. Nothing was changed. They're still kept here."); }
+    finally { setBusy(false); }
+  };
+  const dropKept = () => {
+    if (!confirm("Drop these unsaved changes?")) return;
+    try { localStorage.removeItem(ukey()); } catch {}
+    setRestore(null); setMsg("");
+  };
 
   const save = async () => {
     const name = askName(); if (!name) return;
@@ -262,7 +316,17 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
     <>
       <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={listOpen} onCount={onCount} hidden={cleanView} onSaved={onSaved} onDone={onDone} refresh={refresh} />
       <div className="pe-bar" role="region" aria-label="Review tools (preview only)">
-        {on ? (
+        {restore && !on ? (
+          <div className="pe-kept">
+            <p className="pe-kept-h">{restore.changes.length} unsaved change{restore.changes.length === 1 ? "" : "s"} on this page from before</p>
+            <ul>{restore.changes.slice(0, 6).map((c, k) => <li key={k}><s>{short(c.old)}</s> → {short(c.next)}</li>)}</ul>
+            {restore.changes.length > 6 && <p className="pe-kept-more">and {restore.changes.length - 6} more</p>}
+            <div className="pe-kept-btns">
+              <button type="button" className="pe-btn pe-save" disabled={busy} onClick={saveKept}>Save them</button>
+              <button type="button" className="pe-btn pe-ghost" disabled={busy} onClick={dropKept}>Discard</button>
+            </div>
+          </div>
+        ) : on ? (
           <>
             <span className="pe-n">{changes.length} change{changes.length === 1 ? "" : "s"}</span>
             <button type="button" className="pe-btn pe-save" disabled={!changes.length || busy} onClick={save}>Save</button>

@@ -4088,7 +4088,7 @@ export const CASES: Record<string, CaseData> = {
    "Built a bridge prioritization tool, with tutorials for program managers and bridge staff, to accurately update the delivery timeframes for currently programmed projects",
    "Developed the detailed concept for the statewide asset mapping tool to assist in the prioritization process",
    "Built a bridge triage tool to reduce the number of bridges considered in the biannual calls for projects",
-   "Revised and reduced the number of funding programs to improve project selection and delivery processes",
+   "Revised and reduced the number of funding programs to improve the project selection process",
    "Developed a pre-programming Conceptual Study process to improve projects' programmed scope, schedule, and budget to increase program stability",
    "Established a 5-year work program to increase the reliability of delivering projects within the committed timeframes",
    "Developed a comprehensive Program Development Manual that documents the process for establishing the 5-year work program, from establishing the budget for programs to issuing the call for projects and documenting them."
@@ -4296,7 +4296,7 @@ export const CASES: Record<string, CaseData> = {
    "Developed flowcharts for every delivery method",
    "Crafted a contract close-out process, including creating scope templates by contract type and discipline",
    "Drafted language for adjusted-score design-build request for proposals and design-build procurement",
-   "Surveyed six states on two-phase and single-phase advertisement, and wrote guidance ofor administerng a two-phase process",
+   "Surveyed six states on two-phase and single-phase advertisement, and wrote guidance for administering a two-phase process",
    "Built negotiation memo templates, rate analysis tools, and an active contract list to monitor contract milestones",
    "Reviewed peer state best practices for evaluating consultant performance"
   ],

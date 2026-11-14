@@ -19,6 +19,18 @@ const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /* the wording starts and ends at word edges. A line break written in a string (\n) counts as an edge, so a paragraph
    that starts right after one is found too (Nov 12: deleting the third paragraph of a service's opening didn't save) */
 const LB = "(?<!(?<!\\\\)[A-Za-z0-9_])", LA = "(?![A-Za-z0-9_])";
+/* between two words: spaces, or a line break written in the code (a heading split over two lines with <br />; Nov 14: the
+   Where we work headline went to the list because of one) */
+const GAP = "(?:\\s|<br\\s*\\/?>)+";
+const BR = /<br\s*\/?>/gi;
+/* the pieces of a hit outside its <br /> line breaks, as [from, to] within the hit */
+const textPieces = (m: string): [number, number][] => {
+  const out: [number, number][] = [];
+  let at = 0;
+  for (const b of Array.from(m.matchAll(BR))) { out.push([at, b.index ?? 0]); at = (b.index ?? 0) + b[0].length; }
+  out.push([at, m.length]);
+  return out.map(([a, b]) => { while (a < b && /\s/.test(m[a])) a++; while (b > a && /\s/.test(m[b - 1])) b--; return [a, b] as [number, number]; }).filter(([a, b]) => b > a);
+};
 /* the wording as it may be written in code: any run of spaces or line breaks,
    and apostrophes or quotes written plain, curly, as entities, or escaped */
 export const pattern = (s: string) =>
@@ -26,7 +38,7 @@ export const pattern = (s: string) =>
     (/^\w/.test(s.trim()) ? LB : "") +
     s.trim().split(/\s+/).map((w) =>
       esc(w).replace(/&/g, "(?:&|&amp;)").replace(/['’]/g, "(?:'|’|&apos;|&#x27;|&rsquo;|\\\\')").replace(/["“”]/g, '(?:"|“|”|&quot;|\\\\")'),
-    ).join("\\s+") +
+    ).join(GAP) +
     (/\w$/.test(s.trim()) ? LA : ""),
     "g",
   );
@@ -44,7 +56,9 @@ export function findHits(files: Map<string, string>, text: string, isText?: IsTe
     for (const m of Array.from(src.matchAll(re))) {
       const i = m.index ?? 0;
       if (inComment(cs, i)) continue;
-      if (isText && !isText(path, i, i + m[0].length)) continue; // in the code, not page text
+      // in the code, not page text (a hit across a <br />: each piece of text around it must be page text)
+      if (isText && !(BR.test(m[0]) ? (BR.lastIndex = 0, textPieces(m[0]).every(([a, b]) => isText(path, i + a, i + b))) : isText(path, i, i + m[0].length))) continue;
+      BR.lastIndex = 0;
       hits.push({ path, index: i, match: m[0] });
     }
   }
@@ -256,6 +270,15 @@ export function writeAs(src: string, hit: Hit, next: string): string {
   const line = src.slice(src.lastIndexOf("\n", hit.index) + 1, hit.index);
   const q = (line.match(/['"`][^'"`]*$/) || [""])[0][0];
   if (q === "'") out = out.replace(/'/g, "’");
+  // the wording had a line break (<br />) and the new wording doesn't say where one goes: keep it after the same word
+  if (/<br\s*\/?>/i.test(hit.match) && !/<br\s*\/?>/i.test(out)) {
+    const words = out.trim().split(/\s+/);
+    const at: number[] = [];
+    let n = 0;
+    for (const part of hit.match.split(/<br\s*\/?>/i).slice(0, -1)) { n += part.trim() ? part.trim().split(/\s+/).length : 0; at.push(n); }
+    const tok = (hit.match.match(/<br\s*\/?>/i) || ["<br />"])[0];
+    out = words.map((w, k) => (k > 0 && at.includes(k) ? tok : k > 0 ? " " : "") + w).join("");
+  }
   return src.slice(0, hit.index) + out + src.slice(hit.index + hit.match.length);
 }
 
