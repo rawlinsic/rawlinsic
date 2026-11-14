@@ -55,8 +55,13 @@ const CONTRACTOR_CASES = ["cs-major", "cs-db-partnering", "cs-ia-partnering", "c
 /* Private Sector: our own project first, then our automation team's work before Rawlins (tagged) */
 const PRIVATE_CASES = ["cs-pv-pmo", "cs-pv-capacity", "cs-pv-reporting", "cs-pv-service", "cs-pv-field", "cs-pv-single", "cs-pv-sales"];
 
+const SUB_FIRST: Record<string, string[]> = { "sub-ports": ["cs-harbor"] };
+
 export function SubsectorPage({ ind, sub }: { ind: Industry; sub: Subsector }) {
-  const list = CASES.filter((c) => CASE_DATA[c.id]?.subsectors.includes(sub.id));
+  /* a page's own first projects, in order (Ports & Harbors: the harbor demonstration first; mode pages file v1, Nov 13) */
+  const first = SUB_FIRST[sub.id] ?? [];
+  const rank = (id: string) => (first.includes(id) ? first.indexOf(id) : first.length);
+  const list = CASES.filter((c) => CASE_DATA[c.id]?.subsectors.includes(sub.id)).sort((a, b) => rank(a.id) - rank(b.id));
   return <SubsectorV8 ind={ind} sub={sub} cases={list} />;
 }
 

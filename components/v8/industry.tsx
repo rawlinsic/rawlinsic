@@ -435,6 +435,19 @@ export function IndustryV8({ ind, cases }: { ind: Industry; cases: CaseIndex[] }
 }
 
 /* ── Specialty pages ── */
+/* Nov 13 (Who We Work With, the four mode pages, two layouts, v1): two layouts by how much work stands behind each page.
+   Full (Highways & Bridges, Aviation & Airports): challenges, what we do there, how we can help, the experience behind it,
+   the aviation team, where we've done this. Short (Rail & Transit, Ports & Harbors): where we've done this right under the
+   opening, what the work covered, the experience behind it, how we can help. "What you walk away with" is off all four and
+   challenges are off the short pages; their lines stay in the content (lib/content/catalog.ts), not shown. Every project
+   card, service card, experience line, the aviation team, and every preview note stays. */
+const MODE: Record<string, { short?: boolean; deliverTitle: string }> = {
+  "sub-highways": { deliverTitle: "What we do on highway systems" },
+  "sub-aviation": { deliverTitle: "What we do for aviation programs" },
+  "sub-rail": { short: true, deliverTitle: "What the work covered" },
+  "sub-ports": { short: true, deliverTitle: "What the work covered" },
+};
+
 export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector; cases: CaseIndex[] }) {
   const d = SUBSECTORS[sub.id];
   const aviation = sub.id === "sub-aviation";
@@ -465,6 +478,55 @@ export function SubsectorV8({ ind, sub, cases }: { ind: Industry; sub: Subsector
       actions={<><a className="v8-btn v8-btn-area" href="/contact">Talk to an expert</a>{cases.length > 0 && <a className="v8-btn v8-btn-ghost" href="#work">See the work</a>}</>}
       note={thinNote(sub, "Content status: thin content")} />
   );
+  const mode = MODE[sub.id];
+  if (mode) {
+    const xpSec = xp.length > 0 && <Route id="experience" title="The experience behind it"><RouteList check ordered={false} stops={xp.map((x) => ({ d: <>{x}<LineNote text={x} /></> }))} /></Route>;
+    const deliverSec = deliver.length > 0 && <Route id="deliver" title={mode.deliverTitle}><RouteList check ordered={false} stops={deliver.map((x) => ({ d: <>{x}<LineNote text={x} /></> }))} /></Route>;
+    const helpSec = <ServiceCards id="services" title="How we can help" ids={services} />;
+    const workSec = cases.length > 0 && <Work title="Where we've done this" cases={cases} tone="pale" />;
+    const nav: Nav[] = mode.short
+      ? [
+          ...(cases.length ? [["work", "Where we've done this"] as Nav] : []),
+          ...(deliver.length ? [["deliver", mode.deliverTitle] as Nav] : []),
+          ...(xp.length ? [["experience", "The experience behind it"] as Nav] : []),
+          ...(services.length ? [["services", "How we can help"] as Nav] : []),
+          ["talk", "Talk to us"],
+        ]
+      : [
+          ...(d?.ch?.length ? [["hear", "Challenges we hear"] as Nav] : []),
+          ...(deliver.length ? [["deliver", mode.deliverTitle] as Nav] : []),
+          ...(services.length ? [["services", "How we can help"] as Nav] : []),
+          ...(xp.length ? [["experience", "The experience behind it"] as Nav] : []),
+          ...(avTeam.length ? [["aviation", "Our aviation team"] as Nav] : []),
+          ...(cases.length ? [["work", "Where we've done this"] as Nav] : []),
+          ["talk", "Talk to us"],
+        ];
+    return (
+      <Page sections={nav} hero={hero} more={{ label: "MODES", links: sibs.map((x) => ({ name: x.name, href: x.href, current: x.on })) }}>
+        {mode.short ? (
+          <>
+            {workSec}
+            {deliverSec}
+            {xpSec}
+            {helpSec}
+          </>
+        ) : (
+          <>
+            {d?.ch?.length ? <Hear title="Challenges we hear" items={d.ch} /> : null}
+            {deliverSec}
+            {helpSec}
+            {xpSec}
+            {avTeam.length > 0 && <Team id="aviation" people={avTeam} roles={AVIATION_ROLES} />}
+            {workSec}
+          </>
+        )}
+        <Talk linksTitle={ind.id === "transport" ? "Transportation modes" : "MODES"} links={sibs} />
+        {nextSub
+          ? <Next k={`Next in ${ind.name}`} name={nextSub.name} text={nextSub.line} href={subsectorHref(ind, nextSub)} photo={INDUSTRY_PHOTO[nextSub.id] ?? INDUSTRY_PHOTO[ind.id]} />
+          : <Next k="Next industry" name={nextInd.name} text={nextInd.who} href={industryHref(nextInd)} photo={INDUSTRY_PHOTO[nextInd.id]} />}
+      </Page>
+    );
+  }
   return (
     <Page sections={sections} hero={hero} more={{ label: "MODES", links: sibs.map((x) => ({ name: x.name, href: x.href, current: x.on })) }}>
       {d?.ch?.length ? <Hear title="Challenges we hear" items={d.ch} /> : null}
