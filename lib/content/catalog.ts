@@ -3350,7 +3350,7 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department needed a strategic plan that staff at every level helped shape, turned into yearly actions with measures leadership could track.",
   "when": "Since 2022",
   "did": [
-   "Ran engagement with executive leadership, a working group, all-staff workshops and surveys, and partners",
+   "Led a comprehensive engagement initiative with executive leadership, a mid-level working group, all-staff workshops and surveys, and coordination with traditional and non-traditional partners",
    "Facilitated vision, mission, values, goals, and measures",
    "Built the action plan and monitoring frameworks",
    "Facilitated division and district workshops for the first-year action plan",
