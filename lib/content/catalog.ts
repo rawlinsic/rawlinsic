@@ -4266,7 +4266,7 @@ export const CASES: Record<string, CaseData> = {
    "Worked with the new Director to establish a vision for asset management at the department and created a 100-day plan",
    "Built the organization chart and a prioritized hiring plan",
    "Wrote position descriptions for the director and every manager: fleet and facilities, bridge, pavement, ancillary infrastructures, transportation data systems, quality management, and performance management",
-   "Wrote primers for all seven sections",
+   "Wrote primers for all seven sections that included detailed descriptions of all the functions to be performed by each section",
    "Wrote a fleet and facilities asset management strategy, and built fleet policies from fleet data",
    "Reviewed snow routes and dump trucks at county facilities, analyzed vehicle and equipment usage, and proposed a phased fleet surplus process",
    "Researched pavement treatments, deterioration curves, levels of service, and target setting"
