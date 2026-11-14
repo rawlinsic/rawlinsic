@@ -4298,7 +4298,7 @@ export const CASES: Record<string, CaseData> = {
    "Drafted language for adjusted-score design-build request for proposals and design-build procurement",
    "Surveyed six states on two-phase and single-phase advertisement, and wrote guidance ofor administerng a two-phase process",
    "Built negotiation memo templates, rate analysis tools, and an active contract list to wmonitorcontract expirations",
-   "Reviewed best practice on evaluating consultant performance"
+   "Reviewed peer state best practices for evaluating consultant performance"
   ],
   "res": [
    "All three manuals finalized in July 2023",
