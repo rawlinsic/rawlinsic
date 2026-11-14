@@ -296,7 +296,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Program Development",
   "area": "delivery",
   "st": "ok",
-  "intro": "A credible work program connects investment priorities with the projects the agency can actually advance. We help agencies clarify selection methods, readiness requirements, milestones, and responsibilities, so leadership has a clearer basis for its commitments and can act when conditions change.\n\nAn agency's commitments to its legislature and the public come down to events: a project let, started, completed, and open to traffic. We help agencies establish program development processes results in committed projects delivered on time.",
+  "intro": "A credible work program connects investment priorities with the projects the agency can actually advance. We help agencies clarify selection methods, readiness requirements, milestones, and responsibilities, so leadership has a clearer basis for its commitments and can act when conditions change.\n\nAn agency's commitments to its legislature and the public come down to events: a project let, started, completed, and open to traffic. We help agencies establish program development processes result in committed projects delivered on time.",
   "hear": [
    "Projects keep missing the year they were promised.",
    "It's hard to explain why one project was chosen over another.",
