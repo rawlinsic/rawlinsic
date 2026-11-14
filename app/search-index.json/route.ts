@@ -18,7 +18,7 @@ export function GET() {
     ...AREAS.map((a) => ({ label: a.name, kind: "What we do", href: areaHref(a), text: clean(`${a.tag} ${AREA_DATA[a.id]?.lead ?? ""}`) })),
     ...AREAS.flatMap((a) => a.services.filter((s) => isListed(s.id)).map((s) => {
       const d = SERVICES[s.id];
-      return { label: s.name, kind: a.name, href: `/services/${a.slug}/${s.slug}`, text: clean(`${d?.intro ?? ""} ${(d?.deliver ?? []).join(" ")}`) };
+      return { label: s.name, kind: a.name, href: `/services/${a.slug}/${s.slug}`, text: clean(`${d?.intro ?? ""} ${(d?.deliver ?? []).filter((x) => !x.startsWith("## ")).join(" ")}`) };
     })),
     ...INDUSTRIES.map((i) => ({ label: i.name, kind: "Who we work with", href: industryHref(i), text: clean(`${i.who} ${i.lead}`) })),
     ...INDUSTRIES.flatMap((i) => i.subsectors.map((s) => ({ label: s.name, kind: i.name, href: subsectorHref(i, s), text: clean(s.line) }))),

@@ -378,7 +378,7 @@ export const LEADERS: { name: string; role: string; photo: string }[] = [
   { name: "April Blackburn, PMP", role: "Former Chief Information Officer, Chief Technology Officer, and Interim Assistant Secretary of Finance and Administration, Florida Department of Transportation", photo: "april" },
   { name: "Dara Wheeler", role: "Former Chief Data and AI Officer and Chief Innovation Officer, California Department of Transportation", photo: "darawheeler" },
   { name: "Mayela Sosa", role: "Former Division Administrator, Federal Highway Administration Indiana and Hawaii Divisions", photo: "mayela" },
-  { name: "Paul Steinman, P.E.", role: "Former Chief Operating Officer, Idaho Transportation Department, and District Secretary, Florida DOT", photo: "paulsteinman" },
+  { name: "Paul Steinman, P.E.", role: "Former Chief Operations Officer, Idaho Transportation Department, and District Secretary, Florida DOT", photo: "paulsteinman" },
   { name: "Rex Vines, P.E.", role: "Former Deputy Director and Chief Engineer of Operations, Arkansas Department of Transportation", photo: "rex" },
   { name: "Paul Schneider, P.E.", role: "Former member, Federal Highway Administration California Division executive leadership team", photo: "paulschneider" },
   { name: "Joey Paskey, P.E., PTOE", role: "Former Director of Public Works, City of Las Vegas", photo: "joey" },
@@ -571,6 +571,14 @@ export const LINE_STATUS: Record<string, string> = {
 };
 
 
+/* Nov 13: the card-level "To confirm" notes in the Websites, Portals & Digital Tools file (v2), preview only */
+LINE_STATUS["**Accessibility, hosting, and security:** pages checked against Section 508 and WCAG, more than one language where needed, hosting and domain setup, security certificates, backups, access control, visitor analytics, and a privacy notice"] =
+  "Content status: On the card \"Accessibility, hosting, and security,\" no record was found of a site checked against Section 508 or WCAG, or built in more than one language. Nicole to confirm.";
+LINE_STATUS["**AI on the site:** search that answers from the site's own content, assistants, and document tools, with rules for their use"] =
+  "Content status: On the cards \"AI on the site\" and \"Online services,\" no record was found of one built for a client. Listed at Nicole's direction as part of what the service covers.";
+LINE_STATUS["**Online services:** event registration, booking and scheduling, sign-ups, surveys, online payments, and stores"] =
+  LINE_STATUS["**AI on the site:** search that answers from the site's own content, assistants, and document tools, with rules for their use"];
+
 /* Preview-only notes for a whole page (content pass v7: Owner's Representation, 2.11; Ports & Harbors, Part 6) */
 /* services left out of the menu and their area page for now; their pages stay up (Nicole, Nov 13: Smart Mobility &
    Connected Systems, "for right now") */
@@ -596,6 +604,8 @@ export const PAGE_STATUS: Record<string, string> = {
   // TODO(launch): Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.
   "owners-rep": "Content status: Jacob's portfolio asks leadership to define this role: what authority it carries and how it avoids conflicts with other work for the same owner.",
   /* Nov 13 (Who We Work With read-as-built fixes v1): the To confirm text for Ports & Harbors */
+  /* Nov 13: the "To confirm" note on the Challenges we hear lines in the Websites, Portals & Digital Tools file (v2), preview only */
+  portals: "Content status: The last four lines are worded by the Branding chat from common website problems, not from a client record.",
   /* Nov 13: the "To confirm" notes in Nicole's Digital Solutions file (v5), preview only */
   "data-governance": "Content status: The reports through October 2026 show a governance steering committee chartered and facilitated weekly, a data policy, roles and decision rights, and a dataset inventory with owners and quality notes. They do not show a delivered data catalog or dictionary yet. Jacob to confirm.",
   ai: "Content status: The reports through October 2026 show AI strategy support, policy and governance documents, a commercial AI tool rolled out for one department, and use cases reviewed and ranked for a second. A first AI pilot, on cash-flow modeling, was starting in November 2026. Kobus or Jacob to confirm where it stands.",

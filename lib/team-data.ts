@@ -653,7 +653,7 @@ At the Federal level, Jen led national efforts in economic development and benef
   },
   {
     id: 30,
-    name: `Ken M. McEntire, PE`,
+    name: `Ken M. McEntire, P.E.`,
     photo: `/images/team/kenm.webp`,
     role: `Advisory Services: Highway Maintenance & Operations`,
     location: `North Carolina`,
@@ -729,7 +729,7 @@ She received Caltrans' **Bimla G. Rhinehart Award** in 2025, and Caltrans' GenAI
   },
   {
     id: 26,
-    name: `Joey Paskey`,
+    name: `Joey Paskey, P.E., PTOE`,
     photo: `/images/team/joey.webp`,
     role: `Infrastructure Advisor`,
     location: `Nevada`,

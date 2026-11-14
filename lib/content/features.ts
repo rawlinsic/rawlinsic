@@ -159,11 +159,12 @@ export const SERVICE_STEPS: Record<string, { title: string; kicker?: string; ste
   ] },
   /* Nov 13 (Nicole's Digital Solutions file, v5): "How we do it" on six of the seven pages; Videos keeps "How a training video
      comes together" above. Each step is one sentence, with no title. */
+  /* Nov 13 (Websites, Portals & Digital Tools file v2): the four steps reworded to fit any website */
   portals: { title: "How we do it", steps: [
-    { t: "", d: "Agree who the site is for and what they come to do." },
-    { t: "", d: "Inventory what exists: the tools, manuals, forms, and training, and who owns each." },
-    { t: "", d: "Build the site and its tools, and review a full preview copy with the people who will use it." },
-    { t: "", d: "Launch, train the owners, and set how changes are requested and published." },
+    { t: "", d: "Start with who the site is for and what they come to do." },
+    { t: "", d: "Inventory what exists: pages, documents, tools, forms, data, and accounts, and who owns each." },
+    { t: "", d: "Plan the structure and content, design and build the site and its tools, and review a full preview copy with the people who will use it." },
+    { t: "", d: "Launch, redirect the old addresses, train the owners, and set how changes are requested and published." },
   ] },
   automation: { title: "How we do it", steps: [
     { t: "", d: "Identify the problem, and what a working result looks like." },

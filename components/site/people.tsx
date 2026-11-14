@@ -10,7 +10,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 export type Person = {
   slug: string; name: string; photo: string; role: string; /* the roster role alone, for the role filter */ job?: string; group: "Advisors" | "Specialists" | "Business Operations";
-  areas: string[]; formerly?: string; location?: string; email?: string; phone?: string; linkedin?: string; background: string; achievements: string;
+  /* before: the "Before Rawlins" line shown (formerly, or one of the eight added Nov 13); formerly alone sets the list orders */
+  areas: string[]; formerly?: string; before?: string; location?: string; email?: string; phone?: string; linkedin?: string; background: string; achievements: string;
 };
 type Opt = { value: string; label: string };
 
@@ -68,7 +69,7 @@ export function ProfileBody({ p, showDev = false }: { p: Person; showDev?: boole
       </div>
       <div className="pp-bio">
         {/* the former agency role: not under the current title, but leading into the bio (Nicole, Nov 11) */}
-        {p.formerly && <p className="pp-before"><span>Before Rawlins</span>{p.formerly.replace(/^Former\s+/, "").replace(/^./, (c) => c.toUpperCase())}</p>}
+        {(p.before ?? p.formerly) && <p className="pp-before"><span>Before Rawlins</span>{(p.before ?? p.formerly)!.replace(/^Former\s+/, "").replace(/^./, (c) => c.toUpperCase())}</p>}
         {p.background.trim() === "Coming soon!"
           ? (showDev ? <p className="pg-dev pg-dev-block">Placeholder: bio needed</p> : null)
           : <><h3 className="pg-h3">Background</h3><Bio text={p.background} /></>}
@@ -97,7 +98,9 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
   /* a link to one person (#their-name) opens their group and their bio */
   useEffect(() => {
     const id = window.location.hash.slice(1);
-    if (id) { const p = people.find((x) => x.slug === id); if (p) { setShown((o) => ({ ...o, [p.group]: true })); setOpen(p); } }
+    /* an address from before a name changed still opens that person (Joey Paskey's credentials added, Nov 13) */
+    const alias: Record<string, string> = { "joey-paskey": "joey-paskey-pe-ptoe" };
+    if (id) { const p = people.find((x) => x.slug === id) ?? people.find((x) => x.slug === alias[id]); if (p) { setShown((o) => ({ ...o, [p.group]: true })); setOpen(p); } }
   }, [people]);
   useEffect(() => {
     const d = dlg.current;
@@ -109,7 +112,7 @@ export default function PeopleDirectory({ people, areas, showDev }: { people: Pe
 
   const list = useMemo(() => {
     const s = q.trim().toLowerCase();
-    return people.filter((p) => (!area || p.areas.includes(area)) && (!role || p.group === role) && (!s || `${p.name} ${p.role} ${p.formerly ?? ""} ${p.background}`.toLowerCase().includes(s)));
+    return people.filter((p) => (!area || p.areas.includes(area)) && (!role || p.group === role) && (!s || `${p.name} ${p.role} ${p.before ?? p.formerly ?? ""} ${p.background}`.toLowerCase().includes(s)));
   }, [people, area, role, q]); // eslint-disable-line react-hooks/exhaustive-deps
   const filtering = !!(area || role || q.trim());
   const close = () => { setOpen(null); window.history.replaceState(null, "", window.location.pathname); };

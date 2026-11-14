@@ -15,7 +15,11 @@ export type SvcData = { id: string; name: string; area: string; st: string; intr
   /* cards: the projects shown first under "Where we've done it", in this order; the page shows cards only (Where we've done it file v1, Nov 13) */
   cards?: string[];
   /* cardLinks: phrases in a scope card's title that open another service page (Asset Management, M&O file v10) */
-  cardLinks?: Record<string, string> };
+  cardLinks?: Record<string, string>;
+  /* Nov 13 (Websites, Portals & Digital Tools file v2): a "## " line in deliver is a small label over a group of cards;
+     connect, "Services that connect to this one" (each service with its own line); xpAfterWork, "The experience behind it"
+     as its own section after the project cards */
+  connect?: { id: string; line: string }[]; xpAfterWork?: boolean };
 export type AreaData = { id: string; name: string; tag: string; services: string[]; lead: string; hear: string[]; bring?: string[]; feature: { title: string; lead?: string; /* links: each stage lists its services as links (Program & Project Delivery, Nov 13) */ links?: boolean; steps: { t: string; d: string; services: string[]; areas?: string[] }[] }; keep: string; cases: string[];
   /* xp: "The experience behind it" on the area page (Program & Project Delivery area page file v1, Nov 13) */
   xp?: string[];
@@ -179,7 +183,7 @@ export const SERVICES: Record<string, SvcData> = {
   "src": {
    "intro": "live",
    "hear": "Written from our records",
-   "walk": "Based on Louisiana, Arkansas, and Nevada records"
+   "walk": "Based on project records"
   }
  },
  "workforce": {
@@ -601,7 +605,7 @@ export const SERVICES: Record<string, SvcData> = {
   "src": {
    "intro": "Based on Southeastern DOT work orders (proficiency and appraiser classification); Ron Crew bio",
    "hear": "Written from our records",
-   "walk": "Based on Tennessee and Louisiana records"
+   "walk": "Based on project records"
   }
  },
  "construction": {
@@ -1375,28 +1379,56 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Websites, Portals & Digital Tools",
   "area": "tech",
   "st": "ok",
-  "intro": "We build a program's website: one place where staff find the tools, manuals, and training they need, and where changes are requested, decided, and tracked.\n\nWe link the site to the systems staff already use, publish manuals and guidance as pages people can search, and review a full preview copy with the people who will use it before anything goes live.",
+  "intro": "We plan, design, and build websites, and the portals and web-based tools that run on them. That can be a public site for an organization or a program, a portal where staff, clients, or partners sign in, or a working application with a database behind it.\n\nWe move manual tools and processes onto the web, automate the routine steps, and connect the site to the systems staff already use, so its tools and dashboards read from one place. We can take on the whole site or one part of it: structure and content, design, the build, SEO, accessibility, hosting, governance, and training for the people who keep it current. We review a full preview copy with the people who will use it before anything goes live.",
   "hear": [
    "Tools, manuals, and training spread across drives and intranet pages",
    "Five versions of the same form",
    "No clear way to request a change, or to know what changed",
-   "Hundreds of documents sit on a separate, outdated site"
+   "Hundreds of documents sit on a separate, outdated site",
+   "A process that still runs on spreadsheets and email",
+   "Our website is out of date and hard to use on a phone",
+   "We can't update our own site without a developer",
+   "People search for what we do and don't find us"
   ],
   "quote": false,
   "deliverTitle": "What this service covers",
   "deliver": [
+   "## Sites",
+   "**Public websites:** organization, agency, and program sites, landing pages, and event pages, built new or redesigned, for phones and computers",
    "**Program websites and resource libraries:** the program's tools, manuals, and training in one place, with search, linked to the systems staff already use",
+   "**Portals and intranets:** sign-in areas for staff, clients, and partners, each with the documents, tools, and updates that group needs",
+   "**Design and content:** site structure, page writing and editing, visual design, photos, graphics, interactive diagrams and maps, and video",
+   "**Search engine optimization (SEO):** page titles and descriptions, structured data, site maps, redirects, page speed, search console setup, and business listings",
+   "**Sections staff keep current:** news and articles, job postings, event pages, team directories, podcasts, and video libraries",
+   "## Tools and applications",
+   "**Manual processes moved online:** spreadsheets, paper forms, and email hand-offs rebuilt as web-based tools, with the routine steps automated",
+   "**Custom web applications:** an application built for one job, such as tracking requests, scoring projects, or producing a document from the answers to a form",
    "**Tools and generators:** scope of work, cost estimating, and templates tied to how the program works",
    "**Forms turned into web applications:** request forms and scoring tools rebuilt as web applications, in the organization's own account",
    "**Manuals and guidance online:** published as web pages and kept current",
    "**Change request systems:** submit, route, decide, update, and close out, with every decision recorded",
+   "**Mapping and screening tools:** asset maps and project screening tools for program staff",
+   "**Online services:** event registration, booking and scheduling, sign-ups, surveys, online payments, and stores",
+   "## Data and connections",
+   "**Databases behind the site:** one place that holds the records, so the site's tools, forms, and dashboards all read from it",
+   "**Dashboards:** built on the site or brought in from the systems that hold the data, for staff, leadership, or the public",
+   "**Integrations and automation:** the site connected to sign-in, document libraries, scheduling, finance, and project systems, so information is entered once and routine steps run on their own",
+   "**AI on the site:** search that answers from the site's own content, assistants, and document tools, with rules for their use",
+   "## Keeping it running",
+   "**Website governance:** who owns each page and data source, how content is reviewed, updated, and retired, and who can change what",
    "**Website migrations:** every item reviewed and given a decision: keep, update, combine, move, or retire",
-   "**Mapping and screening tools:** asset maps and project screening tools for program staff"
+   "**Accessibility, hosting, and security:** pages checked against Section 508 and WCAG, more than one language where needed, hosting and domain setup, security certificates, backups, access control, visitor analytics, and a privacy notice",
+   "**Review, training, and support:** a private preview copy where reviewers comment and edit wording, training and documentation for site owners, and updates after launch"
   ],
   "walk": [
    "A live site with one source of truth",
    "Tools and templates tied to how the program works",
-   "A change process tracked from request to close-out"
+   "A change process tracked from request to close-out",
+   "Manual steps moved online and connected to the organization's other systems",
+   "A site set up for phones, search engines, and accessibility",
+   "Written rules for who owns and updates each part of the site",
+   "The site, its accounts, and its content in the organization's name",
+   "Site owners trained to keep it current"
   ],
   "industries": [
    "transport",
@@ -1408,7 +1440,10 @@ export const SERVICES: Record<string, SvcData> = {
    "training-video",
    "program-delivery"
   ],
-  "xp": [],
+  "xp": [
+   "Florida DOT's former Chief Information Officer, who led its data governance, is on our team",
+   "So is the nation's first Chief Data and AI Officer at a state department of transportation"
+  ],
   "cards": [
    "cs-pdn",
    "cs-consult-flow",
@@ -1416,10 +1451,19 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-pd-manual",
    "cs-hi"
   ],
+  "xpAfterWork": true,
+  "connect": [
+   { "id": "automation", "line": "connects the site to the systems behind it, and automates the steps between them" },
+   { "id": "data-governance", "line": "sets who owns the site's content and data, the definitions, and how both are kept current" },
+   { "id": "dashboards", "line": "builds the dashboards the site shows, from the measures to the data behind them" },
+   { "id": "ai", "line": "adds search, assistants, and document tools, with a policy for their use" },
+   { "id": "training-video", "line": "produces the how-to and training videos published next to the tools they teach" },
+   { "id": "tech-strategy", "line": "places the site in the organization's wider technology plan" }
+  ],
   "src": {
-   "intro": "Louisiana delivery website records",
-   "hear": "Louisiana delivery website records",
-   "walk": "Louisiana delivery website records"
+   "intro": "Rawlins' own website and project delivery website records.",
+   "hear": "Rawlins' own website and project delivery website records.",
+   "walk": "Rawlins' own website and project delivery website records."
   }
  },
  "automation": {
@@ -1685,9 +1729,9 @@ export const SERVICES: Record<string, SvcData> = {
    "cs-hi"
   ],
   "src": {
-   "intro": "Louisiana delivery website records",
+   "intro": "Project delivery website records",
    "hear": "Written from our records",
-   "walk": "Louisiana delivery website records"
+   "walk": "Project delivery website records"
   }
  },
  "tech-strategy": {
@@ -1966,7 +2010,7 @@ export const SERVICES: Record<string, SvcData> = {
   "src": {
    "intro": "aviation catalog (internal)",
    "hear": "Written from our records",
-   "walk": "Nevada record"
+   "walk": "Based on project records"
   }
  },
  "smart-mobility": {
@@ -2529,7 +2573,7 @@ export const INDUSTRIES: Record<string, IndustryData> = {
    ],
    [
     "Paul Steinman, P.E.",
-    "Former Chief Operating Officer, Idaho Transportation Department, and District Secretary, Florida DOT"
+    "Former Chief Operations Officer, Idaho Transportation Department, and District Secretary, Florida DOT"
    ],
    [
     "Rex Vines, P.E.",

@@ -1,0 +1,27 @@
+/* Nov 13 content files (Websites, Portals & Digital Tools v2; Our People v2) */
+
+/* What this service covers in groups: a small label over each group, the cards as before */
+.svd-group + .svd-group { margin-top: clamp(22px, 3vh, 34px); }
+.svd-k { display: block; margin: 0 0 12px; }
+
+/* Services that connect to this one: the same cards as "How we can help" on the Who We Work With pages */
+.svx-conn { background: #fff; }
+.svx-conn .v8-h2 { margin-bottom: clamp(22px, 3vw, 36px); }
+.svx-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 22px); }
+.svx-cards.is-2, .svx-cards.is-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.svx-cards.is-1 { grid-template-columns: minmax(0, 640px); }
+.svx-cards a { position: relative; height: 100%; display: flex; flex-direction: column; gap: 8px; padding: 26px 26px 24px; border-radius: 22px; background: #f5f9fd; border: 1px solid #c4d8f2; color: #0a1220 !important; text-decoration: none; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, background 0.25s; }
+.svx-cards a::before { content: ""; width: 42px; height: 3px; margin-bottom: 8px; border-radius: 3px; background: var(--aqua); box-shadow: 0 0 10px var(--aqua); }
+.svx-cards a:hover { transform: translateY(-3px); background: #fff; border-color: var(--aqua); box-shadow: 0 18px 44px -24px rgba(13, 27, 46, 0.4), 0 0 0 1px rgba(34, 211, 238, 0.4); }
+.svx-area { color: #0e7490; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.svx-cards b { font-size: clamp(1.25rem, 1.6vw, 1.45rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+.svx-q { color: #2e3c50; font-size: 1.04rem; line-height: 1.5; }
+.svx-q::first-letter { text-transform: uppercase; }
+.svx-cards i { margin-top: auto; padding-top: 6px; color: #1d3759; font-style: normal; font-size: 1.3rem; transition: transform 0.2s, color 0.2s; }
+.svx-cards a:hover i { color: #0e7490; transform: translateX(5px); }
+@media (max-width: 860px) { .svx-cards, .svx-cards.is-2, .svx-cards.is-4 { grid-template-columns: 1fr; } }
+
+/* The experience behind it as its own section after the project cards: the aside card, full width */
+.svx-xp { background: #fff; }
+.svx-xp .svw-xp ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px clamp(24px, 3vw, 48px); }
+@media (max-width: 760px) { .svx-xp .svw-xp ul { grid-template-columns: 1fr; } }

@@ -114,13 +114,26 @@ export default function ServiceV8({ id }: { id: string }) {
   const deliverTitle = s.deliverTitle ?? "What we deliver";
   const photo = SERVICE_PHOTO[id] ?? AREA_PHOTO[area.id];
   const aviation = AVIATION_PAGES.includes(id);
+  /* the cards in groups where the page has them: a "## " line is a small label over the cards after it (Websites, Portals &
+     Digital Tools file v2, Nov 13); the numbers run on across the groups */
+  const cards = s.deliver.filter((d) => !d.startsWith("## "));
+  const groups = s.deliver.reduce<{ label: string; items: string[] }[]>((g, d) => {
+    if (d.startsWith("## ")) g.push({ label: d.slice(3), items: [] });
+    else if (g.length) g[g.length - 1].items.push(d);
+    else g.push({ label: "", items: [d] });
+    return g;
+  }, []);
+  const connect = (s.connect ?? []).map((c) => ({ ...c, hit: serviceById(c.id) })).filter((c) => c.hit);
+  const xpOwn = !!s.xpAfterWork && s.xp.length > 0;
   const sections: [string, string][] = [
     ["hear", hearTitle(s.hear)], ["deliver", deliverTitle],
     ...(steps && FEATURE_AND_STEPS.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
     ...(steps ? [["how", steps.title] as [string, string]] : HAS_FEATURE.includes(id) ? [["feature", "From our work"] as [string, string]] : []),
     ...(FEATURE_FROM[id] ? [["feature", "What this covers"] as [string, string]] : []),
+    ...(connect.length ? [["connect", "Services that connect to this one"] as [string, string]] : []),
     ["walk", "What you walk away with"],
     ...(hasWork ? [["work", workTitle] as [string, string]] : []),
+    ...(xpOwn ? [["experience", "The experience behind it"] as [string, string]] : []),
     ...(aviation ? [["aviation", "Our aviation team"] as [string, string]] : []),
     ["talk", "Talk to us"],
   ];
@@ -172,15 +185,23 @@ export default function ServiceV8({ id }: { id: string }) {
         </div>
       </section>
 
-      <Scene steps={1} per={Math.max(70, s.deliver.length * 17)} id="deliver" className="svd" label={deliverTitle}>
+      <Scene steps={1} per={Math.max(70, cards.length * 17)} id="deliver" className="svd" label={deliverTitle}>
         <div className="v8-wrap svd-in">
           <AreaMark kind="loop" />
           <div className="svd-head">
             <h2 className="v8-h2">{deliverTitle}</h2>
           </div>
-          <ul className={`svd-cards${s.deliver.length > 6 ? " is-3 is-4" : s.deliver.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: s.deliver.length } as CSSProperties}>
-            {s.deliver.map((d, k) => <li key={d} style={{ ["--i" as string]: k } as CSSProperties}><span>{String(k + 1).padStart(2, "0")}</span><div className="svd-t">{nameLine(d, s.cardLinks)}<LineNote text={d} /></div></li>)}
-          </ul>
+          {groups.map((g) => {
+            const start = cards.indexOf(g.items[0]);
+            return (
+              <div key={g.label || "all"} className={g.label ? "svd-group" : undefined}>
+                {g.label && <p className="v8-eyebrow svd-k">{g.label}</p>}
+                <ul className={`svd-cards${cards.length > 6 ? " is-3 is-4" : cards.length > 4 ? " is-3" : ""}`} style={{ ["--n" as string]: g.items.length } as CSSProperties}>
+                  {g.items.map((d, k) => <li key={d} style={{ ["--i" as string]: start + k } as CSSProperties}><span>{String(start + k + 1).padStart(2, "0")}</span><div className="svd-t">{nameLine(d, s.cardLinks)}<LineNote text={d} /></div></li>)}
+                </ul>
+              </div>
+            );
+          })}
           {/* the pages under this one (Project Delivery: Preconstruction and Construction; Nicole's file v6, Nov 13) */}
           {s.sub?.length ? (
             <ul className="sv-chips svd-sub">
@@ -207,13 +228,35 @@ export default function ServiceV8({ id }: { id: string }) {
         <section id="feature" className="sv-legacy"><ServiceFeature id={FEATURE_FROM[id]} /></section>
       )}
 
+      {/* Services that connect to this one: each linked by name, with its own line, as "How we can help" cards (Websites,
+          Portals & Digital Tools file v2, Nov 13) */}
+      {connect.length > 0 && (
+        <section id="connect" className="sv-sec svx-conn">
+          <div className="v8-wrap">
+            <h2 className="v8-h2">Services that connect to this one</h2>
+            <ul className={`svx-cards is-${connect.length}`}>
+              {connect.map(({ id: cid, line, hit: h }) => (
+                <li key={cid} data-reveal>
+                  <a href={serviceHref(cid)}>
+                    <span className="svx-area">{h!.area.name}</span>
+                    <b>{h!.service.name}</b>
+                    <span className="svx-q">{line}<LineNote text={line} /></span>
+                    <i aria-hidden="true">→</i>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
       <section id="walk" className="sv-sec svw">
-        <div className={`v8-wrap svw-in${s.xp.length ? "" : " is-solo"}`}>
+        <div className={`v8-wrap svw-in${s.xp.length && !xpOwn ? "" : " is-solo"}`}>
           <div>
             <h2 className="v8-h2">What you walk away with</h2>
             <RouteList check ordered={false} stops={s.walk.map((w) => ({ d: w }))} />
           </div>
-          {s.xp.length > 0 && (
+          {s.xp.length > 0 && !xpOwn && (
             <aside id="experience" className="svw-xp" aria-labelledby="svw-xp-h" data-reveal>
               <h2 id="svw-xp-h" className="v8-eyebrow">The experience behind it</h2>
               <ul>{s.xp.map((x) => <li key={x}>{x}<LineNote text={x} /></li>)}</ul>
@@ -251,6 +294,19 @@ export default function ServiceV8({ id }: { id: string }) {
                 <Rail label="Related projects">{rest.slice(0, 3).map((c) => <ProjectCard key={c.id} c={c} />)}</Rail>
               </>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* The experience behind it as its own section after the project cards, in the same style as the aside on other pages
+          (Websites, Portals & Digital Tools file v2, Nov 13) */}
+      {xpOwn && (
+        <section id="experience" className="sv-sec svx-xp">
+          <div className="v8-wrap">
+            <aside className="svw-xp" aria-labelledby="svx-xp-h" data-reveal>
+              <h2 id="svx-xp-h" className="v8-eyebrow">The experience behind it</h2>
+              <ul>{s.xp.map((x) => <li key={x}>{x}<LineNote text={x} /></li>)}</ul>
+            </aside>
           </div>
         </section>
       )}

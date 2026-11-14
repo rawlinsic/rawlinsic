@@ -40,4 +40,18 @@ export const FORMERLY: Record<string, string> = (() => {
   AVIATION_TEAM.forEach(([n, l]) => add(n, l));
   return out;
 })();
-export const formerlyFor = (name: string) => FORMERLY[bareName(name)];
+/* Nov 13 (Our People file v2): "Before Rawlins" lines for eight more people, each from their own bio. Shown on their Our
+   People profile and on people cards, but kept out of FORMERLY so the lists built from "has a former role" (the home
+   people strip's order, the faces on Who we are) stay as they were. */
+export const MORE_FORMERLY: Record<string, string> = {
+  "janine cooper": "Former Associate Region Engineer of Operations, Southwest Region, Michigan Department of Transportation",
+  "amy neidringhaus": "Former Wake County District Engineer, North Carolina Department of Transportation, and Major Projects Engineer, North Carolina Turnpike Authority",
+  "chris petersen": "Former Senior Project Coordinator, Roadway Design Division, Nevada Department of Transportation",
+  "steve cook": "Former Engineer of Operations and Maintenance, Michigan Department of Transportation",
+  "jenica keller": "Former Assistant Director of Operations, Nevada Department of Transportation",
+  "amy causseaux": "Former Statewide Interchange Coordinator and Toll Finance Manager, Florida Department of Transportation",
+  "david douglas": "Former Performance and Strategic Development Manager, Florida's Turnpike Enterprise",
+  "ron crew": "Former right-of-way manager and Local Agency Program coordinator, Florida Department of Transportation",
+};
+/* the line a profile or a people card shows: the former role, or one of the eight above */
+export const formerlyFor = (name: string) => FORMERLY[bareName(name)] ?? MORE_FORMERLY[bareName(name)];

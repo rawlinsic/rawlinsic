@@ -6,7 +6,7 @@ import { TEAM_MEMBERS } from "@/lib/team-data";
 import { THOUGHT_LEADERSHIP, type ThoughtLeadershipArticle } from "@/components/thought-leadership-data";
 import { AREAS, CASES, LEADERS, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, industryHref, subsectorHref, isListed } from "@/lib/content/site";
 import { STATES, STATES_ACTIVE, STATES_SERVED, STEPS } from "@/lib/content/catalog";
-import { FORMERLY, bareName as bare } from "@/lib/content/people";
+import { FORMERLY, bareName as bare, formerlyFor } from "@/lib/content/people";
 import { AWARDS, PUBLICATIONS, RESEARCH, TALKS } from "@/lib/content/research";
 import PeopleDirectory, { Pin, type Person } from "@/components/site/people";
 import PodcastPlayer from "@/components/site/podcast-player";
@@ -223,6 +223,14 @@ const memberSlug = (name: string) => name.toLowerCase().replace(/[.,]/g, "").rep
 const BUSINESS = /Accounting|Administrative Assistant|Professional Services|VP of Finance|Chief Culture|Administration & Contract/;
 const SPECIALIST = /Specialist|Designer|Engineer\b|Architect|Tester|Digital Strategy|Chief AI Strategy/;
 const ADVISORS_BY_NAME = /^(Debbie Cmar|Lauren LeJeune)\b/;
+const [SO, PPD, MO, DS] = ["strategy-organization", "program-project-delivery", "maintenance-operations", "digital-solutions"];
+const AREAS_BY_PERSON: Record<string, string[]> = {
+  "paul steinman": [SO, PPD], "paul schneider": [SO, PPD], "mark geib": [MO], "janine cooper": [SO, MO], "david rader": [SO, MO],
+  "ron crew": [PPD], "lisa marsh": [MO], "chris petersen": [PPD], "lauren lejeune": [SO, PPD], "steve cook": [MO],
+  "amy causseaux": [PPD], "david douglas": [SO], "ken flore": [SO, MO], "carissa mcquiston": [MO], "debbie cmar": [PPD],
+  "mayela sosa": [SO, PPD], "jenna brady": [SO, PPD], "lance grace": [SO, MO], "ken m. mcentire": [MO], "jacob michaels": [PPD],
+  "dara wheeler": [DS, SO],
+};
 function personFromRoster(m: (typeof TEAM_MEMBERS)[number]): Person {
   const role = m.title && m.title !== m.role ? `${m.title}, ${m.role}` : m.role;
   /* Nicole, Nov 11: Debbie Cmar and Lauren LeJeune are advisors (their roster roles alone would put them in Business Operations) */
@@ -237,9 +245,12 @@ function personFromRoster(m: (typeof TEAM_MEMBERS)[number]): Person {
   /* Amy Neidringhaus also shows under Program & Project Delivery (Nicole, Nov 13) */
   if (/^Amy Neidringhaus/.test(m.name)) areas.add("program-project-delivery");
   if (/^Nicole Arakorpi/.test(m.name)) { areas.clear(); ["strategy-organization", "program-project-delivery", "digital-solutions"].forEach((a) => areas.add(a)); }
+  /* Nov 13 (Our People file v2): each of these 21 people's areas, from their own bio */
+  const set = AREAS_BY_PERSON[bare(m.name)];
+  if (set) { areas.clear(); set.forEach((a) => areas.add(a)); }
   return {
     slug: memberSlug(m.name), name: m.name, photo: m.photo, role, job: m.role, group, areas: Array.from(areas),
-    formerly: FORMERLY[bare(m.name)], location: m.location, email: m.email, phone: m.phone, linkedin: m.linkedin, background: cleanNames(m.background), achievements: cleanNames(m.achievements),
+    formerly: FORMERLY[bare(m.name)], before: formerlyFor(m.name), location: m.location, email: m.email, phone: m.phone, linkedin: m.linkedin, background: cleanNames(m.background), achievements: cleanNames(m.achievements),
   };
 }
 /* People for the moving strip on home: the advisors and specialists from Our
