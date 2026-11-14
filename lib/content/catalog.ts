@@ -2976,7 +2976,7 @@ export const SUBSECTORS: Record<string, SubsectorData> = {
 export const CASES: Record<string, CaseData> = {
  "cs-proficiency": {
   "id": "cs-proficiency",
-  "ch": "EPIC (Empowering People Influencing Culture), a department-wide restructuring, set out to cut layers of supervision, update classifications and performance measures, and give staff a clear path to advance. Each new classification needed a defined route to proficiency, written with experts in dozens of disciplines. The goals were multiple career paths, pay set to industry benchmarks, and stronger checks and balances.",
+  "ch": "EPIC (Empowering People Influencing Culture), a department-wide restructuring initiative, aimed to reduce layers of supervision, modernize job classifications, and establish clear opportunities for career advancement. The initiative created multiple career paths, established defined proficiency requirements for advancement within each classification, aligned compensation with industry benchmarks, and strengthened organizational accountability through improved checks and balances.",
   "when": "2023 to 2025",
   "did": [
    "Built proficiency programs with agency experts in more than two dozen disciplines, from right of way and construction to bridge inspection and traffic design",
