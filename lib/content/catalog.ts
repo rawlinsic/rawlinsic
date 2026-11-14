@@ -2427,7 +2427,7 @@ export const AREAS: Record<string, AreaData> = {
   ],
   "xpAfter": true,
   "lines": {
-   "portals": "Program websites, resource libraries, tools, & change requests",
+   "portals": "Program websites, resource libraries, web-based tools, dashboards & change requests",
    "automation": "Connected systems, automated workflows, & custom apps",
    "data-governance": "Owners, definitions, inventories, & policies",
    "ai": "Policy, use cases, tools, & adoption",
