@@ -84,6 +84,10 @@ function variants(o: string, n: string): [string, string][] {
   const edge = /^\s*[“"‘']+|[”"’']+\s*$/g;
   if (edge.test(o)) { edge.lastIndex = 0; o = o.replace(edge, ""); n = n.replace(edge, ""); }
   const out: [string, string][] = [[o, n]];
+  /* a card's number the page draws before its sentence ("05 Developed a five-module…"): the code holds the sentence only.
+     Nov 14: with the number left on, the sentence wasn't found and a fallback changed code instead */
+  const num = /^\s*\d{1,2}\s+(?=\S)/;
+  if (num.test(o) && num.test(n) && o.match(num)![0].trim() === n.match(num)![0].trim()) out.push([o.replace(num, ""), n.replace(num, "")]);
   const unq = (s: string) => s.trim().replace(/^[“"]\s*/, "").replace(/\s*[”"]$/, "");
   const unp = (s: string) => s.trim().replace(/[.!?]$/, "");
   if (unq(o) !== o.trim()) out.push([unq(o), unq(n)]);
@@ -173,6 +177,10 @@ function template(files: Map<string, string>, o: string, n: string, c: Change, i
     for (let k = 0; k < cut.length; k += 2) { segs.push({ fixed: true, ws: words.slice(at, cut[k]) }); segs.push({ fixed: false, ws: words.slice(cut[k], cut[k + 1]) }); at = cut[k + 1]; }
     segs.push({ fixed: true, ws: words.slice(at) });
     if (!segs.some((g) => g.fixed && g.ws.join("").replace(/[^A-Za-z]/g, "").length >= 2) && !segs.some((g) => g.fixed && /[·|:–,-]/.test(g.ws.join("")))) continue;
+    /* Nov 14: a sentence split around "and" matched a code template that joins names (`${a} and ${b}`) and changed it.
+       A filled-in value is short (a name, a number, a label), and the fixed words must be more than small joining words */
+    const fixedWords = segs.filter((g) => g.fixed).flatMap((g) => g.ws).filter((w) => /[A-Za-z]{2}/.test(w) && !SMALL.has(w.toLowerCase()));
+    if (segs.some((g) => !g.fixed && g.ws.length > 5) || (!fixedWords.length && !segs.some((g) => g.fixed && /[·|:–]/.test(g.ws.join(""))))) continue;
     const src = segs.map((g) => (g.fixed ? (g.ws.length ? `(${part(g.ws)})` : "()") : VAR)).join("\\s*");
     let re: RegExp; try { re = new RegExp(src, "g"); } catch { continue; }
     const found: { path: string; m: RegExpMatchArray }[] = [];

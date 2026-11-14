@@ -90,4 +90,22 @@ describe("preview Edit text never changes code", () => {
     const r = save(f, { old: "Global Reach, Local Impact", next: "Zqx" });
     expect("out" in r).toBe(false);
   });
+
+  it("finds a card's sentence when the page shows its number first, and never changes a code template (Nov 14)", () => {
+    const f = new Map([
+      ["lib/content/catalog.ts", `export const CASES = { x: { did: [\n   "Developed a five-module core training course and Responsible Charge training",\n  ] } };`],
+      ["components/v8/service.tsx", "const names = (p: string[]) => (p.length > 1 ? `${p.slice(0, -1).join(\", \")} and ${p[p.length - 1]}` : p[0] ?? \"\");"],
+    ]);
+    const r = save(f, { old: "05 Developed a five-module core training course and Responsible Charge training", next: "05 Developed a five-module core training course including Responsible Charge training" });
+    expect("out" in r).toBe(true);
+    const out = (r as { out: Map<string, string> }).out;
+    expect(out.get("lib/content/catalog.ts")).toContain("five-module core training course including Responsible Charge training");
+    expect(out.get("components/v8/service.tsx")).toContain("} and ${p[p.length - 1]}");
+  });
+
+  it("won't change a code template even when the sentence isn't in the files", () => {
+    const f = new Map([["components/v8/service.tsx", "const names = (p: string[]) => (p.length > 1 ? `${p.slice(0, -1).join(\", \")} and ${p[p.length - 1]}` : p[0] ?? \"\");"]]);
+    const r = save(f, { old: "05 Developed a five-module core training course and Responsible Charge training", next: "05 Developed a five-module core training course including Responsible Charge training" });
+    expect("out" in r).toBe(false);
+  });
 });
