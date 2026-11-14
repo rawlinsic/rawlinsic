@@ -235,7 +235,7 @@ export const INDUSTRIES: Industry[] = [
   {
     /* Nov 13 (Who We Work With file v1): new page under Private Sector */
     id: "eng", slug: "engineering-consulting-firms", name: "Engineering & Consulting Firms", scene: "office", parent: "private",
-    who: "Teaming on Public Programs & Project Systems",
+    who: "Public Programs & Project Systems",
     lead: "Engineering and consulting firms add us to their teams on state DOT programs, for what our people know from running those programs inside an agency. Our automation team also builds the systems a firm runs its own projects on: project tracking, time, invoicing, and reporting.",
     featured: ["program-delivery", "org-design", "workforce", "drone-programs", "automation", "dashboards", "portals"],
     featuredCase: "cs-pv-pmo",
