@@ -3246,7 +3246,7 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The state wanted local agencies to use asset management to plan their work and program their funding. Each community started from a different place.",
   "when": "2024 to 2025",
   "did": [
-   "Helped each agency name an asset management steering committee",
+   "Helped each agency establish an asset management steering committee",
    "Ran self-assessment surveys and reviewed each agency's plans and inventories",
    "Led in-person workshops using the state's competency framework",
    "Built short, mid, and long-term action plans with each agency",
