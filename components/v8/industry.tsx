@@ -26,6 +26,7 @@ import {
 } from "@/lib/content/site";
 import { INDUSTRIES as IND_DATA, PRIV, SERVICES, SUBSECTORS } from "@/lib/content/catalog";
 import WhoRing from "@/components/v8/who-ring";
+import HearPicker from "@/components/v8/hear-picker";
 import { INDUSTRY_PHOTO } from "@/lib/content/media";
 import { casePhoto } from "@/lib/content/v8";
 import { EVENTS, NEWS, eventsByTime } from "@/lib/content/news";
@@ -195,10 +196,13 @@ function FrameHero({ photo, crumbs, tag, title, lead, actions, note }: {
 function Hear({ title, items, bring }: { title: string; items: readonly string[]; bring?: string[] }) {
   const q = quotes(items);
   return (
-    <section id="hear" className="svq">
+    <section id="hear" className={`svq${bring?.length ? " is-picker" : ""}`}>
       <div className="v8-wrap svq-in">
         <h2 className="v8-h2">{title}</h2>
-        <LitText lines={q} notes={bring} noteLabel="What we bring" className={`svq-q is-${Math.min(q.length, 4)}${bring?.length ? " has-notes" : ""}`} />
+        {/* with what we bring: a picker with a glowing line, like the help picker (Nicole, Nov 13) */}
+        {bring?.length
+          ? <HearPicker items={q.map((x, i) => ({ q: x, b: bring[i] }))} />
+          : <LitText lines={q} className={`svq-q is-${Math.min(q.length, 4)}`} />}
       </div>
     </section>
   );

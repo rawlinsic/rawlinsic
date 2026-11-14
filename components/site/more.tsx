@@ -234,6 +234,8 @@ function personFromRoster(m: (typeof TEAM_MEMBERS)[number]): Person {
   if (/Aerial|Jordan Stacy|John Zuleger/.test(`${m.role} ${m.name}`)) { areas.add("drones-advanced-air-mobility"); if (!/Infrastructure Technologies|Jordan/.test(`${m.role} ${m.name}`)) areas.delete("digital-solutions"); }
   /* Nicole works across Strategy & Organization, Project Delivery, and Digital Solutions (her call, Nov 10;
      not Operations & Maintenance or Drones) */
+  /* Amy Neidringhaus also shows under Program & Project Delivery (Nicole, Nov 13) */
+  if (/^Amy Neidringhaus/.test(m.name)) areas.add("program-project-delivery");
   if (/^Nicole Arakorpi/.test(m.name)) { areas.clear(); ["strategy-organization", "program-project-delivery", "digital-solutions"].forEach((a) => areas.add(a)); }
   return {
     slug: memberSlug(m.name), name: m.name, photo: m.photo, role, job: m.role, group, areas: Array.from(areas),
@@ -279,7 +281,7 @@ export function OurPeople() {
         <PeopleDirectory people={people} showDev={!PROD} areas={AREAS.map((a) => ({ value: a.slug, label: a.name }))} />
       </div></section>
       {/* TODO(Nicole): title and line to come from Nicole ("Talk to the right person" and its line were removed, Nov 9) */}
-      <Talk title="Tell us what you're working on" text="" />
+      <Talk text="" />
     </Shell>
   );
 }

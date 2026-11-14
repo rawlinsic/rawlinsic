@@ -18,6 +18,8 @@ import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
 import { AREA_PHOTO, SERVICE_PHOTO, AREA_PHOTO_POS } from "@/lib/content/media";
 import { THEME, themeStyle, casePhoto, hearTitle } from "@/lib/content/v8";
 import Fit from "@/components/v8/fit";
+import HearPicker from "@/components/v8/hear-picker";
+import RouteList from "@/components/v8/route-list";
 import AreaMark from "@/components/v8/area-mark";
 import LitText from "@/components/v8/lit-text";
 import SectionNav from "@/components/v8/section-nav";
@@ -103,11 +105,13 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
 
       <SectionNav items={sections} />
 
-      <section id="hear" className="svq">
+      <section id="hear" className={`svq${L.bring?.length ? " is-picker" : ""}`}>
         <div className="v8-wrap svq-in">
           <h2 className="v8-h2">{hearTitle(L.hear)}</h2>
-          {/* each quote with Jacob's "What we bring" line under it (full site pass, Part 5, 2) */}
-          <LitText lines={quotes(L.hear)} notes={L.bring} noteLabel="What we bring" className={`svq-q is-${Math.min(quotes(L.hear).length, 4)}${L.bring?.length ? " has-notes" : ""}`} />
+          {/* each quote with Jacob's "What we bring" line: as a picker with a glowing line, like the help picker (Nicole, Nov 13) */}
+          {L.bring?.length
+            ? <HearPicker items={quotes(L.hear).map((q, i) => ({ q, b: L.bring?.[i] }))} />
+            : <LitText lines={quotes(L.hear)} className={`svq-q is-${Math.min(quotes(L.hear).length, 4)}`} />}
         </div>
       </section>
 
@@ -118,13 +122,13 @@ export default function AreaV8({ area, extra }: { area: Area; extra?: ReactNode 
       </Scene>
 
       {/* The experience behind it, in the service pages' style (Program & Project Delivery area page file v1, Nov 13) */}
+      {/* redesigned Nov 13 (Nicole: "needs a redesign of something better"): the heading held on the left, each line a card
+          on a glowing route on the right, the same as the list sections on the Who We Work With pages */}
       {L.xp?.length ? (
-        <section id="experience" className="sv-sec ar-xp">
-          <div className="v8-wrap">
-            <aside className="svw-xp" aria-labelledby="ar-xp-h">
-              <h2 id="ar-xp-h" className="v8-eyebrow">The experience behind it</h2>
-              <ul>{L.xp.map((x) => <li key={x}>{x}<LineNote text={x} /></li>)}</ul>
-            </aside>
+        <section id="experience" className="sv-sec ar-xp2">
+          <div className="v8-wrap ar-xp2-in">
+            <div className="ar-xp2-h"><h2 className="v8-h2">The experience behind it</h2></div>
+            <RouteList check ordered={false} stops={L.xp.map((x) => ({ d: <>{x}<LineNote text={x} /></> }))} />
           </div>
         </section>
       ) : null}

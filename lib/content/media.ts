@@ -63,8 +63,8 @@ export const SERVICE_PHOTO: Record<string, string> = {
   "strategic-planning": P("strategy-bg.webp"),
   "org-design": P("auto-human.webp"),
   "change-mgmt": P("change-management-workshop.webp"), // Nicole's photo, Nov 11: a culture workshop led by our team
-  workforce: P("aam-community-engagement.webp"), // a field crew training session (Nicole, Nov 11: a better picture than the speaker)
-  "exec-advisory": P("strategy-bg.webp"),
+  workforce: P("operations-bg.webp"), // the live site's Operations photo, a group talking in a circle (Nicole, Nov 13)
+  "exec-advisory": P("exec-advisory-panel.jpg"), // a panel discussion on stage, Nicole's photo (Nov 13)
   "program-delivery": P("transportation-aerial.webp"),
   "owners-rep": P("transportation-aerial.webp"),
   "alt-delivery": P("aam-team-meeting.webp"),

@@ -1402,3 +1402,38 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .ab-quote.is-light .ab-quote-who em { color: #2e3c50; }
 .ab-quote.is-light .ab-quote-who small { color: #51627a; }
 .ab-quote.is-light .ab-quote-who i { color: #0b7f99; }
+
+/* Nov 13: a line break Nicole types into an area page's service line (Edit text) shows as a line break */
+.way-q { white-space: pre-line; }
+
+/* Nov 13 (Nicole): "Challenges we hear" with "What we bring" as a picker on navy, like the help picker */
+.svq.is-picker { background: radial-gradient(60% 70% at 85% 10%, rgba(34, 211, 238, 0.14), transparent 65%), radial-gradient(rgba(165, 243, 252, 0.08) 1px, transparent 1.6px) 0 0 / 26px 26px, var(--navy-grad); color: #fff; }
+.svq.is-picker .v8-h2 { color: #fff; }
+.hp { margin-top: clamp(22px, 3vw, 40px); }
+.hp-q { align-items: flex-start; font-size: clamp(1.05rem, 1.25vw, 1.2rem); line-height: 1.4; text-align: left; }
+.hp-q .fp-dot { margin-top: 0.3em; }
+.hp-card { padding: clamp(22px, 2.4vw, 32px); border-radius: 18px; background: #fff; color: #0a1220; box-shadow: inset 4px 0 0 var(--aqua), 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 30px rgba(34, 211, 238, 0.28); animation: hp-in 0.45s ease both; }
+.hp-card .fp-k { color: #0b7f99; text-shadow: none; }
+.hp-b { margin: 0; color: #0a1220; font-size: clamp(1.15rem, 1.5vw, 1.4rem); font-weight: 500; line-height: 1.45; }
+@keyframes hp-in { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+.hp-inline { margin: 10px 0 14px; padding: 0; }
+@media (prefers-reduced-motion: reduce) { .hp-card { animation: none; } }
+
+/* Nov 13 (Nicole): the area pages' "The experience behind it", redesigned: heading on the left, a glowing route of cards */
+.ar-xp2 { background: radial-gradient(40% 50% at 100% 8%, rgba(34, 211, 238, 0.12), transparent 70%), linear-gradient(180deg, #f4f8fc, #e6eef8); }
+.ar-xp2-in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+.ar-xp2-h { position: sticky; top: calc(68px + var(--snh, 0px) + 32px); }
+.ar-xp2-h .v8-h2 { max-width: 14ch; margin: 0; color: #0a1220; }
+@media (max-width: 900px) { .ar-xp2-in { grid-template-columns: 1fr; gap: 22px; } .ar-xp2-h { position: static; } .ar-xp2-h .v8-h2 { max-width: none; } }
+
+/* Nov 13 (Nicole): the area tags on project cards glow blue instead of dull blue */
+.pcx-areas i { background: linear-gradient(180deg, #6ee9f8, #22d3ee) !important; color: #06233a !important; box-shadow: 0 0 14px rgba(34, 211, 238, 0.5); }
+
+/* Nov 13 (Nicole): "What this service covers" cards styled like the "How we can help" cards, numbers kept */
+.svd-cards li { flex-direction: column; align-items: stretch; gap: 8px; padding: 26px 26px 24px; border-radius: 22px; background: #fff; border: 1px solid #d6e3f2; box-shadow: 0 18px 44px -30px rgba(13, 27, 46, 0.35); }
+.svd-cards li::after { display: none; }
+.svd-cards li::before { content: ""; width: 42px; height: 3px; margin-bottom: 8px; border-radius: 3px; background: var(--aqua); box-shadow: 0 0 10px var(--aqua); }
+.svd-cards li > span { padding-top: 0; color: #0e7490; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; }
+.svd-t .svd-name { margin-bottom: 8px; color: #0a1220; font-size: clamp(1.2rem, 1.5vw, 1.4rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+.svd-t .svd-line { color: #2e3c50; font-size: 1rem; line-height: 1.5; }
+.svd-cards.is-4 li { padding: 24px 22px 22px; }
