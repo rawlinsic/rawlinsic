@@ -4086,7 +4086,7 @@ export const CASES: Record<string, CaseData> = {
    "Coordinated with FHWA and the State DOT to streamline and improve STIP and TIP processes.",
    "Developed project selection criteria and templates for the new funding categories",
    "Built a bridge prioritization tool, with tutorials for program managers and bridge staff, to accurately update the delivery timeframes for currently programmed projects",
-   "Developed the detailed concept for the statewide asset mapping tool",
+   "Developed the detailed concept for the statewide asset mapping tool to assist in the prioritization process",
    "Built a bridge triage tool to reduce the number of bridges considered in the biannual calls for projects",
    "Analyzed bridge inspection and condition data, and prepared bridge bundling options, maps by district, and procurement recommendations",
    "Calculated a benefit-cost ratio for an interstate project, and coordinated with the safety program",
