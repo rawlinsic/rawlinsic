@@ -1692,3 +1692,15 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .pp-dialog-in p, .pp-dialog-in li, .pp-dialog-in dd, .pp-dialog-in span:not([class*="tag"]) { color: inherit; }
 .pp-dialog-in h2, .pp-dialog-in h3 { color: #0a1220; }
 .apop-card { color: #22344d; text-shadow: none; }
+/* Nov 14 (Nicole, phone screenshot of Paul's bio from the home page): the people strip's pop-up now sits at the end of
+   the page (components/v8/people-strip.tsx), so it carries the palette it had inside the page */
+.ps-dialog {
+  --ink: #0d0d0d; --ink-2: #2e3c50; --muted: #4d688c; --paper: #ffffff; --paper-2: #eef3f9; --pale: #dce6f2; --line: #c4d8f2;
+  --head: #0a1220; --navy: #1d3759; --blue: #1d3759; --steel: #4d688c; --deep: #0e1a2b; --aqua: #22d3ee; --aqua-soft: #a5f3fc; --aqua-ink: #0e7490;
+  --rw-navy: #1d3759; --rw-ink: #0d0d0d; --rw-blue: #4d688c; --rw-blue-strong: #1d3759; --rw-paper: #eef3f9; --rw-panel: #dce6f2; --rw-panel2: #c4d8f2; --rw-slate: #4d688c;
+}
+/* the title and place in navy, as on Our People */
+.ps-dialog .pp-role, .ps-dialog .pp-loc { color: #1d3759; }
+.ps-dialog :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+/* Write your own: white letters; the glowing blue outline stays (Nicole, Nov 14) */
+.fp-q-own:not([aria-pressed="true"]) { color: #fff; }

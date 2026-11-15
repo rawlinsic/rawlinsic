@@ -7,12 +7,17 @@
    Our people). Each card is still a real link to Our people, so a new-tab
    click or no JavaScript goes there instead. */
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import { createPortal } from "react-dom";
 import { Pin, ProfileBody, holdPage, type Person } from "@/components/site/people";
 
 export default function PeopleStrip({ people, across = false, showDev = false, lanes = 2 }: { people: Person[]; across?: boolean; showDev?: boolean; lanes?: number }) {
   const [open, setOpen] = useState<Person | null>(null);
   const dlg = useRef<HTMLDialogElement>(null);
   const byPointer = useRef(false); // closed with the mouse: let the strip move again
+  /* the pop-up is drawn at the end of the page, not inside the strip: the sections the strip sits in (the home page's
+     opening story, Who we are) style their own text, and on phones that turned the bio text light (Nicole, Nov 14) */
+  const [host, setHost] = useState<HTMLElement | null>(null);
+  useEffect(() => setHost(document.body), []);
 
   useEffect(() => {
     const d = dlg.current;
@@ -61,7 +66,8 @@ export default function PeopleStrip({ people, across = false, showDev = false, l
           );
         })}
       </div>
-      <dialog ref={dlg} className="pp-dialog" data-lenis-prevent onClose={() => setOpen(null)} onClick={(e) => { if (e.target === dlg.current) shut(true); }} aria-labelledby="pp-name">
+      {host && createPortal(
+      <dialog ref={dlg} className="pp-dialog ps-dialog" data-lenis-prevent onClose={() => setOpen(null)} onClick={(e) => { if (e.target === dlg.current) shut(true); }} aria-labelledby="pp-name">
         {open && (
           <div className="pp-dialog-in">
             <button type="button" className="pp-close" onClick={(e) => shut(e.detail > 0)} aria-label="Close profile">×</button>
@@ -69,7 +75,7 @@ export default function PeopleStrip({ people, across = false, showDev = false, l
             <p className="pp-more"><a href="/about/our-people">Meet everyone on our team</a></p>
           </div>
         )}
-      </dialog>
+      </dialog>, host)}
     </>
   );
 }
