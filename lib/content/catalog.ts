@@ -4596,7 +4596,7 @@ export const CASES: Record<string, CaseData> = {
    "Benchmarked national best practices for winter maintenance staffing, levels of service, and fleet management to identify opportunities for improving the department’s operations.",
    "Benchmarked national best practices for bridge inspection programs to identify opportunities for improving the department’s inspection practices.",
    "Conducted a nationwide survey of state DOT traffic design practices and synthesized the findings with national research to identify leading practices and opportunities for improvement.",
-   "Ran a peer survey on traffic modeling, and wrote a white paper on the business cases for operations management and intelligent transportation systems",
+   "Benchmarked peer-state traffic modeling practices and evaluated the business cases for transportation operations management and intelligent transportation systems (ITS) to identify opportunities for improving the department’s operations",
    "Analyzed staffing and cost at county maintenance facilities against leading national practice"
   ],
   "res": [
