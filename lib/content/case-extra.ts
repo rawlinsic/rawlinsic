@@ -85,7 +85,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
     when: "2024 to 2025", // source: drafts:301
     did: [
       "", // source: drafts:311
-      "Held virtual follow-up meetings to confirm next steps", // source: drafts:312
+      "Conducted virtual follow-up sessions with each agency to reinforce priorities, clarify implementation responsibilities, and establish actionable next steps for advancing its asset management program.", // source: drafts:312
       "Sent the state deliverable packages: workshop deck, notes, and action plan", // source: drafts:314
     ],
     res: [
