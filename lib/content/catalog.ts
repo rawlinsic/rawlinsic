@@ -90,7 +90,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Organizational Design & Process Improvement",
   "area": "strategy",
   "st": "ok",
-  "intro": "We design the organization from current to future state, with position descriptions, classification and salary analysis, and change communications. Then we work on the processes and procedures people use every day.\n\nWe do the work with the people who run each unit. An assessment starts from interviews and the unit's own documents, and a new structure comes with what staff need to move into it: position descriptions, primers, and a transition plan.",
+  "intro": "WWe help transportation agencies build more efficient, effective, and accountable organizations through comprehensive organizational assessments, analyses, and restructuring. We evaluate functions and responsibilities across divisions, sections, and teams to eliminate duplication, close gaps, align related functions, streamline management structures, and improve decision-making. We go beyond organizational restructuring to transform how work gets done—modernizing processes and procedures, developing policies, manuals, and tools, leveraging technology to improve efficiency, and delivering training to implement and sustain improvements. The result is a more streamlined, coordinated organization with clearer accountability, better use of resources, and improved service delivery.\n\n",
   "hear": [
    "We're reorganizing, or standing up a new division.",
    "Our procedures live in people's heads, or in five versions of the same binder.",
