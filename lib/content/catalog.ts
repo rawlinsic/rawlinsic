@@ -3034,7 +3034,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-pbmc": {
   "id": "cs-pbmc",
-  "ch": "A Region Office decided to used performance-based contracts for interstate maintenance. That meant a measurable quality baseline, a procurement process shaped with industry, and administering two new contracts with staff and contractors learning the model together.",
+  "ch": "A Region Office decided to use performance-based contracts for interstate maintenance. That meant a measurable quality baseline, a procurement process shaped with industry, and administering two new contracts with staff and contractors learning the model together.",
   "when": "2023 to 2025",
   "did": [
    "Developed assessment report that recommended a performance-based maintenance contract for one region and a simpler maintenance quality assurance program",
