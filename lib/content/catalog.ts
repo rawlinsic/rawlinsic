@@ -3249,7 +3249,7 @@ export const CASES: Record<string, CaseData> = {
    "Helped each agency establish an asset management steering committee",
    "Conducted agency self-assessments and evaluated existing asset management plans and inventories to assess current practices, identify capability gaps, and establish a baseline for improvement.",
    "Led in-person workshops structured around the asset management competency framework, incorporating international best practices and case studies to broaden perspectives and demonstrate practical applications of effective asset management.",
-   "Built short, mid, and long-term action plans with each agency",
+   "Equipped each agency with a tailored, actionable roadmap for advancing its asset management capabilities, with prioritized short-, medium-, and long-term initiatives aligned with its needs, resources, and organizational readiness.",
    "Prepared one-page materials for elected officials"
   ],
   "res": [
