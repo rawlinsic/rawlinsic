@@ -25,7 +25,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
   "cs-tn-ipd": {
     did: [
       "Led implementation of the Project Delivery Network (PDN) by providing hands-on guidance and support to department project managers delivering the first projects under the new project delivery framework.", // source: findings:8
-      "Developed and implemented a consistent, structured risk management and quality assurance program to reduce scope, schedule, and budget risks and better meet project delivery schedules.", // source: findings:8
+      "Developed and implemented a standardized risk management and quality assurance program to proactively identify and mitigate scope, schedule, and budget risks, improve project delivery predictability, and increase on-time project completion.", // source: findings:8
     ],
   },
   "cs-pbmc": {
