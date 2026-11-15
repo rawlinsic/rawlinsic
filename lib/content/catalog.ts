@@ -4592,7 +4592,7 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department sought to improve the efficiency, effectiveness, and cost of its maintenance and traffic operations by evaluating current practices against national benchmarks and identifying opportunities for improvement.",
   "when": "2024",
   "did": [
-   "Researched how other states staff and run traffic management centers and highway help truck programs, and reviewed the department's current practice",
+   "Benchmarked national practices for staffing and operating traffic management centers and highway assistance patrol programs, assessing the department’s existing practices to identify opportunities for improvement.",
    "Reviewed national practice for winter maintenance staffing and level of service, with fleet management practices",
    "Researched bridge inspection practice and wrote a white paper with recommendations",
    "Surveyed all states on traffic design practice, and compiled the results with national research",
