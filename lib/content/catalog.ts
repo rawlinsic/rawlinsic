@@ -4600,7 +4600,7 @@ export const CASES: Record<string, CaseData> = {
    "Benchmarked staffing levels and operating costs at county maintenance facilities against national best practices to identify opportunities for improving operational efficiency and cost-effectiveness."
   ],
   "res": [
-   "Findings and recommendations from each review presented to department leadership in 2024",
+   "Presented findings and actionable recommendations from each best practices assessment to department leadership, identifying opportunities to improve operational efficiency, effectiveness, and cost management.",
    "Traffic design survey results delivered in July 2024",
    "Summary presentation on staffing delivered to leadership in October 2024"
   ],
