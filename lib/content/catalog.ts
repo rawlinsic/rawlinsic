@@ -3014,7 +3014,7 @@ export const CASES: Record<string, CaseData> = {
   "ch": "The department sought to transform its traditional, siloed project delivery process to improve collaboration, accountability, efficiency, and project outcomes.",
   "when": "2019 to 2023",
   "did": [
-   "Reworked the project management life cycle from planning to maintenance",
+   "Established a Project Management Division to coordinate the efforts of multi-disciplinary projects teams allowing them to plan, design, and execute projects more efficiently and with fewer delays.",
    "Introduced risk management practices to control scope, schedule, and budget",
    "Worked the department's transition projects in two regions: project schedules, master scopes of work, risk workshops, and risk registers",
    "Wrote an onboarding process for consultants"
