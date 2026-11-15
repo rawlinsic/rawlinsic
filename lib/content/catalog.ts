@@ -3021,7 +3021,7 @@ export const CASES: Record<string, CaseData> = {
   ],
   "res": [
    "Improved construction project delivery commitments from 40% to 100%.",
-   "The consultant onboarding process was shared with all regions for statewide use"
+   "Created a reliable consultant market."
   ],
   "services": [
    "program-delivery"
