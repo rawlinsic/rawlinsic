@@ -3011,7 +3011,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-tn-ipd": {
   "id": "cs-tn-ipd",
-  "ch": "The department wanted a consistent project management life cycle, from planning through maintenance, with risk managed the same way on every project.",
+  "ch": "The department sought to transform its traditional, siloed project delivery process to improve collaboration, accountability, efficiency, and project outcomes.",
   "when": "2019 to 2023",
   "did": [
    "Reworked the project management life cycle from planning to maintenance",
