@@ -4589,7 +4589,7 @@ export const CASES: Record<string, CaseData> = {
  },
  "cs-tn-leading": {
   "id": "cs-tn-leading",
-  "ch": "The department wanted to compare how it staffs and runs maintenance and traffic operations with leading practice in other states.",
+  "ch": "The department sought to improve the efficiency, effectiveness, and cost of its maintenance and traffic operations by evaluating current practices against national benchmarks and identifying opportunities for improvement.",
   "when": "2024",
   "did": [
    "Researched how other states staff and run traffic management centers and highway help truck programs, and reviewed the department's current practice",
