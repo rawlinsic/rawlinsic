@@ -3015,7 +3015,7 @@ export const CASES: Record<string, CaseData> = {
   "when": "2019 to 2023",
   "did": [
    "Established a Project Management Division to coordinate the efforts of multi-disciplinary projects teams allowing them to plan, design, and execute projects more efficiently and with fewer delays.",
-   "Introduced risk management practices to control scope, schedule, and budget",
+   "",
    "Worked the department's transition projects in two regions: project schedules, master scopes of work, risk workshops, and risk registers",
    "Established an annual process to forecast and publish anticipated consultant workloads, providing the industry with greater visibility into future contracting opportunities and fostering a stable, reliable pool of qualified consultants to meet the department’s evolving needs."
   ],
