@@ -4593,11 +4593,11 @@ export const CASES: Record<string, CaseData> = {
   "when": "2024",
   "did": [
    "Benchmarked national practices for staffing and operating traffic management centers and highway assistance patrol programs, assessing the department’s existing practices to identify opportunities for improvement.",
-   "Benchmarked national best practices for winter maintenance staffing, levels of service, and fleet management to identify opportunities for improving the department’s operations.",
-   "Benchmarked national best practices for bridge inspection programs to identify opportunities for improving the department’s inspection practices.",
-   "Conducted a nationwide survey of state DOT traffic design practices and synthesized the findings with national research to identify leading practices and opportunities for improvement.",
+   "Benchmarked national best practices for winter maintenance staffing, levels of service, and fleet management to identify opportunities for improving the department’s operations",
+   "Benchmarked national best practices for bridge inspection programs to identify opportunities for improving the department’s inspection practices",
+   "Conducted a nationwide survey of state DOT traffic design practices and synthesized the findings with national research to identify leading practices and opportunities for improvement",
    "Benchmarked peer-state traffic modeling practices and evaluated the business cases for transportation operations management and intelligent transportation systems (ITS) to identify opportunities for improving the department’s operations",
-   "Analyzed staffing and cost at county maintenance facilities against leading national practice"
+   "Benchmarked staffing levels and operating costs at county maintenance facilities against national best practices to identify opportunities for improving operational efficiency and cost-effectiveness."
   ],
   "res": [
    "Findings and recommendations from each review presented to department leadership in 2024",
