@@ -86,7 +86,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
     did: [
       "", // source: drafts:311
       "Conducted virtual follow-up sessions with each agency to reinforce priorities, clarify implementation responsibilities, and establish actionable next steps for advancing its asset management program.", // source: drafts:312
-      "Sent the state deliverable packages: workshop deck, notes, and action plan", // source: drafts:314
+      "Provided the state with comprehensive deliverable packages for each agency, including workshop presentations, detailed discussion summaries, and tailored action plans outlining priorities and recommended next steps.", // source: drafts:314
     ],
     res: [
       "Kickoffs held with participating cities and county road commissions", // source: drafts:309, drafts:318
