@@ -142,7 +142,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Change Management",
   "area": "strategy",
   "st": "ok",
-  "intro": "We help staff understand and adopt a change, whether it's a reorganization, a new system, or a new way of delivering work: a change plan, change champions, communication, and training.\n\nWe build change management into a reorganization, a new delivery process, or a technology project from the start, with the leaders who will carry the message.",
+  "intro": "We help transportation agencies successfully implement organizational, operational, and technological changes. Working with agency leadership, we develop change management strategies that engage employees, build organizational readiness, and accelerate adoption. Through communication, change champions, and targeted training, we help agencies transition to new structures, processes, and technologies—and sustain improvements over time.\n\n",
   "hear": [
    "A reorganization, a new system, or a new way of delivering work, and staff who have seen changes come and go before.",
    "We have to bring staff through the change.",
