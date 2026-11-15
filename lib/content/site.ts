@@ -410,7 +410,7 @@ const FOUNDER = " · Our founder's work before Rawlins";
 const TEAM = " · Our team's work before Rawlins";
 
 export const CASES: CaseIndex[] = [
-  cs("cs-proficiency", "tennessee-career-paths-and-proficiency", "Career paths and proficiency programs across a department", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["workforce", "org-design", "change-mgmt", "traffic", "construction", "operations"]), // + right of way appraiser program, traffic design and construction proficiency (Nov 11)
+  cs("cs-proficiency", "tennessee-career-paths-and-proficiency", "Transforming Workforce Development Through Department-Wide Career Pathways and Proficiency Programs", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["workforce", "org-design", "change-mgmt", "traffic", "construction", "operations"]), // + right of way appraiser program, traffic design and construction proficiency (Nov 11)
   /* Nov 13 (projects file v4, Part 3): page G, page H, page I, page P */
   cs("cs-tn-reorg", "tennessee-department-reorganization", "Comprehensive Department Reorganization: Aligning Functions, Organizational Structure, Staffing, and Implementation", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["org-design", "change-mgmt", "exec-advisory", "finance", "program-delivery", "planning", "preconstruction", "lpa", "traffic"]),
   cs("cs-tn-amdiv", "tennessee-asset-management-division", "From Vision to Implementation: Establishing a Fully Operational Asset Management Division", "Tennessee Department of Transportation", ["Tennessee"], "Completed", "transport", ["asset-mgmt", "operations", "org-design", "fleet"]),
