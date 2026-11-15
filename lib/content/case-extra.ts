@@ -24,7 +24,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
   },
   "cs-tn-ipd": {
     did: [
-      "Developed and put in place a project delivery network", // source: findings:8
+      "Led efforts to implement the new project delivery process, the Project Delivery Network (PDN) through", // source: findings:8
       "Worked on maintenance quality assurance, an asset management vision, and a quality program", // source: findings:8
     ],
   },
