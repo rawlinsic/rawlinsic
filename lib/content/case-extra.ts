@@ -84,7 +84,7 @@ export const CASE_EXTRA: Record<string, CaseExtra> = {
   "cs-local-am": {
     when: "2024 to 2025", // source: drafts:301
     did: [
-      "Added international asset management case studies to the workshops at the state's request", // source: drafts:311
+      "", // source: drafts:311
       "Held virtual follow-up meetings to confirm next steps", // source: drafts:312
       "Sent the state deliverable packages: workshop deck, notes, and action plan", // source: drafts:314
     ],
