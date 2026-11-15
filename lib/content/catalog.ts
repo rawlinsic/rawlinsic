@@ -3247,8 +3247,8 @@ export const CASES: Record<string, CaseData> = {
   "when": "2024 to 2025",
   "did": [
    "Helped each agency establish an asset management steering committee",
-   "Ran self-assessment surveys and reviewed each agency's plans and inventories",
-   "Led in-person workshops using the state's competency framework",
+   "Conducted agency self-assessments and evaluated existing asset management plans and inventories to assess current practices, identify capability gaps, and establish a baseline for improvement.",
+   "Led in-person workshops structured around the asset management competency framework, incorporating international best practices and case studies to broaden perspectives and demonstrate practical applications of effective asset management.",
    "Built short, mid, and long-term action plans with each agency",
    "Prepared one-page materials for elected officials"
   ],
