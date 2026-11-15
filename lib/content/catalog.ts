@@ -3020,7 +3020,7 @@ export const CASES: Record<string, CaseData> = {
    "Established an annual process to forecast and publish anticipated consultant workloads, providing the industry with greater visibility into future contracting opportunities and fostering a stable, reliable pool of qualified consultants to meet the department’s evolving needs."
   ],
   "res": [
-   "The baseline schedule from the transition projects became the department's template",
+   "Improved construction project delivery commitments from 40% to 100%.",
    "The consultant onboarding process was shared with all regions for statewide use"
   ],
   "services": [
