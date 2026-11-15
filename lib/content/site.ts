@@ -440,7 +440,7 @@ export const CASES: CaseIndex[] = [
   // TODO(launch): needs the prime's and the client's written OK before launch. Both contracts bar public statements about the work without written consent.
   cs("cs-drt", "statewide-drone-response-team", "Statewide drone response team and drone program governance", STATE_DOT, [], "Ongoing", "transport", ["drone-programs", "drone-emergency", "org-design"]),
   // TODO(launch): contract publicity terms not checked yet.
-  cs("cs-local-am", "michigan-local-asset-management", "Asset management workshops and action plans for local agencies", "State of Michigan, Michigan Infrastructure Office", ["Michigan"], "Completed", "gov", ["asset-mgmt", "workforce"]),
+  cs("cs-local-am", "michigan-local-asset-management", "Advancing Local Agency Asset Management Through Tailored Training and Action Planning", "State of Michigan, Michigan Infrastructure Office", ["Michigan"], "Completed", "gov", ["asset-mgmt", "workforce"]),
   cs("cs-mi-pbo", "michigan-performance-based-maintenance-operations", "Performance-based maintenance and operations", "Michigan Department of Transportation · Our team's work before Rawlins, completed 2014", ["Michigan"], "Before Rawlins", "transport", ["operations", "asset-mgmt", "pbmc", "mqa"]),
   // TODO(launch): the prime's subcontract (§12) keeps deliverables and client information confidential without the prime's written permission (findings_cases.md, Nov 6 sweep).
   cs("cs-workforce", "workforce-strategy-analysis", "Workforce strategy: vacancies, staffing, and peer benchmarks", STATE_DOT, [], "Completed", "transport", ["workforce", "org-design"]),
