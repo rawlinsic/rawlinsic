@@ -3253,7 +3253,7 @@ export const CASES: Record<string, CaseData> = {
    "Prepared one-page materials for elected officials"
   ],
   "res": [
-   "Workshops held and action plans built with seven local agencies: two county road commissions and five cities",
+   "Strengthened asset management capabilities across seven local agencies—two county road commissions and five cities—through targeted workshops and customized action plans to guide future improvements",
    "Summary of the first round presented to the department and the state infrastructure council in December 2024"
   ],
   "services": [
