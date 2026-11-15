@@ -664,7 +664,7 @@ export const SERVICES: Record<string, SvcData> = {
   "name": "Local Public Agency Programs",
   "area": "delivery",
   "st": "ok",
-  "intro": "We help states and local agencies with the manuals, oversight, certification, and training that keep local federal-aid projects moving.\n\nA state answers for the federal-aid projects its local agencies deliver. We help the state set up the program: who does what at headquarters, in the districts, and at the local agency; a manual that covers a project from start to closeout; a certification process; and training built on the manual.",
+  "intro": "We help state DOTs modernize their Local Public Agency (LPA) programs to improve project delivery, strengthen oversight, and ensure compliance with federal and state requirements. We assess and improve program processes, design organizational structures with clearly defined responsibilities, establish consistent oversight procedures, and develop comprehensive LPA manuals, guidance, and training for both DOT and local agency personnel. Our approach strengthens coordination and accountability, improves consistency in project development and delivery, and helps local agencies deliver federally funded projects on scope, on schedule, and within budget.\n\n",
   "hear": [
    "Local agencies need clear manuals and oversight.",
    "Federal requirements land on lean teams.",
