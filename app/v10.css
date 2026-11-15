@@ -1685,3 +1685,10 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .pe-kept-more { margin: 0; font-size: 0.85rem; color: #9fb2c8; }
 .pe-kept-btns { display: flex; gap: 8px; }
 @media (max-width: 760px) { .pe-bar:has(.pe-kept) { flex-wrap: wrap; width: auto; overflow: visible; } }
+
+/* Bio pop-ups: their own text color. A pop-up opened from a name or face in a navy section took that section's light text
+   color onto its white card (Nicole, Nov 14: "the text is really light and not the normal color") */
+.pp-dialog, .pp-dialog-in { color: #22344d; text-shadow: none; }
+.pp-dialog-in p, .pp-dialog-in li, .pp-dialog-in dd, .pp-dialog-in span:not([class*="tag"]) { color: inherit; }
+.pp-dialog-in h2, .pp-dialog-in h3 { color: #0a1220; }
+.apop-card { color: #22344d; text-shadow: none; }

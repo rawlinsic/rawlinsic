@@ -4675,7 +4675,8 @@ export const PRIV: { hear: string[]; build: string[]; dot: string[]; start: stri
  ]
 };
 /* Where we work: two layers, matching the approved "Areas We Serve" map.
-   No California, no international pins (content updates v4, 2.1). */
+   No California, no international pins (content updates v4, 2.1).
+   Not used since Nov 14: the map now comes from the projects the site names (components/site/more.tsx, WhereWeWork). */
 export const STATES_ACTIVE: string[] = [
  "Hawaii", "Alaska", "Nevada", "Utah", "Texas", "Arkansas", "Louisiana", "Tennessee", "Michigan", "Iowa", "Florida"
 ];

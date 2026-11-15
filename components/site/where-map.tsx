@@ -4,7 +4,7 @@
    projects that you can click on").
 
      globe   the live site's globe, redrawn in this site's colors: land as dots, a pin on each state with our work
-             (Active, Areas we've served). It turns slowly and can be dragged. Only U.S. pins, as on the approved map.
+             (Rawlins work; before Rawlins only). It turns slowly and can be dragged. Only U.S. pins, as on the approved map.
      map     a click on the globe (or "Open the map") opens the flat U.S. map out of it. States with our work are
              lit; a number on a state is how many project pages it has. A click on a state zooms in on it and lists
              its projects beside the map, each one a link to its page.
@@ -27,12 +27,18 @@ const LL: Record<string, [number, number]> = {
   Wisconsin: [44.6, -89.9], Illinois: [40.0, -89.2], Missouri: [38.4, -92.5], Idaho: [44.4, -114.6], Washington: [47.4, -120.5],
   Oregon: [43.9, -120.6], Minnesota: [46.3, -94.3],
 };
+/* what a state's projects are, in words (Nov 14, Nicole: say "1 completed project", or one in the works, not "Active") */
+const n = (k: number, one: string, many: string) => `${k} ${k === 1 ? one : many}`;
+export const statusLine = (list: WwProject[] = []) => {
+  const done = list.filter((p) => p.tag === "Completed").length, live = list.filter((p) => p.tag === "In the works").length, before = list.filter((p) => p.tag === "Before Rawlins").length;
+  return [done && n(done, "completed project", "completed projects"), live && n(live, "project in the works", "projects in the works"), before && n(before, "Before Rawlins project", "Before Rawlins projects")].filter(Boolean).join(" · ");
+};
 const D = Math.PI / 180;
 const slug = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
 const reduced = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ── The globe ── */
-function Globe({ pins, onOpen, paused }: { pins: Pin[]; onOpen: (state?: string) => void; paused: boolean }) {
+function Globe({ pins, onOpen, paused, lines }: { pins: Pin[]; onOpen: (state?: string) => void; paused: boolean; lines: Record<string, string> }) {
   const cv = useRef<HTMLCanvasElement>(null);
   const [tip, setTip] = useState<{ x: number; y: number; name: string; strong: boolean } | null>(null);
   const live = useRef({ paused, onOpen, pins });
@@ -151,7 +157,7 @@ function Globe({ pins, onOpen, paused }: { pins: Pin[]; onOpen: (state?: string)
   return (
     <div className="ww-globe">
       <canvas ref={cv} role="img" aria-label="A globe with a pin on each U.S. state where we have worked. Use the Open the map button to see the states and their projects." />
-      {tip && <span className="ww-tip" style={{ left: tip.x, top: tip.y }}><b>{tip.name}</b>{tip.strong ? "Active" : "Areas we've served"}</span>}
+      {tip && <span className="ww-tip" style={{ left: tip.x, top: tip.y }}><b>{tip.name}</b>{lines[tip.name] ?? ""}</span>}
     </div>
   );
 }
@@ -170,7 +176,7 @@ function zoomBox(d: MapData, name: string): number[] {
 }
 const ringsPath = (rings: number[][][]) => rings.map((r) => `M${r.map(([x, y]) => `${x},${y}`).join("L")}Z`).join("");
 
-function FlatMap({ data, active, served, counts, picked, onPick }: { data: MapData; active: Set<string>; served: Set<string>; counts: Record<string, number>; picked: string | null; onPick: (s: string | null) => void }) {
+function FlatMap({ data, active, served, counts, lines, picked, onPick }: { data: MapData; active: Set<string>; served: Set<string>; counts: Record<string, number>; lines: Record<string, string>; picked: string | null; onPick: (s: string | null) => void }) {
   const svg = useRef<SVGSVGElement>(null);
   const box = useRef<number[]>(fullBox(data));
   const [tip, setTip] = useState<{ x: number; y: number; name: string } | null>(null);
@@ -192,7 +198,7 @@ function FlatMap({ data, active, served, counts, picked, onPick }: { data: MapDa
     return () => cancelAnimationFrame(raf);
   }, [picked, data]);
 
-  const label = (name: string) => `${name}: ${active.has(name) ? "Active" : "Areas we've served"}${counts[name] ? `, ${counts[name]} ${counts[name] === 1 ? "project" : "projects"}` : ""}`;
+  const label = (name: string) => `${name}: ${lines[name] ?? ""}`;
   const where = (e: React.PointerEvent) => { const r = svg.current?.parentElement?.getBoundingClientRect(); return r ? { x: e.clientX - r.left, y: e.clientY - r.top } : { x: 0, y: 0 }; };
   /* lit states are drawn last so their outline sits on top of their neighbors */
   const order = [...data.states].sort((a, b) => Number(active.has(a.name) || served.has(a.name)) - Number(active.has(b.name) || served.has(b.name)) || Number(a.name === picked) - Number(b.name === picked));
@@ -218,7 +224,7 @@ function FlatMap({ data, active, served, counts, picked, onPick }: { data: MapDa
           ))}
         </g>
       </svg>
-      {tip && <span className="ww-tip" style={{ left: tip.x, top: tip.y }}><b>{tip.name}</b>{active.has(tip.name) ? "Active" : "Areas we've served"}{counts[tip.name] ? ` · ${counts[tip.name]} ${counts[tip.name] === 1 ? "project" : "projects"}` : ""}</span>}
+      {tip && <span className="ww-tip" style={{ left: tip.x, top: tip.y }}><b>{tip.name}</b>{lines[tip.name] ?? ""}</span>}
     </div>
   );
 }
@@ -236,6 +242,7 @@ export default function WhereMap({ copy, active, served, projects }: { copy: Rea
   const sSet = useMemo(() => new Set(served), [served]);
   const pins = useMemo<Pin[]>(() => [...served, ...active].filter((n) => LL[n]).map((n) => ({ name: n, lat: LL[n][0], lng: LL[n][1], strong: active.includes(n) })), [active, served]);
   const counts = useMemo(() => Object.fromEntries(Object.entries(projects).map(([k, v]) => [k, v.length])), [projects]);
+  const lines = useMemo(() => Object.fromEntries(Object.entries(projects).map(([k, v]) => [k, statusLine(v)])), [projects]);
   const withPages = useMemo(() => Object.keys(projects).filter((k) => projects[k].length).sort((a, b) => projects[b].length - projects[a].length || a.localeCompare(b)), [projects]);
 
   useEffect(() => { fetch("/world/us-map.json").then((r) => r.json()).then(setData).catch(() => {}); }, []);
@@ -265,15 +272,16 @@ export default function WhereMap({ copy, active, served, projects }: { copy: Rea
   const list = picked ? projects[picked] ?? [] : [];
   const legend = (
     <ul className="ww-legend" aria-label="Map key">
-      <li><i className="is-active" aria-hidden="true" />Active</li>
-      <li><i aria-hidden="true" />Areas we&apos;ve served</li>
+      {/* the shades: Rawlins work (completed or in the works), and only our team's work before Rawlins (Nov 14) */}
+      <li><i className="is-active" aria-hidden="true" />Completed or in the works</li>
+      <li><i aria-hidden="true" />Before Rawlins</li>
     </ul>
   );
   return (
     <header ref={root} className={`ed-hero is-dark ww is-${mode}${picked ? " has-pick" : ""}`} data-nofill>
       <div className="ed-wrap ww-stage">
         <div className="ww-view ww-view-globe" inert={mode !== "globe"}>
-          <Globe pins={pins} onOpen={open} paused={mode !== "globe"} />
+          <Globe pins={pins} onOpen={open} paused={mode !== "globe"} lines={lines} />
           <div className="ww-copy">
             {copy}
             {legend}
@@ -286,7 +294,7 @@ export default function WhereMap({ copy, active, served, projects }: { copy: Rea
         </div>
         <div className="ww-view ww-view-map" inert={mode !== "map"}>
           <div className="ww-mapcol">
-            {data ? <FlatMap data={data} active={aSet} served={sSet} counts={counts} picked={picked} onPick={setPicked} /> : <div className="ww-map" aria-hidden="true" />}
+            {data ? <FlatMap data={data} active={aSet} served={sSet} counts={counts} lines={lines} picked={picked} onPick={setPicked} /> : <div className="ww-map" aria-hidden="true" />}
             {legend}
           </div>
           <aside className="ww-panel" aria-live="polite">
@@ -295,7 +303,7 @@ export default function WhereMap({ copy, active, served, projects }: { copy: Rea
             </p>
             {picked ? (
               <>
-                <p className="ww-status">{aSet.has(picked) ? "Active" : "Areas we've served"}</p>
+                <p className="ww-status">{lines[picked] ?? ""}</p>
                 <h2>{picked}</h2>
                 {list.length > 0 ? (
                   <ul className="ww-projs">

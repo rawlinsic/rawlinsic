@@ -5,7 +5,7 @@ import { PAGE_PHOTO } from "@/lib/content/media";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { THOUGHT_LEADERSHIP, type ThoughtLeadershipArticle } from "@/components/thought-leadership-data";
 import { AREAS, CASES, LEADERS, VISIBLE_INDUSTRIES, WHY, areaHref, caseHref, industryHref, subsectorHref, isListed } from "@/lib/content/site";
-import { STATES, STATES_ACTIVE, STATES_SERVED, STEPS } from "@/lib/content/catalog";
+import { STEPS } from "@/lib/content/catalog";
 import { FORMERLY, bareName as bare, formerlyFor } from "@/lib/content/people";
 import { AWARDS, PUBLICATIONS, RESEARCH, TALKS } from "@/lib/content/research";
 import PeopleDirectory, { Pin, type Person } from "@/components/site/people";
@@ -113,6 +113,14 @@ function FounderQuote({ light = false }: { light?: boolean }) {
     </figure>
   );
 }
+
+/* Where we work (Nov 14, Nicole: "if we can't say it was a specific place or project leave it off the map, but make sure the
+   ones we can are included"): the map comes from the projects. A state is on it only when a project the site names is
+   there (an unnamed client's project has no state). Active: Rawlins work there. Areas we've served: only our team's work
+   before Rawlins. The live site's 27-state "Areas We Serve" list (lib/content/catalog.ts) is no longer used. */
+const STATES_ACTIVE = Array.from(new Set(CASES.filter((c) => c.status !== "Before Rawlins").flatMap((c) => c.states))).sort();
+const STATES_SERVED = Array.from(new Set(CASES.filter((c) => c.status === "Before Rawlins").flatMap((c) => c.states))).filter((s) => !STATES_ACTIVE.includes(s)).sort();
+const STATES = [...STATES_ACTIVE, ...STATES_SERVED].sort();
 
 export function WhoWeAre() {
   /* Scott's card: the same details every other card shows (title, location), not his former role, and it opens
