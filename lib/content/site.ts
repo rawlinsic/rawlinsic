@@ -329,8 +329,8 @@ export const HOME_STORY: { k?: string; h: string; p: string; cta?: { label: stri
 ];
 
 export const HOME = {
-  eyebrow: "Trusted Advisors • Proven Execution",
-  headline: "Pairing advisory services with digital solutions to solve complex challenges at the intersection of strategy, delivery, & operations",
+  eyebrow: "TRUSTED ADVISORS | EXPERIENCED PRACTITIONERS | HANDS-ON PARTNERS",
+  headline: "We help agencies move projects from planning to delivery, strengthen everyday operations, and put technology to work for the communities they serve.",
   line: "We find what's broken, fix it, and stay until it runs.",
 };
 
