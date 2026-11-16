@@ -183,7 +183,7 @@ export default function Home() {
       {/* 2 · what we do, area by area. Hidden for now (Nicole, Nov 9: "remove this whole section for now,
           but don't delete it"). To bring it back, set SHOW_WHAT_WE_DO to true at the top of this file. */}
       {SHOW_WHAT_WE_DO && <Chapters
-        intro={{ k: "What we do", h: "Challenges we hear, and what we bring.", lead: "Like many organizations today, you’re facing complex, interconnected challenges: technology-driven transformation, resource constraints, and shifting regulatory demands. That's where we come in. From strategy and proven frameworks to the systems and products that put them to work, we help you turn decisions into action." }}
+        intro={{ k: "What we do", h: "Challenges we hear, and what we bring.", lead: "We analyze how work gets done, diagnose what’s getting in the way, and work with your team to address the causes. We build systems and processes designed for your organization to maintain, with training and workforce development that prepare staff to use, manage, and adapt them. We stay involved through implementation until your team is ready to take ownership and sustain the improvements independently." }}
         items={AREAS.map((a) => {
           const L = AREA_DATA[a.id];
           const fc = a.featuredCase ? caseById(a.featuredCase) : undefined;

@@ -9,7 +9,7 @@ export default function SiteFooter() {
         <div className="ft-brand">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/pages/rawlinslogo-blue-wordmark.png" alt="Rawlins" width={150} height={36} loading="lazy" />
-          <p>We find what&apos;s broken, fix it, and stay until it runs.</p>
+          <p>We turn recommendations into solutions your team can sustain.</p>
           <p className="ft-contact">
             <a href="mailto:info@rawlinsic.com">info@rawlinsic.com</a>
             <a href="tel:+17758433822">(775) 843-3822</a>

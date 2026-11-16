@@ -325,13 +325,13 @@ export const PROBLEMS: { q: string; services: string[] }[] = [
    wording so an edit changes only that one. 1st: frame on the right, words on
    the left; 2nd: the other way (Nicole, Nov 9: two sides). */
 export const HOME_STORY: { k?: string; h: string; p: string; cta?: { label: string; href: string } }[] = [
-  { k: "How we work", h: "We find what's broken, fix it, and stay until it runs.", p: "Like many organizations today, you're facing complex, interconnected challenges: technology-driven transformation, resource constraints, and shifting regulatory demands. That's where we come in. From strategy and proven frameworks to the systems and products that put them to work, we help you turn decisions into action.", cta: { label: "See what we do", href: "/services" } },
+  { k: "How we work", h: "We turn recommendations into solutions your team can sustain.", p: "We analyze how work gets done, diagnose what’s getting in the way, and work with your team to address the causes. We build systems and processes designed for your organization to maintain, with training and workforce development that prepare staff to use, manage, and adapt them. We stay involved through implementation until your team is ready to take ownership and sustain the improvements independently.", cta: { label: "See what we do", href: "/services" } },
 ];
 
 export const HOME = {
   eyebrow: "TRUSTED ADVISORS | EXPERIENCED PRACTITIONERS | HANDS-ON PARTNERS",
   headline: "We help agencies move projects from planning to delivery, strengthen everyday operations, and put technology to work for the communities they serve.",
-  line: "We find what's broken, fix it, and stay until it runs.",
+  line: "We turn recommendations into solutions your team can sustain.",
 };
 
 /* Numbers strip (v12). `verified: false` = dev-only placeholder; launch rule:

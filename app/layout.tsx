@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rawlins | Trusted Advisors at the Intersection of Strategy, Operations & Technology",
     description:
-      "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. We find what's broken, fix it, and stay until it runs.",
+      "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. We turn recommendations into solutions your team can sustain.",
     url: SITE_URL,
     siteName: "Rawlins",
     type: "website",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Rawlins | Trusted Advisors at the Intersection of Strategy, Operations & Technology",
     description:
-      "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. We find what's broken, fix it, and stay until it runs.",
+      "We help organizations plan, deliver, and adopt better ways of working, from strategy through operations and technology. We turn recommendations into solutions your team can sustain.",
     images: ["/images/pages/og-image-v2.png"],
   },
   robots: {
