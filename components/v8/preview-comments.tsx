@@ -9,6 +9,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { movedPath } from "@/lib/moved-pages"; // a comment saved on a page's old address shows on its new one (Nov 12)
 import { useDraggable } from "@/components/v8/preview-drag";
+import { canSee } from "@/components/v8/preview-seen";
 
 type C = { id: number; page: string; sel: string; rx: number; ry: number; snippet: string; text: string; who: string; at: string };
 type Draft = { x: number; y: number; sel: string; rx: number; ry: number; snippet: string };
@@ -107,7 +108,8 @@ export const Grip = ({ label, handle }: { label: string; handle: ReturnType<type
 );
 const GO = "pc-go"; // a comment to open once its page has loaded (clicked in the list on another page)
 
-export default function PreviewComments({ adding, onAdded, listOpen, onCount, hidden, onSaved, onDone, refresh }: { adding: boolean; onAdded: () => void; listOpen: boolean; onCount: (here: number, all: number) => void; hidden: boolean; /* a comment was saved / marked done (so Undo can take it back) */ onSaved?: (id: number, text: string) => void; onDone?: (id: number, text: string) => void; /* the bar undid or redid a comment: n counts the changes, id is the comment, open is whether it should now show */ refresh?: { n: number; id: number; open: boolean } }) {
+/* pins: the "Show comments" switch in the bar. Off, the pins are hidden; a comment opened from the list still shows. */
+export default function PreviewComments({ adding, onAdded, listOpen, onCount, hidden, onSaved, onDone, refresh, pins = true }: { pins?: boolean; adding: boolean; onAdded: () => void; listOpen: boolean; onCount: (here: number, all: number) => void; hidden: boolean; /* a comment was saved / marked done (so Undo can take it back) */ onSaved?: (id: number, text: string) => void; onDone?: (id: number, text: string) => void; /* the bar undid or redid a comment: n counts the changes, id is the comment, open is whether it should now show */ refresh?: { n: number; id: number; open: boolean } }) {
   /* every open comment on every page; list: the ones on this page (and on menu items, which are on every page) */
   const [all, setAll] = useState<C[]>([]);
   const [names, setNames] = useState<Record<string, string>>({});
@@ -234,6 +236,11 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
     /* keep the pin inside the element even if it is now a different size */
     return { x: r.left + Math.min(1, Math.max(0, c.rx)) * r.width, y: r.top + Math.min(1, Math.max(0, c.ry)) * Math.min(r.height, 600) };
   };
+  /* Nov 16 (Nicole: "i only want them to show in the spots they are so it's not confusing"): a pin shows only on its own
+     spot, and only while that spot can be seen, the same as the flags (components/v8/preview-seen.ts). A comment whose
+     spot is gone isn't parked down the edge of the window any more: it stays in the Comments list, and opening it from
+     there shows it with a line saying the text it was on has changed. */
+  const inSight = (c: C, at: { x: number; y: number } | null) => { const el = at && locate(c); return !!el && canSee(el, at!.x, at!.y); };
   const show = (c: C) => {
     const m = menuOf(c.sel);
     if (m) { if (!locate(c)) menuButton(m)?.click(); window.setTimeout(() => setOpenId(c.id), 150); return; }
@@ -276,6 +283,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
         /* no spot on the page any more: the pin is parked down the right edge, so the comment is still there to read */
         if (tucked.has(c.id)) return null; // counted on its menu's name until the menu opens
         const at = spot(c), parked = !at || gone(c), k = lost.indexOf(c.id);
+        if (openId !== c.id && (!pins || parked || !inSight(c, at))) return null; // only on its spot, while it shows (and only with Show comments on)
         /* an open menu covers part of the page: a page comment's pin under it would look like it is on a menu item */
         if (at && over && !menuOf(c.sel) && openId !== c.id && at.x >= over.left && at.x <= over.right && at.y >= over.top && at.y <= over.bottom) return null;
         const p = at ?? { x: vw - 30 - Math.floor(k / rows) * 42, y: 150 + (k % rows) * 42 };
@@ -296,7 +304,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
         );
       })}
       {/* a number on a menu's name: how many comments are on items inside it; a click opens the menu */}
-      {Array.from(inMenu.entries()).map(([m, cs]) => {
+      {pins && Array.from(inMenu.entries()).map(([m, cs]) => {
         const b = menuButton(m); if (!b) return null;
         const r = b.getBoundingClientRect();
         const who = Array.from(new Set(cs.map((c) => c.who))).join(", ");

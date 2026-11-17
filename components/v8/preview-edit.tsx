@@ -81,6 +81,12 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
   const [flags, setFlags] = useState(true);
   useEffect(() => { try { setFlags(localStorage.getItem("pe-flags") !== "0"); } catch {} }, []);
   const switchFlags = () => setFlags((v) => { try { localStorage.setItem("pe-flags", v ? "0" : "1"); } catch {} return !v; });
+  /* comment pins on the page: on unless switched off in this browser (Nicole, Nov 16: "show comments and not show comments") */
+  const [pins, setPins] = useState(true);
+  useEffect(() => { try { setPins(localStorage.getItem("pe-pins") !== "0"); } catch {} }, []);
+  const savePins = (v: boolean) => { setPins(v); try { localStorage.setItem("pe-pins", v ? "1" : "0"); } catch {} };
+  /* leaving a comment: the pins come back on, so the new one shows where it was put */
+  const startComment = () => { setAdding(true); setMsg(""); if (!pins) savePins(true); };
   /* the bar can be dragged anywhere (remembered in this browser); on phones it sits at the top or the bottom */
   const [narrow, setNarrow] = useState(false);
   useEffect(() => {
@@ -339,7 +345,7 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
   if (min && !on && !adding && !deleting) return (
     <>
       {flagsHere}
-      <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={false} onCount={onCount} hidden={false} onSaved={onSaved} onDone={onDone} refresh={refresh} />
+      <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={false} onCount={onCount} hidden={false} onSaved={onSaved} onDone={onDone} refresh={refresh} pins={pins} />
       {tab("Open the review tools: edit text, comment", () => fold(false))}
     </>
   );
@@ -347,7 +353,7 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
   return (
     <>
       {flagsHere}
-      <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={listOpen} onCount={onCount} hidden={cleanView} onSaved={onSaved} onDone={onDone} refresh={refresh} />
+      <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={listOpen} onCount={onCount} hidden={cleanView} onSaved={onSaved} onDone={onDone} refresh={refresh} pins={pins} />
       <div ref={bar} className={`pe-bar${drag.moved ? " is-moved" : ""}${narrow && edge === "top" ? " is-top" : ""}`} style={narrow ? (edge === "top" ? { top: headH + 8, bottom: "auto" } : undefined) : drag.style} role="region" aria-label="Review tools (preview only)">
         {!narrow && <Grip label="Move the review bar" handle={drag.handle} />}
         {restore && !on ? (
@@ -380,12 +386,12 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
           <div className="pe-row">{/* one row; on phones it scrolls sideways */}
             {review
               ? <>
-                  <button type="button" className="pe-btn" onClick={() => { const n = askName(); if (!n) return; setMe(n); setAdding(true); setMsg(""); }}>Comment</button>
+                  <button type="button" className="pe-btn" onClick={() => { const n = askName(); if (!n) return; setMe(n); startComment(); }}>Comment</button>
                   <button type="button" className="pe-btn pe-ghost" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter adds a new line. Esc or click away to finish."); }}>Edit text</button>
                 </>
               : <>
                   <button type="button" className="pe-btn" onClick={() => { setOn(true); setMsg("Click any words to change them. Enter adds a new line. Esc or click away to finish."); }}>Edit text</button>
-                  <button type="button" className="pe-btn" onClick={() => { setAdding(true); setMsg(""); }}>Comment</button>
+                  <button type="button" className="pe-btn" onClick={startComment}>Comment</button>
                 </>}
             {/* always there (Nicole, Nov 12), greyed out until there is something to undo or redo. They cover what
                 was done from this browser: a comment, marking one done, a saved text change, a deleted section. */}
@@ -393,7 +399,9 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
             <button type="button" className="pe-btn pe-ghost" disabled={busy || !redos.length} onClick={redo} title={redos.length ? `Redo: ${redos[redos.length - 1].label}` : "Nothing to redo yet"}>Redo</button>
             {canDelete && <button type="button" className="pe-btn pe-ghost pe-danger" onClick={() => { setDeleting(true); setMsg(""); }}>Delete section</button>}
             <button type="button" className={`pe-btn pe-ghost${listOpen ? " is-on" : ""}`} onClick={() => setListOpen((v) => !v)} aria-label={`Comments: ${count} on this page, ${total} in all`}>Comments ({count} here · {total} in all)</button>
-            {review && <button type="button" role="switch" aria-checked={flags} className={`pe-btn pe-ghost pe-switch${flags ? " is-on" : ""}`} onClick={switchFlags} title="Flags beside text that was changed with Edit text">Flags <span aria-hidden="true">{flags ? "on" : "off"}</span></button>}
+            {/* what shows on the page: comment pins, and flags beside changed text (Nicole, Nov 16) */}
+            <button type="button" role="switch" aria-checked={pins} className={`pe-btn pe-ghost pe-switch${pins ? " is-on" : ""}`} onClick={() => savePins(!pins)} title="Comment pins on the page, each on its own spot">Show comments <span aria-hidden="true">{pins ? "on" : "off"}</span></button>
+            {review && <button type="button" role="switch" aria-checked={flags} className={`pe-btn pe-ghost pe-switch${flags ? " is-on" : ""}`} onClick={switchFlags} title="Flags beside text that was changed with Edit text">Show flags <span aria-hidden="true">{flags ? "on" : "off"}</span></button>}
             <button type="button" className="pe-btn pe-ghost" onClick={() => { setCleanView(true); setListOpen(false); }} title="Hide the tools, comment pins, and placeholder notes">Clean view</button>
             <button type="button" className="pe-btn pe-ghost pe-fold" onClick={() => { fold(true); setListOpen(false); setMsg(""); }} aria-label="Hide the review tools" title="Hide the review tools">
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>

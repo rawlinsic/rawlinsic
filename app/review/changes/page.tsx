@@ -4,7 +4,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import RECORD from "@/lib/edit-record.json";
-import type { RecordEntry } from "@/lib/edit-record";
+import { byTime, type RecordEntry } from "@/lib/edit-record";
 import { isReviewVersion } from "@/lib/preview-gh";
 import { pageNames } from "@/lib/page-names";
 import { movedPath } from "@/lib/moved-pages";
@@ -15,7 +15,7 @@ export const metadata: Metadata = { title: "All changes", robots: { index: false
 
 export default function Page() {
   if (process.env.VERCEL_ENV !== "preview" || !isReviewVersion()) notFound();
-  const entries = [...(RECORD as { entries: RecordEntry[] }).entries].sort((a, b) => b.at.localeCompare(a.at)).map((e) => ({ ...e, page: movedPath(e.page || "/") }));
+  const entries = [...(RECORD as { entries: RecordEntry[] }).entries].sort((a, b) => byTime(b, a)).map((e) => ({ ...e, page: movedPath(e.page || "/") }));
   return (
     <Shell>
       <section className="pg-sec pg-body chg-page">

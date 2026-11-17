@@ -8,6 +8,7 @@
 import { useEffect, useRef, useState } from "react";
 import { movedPath } from "@/lib/moved-pages";
 import { core, pacific, type Chain } from "@/lib/edit-record";
+import { canSee } from "@/components/v8/preview-seen";
 
 const LEAF = "h1,h2,h3,h4,h5,p,li,blockquote,dt,dd,figcaption,b,strong,em,small,span,a,button,label,td,th";
 const TOOLS = ".pe-bar, .pe-tab, .pc-list, .pc-pop, .pc-pin, .pf-flag, .chg-page";
@@ -21,8 +22,6 @@ const textOf = (el: Node): string => {
   });
   return out;
 };
-/* for browsers without checkVisibility: the element or one around it is see-through or hidden */
-const faded = (el: HTMLElement) => { for (let n: HTMLElement | null = el; n; n = n.parentElement) { const s = getComputedStyle(n); if (s.opacity === "0" || s.visibility === "hidden") return true; } return false; };
 /* where the flag goes: just after the last line of the element's words */
 const endOf = (el: HTMLElement) => {
   if (!el.isConnected) return null;
@@ -31,30 +30,9 @@ const endOf = (el: HTMLElement) => {
   const last = rs.length ? rs[rs.length - 1] : el.getBoundingClientRect();
   if (!last.width && !last.height) return null;
   const p = { x: last.right, y: last.top + last.height / 2 };
-  /* faded out (a story step not reached yet) or hidden: no flag until it shows */
-  const vis = (el as HTMLElement & { checkVisibility?: (o: object) => boolean }).checkVisibility;
-  if (vis ? !vis.call(el, { opacityProperty: true, visibilityProperty: true }) : faded(el)) return null;
-  /* not clipped off: a card slid out of a carousel, a pane scrolled out of its box */
-  for (const box of clippers(el)) {
-    const r = box.getBoundingClientRect();
-    if (p.x - 3 < r.left || p.x - 3 > r.right || p.y < r.top || p.y > r.bottom) return null;
-  }
-  return p;
+  return canSee(el, p.x - 3, p.y) ? p : null; // only while those words can be seen (components/v8/preview-seen.ts)
 };
-/* the boxes around an element that cut off what spills out of them (worked out once per element) */
-const clipMemo = new WeakMap<HTMLElement, HTMLElement[]>();
-const clippers = (el: HTMLElement) => {
-  let out = clipMemo.get(el);
-  if (out) return out;
-  out = [];
-  for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) {
-    const s = getComputedStyle(n);
-    if (s.overflowX !== "visible" || s.overflowY !== "visible") out.push(n);
-  }
-  clipMemo.set(el, out);
-  return out;
-};
-const latest = (c: Chain) => c.steps[c.steps.length - 1]?.at ?? "";
+const latest = (c: Chain) => Date.parse(c.steps[c.steps.length - 1]?.at ?? "") || 0;
 type Spot = { el: HTMLElement; chain: number };
 
 export default function PreviewFlags() {
@@ -114,13 +92,11 @@ export default function PreviewFlags() {
   if (typeof window === "undefined" || !spots.length) return null;
   const vw = window.innerWidth, vh = window.innerHeight;
   const open = spots.find((s) => s.el === openAt);
-  /* text scrolled up under the site's header is out of sight: no flag on top of the header */
-  const head = document.querySelector<HTMLElement>("header.hx")?.getBoundingClientRect().bottom ?? 0;
   return (
     <>
       {spots.map((s, k) => {
         const p = endOf(s.el);
-        if (!p || p.y < -20 || p.y > vh + 20 || (p.y < head && !s.el.closest("header.hx"))) return null;
+        if (!p || p.y < -20 || p.y > vh + 20) return null;
         const c = list[s.chain], last = c.steps[c.steps.length - 1];
         return (
           <button key={k} type="button" className={`pf-flag${s.el === openAt ? " is-open" : ""}`} style={{ left: Math.min(p.x + 4, vw - 26), top: p.y }}

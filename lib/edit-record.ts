@@ -46,14 +46,30 @@ export type Chain = { original: string; now: string; pages: string[]; steps: Ste
    "For review" tag on the end or without, depending on where the person clicked */
 export const core = (s: string) => norm(s).replace(/^\d{1,2}\s+/, "").replace(/\s*For review$/, "").trim();
 
-export function chains(entries: RecordEntry[]): Chain[] {
+/* oldest first (times are written with an offset or in UTC, so they're compared as times, not as text) */
+export const byTime = (a: RecordEntry, b: RecordEntry) => (Date.parse(a.at) || 0) - (Date.parse(b.at) || 0);
+
+/* Nicole's own changes up to the end of Nov 14 are the site as she launched it for review (Nicole, Nov 16: "what i put
+   should show as the original so don't flag all of that unless i changed it after the 14th"). In a flag's story they
+   are folded into the original: a piece of text she changed then, and no one else since, has no flag; where someone
+   else changed it later, her wording is the original. Her changes from Nov 15 on show like anyone's. */
+export const LAUNCH = { who: "Nicole", until: Date.parse("2026-11-15T00:00:00-08:00") };
+export const isLaunch = (e: Pick<RecordEntry, "who" | "at">) => e.who === LAUNCH.who && (Date.parse(e.at) || 0) < LAUNCH.until;
+
+export function chains(entries: RecordEntry[], original: (e: RecordEntry) => boolean = isLaunch): Chain[] {
   const out: Chain[] = [];
-  const sorted = [...entries].sort((a, b) => a.at.localeCompare(b.at));
+  const sorted = [...entries].sort(byTime);
   for (const e of sorted) {
     if (e.status === "list") continue; // never placed: not on the page
     const b = core(e.before), a = core(e.after), shown = e.landed ?? e.after;
     let c: Chain | undefined;
     for (let i = out.length - 1; i >= 0 && !c; i--) if (core(out[i].now) === b) c = out[i];
+    /* part of the original: the wording it starts from, while no one else has changed it yet */
+    if (original(e) && (!c || !c.steps.length)) {
+      if (c) { c.original = shown; c.now = shown; if (!c.pages.includes(e.page)) c.pages.push(e.page); }
+      else out.push({ original: shown, now: shown, pages: [e.page], steps: [] });
+      continue;
+    }
     /* the same save made twice (or the same change saved from the item and from its sentence): nothing new */
     if (!c && a !== b && out.some((x) => core(x.now) === a)) continue;
     const step: Step = { who: e.who, at: e.at, kind: e.kind, text: e.after, ...(a === b || e.status === "breaks" ? { breaks: true } : {}), ...(e.landed ? { landed: e.landed } : {}), ...(e.status === "applied" ? { fromList: true } : {}) };
@@ -65,7 +81,7 @@ export function chains(entries: RecordEntry[]): Chain[] {
     } else out.push({ original: e.before, now: shown, pages: [e.page], steps: [step] });
   }
   /* only text that is different from its original now (or whose line breaks were changed last), and still has words */
-  return out.filter((c) => core(c.now) && (core(c.now) !== core(c.original) || !!c.steps[c.steps.length - 1].breaks));
+  return out.filter((c) => c.steps.length > 0 && core(c.now) && (core(c.now) !== core(c.original) || !!c.steps[c.steps.length - 1].breaks));
 }
 
 /* Undo or Redo of a save: each of its lines turned around */
