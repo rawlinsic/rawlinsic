@@ -91,6 +91,13 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
   }, []);
   const [edge, setEdge] = useState<"bottom" | "top">("bottom");
   useEffect(() => { try { setEdge(localStorage.getItem("pe-edge") === "top" ? "top" : "bottom"); } catch {} }, []);
+  const [headH, setHeadH] = useState(68);
+  useEffect(() => {
+    if (!narrow) return;
+    const m = () => setHeadH(document.querySelector<HTMLElement>("header.hx")?.offsetHeight || 68);
+    m(); window.addEventListener("resize", m);
+    return () => window.removeEventListener("resize", m);
+  }, [narrow]);
   const moveEdge = () => setEdge((v) => { const n = v === "top" ? "bottom" : "top"; try { localStorage.setItem("pe-edge", n); } catch {} return n; });
   const resetPos = () => { resetPositions(); setEdge("bottom"); try { localStorage.removeItem("pe-edge"); } catch {} };
   const bar = useRef<HTMLDivElement>(null);
@@ -341,7 +348,7 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
     <>
       {flagsHere}
       <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={listOpen} onCount={onCount} hidden={cleanView} onSaved={onSaved} onDone={onDone} refresh={refresh} />
-      <div ref={bar} className={`pe-bar${drag.moved ? " is-moved" : ""}${narrow && edge === "top" ? " is-top" : ""}`} style={narrow ? undefined : drag.style} role="region" aria-label="Review tools (preview only)">
+      <div ref={bar} className={`pe-bar${drag.moved ? " is-moved" : ""}${narrow && edge === "top" ? " is-top" : ""}`} style={narrow ? (edge === "top" ? { top: headH + 8, bottom: "auto" } : undefined) : drag.style} role="region" aria-label="Review tools (preview only)">
         {!narrow && <Grip label="Move the review bar" handle={drag.handle} />}
         {restore && !on ? (
           <div className="pe-kept">
@@ -370,7 +377,7 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
             <button type="button" className="pe-btn pe-ghost" onClick={() => setAdding(false)}>Cancel</button>
           </>
         ) : (
-          <>
+          <div className="pe-row">{/* one row; on phones it scrolls sideways */}
             {review
               ? <>
                   <button type="button" className="pe-btn" onClick={() => { const n = askName(); if (!n) return; setMe(n); setAdding(true); setMsg(""); }}>Comment</button>
@@ -391,7 +398,7 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
             <button type="button" className="pe-btn pe-ghost pe-fold" onClick={() => { fold(true); setListOpen(false); setMsg(""); }} aria-label="Hide the review tools" title="Hide the review tools">
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
-          </>
+          </div>
         )}
         {/* whose name goes on comments and changes from this browser */}
         {!on && !deleting && !adding && (

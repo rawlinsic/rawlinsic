@@ -16,7 +16,6 @@ import CookieBanner from '@/components/cookie-banner';
 import ClarityLoader from '@/components/clarity-loader';
 import Smooth from "@/components/v8/smooth";
 import PreviewEdit from "@/components/v8/preview-edit";
-import NotOnPhones from "@/components/v8/not-on-phones";
 import GlowOnDark from "@/components/v8/glow-on-dark";
 import { REMOVED_SECTIONS } from "@/lib/content/removed-sections";
 import { canDeleteSections, isBackupVersion, isJacobVersion, isReviewVersion, JACOB_DEAD_LINKS } from "@/lib/preview-gh";
@@ -247,7 +246,8 @@ export default function RootLayout({
         <CookieBanner />
         {/* preview builds only: click-and-type text editor (never on the live site) */}
         <GlowOnDark />
-        {process.env.VERCEL_ENV === "preview" && !isBackupVersion() && <NotOnPhones><PreviewEdit canDelete={canDeleteSections()} review={isReviewVersion()} built={process.env.VERCEL_GIT_COMMIT_SHA || ""} /></NotOnPhones>}
+        {process.env.VERCEL_ENV === "preview" && !isBackupVersion() && <PreviewEdit canDelete={canDeleteSections()} review={isReviewVersion()} built={process.env.VERCEL_GIT_COMMIT_SHA || ""} />}
+        {/* on phones too again (Nicole, Nov 16; off since Nov 12): there the bar sits at the top or the bottom, with a button to switch */}
         <Smooth />
       </body>
     </html>

@@ -1766,3 +1766,14 @@ html.pe-dragging, html.pe-dragging * { cursor: grabbing !important; user-select:
 .chg-files { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 0; color: #4d688c; font-size: 0.82rem; }
 .chg-files code { padding: 1px 6px; border-radius: 6px; background: #eef3f9; color: #1d3759; font-size: 0.8rem; }
 @media (max-width: 700px) { .chg-words { grid-template-columns: 1fr; } .chg-filters select { min-width: 0; width: 100%; } .chg-filters label { width: 100%; } }
+/* the review bar on phones (Nicole, Nov 16: on phones again): the buttons in one row that scrolls sideways, the name
+   line under them, across the screen at the bottom (or just under the header, "Move to top") */
+.pe-row { display: contents; }
+@media (max-width: 767px) {
+  .pe-bar { left: 10px; right: 10px; bottom: 10px; width: auto; max-width: none; transform: none; flex-wrap: wrap; overflow: visible; padding: 6px; gap: 4px; }
+  .pe-row { display: flex; flex: 1 1 100%; min-width: 0; gap: 6px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .pe-row::-webkit-scrollbar { display: none; }
+  .pe-row .pe-btn { flex: none; }
+  .pe-bar .pe-who { flex: 1 1 100%; padding: 2px 6px; font-size: 0.82rem; }
+  .pe-bar.is-top { bottom: auto; }
+}
