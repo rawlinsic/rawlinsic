@@ -234,7 +234,13 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
       return { x: r.right - 34 - Math.floor(k / per) * 42, y: r.top + 34 + (k % per) * 42 };
     }
     /* keep the pin inside the element even if it is now a different size */
-    return { x: r.left + Math.min(1, Math.max(0, c.rx)) * r.width, y: r.top + Math.min(1, Math.max(0, c.ry)) * Math.min(r.height, 600) };
+    let y = r.top + Math.min(1, Math.max(0, c.ry)) * Math.min(r.height, 600);
+    /* a comment on the very top of a page (the whole page, or a hero that starts behind the site's header): while the
+       page is at its top, the pin sits just under the header instead of behind it (Nov 16: Nicole's "still working out
+       the design for this page" on Research & Publications was hidden there) */
+    const head = el.closest("header.hx") ? 0 : document.querySelector<HTMLElement>("header.hx")?.getBoundingClientRect().bottom ?? 0;
+    if (y < head + 12 && r.top > -12 && r.bottom > head + 40) y = head + 18;
+    return { x: r.left + Math.min(1, Math.max(0, c.rx)) * r.width, y };
   };
   /* Nov 16 (Nicole: "i only want them to show in the spots they are so it's not confusing"): a pin shows only on its own
      spot, and only while that spot can be seen, the same as the flags (components/v8/preview-seen.ts). A comment whose
