@@ -75,13 +75,38 @@ const menuSpot = (sel: string, snippet: string): { el: HTMLElement; lost: boolea
   });
   return best ? { el: best, lost: false } : { el: panel, lost: true };
 };
+/* 4. (Nicole, Nov 16: "why wouldn't we have my comments go with where i put them") the same place on the page: the saved
+   path, or the nearest part of it still there, when the words there have changed but it is still recognizably that part:
+   a named section (#deliver), or one of the saved words' headings or lines is still in it ("What we build" after the
+   section was rewritten). Where nothing there is recognizable (a photo taken off, a section turned off) the comment
+   isn't put on whatever sits there now; it stays in the Comments list. */
+const chunks = (snippet: string) => words(snippet).split(/(?<=[a-z0-9.!?)”"’])(?=[A-Z])/).map((x) => x.trim().split(" ").slice(0, 3).join(" ").toLowerCase()).filter((x) => x.length >= 6);
+const samePlace = (sel: string, snippet: string): HTMLElement | null => {
+  const parts = sel.split(" > "), keys = chunks(snippet);
+  for (let n = parts.length; n > 0; n--) {
+    const el = byPath(parts.slice(0, n).join(" > "));
+    if (!el) continue;
+    if (!el.getClientRects().length) return null;
+    const named = n === parts.length && /^#[A-Za-z][\w-]*$/.test(parts[n - 1]);
+    const t = words(el.textContent || el.getAttribute("alt") || "").toLowerCase().slice(0, 600);
+    return named || keys.some((k) => t.includes(k)) ? el : null;
+  }
+  return null;
+};
+/* comments placed the fourth way (by their saved path and words): the words there have changed since */
+const approx = new Set<string>();
+const placeKey = (sel: string, snippet: string) => `${sel}|${snippet}`;
 const find = (sel: string, snippet = ""): HTMLElement | null => {
   const el = byPath(sel);
   if (el && el.getClientRects().length) {
     const key = words(snippet).slice(0, 40);
     if (!key || sameStart(key, words(el.textContent || el.getAttribute("alt") || "").slice(0, 40)) >= Math.min(key.length, 12)) return el;
   }
-  return byWords(snippet) || null;
+  const w = byWords(snippet);
+  if (w) { approx.delete(placeKey(sel, snippet)); return w; }
+  const same = samePlace(sel, snippet);
+  if (same) approx.add(placeKey(sel, snippet)); else approx.delete(placeKey(sel, snippet));
+  return same;
 };
 const when = (iso: string) => { try { return new Date(iso).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }); } catch { return ""; } };
 /* the name saved in this browser, and a way to change it */
@@ -302,6 +327,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
               <div className="pc-pop" style={{ left: Math.max(12, Math.min(p.x + 18, vw - 340)), top: p.y + 10 }}>
                 <p className="pc-meta"><b>{c.who}</b> · {when(c.at)}</p>
                 {parked && <p className="pc-meta">The text it was on has changed.{c.snippet ? ` It was about “${c.snippet.slice(0, 60)}${c.snippet.length > 60 ? "…" : ""}”.` : ""}</p>}
+                {!parked && !menuOf(c.sel) && approx.has(placeKey(c.sel, c.snippet)) && <p className="pc-meta">Where it was left. The words here have changed since.{c.snippet ? ` They were “${c.snippet.slice(0, 60)}${c.snippet.length > 60 ? "…" : ""}”.` : ""}</p>}
                 <p className="pc-text">{c.text}</p>
                 <div className="pc-act"><button type="button" className="pe-btn" onClick={() => done(c.id)}>Mark done</button><button type="button" className="pe-btn pe-ghost" onClick={() => setOpenId(null)}>Close</button></div>
               </div>
