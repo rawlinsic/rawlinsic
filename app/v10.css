@@ -1704,3 +1704,65 @@ body:has(.pv) .pe-bar { bottom: auto; top: 84px; }
 .ps-dialog :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
 /* Write your own: white letters; the glowing blue outline stays (Nicole, Nov 14) */
 .fp-q-own:not([aria-pressed="true"]) { color: #fff; }
+
+/* ── Nov 16, 2026 (Nicole): review version only. Flags beside text changed with Edit text (components/v8/preview-flags.tsx),
+   the comments list with every page's comments, a review bar and comments list that can be moved, and the all-changes
+   page (app/review/changes) ── */
+.pf-flag { position: fixed; z-index: 2147482985; width: 22px; height: 22px; margin: -11px 0 0 0; display: grid; place-items: center; padding: 0; border: 2px solid #fff; border-radius: 6px; background: #22d3ee; color: #0a1220; box-shadow: 0 2px 8px rgba(4, 19, 31, 0.35); cursor: pointer; }
+.pf-flag:hover, .pf-flag.is-open { background: #0a1220; color: #22d3ee; border-color: #22d3ee; }
+.pf-flag:focus-visible { outline: 3px solid #0e7490; outline-offset: 2px; }
+.pf-pop { width: min(360px, calc(100vw - 24px)); max-height: min(70vh, 560px); overflow: auto; }
+.pf-steps { list-style: none; margin: 0 0 6px; padding: 0; display: grid; gap: 10px; }
+.pf-steps li { padding: 0 0 10px 10px; border-left: 2px solid rgba(255, 255, 255, 0.16); }
+.pf-steps li.is-now { border-left-color: #22d3ee; }
+.pf-who { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0 0 4px; color: #cfdbea; font-size: 0.82rem; line-height: 1.35; }
+.pf-who b { color: #fff; }
+.pf-tag { padding: 1px 8px; border-radius: 999px; box-shadow: inset 0 0 0 1px #a5f3fc; color: #a5f3fc; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; }
+.pf-now { margin-left: auto; padding: 1px 9px; border-radius: 999px; background: #22d3ee; color: #04131f; font-size: 0.74rem; font-weight: 700; }
+.pf-text { margin: 0; color: #fff; font-size: 0.95rem; line-height: 1.45; }
+.pf-note { margin: 4px 0 0; color: #a5f3fc; font-size: 0.82rem; line-height: 1.4; }
+.pf-pop .pc-act a.pe-btn { display: inline-block; text-decoration: none; }
+/* the handle that moves the bar and the list */
+.pe-grip { flex: none; display: grid; place-items: center; width: 26px; height: 36px; padding: 0; border: 0; border-radius: 8px; background: rgba(255, 255, 255, 0.08); color: #9fb2c8; cursor: grab; touch-action: none; }
+.pe-grip:hover { background: rgba(34, 211, 238, 0.16); color: #22d3ee; }
+.pe-grip:focus-visible { outline: 3px solid #22d3ee; outline-offset: 2px; }
+html.pe-dragging, html.pe-dragging * { cursor: grabbing !important; user-select: none !important; }
+.pe-bar.is-moved { width: max-content; }
+.pe-who a { color: #22d3ee; font-weight: 700; }
+.pe-switch span { margin-left: 2px; padding: 1px 7px; border-radius: 999px; background: rgba(255, 255, 255, 0.14); font-size: 0.78rem; }
+.pe-switch.is-on span { background: #22d3ee; color: #04131f; }
+/* the comments list: every page */
+.pc-list-head { display: flex; align-items: center; gap: 8px; }
+.pc-list-head .pc-meta { margin: 0; }
+.pc-filter { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; color: #cfdbea; font-size: 0.88rem; }
+.pc-filter select { flex: 1; min-width: 0; padding: 6px 8px; border: 0; border-radius: 8px; background: #fff; color: #0a1220; font: inherit; }
+.pc-group { display: flex; align-items: center; gap: 8px; margin: 14px 0 0; color: #a5f3fc; font-size: 0.82rem; font-weight: 700; line-height: 1.3; }
+.pc-group a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.pc-group span { padding: 0 7px; border-radius: 999px; background: rgba(165, 243, 252, 0.16); font-size: 0.75rem; }
+.pc-n.pc-away { background: transparent; box-shadow: inset 0 0 0 1px #22d3ee; color: #22d3ee; }
+/* phones: the bar sits at the top or the bottom */
+@media (max-width: 767px) { .pe-bar.is-top { top: 10px; bottom: auto; } }
+/* the all-changes page */
+.chg-page { padding-top: clamp(120px, 12vw, 170px); }
+.chg-page .pg-wrap { max-width: 1040px; }
+.chg-h1 { margin: 0; color: #0a1220; font-size: clamp(2rem, 3.4vw, 2.8rem); font-weight: 600; line-height: 1.1; }
+.chg-lead { margin: 10px 0 0; color: #2e3c50; font-size: 1.05rem; }
+.chg-filters { display: flex; flex-wrap: wrap; align-items: end; gap: 12px 20px; margin: 22px 0; padding: 14px 16px; border-radius: 14px; background: #eef3f9; }
+.chg-filters label { display: grid; gap: 4px; color: #1d3759; font-size: 0.9rem; font-weight: 600; }
+.chg-filters select { min-width: 240px; max-width: 100%; padding: 8px 10px; border: 1px solid #c4d8f2; border-radius: 10px; background: #fff; color: #0a1220; font: inherit; font-weight: 400; }
+.chg-count { margin: 0 0 0 auto; color: #4d688c; font-size: 0.9rem; }
+.chg-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.chg-item { padding: 14px 16px; border: 1px solid #c4d8f2; border-radius: 14px; background: #fff; }
+.chg-item.is-fix { border-left: 4px solid #0e7490; }
+.chg-meta { margin: 0 0 8px; color: #4d688c; font-size: 0.9rem; }
+.chg-meta b { color: #0a1220; }
+.chg-meta a { color: #1d3759; text-decoration: underline; text-underline-offset: 2px; }
+.chg-tag { margin-right: 6px; padding: 1px 8px; border-radius: 999px; background: #0e7490; color: #fff; font-size: 0.75rem; font-weight: 700; }
+.chg-words { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.chg-words p { margin: 2px 0 0; color: #0d0d0d; line-height: 1.45; }
+.chg-words > div:first-child p { color: #4d688c; }
+.chg-k { color: #0e7490; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.chg-note { margin: 8px 0 0; color: #1d3759; font-size: 0.88rem; }
+.chg-files { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 0; color: #4d688c; font-size: 0.82rem; }
+.chg-files code { padding: 1px 6px; border-radius: 6px; background: #eef3f9; color: #1d3759; font-size: 0.8rem; }
+@media (max-width: 700px) { .chg-words { grid-template-columns: 1fr; } .chg-filters select { min-width: 0; width: 100%; } .chg-filters label { width: 100%; } }

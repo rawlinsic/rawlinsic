@@ -8,7 +8,9 @@
    is found even when a sentence has a link in it or a wording repeats. Anything it
    can't place goes on EDITS-PENDING.md in the repo for Claude Code. */
 import { useCallback, useEffect, useRef, useState } from "react";
-import PreviewComments, { askName, changeName, cssPath, savedName } from "@/components/v8/preview-comments";
+import PreviewComments, { Grip, askName, changeName, cssPath, savedName } from "@/components/v8/preview-comments";
+import PreviewFlags from "@/components/v8/preview-flags";
+import { resetPositions, useDraggable } from "@/components/v8/preview-drag";
 
 const LEAF = "h1,h2,h3,h4,h5,p,li,blockquote,dt,dd,figcaption,b,strong,em,small,span,a,button,label,td,th";
 import { clean, diff, type Change, type Snap } from "@/lib/preview-edit-diff";
@@ -73,7 +75,25 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
   const [adding, setAdding] = useState(false);
   const [listOpen, setListOpen] = useState(false);
   const [count, setCount] = useState(0);
-  const onCount = useCallback((n: number) => setCount(n), []);
+  const [total, setTotal] = useState(0); // open comments on every page
+  const onCount = useCallback((n: number, all: number) => { setCount(n); setTotal(all); }, []);
+  /* flags beside edited text (review version; Nicole, Nov 16): on unless switched off in this browser */
+  const [flags, setFlags] = useState(true);
+  useEffect(() => { try { setFlags(localStorage.getItem("pe-flags") !== "0"); } catch {} }, []);
+  const switchFlags = () => setFlags((v) => { try { localStorage.setItem("pe-flags", v ? "0" : "1"); } catch {} return !v; });
+  /* the bar can be dragged anywhere (remembered in this browser); on phones it sits at the top or the bottom */
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const m = window.matchMedia("(max-width: 767px)");
+    const set = () => setNarrow(m.matches);
+    set(); m.addEventListener?.("change", set);
+    return () => m.removeEventListener?.("change", set);
+  }, []);
+  const [edge, setEdge] = useState<"bottom" | "top">("bottom");
+  useEffect(() => { try { setEdge(localStorage.getItem("pe-edge") === "top" ? "top" : "bottom"); } catch {} }, []);
+  const moveEdge = () => setEdge((v) => { const n = v === "top" ? "bottom" : "top"; try { localStorage.setItem("pe-edge", n); } catch {} return n; });
+  const resetPos = () => { resetPositions(); setEdge("bottom"); try { localStorage.removeItem("pe-edge"); } catch {} };
+  const bar = useRef<HTMLDivElement>(null);
   // clean view: hide every review mark (tools, pins, placeholder notes) to see the site as it will look
   const [cleanView, setCleanView] = useState(false);
   // the bar folds into a small tab on the left edge so it's out of the way (remembered per browser)
@@ -119,7 +139,7 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
       const t = e.target as HTMLElement;
       /* the review tools' own text is never page text: the bar, the comments list, a comment card, a pin. (Nov 12: a
          click in the comments list while editing made that line "editable", and its text went to EDITS-PENDING.md.) */
-      if (t.closest(".pe-bar, .pc-list, .pc-pop, .pc-pin")) return;
+      if (t.closest(".pe-bar, .pc-list, .pc-pop, .pc-pin, .pf-flag, .chg-page")) return; // and the all-changes list: its words are the record's
       e.preventDefault();
       e.stopPropagation();
       const el = t.closest<HTMLElement>(LEAF);
@@ -298,6 +318,10 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
     return () => { hl?.classList.remove("pe-del-hl"); document.documentElement.classList.remove("pe-deleting"); document.removeEventListener("mouseover", over, true); document.removeEventListener("click", click, true); };
   }, [deleting]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const folded = cleanView || (min && !on && !adding && !deleting);
+  const drag = useDraggable("pe-pos-bar", bar, !narrow, !folded);
+  /* the flags sit first in both the folded and the open tools, so they keep what they found when the bar opens or folds */
+  const flagsHere = review && flags && !cleanView && !on && !adding && !deleting ? <PreviewFlags /> : null;
   const tab = (label: string, open: () => void) => (
     <button type="button" className="pe-tab" onClick={open} aria-label={label} title={label}>
       <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 17.5V20h2.5L17.8 8.7l-2.5-2.5L4 17.5zM19.7 6.8a1 1 0 0 0 0-1.4l-1.1-1.1a1 1 0 0 0-1.4 0l-1 1 2.5 2.5 1-1z" fill="currentColor" /></svg>
@@ -307,6 +331,7 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
   if (cleanView) return tab("Show the review tools", () => { setCleanView(false); fold(false); });
   if (min && !on && !adding && !deleting) return (
     <>
+      {flagsHere}
       <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={false} onCount={onCount} hidden={false} onSaved={onSaved} onDone={onDone} refresh={refresh} />
       {tab("Open the review tools: edit text, comment", () => fold(false))}
     </>
@@ -314,8 +339,10 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
 
   return (
     <>
+      {flagsHere}
       <PreviewComments adding={adding} onAdded={() => setAdding(false)} listOpen={listOpen} onCount={onCount} hidden={cleanView} onSaved={onSaved} onDone={onDone} refresh={refresh} />
-      <div className="pe-bar" role="region" aria-label="Review tools (preview only)">
+      <div ref={bar} className={`pe-bar${drag.moved ? " is-moved" : ""}${narrow && edge === "top" ? " is-top" : ""}`} style={narrow ? undefined : drag.style} role="region" aria-label="Review tools (preview only)">
+        {!narrow && <Grip label="Move the review bar" handle={drag.handle} />}
         {restore && !on ? (
           <div className="pe-kept">
             <p className="pe-kept-h">{restore.changes.length} unsaved change{restore.changes.length === 1 ? "" : "s"} on this page from before</p>
@@ -358,7 +385,8 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
             <button type="button" className="pe-btn pe-ghost" disabled={busy || !history.length} onClick={undo} title={history.length ? `Undo: ${history[history.length - 1].label}` : "Nothing to undo yet"}>Undo</button>
             <button type="button" className="pe-btn pe-ghost" disabled={busy || !redos.length} onClick={redo} title={redos.length ? `Redo: ${redos[redos.length - 1].label}` : "Nothing to redo yet"}>Redo</button>
             {canDelete && <button type="button" className="pe-btn pe-ghost pe-danger" onClick={() => { setDeleting(true); setMsg(""); }}>Delete section</button>}
-            <button type="button" className={`pe-btn pe-ghost${listOpen ? " is-on" : ""}`} onClick={() => setListOpen((v) => !v)}>Comments ({count})</button>
+            <button type="button" className={`pe-btn pe-ghost${listOpen ? " is-on" : ""}`} onClick={() => setListOpen((v) => !v)} aria-label={`Comments: ${count} on this page, ${total} in all`}>Comments ({count} here · {total} in all)</button>
+            {review && <button type="button" role="switch" aria-checked={flags} className={`pe-btn pe-ghost pe-switch${flags ? " is-on" : ""}`} onClick={switchFlags} title="Flags beside text that was changed with Edit text">Flags <span aria-hidden="true">{flags ? "on" : "off"}</span></button>}
             <button type="button" className="pe-btn pe-ghost" onClick={() => { setCleanView(true); setListOpen(false); }} title="Hide the tools, comment pins, and placeholder notes">Clean view</button>
             <button type="button" className="pe-btn pe-ghost pe-fold" onClick={() => { fold(true); setListOpen(false); setMsg(""); }} aria-label="Hide the review tools" title="Hide the review tools">
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -367,7 +395,10 @@ export default function PreviewEdit({ canDelete = false, review = false, built =
         )}
         {/* whose name goes on comments and changes from this browser */}
         {!on && !deleting && !adding && (
-          <p className="pe-who">{me ? <>Commenting as <b>{me}</b></> : "Your name goes on your comments"} <button type="button" onClick={() => setMe(changeName())}>{me ? "Change" : "Add your name"}</button></p>
+          <p className="pe-who">{me ? <>Commenting as <b>{me}</b></> : "Your name goes on your comments"} <button type="button" onClick={() => setMe(changeName())}>{me ? "Change" : "Add your name"}</button>
+            {review && <> · <a href="/review/changes">All changes</a></>}
+            {narrow ? <> · <button type="button" onClick={moveEdge}>{edge === "top" ? "Move to bottom" : "Move to top"}</button></> : <> · <button type="button" onClick={resetPos}>Reset position</button></>}
+          </p>
         )}
         {msg && <p className="pe-msg" aria-live="polite">{msg}</p>}
       </div>

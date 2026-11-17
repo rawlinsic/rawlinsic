@@ -4,12 +4,13 @@
    EDIT_PASSCODE, set in Vercel for Preview only), so the public repo shows only
    a locked note. Anyone with the preview link can read and add them (Nicole's
    call: no password), the same people who can see the preview.
-     GET   ?page=/path  open comments (all pages when page is left out)
+     GET   ?page=/path  open comments (all pages when page is left out), with each page's name
      POST  { page, sel, rx, ry, snippet, text, name }  add one
      PATCH { id }  mark one done (closes the issue); { id, reopen: true } brings it back (Undo and Redo) */
 import { NextResponse } from "next/server";
 import { BACKUP_LOCKED, isBackupVersion } from "@/lib/preview-gh";
 import { movedPath } from "@/lib/moved-pages";
+import { pageNames } from "@/lib/page-names";
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "crypto";
 
 export const runtime = "nodejs";
@@ -59,7 +60,8 @@ export async function GET(req: Request) {
       for (const it of list || []) { const m = MARK.exec(it.body || ""); const n = m && open(s.key, m[1]); if (n && (!page || movedPath(n.page) === page)) out.push({ id: it.number, ...n }); }
       if (!list || list.length < 100) break;
     }
-    return NextResponse.json({ comments: out.sort((a, b) => a.at.localeCompare(b.at)) });
+    /* names: each page's name, for the comments list that shows every page's comments (Nicole, Nov 16) */
+    return NextResponse.json({ comments: out.sort((a, b) => a.at.localeCompare(b.at)), names: pageNames(out.map((c) => movedPath(c.page))) });
   } catch (e) { return NextResponse.json({ error: `Couldn't load comments: ${(e as Error).message}` }, { status: 500 }); }
 }
 

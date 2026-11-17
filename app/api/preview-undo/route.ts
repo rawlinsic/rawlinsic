@@ -4,7 +4,8 @@
    Only commits made by the review tools, and only if nothing has changed those
    files since; otherwise it says so and nothing changes. Never touches main. */
 import { NextResponse } from "next/server";
-import { commitFiles, previewGitHub } from "@/lib/preview-gh";
+import { commitFiles, previewGitHub, readFile } from "@/lib/preview-gh";
+import { RECORD_PATH, newSaveId, parseRecord, recordText, reversed } from "@/lib/edit-record";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,6 +23,8 @@ export async function POST(req: Request) {
     const parent = c.parents?.[0]?.sha;
     const restore: { path: string; content: string | null }[] = [];
     for (const f of c.files || []) {
+      /* the record of changes is added to by every save, so it never blocks an Undo: the Undo adds its own lines instead */
+      if (f.filename === RECORD_PATH) continue;
       // nothing may have changed this file since
       let headBlob: string | null = null;
       try { headBlob = (await s.gh(`/contents/${f.filename}?ref=${encodeURIComponent(s.branch)}`)).sha; } catch (e) { if ((e as { status?: number }).status !== 404) throw e; }
@@ -34,9 +37,15 @@ export async function POST(req: Request) {
     if (!restore.length) return NextResponse.json({ error: "Nothing to undo" }, { status: 400 });
     const who = String(body?.name || "someone").replace(/[\r\n"`<>{}]/g, " ").trim().slice(0, 40) || "someone";
     const what = first.replace(/^Preview (undo|redo) by [^:]*: /, "");
+    /* the record: each line of the save taken back, turned around (a save from before the record began is found by its commit) */
+    const of = /^Record: (\S+)$/m.exec(String(c.commit?.message || ""))?.[1] ?? sha.slice(0, 10);
+    const id = newSaveId();
+    const prior = parseRecord(await readFile(s.gh, s.branch, RECORD_PATH));
+    const back = reversed(prior, of, id, who, body?.redo ? "redo" : "undo");
+    if (back.length) restore.push({ path: RECORD_PATH, content: recordText([...prior, ...back]) });
     const made = await commitFiles(s.gh, s.branch, restore, body?.redo
-      ? `Preview redo by ${who}: ${what}\n\nPuts back what ${sha.slice(0, 7)} undid. Made with the preview Redo button.`
-      : `Preview undo by ${who}: ${what}\n\nUndoes ${sha.slice(0, 7)}. Made with the preview Undo button.`);
+      ? `Preview redo by ${who}: ${what}\n\nPuts back what ${sha.slice(0, 7)} undid. Made with the preview Redo button.${back.length ? `\nRecord: ${id}` : ""}`
+      : `Preview undo by ${who}: ${what}\n\nUndoes ${sha.slice(0, 7)}. Made with the preview Undo button.${back.length ? `\nRecord: ${id}` : ""}`);
     return NextResponse.json({ ok: true, commit: made });
   } catch (e) {
     return NextResponse.json({ error: `Couldn't undo: ${(e as Error).message}. Nothing was changed.` }, { status: 500 });

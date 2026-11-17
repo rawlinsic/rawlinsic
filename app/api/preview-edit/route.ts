@@ -18,6 +18,7 @@ import { inText, onlyTextChanged, textSpans } from "@/lib/preview-edit-safe";
 import { BACKUP_LOCKED, isBackupVersion } from "@/lib/preview-gh";
 import { AREAS, INDUSTRIES, slugify } from "@/lib/content/site";
 import { addMove, type MovedList } from "@/lib/moved-pages";
+import { RECORD_PATH, core, newSaveId, parseRecord, recordText, type RecordEntry } from "@/lib/edit-record";
 
 /* names that make a page's address (services and sub-sectors): renaming one moves the page, so the save also
    records the move in lib/moved-pages.json, which redirects the old address and keeps its comments showing (Nov 12) */
@@ -123,6 +124,10 @@ export async function POST(req: Request) {
     const changed = new Map<string, string>();
     const pending: { c: Change; why: string }[] = [];
     const moves: [string, string][] = []; // pages this save renames (old address segment, new one)
+    /* this save's lines for the record of changes (lib/edit-record.ts): placed, or on the list for Claude Code */
+    const saveId = newSaveId(), at = new Date().toISOString();
+    const recs: RecordEntry[] = [];
+    const rec = (c: Change, status: RecordEntry["status"], files: string[]) => recs.push({ id: saveId, at, who, kind: "edit", page: String(body.page || ""), files, before: cleanWs(c.old), after: cleanWs(c.next), status: status === "saved" && core(c.old) === core(c.next) ? "breaks" : status });
     let applied = 0, already = 0;
     // page text in each file as it is now (worked out once per version of a file)
     const spanCache = new Map<string, { src: string; spans: [number, number][] }>();
@@ -153,17 +158,18 @@ export async function POST(req: Request) {
         }
       }
       if ("already" in got) { already++; continue; } // the new wording is already there: nothing to change
-      if ("why" in got) { pending.push({ c, why: got.why }); continue; }
+      if ("why" in got) { pending.push({ c, why: got.why }); rec(c, "list", []); continue; }
       const writes = Array.from(new Set(got.hits.map((h) => h.path))).map((path) => {
         const hits = got.hits.filter((h) => h.path === path);
         if (special) return [path, writeSpecial(now.get(path)!, hits, got.next)] as const;
         return [path, lines && lines.length > 1 ? writeWithBreaks(now.get(path)!, hits, got.next, lines) : writeAll(now.get(path)!, hits, got.next)] as const;
       });
-      if (writes.some(([, out]) => out === null)) { pending.push({ c, why: "found it, but changing it there automatically isn't safe" }); continue; }
+      if (writes.some(([, out]) => out === null)) { pending.push({ c, why: "found it, but changing it there automatically isn't safe" }); rec(c, "list", []); continue; }
       // the file must read as the same code afterwards, with only page text different
-      if (writes.some(([path, out]) => !onlyTextChanged(path, now.get(path)!, out!))) { pending.push({ c, why: "saving it there would have changed code, not just page text" }); continue; }
+      if (writes.some(([path, out]) => !onlyTextChanged(path, now.get(path)!, out!))) { pending.push({ c, why: "saving it there would have changed code, not just page text" }); rec(c, "list", []); continue; }
       for (const [path, out] of writes) changed.set(path, out!);
       applied++;
+      rec(c, "saved", writes.map(([path]) => path));
       if (ADDRESS_NAMES.has(c.old.trim()) && slugify(got.next)) moves.push([slugify(c.old.trim()), slugify(got.next)]);
     }
 
@@ -184,9 +190,17 @@ export async function POST(req: Request) {
       items.push({ path: "EDITS-PENDING.md", mode: "100644", type: "blob", content: list });
     }
     if (!items.length) return NextResponse.json({ applied: 0, pending: 0, already });
+    /* the record of changes gets this save's lines in the same commit (a record that can't be read is started again
+       from the lines it can: never a reason to refuse the save) */
+    if (recs.length) {
+      let prior: RecordEntry[] = [];
+      const blob = (tree.tree as { path: string; sha: string }[]).find((t) => t.path === RECORD_PATH);
+      if (blob) { try { const b = await gh(`/git/blobs/${blob.sha}`); prior = parseRecord(Buffer.from(b.content, "base64").toString("utf8")); } catch (e) { if (e instanceof GhError && e.status === 429) throw e; } }
+      if (prior.length || !blob) items.push({ path: RECORD_PATH, mode: "100644", type: "blob", content: recordText([...prior, ...recs]) });
+    }
 
     const newTree = await gh(`/git/trees`, { method: "POST", body: JSON.stringify({ base_tree: commit.tree.sha, tree: items }) });
-    const message = `Preview edit by ${who} on ${body.page || "a page"}: ${applied} change${applied === 1 ? "" : "s"}${pending.length ? `, ${pending.length} for Claude Code` : ""}\n\n${changes.map((c) => `- "${c.old}" -> "${c.next.trim()}"`).join("\n")}\n\nMade with the preview Edit text button.`;
+    const message = `Preview edit by ${who} on ${body.page || "a page"}: ${applied} change${applied === 1 ? "" : "s"}${pending.length ? `, ${pending.length} for Claude Code` : ""}\n\n${changes.map((c) => `- "${c.old}" -> "${c.next.trim()}"`).join("\n")}\n\nMade with the preview Edit text button.${recs.length ? `\nRecord: ${saveId}` : ""}`;
     const made = await gh(`/git/commits`, { method: "POST", body: JSON.stringify({ message, tree: newTree.sha, parents: [head] }) });
     await gh(`/git/refs/heads/${encodeURIComponent(branch)}`, { method: "PATCH", body: JSON.stringify({ sha: made.sha, force: false }) });
     return NextResponse.json({ applied, pending: pending.length, already, commit: made.sha });

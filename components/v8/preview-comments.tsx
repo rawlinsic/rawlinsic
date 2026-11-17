@@ -3,10 +3,12 @@
    "Comment", then click any spot on the page and type a note. Notes show as
    numbered pins where they were left, for everyone looking at this preview;
    click a pin to read it or mark it done. "Comments" lists every open note on
-   the page. Stored encrypted by /api/preview-comments; Claude Code reads them
+   every page (Nicole, Nov 16): this page's first, then the rest by page, with a filter by person; a click on one on
+   another page goes there and opens it. Stored encrypted by /api/preview-comments; Claude Code reads them
    from there and marks them done when they're handled. */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { movedPath } from "@/lib/moved-pages"; // a comment saved on a page's old address shows on its new one (Nov 12)
+import { useDraggable } from "@/components/v8/preview-drag";
 
 type C = { id: number; page: string; sel: string; rx: number; ry: number; snippet: string; text: string; who: string; at: string };
 type Draft = { x: number; y: number; sel: string; rx: number; ry: number; snippet: string };
@@ -97,14 +99,30 @@ export const askName = () => {
   return name;
 };
 
-export default function PreviewComments({ adding, onAdded, listOpen, onCount, hidden, onSaved, onDone, refresh }: { adding: boolean; onAdded: () => void; listOpen: boolean; onCount: (n: number) => void; hidden: boolean; /* a comment was saved / marked done (so Undo can take it back) */ onSaved?: (id: number, text: string) => void; onDone?: (id: number, text: string) => void; /* the bar undid or redid a comment: n counts the changes, id is the comment, open is whether it should now show */ refresh?: { n: number; id: number; open: boolean } }) {
-  const [list, setList] = useState<C[]>([]);
+/* the handle that moves a box (the review bar, the comments list) */
+export const Grip = ({ label, handle }: { label: string; handle: ReturnType<typeof useDraggable>["handle"] }) => (
+  <button type="button" className="pe-grip" aria-label={`${label} (drag it, or use the arrow keys)`} title="Drag to move" {...handle}>
+    <svg viewBox="0 0 12 18" width="10" height="16" aria-hidden="true"><g fill="currentColor"><circle cx="3" cy="3" r="1.6" /><circle cx="9" cy="3" r="1.6" /><circle cx="3" cy="9" r="1.6" /><circle cx="9" cy="9" r="1.6" /><circle cx="3" cy="15" r="1.6" /><circle cx="9" cy="15" r="1.6" /></g></svg>
+  </button>
+);
+const GO = "pc-go"; // a comment to open once its page has loaded (clicked in the list on another page)
+
+export default function PreviewComments({ adding, onAdded, listOpen, onCount, hidden, onSaved, onDone, refresh }: { adding: boolean; onAdded: () => void; listOpen: boolean; onCount: (here: number, all: number) => void; hidden: boolean; /* a comment was saved / marked done (so Undo can take it back) */ onSaved?: (id: number, text: string) => void; onDone?: (id: number, text: string) => void; /* the bar undid or redid a comment: n counts the changes, id is the comment, open is whether it should now show */ refresh?: { n: number; id: number; open: boolean } }) {
+  /* every open comment on every page; list: the ones on this page (and on menu items, which are on every page) */
+  const [all, setAll] = useState<C[]>([]);
+  const [names, setNames] = useState<Record<string, string>>({});
+  const [loaded, setLoaded] = useState(false);
+  const [person, setPerson] = useState("");
+  const listBox = useRef<HTMLDivElement>(null);
+  const drag = useDraggable("pe-pos-list", listBox, true, listOpen);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [text, setText] = useState("");
   const [openId, setOpenId] = useState<number | null>(null);
   const [msg, setMsg] = useState("");
   const [, tick] = useState(0);
   const page = typeof window === "undefined" ? "/" : window.location.pathname;
+  const isHere = (c: C) => movedPath(c.page) === page || !!menuOf(c.sel);
+  const list = all.filter(isHere);
   const box = useRef<HTMLTextAreaElement>(null);
   /* where each comment sits, remembered so the page isn't searched on every scroll frame; a comment with no
      spot is looked for again every couple of seconds (pages finish drawing late, menus open, cards turn) */
@@ -134,27 +152,28 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
     mine.current.forEach((v, id) => {
       if (now - v.t > 90000) { mine.current.delete(id); return; }
       if (!v.open) out = out.filter((c) => c.id !== id);
-      else if (v.c && (movedPath(v.c.page) === page || menuOf(v.c.sel)) && !out.some((c) => c.id === id)) out = [...out, v.c];
+      else if (v.c && !out.some((c) => c.id === id)) out = [...out, v.c];
     });
     return [...out].sort((a, b) => a.at.localeCompare(b.at));
-  }, [page]);
+  }, []);
   const load = useCallback(async () => {
-    /* every open comment, then this page's plus the ones on menu items (those belong to every page) */
-    try { const r = await fetch("/api/preview-comments"); const j = await r.json(); if (r.ok) setList(settle(((j.comments || []) as C[]).filter((c) => movedPath(c.page) === page || menuOf(c.sel)))); else setMsg(j.error || ""); } catch {}
-  }, [page, settle]);
+    /* every open comment on every page, with each page's name */
+    try { const r = await fetch("/api/preview-comments"); const j = await r.json(); if (r.ok) { setAll(settle((j.comments || []) as C[])); setNames(j.names || {}); } else setMsg(j.error || ""); } catch {}
+    setLoaded(true);
+  }, [settle]);
   useEffect(() => { load(); }, [load]);
   /* Undo or Redo of a comment from the bar: show the result at once */
   useEffect(() => {
     if (!refresh) return;
     const { id, open } = refresh;
-    setList((l) => {
+    setAll((l) => {
       const had = mine.current.get(id)?.c ?? l.find((c) => c.id === id);
       mine.current.set(id, { open, c: had, t: Date.now() }); keep();
       return settle(l);
     });
     if (open) { const t = window.setTimeout(load, 4000); return () => window.clearTimeout(t); } // in case this browser never had its words
   }, [refresh?.n]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => { onCount(list.length); }, [list, onCount]);
+  useEffect(() => { onCount(list.length, all.length); }, [list.length, all.length, onCount]);
 
   // keep pins on their spots as the page scrolls, slides, and resizes
   useEffect(() => {
@@ -175,7 +194,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
     document.documentElement.classList.add("pc-adding");
     const click = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      if (t.closest(".pe-bar, .pc-pin, .pc-pop, .pc-list")) return;
+      if (t.closest(".pe-bar, .pc-pin, .pc-pop, .pc-list, .pf-flag")) return;
       e.preventDefault(); e.stopPropagation();
       const el = t.closest<HTMLElement>("h1,h2,h3,h4,p,li,a,button,img,figure,blockquote,span,b,em,section,div") || t;
       const r = el.getBoundingClientRect();
@@ -195,11 +214,11 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
       const j = await r.json();
       if (!r.ok) { setMsg(j.error || "Couldn't save the comment."); return; }
       mine.current.set(j.comment.id, { open: true, c: j.comment, t: Date.now() }); keep();
-      setList((l) => [...l, j.comment]); setDraft(null); setText(""); setMsg(""); onAdded(); onSaved?.(j.comment.id, j.comment.text);
+      setAll((l) => [...l, j.comment]); setDraft(null); setText(""); setMsg(""); onAdded(); onSaved?.(j.comment.id, j.comment.text);
     } catch { setMsg("Couldn't reach the server. The comment wasn't saved."); }
   };
   const done = async (id: number) => {
-    try { const r = await fetch("/api/preview-comments", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id }) }); if (r.ok) { const was = list.find((c) => c.id === id); mine.current.set(id, { open: false, c: was, t: Date.now() }); keep(); setList((l) => l.filter((c) => c.id !== id)); setOpenId(null); onDone?.(id, was?.text || ""); } } catch {}
+    try { const r = await fetch("/api/preview-comments", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ id }) }); if (r.ok) { const was = list.find((c) => c.id === id); mine.current.set(id, { open: false, c: was, t: Date.now() }); keep(); setAll((l) => l.filter((c) => c.id !== id)); setOpenId(null); onDone?.(id, was?.text || ""); } } catch {}
   };
   /* menu comments whose item is gone, in the open menu: parked down its right edge, in order */
   const gone = (c: C) => !!menuOf(c.sel) && !!inOpenMenu(c)?.lost;
@@ -220,6 +239,25 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
     if (m) { if (!locate(c)) menuButton(m)?.click(); window.setTimeout(() => setOpenId(c.id), 150); return; }
     const el = locate(c); el?.scrollIntoView({ block: "center", behavior: "smooth" }); setOpenId(c.id);
   };
+  /* a comment on another page: go there, and it opens once that page has loaded */
+  const go = (c: C) => {
+    try { sessionStorage.setItem(GO, String(c.id)); } catch {}
+    window.location.href = movedPath(c.page);
+  };
+  useEffect(() => {
+    if (!loaded) return;
+    let id = 0;
+    try { id = Number(sessionStorage.getItem(GO) || 0); sessionStorage.removeItem(GO); } catch {}
+    const c = id ? all.find((x) => x.id === id && isHere(x)) : undefined;
+    if (!c) return;
+    /* its spot may draw late: looked for a few times; not found, it opens anyway, parked, saying its text changed */
+    let tries = 0;
+    const t = window.setInterval(() => {
+      tries++; seen.current.delete(c.id);
+      if (locate(c) || tries >= 8) { window.clearInterval(t); show(c); }
+    }, 350);
+    return () => window.clearInterval(t);
+  }, [loaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (hidden) return null;
   const vw = typeof window === "undefined" ? 1400 : window.innerWidth;
@@ -249,7 +287,7 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
             {open && (
               <div className="pc-pop" style={{ left: Math.max(12, Math.min(p.x + 18, vw - 340)), top: p.y + 10 }}>
                 <p className="pc-meta"><b>{c.who}</b> · {when(c.at)}</p>
-                {parked && <p className="pc-meta">Its spot on the page changed.{c.snippet ? ` It was about “${c.snippet.slice(0, 60)}${c.snippet.length > 60 ? "…" : ""}”.` : ""}</p>}
+                {parked && <p className="pc-meta">The text it was on has changed.{c.snippet ? ` It was about “${c.snippet.slice(0, 60)}${c.snippet.length > 60 ? "…" : ""}”.` : ""}</p>}
                 <p className="pc-text">{c.text}</p>
                 <div className="pc-act"><button type="button" className="pe-btn" onClick={() => done(c.id)}>Mark done</button><button type="button" className="pe-btn pe-ghost" onClick={() => setOpenId(null)}>Close</button></div>
               </div>
@@ -272,12 +310,49 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
           {msg && <p className="pc-meta">{msg}</p>}
         </div>
       )}
-      {listOpen && (
-        <div className="pc-list" role="region" aria-label="Comments on this page">
-          <p className="pc-meta"><b>{list.length ? `${list.length} open comment${list.length === 1 ? "" : "s"} on this page` : "No open comments on this page"}</b></p>
-          <ol>{list.map((c, i) => <li key={c.id}><button type="button" onClick={() => show(c)}><span className="pc-n">{i + 1}</span><span><b>{c.who}</b> · {when(c.at)}<br />{c.text.length > 140 ? `${c.text.slice(0, 140)}…` : c.text}{!locate(c) && <em> (its spot changed; it's about “{c.snippet.slice(0, 40)}”)</em>}</span></button></li>)}</ol>
-        </div>
-      )}
+      {listOpen && (() => {
+        /* this page's comments first, then every other page's, by page; a filter by person at the top */
+        const people = Array.from(new Set(all.map((c) => c.who))).sort((a, b) => a.localeCompare(b));
+        const mineToo = (c: C) => !person || c.who === person;
+        const here = list.filter(mineToo);
+        const groups = new Map<string, C[]>();
+        all.filter((c) => !isHere(c) && mineToo(c)).forEach((c) => { const p = movedPath(c.page); groups.set(p, [...(groups.get(p) || []), c]); });
+        const pages = Array.from(groups.entries()).sort((a, b) => (names[a[0]] || a[0]).localeCompare(names[b[0]] || b[0]));
+        const short = (t: string) => (t.length > 140 ? `${t.slice(0, 140)}…` : t);
+        /* not moved on its own: it sits next to the review bar, wherever the bar is (above it, or below it near the top) */
+        const b = document.querySelector(".pe-bar")?.getBoundingClientRect();
+        const vh = window.innerHeight, w = Math.min(380, vw - 32);
+        const nextToBar = drag.style || !b ? drag.style : {
+          left: Math.max(8, Math.min(b.left + b.width / 2 - w / 2, vw - w - 8)), transform: "none",
+          ...(b.top > vh - b.bottom ? { bottom: vh - b.top + 12, top: "auto", maxHeight: Math.max(160, b.top - 24) } : { top: b.bottom + 12, bottom: "auto", maxHeight: Math.max(160, vh - b.bottom - 24) }),
+        };
+        return (
+          <div ref={listBox} className={`pc-list${drag.moved ? " is-moved" : ""}`} style={nextToBar} role="region" aria-label="Open comments on every page">
+            <div className="pc-list-head">
+              <Grip label="Move the comments list" handle={drag.handle} />
+              <p className="pc-meta"><b>{list.length} open on this page · {all.length} in all</b></p>
+            </div>
+            {people.length > 1 && (
+              <label className="pc-filter">Person
+                <select value={person} onChange={(e) => setPerson(e.target.value)}>
+                  <option value="">Everyone</option>
+                  {people.map((p) => <option key={p} value={p}>{p}</option>)}
+                </select>
+              </label>
+            )}
+            <h3 className="pc-group">This page</h3>
+            {here.length ? (
+              <ol>{here.map((c) => <li key={c.id}><button type="button" onClick={() => show(c)}><span className="pc-n">{list.indexOf(c) + 1}</span><span><b>{c.who}</b> · {when(c.at)}<br />{short(c.text)}{!locate(c) && <em> (the text it was on has changed; it was about “{c.snippet.slice(0, 40)}”)</em>}</span></button></li>)}</ol>
+            ) : <p className="pc-meta">{person ? `None from ${person} on this page.` : "No open comments on this page."}</p>}
+            {pages.map(([p, cs]) => (
+              <div key={p}>
+                <h3 className="pc-group"><a href={p}>{names[p] || p}</a> <span>{cs.length}</span></h3>
+                <ol>{cs.map((c) => <li key={c.id}><button type="button" onClick={() => go(c)} title={`Go to ${names[p] || p} and open this comment`}><span className="pc-n pc-away" aria-hidden="true">→</span><span><b>{c.who}</b> · {when(c.at)}<br />{short(c.text)}</span></button></li>)}</ol>
+              </div>
+            ))}
+          </div>
+        );
+      })()}
     </>
   );
 }
