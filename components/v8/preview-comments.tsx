@@ -275,7 +275,14 @@ export default function PreviewComments({ adding, onAdded, listOpen, onCount, hi
   const show = (c: C) => {
     const m = menuOf(c.sel);
     if (m) { if (!locate(c)) menuButton(m)?.click(); window.setTimeout(() => setOpenId(c.id), 150); return; }
-    const el = locate(c); el?.scrollIntoView({ block: "center", behavior: "smooth" }); setOpenId(c.id);
+    const el = locate(c);
+    if (el) {
+      /* a tall part of the page (a whole page's column): go to the comment's own spot in it, not to the part's middle */
+      const r = el.getBoundingClientRect(), at = spot(c);
+      if (r.height > window.innerHeight * 0.8 && at) window.scrollTo({ top: window.scrollY + at.y - window.innerHeight / 2, behavior: "smooth" });
+      else el.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+    setOpenId(c.id);
   };
   /* a comment on another page: go there, and it opens once that page has loaded */
   const go = (c: C) => {
