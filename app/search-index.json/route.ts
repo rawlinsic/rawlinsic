@@ -15,11 +15,12 @@ export const dynamic = "force-static";
 
 type Hit = { label: string; kind: string; href: string; text?: string };
 const clean = (s = "", max = 700) => s.replace(/\*\*/g, "").replace(/\s+/g, " ").trim().slice(0, max);
-/* a project page's own words: the challenge, what we did (a "## " line is a small heading there), and results, with
-   the lines from our records (CASE_EXTRA) that the page adds under each */
+/* a project page's own words: the challenge, what we did (a "## " line is a small heading there) with its Tools row,
+   and results, with the lines from our records (CASE_EXTRA) that the page adds under each */
 const caseWords = (id: string) => {
   const d = CASE_DATA[id], x = CASE_EXTRA[id] ?? {};
-  return [d?.ch ?? "", ...(d?.did ?? []), ...(x.did ?? []), ...(d?.res ?? []), ...(x.res ?? [])].map((t) => t.replace(/^## /, "")).join(" ");
+  return [d?.ch ?? "", ...(d?.did ?? []), ...(x.did ?? []), ...(d?.tools ?? []), ...(d?.res ?? []), ...(x.res ?? [])]
+    .map((t) => t.replace(/^## /, "")).join(" ");
 };
 
 export function GET() {
