@@ -23,7 +23,8 @@ type Menu = "what" | "who" | "work" | "insights" | "about" | null;
 const MENUS: [Exclude<Menu, null>, string][] = [["what", "What We Do"], ["who", "Who We Work With"], ["work", "Our Work"], ["insights", "Insights"], ["about", "About"]];
 
 /* Search (Nov 12, Nicole: "the search on the site doesn't work right"). The full list (pages plus the words around them:
-   a service's opening, a project's client and states, people's titles) loads from /search-index.json the first time
+   a service's opening, a project's client and states and, since Nov 23, its challenge, what we did, and results,
+   people's titles) loads from /search-index.json the first time
    someone types; until then the menu's own list is used. Every word typed has to be found, in any order; a match in
    the page's name ranks above a match in the words around it. */
 const SMALL = new Set(["a", "an", "and", "or", "the", "of", "for", "to", "in", "on", "with", "&"]);

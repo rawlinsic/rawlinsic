@@ -1,9 +1,12 @@
 /* Everything the site search looks through (Nov 12, Nicole: "the search on the site doesn't work right"), built once
    at deploy: each page's name plus the words around it (a service's opening and what it covers, a project's client,
    states, and services, people's titles), so a search for a state, a client, or a topic finds the pages about it.
+   Nov 23 (Nicole: yes, after a search for "EPIC" and "14%" found nothing): a project also carries its page's
+   challenge, what we did, and results, the same lines its page shows (components/site/cases.tsx CaseDetail).
    Loaded by the header's search the first time someone types (components/v8/header-client.tsx). */
 import { AREAS, CASES, INDUSTRIES, areaHref, caseHref, industryHref, serviceById, subsectorHref, isListed } from "@/lib/content/site";
-import { AREAS as AREA_DATA, SERVICES } from "@/lib/content/catalog";
+import { AREAS as AREA_DATA, SERVICES, CASES as CASE_DATA } from "@/lib/content/catalog";
+import { CASE_EXTRA } from "@/lib/content/case-extra";
 import { TEAM_MEMBERS } from "@/lib/team-data";
 import { THOUGHT_LEADERSHIP } from "@/components/thought-leadership-data";
 import { PUBLICATIONS } from "@/lib/content/research";
@@ -11,7 +14,13 @@ import { PUBLICATIONS } from "@/lib/content/research";
 export const dynamic = "force-static";
 
 type Hit = { label: string; kind: string; href: string; text?: string };
-const clean = (s = "") => s.replace(/\*\*/g, "").replace(/\s+/g, " ").trim().slice(0, 700);
+const clean = (s = "", max = 700) => s.replace(/\*\*/g, "").replace(/\s+/g, " ").trim().slice(0, max);
+/* a project page's own words: the challenge, what we did (a "## " line is a small heading there), and results, with
+   the lines from our records (CASE_EXTRA) that the page adds under each */
+const caseWords = (id: string) => {
+  const d = CASE_DATA[id], x = CASE_EXTRA[id] ?? {};
+  return [d?.ch ?? "", ...(d?.did ?? []), ...(x.did ?? []), ...(d?.res ?? []), ...(x.res ?? [])].map((t) => t.replace(/^## /, "")).join(" ");
+};
 
 export function GET() {
   const hits: Hit[] = [
@@ -23,7 +32,7 @@ export function GET() {
     ...INDUSTRIES.map((i) => ({ label: i.name, kind: "Who we work with", href: industryHref(i), text: clean(`${i.who} ${i.lead}`) })),
     ...INDUSTRIES.flatMap((i) => i.subsectors.map((s) => ({ label: s.name, kind: i.name, href: subsectorHref(i, s), text: clean(s.line) }))),
     ...CASES.map((c) => ({ label: c.title, kind: "Project", href: caseHref(c),
-      text: clean(`${c.who} ${c.states.join(" ")} ${c.status} ${c.services.map((id) => serviceById(id)?.service.name ?? "").join(" ")}`) })),
+      text: clean(`${c.who} ${c.states.join(" ")} ${c.status} ${c.services.map((id) => serviceById(id)?.service.name ?? "").join(" ")} ${caseWords(c.id)}`, 20000) })),
     ...TEAM_MEMBERS.map((p) => ({ label: p.name, kind: p.title || p.role, href: "/about/our-people", text: clean(p.location) })),
     ...THOUGHT_LEADERSHIP.map((a) => ({ label: a.title, kind: "Thought leadership", href: `/insights/thought-leadership/${a.slug}` })),
     ...PUBLICATIONS.map((p) => ({ label: p.title, kind: "Research & publications", href: "/insights/research", text: clean(`${p.publisher} ${p.people.join(" ")}`) })),
