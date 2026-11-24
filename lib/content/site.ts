@@ -68,7 +68,7 @@ export const AREAS: Area[] = [
     ],
   },
   {
-    id: "om", slug: "maintenance-operations", name: "Maintenance & Operations", // Nov 13 (Nicole): "everywhere it's operations and maintenance, it should be maintenance and operations"; the old address redirects
+    id: "om", slug: "maintenance-operations", name: "Construction,\nMaintenance & Operations", // Nov 13 (Nicole): "everywhere it's operations and maintenance, it should be maintenance and operations"; the old address redirects
     tag: "Asset management, maintenance, contracting, & traffic operations", scene: "dusk", featuredCase: "cs-pbmc",
     services: [
       svc("asset-mgmt", "Asset Management", "crossing"),
