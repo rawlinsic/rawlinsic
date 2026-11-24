@@ -2059,7 +2059,7 @@ export const SERVICES: Record<string, SvcData> = {
 export const AREAS: Record<string, AreaData> = {
  "strategy": {
   "id": "strategy",
-  "name": "Strategy & Organization",
+  "name": "Strategy, Organization, and Professional Development",
   "tag": "Direction, structure, & people",
   "services": [
    "strategic-planning",
